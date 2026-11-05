@@ -9,15 +9,26 @@ function isGoogleMapsUrl(value: string) {
     const url = new URL(value);
     const host = url.hostname.toLowerCase();
 
-    return (
+    const isDirectReviewLink =
+      host === "search.google.com" &&
+      url.pathname === "/local/writereview" &&
+      url.searchParams.has("placeid");
+
+    const isMapsLink =
       url.protocol === "https:" &&
       (
         host === "maps.app.goo.gl" ||
         host === "maps.google.com" ||
         host === "goo.gl" ||
-        ["google.com", "www.google.com"].includes(host) &&
+        (
+          ["google.com", "www.google.com"].includes(host) &&
           url.pathname.startsWith("/maps")
-      )
+        )
+      );
+
+    return (
+      url.protocol === "https:" &&
+      (isDirectReviewLink || isMapsLink)
     );
   } catch {
     return false;
