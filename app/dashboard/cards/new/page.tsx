@@ -91,21 +91,20 @@ export default function NewCardPage() {
       router.replace("/dashboard");
       router.refresh();
    } catch (err: any) {
-  console.error("DITAPAJA INSERT ERROR:", err);
+      console.error("DITAPAJA INSERT ERROR:", err);
 
-  const errorMessage = [
-    err?.message,
-    err?.details,
-    err?.hint,
-    err?.code ? `Code: ${err.code}` : null,
-  ]
-    .filter(Boolean)
-    .join(" | ");
+      const errorMessage = [
+        err?.message,
+        err?.details,
+        err?.hint,
+        err?.code ? `Code: ${err.code}` : null,
+      ]
+        .filter(Boolean)
+        .join(" | ");
 
-  setError(
-    errorMessage || "Kartu gagal dibuat. Silakan coba lagi."
-  );
-}
+      setError(
+        errorMessage || "Kartu gagal dibuat. Silakan coba lagi."
+      );
     } finally {
       setLoading(false);
     }
