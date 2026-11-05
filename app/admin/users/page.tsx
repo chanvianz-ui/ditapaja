@@ -216,33 +216,28 @@ export default function AdminUsersPage() {
               </p>
             </div>
 
+            {/* ACTION BUTTONS */}
             <div className="flex flex-col gap-2 sm:flex-row">
-  <button
-    onClick={() => router.push("/admin/users/new")}
-    className="flex items-center justify-center gap-2 rounded-xl bg-[#155eef] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
-  >
-    <UserPlus size={16} />
-    Add New User
-  </button>
+              <button
+                onClick={() => router.push("/admin/users/new")}
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#155eef] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+              >
+                <UserPlus size={16} />
+                Add New User
+              </button>
 
-  <button
-    onClick={refreshUsers}
-    disabled={loading || refreshing}
-    className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-[#155eef] disabled:opacity-50"
-  >
-    <RefreshCw
-      size={16}
-      className={refreshing ? "animate-spin" : ""}
-    />
-    Refresh Users
-  </button>
-</div>
-              <RefreshCw
-                size={16}
-                className={refreshing ? "animate-spin" : ""}
-              />
-              Refresh Users
-            </button>
+              <button
+                onClick={refreshUsers}
+                disabled={loading || refreshing}
+                className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-[#155eef] disabled:opacity-50"
+              >
+                <RefreshCw
+                  size={16}
+                  className={refreshing ? "animate-spin" : ""}
+                />
+                Refresh Users
+              </button>
+            </div>
           </div>
         </div>
 
