@@ -537,20 +537,36 @@ export default function DashboardPage() {
                   </p>
                 </div>
 
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <select
-                    value={selectedCardId}
-                    onChange={(event) => setSelectedCardId(event.target.value)}
-                    className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-700 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-                    aria-label="Pilih kartu untuk melihat analytics"
-                  >
-                    <option value="all">Semua Kartu</option>
+                <div className="flex flex-col gap-3">
+                  <div className="flex max-w-full flex-wrap gap-2" role="group" aria-label="Pilih kartu untuk melihat analytics">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCardId("all")}
+                      aria-pressed={selectedCardId === "all"}
+                      className={`rounded-xl border px-4 py-2.5 text-xs font-semibold transition ${
+                        selectedCardId === "all"
+                          ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                          : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+                      }`}
+                    >
+                      Semua Kartu
+                    </button>
                     {cards.map((card) => (
-                      <option key={card.id} value={card.id}>
+                      <button
+                        key={card.id}
+                        type="button"
+                        onClick={() => setSelectedCardId(card.id)}
+                        aria-pressed={selectedCardId === card.id}
+                        className={`rounded-xl border px-4 py-2.5 text-xs font-semibold transition ${
+                          selectedCardId === card.id
+                            ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                            : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+                        }`}
+                      >
                         {card.card_name || "Untitled Card"}
-                      </option>
+                      </button>
                     ))}
-                  </select>
+                  </div>
 
                   <div className="flex w-fit rounded-xl bg-slate-100 p-1">
                     {([7, 30, 90] as const).map((period) => (
