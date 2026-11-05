@@ -28,6 +28,12 @@ type NfcCard = {
   active: boolean;
 };
 
+type Analytics = {
+  totalTaps: number;
+  uniqueVisitors: number;
+  reviewClicks: number;
+};
+
 export default function DashboardPage() {
   const router = useRouter();
 
@@ -35,41 +41,86 @@ export default function DashboardPage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [cards, setCards] = useState<NfcCard[]>([]);
   const [email, setEmail] = useState("");
+  const [analytics, setAnalytics] = useState<Analytics>({
+    totalTaps: 0,
+    uniqueVisitors: 0,
+    reviewClicks: 0,
+  });
+  const [analyticsError, setAnalyticsError] = useState("");
 
   useEffect(() => {
     async function loadDashboard() {
-      const { data, error } = await supabase.auth.getUser();
+      try {
+        const { data, error } = await supabase.auth.getUser();
 
-      if (error || !data.user) {
-        router.replace("/login");
-        return;
+        if (error || !data.user) {
+          router.replace("/login");
+          return;
+        }
+
+        setEmail(data.user.email ?? "");
+
+        const [profileResult, cardsResult] = await Promise.all([
+          supabase
+            .from("profiles")
+            .select("full_name")
+            .eq("id", data.user.id)
+            .maybeSingle(),
+
+          supabase
+            .from("nfc_cards")
+            .select(
+              "id, card_name, public_code, destination_url, active"
+            )
+            .eq("user_id", data.user.id)
+            .order("created_at", { ascending: false }),
+        ]);
+
+        if (cardsResult.error) {
+          console.error("Card loading error:", cardsResult.error);
+        }
+
+        setProfile(profileResult.data);
+        const userCards = cardsResult.data ?? [];
+        setCards(userCards);
+
+        if (userCards.length > 0) {
+          const cardIds = userCards.map((card) => card.id);
+
+          const { data: events, error: eventsError } = await supabase
+            .from("tap_events")
+            .select("card_id, event_type, visitor_hash")
+            .in("card_id", cardIds)
+            .eq("event_type", "tap");
+
+          if (eventsError) {
+            console.error("Analytics loading error:", eventsError);
+            setAnalyticsError(
+              "Statistik belum dapat dimuat. Periksa izin akses database."
+            );
+          } else {
+            const tapEvents = events ?? [];
+
+            const uniqueHashes = new Set(
+              tapEvents
+                .map((event) => event.visitor_hash)
+                .filter((hash): hash is string => Boolean(hash))
+            );
+
+            setAnalytics({
+              totalTaps: tapEvents.length,
+              uniqueVisitors: uniqueHashes.size,
+              reviewClicks: tapEvents.length,
+            });
+          }
+        }
+
+      } catch (error) {
+        console.error("Dashboard loading error:", error);
+        setAnalyticsError("Terjadi kesalahan saat memuat dashboard.");
+      } finally {
+        setLoading(false);
       }
-
-      setEmail(data.user.email ?? "");
-
-      const [profileResult, cardsResult] = await Promise.all([
-        supabase
-          .from("profiles")
-          .select("full_name")
-          .eq("id", data.user.id)
-          .maybeSingle(),
-
-        supabase
-          .from("nfc_cards")
-          .select(
-            "id, card_name, public_code, destination_url, active"
-          )
-          .eq("user_id", data.user.id)
-          .order("created_at", { ascending: false }),
-      ]);
-
-      if (cardsResult.error) {
-        console.error("Card loading error:", cardsResult.error);
-      }
-
-      setProfile(profileResult.data);
-      setCards(cardsResult.data ?? []);
-      setLoading(false);
     }
 
     loadDashboard();
@@ -90,6 +141,27 @@ export default function DashboardPage() {
 
   const displayName =
     profile?.full_name || email.split("@")[0] || "User";
+
+  const analyticsItems = [
+    {
+      label: "Total Taps",
+      value: analytics.totalTaps,
+      icon: MousePointerClick,
+      description: "Total aktivitas tap seluruh kartu.",
+    },
+    {
+      label: "Unique Visitors",
+      value: analytics.uniqueVisitors,
+      icon: Users,
+      description: "Pengunjung dengan identitas hash berbeda.",
+    },
+    {
+      label: "Review Clicks",
+      value: analytics.reviewClicks,
+      icon: ExternalLink,
+      description: "Tap yang memicu redirect ke Google Maps.",
+    },
+  ];
 
   return (
     <main className="min-h-screen bg-[#f7f9fc] text-slate-900">
@@ -169,9 +241,7 @@ export default function DashboardPage() {
               </div>
 
               <button
-                onClick={() =>
-                  router.push("/dashboard/cards/new")
-                }
+                onClick={() => router.push("/dashboard/cards/new")}
                 className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"
               >
                 <Plus size={18} /> Add New Card
@@ -182,20 +252,7 @@ export default function DashboardPage() {
               id="analytics"
               className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
             >
-              {[
-                {
-                  label: "Total Taps",
-                  icon: MousePointerClick,
-                },
-                {
-                  label: "Unique Visitors",
-                  icon: Users,
-                },
-                {
-                  label: "Review Clicks",
-                  icon: ExternalLink,
-                },
-              ].map((item) => (
+              {analyticsItems.map((item) => (
                 <div
                   key={item.label}
                   className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
@@ -207,14 +264,22 @@ export default function DashboardPage() {
                     <item.icon className="text-blue-600" size={20} />
                   </div>
 
-                  <p className="mt-5 text-3xl font-bold">—</p>
+                  <p className="mt-5 text-3xl font-bold tabular-nums">
+                    {item.value.toLocaleString("id-ID")}
+                  </p>
 
                   <p className="mt-2 text-xs text-slate-400">
-                    Analytics akan tampil setelah kartu menerima aktivitas.
+                    {item.description}
                   </p>
                 </div>
               ))}
             </div>
+
+            {analyticsError && (
+              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
+                {analyticsError}
+              </div>
+            )}
 
             <div
               id="cards"
@@ -248,9 +313,7 @@ export default function DashboardPage() {
                   </p>
 
                   <button
-                    onClick={() =>
-                      router.push("/dashboard/cards/new")
-                    }
+                    onClick={() => router.push("/dashboard/cards/new")}
                     className="mt-5 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700"
                   >
                     Tambahkan Kartu
