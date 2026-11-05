@@ -50,57 +50,66 @@ export default function AdminUsersPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
 
-  const loadUsers = useCallback(async (pageNumber: number) => {
-    setError("");
+  const loadUsers = useCallback(
+    async (pageNumber: number) => {
+      setError("");
 
-    try {
-      const { data: sessionData, error: sessionError } =
-        await supabase.auth.getSession();
+      try {
+        const { data: sessionData, error: sessionError } =
+          await supabase.auth.getSession();
 
-      if (sessionError || !sessionData.session) {
-        router.replace("/login");
-        return;
-      }
-
-      const response = await fetch(
-        `/api/admin/users?page=${pageNumber}`,
-        {
-          headers: {
-            Authorization: `Bearer ${sessionData.session.access_token}`,
-          },
-          cache: "no-store",
+        if (sessionError || !sessionData.session) {
+          router.replace("/login");
+          return;
         }
-      );
 
-      if (response.status === 401) {
-        router.replace("/login");
-        return;
+        const response = await fetch(
+          `/api/admin/users?page=${pageNumber}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${sessionData.session.access_token}`,
+            },
+            cache: "no-store",
+          }
+        );
+
+        if (response.status === 401) {
+          router.replace("/login");
+          return;
+        }
+
+        if (response.status === 403) {
+          throw new Error(
+            "Akun ini tidak memiliki akses Super Admin."
+          );
+        }
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(
+            result.error || "Gagal mengambil data pengguna."
+          );
+        }
+
+        setUsers(result.users);
+        setHasMore(result.pagination.hasMore);
+      } catch (err) {
+        console.error("Admin users error:", err);
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Terjadi kesalahan saat mengambil data."
+        );
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
       }
-
-      if (response.status === 403) {
-        throw new Error("Akun ini tidak memiliki akses Super Admin.");
-      }
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || "Gagal mengambil data pengguna.");
-      }
-
-      setUsers(result.users);
-      setHasMore(result.pagination.hasMore);
-    } catch (err) {
-      console.error("Admin users error:", err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Terjadi kesalahan saat mengambil data."
-      );
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, [router]);
+    },
+    [router]
+  );
 
   useEffect(() => {
     loadUsers(page);
@@ -125,8 +134,13 @@ export default function AdminUsersPage() {
     );
   });
 
+  function openUserDetail(userId: string) {
+    router.push(`/admin/users/${userId}`);
+  }
+
   return (
     <main className="min-h-screen bg-[#f5f7fb] text-[#17243b]">
+      {/* HEADER */}
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] items-center justify-between px-5 py-4 sm:px-8">
           <div className="flex items-center gap-3">
@@ -165,7 +179,9 @@ export default function AdminUsersPage() {
         </div>
       </header>
 
+      {/* MAIN CONTENT */}
       <div className="mx-auto max-w-[1500px] p-5 sm:p-8">
+        {/* PAGE TITLE */}
         <div className="mb-8">
           <div className="mb-3 flex items-center gap-2 text-xs text-slate-400">
             <span
@@ -174,8 +190,12 @@ export default function AdminUsersPage() {
             >
               Admin Overview
             </span>
+
             <span>/</span>
-            <span className="font-semibold text-[#155eef]">Users</span>
+
+            <span className="font-semibold text-[#155eef]">
+              Users
+            </span>
           </div>
 
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
@@ -209,6 +229,7 @@ export default function AdminUsersPage() {
           </div>
         </div>
 
+        {/* SUMMARY CARDS */}
         <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
             <div className="flex items-center justify-between">
@@ -216,10 +237,12 @@ export default function AdminUsersPage() {
                 <p className="text-sm text-slate-500">
                   Users on this page
                 </p>
+
                 <p className="mt-2 text-3xl font-bold">
                   {loading ? "—" : users.length}
                 </p>
               </div>
+
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#155eef]">
                 <Users size={21} />
               </div>
@@ -232,8 +255,12 @@ export default function AdminUsersPage() {
                 <p className="text-sm text-slate-500">
                   Current Page
                 </p>
-                <p className="mt-2 text-3xl font-bold">{page}</p>
+
+                <p className="mt-2 text-3xl font-bold">
+                  {page}
+                </p>
               </div>
+
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
                 <CalendarDays size={21} />
               </div>
@@ -241,10 +268,15 @@ export default function AdminUsersPage() {
           </div>
         </div>
 
+        {/* USERS TABLE */}
         <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          {/* TABLE HEADER */}
           <div className="flex flex-col justify-between gap-4 border-b border-slate-100 p-5 sm:flex-row sm:items-center">
             <div>
-              <h3 className="font-bold">Registered Users</h3>
+              <h3 className="font-bold">
+                Registered Users
+              </h3>
+
               <p className="mt-1 text-xs text-slate-400">
                 Showing up to 20 accounts per page
               </p>
@@ -255,22 +287,30 @@ export default function AdminUsersPage() {
                 size={17}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
               />
+
               <input
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                onChange={(event) =>
+                  setSearch(event.target.value)
+                }
                 placeholder="Search email or user ID..."
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
               />
             </div>
           </div>
 
+          {/* ERROR MESSAGE */}
           {error && (
             <div className="m-5 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-              <AlertCircle size={18} className="mt-0.5 shrink-0" />
+              <AlertCircle
+                size={18}
+                className="mt-0.5 shrink-0"
+              />
               <p>{error}</p>
             </div>
           )}
 
+          {/* TABLE */}
           <div className="overflow-x-auto">
             <table className="w-full min-w-[850px] text-left">
               <thead className="bg-slate-50">
@@ -286,17 +326,28 @@ export default function AdminUsersPage() {
               <tbody className="divide-y divide-slate-100">
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-16 text-center text-sm text-slate-400">
+                    <td
+                      colSpan={5}
+                      className="px-6 py-16 text-center text-sm text-slate-400"
+                    >
                       Loading users...
                     </td>
                   </tr>
                 ) : filteredUsers.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-16 text-center">
-                      <UserRound size={28} className="mx-auto mb-3 text-slate-300" />
+                    <td
+                      colSpan={5}
+                      className="px-6 py-16 text-center"
+                    >
+                      <UserRound
+                        size={28}
+                        className="mx-auto mb-3 text-slate-300"
+                      />
+
                       <p className="text-sm font-semibold text-slate-500">
                         No users found
                       </p>
+
                       <p className="mt-1 text-xs text-slate-400">
                         Try another search keyword.
                       </p>
@@ -305,22 +356,34 @@ export default function AdminUsersPage() {
                 ) : (
                   filteredUsers.map((user) => (
                     <tr
-                     <tr
-  
-  key={user.id}
-  onClick={() => router.push(`/admin/users/${user.id}`)}
-  className="cursor-pointer transition hover:bg-blue-50/70"
-                      
->
+                      key={user.id}
+                      onClick={() => openUserDetail(user.id)}
+                      onKeyDown={(event) => {
+                        if (
+                          event.key === "Enter" ||
+                          event.key === " "
+                        ) {
+                          event.preventDefault();
+                          openUserDetail(user.id);
+                        }
+                      }}
+                      tabIndex={0}
+                      role="link"
+                      aria-label={`View details for ${user.email}`}
+                      className="cursor-pointer transition hover:bg-blue-50/70 focus:bg-blue-50 focus:outline-none"
+                    >
+                      {/* USER */}
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-3">
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[#155eef]">
                             <UserRound size={19} />
                           </div>
+
                           <div>
                             <p className="text-sm font-semibold text-[#17243b]">
                               {user.email || "No email"}
                             </p>
+
                             <p className="mt-1 text-xs text-slate-400">
                               DiTapAja Account
                             </p>
@@ -328,12 +391,14 @@ export default function AdminUsersPage() {
                         </div>
                       </td>
 
+                      {/* USER ID */}
                       <td className="px-6 py-5">
                         <span className="font-mono text-xs text-slate-500">
                           {user.id.slice(0, 8)}...
                         </span>
                       </td>
 
+                      {/* REGISTERED */}
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-2 text-xs text-slate-500">
                           <CalendarDays size={14} />
@@ -341,6 +406,7 @@ export default function AdminUsersPage() {
                         </div>
                       </td>
 
+                      {/* LAST LOGIN */}
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-2 text-xs text-slate-500">
                           <Clock3 size={14} />
@@ -348,6 +414,7 @@ export default function AdminUsersPage() {
                         </div>
                       </td>
 
+                      {/* EMAIL STATUS */}
                       <td className="px-6 py-5">
                         {user.emailConfirmedAt ? (
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-600">
@@ -368,6 +435,7 @@ export default function AdminUsersPage() {
             </table>
           </div>
 
+          {/* PAGINATION */}
           <div className="flex flex-col justify-between gap-3 border-t border-slate-100 px-5 py-4 sm:flex-row sm:items-center">
             <p className="text-xs text-slate-400">
               Page {page} · {filteredUsers.length} users displayed
@@ -375,7 +443,9 @@ export default function AdminUsersPage() {
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setPage((current) => Math.max(1, current - 1))}
+                onClick={() =>
+                  setPage((current) => Math.max(1, current - 1))
+                }
                 disabled={page === 1 || loading}
                 className="flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
               >
@@ -384,7 +454,9 @@ export default function AdminUsersPage() {
               </button>
 
               <button
-                onClick={() => setPage((current) => current + 1)}
+                onClick={() =>
+                  setPage((current) => current + 1)
+                }
                 disabled={!hasMore || loading}
                 className="flex items-center gap-2 rounded-xl bg-[#155eef] px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
               >
@@ -395,6 +467,7 @@ export default function AdminUsersPage() {
           </div>
         </section>
 
+        {/* FOOTER */}
         <footer className="py-8 text-center text-xs text-slate-400">
           DiTapAja Admin Control Center · Tap. Review. Grow.
         </footer>
