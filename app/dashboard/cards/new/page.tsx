@@ -19,17 +19,23 @@ function isGoogleMapsUrl(value: string) {
     const url = new URL(value);
     const host = url.hostname.toLowerCase();
 
+    const isDirectReviewLink =
+      host === "search.google.com" &&
+      url.pathname === "/local/writereview" &&
+      Boolean(url.searchParams.get("placeid")?.trim());
+
+    const isMapsLink =
+      host === "maps.app.goo.gl" ||
+      host === "maps.google.com" ||
+      host === "goo.gl" ||
+      (
+        ["google.com", "www.google.com"].includes(host) &&
+        url.pathname.startsWith("/maps")
+      );
+
     return (
       url.protocol === "https:" &&
-      (
-        host === "maps.app.goo.gl" ||
-        host === "maps.google.com" ||
-        host === "goo.gl" ||
-        (
-          ["google.com", "www.google.com"].includes(host) &&
-          url.pathname.startsWith("/maps")
-        )
-      )
+      (isDirectReviewLink || isMapsLink)
     );
   } catch {
     return false;
@@ -90,7 +96,7 @@ export default function NewCardPage() {
 
       router.replace("/dashboard");
       router.refresh();
-   } catch (err: any) {
+    } catch (err: any) {
       console.error("DITAPAJA INSERT ERROR:", err);
 
       const errorMessage = [
@@ -182,13 +188,13 @@ export default function NewCardPage() {
                   type="url"
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
-                  placeholder="https://maps.app.goo.gl/..."
+                  placeholder="https://search.google.com/local/writereview?placeid=..."
                   className="w-full rounded-xl border border-slate-200 py-3.5 pl-11 pr-4 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-50"
                 />
               </div>
 
               <p className="mt-2 text-xs text-slate-400">
-                Gunakan link Google Maps yang mengarah ke halaman ulasan bisnis.
+                Bisa menggunakan link Google Maps biasa atau link Google Review langsung.
               </p>
             </div>
 
