@@ -38,7 +38,7 @@ export default function Home() {
         <nav className="desktop-nav">
           <a href="#fitur">Fitur</a><a href="#cara-kerja">Cara Kerja</a><a href="#produk">Produk</a><a href="#faq">FAQ</a>
         </nav>
-        <div className="nav-actions"><a className="login-link" href="#dashboard">Masuk</a><a className="button button-small" href="#produk">Mulai Sekarang <ArrowUpRight size={15}/></a></div>
+        <div className="nav-actions"><a className="login-link" href="/login">Masuk</a><a className="button button-small" href="#produk">Mulai Sekarang <ArrowUpRight size={15}/></a></div>
         <button className="mobile-menu" aria-label="Menu"><Menu size={22}/></button>
       </div>
     </header>
@@ -98,6 +98,6 @@ export default function Home() {
 
     <section className="cta-section"><div className="container cta-inner"><div className="cta-orb"><Sparkles size={25}/></div><div><div className="eyebrow">READY WHEN YOU ARE</div><h2>Bikin setiap pengalaman<br/>lebih mudah diingat.</h2><p>Mulai perjalanan review yang lebih praktis bersama DiTapAja.</p></div><a className="button button-white" href="#produk">Temukan NFC Card <ArrowRight size={17}/></a><div className="cta-decoration">DITAPAJA®</div></div></section>
 
-    <footer className="site-footer"><div className="container footer-top"><div><Brand/><p>Satu tap lebih dekat dengan<br/>pengalaman pelanggan yang lebih baik.</p></div><div className="footer-links"><div><b>JELAJAHI</b><a href="#fitur">Fitur</a><a href="#cara-kerja">Cara Kerja</a><a href="#produk">Produk</a></div><div><b>BANTUAN</b><a href="#faq">FAQ</a><a href="mailto:hello@ditapaja.com">Kontak</a></div><div><b>AKUN</b><a href="#dashboard">Dashboard</a><a href="#produk">Mulai sekarang</a></div></div></div><div className="container footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>Made for better business experiences. <span className="footer-heart">♥</span></span></div></footer>
+    <footer className="site-footer"><div className="container footer-top"><div><Brand/><p>Satu tap lebih dekat dengan<br/>pengalaman pelanggan yang lebih baik.</p></div><div className="footer-links"><div><b>JELAJAHI</b><a href="#fitur">Fitur</a><a href="#cara-kerja">Cara Kerja</a><a href="#produk">Produk</a></div><div><b>BANTUAN</b><a href="#faq">FAQ</a><a href="mailto:hello@ditapaja.com">Kontak</a></div><div><b>AKUN</b><a href="/login">Dashboard</a><a href="#produk">Mulai sekarang</a></div></div></div><div className="container footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>Made for better business experiences. <span className="footer-heart">♥</span></span></div></footer>
   </main>;
 }
