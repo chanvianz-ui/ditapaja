@@ -1,6 +1,5 @@
 
 import { createClient } from "@supabase/supabase-js";
-import { createHash } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -46,31 +45,6 @@ export async function GET(
       return new NextResponse("Kartu tidak ditemukan atau tidak aktif.", {
         status: 404,
       });
-    }
-
-    const userAgent = request.headers.get("user-agent") || "";
-    const ip = request.headers
-      .get("x-forwarded-for")
-      ?.split(",")[0]
-      ?.trim();
-
-    const visitorHash = ip
-      ? createHash("sha256")
-          .update(`${ip}:${userAgent}:${secretKey}`)
-          .digest("hex")
-      : null;
-
-    const { error: trackingError } = await supabase
-      .from("tap_events")
-      .insert({
-        card_id: card.id,
-        event_type: "tap",
-        visitor_hash: visitorHash,
-        user_agent: userAgent,
-      });
-
-    if (trackingError) {
-      console.error("Tap tracking error:", trackingError);
     }
 
     const clickUrl = `/api/review/${encodeURIComponent(code)}`;
@@ -133,6 +107,9 @@ export async function GET(
       line-height: 1.7;
     }
     .button {
+      width: 100%;
+      border: 0;
+      cursor: pointer;
       display: block;
       margin-top: 28px;
       padding: 17px;
@@ -161,11 +138,58 @@ export async function GET(
       Bagikan pengalaman kamu dengan memberikan ulasan
       melalui Google Maps.
     </p>
-    <a class="button" href="${clickUrl}">
+    <button class="button" id="reviewButton" type="button">
       ★ &nbsp; Buka Google Maps Review
-    </a>
+    </button>
+    <p id="status" role="status" aria-live="polite" style="min-height:20px;font-size:12px;color:#64748b"></p>
     <div class="footer">Powered by DiTapAja · Tap. Review. Grow.</div>
   </main>
+  <script>
+    (function () {
+      var code = ${JSON.stringify(code)};
+      var button = document.getElementById("reviewButton");
+      var status = document.getElementById("status");
+      var tapKey = "ditapaja-tap-" + code;
+
+      // Count once per browser tab session after the page is rendered.
+      try {
+        if (!sessionStorage.getItem(tapKey)) {
+          sessionStorage.setItem(tapKey, "1");
+          fetch("/api/track/" + encodeURIComponent(code), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            keepalive: true
+          }).catch(function () {});
+        }
+      } catch (_) {
+        fetch("/api/track/" + encodeURIComponent(code), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          keepalive: true
+        }).catch(function () {});
+      }
+
+      button.addEventListener("click", async function () {
+        button.disabled = true;
+        button.textContent = "Membuka Google Maps...";
+        status.textContent = "";
+        try {
+          var response = await fetch("/api/review/" + encodeURIComponent(code), {
+            method: "POST"
+          });
+          var result = await response.json();
+          if (!response.ok || !result.url) {
+            throw new Error("Tidak dapat membuka halaman review.");
+          }
+          window.location.assign(result.url);
+        } catch (_) {
+          button.disabled = false;
+          button.textContent = "★  Buka Google Maps Review";
+          status.textContent = "Gagal membuka halaman review. Silakan coba lagi.";
+        }
+      });
+    })();
+  </script>
 </body>
 </html>`;
 
