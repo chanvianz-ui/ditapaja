@@ -28,9 +28,11 @@ export default function AccountSettingsPage() {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
 
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -79,6 +81,11 @@ export default function AccountSettingsPage() {
     setError("");
     setSuccess("");
 
+    if (!currentPassword) {
+      setError("Masukkan password saat ini untuk verifikasi keamanan.");
+      return;
+    }
+
     if (newPassword.length < 8) {
       setError("Password baru minimal 8 karakter.");
       return;
@@ -97,17 +104,28 @@ export default function AccountSettingsPage() {
     setSaving(true);
 
     try {
-      const { error: updateError } =
-        await supabase.auth.updateUser({
-          password: newPassword,
-        });
+      // Re-authenticate before changing sensitive account credentials.
+      const { error: verifyError } = await supabase.auth.signInWithPassword({
+        email,
+        password: currentPassword,
+      });
+
+      if (verifyError) {
+        throw new Error("Password saat ini tidak benar. Periksa kembali.");
+      }
+
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
 
       if (updateError) {
         throw updateError;
       }
 
+      setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
+      setShowCurrentPassword(false);
       setShowPassword(false);
       setShowConfirmPassword(false);
 
@@ -281,6 +299,44 @@ export default function AccountSettingsPage() {
               onSubmit={handleChangePassword}
               className="mt-6 space-y-5"
             >
+              {/* CURRENT PASSWORD */}
+              <div>
+                <label
+                  htmlFor="currentPassword"
+                  className="mb-2 block text-sm font-semibold text-slate-700"
+                >
+                  Current Password
+                </label>
+                <div className="relative">
+                  <LockKeyhole
+                    size={17}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                  />
+                  <input
+                    id="currentPassword"
+                    type={showCurrentPassword ? "text" : "password"}
+                    value={currentPassword}
+                    onChange={(event) => setCurrentPassword(event.target.value)}
+                    placeholder="Enter current password"
+                    required
+                    disabled={saving}
+                    autoComplete="current-password"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-12 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50 disabled:opacity-60"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowCurrentPassword((current) => !current)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600"
+                    aria-label="Toggle current password visibility"
+                  >
+                    {showCurrentPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                  </button>
+                </div>
+                <p className="mt-2 text-xs text-slate-400">
+                  Verifikasi password saat ini sebelum menggantinya.
+                </p>
+              </div>
+
               {/* NEW PASSWORD */}
               <div>
                 <label
@@ -405,7 +461,7 @@ export default function AccountSettingsPage() {
 
               <button
                 type="submit"
-                disabled={saving || !newPassword || !confirmPassword}
+                disabled={saving || !currentPassword || !newPassword || !confirmPassword}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {saving ? (
