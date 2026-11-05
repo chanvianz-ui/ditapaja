@@ -305,9 +305,11 @@ export default function AdminUsersPage() {
                 ) : (
                   filteredUsers.map((user) => (
                     <tr
-                      key={user.id}
-                      className="transition hover:bg-slate-50/80"
-                    >
+                     <tr
+  key={user.id}
+  onClick={() => router.push(`/admin/users/${user.id}`)}
+  className="cursor-pointer transition hover:bg-blue-50/70"
+>
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-3">
                           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[#155eef]">
