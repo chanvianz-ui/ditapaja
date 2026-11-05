@@ -175,7 +175,27 @@ export default function DashboardPage() {
           throw cardsResult.error;
         }
 
-        setProfile(profileResult.data);
+        let currentProfile = profileResult.data;
+
+        // Repair profiles that were not created when email confirmation was required.
+        if (!currentProfile && typeof data.user.user_metadata?.full_name === "string") {
+          const fullName = data.user.user_metadata.full_name.trim();
+          if (fullName) {
+            const { data: repairedProfile, error: profileSyncError } = await supabase
+              .from("profiles")
+              .upsert({ id: data.user.id, full_name: fullName })
+              .select("full_name")
+              .single();
+
+            if (profileSyncError) {
+              console.error("Profile sync error:", profileSyncError);
+            } else {
+              currentProfile = repairedProfile;
+            }
+          }
+        }
+
+        setProfile(currentProfile);
 
         const userCards = (cardsResult.data ?? []) as NfcCard[];
         setCards(userCards);
