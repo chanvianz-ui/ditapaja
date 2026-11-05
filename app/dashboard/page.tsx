@@ -53,7 +53,7 @@ export default function DashboardPage() {
   const [cards, setCards] = useState<NfcCard[]>([]);
   const [email, setEmail] = useState("");
 
-  const [analytics, setAnalytics] = useState<Analytics>({
+  const [, setAnalytics] = useState<Analytics>({
     totalTaps: 0,
     uniqueVisitors: 0,
     reviewClicks: 0,
@@ -63,6 +63,31 @@ export default function DashboardPage() {
   const [analyticsError, setAnalyticsError] = useState("");
   const [chartPeriod, setChartPeriod] = useState<7 | 30 | 90>(7);
   const [eventRows, setEventRows] = useState<AnalyticsEvent[]>([]);
+  const [selectedCardId, setSelectedCardId] = useState("all");
+
+  const selectedEventRows = useMemo(() => {
+    if (selectedCardId === "all") return eventRows;
+    return eventRows.filter((event) => event.card_id === selectedCardId);
+  }, [eventRows, selectedCardId]);
+
+  const displayedAnalytics = useMemo<Analytics>(() => {
+    const tapEvents = selectedEventRows.filter((event) => event.event_type === "tap");
+    const reviewEvents = selectedEventRows.filter((event) => event.event_type === "review_click");
+    const uniqueHashes = new Set(
+      tapEvents
+        .map((event) => event.visitor_hash)
+        .filter((hash): hash is string => Boolean(hash))
+    );
+    const totalTaps = tapEvents.length;
+    const reviewClicks = reviewEvents.length;
+
+    return {
+      totalTaps,
+      uniqueVisitors: uniqueHashes.size,
+      reviewClicks,
+      ctr: totalTaps > 0 ? (reviewClicks / totalTaps) * 100 : 0,
+    };
+  }, [selectedEventRows]);
 
   const [editingCard, setEditingCard] = useState<NfcCard | null>(null);
   const [editName, setEditName] = useState("");
@@ -96,7 +121,7 @@ export default function DashboardPage() {
 
     const dayMap = new Map(days.map((day) => [day.key, day]));
 
-    eventRows.forEach((event) => {
+    selectedEventRows.forEach((event) => {
       const date = new Date(event.created_at);
       const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
       const day = dayMap.get(key);
@@ -107,7 +132,7 @@ export default function DashboardPage() {
     });
 
     return days;
-  }, [eventRows, chartPeriod]);
+  }, [selectedEventRows, chartPeriod]);
 
   const chartMax = Math.max(
     1,
@@ -369,25 +394,25 @@ export default function DashboardPage() {
   const analyticsItems = [
     {
       label: "Total Taps",
-      value: analytics.totalTaps.toLocaleString("id-ID"),
+      value: displayedAnalytics.totalTaps.toLocaleString("id-ID"),
       icon: MousePointerClick,
       description: "Total aktivitas tap seluruh kartu.",
     },
     {
       label: "Unique Visitors",
-      value: analytics.uniqueVisitors.toLocaleString("id-ID"),
+      value: displayedAnalytics.uniqueVisitors.toLocaleString("id-ID"),
       icon: Users,
       description: "Pengunjung dengan identitas hash berbeda.",
     },
     {
       label: "Review Clicks",
-      value: analytics.reviewClicks.toLocaleString("id-ID"),
+      value: displayedAnalytics.reviewClicks.toLocaleString("id-ID"),
       icon: ExternalLink,
       description: "Jumlah klik menuju Google Maps.",
     },
     {
       label: "CTR",
-      value: `${analytics.ctr.toFixed(1)}%`,
+      value: `${displayedAnalytics.ctr.toFixed(1)}%`,
       icon: BarChart3,
       description: "Persentase tap yang berlanjut ke review.",
     },
@@ -506,12 +531,29 @@ export default function DashboardPage() {
                 <div>
                   <h3 className="font-bold">Performance Overview</h3>
                   <p className="mt-1 text-sm text-slate-500">
-                    Perbandingan aktivitas tap dan klik review.
+                    {selectedCardId === "all"
+                      ? "Perbandingan aktivitas seluruh kartu."
+                      : `Performa kartu ${cards.find((card) => card.id === selectedCardId)?.card_name || "terpilih"}.`}
                   </p>
                 </div>
 
-                <div className="flex w-fit rounded-xl bg-slate-100 p-1">
-                  {([7, 30, 90] as const).map((period) => (
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <select
+                    value={selectedCardId}
+                    onChange={(event) => setSelectedCardId(event.target.value)}
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-700 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                    aria-label="Pilih kartu untuk melihat analytics"
+                  >
+                    <option value="all">Semua Kartu</option>
+                    {cards.map((card) => (
+                      <option key={card.id} value={card.id}>
+                        {card.card_name || "Untitled Card"}
+                      </option>
+                    ))}
+                  </select>
+
+                  <div className="flex w-fit rounded-xl bg-slate-100 p-1">
+                    {([7, 30, 90] as const).map((period) => (
                     <button
                       key={period}
                       onClick={() => setChartPeriod(period)}
@@ -523,7 +565,8 @@ export default function DashboardPage() {
                     >
                       {period} Hari
                     </button>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -572,7 +615,7 @@ export default function DashboardPage() {
                 ))}
               </div>
 
-              {eventRows.length === 0 && (
+              {selectedEventRows.length === 0 && (
                 <p className="mt-4 text-center text-xs text-slate-400">
                   Belum ada aktivitas untuk ditampilkan.
                 </p>
