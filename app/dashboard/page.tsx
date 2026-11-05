@@ -14,6 +14,8 @@ import {
   Loader2,
   Pencil,
   Power,
+  Trash2,
+  AlertTriangle,
   X,
   Save,
 } from "lucide-react";
@@ -96,6 +98,8 @@ export default function DashboardPage() {
   const [updatingCardId, setUpdatingCardId] = useState<string | null>(null);
   const [cardMessage, setCardMessage] = useState("");
   const [cardError, setCardError] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState<NfcCard | null>(null);
+  const [deletingCard, setDeletingCard] = useState(false);
 
   const chartData = useMemo(() => {
     const today = new Date();
@@ -377,6 +381,44 @@ export default function DashboardPage() {
       setCardError("Gagal mengubah status kartu. Coba lagi.");
     } finally {
       setUpdatingCardId(null);
+    }
+  }
+
+  async function handleDeleteCard() {
+    if (!deleteTarget) return;
+
+    setDeletingCard(true);
+    setCardError("");
+    setCardMessage("");
+
+    try {
+      const { data: authData, error: authError } =
+        await supabase.auth.getUser();
+
+      if (authError || !authData.user) {
+        router.replace("/login");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("nfc_cards")
+        .delete()
+        .eq("id", deleteTarget.id)
+        .eq("user_id", authData.user.id);
+
+      if (error) throw error;
+
+      const deletedId = deleteTarget.id;
+      setCards((current) => current.filter((card) => card.id !== deletedId));
+      setEventRows((current) => current.filter((event) => event.card_id !== deletedId));
+      setSelectedCardId((current) => current === deletedId ? "all" : current);
+      setDeleteTarget(null);
+      setCardMessage("Kartu dan riwayat aktivitasnya berhasil dihapus.");
+    } catch (error) {
+      console.error("Card deletion error:", error);
+      setCardError("Gagal menghapus kartu. Periksa izin DELETE di Supabase, lalu coba lagi.");
+    } finally {
+      setDeletingCard(false);
     }
   }
 
@@ -748,6 +790,18 @@ export default function DashboardPage() {
                           )}
                           {card.active ? "Deactivate" : "Activate"}
                         </button>
+
+                        <button
+                          onClick={() => {
+                            setDeleteTarget(card);
+                            setCardError("");
+                          }}
+                          disabled={updatingCardId === card.id || deletingCard}
+                          className="inline-flex items-center gap-2 rounded-xl border border-red-100 px-3 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-50"
+                        >
+                          <Trash2 size={16} />
+                          Delete
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -761,6 +815,64 @@ export default function DashboardPage() {
           </div>
         </section>
       </div>
+
+      {/* DELETE CARD CONFIRMATION MODAL */}
+      {deleteTarget && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-card-title"
+            className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-red-600">
+              <AlertTriangle size={24} />
+            </div>
+            <h3 id="delete-card-title" className="mt-5 text-lg font-bold text-slate-900">
+              Hapus kartu ini?
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              Kamu akan menghapus <strong>{deleteTarget.card_name || "Untitled Card"}</strong> secara permanen.
+              Seluruh riwayat tap dan review click kartu ini juga akan ikut terhapus. Tindakan ini tidak bisa dibatalkan.
+            </p>
+
+            {cardError && (
+              <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                {cardError}
+              </div>
+            )}
+
+            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  if (!deletingCard) {
+                    setDeleteTarget(null);
+                    setCardError("");
+                  }
+                }}
+                disabled={deletingCard}
+                className="rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteCard}
+                disabled={deletingCard}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {deletingCard ? (
+                  <Loader2 size={17} className="animate-spin" />
+                ) : (
+                  <Trash2 size={17} />
+                )}
+                {deletingCard ? "Menghapus..." : "Hapus Permanen"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* EDIT CARD MODAL */}
       {editingCard && (
