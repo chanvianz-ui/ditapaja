@@ -227,30 +227,28 @@ export default function DashboardPage() {
   function isGoogleMapsUrl(value: string) {
     try {
       const url = new URL(value);
-     function isGoogleMapsUrl(value: string) {
-  try {
-    const url = new URL(value);
-    const host = url.hostname.toLowerCase();
+      const host = url.hostname.toLowerCase();
 
-    const isDirectReviewLink =
-      host === "search.google.com" &&
-      url.pathname === "/local/writereview";
+      const isDirectReviewLink =
+        host === "search.google.com" &&
+        url.pathname === "/local/writereview" &&
+        url.searchParams.has("placeid");
 
-    const isMapsLink =
-      host === "maps.google.com" ||
-      host === "www.google.com" ||
-      host === "google.com" ||
-      host === "goo.gl" ||
-      host === "maps.app.goo.gl";
+      const isMapsLink =
+        host === "maps.google.com" ||
+        host === "www.google.com" ||
+        host === "google.com" ||
+        host === "goo.gl" ||
+        host === "maps.app.goo.gl";
 
-    return (
-      url.protocol === "https:" &&
-      (isDirectReviewLink || isMapsLink)
-    );
-  } catch {
-    return false;
+      return (
+        url.protocol === "https:" &&
+        (isDirectReviewLink || isMapsLink)
+      );
+    } catch {
+      return false;
+    }
   }
-}
 
   async function handleSaveCard() {
     if (!editingCard) return;
