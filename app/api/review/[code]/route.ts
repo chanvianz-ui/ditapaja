@@ -35,7 +35,7 @@ function isGoogleMapsUrl(value: string) {
   }
 }
 
-export async function GET(
+export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ code: string }> }
 ) {
@@ -96,7 +96,7 @@ export async function GET(
       console.error("Review click tracking error:", trackingError);
     }
 
-    return NextResponse.redirect(card.destination_url, 302);
+    return NextResponse.json({ success: true, url: card.destination_url });
   } catch (error) {
     console.error("Review route error:", error);
 
