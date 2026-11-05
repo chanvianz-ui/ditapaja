@@ -24,14 +24,11 @@ function isGoogleMapsUrl(value: string) {
       (
         host === "maps.app.goo.gl" ||
         host === "maps.google.com" ||
-        host === "google.com" ||
-        host === "www.google.com" ||
-        host === "goo.gl"
-      ) &&
-      (
-        host !== "google.com" &&
-        host !== "www.google.com" ||
-        url.pathname.startsWith("/maps")
+        host === "goo.gl" ||
+        (
+          ["google.com", "www.google.com"].includes(host) &&
+          url.pathname.startsWith("/maps")
+        )
       )
     );
   } catch {
@@ -51,7 +48,13 @@ export default function NewCardPage() {
     e.preventDefault();
     setError("");
 
+    const cleanName = cardName.trim();
     const cleanDestination = destination.trim();
+
+    if (!cleanName) {
+      setError("Nama kartu wajib diisi.");
+      return;
+    }
 
     if (!isGoogleMapsUrl(cleanDestination)) {
       setError("Masukkan link Google Maps Review yang valid.");
@@ -77,6 +80,7 @@ export default function NewCardPage() {
         .from("nfc_cards")
         .insert({
           user_id: data.user.id,
+          card_name: cleanName,
           public_code: publicCode,
           destination_url: cleanDestination,
           active: true,
@@ -84,7 +88,7 @@ export default function NewCardPage() {
 
       if (insertError) throw insertError;
 
-      router.push("/dashboard");
+      router.replace("/dashboard");
       router.refresh();
     } catch (err) {
       setError(
@@ -123,8 +127,8 @@ export default function NewCardPage() {
             </h1>
 
             <p className="mt-3 text-sm leading-6 text-slate-500">
-              Hubungkan kartu NFC kamu dengan halaman Google Maps
-              Review bisnis. Setiap kartu akan mendapatkan alamat unik.
+              Hubungkan kartu NFC dengan halaman Google Maps Review
+              bisnis kamu. Setiap kartu mendapatkan kode unik.
             </p>
           </div>
 
@@ -148,8 +152,9 @@ export default function NewCardPage() {
                   className="w-full rounded-xl border border-slate-200 py-3.5 pl-11 pr-4 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-50"
                 />
               </div>
+
               <p className="mt-2 text-xs text-slate-400">
-                Nama ini hanya untuk memudahkan kamu mengenali kartu.
+                Nama ini digunakan untuk mengenali kartu kamu.
               </p>
             </div>
 
@@ -174,7 +179,7 @@ export default function NewCardPage() {
               </div>
 
               <p className="mt-2 text-xs text-slate-400">
-                Tempelkan link Google Maps yang mengarah ke halaman ulasan bisnis.
+                Gunakan link Google Maps yang mengarah ke halaman ulasan bisnis.
               </p>
             </div>
 
