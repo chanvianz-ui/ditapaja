@@ -32,6 +32,7 @@ type Analytics = {
   totalTaps: number;
   uniqueVisitors: number;
   reviewClicks: number;
+  ctr: number;
 };
 
 export default function DashboardPage() {
@@ -45,6 +46,7 @@ export default function DashboardPage() {
     totalTaps: 0,
     uniqueVisitors: 0,
     reviewClicks: 0,
+    ctr;0,
   });
   const [analyticsError, setAnalyticsError] = useState("");
 
@@ -87,31 +89,49 @@ export default function DashboardPage() {
         if (userCards.length > 0) {
           const cardIds = userCards.map((card) => card.id);
 
-          const { data: events, error: eventsError } = await supabase
-            .from("tap_events")
-            .select("card_id, event_type, visitor_hash")
-            .in("card_id", cardIds)
-            .eq("event_type", "tap");
+const { data: events, error: eventsError } = await supabase
+  .from("tap_events")
+  .select("card_id, event_type, visitor_hash")
+  .in("card_id", cardIds)
+  .in("event_type", ["tap", "review_click"]);
 
-          if (eventsError) {
-            console.error("Analytics loading error:", eventsError);
-            setAnalyticsError(
-              "Statistik belum dapat dimuat. Periksa izin akses database."
-            );
-          } else {
-            const tapEvents = events ?? [];
+if (eventsError) {
+  console.error("Analytics loading error:", eventsError);
+  setAnalyticsError(
+    "Statistik belum dapat dimuat. Periksa izin akses database."
+  );
+} else {
+  const allEvents = events ?? [];
 
-            const uniqueHashes = new Set(
-              tapEvents
-                .map((event) => event.visitor_hash)
-                .filter((hash): hash is string => Boolean(hash))
-            );
+  const tapEvents = allEvents.filter(
+    (event) => event.event_type === "tap"
+  );
 
-            setAnalytics({
-              totalTaps: tapEvents.length,
-              uniqueVisitors: uniqueHashes.size,
-              reviewClicks: tapEvents.length,
-            });
+  const reviewEvents = allEvents.filter(
+    (event) => event.event_type === "review_click"
+  );
+
+  const uniqueHashes = new Set(
+    tapEvents
+      .map((event) => event.visitor_hash)
+      .filter((hash): hash is string => Boolean(hash))
+  );
+
+  const totalTaps = tapEvents.length;
+  const reviewClicks = reviewEvents.length;
+
+  const ctr =
+    totalTaps > 0
+      ? (reviewClicks / totalTaps) * 100
+      : 0;
+
+  setAnalytics({
+    totalTaps,
+    uniqueVisitors: uniqueHashes.size,
+    reviewClicks,
+    ctr,
+  });
+}
           }
         }
 
