@@ -19,6 +19,8 @@ import {
   X,
   Save,
   Settings,
+  Nfc,
+  CheckCircle2,
 } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 
@@ -101,6 +103,9 @@ export default function DashboardPage() {
   const [cardError, setCardError] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<NfcCard | null>(null);
   const [deletingCard, setDeletingCard] = useState(false);
+  const [writingCardId, setWritingCardId] = useState<string | null>(null);
+  const [nfcMessage, setNfcMessage] = useState("");
+  const [nfcError, setNfcError] = useState("");
 
   const chartData = useMemo(() => {
     const today = new Date();
@@ -402,6 +407,48 @@ export default function DashboardPage() {
       setCardError("Gagal mengubah status kartu. Coba lagi.");
     } finally {
       setUpdatingCardId(null);
+    }
+  }
+
+  async function handleWriteNfc(card: NfcCard) {
+    setNfcMessage("");
+    setNfcError("");
+
+    if (!card.active) {
+      setNfcError("Aktifkan kartu terlebih dahulu sebelum menulis NFC.");
+      return;
+    }
+
+    if (typeof window === "undefined" || !("NDEFReader" in window)) {
+      setNfcError(
+        "Browser ini belum mendukung penulisan NFC. Gunakan Chrome di Android dengan NFC aktif."
+      );
+      return;
+    }
+
+    const nfcUrl = `${window.location.origin}/c/${card.public_code}`;
+    setWritingCardId(card.id);
+
+    try {
+      const NDEFReaderClass = (window as any).NDEFReader;
+      const reader = new NDEFReaderClass();
+      await reader.write({
+        records: [{ recordType: "url", data: nfcUrl }],
+      });
+      setNfcMessage(`Berhasil menulis URL ke kartu ${card.card_name || "NFC"}.`);
+    } catch (error: any) {
+      console.error("NFC write error:", error);
+      if (error?.name === "NotAllowedError") {
+        setNfcError("Izin NFC ditolak. Izinkan akses NFC pada browser.");
+      } else if (error?.name === "NotSupportedError") {
+        setNfcError("Kartu NFC tidak kompatibel atau tidak dapat ditulis.");
+      } else if (error?.name === "AbortError") {
+        setNfcError("Penulisan NFC dibatalkan. Coba tempelkan kartu lagi.");
+      } else {
+        setNfcError("Gagal menulis kartu. Pastikan NFC aktif dan dekatkan kartu ke HP.");
+      }
+    } finally {
+      setWritingCardId(null);
     }
   }
 
@@ -727,6 +774,17 @@ export default function DashboardPage() {
               </div>
             )}
 
+            {nfcMessage && (
+              <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700">
+                <CheckCircle2 className="mr-2 inline" size={17} />{nfcMessage}
+              </div>
+            )}
+            {nfcError && (
+              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
+                {nfcError}
+              </div>
+            )}
+
             {/* NFC CARDS */}
             <div
               id="cards"
@@ -795,6 +853,20 @@ export default function DashboardPage() {
                       </div>
 
                       <div className="flex shrink-0 flex-wrap items-center gap-2">
+                        <button
+                          onClick={() => handleWriteNfc(card)}
+                          disabled={writingCardId !== null || !card.active}
+                          className="inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
+                          title="Tulis URL DiTapAja ke kartu NFC"
+                        >
+                          {writingCardId === card.id ? (
+                            <Loader2 size={16} className="animate-spin" />
+                          ) : (
+                            <Nfc size={16} />
+                          )}
+                          {writingCardId === card.id ? "Tempelkan Kartu..." : "Tulis NFC"}
+                        </button>
+
                         <button
                           onClick={() => openEditCard(card)}
                           className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
