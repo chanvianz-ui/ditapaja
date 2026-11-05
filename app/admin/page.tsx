@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   LogOut,
   AlertCircle,
+  KeyRound,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -157,6 +158,14 @@ export default function AdminPage() {
             <LayoutDashboard size={18} />
             Overview
           </div>
+
+          <button
+            onClick={() => router.push("/admin/pins")}
+            className="mt-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-500 transition hover:bg-blue-50 hover:text-[#155eef]"
+          >
+            <KeyRound size={18} />
+            Activation PINs
+          </button>
         </div>
 
         <div className="absolute bottom-6 left-6 right-6">
