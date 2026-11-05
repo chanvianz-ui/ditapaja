@@ -27,6 +27,27 @@ export default function LoginPage() {
 
       if (error) throw error;
 
+      const { data: userData } = await supabase.auth.getUser();
+      if (userData.user) {
+        const fullName =
+          typeof userData.user.user_metadata?.full_name === "string"
+            ? userData.user.user_metadata.full_name.trim()
+            : "";
+
+        if (fullName) {
+          const { error: profileError } = await supabase
+            .from("profiles")
+            .upsert({
+              id: userData.user.id,
+              full_name: fullName,
+            });
+
+          if (profileError) {
+            console.error("Profile sync error:", profileError);
+          }
+        }
+      }
+
       router.push("/dashboard");
     } catch (error) {
       setMessage(
