@@ -20,7 +20,6 @@ export async function GET(
     const supabase = auth.supabase!;
     const { id } = await context.params;
 
-    // Validasi format User ID
     const uuidRegex =
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -31,7 +30,6 @@ export async function GET(
       );
     }
 
-    // Ambil informasi akun
     const { data: userData, error: userError } =
       await supabase.auth.admin.getUserById(id);
 
@@ -44,7 +42,6 @@ export async function GET(
 
     const user = userData.user;
 
-    // Ambil profil pengguna
     const { data: profile, error: profileError } =
       await supabase
         .from("profiles")
@@ -54,7 +51,6 @@ export async function GET(
 
     if (profileError) throw profileError;
 
-    // Ambil seluruh kartu milik pengguna
     const { data: cards, error: cardsError } =
       await supabase
         .from("nfc_cards")
@@ -66,7 +62,6 @@ export async function GET(
 
     if (cardsError) throw cardsError;
 
-    // Ambil statistik setiap kartu
     const cardsWithStats = await Promise.all(
       (cards || []).map(async (card) => {
         const { count: taps, error: tapsError } =
