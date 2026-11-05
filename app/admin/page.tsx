@@ -159,6 +159,11 @@ export default function AdminPage() {
             Overview
           </div>
 
+          <button onClick={() => router.push("/admin/pins")} className="mt-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-500 transition hover:bg-blue-50 hover:text-[#155eef]">
+            <KeyRound size={18} />
+            Activation PINs
+          </button>
+
           <button
             onClick={() => router.push("/admin/pins")}
             className="mt-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-500 transition hover:bg-blue-50 hover:text-[#155eef]"
