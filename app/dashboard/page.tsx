@@ -42,12 +42,14 @@ export default function DashboardPage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [cards, setCards] = useState<NfcCard[]>([]);
   const [email, setEmail] = useState("");
+
   const [analytics, setAnalytics] = useState<Analytics>({
     totalTaps: 0,
     uniqueVisitors: 0,
     reviewClicks: 0,
-    ctr;0,
+    ctr: 0,
   });
+
   const [analyticsError, setAnalyticsError] = useState("");
 
   useEffect(() => {
@@ -80,64 +82,80 @@ export default function DashboardPage() {
 
         if (cardsResult.error) {
           console.error("Card loading error:", cardsResult.error);
+          throw cardsResult.error;
         }
 
         setProfile(profileResult.data);
+
         const userCards = cardsResult.data ?? [];
         setCards(userCards);
 
         if (userCards.length > 0) {
           const cardIds = userCards.map((card) => card.id);
 
-const { data: events, error: eventsError } = await supabase
-  .from("tap_events")
-  .select("card_id, event_type, visitor_hash")
-  .in("card_id", cardIds)
-  .in("event_type", ["tap", "review_click"]);
+          const { data: events, error: eventsError } =
+            await supabase
+              .from("tap_events")
+              .select("card_id, event_type, visitor_hash")
+              .in("card_id", cardIds)
+              .in("event_type", ["tap", "review_click"]);
 
-if (eventsError) {
-  console.error("Analytics loading error:", eventsError);
-  setAnalyticsError(
-    "Statistik belum dapat dimuat. Periksa izin akses database."
-  );
-} else {
-  const allEvents = events ?? [];
+          if (eventsError) {
+            console.error(
+              "Analytics loading error:",
+              eventsError
+            );
 
-  const tapEvents = allEvents.filter(
-    (event) => event.event_type === "tap"
-  );
+            setAnalyticsError(
+              "Statistik belum dapat dimuat. Periksa izin akses database."
+            );
+          } else {
+            const allEvents = events ?? [];
 
-  const reviewEvents = allEvents.filter(
-    (event) => event.event_type === "review_click"
-  );
+            const tapEvents = allEvents.filter(
+              (event) => event.event_type === "tap"
+            );
 
-  const uniqueHashes = new Set(
-    tapEvents
-      .map((event) => event.visitor_hash)
-      .filter((hash): hash is string => Boolean(hash))
-  );
+            const reviewEvents = allEvents.filter(
+              (event) => event.event_type === "review_click"
+            );
 
-  const totalTaps = tapEvents.length;
-  const reviewClicks = reviewEvents.length;
+            const uniqueHashes = new Set(
+              tapEvents
+                .map((event) => event.visitor_hash)
+                .filter(
+                  (hash): hash is string => Boolean(hash)
+                )
+            );
 
-  const ctr =
-    totalTaps > 0
-      ? (reviewClicks / totalTaps) * 100
-      : 0;
+            const totalTaps = tapEvents.length;
+            const reviewClicks = reviewEvents.length;
 
-  setAnalytics({
-    totalTaps,
-    uniqueVisitors: uniqueHashes.size,
-    reviewClicks,
-    ctr,
-  });
-}
+            const ctr =
+              totalTaps > 0
+                ? (reviewClicks / totalTaps) * 100
+                : 0;
+
+            setAnalytics({
+              totalTaps,
+              uniqueVisitors: uniqueHashes.size,
+              reviewClicks,
+              ctr,
+            });
           }
+        } else {
+          setAnalytics({
+            totalTaps: 0,
+            uniqueVisitors: 0,
+            reviewClicks: 0,
+            ctr: 0,
+          });
         }
-
       } catch (error) {
         console.error("Dashboard loading error:", error);
-        setAnalyticsError("Terjadi kesalahan saat memuat dashboard.");
+        setAnalyticsError(
+          "Terjadi kesalahan saat memuat dashboard."
+        );
       } finally {
         setLoading(false);
       }
@@ -165,21 +183,27 @@ if (eventsError) {
   const analyticsItems = [
     {
       label: "Total Taps",
-      value: analytics.totalTaps,
+      value: analytics.totalTaps.toLocaleString("id-ID"),
       icon: MousePointerClick,
       description: "Total aktivitas tap seluruh kartu.",
     },
     {
       label: "Unique Visitors",
-      value: analytics.uniqueVisitors,
+      value: analytics.uniqueVisitors.toLocaleString("id-ID"),
       icon: Users,
       description: "Pengunjung dengan identitas hash berbeda.",
     },
     {
       label: "Review Clicks",
-      value: analytics.reviewClicks,
+      value: analytics.reviewClicks.toLocaleString("id-ID"),
       icon: ExternalLink,
-      description: "Tap yang memicu redirect ke Google Maps.",
+      description: "Jumlah klik menuju Google Maps.",
+    },
+    {
+      label: "CTR",
+      value: `${analytics.ctr.toFixed(1)}%`,
+      icon: BarChart3,
+      description: "Persentase tap yang berlanjut ke review.",
     },
   ];
 
@@ -231,13 +255,19 @@ if (eventsError) {
               <p className="text-xs text-slate-400">
                 Workspace / Overview
               </p>
-              <h1 className="mt-1 text-xl font-bold">Dashboard</h1>
+              <h1 className="mt-1 text-xl font-bold">
+                Dashboard
+              </h1>
             </div>
 
             <div className="flex items-center gap-3">
               <div className="hidden text-right sm:block">
-                <p className="text-sm font-semibold">{displayName}</p>
-                <p className="text-xs text-slate-400">{email}</p>
+                <p className="text-sm font-semibold">
+                  {displayName}
+                </p>
+                <p className="text-xs text-slate-400">
+                  {email}
+                </p>
               </div>
 
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700">
@@ -252,25 +282,30 @@ if (eventsError) {
                 <p className="text-sm text-slate-500">
                   Welcome back,
                 </p>
+
                 <h2 className="mt-1 text-2xl font-bold tracking-tight">
                   {displayName} 👋
                 </h2>
+
                 <p className="mt-1 text-sm text-slate-500">
                   Pantau performa kartu NFC kamu dari sini.
                 </p>
               </div>
 
               <button
-                onClick={() => router.push("/dashboard/cards/new")}
+                onClick={() =>
+                  router.push("/dashboard/cards/new")
+                }
                 className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"
               >
                 <Plus size={18} /> Add New Card
               </button>
             </div>
 
+            {/* ANALYTICS */}
             <div
               id="analytics"
-              className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
+              className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4"
             >
               {analyticsItems.map((item) => (
                 <div
@@ -281,11 +316,15 @@ if (eventsError) {
                     <p className="text-sm text-slate-500">
                       {item.label}
                     </p>
-                    <item.icon className="text-blue-600" size={20} />
+
+                    <item.icon
+                      className="text-blue-600"
+                      size={20}
+                    />
                   </div>
 
                   <p className="mt-5 text-3xl font-bold tabular-nums">
-                    {item.value.toLocaleString("id-ID")}
+                    {item.value}
                   </p>
 
                   <p className="mt-2 text-xs text-slate-400">
@@ -301,6 +340,7 @@ if (eventsError) {
               </div>
             )}
 
+            {/* NFC CARDS */}
             <div
               id="cards"
               className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
@@ -308,6 +348,7 @@ if (eventsError) {
               <div className="flex items-center justify-between border-b border-slate-100 p-6">
                 <div>
                   <h3 className="font-bold">My NFC Cards</h3>
+
                   <p className="mt-1 text-sm text-slate-500">
                     Kelola semua kartu NFC kamu.
                   </p>
@@ -329,11 +370,14 @@ if (eventsError) {
                   </h4>
 
                   <p className="mx-auto mt-2 max-w-sm text-sm text-slate-500">
-                    Tambahkan kartu NFC pertama kamu untuk mulai mengumpulkan data tap.
+                    Tambahkan kartu NFC pertama kamu untuk mulai
+                    mengumpulkan data tap.
                   </p>
 
                   <button
-                    onClick={() => router.push("/dashboard/cards/new")}
+                    onClick={() =>
+                      router.push("/dashboard/cards/new")
+                    }
                     className="mt-5 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700"
                   >
                     Tambahkan Kartu
