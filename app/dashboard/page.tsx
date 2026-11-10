@@ -42,6 +42,7 @@ type NfcCard = {
   public_code: string;
   destination_url: string;
   active: boolean;
+  location_id?: string | null;
 };
 
 type AnalyticsEvent = {
@@ -77,11 +78,20 @@ export default function DashboardPage() {
   const [chartPeriod, setChartPeriod] = useState<7 | 30 | 90>(7);
   const [eventRows, setEventRows] = useState<AnalyticsEvent[]>([]);
   const [selectedCardId, setSelectedCardId] = useState("all");
+  const [selectedLocationId, setSelectedLocationId] = useState("all");
+  const [businessLocations, setBusinessLocations] = useState<{id:string;name:string}[]>([]);
+  const [qrForeground, setQrForeground] = useState("#111827");
+  const [qrBackground, setQrBackground] = useState("#ffffff");
 
   const selectedEventRows = useMemo(() => {
-    if (selectedCardId === "all") return eventRows;
-    return eventRows.filter((event) => event.card_id === selectedCardId);
-  }, [eventRows, selectedCardId]);
+    let rows = eventRows;
+    if (selectedCardId !== "all") rows = rows.filter((event) => event.card_id === selectedCardId);
+    if (selectedLocationId !== "all") {
+      const locationCardIds = new Set(cards.filter((card) => selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId).map((card) => card.id));
+      rows = rows.filter((event) => locationCardIds.has(event.card_id));
+    }
+    return rows;
+  }, [eventRows, selectedCardId, selectedLocationId, cards]);
 
   const displayedAnalytics = useMemo<Analytics>(() => {
     const tapEvents = selectedEventRows.filter((event) => event.event_type === "tap");
@@ -206,7 +216,7 @@ export default function DashboardPage() {
 
         setEmail(data.user.email ?? "");
 
-        const [profileResult, cardsResult] = await Promise.all([
+        const [profileResult, cardsResult, locationsResult] = await Promise.all([
           supabase
             .from("profiles")
             .select("full_name")
@@ -215,9 +225,15 @@ export default function DashboardPage() {
 
           supabase
             .from("nfc_cards")
-            .select("id, card_name, public_code, destination_url, active")
+            .select("id, card_name, public_code, destination_url, active, location_id")
             .eq("user_id", data.user.id)
             .order("created_at", { ascending: false }),
+
+          supabase
+            .from("business_locations")
+            .select("id,name")
+            .eq("user_id", data.user.id)
+            .order("name"),
         ]);
 
         if (cardsResult.error) {
@@ -249,6 +265,7 @@ export default function DashboardPage() {
 
         const userCards = (cardsResult.data ?? []) as NfcCard[];
         setCards(userCards);
+        setBusinessLocations(locationsResult.data ?? []);
 
         const { data: logs, error: logsError } = await supabase
           .from("nfc_card_change_logs")
@@ -775,6 +792,16 @@ export default function DashboardPage() {
                     ))}
                   </div>
 
+                  {businessLocations.length > 0 && (
+                    <div className="flex flex-wrap items-center gap-2">
+                      <label htmlFor="location-filter" className="text-xs font-semibold text-slate-500">Lokasi</label>
+                      <select id="location-filter" value={selectedLocationId} onChange={(event) => setSelectedLocationId(event.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-600 outline-none focus:border-blue-400">
+                        <option value="all">Semua lokasi</option>
+                        {businessLocations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
+                        <option value="unassigned">Tanpa lokasi</option>
+                      </select>
+                    </div>
+                  )}
                   <div className="flex flex-wrap items-center gap-2">
                     <div className="flex w-fit rounded-xl bg-slate-100 p-1">
                       {([7, 30, 90] as const).map((period) => (
@@ -1022,8 +1049,12 @@ export default function DashboardPage() {
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm" onClick={() => setQrCard(null)}>
           <div role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-2xl" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between text-left"><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR ACCESS</p><h3 id="qr-card-title" className="mt-1 text-lg font-bold text-slate-900">{qrCard.card_name || "Untitled Card"}</h3></div><button type="button" onClick={() => setQrCard(null)} aria-label="Tutup QR Code" className="rounded-full p-2 text-slate-400 hover:bg-slate-100"><X size={19}/></button></div>
-            <div className="mx-auto my-6 inline-flex rounded-2xl border border-slate-100 bg-white p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.web.id/c/" + qrCard.public_code} size={220} level="H" includeMargin /></div>
+            <div className="mx-auto my-6 inline-flex rounded-2xl border border-slate-100 bg-white p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.web.id/c/" + qrCard.public_code} size={220} level="H" includeMargin fgColor={qrForeground} bgColor={qrBackground} /></div>
             <p className="break-all text-xs text-slate-400">ditapaja.web.id/c/{qrCard.public_code}</p><p className="mt-2 text-xs leading-5 text-slate-500">Scan QR ini untuk membuka halaman review kartu.</p>
+            <div className="grid grid-cols-2 gap-3 text-left">
+              <label className="rounded-xl border border-slate-200 p-3 text-xs font-semibold text-slate-600">Warna QR<input type="color" value={qrForeground} onChange={(event) => setQrForeground(event.target.value)} className="mt-2 h-9 w-full cursor-pointer rounded"/></label>
+              <label className="rounded-xl border border-slate-200 p-3 text-xs font-semibold text-slate-600">Warna latar<input type="color" value={qrBackground} onChange={(event) => setQrBackground(event.target.value)} className="mt-2 h-9 w-full cursor-pointer rounded"/></label>
+            </div>
             <button type="button" onClick={() => downloadQrPng(qrCard)} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"><Download size={17}/> Download QR PNG</button>
           </div>
         </div>
