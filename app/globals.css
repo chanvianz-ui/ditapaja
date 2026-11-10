@@ -34,3 +34,43 @@
 .detail-order{background:#286be4;color:#fff;padding:55px 0}.detail-order-inner{display:flex;align-items:center;justify-content:space-between;gap:30px}.detail-order h2{font:800 29px/1.2 Manrope;letter-spacing:-1px;margin:12px 0}.detail-order p{font-size:10px;color:#d4e2ff;line-height:1.7}.detail-order .eyebrow{color:#c6d9ff}.detail-footer{height:65px;padding:0 max(20px,calc((100% - 1160px)/2));display:flex;align-items:center;justify-content:space-between;font-size:9px;color:#96a2b4}
 .product-not-found{min-height:70vh;display:grid;place-content:center;text-align:center}.product-not-found a{color:#3478f6}
 @media(max-width:700px){.detail-header{height:62px}.detail-hero{grid-template-columns:1fr;gap:28px;padding-top:45px;padding-bottom:50px}.detail-copy h1{font-size:42px}.detail-art{height:310px;grid-row:1}.detail-card{width:205px;height:205px}.detail-spec-grid{grid-template-columns:repeat(2,1fr)}.detail-features{padding-top:65px;padding-bottom:65px}.detail-feature-grid{grid-template-columns:repeat(2,1fr);gap:9px}.detail-feature-grid article{padding:13px;min-height:160px}.detail-feature-grid h3{font-size:11px}.detail-order-inner{display:grid;gap:15px}.detail-order h2{font-size:24px}.detail-order .button{width:max-content;margin:5px 0}.detail-footer{height:auto;min-height:60px;padding:16px 20px;gap:10px;flex-wrap:wrap}}
+
+
+/* Premium theme refinement + persistent dark mode */
+:root{color-scheme:light;--ink:#17243b;--muted:#77849a;--line:#e9edf4;--bg:#fff;--soft:#f6f8fc;--surface:#fff;--surface-soft:#f7f9fd}
+html[data-theme="dark"]{color-scheme:dark;--ink:#edf2fb;--muted:#a0aec2;--line:#29364a;--bg:#0b1019;--soft:#111a28;--surface:#121c2b;--surface-soft:#0f1724}
+body{background:var(--bg);color:var(--ink);transition:background .25s ease,color .25s ease}
+.theme-toggle{position:fixed;right:22px;bottom:22px;z-index:80;height:44px;padding:0 15px;display:flex;align-items:center;gap:9px;border:1px solid #dce3ed;border-radius:999px;background:#fff;color:#263650;box-shadow:0 8px 28px #10213a20;font-size:11px;font-weight:800;cursor:pointer;transition:transform .2s,background .2s,border .2s}
+.theme-toggle:hover{transform:translateY(-2px);border-color:#8daee7}
+.theme-toggle svg{color:#3478f6}
+html[data-theme="dark"] body{background:#0b1019;color:#edf2fb}
+html[data-theme="dark"] .site-header,html[data-theme="dark"] .detail-header,html[data-theme="dark"] .site-footer{background:#0d1522;border-color:#263449}
+html[data-theme="dark"] .desktop-nav a,html[data-theme="dark"] .login-link,html[data-theme="dark"] .detail-back{color:#a9b6ca}
+html[data-theme="dark"] .hero h1,html[data-theme="dark"] .section-heading h2,html[data-theme="dark"] .how-copy h2,html[data-theme="dark"] .dashboard-copy h2,html[data-theme="dark"] .faq-heading h2,html[data-theme="dark"] .products-heading h2,html[data-theme="dark"] .detail-copy h1,html[data-theme="dark"] .detail-spec-section h2,html[data-theme="dark"] .detail-features h2{color:#f0f4fb}
+html[data-theme="dark"] .hero-desc,html[data-theme="dark"] .section-heading p,html[data-theme="dark"] .how-copy>p,html[data-theme="dark"] .dashboard-copy>p,html[data-theme="dark"] .faq-heading>p,html[data-theme="dark"] .products-heading p,html[data-theme="dark"] .detail-copy>p{color:#a0aec2}
+html[data-theme="dark"] .trust-strip,html[data-theme="dark"] .how-section,html[data-theme="dark"] .products-section,html[data-theme="dark"] .detail-spec-section{background:#101927}
+html[data-theme="dark"] .free-dashboard-band{background:#111e30;border-color:#263b59}
+html[data-theme="dark"] .free-dashboard-copy h2,html[data-theme="dark"] .detail-fit b{color:#edf2fb}
+html[data-theme="dark"] .free-dashboard-copy p,html[data-theme="dark"] .free-dashboard-points div{color:#aab8cb}
+html[data-theme="dark"] .feature-card,html[data-theme="dark"] .product-card,html[data-theme="dark"] .dashboard-mock,html[data-theme="dark"] .detail-spec-grid>div,html[data-theme="dark"] .detail-feature-grid article{background:#121d2c;border-color:#29384d;color:#edf2fb}
+html[data-theme="dark"] .feature-card h3,html[data-theme="dark"] .product-info h3,html[data-theme="dark"] .product-info>div>b,html[data-theme="dark"] .detail-feature-grid h3{color:#edf2fb}
+html[data-theme="dark"] .feature-card p,html[data-theme="dark"] .product-info p,html[data-theme="dark"] .detail-feature-grid p,html[data-theme="dark"] .detail-spec-grid span{color:#9eacc0}
+html[data-theme="dark"] .step,html[data-theme="dark"] .steps,html[data-theme="dark"] .faq-list,html[data-theme="dark"] .faq-list details,html[data-theme="dark"] .footer-bottom{border-color:#29364a}
+html[data-theme="dark"] .step h3,html[data-theme="dark"] .faq-list summary{color:#eaf0fa}
+html[data-theme="dark"] .step p,html[data-theme="dark"] .faq-list details p,html[data-theme="dark"] .footer-links a,html[data-theme="dark"] .footer-top>div:first-child>p{color:#9eacc0}
+html[data-theme="dark"] .step-icon,html[data-theme="dark"] .link-preview,html[data-theme="dark"] .detail-pills span{background:#17263a;border-color:#2b3e59;color:#c7d5e9}
+html[data-theme="dark"] .dashboard-mock{box-shadow:0 25px 70px #0005}
+html[data-theme="dark"] .mock-top,html[data-theme="dark"] .mock-card-row,html[data-theme="dark"] .mock-stats>div,html[data-theme="dark"] .mock-graph{border-color:#29384d}
+html[data-theme="dark"] .mock-side{background:#0e1724;border-color:#29384d}
+html[data-theme="dark"] .mock-side .mock-active{background:#1b3150;color:#8db7ff}
+html[data-theme="dark"] .mock-content h3,html[data-theme="dark"] .mock-card-row b,html[data-theme="dark"] .mock-card-row strong{color:#eaf0fa}
+html[data-theme="dark"] .mock-user{background:#203653;color:#b9d2fa}
+html[data-theme="dark"] .detail-brand{color:#edf2fb}
+html[data-theme="dark"] .detail-spec-grid{background:#29384d;border-color:#29384d}
+html[data-theme="dark"] .detail-spec-grid b{color:#edf2fb}
+html[data-theme="dark"] .detail-feature-grid article{box-shadow:0 10px 28px #0002}
+html[data-theme="dark"] .detail-footer{background:#0d1522;color:#9eacc0}
+html[data-theme="dark"] .product-not-found{background:#0b1019;color:#edf2fb}
+html[data-theme="dark"] .theme-toggle{background:#17263a;color:#edf2fb;border-color:#354963;box-shadow:0 8px 28px #0006}
+html[data-theme="dark"] .theme-toggle svg{color:#f4c66b}
+@media(max-width:700px){.theme-toggle{right:14px;bottom:14px;height:42px;padding:0 13px;font-size:10px}}
