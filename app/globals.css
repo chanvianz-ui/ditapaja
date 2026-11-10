@@ -887,3 +887,67 @@ html[data-theme="light"] .concept-home{background:#f3f1eb;color:#111820}
  .concept-product-buy>a{max-width:none;width:100%}
 }
 @media(hover:none){.concept-product:hover{transform:none}.concept-product:hover .simple-card{transform:rotate(-8deg)}}
+
+
+/* Shape language & motion refinement — DiTapAja */
+.concept-home{overflow:clip}
+.concept-header{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.concept-nav-cta,.concept-button,.concept-product-buy>a,.concept-final-button{position:relative;overflow:hidden;isolation:isolate;border-radius:999px}
+.concept-nav-cta:before,.concept-button:before,.concept-product-buy>a:before,.concept-final-button:before{content:"";position:absolute;inset:0;z-index:-1;translate:-120% 0;background:linear-gradient(105deg,transparent 25%,#ffffff38 48%,transparent 70%);transition:translate .65s cubic-bezier(.2,.7,.2,1)}
+.concept-nav-cta:hover:before,.concept-button:hover:before,.concept-product-buy>a:hover:before,.concept-final-button:hover:before{translate:120% 0}
+.concept-stage-circle{border-radius:44% 56% 52% 48% / 48% 43% 57% 52%;animation:stageMorph 14s ease-in-out infinite,stageDrift 9s ease-in-out infinite}
+.concept-stage-circle:before{inset:24px;border-radius:48% 52% 45% 55% / 52% 46% 54% 48%;animation:stageMorph 18s ease-in-out infinite reverse}
+.concept-stage-circle:after{inset:54px;border-radius:50%;animation:orbitSpin 48s linear infinite}
+.concept-hero-card{animation:conceptFloat 6.5s ease-in-out infinite;transform-origin:55% 65%}
+.concept-card-back{animation:backFloat 8s ease-in-out infinite;transform-origin:50% 50%}
+.concept-card-shadow{animation:shadowBreath 6.5s ease-in-out infinite}
+.concept-stage-chip{border-radius:14px;animation:chipFloat 5.5s ease-in-out infinite;box-shadow:0 16px 38px #17202a18}
+.concept-stage-chip:after{content:"";position:absolute;inset:-1px;border:1px solid #456ff538;border-radius:inherit;animation:chipPulse 3.5s ease-out infinite;pointer-events:none}
+.concept-product{border-radius:17px;overflow:hidden;transform:translateZ(0)}
+.concept-product-art{border-radius:15px 15px 0 0}
+.concept-product-art:after{pointer-events:none;transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .5s}
+.concept-product:hover .concept-product-art:after{transform:scale(1.16) rotate(12deg);opacity:.8}
+.concept-product-art .simple-card{transition:transform .65s cubic-bezier(.2,.75,.2,1),filter .5s}
+.concept-product:hover .concept-product-art .simple-card{transform:translateY(-9px) rotate(-3deg) scale(1.045);filter:drop-shadow(0 28px 24px #0004)}
+.concept-product-buy>a{border-radius:999px;padding:12px 16px}
+.concept-flow article{border-radius:15px;overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s,background .3s,box-shadow .3s}
+.concept-flow article:hover{transform:translateY(-7px);box-shadow:0 18px 42px #0002}
+.concept-step-icon{border-radius:13px;transition:transform .35s,background .35s}
+.concept-flow article:hover .concept-step-icon{transform:rotate(-8deg) scale(1.08);background:#89a4ff12}
+.concept-flow-line{overflow:hidden}
+.concept-flow-line:before{content:"";position:absolute;left:-45%;top:0;width:38%;height:1px;background:linear-gradient(90deg,transparent,#9bb3ff,transparent);animation:flowTravel 3.2s ease-in-out infinite}
+.concept-flow-line:nth-of-type(2):before{animation-delay:1.2s}
+.concept-dashboard-visual,.concept-dashboard-frame{border-radius:20px}
+.concept-dashboard-visual{overflow:visible}
+.concept-dashboard-frame{border-radius:13px;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.concept-dashboard-visual:hover .concept-dashboard-frame{transform:translateY(-6px) rotate(-.5deg);box-shadow:0 32px 70px #192a3b2b}
+.concept-dash-sticker{border-radius:14px;animation:chipFloat 6s ease-in-out infinite}
+.concept-faq-list details{transition:background .3s,padding .3s}
+.concept-faq-list details[open]{padding-inline:15px;border-radius:12px}
+.concept-faq-list summary svg{transition:transform .35s cubic-bezier(.2,.7,.2,1),color .2s}
+.concept-final-orbit{animation:orbitSpin 65s linear infinite}
+.concept-final-button{border-radius:999px;box-shadow:0 12px 30px #456ff53a;transition:transform .3s,box-shadow .3s}
+.concept-final-button:hover{transform:translateY(-4px);box-shadow:0 18px 38px #456ff55c}
+.concept-ticker:hover>div{animation-play-state:paused}
+.concept-footer .brand-symbol{border-radius:12px}
+@keyframes stageMorph{0%,100%{border-radius:44% 56% 52% 48% / 48% 43% 57% 52%}50%{border-radius:56% 44% 43% 57% / 42% 56% 44% 58%}}
+@keyframes stageDrift{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(0,-9px,0) scale(1.025)}}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+@keyframes backFloat{0%,100%{transform:translate(80px,50px) rotate(10deg)}50%{transform:translate(88px,39px) rotate(7deg)}}
+@keyframes shadowBreath{0%,100%{transform:scaleX(1);opacity:.8}50%{transform:scaleX(.82);opacity:.48}}
+@keyframes chipFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@keyframes chipPulse{0%{transform:scale(.96);opacity:.65}100%{transform:scale(1.16);opacity:0}}
+@keyframes flowTravel{0%{left:-45%}100%{left:110%}}
+@media(max-width:900px){.concept-product{border-radius:14px}.concept-dashboard-visual,.concept-dashboard-frame{border-radius:15px}}
+@media(max-width:680px){
+ .concept-stage-circle{animation-duration:18s,12s}
+ .concept-card-back{animation-name:backFloatMobile}
+ .concept-product:hover .concept-product-art .simple-card{transform:rotate(-8deg)}
+ .concept-dashboard-visual:hover .concept-dashboard-frame{transform:none}
+ .concept-flow article:hover{transform:none}
+}
+@keyframes backFloatMobile{0%,100%{transform:translate(54px,38px) rotate(10deg)}50%{transform:translate(60px,30px) rotate(7deg)}}
+@media(prefers-reduced-motion:reduce){
+ .concept-stage-circle,.concept-stage-circle:before,.concept-stage-circle:after,.concept-hero-card,.concept-card-back,.concept-card-shadow,.concept-stage-chip,.concept-stage-chip:after,.concept-flow-line:before,.concept-dash-sticker,.concept-final-orbit{animation:none!important}
+ .concept-home *{scroll-behavior:auto!important}
+}
