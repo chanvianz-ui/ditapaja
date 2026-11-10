@@ -172,6 +172,50 @@ export default function DashboardPage() {
     ...chartData.map((day) => Math.max(day.taps, day.clicks))
   );
 
+  const analyticsInsights = useMemo(() => {
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+    const currentStart = new Date();
+    currentStart.setHours(0, 0, 0, 0);
+    currentStart.setDate(currentStart.getDate() - (chartPeriod - 1));
+    const previousStart = new Date(currentStart);
+    previousStart.setDate(previousStart.getDate() - chartPeriod);
+    const previousEnd = new Date(currentStart.getTime() - 1);
+
+    const countEvents = (start: Date, finish: Date) => {
+      const rows = selectedEventRows.filter((event) => {
+        const time = new Date(event.created_at).getTime();
+        return time >= start.getTime() && time <= finish.getTime();
+      });
+      return {
+        taps: rows.filter((event) => event.event_type === "tap").length,
+        clicks: rows.filter((event) => event.event_type === "review_click").length,
+      };
+    };
+    const current = countEvents(currentStart, end);
+    const previous = countEvents(previousStart, previousEnd);
+    const change = (now: number, before: number) => before === 0
+      ? (now === 0 ? 0 : null)
+      : ((now - before) / before) * 100;
+    const bestDay = [...chartData].sort((a, b) => b.taps - a.taps)[0];
+    const filteredCardIds = new Set(cards
+      .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
+      .filter((card) => selectedLocationId === "all" || (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
+      .map((card) => card.id));
+    const cardTotals = cards.filter((card) => filteredCardIds.has(card.id)).map((card) => {
+      const taps = selectedEventRows.filter((event) => event.card_id === card.id && event.event_type === "tap").length;
+      return { name: card.card_name || "Untitled Card", taps };
+    }).sort((a, b) => b.taps - a.taps);
+    return {
+      current,
+      previous,
+      tapChange: change(current.taps, previous.taps),
+      clickChange: change(current.clicks, previous.clicks),
+      bestDay: bestDay && bestDay.taps > 0 ? bestDay : null,
+      topCard: cardTotals[0] && cardTotals[0].taps > 0 ? cardTotals[0] : null,
+    };
+  }, [selectedEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId]);
+
   const cardPerformance = useMemo(() => cards.map((card) => {
     const rows = eventRows.filter((event) => event.card_id === card.id);
     const taps = rows.filter((event) => event.event_type === "tap");
@@ -913,6 +957,41 @@ export default function DashboardPage() {
                   Belum ada aktivitas untuk ditampilkan.
                 </p>
               )}
+            </section>
+
+            {/* LOCAL ANALYTICS INSIGHTS - DERIVED FROM ALREADY LOADED EVENTS */}
+            <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">INSIGHT PERFORMA</p>
+                  <h3 className="mt-1 font-bold text-slate-900">Apa yang terjadi?</h3>
+                  <p className="mt-1 text-xs text-slate-500">Perbandingan dengan {chartPeriod} hari sebelumnya, berdasarkan data yang sudah dimuat.</p>
+                </div>
+                <span className="text-[10px] text-slate-400">Periode: {chartPeriod} hari terakhir</span>
+              </div>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="rounded-xl bg-slate-50 p-4">
+                  <p className="text-xs text-slate-500">Perubahan tap</p>
+                  <p className="mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.tapChange === null ? "—" : `${analyticsInsights.tapChange > 0 ? "+" : ""}${analyticsInsights.tapChange.toFixed(1)}%`}</p>
+                  <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.current.taps.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.taps.toLocaleString("id-ID")} sebelumnya</p>
+                </div>
+                <div className="rounded-xl bg-slate-50 p-4">
+                  <p className="text-xs text-slate-500">Perubahan review click</p>
+                  <p className="mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.clickChange === null ? "—" : `${analyticsInsights.clickChange > 0 ? "+" : ""}${analyticsInsights.clickChange.toFixed(1)}%`}</p>
+                  <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.current.clicks.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.clicks.toLocaleString("id-ID")} sebelumnya</p>
+                </div>
+                <div className="rounded-xl bg-slate-50 p-4">
+                  <p className="text-xs text-slate-500">Hari paling aktif</p>
+                  <p className="mt-2 text-lg font-bold text-slate-900">{analyticsInsights.bestDay ? analyticsInsights.bestDay.label : "Belum ada data"}</p>
+                  <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.bestDay ? `${analyticsInsights.bestDay.taps} tap tercatat` : "Belum ada tap pada periode ini"}</p>
+                </div>
+                <div className="rounded-xl bg-slate-50 p-4">
+                  <p className="text-xs text-slate-500">Kartu teratas</p>
+                  <p className="mt-2 truncate text-lg font-bold text-slate-900">{analyticsInsights.topCard?.name || "Belum ada data"}</p>
+                  <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.topCard ? `${analyticsInsights.topCard.taps} tap tercatat` : "Tidak ada tap pada filter ini"}</p>
+                </div>
+              </div>
+              <p className="mt-4 text-[10px] leading-5 text-slate-400">Persentase perubahan tidak ditampilkan jika periode pembanding belum memiliki aktivitas. Insight ini merupakan ringkasan aktivitas, bukan jumlah ulasan Google yang dipublikasikan.</p>
             </section>
 
             {cards.length > 1 && (
