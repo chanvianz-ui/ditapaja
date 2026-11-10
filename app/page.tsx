@@ -1,101 +1,43 @@
-import {
-  ArrowRight, ArrowUpRight, Check, ChevronDown, CircleHelp, CreditCard,
-  Gauge, MapPin, Menu, MessageCircle, MousePointerClick, Nfc, ShieldCheck,
-  Smartphone, Sparkles, Star, TrendingUp, Zap
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, ChevronDown, Nfc, QrCode, BarChart3, Link2, Smartphone } from "lucide-react";
 
 const products = [
-  { name: "DiTapAja Noir", subtitle: "BLACK EDITION", desc: "Desain hitam elegan untuk bisnis dengan karakter modern dan eksklusif.", price: "Lihat detail produk", tone: "noir", code: "01", href: "/products/noir" },
-  { name: "DiTapAja Blanc", subtitle: "WHITE EDITION", desc: "Desain putih minimalis yang bersih, rapi, dan timeless.", price: "Lihat detail produk", tone: "blanc", code: "02", href: "/products/blanc" },
-  { name: "DiTapAja Signature", subtitle: "CUSTOM EDITION", desc: "Desain personal yang mengikuti logo dan identitas visual bisnismu.", price: "Lihat detail produk", tone: "signature", code: "03", href: "/products/signature" },
+  { name:"DiTapAja Noir", label:"BLACK EDITION", description:"Karakter tegas untuk brand yang berani tampil berbeda.", tone:"noir", href:"/products/noir" },
+  { name:"DiTapAja Blanc", label:"WHITE EDITION", description:"Sederhana, bersih, dan mudah menyatu dengan ruang apa pun.", tone:"blanc", href:"/products/blanc" },
+  { name:"DiTapAja Signature", label:"CUSTOM EDITION", description:"Sentuhan personal dengan identitas visual brand milikmu.", tone:"signature", href:"/products/signature" }
 ];
 
-const faqs = [
-  ["Apakah ada biaya langganan dashboard?", "Tidak. Dashboard DiTapAja termasuk dalam pembelian NFC card dan tidak dikenakan biaya langganan bulanan."],
-  ["Apa itu DiTapAja NFC Review Card?", "DiTapAja adalah kartu NFC yang membantu pelanggan membuka halaman review bisnis hanya dengan mendekatkan smartphone yang mendukung NFC."],
-  ["Apakah pelanggan perlu mengunduh aplikasi?", "Tidak. Pelanggan cukup menggunakan smartphone yang mendukung NFC dan membuka tautan yang muncul."],
-  ["Bisakah link Google Maps diganti?", "Ya. Nantinya kamu dapat mengatur tujuan kartu melalui dashboard DiTapAja tanpa perlu menulis ulang kartu NFC."],
-  ["Apakah saya bisa melihat berapa kali kartu di-tap?", "Ya. Dashboard gratis DiTapAja dirancang untuk menampilkan jumlah tap dan klik menuju halaman review. Dashboard termasuk dalam pembelian kartu, tanpa biaya langganan bulanan."],
+const questions = [
+  ["Apakah dashboard dikenakan biaya bulanan?","Tidak. Akses dashboard sudah termasuk dalam pembelian kartu DiTapAja."],
+  ["Bagaimana pelanggan menggunakan kartu?","Pelanggan cukup mendekatkan smartphone yang mendukung NFC atau memindai QR Code pada kartu."],
+  ["Apakah link tujuan bisa diubah?","Bisa. Tujuan kartu dapat dikelola melalui dashboard tanpa perlu mengganti kartu."],
+  ["Apa saja yang bisa dipantau?","Dashboard dirancang untuk menampilkan jumlah tap, estimasi pengunjung unik, dan klik menuju Google Review."]
 ];
 
-function Brand() {
-  return <a href="#" className="brand" aria-label="DiTapAja beranda"><span className="brand-symbol"><i/><i/><i/></span><span>DiTap<span className="blue-word">Aja</span><small>NFC REVIEW • FREE DASHBOARD</small></span></a>;
+function Brand(){return <a href="/" className="brand"><span className="brand-symbol"><i/><i/><i/></span><span>DiTap<span className="blue-word">Aja</span></span></a>}
+
+function CardMock({tone}:{tone:string}) {
+ return <div className={`simple-card ${tone}`}>
+  <div className="simple-card-top"><b>DiTapAja<span>.</span></b><Nfc size={23}/></div>
+  <div className="simple-card-center"><span>YOUR BUSINESS</span><strong>MAKE EVERY<br/>TAP COUNT.</strong></div>
+  <div className="simple-card-bottom"><span>NFC · QR CODE</span><span>10 × 10 CM</span></div>
+ </div>
 }
 
-function NfcCardVisual({ variant = "blue" }: { variant?: string }) {
-  return <div className={`nfc-card-visual ${variant}`}>
-    <div className="card-visual-top"><span>DiTapAja.</span><span className="tiny-chip">NFC ENABLED</span></div>
-    <div className="card-wave"><span/><span/><span/></div>
-    <div className="card-visual-bottom"><b>MAKE EVERY TAP COUNT.</b><Nfc size={20}/></div>
-  </div>;
-}
-
-export default function Home() {
-  return <main>
-    <header className="site-header">
-      <div className="container nav-wrap">
-        <Brand/>
-        <nav className="desktop-nav">
-          <a href="#fitur">Fitur</a><a href="#cara-kerja">Cara Kerja</a><a href="#produk">Produk</a><a href="#faq">FAQ</a>
-        </nav>
-        <div className="nav-actions"><a className="login-link" href="/login">Masuk</a><a className="button button-small" href="#produk">Mulai Sekarang <ArrowUpRight size={15}/></a></div>
-        <button className="mobile-menu" aria-label="Menu"><Menu size={22}/></button>
-      </div>
-    </header>
-
-    <section className="hero container">
-      <div className="hero-copy">
-        <div className="eyebrow"><span className="eyebrow-dot"/> CARA BARU MENGUMPULKAN REVIEW</div>
-        <h1>Satu tap,<br/><span>lebih banyak</span><br/>review.</h1>
-        <p className="hero-desc">Buat pelanggan lebih mudah menemukan halaman review bisnismu. Beli NFC card sekali, nikmati dashboard DiTapAja tanpa biaya langganan bulanan. Pelanggan cukup mendekatkan smartphone untuk membuka halaman review bisnismu.</p>
-        <div className="hero-actions"><a className="button" href="#produk">Temukan NFC Card <ArrowRight size={17}/></a><a className="button button-ghost" href="#cara-kerja"><span className="play-icon">▶</span> Lihat cara kerja</a></div><div className="free-note"><Check size={14}/> Dashboard gratis. Tanpa biaya bulanan.</div>
-        <div className="hero-proof"><div className="avatar-stack"><span>R</span><span>A</span><span>D</span><span>+</span></div><div><div className="proof-stars">★★★★★</div><small>Pengalaman review yang lebih praktis</small></div></div>
-      </div>
-      <div className="hero-art">
-        <div className="art-glow"/>
-        <div className="floating-label label-top"><span className="live-dot"/> TAP EXPERIENCE <b>01 / 03</b></div>
-        <div className="phone">
-          <div className="phone-island"/>
-          <div className="phone-screen">
-            <div className="phone-status"><span>9:41</span><span>●●● ▰</span></div>
-            <div className="google-mark"><b>G</b><span>Google</span></div>
-            <div className="business-avatar">K</div>
-            <h3>Kopi Senja</h3><p>Tempat nyaman untuk cerita.</p>
-            <div className="rating">4.9 <span>★★★★★</span></div>
-            <div className="phone-divider"/>
-            <div className="review-prompt">Bagaimana pengalamanmu?</div>
-            <div className="review-stars">☆ ☆ ☆ ☆ ☆</div>
-            <div className="review-cta">Tulis ulasan <ArrowUpRight size={13}/></div>
-            <small className="phone-note">Dibuka melalui DiTapAja</small>
-          </div>
-        </div>
-        <div className="hero-card"><NfcCardVisual/><div className="tap-rings"><span/><span/><span/></div></div>
-        <div className="floating-label label-bottom"><span className="label-icon"><TrendingUp size={15}/></span><div><b>Tap berhasil!</b><small>Pengalaman tanpa ribet</small></div><Check size={16} className="check-icon"/></div>
-        <div className="art-caption">TAP. REVIEW. GROW.</div>
-      </div>
-    </section>
-
-    <section className="trust-strip"><div className="container trust-inner"><span>DIBUAT UNTUK BISNIS YANG INGIN TERUS BERTUMBUH</span><div><b>CAFÉ & RESTAURANT</b><b>BEAUTY & WELLNESS</b><b>RETAIL</b><b>HOSPITALITY</b></div></div></section>
-
-    <section className="section container" id="fitur">
-      <div className="section-heading"><div className="eyebrow">KENAPA DITAPAJA?</div><h2>Review yang baik dimulai<br/>dari pengalaman yang <span>mudah.</span></h2><p>Hilangkan langkah yang tidak perlu. Bantu pelanggan memberikan feedback saat pengalaman mereka masih segar.</p></div>
-      <div className="feature-grid">
-        <article className="feature-card feature-main"><div className="feature-icon blue-bg"><Nfc size={22}/></div><div className="feature-number">01 / SIMPLE</div><h3>Cukup satu tap.</h3><p>Pelanggan tidak perlu mencari nama bisnismu secara manual. Dekatkan smartphone ke kartu dan halaman tujuan langsung terbuka.</p><div className="feature-illustration"><div className="mini-nfc"><Nfc size={28}/><b>DiTapAja</b></div><div className="mini-phone"><div/><div/><div/></div></div></article>
-        <article className="feature-card"><div className="feature-icon purple-bg"><Gauge size={22}/></div><div className="feature-number">02 / INSIGHT</div><h3>Kenali performa.</h3><p>Pantau aktivitas tap dan klik review melalui dashboard yang mudah dipahami.</p><div className="mini-chart"><div className="chart-bars"><i/><i/><i/><i/><i/><i/><i/></div><div className="chart-line"><span>Aktivitas meningkat</span><b>↗ 24.8%</b></div></div></article>
-        <article className="feature-card"><div className="feature-icon green-bg"><Zap size={22}/></div><div className="feature-number">03 / FLEXIBLE</div><h3>Atur dengan mudah.</h3><p>Kelola tujuan link kartu dari satu tempat. Tidak perlu mengganti kartu setiap kali link berubah.</p><div className="link-preview"><span className="link-icon"><MapPin size={16}/></span><div><b>Google Maps Review</b><small>maps.app.goo.gl/your-business</small></div><Check size={17}/></div></article>
-      </div>
-    </section>
-
-    <section className="how-section" id="cara-kerja"><div className="container how-inner"><div className="how-copy"><div className="eyebrow">MUDAH DALAM 3 LANGKAH</div><h2>Dari tap sampai<br/><span>review.</span> Sesederhana itu.</h2><p>Pengalaman singkat yang membuat pelanggan lebih mudah terhubung dengan bisnismu.</p><a href="#produk" className="text-link">Pilih kartu NFC kamu <ArrowRight size={16}/></a></div><div className="steps"><div className="step"><div className="step-icon"><Smartphone size={21}/></div><div><span>LANGKAH 01</span><h3>Tap kartu NFC</h3><p>Pelanggan mendekatkan smartphone ke kartu DiTapAja.</p></div><b>01</b></div><div className="step"><div className="step-icon"><MousePointerClick size={21}/></div><div><span>LANGKAH 02</span><h3>Halaman terbuka</h3><p>Halaman bisnis dan tombol review tampil di browser.</p></div><b>02</b></div><div className="step"><div className="step-icon"><Star size={21}/></div><div><span>LANGKAH 03</span><h3>Bagikan pengalaman</h3><p>Pelanggan dapat melanjutkan ke halaman Google Review.</p></div><b>03</b></div></div></div></section>
-
-    <section className="dashboard-section container" id="dashboard"><div className="dashboard-copy"><div className="eyebrow">LEBIH DARI SEKADAR KARTU</div><h2>Semua aktivitas,<br/>dalam <span>satu dashboard.</span></h2><p>Kelola kartu NFC, atur link tujuan, dan pahami interaksi pelanggan dari satu tempat. Dirancang supaya kamu fokus mengembangkan bisnis.</p><ul><li><Check size={16}/> Ringkasan aktivitas tap</li><li><Check size={16}/> Statistik klik review</li><li><Check size={16}/> Kelola beberapa kartu</li></ul><a className="button" href="#produk">Jelajahi produk <ArrowRight size={16}/></a></div><div className="dashboard-mock"><div className="mock-top"><div className="mock-brand"><span className="brand-symbol"><i/><i/><i/></span> DiTapAja</div><div className="mock-user">CI</div></div><div className="mock-body"><aside className="mock-side"><span className="mock-active">▦ Overview</span><span>▣ My Cards</span><span>⌁ Analytics</span><span>⚙ Settings</span></aside><div className="mock-content"><small>OVERVIEW / NOVEMBER 2026</small><h3>Selamat datang kembali!</h3><div className="mock-stats"><div><span>Total tap</span><b>2,481</b><em>↗ 12.8%</em></div><div><span>Review clicks</span><b>1,126</b><em>↗ 18.4%</em></div></div><div className="mock-graph"><div className="graph-title">Aktivitas NFC <span>7 hari terakhir⌄</span></div><div className="graph-lines"><i/><i/><i/><i/></div><svg viewBox="0 0 400 100" preserveAspectRatio="none"><path d="M0 82 C35 78 45 53 80 64 S125 35 160 49 S210 22 245 39 S285 15 320 27 S365 5 400 12" fill="none" stroke="#3978f6" strokeWidth="3" strokeLinecap="round"/></svg></div><div className="mock-card-row"><span className="mock-card-thumb"><Nfc size={17}/></span><span><b>Kopi Senja — Main Outlet</b><small>Active · Jakarta Selatan</small></span><strong>1,248 taps</strong></div></div></div></div></section>
-
-    <section className="free-dashboard-band"><div className="container free-dashboard-inner"><div className="free-dashboard-icon"><Gauge size={25}/></div><div className="free-dashboard-copy"><span className="eyebrow">TERMASUK DALAM PEMBELIAN</span><h2>Dashboard gratis. <span>Selamanya.</span></h2><p>Beli NFC card DiTapAja satu kali dan gunakan dashboard untuk mengelola kartu serta memantau aktivitas tap dan klik review — tanpa tagihan langganan bulanan.</p></div><div className="free-dashboard-points"><div><Check size={15}/> Tanpa biaya bulanan</div><div><Check size={15}/> Kelola kartu dari satu akun</div><div><Check size={15}/> Pantau aktivitas kartu</div></div></div></section>
-
-    <section className="products-section" id="produk"><div className="container"><div className="products-heading"><div><div className="eyebrow">DITAPAJA PREMIUM COLLECTION</div><h2>Pilih gaya bisnismu.</h2><p>Tiga desain NFC Review Card, satu dashboard gratis untuk memantau aktivitas pelanggan.</p></div></div><div className="product-grid">{products.map((p)=><article className="product-card" key={p.code}><a href={p.href} className="product-card-link" aria-label={`Lihat detail ${p.name}`}><div className={`product-art ${p.tone}`}><span className="product-tag">{p.subtitle}</span><div className={`collection-card ${p.tone}`}><span className="collection-brand">DiTapAja<span>.</span></span><span className="collection-review">GOOGLE REVIEW</span><span className="collection-nfc">NFC <Nfc size={18}/></span><span className="collection-size">10 × 10 CM</span></div><span className="product-code">DITAPAJA / {p.code}</span></div><div className="product-info"><h3>{p.name}</h3><p>{p.desc}</p><div><b>{p.price}</b><span className="product-arrow"><ArrowUpRight size={17}/></span></div></div></a></article>)}</div><p className="product-disclaimer">Setiap kartu dilengkapi NFC, QR Code, dan akses dashboard DiTapAja tanpa biaya langganan bulanan.</p></div></section>
-
-    <section className="faq-section container" id="faq"><div className="faq-heading"><div className="eyebrow">PUNYA PERTANYAAN?</div><h2>Yang perlu<br/>kamu <span>tahu.</span></h2><p>Masih penasaran? Temukan jawaban singkatnya di sini.</p><a className="text-link" href="https://wa.me/6281321778081">Hubungi tim DiTapAja <ArrowUpRight size={16}/></a></div><div className="faq-list">{faqs.map(([q,a],i)=><details key={q} open={i===0}><summary>{q}<ChevronDown size={18}/></summary><p>{a}</p></details>)}</div></section>
-    <section className="cta-section"><div className="container cta-inner"><div className="cta-orb"><Sparkles size={25}/></div><div><div className="eyebrow">READY WHEN YOU ARE</div><h2>Bikin setiap pengalaman<br/>lebih mudah diingat.</h2><p>Mulai perjalanan review yang lebih praktis bersama DiTapAja.</p></div><a className="button button-white" href="#produk">Temukan NFC Card <ArrowRight size={17}/></a><div className="cta-decoration">DITAPAJA®</div></div></section>
-    <footer className="site-footer"><div className="container footer-top"><div><Brand/><p>Satu tap lebih dekat dengan<br/>pengalaman pelanggan yang lebih baik.</p></div><div className="footer-links"><div><b>JELAJAHI</b><a href="#fitur">Fitur</a><a href="#cara-kerja">Cara Kerja</a><a href="#produk">Produk</a></div><div><b>BANTUAN</b><a href="#faq">FAQ</a><a href="https://wa.me/6281321778081">Kontak</a></div><div><b>AKUN</b><a href="/login">Dashboard</a><a href="#produk">Mulai sekarang</a></div></div></div><div className="container footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>Made for better business experiences. <span className="footer-heart">♥</span></span></div></footer>
-  </main>;
+export default function Home(){
+ return <main className="minimal-home">
+  <header className="minimal-header"><div className="minimal-nav"><Brand/><nav><a href="#produk">Produk</a><a href="#cara-kerja">Cara kerja</a><a href="#faq">FAQ</a></nav><div className="minimal-actions"><a href="/login">Masuk</a><a className="minimal-cta" href="#produk">Pilih kartu <ArrowUpRight size={15}/></a></div></div></header>
+  <section className="minimal-hero">
+   <div className="minimal-hero-inner">
+    <div className="minimal-hero-copy"><span className="minimal-kicker">NFC REVIEW CARD · FREE DASHBOARD</span><h1>Review bisnis,<br/><em>semudah satu tap.</em></h1><p>Hubungkan pelanggan ke halaman Google Review dengan satu sentuhan. Kelola kartu dan pantau interaksi melalui satu dashboard.</p><div className="minimal-hero-buttons"><a className="minimal-cta" href="#produk">Temukan kartu <ArrowRight size={16}/></a><a className="minimal-text-link" href="#cara-kerja">Pelajari cara kerja</a></div><div className="minimal-assurance"><Check size={15}/> Sekali beli. Dashboard tanpa biaya bulanan.</div></div>
+    <div className="minimal-hero-visual"><div className="minimal-orbit orbit-one"/><div className="minimal-orbit orbit-two"/><CardMock tone="noir"/><div className="minimal-float"><span><Nfc size={17}/></span><div><b>Tap. Terhubung.</b><small>Tanpa aplikasi tambahan</small></div></div><div className="minimal-visual-index">DITAPAJA / 001</div></div>
+   </div>
+  </section>
+  <section className="minimal-benefits"><div className="minimal-benefit"><Nfc/><div><b>Satu sentuhan</b><span>Akses dengan NFC</span></div></div><div className="minimal-benefit"><QrCode/><div><b>Scan juga bisa</b><span>QR Code tersedia</span></div></div><div className="minimal-benefit"><BarChart3/><div><b>Lebih terukur</b><span>Pantau dari dashboard</span></div></div><div className="minimal-benefit"><Link2/><div><b>Fleksibel</b><span>Atur link kapan saja</span></div></div></section>
+  <section className="minimal-products" id="produk"><div className="minimal-section-head"><div><span className="minimal-kicker">THE COLLECTION</span><h2>Satu fungsi.<br/><em>Tiga karakter.</em></h2></div><p>Pilih desain yang paling sesuai dengan identitas bisnismu.</p></div><div className="minimal-product-grid">{products.map((p,i)=><a className="minimal-product" href={p.href} key={p.tone}><div className={`minimal-product-art ${p.tone}`}><span className="minimal-product-label">{p.label}</span><CardMock tone={p.tone}/><span className="minimal-product-number">0{i+1}</span></div><div className="minimal-product-info"><div><h3>{p.name}</h3><p>{p.description}</p></div><span className="minimal-product-arrow"><ArrowUpRight size={18}/></span></div></a>)}</div></section>
+  <section className="minimal-how" id="cara-kerja"><div className="minimal-how-inner"><div><span className="minimal-kicker">HOW IT WORKS</span><h2>Tiga langkah.<br/><em>Sesederhana itu.</em></h2><p>Pengalaman yang ringkas untuk pelanggan, kendali yang lebih mudah untuk bisnismu.</p></div><div className="minimal-steps"><article><span>01</span><div><Smartphone/><h3>Tap atau scan</h3><p>Pelanggan mendekatkan ponsel atau memindai QR Code.</p></div></article><article><span>02</span><div><Link2/><h3>Halaman terbuka</h3><p>Link tujuan bisnismu terbuka langsung di browser.</p></div></article><article><span>03</span><div><Check/><h3>Lanjut ke review</h3><p>Pelanggan dapat menulis ulasan di Google.</p></div></article></div></div></section>
+  <section className="minimal-dashboard"><div className="minimal-dashboard-inner"><div><span className="minimal-kicker">ONE CARD. ONE DASHBOARD.</span><h2>Kartunya sederhana.<br/><em>Kontrolnya lengkap.</em></h2><p>Atur tujuan kartu, lihat aktivitas tap, dan pantau klik menuju Google Review dari satu tempat.</p><ul><li><Check/> Ringkasan aktivitas kartu</li><li><Check/> Estimasi pengunjung unik</li><li><Check/> Klik menuju Google Review</li><li><Check/> Tanpa biaya langganan bulanan</li></ul><a className="minimal-text-link" href="/login">Masuk ke dashboard <ArrowUpRight size={16}/></a></div><div className="minimal-dashboard-art"><div className="dashboard-window"><div className="dashboard-window-top"><span/><span/><span/><b>DiTapAja / Overview</b></div><div className="dashboard-window-body"><small>YOUR ACTIVITY</small><h3>Semua dalam kendali.</h3><div className="dashboard-placeholder-stats"><div><span>Total tap</span><b>— — —</b></div><div><span>Review clicks</span><b>— — —</b></div></div><div className="dashboard-placeholder-chart"><span/><span/><span/><span/><span/><span/><span/><span/></div><small>Visual ilustrasi dashboard</small></div></div></div></div></section>
+  <section className="minimal-faq" id="faq"><div><span className="minimal-kicker">GOOD TO KNOW</span><h2>Pertanyaan<br/><em>yang sering ada.</em></h2><p>Belum menemukan jawaban? <a href="https://wa.me/6281321778081">Hubungi kami.</a></p></div><div className="minimal-faq-list">{questions.map(([q,a])=><details key={q}><summary>{q}<ChevronDown size={18}/></summary><p>{a}</p></details>)}</div></section>
+  <section className="minimal-end"><span className="minimal-kicker">MAKE EVERY TAP COUNT</span><h2>Mulai dari satu tap.</h2><p>Buat pengalaman review jadi lebih mudah bersama DiTapAja.</p><a className="minimal-cta minimal-cta-light" href="#produk">Pilih desain kartu <ArrowRight size={16}/></a></section>
+  <footer className="minimal-footer"><Brand/><span>© 2026 DiTapAja</span><a href="https://wa.me/6281321778081">Butuh bantuan? Hubungi kami <ArrowUpRight size={14}/></a></footer>
+ </main>
 }
