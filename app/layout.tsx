@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ThemeToggle from "./components/theme-toggle";
 
 export const metadata: Metadata = {
   title: "DiTapAja — Satu Tap, Lebih Banyak Review",
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="id"><body>{children}</body></html>;
+  return <html lang="id" suppressHydrationWarning><body>{children}<ThemeToggle/></body></html>;
 }
