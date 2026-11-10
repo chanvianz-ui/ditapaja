@@ -1056,3 +1056,67 @@ html[data-theme="dark"] .benefit-slide-icon{background:linear-gradient(145deg,#5
  .benefit-slider-track{animation-duration:29s}
 }
 @media(prefers-reduced-motion:reduce){.benefit-slider-track{animation:none!important}}
+
+
+/* Refined editorial finish — quieter surfaces, tighter live benefits rail */
+.concept-home{background:#f5f3ed}
+.concept-eyebrow{letter-spacing:1.35px}
+.concept-header{box-shadow:0 2px 12px #17202a08}
+.concept-nav-cta,.concept-button,.concept-product-buy>a,.concept-final-button{border-radius:7px}
+.concept-nav-cta{box-shadow:none}
+.concept-button{box-shadow:0 5px 14px #456ff51c}
+.concept-hero h1{letter-spacing:-.082em}
+.concept-stage-circle{background:#eae8e1}
+.concept-stage-circle:after{border-style:solid;opacity:.35}
+.concept-stage-chip{border-radius:7px;box-shadow:0 7px 20px #17202a10}
+.concept-product{border-radius:12px;box-shadow:0 3px 14px #17202a08}
+.concept-product:hover{transform:translateY(-3px);box-shadow:0 12px 28px #17202a10}
+.concept-product-art{border-radius:0;height:285px}
+.concept-product-art:before{inset:11px;border-radius:5px}
+.concept-product-art:after{opacity:.5}
+.concept-product-art .simple-card{border-radius:10px;transform:rotate(-5deg);box-shadow:0 18px 32px #0003}
+.concept-product-body{padding:20px}
+.concept-product h3{font-size:19px}
+.concept-product-buy>a{border-radius:6px;box-shadow:none}
+.concept-flow article{border-radius:8px}
+.concept-step-icon{border-radius:8px}
+.concept-dashboard-visual,.concept-dashboard-frame{border-radius:9px}
+.concept-dash-sticker{border-radius:8px}
+.concept-faq-list details[open]{border-radius:6px}
+.concept-final-button{box-shadow:none}
+.concept-footer .brand-symbol{border-radius:8px}
+
+/* Compact live slider: subtle motion, less visual weight */
+.benefit-slider{height:92px;background:#f0f2f5;border:0;border-top:1px solid #e7e9ed;border-bottom:1px solid #e7e9ed}
+.benefit-slider:before,.benefit-slider:after{width:5%}
+.benefit-slider:before{background:linear-gradient(90deg,#f0f2f5,transparent)}
+.benefit-slider:after{background:linear-gradient(270deg,#f0f2f5,transparent)}
+.benefit-slider-track{animation-duration:48s}
+.benefit-slider-group{gap:13px;padding-right:13px}
+.benefit-slide{width:318px;min-height:62px;gap:13px;padding:9px 13px;border:1px solid #e4e7ec;border-radius:9px;box-shadow:0 2px 7px #1c2a3b08}
+.benefit-slide:hover{transform:translateY(-2px);box-shadow:0 5px 14px #1c2a3b0c}
+.benefit-slide-icon{width:42px;height:42px;flex-basis:42px;border-radius:8px;background:#edf2ff;color:#3659df;box-shadow:none}
+.benefit-slide-icon svg{width:19px;height:19px}
+.benefit-slide h3{font:700 13px/1.25 Manrope,sans-serif;letter-spacing:-.25px;color:#253143;margin:0 0 3px}
+.benefit-slide p{font:400 10px/1.35 "DM Sans",sans-serif;color:#818b98}
+html[data-theme="dark"] .concept-home{background:#0b111a}
+html[data-theme="dark"] .concept-stage-circle{background:#182638}
+html[data-theme="dark"] .benefit-slider{background:#111b28;border-color:#243246}
+html[data-theme="dark"] .benefit-slider:before{background:linear-gradient(90deg,#111b28,transparent)}
+html[data-theme="dark"] .benefit-slider:after{background:linear-gradient(270deg,#111b28,transparent)}
+html[data-theme="dark"] .benefit-slide{background:#172333;border-color:#29394e;box-shadow:0 2px 8px #0002}
+html[data-theme="dark"] .benefit-slide-icon{background:#243653;color:#a9bcff}
+html[data-theme="dark"] .benefit-slide h3{color:#e7edf6}
+html[data-theme="dark"] .benefit-slide p{color:#9aa9bb}
+@media(max-width:680px){
+ .benefit-slider{height:76px}
+ .benefit-slider-group{gap:9px;padding-right:9px}
+ .benefit-slide{width:258px;min-height:52px;gap:10px;padding:7px 10px;border-radius:8px}
+ .benefit-slide-icon{width:36px;height:36px;flex-basis:36px;border-radius:7px}
+ .benefit-slide-icon svg{width:17px;height:17px}
+ .benefit-slide h3{font-size:11px;margin-bottom:2px}
+ .benefit-slide p{font-size:9px}
+ .benefit-slider-track{animation-duration:42s}
+ .concept-product-art{height:260px}
+}
+@media(prefers-reduced-motion:reduce){.benefit-slider-track{animation:none!important}}
