@@ -150,26 +150,33 @@ export async function GET(
       var button = document.getElementById("reviewButton");
       var status = document.getElementById("status");
       var tapKey = "ditapaja-tap-" + code;
+      var previewMode = ${JSON.stringify(request.nextUrl.searchParams.get("preview") === "1")};
 
-      // Count once per browser tab session after the page is rendered.
-      try {
-        if (!sessionStorage.getItem(tapKey)) {
-          sessionStorage.setItem(tapKey, "1");
+      // Preview sessions must not be counted as real customer activity.
+      if (!previewMode) {
+        try {
+          if (!sessionStorage.getItem(tapKey)) {
+            sessionStorage.setItem(tapKey, "1");
+            fetch("/api/track/" + encodeURIComponent(code), {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              keepalive: true
+            }).catch(function () {});
+          }
+        } catch (_) {
           fetch("/api/track/" + encodeURIComponent(code), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             keepalive: true
           }).catch(function () {});
         }
-      } catch (_) {
-        fetch("/api/track/" + encodeURIComponent(code), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          keepalive: true
-        }).catch(function () {});
+      } else {
+        button.disabled = true;
+        button.textContent = "Mode Preview";
+        status.textContent = "Pratinjau pemilik kartu — aktivitas tidak dicatat.";
       }
 
-      button.addEventListener("click", async function () {
+      if (!previewMode) button.addEventListener("click", async function () {
         button.disabled = true;
         button.textContent = "Membuka Google Maps...";
         status.textContent = "";
