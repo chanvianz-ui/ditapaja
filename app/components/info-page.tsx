@@ -1,0 +1,4 @@
+import type { ReactNode } from "react";
+import SiteHeader from "./site-header";
+import { ArrowUpRight } from "lucide-react";
+export default function InfoPage({eyebrow,title,lead,children}:{eyebrow:string;title:ReactNode;lead:string;children:ReactNode}){return <main className="info-page"><SiteHeader/><section className="info-hero"><div className="info-wrap"><div className="info-eyebrow">{eyebrow}</div><h1>{title}</h1><p>{lead}</p></div></section><section className="info-content"><div className="info-wrap">{children}<div className="info-contact-strip"><div><small>ADA YANG INGIN DITANYAKAN?</small><strong>Kami siap membantu.</strong></div><a href="https://wa.me/6281321778081">Hubungi DiTapAja <ArrowUpRight size={16}/></a></div></div></section><footer className="info-footer"><a href="/">DiTap<span>Aja</span></a><span>© 2026 DiTapAja</span><a href="/kebijakan-privasi">Privasi</a><a href="/syarat-ketentuan">Ketentuan</a></footer></main>}
