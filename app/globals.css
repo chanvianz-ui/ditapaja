@@ -742,3 +742,148 @@ html[data-theme="dark"] .modern-footer{border-color:#26374d}
 .concept-product-buy{flex-direction:column;align-items:stretch}.concept-product-buy>a{justify-content:center}
 .concept-collection-foot p{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.concept-home *,.concept-home *:before,.concept-home *:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+
+/* Concept homepage — complete dark theme + final polish */
+.concept-home{background:#f3f1eb;color:#111820}
+.concept-home .concept-product,.concept-home .concept-dashboard-frame{color:#17212a}
+.concept-home .concept-hero,.concept-home .concept-header{color:#111820}
+.concept-home .concept-button,.concept-home .concept-product-buy>a,.concept-home .concept-final-button{transition:transform .22s ease,background .22s ease,box-shadow .22s ease}
+.concept-home .concept-product-art .simple-card{transition:transform .35s ease,box-shadow .35s ease}
+.concept-home .concept-product:hover .simple-card{transform:rotate(-4deg) translateY(-4px)}
+.concept-home .concept-section-top h2,.concept-home .concept-experience h2,.concept-home .concept-dashboard h2,.concept-home .concept-faq h2{line-height:1.04}
+.concept-home .concept-product{box-shadow:0 5px 20px #17202a08}
+.concept-home .concept-product:hover{box-shadow:0 22px 48px #17202a15}
+.concept-home .concept-flow article{transition:border-color .25s ease,background .25s ease}
+.concept-home .concept-flow article:hover{border-color:#617cae;background:#ffffff08}
+.concept-home .concept-dashboard-frame{border-radius:5px}
+.concept-home .concept-dashboard-visual{border-radius:3px}
+.concept-home .concept-product-art{background-image:radial-gradient(circle at 50% 45%,#ffffff12,transparent 65%)}
+.concept-home .concept-product-art.blanc{background-image:radial-gradient(circle at 50% 45%,#ffffffa8,transparent 65%)}
+.concept-home .concept-product-art.signature{background-image:radial-gradient(circle at 50% 45%,#ffffff88,transparent 65%)}
+.concept-home .concept-footer .brand-symbol{box-shadow:inset 0 0 0 1px #ffffff12}
+html[data-theme="dark"] body{background:#0b111a;color:#e9edf4}
+html[data-theme="dark"] .concept-home{--c-ink:#edf2f8;--c-muted:#a1adbd;--c-blue:#91adff;background:#0b111a;color:#edf2f8}
+html[data-theme="dark"] .concept-header{background:#0d1520;border-color:#263447}
+html[data-theme="dark"] .concept-nav .brand{color:#f1f4f8}
+html[data-theme="dark"] .concept-nav nav a,html[data-theme="dark"] .concept-nav-actions>a:first-child{color:#aab7c8}
+html[data-theme="dark"] .concept-nav nav a:hover,html[data-theme="dark"] .concept-nav-actions>a:first-child:hover{color:#a9c0ff}
+html[data-theme="dark"] .concept-nav-cta{background:#e8edf5;color:#142033!important}
+html[data-theme="dark"] .concept-hero{background:radial-gradient(ellipse at 77% 43%,#1b2b43 0%,#111c2b 43%,#0b111a 78%);color:#edf2f8}
+html[data-theme="dark"] .concept-hero h1{color:#f1f4f8}
+html[data-theme="dark"] .concept-lead{color:#aebaca}
+html[data-theme="dark"] .concept-eyebrow{color:#98a8bd}
+html[data-theme="dark"] .concept-eyebrow>span{background:#91adff;box-shadow:0 0 0 4px #91adff20}
+html[data-theme="dark"] .concept-quiet-link{color:#c0cad8}
+html[data-theme="dark"] .concept-proof{border-color:#2b3a4d}
+html[data-theme="dark"] .concept-proof span{color:#aab8c9}
+html[data-theme="dark"] .concept-proof svg,html[data-theme="dark"] .concept-hero h1 em{color:#91adff}
+html[data-theme="dark"] .concept-button,html[data-theme="dark"] .concept-product-buy>a,html[data-theme="dark"] .concept-final-button{background:#527cf0;color:#fff!important;box-shadow:0 9px 24px #426fe02b}
+html[data-theme="dark"] .concept-button:hover,html[data-theme="dark"] .concept-product-buy>a:hover,html[data-theme="dark"] .concept-final-button:hover{background:#7093ff}
+html[data-theme="dark"] .concept-stage-circle{background:#182638;border-color:#34465c}
+html[data-theme="dark"] .concept-stage-circle:before,html[data-theme="dark"] .concept-stage-circle:after{border-color:#3b4d62}
+html[data-theme="dark"] .concept-stage-label,html[data-theme="dark"] .concept-stage-index{color:#8293a8}
+html[data-theme="dark"] .concept-stage-index b{color:#c0ccda}
+html[data-theme="dark"] .concept-card-shadow{background:#0008}
+html[data-theme="dark"] .concept-stage-chip{background:#182638;border-color:#354a63;color:#9db8ff}
+html[data-theme="dark"] .concept-stage-chip b{color:#edf3fc}
+html[data-theme="dark"] .concept-stage-chip small{color:#9eafc2}
+html[data-theme="dark"] .concept-hero-bottom{border-color:#29394d;color:#8494a8}
+html[data-theme="dark"] .concept-hero-bottom b{color:#a4bbff}
+html[data-theme="dark"] .concept-ticker{background:#050a11;color:#e6edf8;border-top:1px solid #26374c;border-bottom:1px solid #26374c}
+html[data-theme="dark"] .concept-ticker i{color:#91adff}
+html[data-theme="dark"] .concept-collection{background:#101a28;color:#edf2f8}
+html[data-theme="dark"] .concept-section-top h2,html[data-theme="dark"] .concept-dashboard h2,html[data-theme="dark"] .concept-faq h2{color:#edf2f8}
+html[data-theme="dark"] .concept-section-top h2 em,html[data-theme="dark"] .concept-dashboard h2 em,html[data-theme="dark"] .concept-faq h2 em{color:#91adff}
+html[data-theme="dark"] .concept-section-top>p{color:#a2b0c2}
+html[data-theme="dark"] .dark-eyebrow{color:#91a1b5}
+html[data-theme="dark"] .concept-product{background:#152235;border-color:#2a3b51;box-shadow:0 8px 25px #0002}
+html[data-theme="dark"] .concept-product:hover{box-shadow:0 22px 48px #0004}
+html[data-theme="dark"] .concept-product-art{background-color:#1c2a3d;background-image:radial-gradient(circle at 50% 45%,#ffffff12,transparent 65%)}
+html[data-theme="dark"] .concept-product-art.blanc{background-color:#344255;background-image:radial-gradient(circle at 50% 45%,#ffffff20,transparent 65%)}
+html[data-theme="dark"] .concept-product-art.signature{background-color:#263c58;background-image:radial-gradient(circle at 50% 45%,#ffffff18,transparent 65%)}
+html[data-theme="dark"] .concept-product-art:after{border-color:#ffffff20;box-shadow:0 0 0 28px #ffffff08,0 0 0 58px #ffffff05}
+html[data-theme="dark"] .concept-product-art.blanc:after,html[data-theme="dark"] .concept-product-art.signature:after{border-color:#ffffff20;box-shadow:0 0 0 28px #ffffff08,0 0 0 58px #ffffff05}
+html[data-theme="dark"] .concept-product-art.blanc .concept-product-art-top,html[data-theme="dark"] .concept-product-art.blanc .concept-product-art-bottom,html[data-theme="dark"] .concept-product-art.signature .concept-product-art-top,html[data-theme="dark"] .concept-product-art.signature .concept-product-art-bottom{color:#e0e8f2b5}
+html[data-theme="dark"] .concept-product-meta{color:#9cabc0}
+html[data-theme="dark"] .concept-product-meta span:first-child{color:#a7bdff}
+html[data-theme="dark"] .concept-product h3{color:#edf2f8}
+html[data-theme="dark"] .concept-product-body>p{color:#a4b1c2}
+html[data-theme="dark"] .concept-product-includes{border-color:#2b3d53}
+html[data-theme="dark"] .concept-product-includes span{color:#aab8c9}
+html[data-theme="dark"] .concept-product-includes svg{color:#a0b8ff}
+html[data-theme="dark"] .concept-product-buy strong{color:#f0f4fa}
+html[data-theme="dark"] .concept-product-buy small,html[data-theme="dark"] .concept-product-buy>div>span{color:#91a0b3}
+html[data-theme="dark"] .concept-collection-foot{color:#91a0b3}
+html[data-theme="dark"] .concept-collection-foot p{color:#aab7c7}
+html[data-theme="dark"] .concept-experience{background:#080e16;color:#edf2f8}
+html[data-theme="dark"] .concept-experience .concept-eyebrow{color:#91a1b5}
+html[data-theme="dark"] .concept-experience h2 em{color:#91adff}
+html[data-theme="dark"] .concept-experience-head>p{color:#aab7c7}
+html[data-theme="dark"] .concept-flow article{border-color:#2b3c51;background:#101c2b}
+html[data-theme="dark"] .concept-flow article:hover{border-color:#526d9b;background:#15243a}
+html[data-theme="dark"] .concept-step-no{color:#8193aa}
+html[data-theme="dark"] .concept-step-icon{border-color:#3a506c;color:#a4bcff}
+html[data-theme="dark"] .concept-flow h3{color:#eef3fa}
+html[data-theme="dark"] .concept-flow p,html[data-theme="dark"] .concept-experience-note{color:#a6b4c5}
+html[data-theme="dark"] .concept-flow-line{background:#3a4d65}
+html[data-theme="dark"] .concept-flow-line:after{border-color:#91adff}
+html[data-theme="dark"] .concept-experience-note svg{color:#a3baff}
+html[data-theme="dark"] .concept-dashboard{background:#111e2e;color:#edf2f8}
+html[data-theme="dark"] .concept-dashboard-copy>p{color:#a9b7c8}
+html[data-theme="dark"] .concept-dashboard-copy li{color:#c0ccda}
+html[data-theme="dark"] .concept-dashboard-copy li svg,html[data-theme="dark"] .concept-dashboard-link{color:#a3baff}
+html[data-theme="dark"] .concept-dashboard-link{border-color:#7898f2}
+html[data-theme="dark"] .concept-dashboard-visual{background:#1a2a3e;border-color:#344a64}
+html[data-theme="dark"] .concept-dashboard-frame{background:#101b2a;border-color:#2b3d53;box-shadow:0 25px 60px #0005}
+html[data-theme="dark"] .concept-dash-top{border-color:#2a3d53}
+html[data-theme="dark"] .concept-dash-top .brand{color:#edf2f8}
+html[data-theme="dark"] .concept-dash-top>span{color:#9aabc0}
+html[data-theme="dark"] .concept-dash-welcome small,html[data-theme="dark"] .concept-dash-chart>div:first-child span{color:#9aabc0}
+html[data-theme="dark"] .concept-dash-welcome h3{color:#edf2f8}
+html[data-theme="dark"] .concept-dash-welcome p{color:#9cacc0}
+html[data-theme="dark"] .concept-dash-metrics>div,html[data-theme="dark"] .concept-dash-chart{background:#17263a;border-color:#30445e}
+html[data-theme="dark"] .concept-dash-metrics span{color:#aab8c9}
+html[data-theme="dark"] .concept-dash-metrics b{color:#edf3fb}
+html[data-theme="dark"] .concept-dash-metrics small,html[data-theme="dark"] .concept-dash-chart>div:first-child small{color:#8fa0b5}
+html[data-theme="dark"] .concept-chart-bars i{background:linear-gradient(180deg,#a8bdff,#527cf0)}
+html[data-theme="dark"] .concept-dash-sticker{background:#080f19;color:#a8bdff;box-shadow:0 12px 30px #0005}
+html[data-theme="dark"] .concept-dash-sticker span{color:#b7c5d6}
+html[data-theme="dark"] .concept-dash-sticker b{color:#f2f5fa}
+html[data-theme="dark"] .concept-faq{background:#101a28;color:#edf2f8}
+html[data-theme="dark"] .concept-faq>div:first-child>p{color:#a0aec0}
+html[data-theme="dark"] .concept-faq>div:first-child>p a{color:#a5bcff}
+html[data-theme="dark"] .concept-faq-list,html[data-theme="dark"] .concept-faq-list details{border-color:#2b3c51}
+html[data-theme="dark"] .concept-faq-list summary{color:#edf2f8}
+html[data-theme="dark"] .concept-faq-list summary svg{color:#a5bcff}
+html[data-theme="dark"] .concept-faq-list details p{color:#aab8c9}
+html[data-theme="dark"] .concept-faq-list details[open]{background:#17263a}
+html[data-theme="dark"] .concept-final{background:radial-gradient(ellipse at 50% -20%,#1e3556 0%,#0b1421 58%,#070c13 100%);color:#edf2f8}
+html[data-theme="dark"] .concept-final .concept-eyebrow{color:#a0aec0}
+html[data-theme="dark"] .concept-final h2 em{color:#a7bdff}
+html[data-theme="dark"] .concept-final>p{color:#aab8c9}
+html[data-theme="dark"] .concept-final-orbit{border-color:#ffffff14;box-shadow:0 0 0 45px #ffffff06,0 0 0 95px #ffffff04}
+html[data-theme="dark"] .concept-footer{background:#070d15;border-color:#26374b;color:#8798ad}
+html[data-theme="dark"] .concept-footer .brand{color:#edf2f8}
+html[data-theme="dark"] .concept-footer .brand-symbol{background:#1c2d43;box-shadow:inset 0 0 0 1px #ffffff14}
+html[data-theme="dark"] .concept-footer>a:last-child{color:#b5c3d4}
+html[data-theme="dark"] .concept-mobile-menu summary{border-color:#35475e;background:#152338}
+html[data-theme="dark"] .concept-mobile-menu summary span{background:#e8eef7}
+html[data-theme="dark"] .concept-mobile-menu>div{background:#142237;border-color:#35475e;box-shadow:0 18px 40px #0007}
+html[data-theme="dark"] .concept-mobile-menu>div a{color:#e3ebf5}
+html[data-theme="dark"] .concept-mobile-menu>div a:hover{background:#203550}
+html[data-theme="dark"] .theme-toggle{background:#17263a;color:#edf2fb;border-color:#354963;box-shadow:0 8px 28px #0006}
+html[data-theme="dark"] .theme-toggle svg{color:#f4c66b}
+html[data-theme="light"] .concept-home{background:#f3f1eb;color:#111820}
+@media(max-width:680px){
+ .concept-hero-stage{overflow:hidden}
+ .concept-stage-chip{left:2px}
+ .concept-product-buy{min-width:0}
+ .concept-product-buy>a{max-width:48%;justify-content:center}
+ .concept-dash-sticker{right:-4px}
+}
+@media(max-width:380px){
+ .concept-product-buy{flex-direction:column;align-items:stretch}
+ .concept-product-buy>a{max-width:none;width:100%}
+}
+@media(hover:none){.concept-product:hover{transform:none}.concept-product:hover .simple-card{transform:rotate(-8deg)}}
