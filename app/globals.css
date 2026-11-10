@@ -1339,3 +1339,33 @@ html[data-theme="dark"] .concept-home .concept-flow article,html[data-theme="dar
 html[data-theme="dark"] .concept-home .concept-faq-list details{border:0!important}
 @media(max-width:900px){.catalog-track>.concept-product{flex-basis:calc((100% - 18px)/2)}}
 @media(max-width:680px){.catalog-slider-controls{margin-bottom:12px}.catalog-track{gap:13px!important;margin-right:-19px;padding-right:19px}.catalog-track>.concept-product{flex-basis:84%;scroll-snap-align:center}.catalog-slider-progress{margin-right:19px}}
+
+/* Explicit horizontal product rail: one card peeks into the next */
+.catalog-slider{width:100%;min-width:0;overflow:hidden}
+.catalog-track{display:flex!important;flex-flow:row nowrap!important;align-items:stretch;gap:18px!important;width:100%;max-width:100%;overflow-x:auto!important;overflow-y:hidden!important;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:2px 2px 12px;margin:0}
+.catalog-track::-webkit-scrollbar{display:none}
+.catalog-track>.concept-product{display:flex;flex-direction:column;flex:0 0 calc((100% - 36px)/2)!important;width:calc((100% - 36px)/2);min-width:0;scroll-snap-align:start}
+.catalog-track>.concept-product .concept-product-body{flex:1;display:flex;flex-direction:column}
+.catalog-track>.concept-product .concept-product-buy{margin-top:auto}
+.catalog-slider-controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;color:#8b929b;font-size:11px}
+.catalog-slider-controls>div{display:flex;gap:8px}
+.catalog-slider-controls button{width:36px;height:36px;padding:0;border:0!important;border-radius:50%;display:grid;place-items:center;background:#e9edf2;color:#26364b;cursor:pointer}
+.catalog-slider-progress{height:2px;background:#e8e9e7;border-radius:3px;overflow:hidden;margin-top:7px}
+.catalog-slider-progress span{display:block;width:34%;height:100%;background:#7185aa;border-radius:3px;transition:transform .12s linear}
+@media(min-width:1100px){.catalog-track>.concept-product{flex-basis:calc((100% - 36px)/2)!important}}
+@media(max-width:680px){
+ .catalog-track{gap:14px!important;padding:2px 20px 12px 2px;margin-right:-20px;width:calc(100% + 20px);scroll-padding-left:2px}
+ .catalog-track>.concept-product{flex:0 0 86%!important;width:86%;scroll-snap-align:start}
+ .catalog-slider-controls{margin-bottom:10px}
+}
+html[data-theme="dark"] .catalog-slider-controls{color:#a5b2c4}
+html[data-theme="dark"] .catalog-slider-controls button{background:#1c2b40;color:#e6edf7}
+html[data-theme="dark"] .catalog-slider-progress{background:#26374c}
+html[data-theme="dark"] .catalog-slider-progress span{background:#91a7cf}
+
+/* Remove decorative outlines/strokes from the landing page surfaces */
+.concept-home .concept-product,.concept-home .concept-flow article,.concept-home .concept-dashboard-frame,.concept-home .concept-dash-metrics>div,.concept-home .concept-dash-chart,.concept-home .concept-faq-list details,.concept-home .concept-final-button,.concept-home .concept-button,.concept-home .concept-nav-cta,.concept-home .benefit-slide,.concept-home .concept-stage-chip,.concept-home .concept-dash-sticker{border:0!important;outline:0!important}
+.concept-home .concept-product-art:before,.concept-home .concept-product-art:after{display:none!important}
+.concept-home .concept-faq-list details{border-bottom:0!important}
+.concept-home .concept-product{box-shadow:0 8px 24px #17202a0a}
+html[data-theme="dark"] .concept-home .concept-product{box-shadow:0 8px 26px #0003}
