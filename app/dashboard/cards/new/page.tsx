@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -49,6 +49,18 @@ export default function NewCardPage() {
   const [destination, setDestination] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [locations, setLocations] = useState<{id:string;name:string}[]>([]);
+  const [locationId, setLocationId] = useState("");
+
+  useEffect(() => {
+    async function loadLocations() {
+      const { data: auth } = await supabase.auth.getUser();
+      if (!auth.user) return;
+      const { data } = await supabase.from("business_locations").select("id,name").eq("user_id", auth.user.id).order("name");
+      setLocations(data || []);
+    }
+    loadLocations();
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -90,6 +102,7 @@ export default function NewCardPage() {
           public_code: publicCode,
           destination_url: cleanDestination,
           active: true,
+          location_id: locationId || null,
         });
 
       if (insertError) throw insertError;
@@ -172,6 +185,17 @@ export default function NewCardPage() {
                 Nama ini digunakan untuk mengenali kartu kamu.
               </p>
             </div>
+
+            {locations.length > 0 && (
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">Lokasi bisnis</label>
+                <select value={locationId} onChange={(e) => setLocationId(e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm outline-none focus:border-blue-500">
+                  <option value="">Tanpa lokasi / bisnis utama</option>
+                  {locations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
+                </select>
+                <p className="mt-2 text-xs text-slate-400">Pilih cabang agar aktivitas kartu dapat dianalisis per lokasi.</p>
+              </div>
+            )}
 
             <div>
               <label className="mb-2 block text-sm font-semibold text-slate-700">
