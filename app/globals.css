@@ -1739,3 +1739,68 @@ html[data-theme="dark"] .concept-product-art{color:#fff}
 }
 html[data-theme="dark"] .concept-hero{background:#101b2d}
 html[data-theme="dark"] .concept-hero-stage{background:radial-gradient(circle at 50% 48%,#263b62 0,#1b2b46 52%,#101b2d 78%)}
+
+
+/* Spacious layout pass — wider canvas, calmer rhythm */
+:root{--da-wide:1480px;--da-gutter:clamp(24px,5.2vw,88px)}
+.concept-home{width:100%;overflow-x:clip}
+.concept-nav{width:min(var(--da-wide),calc(100% - var(--da-gutter)))!important}
+.concept-hero-grid{width:min(var(--da-wide),calc(100% - var(--da-gutter)))!important;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;gap:clamp(42px,6vw,104px)!important;min-height:clamp(620px,54vw,760px)!important;padding-block:clamp(54px,6vw,90px) 38px!important}
+.concept-hero-copy{max-width:660px!important}
+.concept-hero h1{font-size:clamp(66px,7.2vw,112px)!important;max-width:760px;line-height:.96!important}
+.concept-lead{max-width:540px!important;font-size:clamp(14px,1.1vw,17px)!important;line-height:1.9!important}
+.concept-hero-stage{height:clamp(500px,43vw,650px)!important;border-radius:clamp(24px,3vw,42px)!important}
+.concept-hero-stage .simple-card{width:clamp(245px,23vw,340px)!important;height:clamp(245px,23vw,340px)!important}
+.concept-hero-stage .simple-card-center strong{font-size:clamp(24px,2.3vw,34px)!important}
+.concept-hero-bottom{width:min(var(--da-wide),calc(100% - var(--da-gutter)))!important}
+.concept-collection,.concept-experience,.concept-dashboard,.concept-faq{padding-left:var(--da-gutter)!important;padding-right:var(--da-gutter)!important;padding-top:clamp(100px,9vw,150px)!important;padding-bottom:clamp(100px,9vw,150px)!important}
+.concept-section-top{max-width:var(--da-wide);margin:0 auto clamp(38px,4vw,58px)!important;grid-template-columns:minmax(0,1fr) minmax(280px,.55fr)!important;gap:clamp(40px,7vw,120px)!important}
+.concept-section-top h2,.concept-experience h2,.concept-dashboard h2,.concept-faq h2{font-size:clamp(52px,5.4vw,78px)!important;line-height:1!important}
+.concept-section-top>p,.concept-experience-head>p,.concept-dashboard-copy>p{font-size:clamp(14px,1.05vw,16px)!important;line-height:1.9!important}
+.catalog-slider,.concept-flow,.concept-dashboard,.concept-faq{max-width:var(--da-wide);margin-left:auto;margin-right:auto}
+.catalog-slider-controls{margin-bottom:25px!important}
+.catalog-track{gap:clamp(20px,2vw,30px)!important}
+.catalog-track>.concept-product{flex-basis:calc((100% - 2 * clamp(20px,2vw,30px))/3)!important}
+.concept-product-art{height:clamp(285px,24vw,370px)!important}
+.concept-product-art .simple-card{width:clamp(180px,16vw,235px)!important;height:clamp(180px,16vw,235px)!important}
+.concept-product-body{padding:clamp(22px,2vw,30px)!important}
+.concept-product h3{font-size:clamp(20px,1.55vw,25px)!important}
+.concept-product-body>p{font-size:14px!important;line-height:1.8!important}
+.concept-experience-head{max-width:760px!important}
+.concept-flow{margin-top:clamp(48px,5vw,76px)!important}
+.concept-flow article{padding:clamp(26px,3vw,42px)!important}
+.concept-dashboard{gap:clamp(55px,8vw,130px)!important;align-items:center}
+.concept-dashboard-copy{max-width:600px}
+.concept-dashboard-frame{max-width:720px!important}
+.concept-faq{gap:clamp(55px,8vw,130px)!important}
+.concept-final{padding:clamp(110px,11vw,170px) 24px!important}
+.concept-final h2{font-size:clamp(54px,6.4vw,88px)!important}
+.concept-footer{padding-left:var(--da-gutter)!important;padding-right:var(--da-gutter)!important}
+@media(max-width:900px){
+ .concept-hero-grid{grid-template-columns:1fr 1fr!important;gap:24px!important;min-height:580px!important}
+ .concept-hero h1{font-size:clamp(52px,7vw,76px)!important}
+ .concept-hero-stage{height:440px!important}
+ .concept-hero-stage .simple-card{width:225px!important;height:225px!important}
+ .concept-section-top{grid-template-columns:1fr!important;gap:16px!important}
+ .catalog-track>.concept-product{flex-basis:calc((100% - 24px)/2)!important}
+}
+@media(max-width:680px){
+ :root{--da-gutter:20px}
+ .concept-nav{width:calc(100% - 36px)!important}
+ .concept-hero-grid{grid-template-columns:1fr!important;width:calc(100% - 38px)!important;min-height:0!important;padding:46px 0 15px!important;gap:0!important}
+ .concept-hero h1{font-size:clamp(54px,13vw,76px)!important}
+ .concept-lead{font-size:13px!important;max-width:100%!important}
+ .concept-hero-stage{height:360px!important;min-height:0!important;margin-top:10px;border-radius:22px!important}
+ .concept-hero-stage .simple-card{width:205px!important;height:205px!important}
+ .concept-hero-stage .simple-card-center strong{font-size:21px!important}
+ .concept-hero-bottom{width:calc(100% - 38px)!important}
+ .concept-collection,.concept-experience,.concept-dashboard,.concept-faq{padding:76px 20px!important}
+ .concept-section-top{display:block!important;margin-bottom:30px!important}
+ .concept-section-top h2,.concept-experience h2,.concept-dashboard h2,.concept-faq h2{font-size:clamp(44px,11vw,58px)!important}
+ .catalog-track>.concept-product{flex-basis:88%!important;width:88%}
+ .concept-product-art{height:270px!important}
+ .concept-product-art .simple-card{width:180px!important;height:180px!important}
+ .concept-dashboard{gap:35px!important}
+ .concept-faq{gap:35px!important}
+ .concept-final{padding:85px 20px!important}
+}
