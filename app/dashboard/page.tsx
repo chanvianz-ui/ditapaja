@@ -28,7 +28,6 @@ import {
   Building2,
   Bell,
   Package,
-  UsersRound,
 } from "lucide-react";
 import { QRCodeCanvas } from "qrcode.react";
 import { supabase } from "../../lib/supabase";
@@ -660,12 +659,6 @@ export default function DashboardPage() {
               <Package size={19} /> Orders
             </a>
 
-            <a
-              href="/dashboard/team"
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              <UsersRound size={19} /> Team Access
-            </a>
           </nav>
 
           <div className="mt-auto border-t border-slate-100 pt-5">
