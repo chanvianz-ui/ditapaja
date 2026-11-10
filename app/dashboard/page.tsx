@@ -21,7 +21,12 @@ import {
   Settings,
   Nfc,
   CheckCircle2,
+  QrCode,
+  Download,
+  Eye,
+  FileSpreadsheet,
 } from "lucide-react";
+import { QRCodeCanvas } from "qrcode.react";
 import { supabase } from "../../lib/supabase";
 
 type Profile = {
@@ -106,6 +111,7 @@ export default function DashboardPage() {
   const [writingCardId, setWritingCardId] = useState<string | null>(null);
   const [nfcMessage, setNfcMessage] = useState("");
   const [nfcError, setNfcError] = useState("");
+  const [qrCard, setQrCard] = useState<NfcCard | null>(null);
 
   const chartData = useMemo(() => {
     const today = new Date();
@@ -148,6 +154,40 @@ export default function DashboardPage() {
     1,
     ...chartData.map((day) => Math.max(day.taps, day.clicks))
   );
+
+  const cardPerformance = useMemo(() => cards.map((card) => {
+    const rows = eventRows.filter((event) => event.card_id === card.id);
+    const taps = rows.filter((event) => event.event_type === "tap");
+    const clicks = rows.filter((event) => event.event_type === "review_click").length;
+    const visitors = new Set(taps.map((event) => event.visitor_hash).filter(Boolean));
+    return { card, taps: taps.length, clicks, visitors: visitors.size, ctr: taps.length ? clicks / taps.length * 100 : 0 };
+  }).sort((a, b) => b.taps - a.taps), [cards, eventRows]);
+
+  function exportAnalyticsCsv() {
+    const rows = selectedEventRows.map((event) => {
+      const card = cards.find((item) => item.id === event.card_id);
+      return [card?.card_name || "Untitled Card", event.event_type === "tap" ? "Tap" : "Review Click", new Date(event.created_at).toLocaleString("id-ID")];
+    });
+    const csv = [["Nama Kartu", "Aktivitas", "Waktu"], ...rows]
+      .map((row) => row.map((value) => '"' + String(value).replace(/"/g, '""') + '"').join(","))
+      .join("\r\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "ditapaja-analytics-" + new Date().toISOString().slice(0, 10) + ".csv";
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function downloadQrPng(card: NfcCard) {
+    const canvas = document.getElementById("ditapaja-qr-" + card.public_code) as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const anchor = document.createElement("a");
+    anchor.href = canvas.toDataURL("image/png");
+    anchor.download = "ditapaja-qr-" + card.public_code + ".png";
+    anchor.click();
+  }
 
   useEffect(() => {
     async function loadDashboard() {
@@ -686,20 +726,15 @@ export default function DashboardPage() {
                     ))}
                   </div>
 
-                  <div className="flex w-fit rounded-xl bg-slate-100 p-1">
-                    {([7, 30, 90] as const).map((period) => (
-                    <button
-                      key={period}
-                      onClick={() => setChartPeriod(period)}
-                      className={`rounded-lg px-3 py-2 text-xs font-semibold transition ${
-                        chartPeriod === period
-                          ? "bg-white text-blue-700 shadow-sm"
-                          : "text-slate-500 hover:text-slate-800"
-                      }`}
-                    >
-                      {period} Hari
-                    </button>
-                    ))}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex w-fit rounded-xl bg-slate-100 p-1">
+                      {([7, 30, 90] as const).map((period) => (
+                      <button key={period} onClick={() => setChartPeriod(period)} className={`rounded-lg px-3 py-2 text-xs font-semibold transition ${chartPeriod === period ? "bg-white text-blue-700 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}>
+                        {period} Hari
+                      </button>
+                      ))}
+                    </div>
+                    <button type="button" onClick={exportAnalyticsCsv} disabled={selectedEventRows.length === 0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"><FileSpreadsheet size={15}/> Export CSV</button>
                   </div>
                 </div>
               </div>
@@ -755,6 +790,13 @@ export default function DashboardPage() {
                 </p>
               )}
             </section>
+
+            {cards.length > 1 && (
+              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Perbandingan Kartu</h3><p className="mt-1 text-sm text-slate-500">Urutan kartu berdasarkan total tap yang tercatat.</p></div>
+                <div className="overflow-x-auto"><table className="w-full min-w-[560px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">CTR</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
+              </section>
+            )}
 
             {analyticsError && (
               <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
@@ -853,6 +895,8 @@ export default function DashboardPage() {
                       </div>
 
                       <div className="flex shrink-0 flex-wrap items-center gap-2">
+                        <button onClick={() => setQrCard(card)} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700" title="Tampilkan QR Code kartu"><QrCode size={16}/> QR Code</button>
+                        <button onClick={() => window.open("/c/" + card.public_code, "_blank", "noopener,noreferrer")} disabled={!card.active} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-40" title="Preview halaman publik kartu"><Eye size={16}/> Preview</button>
                         <button
                           onClick={() => handleWriteNfc(card)}
                           disabled={writingCardId !== null || !card.active}
@@ -916,6 +960,18 @@ export default function DashboardPage() {
           </div>
         </section>
       </div>
+
+      {/* QR CODE MODAL */}
+      {qrCard && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm" onClick={() => setQrCard(null)}>
+          <div role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            <div className="flex items-center justify-between text-left"><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR ACCESS</p><h3 id="qr-card-title" className="mt-1 text-lg font-bold text-slate-900">{qrCard.card_name || "Untitled Card"}</h3></div><button type="button" onClick={() => setQrCard(null)} aria-label="Tutup QR Code" className="rounded-full p-2 text-slate-400 hover:bg-slate-100"><X size={19}/></button></div>
+            <div className="mx-auto my-6 inline-flex rounded-2xl border border-slate-100 bg-white p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.web.id/c/" + qrCard.public_code} size={220} level="H" includeMargin /></div>
+            <p className="break-all text-xs text-slate-400">ditapaja.web.id/c/{qrCard.public_code}</p><p className="mt-2 text-xs leading-5 text-slate-500">Scan QR ini untuk membuka halaman review kartu.</p>
+            <button type="button" onClick={() => downloadQrPng(qrCard)} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"><Download size={17}/> Download QR PNG</button>
+          </div>
+        </div>
+      )}
 
       {/* DELETE CARD CONFIRMATION MODAL */}
       {deleteTarget && (
