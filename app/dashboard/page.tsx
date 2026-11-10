@@ -112,6 +112,8 @@ export default function DashboardPage() {
   const [nfcMessage, setNfcMessage] = useState("");
   const [nfcError, setNfcError] = useState("");
   const [qrCard, setQrCard] = useState<NfcCard | null>(null);
+  const [changeLogs, setChangeLogs] = useState<any[]>([]);
+  const [changeLogUnavailable, setChangeLogUnavailable] = useState(false);
 
   const chartData = useMemo(() => {
     const today = new Date();
@@ -244,6 +246,19 @@ export default function DashboardPage() {
 
         const userCards = (cardsResult.data ?? []) as NfcCard[];
         setCards(userCards);
+
+        const { data: logs, error: logsError } = await supabase
+          .from("nfc_card_change_logs")
+          .select("id, card_id, change_type, old_values, new_values, created_at")
+          .eq("user_id", data.user.id)
+          .order("created_at", { ascending: false })
+          .limit(30);
+        if (logsError) {
+          console.warn("Card history is not available yet:", logsError.message);
+          setChangeLogUnavailable(true);
+        } else {
+          setChangeLogs(logs ?? []);
+        }
 
         if (userCards.length > 0) {
           const cardIds = userCards.map((card) => card.id);
@@ -659,6 +674,16 @@ export default function DashboardPage() {
               </button>
             </div>
 
+            {cards.length === 0 && (
+              <section className="rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-5 shadow-sm sm:p-6">
+                <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">MULAI DI SINI</p>
+                <h3 className="mt-2 text-lg font-bold text-slate-900">Siapkan kartu pertamamu</h3>
+                <p className="mt-1 max-w-xl text-sm leading-6 text-slate-500">Ikuti tiga langkah singkat untuk mulai menerima tap dan memantau aktivitas pelanggan.</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">01 · Tambahkan</b><p className="mt-1 text-xs text-slate-500">Buat kartu dan masukkan link Google Review.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">02 · Pasang</b><p className="mt-1 text-xs text-slate-500">Tulis NFC atau gunakan QR Code pada kartu.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">03 · Pantau</b><p className="mt-1 text-xs text-slate-500">Lihat tap dan klik review di analytics.</p></div></div>
+                <a href="/panduan" className="mt-4 inline-flex text-xs font-bold text-blue-700 hover:text-blue-800">Buka panduan lengkap →</a>
+              </section>
+            )}
+
             {/* ANALYTICS */}
             <div
               id="analytics"
@@ -795,6 +820,13 @@ export default function DashboardPage() {
               <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Perbandingan Kartu</h3><p className="mt-1 text-sm text-slate-500">Urutan kartu berdasarkan total tap yang tercatat.</p></div>
                 <div className="overflow-x-auto"><table className="w-full min-w-[560px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">CTR</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
+              </section>
+            )}
+
+            {cards.length > 0 && (
+              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Riwayat Perubahan</h3><p className="mt-1 text-sm text-slate-500">Perubahan nama, link tujuan, dan status kartu.</p></div>
+                {changeLogUnavailable ? <p className="px-6 py-5 text-xs leading-5 text-slate-400">Riwayat belum diaktifkan. Jalankan migration Supabase yang disertakan pada repository untuk mengaktifkannya.</p> : changeLogs.length === 0 ? <p className="px-6 py-5 text-xs text-slate-400">Belum ada perubahan kartu yang tercatat.</p> : <div className="divide-y divide-slate-100">{changeLogs.map((log) => { const card = cards.find((item) => item.id === log.card_id); const label = log.change_type === "destination_url" ? "Link tujuan diperbarui" : log.change_type === "active" ? "Status kartu diubah" : "Nama kartu diperbarui"; return <div key={log.id} className="flex items-center justify-between gap-3 px-6 py-3"><div className="min-w-0"><p className="text-xs font-semibold text-slate-700">{label}</p><p className="mt-1 truncate text-[11px] text-slate-400">{card?.card_name || "Kartu"}</p></div><time className="shrink-0 text-[10px] text-slate-400">{new Date(log.created_at).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}</time></div>; })}</div>}
               </section>
             )}
 
