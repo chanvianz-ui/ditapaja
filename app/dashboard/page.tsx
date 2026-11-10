@@ -972,6 +972,19 @@ export default function DashboardPage() {
                         <p className="mt-1 text-xs text-slate-400">
                           Code: {card.public_code}
                         </p>
+                        <div className="mt-2 flex flex-wrap items-center gap-2">
+                          {card.location_id ? (
+                            <span className="rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-semibold text-blue-700">{businessLocations.find((location) => location.id === card.location_id)?.name || "Cabang bisnis"}</span>
+                          ) : (
+                            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold text-slate-500">Belum ditautkan ke cabang</span>
+                          )}
+                          {(() => {
+                            const cardTaps = eventRows.filter((event) => event.card_id === card.id && event.event_type === "tap");
+                            const latestTap = cardTaps.reduce<string | null>((latest, event) => !latest || event.created_at > latest ? event.created_at : latest, null);
+                            const health = !card.active ? "Nonaktif" : cardTaps.length === 0 ? "Belum pernah digunakan" : "Berfungsi · " + new Date(latestTap as string).toLocaleDateString("id-ID");
+                            return <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${!card.active ? "bg-slate-100 text-slate-500" : cardTaps.length === 0 ? "bg-amber-50 text-amber-700" : "bg-emerald-50 text-emerald-700"}`}>{health}</span>;
+                          })()}
+                        </div>
                         <p className="mt-1 max-w-md truncate text-sm text-slate-500">
                           {card.destination_url}
                         </p>
