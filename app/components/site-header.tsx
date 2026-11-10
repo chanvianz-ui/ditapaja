@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X, ShoppingBag } from "lucide-react";
 import ThemeToggle from "./theme-toggle";
 function Brand(){return <a href="/" className="brand" aria-label="DiTapAja beranda"><span className="brand-symbol"><i/><i/><i/></span><span>DiTap<span className="blue-word">Aja</span></span></a>}
-const links=[["Beranda","/"],["Koleksi","/#koleksi"],["Cara kerja","/cara-kerja"],["Tentang","/tentang"],["FAQ","/faq"],["Kontak","/kontak"]];
+const links=[["Beranda","/"],["Koleksi","/#koleksi"],["Fitur","/fitur"],["Cara kerja","/cara-kerja"],["Panduan","/panduan"],["Tentang","/tentang"],["FAQ","/faq"],["Kontak","/kontak"]];
 export default function SiteHeader(){
  const [open,setOpen]=useState(false);
  useEffect(()=>{const onKey=(event:KeyboardEvent)=>{if(event.key==="Escape")setOpen(false)};window.addEventListener("keydown",onKey);document.body.style.overflow=open?"hidden":"";return ()=>{window.removeEventListener("keydown",onKey);document.body.style.overflow=""}},[open]);
