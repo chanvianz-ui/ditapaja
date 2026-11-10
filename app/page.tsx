@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, Nfc, QrCode, BarChart3, Link2, Smartphone, Sparkles, ShieldCheck } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
+import ScrollMotion from "./components/scroll-motion";
 const products=[
 {name:"DiTapAja Noir",label:"01 / BLACK EDITION",description:"Karakter tegas untuk bisnis yang ingin tampil standout.",tone:"noir",price:"Rp50.000",before:"Rp60.000",discount:"SAVE 17%",order:"READY TO ORDER",action:"Beli Noir",mode:"buy"},
 {name:"DiTapAja Blanc",label:"02 / WHITE EDITION",description:"Minimal, bersih, dan mudah menyatu dengan identitas brand.",tone:"blanc",price:"Rp50.000",before:"Rp60.000",discount:"SAVE 17%",order:"READY TO ORDER",action:"Beli Blanc",mode:"buy"},
@@ -13,6 +14,7 @@ const questions=[
 function CardMock({tone}:{tone:string}){return <div className={`simple-card ${tone}`}><div className="simple-card-top"><b>DiTapAja<span>.</span></b><Nfc size={23}/></div><div className="simple-card-center"><span>YOUR BUSINESS</span><strong>MAKE EVERY<br/>TAP COUNT.</strong></div><div className="simple-card-bottom"><span>NFC · QR CODE</span><span>10 × 10 CM</span></div></div>}
 function Brand(){return <a href="/" className="brand"><span className="brand-symbol"><i/><i/><i/></span><span>DiTap<span className="blue-word">Aja</span></span></a>}
 export default function Home(){return <main className="concept-home" id="top">
+<ScrollMotion/>
 <SiteHeader/>
 <section className="concept-hero"><div className="concept-hero-grid"><div className="concept-hero-copy"><div className="concept-eyebrow"><span/> NFC REVIEW CARD <i/> SMARTER CUSTOMER EXPERIENCE</div><h1>Satu tap untuk<br/><em>ulasan lebih mudah.</em></h1><p className="concept-lead">Hubungkan pelanggan ke halaman review bisnismu lewat satu kartu. Atur tujuan tautan dan pantau interaksi dari satu dashboard.</p><div className="concept-hero-actions"><a className="concept-button" href="#koleksi">Lihat koleksi <ArrowUpRight size={17}/></a><a className="concept-quiet-link" href="#experience">Cara kerja <ArrowRight size={15}/></a></div><div className="concept-proof"><span><Check size={14}/> NFC + QR dalam satu kartu</span><span><Check size={14}/> Dashboard termasuk</span></div></div><div className="concept-hero-stage"><div className="concept-stage-label stage-label-top">YOUR REVIEW LINK.<br/>ONE SIMPLE TAP.</div><div className="concept-stage-circle"/><div className="concept-card-shadow"/><div className="concept-hero-card"><CardMock tone="noir"/></div><div className="concept-card-back"><CardMock tone="blanc"/></div><div className="concept-stage-chip"><Nfc size={16}/><span><b>Tap atau scan</b><small>Sesederhana itu.</small></span></div><div className="concept-stage-index">DITAPAJA® <b>001—003</b></div><div className="concept-stage-label stage-label-side">DESIGNED FOR<br/>YOUR BUSINESS</div></div></div><div className="concept-hero-bottom"><span>A MORE THOUGHTFUL WAY TO COLLECT REVIEWS</span><span>JELAJAHI <b>↓</b></span></div></section>
 <section className="benefit-slider" aria-label="Keunggulan DiTapAja"><div className="benefit-slider-track">
