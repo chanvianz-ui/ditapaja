@@ -1632,3 +1632,55 @@ html[data-theme="dark"] .concept-hero-stage:before{border-color:#ffffff16}
 html[data-theme="dark"] .concept-stage-chip{background:#17263c;border-color:#30435d!important;color:#eaf0f8}
 html[data-theme="dark"] .concept-stage-chip small{color:#a7b6ca}
 html[data-theme="dark"] .concept-product-art{color:#fff}
+
+
+/* DiTapAja motion system — subtle, purposeful, reduced-motion friendly */
+:root{scroll-behavior:smooth}
+.concept-home{overflow:clip}
+.concept-hero-copy{animation:da-rise .85s cubic-bezier(.2,.7,.2,1) both}
+.concept-eyebrow{animation:da-fade .7s .08s both}
+.concept-hero-card{animation:da-float 7s ease-in-out infinite}
+.concept-card-back{animation:da-float-back 8s ease-in-out infinite}
+.concept-stage-chip{animation:da-float-chip 5s ease-in-out infinite}
+.concept-stage-circle{animation:da-pulse 8s ease-in-out infinite}
+.concept-stage-label{animation:da-fade 1s .35s both}
+.concept-hero-bottom{animation:da-fade 1s .55s both}
+.benefit-slider-track{will-change:transform}
+.benefit-slide-icon{transition:transform .35s cubic-bezier(.2,.8,.2,1),background .35s}
+.benefit-slide:hover .benefit-slide-icon{transform:translateY(-5px) rotate(-7deg);background:#e6efff}
+.concept-button,.concept-final-button,.concept-dashboard-link,.concept-quiet-link{transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s,background .28s}
+.concept-button:hover,.concept-final-button:hover{transform:translateY(-3px);box-shadow:0 14px 30px #2869e52e}
+.concept-quiet-link:hover,.concept-dashboard-link:hover{transform:translateX(4px)}
+.simple-card{transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s}
+.concept-product:hover .simple-card{transform:translateY(-7px) rotate(-1deg) scale(1.025);box-shadow:0 25px 50px #12264a24}
+.concept-product-art{transition:background .4s,transform .5s}
+.concept-product:hover .concept-product-art{transform:translateY(-3px)}
+.concept-product-buy a{transition:gap .25s,color .25s}
+.concept-product-buy a:hover{gap:13px;color:var(--blue-dark)}
+.catalog-slider-controls button{transition:transform .2s,background .2s,color .2s}
+.catalog-slider-controls button:hover{transform:translateY(-2px);background:var(--blue);color:#fff}
+.concept-step-icon{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.concept-flow article:hover .concept-step-icon{transform:translateY(-6px) scale(1.06);box-shadow:0 14px 30px #3478f62b}
+.concept-flow-line{transform-origin:left;animation:da-line 2.2s ease-in-out infinite alternate}
+.concept-dashboard-frame{transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s}
+.concept-dashboard-visual:hover .concept-dashboard-frame{transform:translateY(-7px) rotateX(1deg);box-shadow:0 35px 85px #10264a20}
+.concept-chart-bars i{transform-origin:bottom;animation:da-bars 1.2s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--bar-index,0)*65ms)}
+.concept-chart-bars i:nth-child(1){--bar-index:1}.concept-chart-bars i:nth-child(2){--bar-index:2}.concept-chart-bars i:nth-child(3){--bar-index:3}.concept-chart-bars i:nth-child(4){--bar-index:4}.concept-chart-bars i:nth-child(5){--bar-index:5}.concept-chart-bars i:nth-child(6){--bar-index:6}.concept-chart-bars i:nth-child(7){--bar-index:7}.concept-chart-bars i:nth-child(8){--bar-index:8}.concept-chart-bars i:nth-child(9){--bar-index:9}.concept-chart-bars i:nth-child(10){--bar-index:10}.concept-chart-bars i:nth-child(11){--bar-index:11}.concept-chart-bars i:nth-child(12){--bar-index:12}
+.concept-faq details summary{transition:color .2s,padding .25s}
+.concept-faq details[open] summary{color:var(--blue)}
+.concept-faq details summary svg{transition:transform .25s}
+.concept-faq details[open] summary svg{transform:rotate(180deg)}
+.concept-final-orbit{animation:da-orbit 22s linear infinite}
+.motion-item{opacity:0;transform:translate3d(0,26px,0);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1);transition-delay:var(--motion-delay,0ms)}
+.motion-item.is-visible{opacity:1;transform:translate3d(0,0,0)}
+@keyframes da-rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes da-fade{from{opacity:0}to{opacity:1}}
+@keyframes da-float{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-13px) rotate(-3deg)}}
+@keyframes da-float-back{0%,100%{transform:translateY(0) rotate(7deg)}50%{transform:translateY(10px) rotate(9deg)}}
+@keyframes da-float-chip{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes da-pulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.07);opacity:.9}}
+@keyframes da-line{from{transform:scaleX(.72);opacity:.45}to{transform:scaleX(1);opacity:1}}
+@keyframes da-bars{from{transform:scaleY(.15);opacity:.35}to{transform:scaleY(1);opacity:1}}
+@keyframes da-orbit{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.motion-item{opacity:1;transform:none}}
+@media(max-width:680px){.concept-hero-card,.concept-card-back{animation-duration:9s}.motion-item{transform:translate3d(0,16px,0)}}
