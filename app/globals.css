@@ -2009,3 +2009,14 @@ html[data-theme="dark"] .catalog-page-benefits b,html[data-theme="dark"] .catalo
 html[data-theme="dark"] .catalog-page-benefits small,html[data-theme="dark"] .catalog-page-note p{color:#a8b6c9}
 html[data-theme="dark"] .catalog-page-note{background:#172a46;border-color:#2b4162}
 @media(max-width:680px){.catalog-page-benefits{grid-template-columns:1fr;gap:8px;margin-bottom:22px}.catalog-page-benefits>div{padding:13px 14px}.catalog-page-note{margin-top:22px;padding:17px}.catalog-page-note p{margin-left:0;font-size:11px}}
+
+/* Product detail refinements */
+.detail-price{display:flex;align-items:baseline;gap:8px;margin:22px 0 0;color:#17243b}
+.detail-price strong{font:800 27px Manrope;letter-spacing:-1px}
+.detail-price>span{font-size:11px;color:#8290a5}
+.detail-price small{font-size:10px;color:#b07820;margin-left:8px}
+.concept-product-detail-link{display:inline-flex;align-items:center;gap:6px;margin-top:13px;font-size:10px;font-weight:800;color:#4268f5}
+.concept-product-detail-link:hover{text-decoration:underline}
+.concept-product h3 a{color:inherit;text-decoration:none}
+@media(max-width:680px){.detail-price{margin-top:17px}.detail-price strong{font-size:24px}.detail-price small{font-size:9px}}
+html[data-theme="dark"] .detail-price{color:#edf3fc}
