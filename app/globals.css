@@ -1804,3 +1804,35 @@ html[data-theme="dark"] .concept-hero-stage{background:radial-gradient(circle at
  .concept-faq{gap:35px!important}
  .concept-final{padding:85px 20px!important}
 }
+
+
+/* Dedicated feature and onboarding pages */
+.feature-page-intro{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:58px}
+.feature-page-intro>div{min-height:145px;padding:25px;border:1px solid #e7ebf2;border-radius:18px;background:linear-gradient(145deg,#fff,#f8faff);display:flex;flex-direction:column;justify-content:space-between}
+.feature-page-intro span,.feature-page-card-top span,.feature-page-note>div span,.guide-page-callout>div span{font-size:9px;font-weight:800;letter-spacing:1.3px;color:#8b98ab}
+.feature-page-intro strong{font:800 clamp(20px,2vw,27px) Manrope,sans-serif;letter-spacing:-.8px;color:#17243b}
+.feature-page-intro small{font-size:12px;color:#7d899b}
+.feature-page-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.feature-page-grid article{min-height:245px;padding:27px;border:1px solid #e8edf4;border-radius:18px;background:#fff;transition:transform .3s,box-shadow .3s,border-color .3s}
+.feature-page-grid article:hover{transform:translateY(-5px);border-color:#cbd9fb;box-shadow:0 18px 45px #19345c10}
+.feature-page-card-top{display:flex;align-items:center;justify-content:space-between;color:#4268f5}
+.feature-page-card-top span{color:#9aa5b5}
+.feature-page-grid h2{font:800 20px Manrope,sans-serif;letter-spacing:-.6px;margin:29px 0 11px;color:#17243b}
+.feature-page-grid p,.feature-page-note p,.guide-page-steps p,.guide-page-callout p{font-size:13px;line-height:1.85;color:#778398;margin:0}
+.feature-page-note,.guide-page-callout{margin-top:32px;padding:clamp(25px,4vw,42px);border-radius:22px;background:#f2f6ff;border:1px solid #e1eaff}
+.feature-page-note>div,.guide-page-callout>div{display:flex;align-items:center;gap:10px;color:#4268f5}
+.feature-page-note h2,.guide-page-callout h2{font:800 clamp(22px,3vw,30px) Manrope,sans-serif;letter-spacing:-.9px;margin:22px 0 12px;color:#17243b}
+.feature-page-note>a,.guide-page-callout>a{display:inline-flex;align-items:center;gap:8px;margin-top:20px;color:#3267df;font-size:13px;font-weight:800}
+.guide-page-steps{display:grid;gap:0}
+.guide-page-steps article{display:grid;grid-template-columns:48px 54px minmax(0,1fr) 24px;align-items:start;gap:20px;padding:30px 8px;border-bottom:1px solid #e9edf3}
+.guide-step-index{font:800 12px Manrope;color:#4268f5;padding-top:5px}
+.guide-step-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:#edf3ff;color:#4268f5}
+.guide-page-steps h2{font:800 19px Manrope;letter-spacing:-.4px;margin:1px 0 8px;color:#17243b}
+.guide-step-check{color:#4a82ef;margin-top:4px}
+.guide-page-callout{margin-top:42px}
+html[data-theme="dark"] .feature-page-intro>div,html[data-theme="dark"] .feature-page-grid article{background:#142238;border-color:#293b54}
+html[data-theme="dark"] .feature-page-intro strong,html[data-theme="dark"] .feature-page-grid h2,html[data-theme="dark"] .feature-page-note h2,html[data-theme="dark"] .guide-page-steps h2,html[data-theme="dark"] .guide-page-callout h2{color:#edf3fc}
+html[data-theme="dark"] .feature-page-grid p,html[data-theme="dark"] .feature-page-intro small,html[data-theme="dark"] .feature-page-note p,html[data-theme="dark"] .guide-page-steps p,html[data-theme="dark"] .guide-page-callout p{color:#a8b6c9}
+html[data-theme="dark"] .feature-page-note,html[data-theme="dark"] .guide-page-callout{background:#172a46;border-color:#2b4162}
+@media(max-width:800px){.feature-page-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-page-intro{gap:12px}.feature-page-intro>div{padding:19px}}
+@media(max-width:600px){.feature-page-grid{grid-template-columns:1fr}.feature-page-intro{grid-template-columns:1fr}.feature-page-intro>div{min-height:115px}.feature-page-grid article{min-height:0}.guide-page-steps article{grid-template-columns:34px 44px minmax(0,1fr);gap:12px;padding:23px 0}.guide-step-icon{width:42px;height:42px}.guide-step-check{display:none}.guide-page-steps h2{font-size:17px}}
