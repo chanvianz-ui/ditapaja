@@ -82,6 +82,7 @@ export default function DashboardPage() {
   const [businessLocations, setBusinessLocations] = useState<{id:string;name:string}[]>([]);
   const [qrForeground, setQrForeground] = useState("#111827");
   const [qrBackground, setQrBackground] = useState("#ffffff");
+  const [qrLinkCopied, setQrLinkCopied] = useState(false);
 
   const selectedEventRows = useMemo(() => {
     let rows = eventRows;
@@ -197,12 +198,54 @@ export default function DashboardPage() {
   }
 
   function downloadQrPng(card: NfcCard) {
-    const canvas = document.getElementById("ditapaja-qr-" + card.public_code) as HTMLCanvasElement | null;
-    if (!canvas) return;
+    const qrCanvas = document.getElementById("ditapaja-qr-" + card.public_code) as HTMLCanvasElement | null;
+    if (!qrCanvas) return;
+    const output = document.createElement("canvas");
+    output.width = 900;
+    output.height = 1080;
+    const ctx = output.getContext("2d");
+    if (!ctx) return;
+    ctx.fillStyle = qrBackground;
+    ctx.fillRect(0, 0, output.width, output.height);
+    ctx.strokeStyle = "#e5e7eb";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(28, 28, output.width - 56, output.height - 56);
+    ctx.textAlign = "center";
+    ctx.fillStyle = qrForeground;
+    ctx.font = "700 38px Arial, sans-serif";
+    ctx.fillText("DiTapAja.", 450, 112);
+    ctx.fillStyle = "#64748b";
+    ctx.font = "500 22px Arial, sans-serif";
+    ctx.fillText("YOUR REVIEW STARTS HERE", 450, 158);
+    ctx.fillStyle = qrForeground;
+    ctx.font = "700 34px Arial, sans-serif";
+    ctx.fillText((card.card_name || "Review bisnis").slice(0, 32), 450, 225);
+    const qrSize = 520;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect((900 - qrSize) / 2 - 18, 270, qrSize + 36, qrSize + 36);
+    ctx.drawImage(qrCanvas, (900 - qrSize) / 2, 288, qrSize, qrSize);
+    ctx.fillStyle = qrForeground;
+    ctx.font = "700 30px Arial, sans-serif";
+    ctx.fillText("SCAN TO LEAVE A REVIEW", 450, 875);
+    ctx.fillStyle = "#64748b";
+    ctx.font = "500 20px Arial, sans-serif";
+    ctx.fillText("Arahkan kamera ke QR Code", 450, 920);
+    ctx.font = "500 17px Arial, sans-serif";
+    ctx.fillText("ditapaja.web.id/c/" + card.public_code, 450, 975);
     const anchor = document.createElement("a");
-    anchor.href = canvas.toDataURL("image/png");
-    anchor.download = "ditapaja-qr-" + card.public_code + ".png";
+    anchor.href = output.toDataURL("image/png");
+    anchor.download = "ditapaja-qr-print-" + card.public_code + ".png";
     anchor.click();
+  }
+
+  async function copyQrLink(card: NfcCard) {
+    try {
+      await navigator.clipboard.writeText(window.location.origin + "/c/" + card.public_code);
+      setQrLinkCopied(true);
+      window.setTimeout(() => setQrLinkCopied(false), 1800);
+    } catch {
+      setCardError("Browser tidak mengizinkan penyalinan otomatis. Salin tautan yang tampil di bawah QR.");
+    }
   }
 
   useEffect(() => {
@@ -1068,12 +1111,14 @@ export default function DashboardPage() {
           <div role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-2xl" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between text-left"><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR ACCESS</p><h3 id="qr-card-title" className="mt-1 text-lg font-bold text-slate-900">{qrCard.card_name || "Untitled Card"}</h3></div><button type="button" onClick={() => setQrCard(null)} aria-label="Tutup QR Code" className="rounded-full p-2 text-slate-400 hover:bg-slate-100"><X size={19}/></button></div>
             <div className="mx-auto my-6 inline-flex rounded-2xl border border-slate-100 bg-white p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.web.id/c/" + qrCard.public_code} size={220} level="H" includeMargin fgColor={qrForeground} bgColor={qrBackground} /></div>
-            <p className="break-all text-xs text-slate-400">ditapaja.web.id/c/{qrCard.public_code}</p><p className="mt-2 text-xs leading-5 text-slate-500">Scan QR ini untuk membuka halaman review kartu.</p>
+            <p className="break-all text-xs text-slate-400">ditapaja.web.id/c/{qrCard.public_code}</p>
+            <button type="button" onClick={() => copyQrLink(qrCard)} className="mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700">{qrLinkCopied ? "Tautan berhasil disalin" : "Salin tautan kartu"}</button>
+            <p className="mt-2 text-xs leading-5 text-slate-500">Scan QR ini untuk membuka halaman review kartu.</p>
             <div className="grid grid-cols-2 gap-3 text-left">
               <label className="rounded-xl border border-slate-200 p-3 text-xs font-semibold text-slate-600">Warna QR<input type="color" value={qrForeground} onChange={(event) => setQrForeground(event.target.value)} className="mt-2 h-9 w-full cursor-pointer rounded"/></label>
               <label className="rounded-xl border border-slate-200 p-3 text-xs font-semibold text-slate-600">Warna latar<input type="color" value={qrBackground} onChange={(event) => setQrBackground(event.target.value)} className="mt-2 h-9 w-full cursor-pointer rounded"/></label>
             </div>
-            <button type="button" onClick={() => downloadQrPng(qrCard)} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"><Download size={17}/> Download QR PNG</button>
+            <button type="button" onClick={() => downloadQrPng(qrCard)} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"><Download size={17}/> Download QR Siap Cetak PNG</button>
           </div>
         </div>
       )}
