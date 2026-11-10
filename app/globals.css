@@ -481,3 +481,81 @@ html[data-theme="dark"] .catalog-hint{color:#9eafc5}
  .catalog-preorder{font-size:7px}
  .hero-detail-line{gap:9px}
 }
+
+
+/* Final brand direction — editorial, confident, carefully responsive */
+.modern-home{background:#fbfcfe}
+.modern-header{height:76px}
+.modern-header .minimal-nav{max-width:1240px}
+.modern-hero{background:radial-gradient(ellipse at 78% 42%,#e5edff 0%,#f3f6fc 34%,#fbfcfe 72%);padding-block:24px 38px}
+.modern-hero-inner{min-height:600px;align-items:center}
+.modern-hero-copy{padding-block:30px}
+.modern-hero h1{font-size:clamp(58px,7vw,88px);letter-spacing:-.065em;line-height:.99;margin:25px 0 18px}
+.modern-hero-copy>p{max-width:440px;color:#687990;font-size:14px}
+.hero-edition-note{display:grid;gap:6px;margin:22px 0 0;padding-left:13px;border-left:2px solid #7298e8;max-width:380px}
+.hero-edition-note span{font-size:8px;letter-spacing:1.5px;font-weight:800;color:#7890b3}
+.hero-edition-note b{font:500 12px/1.6 Manrope,sans-serif;color:#465b78}
+.hero-price-link{display:inline-flex;align-items:center;gap:8px;margin-top:15px;color:#3978ed;font-size:11px;font-weight:800}
+.modern-hero .minimal-assurance{margin-top:24px}
+.modern-visual{min-height:490px}
+.modern-visual .simple-card{box-shadow:0 38px 90px #1c34534a,0 4px 12px #162c4c24}
+.modern-marquee{height:44px;background:#111f32}
+.modern-benefits{min-height:120px}
+.modern-benefit{padding-block:20px}
+.modern-products{padding-top:125px;padding-bottom:126px}
+.modern-products .minimal-section-head{margin-bottom:40px}
+.modern-products .minimal-section-head h2{font-size:clamp(38px,4.8vw,58px);letter-spacing:-.055em}
+.modern-products .minimal-section-head h2 em{font-style:normal}
+.modern-products .minimal-section-head>p{font-size:12px;color:#74839a}
+.modern-products .catalog-track{grid-auto-columns:min(430px, min(78%, 430px));gap:20px;scroll-padding-inline:4px}
+.catalog-slide{border-radius:14px;border-color:#e7ebf1;box-shadow:0 12px 34px #17283f0b}
+.catalog-slide:hover{transform:translateY(-3px);box-shadow:0 22px 48px #17283f14}
+.catalog-slide .minimal-product-art{flex-basis:285px}
+.catalog-discount{background:#17283f;border-radius:3px}
+.catalog-preorder{border-radius:4px}
+.catalog-order{background:#3478ed;border-radius:5px;box-shadow:0 7px 16px #3478ed25}
+.catalog-order:hover{background:#225fc8}
+.catalog-order-preorder{background:#17283f;box-shadow:0 7px 16px #17283f1e}
+.catalog-order-preorder:hover{background:#2d405a}
+.catalog-note{max-width:780px;font-size:10px}
+.modern-how{background:#f0f4fa}
+.modern-dashboard{background:#fbfcfe}
+.modern-end{background:radial-gradient(ellipse at 50% -15%,#46649a 0%,#1b2d47 52%,#111f32 100%)}
+.modern-footer{border-top:1px solid #e8edf3}
+@media(max-width:900px) and (min-width:761px){
+ .modern-hero-inner{min-height:560px}
+ .modern-hero h1{font-size:clamp(48px,6vw,64px)}
+ .hero-edition-note{max-width:320px}
+ .modern-visual{min-height:420px}
+}
+@media(max-width:760px){
+ .modern-hero{padding-top:0;padding-bottom:20px}
+ .modern-hero-inner{min-height:0}
+ .modern-hero-copy{padding-top:48px}
+ .modern-hero h1{font-size:clamp(48px,13vw,60px);line-height:1.02}
+ .hero-edition-note{margin-top:17px}
+ .hero-edition-note b{font-size:11px}
+ .hero-price-link{margin-top:13px}
+ .modern-visual{min-height:360px;height:360px}
+ .modern-products{padding-top:82px;padding-bottom:86px}
+ .modern-products .minimal-section-head{margin-bottom:25px}
+ .modern-products .catalog-track{grid-auto-columns:min(88%,360px);gap:14px}
+ .catalog-slide .minimal-product-art{flex-basis:245px}
+ .catalog-order{box-shadow:none}
+ .modern-benefits{padding-block:9px}
+ .modern-end h2{font-size:clamp(37px,10vw,44px)}
+}
+@media(max-width:380px){
+ .modern-hero h1{font-size:47px;letter-spacing:-3px}
+ .modern-visual{min-height:330px;height:330px}
+ .catalog-title-row{gap:8px}
+ .catalog-preorder{white-space:normal;max-width:125px;line-height:1.35}
+}
+html[data-theme="dark"] .modern-hero{background:radial-gradient(ellipse at 78% 42%,#1c3459 0%,#101d30 42%,#0b1220 76%)}
+html[data-theme="dark"] .hero-edition-note b{color:#c1d0e5}
+html[data-theme="dark"] .hero-edition-note{border-color:#658bd5}
+html[data-theme="dark"] .hero-edition-note span{color:#91acd9}
+html[data-theme="dark"] .hero-price-link{color:#9bbcff}
+html[data-theme="dark"] .modern-home{background:#0b1220}
+html[data-theme="dark"] .modern-how{background:#111e30}
+html[data-theme="dark"] .modern-footer{border-color:#26374d}
