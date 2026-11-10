@@ -951,3 +951,74 @@ html[data-theme="light"] .concept-home{background:#f3f1eb;color:#111820}
  .concept-stage-circle,.concept-stage-circle:before,.concept-stage-circle:after,.concept-hero-card,.concept-card-back,.concept-card-shadow,.concept-stage-chip,.concept-stage-chip:after,.concept-flow-line:before,.concept-dash-sticker,.concept-final-orbit{animation:none!important}
  .concept-home *{scroll-behavior:auto!important}
 }
+
+
+/* Premium sticky header + custom mobile navigation */
+.concept-header{position:sticky;top:0;height:76px;z-index:100;background:color-mix(in srgb,#f3f1eb 88%,transparent);border-bottom:1px solid #deddd6;box-shadow:0 5px 25px #17202a08;transition:background .25s,border-color .25s}
+.concept-nav{gap:24px}
+.concept-nav nav{margin-left:auto;margin-right:auto}
+.concept-nav nav a{position:relative;padding:10px 0}
+.concept-nav nav a:after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:2px;background:#456ff5;border-radius:5px;transition:right .25s}
+.concept-nav nav a:hover:after{right:0}
+.concept-nav-cta{border-radius:999px;padding:13px 19px;box-shadow:0 8px 22px #11182018;transition:transform .25s,box-shadow .25s}
+.concept-nav-cta:hover{transform:translateY(-2px);box-shadow:0 12px 25px #11182026}
+.concept-mobile-actions{display:none;align-items:center;gap:10px}
+.concept-mobile-actions>a,.concept-mobile-actions>button{width:42px;height:42px;border:1px solid #deddd6;border-radius:50%;display:grid;place-items:center;background:#ffffffa8;color:#1b2735}
+.concept-mobile-actions>button{cursor:pointer}
+.mobile-drawer-backdrop{position:fixed;inset:0;z-index:200;background:#0b111a78;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);animation:drawerFade .25s ease both}
+.mobile-drawer{position:absolute;top:0;right:0;width:min(440px,92vw);height:100%;height:100dvh;padding:24px 25px 22px;background:#f7f6f1;color:#17212c;display:flex;flex-direction:column;box-shadow:-25px 0 80px #0003;animation:drawerIn .38s cubic-bezier(.2,.8,.2,1) both;overflow:auto}
+.mobile-drawer-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:23px;border-bottom:1px solid #e3e2dc}
+.mobile-drawer-head .brand{font-size:21px}
+.mobile-drawer-head>button{width:42px;height:42px;border:1px solid #e1e2e5;border-radius:50%;background:#edf1f8;color:#26364a;display:grid;place-items:center;cursor:pointer}
+.mobile-drawer-kicker{display:flex;justify-content:space-between;margin:35px 2px 14px;color:#89929b;font:800 8px Manrope;letter-spacing:1.8px}
+.mobile-drawer-kicker span{color:#456ff5}
+.mobile-drawer nav{display:grid}
+.mobile-drawer nav a{display:grid;grid-template-columns:35px 1fr 22px;align-items:center;gap:10px;padding:19px 12px;border-bottom:1px solid #e6e5df;border-radius:10px;transition:background .2s,transform .2s}
+.mobile-drawer nav a:hover{background:#edf1fc;transform:translateX(4px)}
+.drawer-number{font:700 9px Manrope;color:#9aa4ae}
+.mobile-drawer nav strong{font:600 21px Manrope;letter-spacing:-.8px}
+.mobile-drawer nav svg{color:#456ff5}
+.mobile-drawer-bottom{margin-top:auto;padding-top:32px}
+.mobile-drawer-bottom p{font:600 14px Manrope;color:#76818b;margin:0 0 17px}
+.mobile-drawer-bottom>a{display:flex;align-items:center;justify-content:space-between;padding:17px 19px;border-radius:999px;background:#345ce8;color:white;font-size:12px;font-weight:800;box-shadow:0 12px 25px #345ce833}
+.mobile-drawer-bottom small{display:block;margin-top:21px;color:#9aa3aa;font-size:8px;letter-spacing:.4px}
+.concept-product{border-radius:20px;background:linear-gradient(155deg,#fff,#f9f8f4);box-shadow:0 10px 35px #17202a0b}
+.concept-product-art{height:315px;position:relative;isolation:isolate;background:radial-gradient(ellipse at 50% 46%,#3a4d65 0%,#202c3b 48%,#131a22 100%)}
+.concept-product-art.blanc{background:radial-gradient(ellipse at 50% 46%,#fff 0%,#e9e9e5 55%,#d8d9d5 100%)}
+.concept-product-art.signature{background:radial-gradient(ellipse at 50% 46%,#f5f7ff 0%,#dce4f4 54%,#c5d1e5 100%)}
+.concept-product-art:before{content:"";position:absolute;inset:14px;border:1px solid #ffffff20;border-radius:13px;pointer-events:none}
+.concept-product-art:after{width:240px;height:240px;box-shadow:0 0 0 22px #ffffff0a,0 0 0 48px #ffffff06}
+.concept-product-art .simple-card{width:205px;height:205px;border-radius:17px;box-shadow:0 32px 55px #0005,inset 0 1px #ffffff50;transform:perspective(900px) rotateX(7deg) rotateZ(-7deg)}
+.concept-product-art.blanc .simple-card{box-shadow:0 30px 45px #29334330,inset 0 1px #ffffff}
+.concept-product-art-top,.concept-product-art-bottom{letter-spacing:1.4px}
+.concept-product-body{padding:22px 22px 23px}
+.concept-product h3{font-size:20px;letter-spacing:-.8px}
+.concept-product-buy strong{font-size:25px}
+.concept-product-buy>a{padding:13px 17px}
+html[data-theme="dark"] .concept-header{background:color-mix(in srgb,#0d1520 90%,transparent);border-color:#263447}
+html[data-theme="dark"] .concept-mobile-actions>a,html[data-theme="dark"] .concept-mobile-actions>button{background:#17263a;border-color:#354963;color:#edf2f8}
+html[data-theme="dark"] .mobile-drawer{background:#101b2a;color:#edf2f8}
+html[data-theme="dark"] .mobile-drawer-head{border-color:#2b3d53}
+html[data-theme="dark"] .mobile-drawer-head>button{background:#1d2d42;border-color:#3a4c63;color:#edf2f8}
+html[data-theme="dark"] .mobile-drawer-kicker{color:#91a1b5}
+html[data-theme="dark"] .mobile-drawer nav a{border-color:#2b3d53}
+html[data-theme="dark"] .mobile-drawer nav a:hover{background:#1b2c43}
+html[data-theme="dark"] .drawer-number{color:#8496ac}
+html[data-theme="dark"] .mobile-drawer-bottom p{color:#aab8c9}
+html[data-theme="dark"] .mobile-drawer-bottom small{color:#8494a8}
+html[data-theme="dark"] .concept-product{background:linear-gradient(155deg,#17263a,#111d2d)}
+@media(max-width:900px){.concept-nav nav{gap:19px}.concept-nav{width:calc(100% - 48px)}}
+@media(max-width:680px){
+ .concept-header{height:68px}
+ .concept-nav{width:calc(100% - 36px)}
+ .concept-nav nav,.concept-nav-actions{display:none}
+ .concept-mobile-actions{display:flex}
+ .concept-mobile-menu{display:none!important}
+ .concept-product-art{height:285px}
+ .concept-product-art .simple-card{width:195px;height:195px}
+ .mobile-drawer{padding:19px 20px 20px}
+ .mobile-drawer nav strong{font-size:20px}
+}
+@keyframes drawerFade{from{opacity:0}to{opacity:1}}
+@keyframes drawerIn{from{transform:translateX(35px);opacity:.7}to{transform:translateX(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.mobile-drawer-backdrop,.mobile-drawer{animation:none!important}}
