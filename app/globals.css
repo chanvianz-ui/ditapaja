@@ -1836,3 +1836,159 @@ html[data-theme="dark"] .feature-page-grid p,html[data-theme="dark"] .feature-pa
 html[data-theme="dark"] .feature-page-note,html[data-theme="dark"] .guide-page-callout{background:#172a46;border-color:#2b4162}
 @media(max-width:800px){.feature-page-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-page-intro{gap:12px}.feature-page-intro>div{padding:19px}}
 @media(max-width:600px){.feature-page-grid{grid-template-columns:1fr}.feature-page-intro{grid-template-columns:1fr}.feature-page-intro>div{min-height:115px}.feature-page-grid article{min-height:0}.guide-page-steps article{grid-template-columns:34px 44px minmax(0,1fr);gap:12px;padding:23px 0}.guide-step-icon{width:42px;height:42px}.guide-step-check{display:none}.guide-page-steps h2{font-size:17px}}
+
+
+/* Mobile compact pass — tighter spacing without changing the desktop layout */
+@media(max-width:680px){
+  html{scroll-padding-top:70px}
+  .concept-header{height:62px}
+  .concept-nav{width:calc(100% - 30px)!important}
+  .concept-nav .brand{font-size:17px;gap:8px}
+  .concept-nav .brand-symbol{width:30px;height:30px;border-radius:9px}
+  .concept-mobile-actions{gap:7px}
+  .concept-mobile-actions .theme-toggle{width:32px;height:32px}
+  .concept-mobile-actions>a,.concept-mobile-actions>button{width:34px;height:34px;display:grid;place-items:center}
+  .mobile-drawer{padding:17px 17px 18px}
+  .mobile-drawer-kicker{margin-top:24px}
+  .mobile-drawer nav a{padding:13px 12px}
+  .mobile-drawer nav a strong{font-size:18px}
+  .mobile-drawer-bottom{margin-top:20px}
+
+  .concept-hero-grid{padding:34px 0 8px!important}
+  .concept-hero h1{font-size:clamp(45px,11.5vw,58px)!important;letter-spacing:-.075em!important;line-height:.98!important;margin:15px 0 12px!important}
+  .concept-eyebrow{font-size:8px;letter-spacing:1px}
+  .concept-lead{font-size:12px!important;line-height:1.7!important}
+  .concept-hero-actions{gap:14px;margin-top:18px}
+  .concept-button{min-height:42px;padding:0 15px;font-size:11px}
+  .concept-quiet-link{font-size:11px}
+  .concept-proof{margin-top:16px;gap:8px 13px;flex-wrap:wrap}
+  .concept-proof span{font-size:9px}
+  .concept-hero-stage{height:270px!important;margin-top:12px!important;border-radius:18px!important}
+  .concept-hero-stage .simple-card{width:168px!important;height:168px!important}
+  .concept-hero-stage .simple-card-center strong{font-size:17px!important}
+  .concept-stage-label{font-size:7px}
+  .concept-stage-chip{padding:8px 10px;gap:7px}
+  .concept-stage-chip svg{width:13px;height:13px}
+  .concept-stage-chip b{font-size:9px}
+  .concept-stage-chip small{font-size:8px}
+  .concept-hero-bottom{font-size:6px;letter-spacing:.8px;padding:8px 0}
+  .benefit-slider{padding-block:9px}
+  .benefit-slide{min-width:205px;padding:9px 12px;gap:9px}
+  .benefit-slide-icon{width:32px;height:32px}
+  .benefit-slide-icon svg{width:18px;height:18px}
+  .benefit-slide h3{font-size:10px}
+  .benefit-slide p{font-size:8px}
+
+  .concept-collection,.concept-experience,.concept-dashboard,.concept-faq{padding:56px 16px!important}
+  .concept-section-top{margin-bottom:22px!important}
+  .concept-section-top h2,.concept-experience h2,.concept-dashboard h2,.concept-faq h2{font-size:clamp(36px,9.5vw,46px)!important;letter-spacing:-.065em!important}
+  .concept-section-top>p,.concept-experience-head>p,.concept-dashboard-copy>p,.concept-faq>div>p{font-size:12px;line-height:1.7}
+  .catalog-slider-controls{margin-bottom:14px!important}
+  .catalog-track{gap:12px!important}
+  .catalog-track>.concept-product{flex-basis:84%!important;width:84%}
+  .concept-product-art{height:220px!important}
+  .concept-product-art .simple-card{width:155px!important;height:155px!important}
+  .concept-product-body{padding:15px!important}
+  .concept-product h3{font-size:17px!important}
+  .concept-product-body>p{font-size:11px!important;min-height:0!important;line-height:1.6!important}
+  .concept-product-includes{gap:6px;margin-top:12px}
+  .concept-product-includes span{font-size:8px;padding:5px 7px}
+  .concept-product-buy{margin-top:13px;padding-top:12px}
+  .concept-collection-foot{margin-top:17px;padding-top:12px;gap:8px}
+  .concept-collection-foot span{font-size:7px}
+  .concept-collection-foot p{font-size:10px;line-height:1.6}
+
+  .concept-experience-head{margin-bottom:22px}
+  .concept-flow{margin-top:22px!important;gap:10px}
+  .concept-flow article{padding:16px!important;border-radius:13px}
+  .concept-step-icon{width:36px;height:36px}
+  .concept-flow h3{font-size:14px;margin:10px 0 5px}
+  .concept-flow article p{font-size:10px;line-height:1.6}
+  .concept-flow-line{height:16px}
+  .concept-experience-note{font-size:10px;line-height:1.6;margin-top:17px}
+  .concept-dashboard{gap:22px!important}
+  .concept-dashboard-copy ul{gap:9px;margin:16px 0 20px}
+  .concept-dashboard-copy li{font-size:10px}
+  .concept-dashboard-frame{border-radius:14px;transform:none!important}
+  .concept-dash-top{padding:12px 13px}
+  .concept-dash-welcome{padding:15px}
+  .concept-dash-metrics{gap:8px;padding:0 12px}
+  .concept-dash-metrics>div{padding:11px}
+  .concept-dash-chart{margin:10px 12px 13px;padding:12px}
+  .concept-faq{gap:20px!important}
+  .concept-faq-list details{padding:15px 0}
+  .concept-faq-list summary{font-size:12px;gap:12px}
+  .concept-faq-list details p{font-size:10px;line-height:1.7}
+  .concept-final{padding:65px 18px!important}
+  .concept-final h2{font-size:clamp(35px,9vw,46px)!important;letter-spacing:-.06em}
+  .concept-final p{font-size:11px;line-height:1.7}
+  .concept-final-button{min-height:43px;padding:0 16px;font-size:11px}
+  .concept-footer{padding:20px 17px;gap:10px}
+  .concept-footer>span{font-size:9px}
+  .concept-footer>a:last-child{font-size:10px}
+
+  .info-wrap{width:calc(100% - 32px)!important}
+  .info-hero{padding:48px 0 38px!important}
+  .info-hero h1{font-size:clamp(34px,9vw,44px)!important;line-height:1.05;letter-spacing:-.06em}
+  .info-hero p{font-size:12px;line-height:1.7}
+  .info-content{padding:30px 0 42px!important}
+  .feature-page-intro{gap:9px;margin-bottom:28px}
+  .feature-page-intro>div{min-height:92px;padding:14px;border-radius:13px}
+  .feature-page-intro strong{font-size:18px}
+  .feature-page-intro small{font-size:10px}
+  .feature-page-grid{gap:10px}
+  .feature-page-grid article{padding:17px;border-radius:13px}
+  .feature-page-grid h2{font-size:16px;margin:17px 0 7px}
+  .feature-page-grid p,.feature-page-note p,.guide-page-steps p,.guide-page-callout p{font-size:11px;line-height:1.7}
+  .feature-page-note,.guide-page-callout{margin-top:20px;padding:19px;border-radius:15px}
+  .feature-page-note h2,.guide-page-callout h2{font-size:21px;margin:14px 0 8px}
+  .guide-page-steps article{grid-template-columns:28px 36px minmax(0,1fr);gap:9px;padding:17px 0}
+  .guide-step-icon{width:34px;height:34px;border-radius:10px}
+  .guide-page-steps h2{font-size:15px}
+  .info-contact-strip{margin-top:25px;padding:17px}
+  .info-footer{padding:20px 16px;font-size:10px}
+}
+
+/* Dashboard mobile layout */
+@media(max-width:767px){
+  main.min-h-screen>div.flex>section.min-w-0>header{
+    min-height:62px;padding:10px 14px;gap:10px
+  }
+  main.min-h-screen>div.flex>section.min-w-0>header p{font-size:10px}
+  main.min-h-screen>div.flex>section.min-w-0>header h1{font-size:17px;margin-top:2px}
+  main.min-h-screen>div.flex>section.min-w-0>header .flex.items-center.gap-3{gap:7px}
+  main.min-h-screen>div.flex>section.min-w-0>header .h-10.w-10{width:34px;height:34px}
+  main.min-h-screen .max-w-7xl{padding:14px!important;gap:18px}
+  main.min-h-screen .max-w-7xl h2{font-size:19px}
+  main.min-h-screen .max-w-7xl .text-sm{font-size:11px}
+  main.min-h-screen .max-w-7xl>div:first-child{gap:12px}
+  main.min-h-screen .max-w-7xl>div:first-child>button{width:100%;min-height:42px;padding:10px 14px;font-size:12px}
+  main.min-h-screen #analytics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  main.min-h-screen #analytics>div{padding:13px;border-radius:13px}
+  main.min-h-screen #analytics>div p:first-child{font-size:10px}
+  main.min-h-screen #analytics>div p.mt-5{font-size:23px;margin-top:11px}
+  main.min-h-screen #analytics>div p.mt-2{font-size:9px;line-height:1.45}
+  main.min-h-screen #analytics+section,
+  main.min-h-screen #analytics~section{min-width:0}
+  main.min-h-screen #cards{border-radius:14px}
+  main.min-h-screen #cards>div:first-child{padding:14px;gap:8px}
+  main.min-h-screen #cards>div:first-child h3{font-size:13px}
+  main.min-h-screen #cards>div:first-child p{font-size:10px}
+  main.min-h-screen #cards>div>div.flex.flex-col{padding:14px}
+  main.min-h-screen #cards button{font-size:10px;padding:8px 10px}
+  main.min-h-screen #cards button svg{width:14px;height:14px}
+  main.min-h-screen .rounded-2xl.border.bg-white.p-6{padding:14px;border-radius:14px}
+  main.min-h-screen .h-56{height:150px}
+  main.min-h-screen .mt-7{margin-top:14px}
+  main.min-h-screen .mt-5{margin-top:12px}
+  main.min-h-screen .gap-5{gap:10px}
+  main.min-h-screen .space-y-8>*+*{margin-top:18px}
+}
+@media(max-width:420px){
+  .concept-hero-stage{height:245px!important}
+  .concept-hero-stage .simple-card{width:150px!important;height:150px!important}
+  .concept-hero-bottom{font-size:5.5px}
+  .catalog-track>.concept-product{flex-basis:90%!important;width:90%}
+  main.min-h-screen .max-w-7xl{padding:11px!important}
+  main.min-h-screen #analytics>div{padding:11px}
+}
