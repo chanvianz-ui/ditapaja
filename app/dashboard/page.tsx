@@ -116,6 +116,7 @@ export default function DashboardPage() {
   const [editingCard, setEditingCard] = useState<NfcCard | null>(null);
   const [editName, setEditName] = useState("");
   const [editUrl, setEditUrl] = useState("");
+  const [editLocationId, setEditLocationId] = useState("");
   const [savingCard, setSavingCard] = useState(false);
   const [updatingCardId, setUpdatingCardId] = useState<string | null>(null);
   const [cardMessage, setCardMessage] = useState("");
@@ -351,6 +352,7 @@ export default function DashboardPage() {
     setEditingCard(card);
     setEditName(card.card_name ?? "");
     setEditUrl(card.destination_url);
+    setEditLocationId(card.location_id || "");
     setCardMessage("");
     setCardError("");
   }
@@ -415,6 +417,7 @@ export default function DashboardPage() {
         .update({
           card_name: trimmedName,
           destination_url: trimmedUrl,
+          location_id: editLocationId || null,
         })
         .eq("id", editingCard.id)
         .eq("user_id", authData.user.id);
@@ -428,6 +431,7 @@ export default function DashboardPage() {
                 ...card,
                 card_name: trimmedName,
                 destination_url: trimmedUrl,
+                location_id: editLocationId || null,
               }
             : card
         )
@@ -989,7 +993,7 @@ export default function DashboardPage() {
                           {(() => {
                             const cardTaps = eventRows.filter((event) => event.card_id === card.id && event.event_type === "tap");
                             const latestTap = cardTaps.reduce<string | null>((latest, event) => !latest || event.created_at > latest ? event.created_at : latest, null);
-                            const health = !card.active ? "Nonaktif" : cardTaps.length === 0 ? "Belum pernah digunakan" : "Berfungsi · " + new Date(latestTap as string).toLocaleDateString("id-ID");
+                            const health = !card.active ? "Nonaktif" : cardTaps.length === 0 ? "Belum pernah digunakan" : "Pernah digunakan · " + new Date(latestTap as string).toLocaleDateString("id-ID");
                             return <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${!card.active ? "bg-slate-100 text-slate-500" : cardTaps.length === 0 ? "bg-amber-50 text-amber-700" : "bg-emerald-50 text-emerald-700"}`}>{health}</span>;
                           })()}
                         </div>
@@ -1181,6 +1185,14 @@ export default function DashboardPage() {
                   placeholder="Contoh: Kartu Staff"
                   className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="edit-card-location" className="mb-2 block text-sm font-semibold text-slate-700">Lokasi bisnis</label>
+                <select id="edit-card-location" value={editLocationId} onChange={(event) => setEditLocationId(event.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500">
+                  <option value="">Tanpa lokasi / bisnis utama</option>
+                  {businessLocations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
+                </select>
               </div>
 
               <div>
