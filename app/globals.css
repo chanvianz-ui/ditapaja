@@ -1313,3 +1313,29 @@ html[data-theme="light"] .info-page{background:#f7f6f1;color:#17212c}
  .concept-final{padding:82px 20px 96px}
  .concept-nav-actions .theme-toggle{display:inline-flex}
 }
+
+/* Product collection: tactile horizontal carousel, swipe + controls */
+.catalog-slider{width:100%;min-width:0}
+.catalog-slider-controls{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px;color:#8b929b;font-size:10px}
+.catalog-slider-controls>div{display:flex;gap:7px}
+.catalog-slider-controls button{width:35px;height:35px;border:0;border-radius:50%;display:grid;place-items:center;background:#e9edf2;color:#26364b;cursor:pointer;transition:background .2s,transform .2s}
+.catalog-slider-controls button:hover{background:#dce5f2;transform:translateY(-2px)}
+.catalog-track{display:flex!important;gap:18px!important;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:2px 2px 16px;scrollbar-width:none}
+.catalog-track::-webkit-scrollbar{display:none}
+.catalog-track>.concept-product{flex:0 0 calc((100% - 36px)/3);scroll-snap-align:start;min-width:0}
+.catalog-slider-progress{height:2px;background:#e8e9e7;border-radius:4px;overflow:hidden;margin-top:3px}
+.catalog-slider-progress span{display:block;width:34%;height:100%;background:#8a9bb0;border-radius:4px}
+html[data-theme="dark"] .catalog-slider-controls{color:#9eacbf}
+html[data-theme="dark"] .catalog-slider-controls button{background:#1c2b40;color:#e6edf7}
+html[data-theme="dark"] .catalog-slider-controls button:hover{background:#2b405d}
+html[data-theme="dark"] .catalog-slider-progress{background:#243348}
+html[data-theme="dark"] .catalog-slider-progress span{background:#8ca4cb}
+/* Remove decorative strokes for a cleaner, softer surface */
+.concept-home .concept-product,.concept-home .concept-flow article,.concept-home .concept-dashboard-frame,.concept-home .concept-dash-metrics>div,.concept-home .concept-dash-chart,.concept-home .concept-faq-list details,.concept-home .concept-final-button,.concept-home .concept-button,.catalog-slider-controls button{border:0!important}
+.concept-home .concept-faq-list details{border-bottom:0!important}
+.concept-home .concept-product{box-shadow:0 7px 24px #17202a0a}
+html[data-theme="dark"] .concept-home .concept-product{border:0!important;box-shadow:0 8px 26px #0003}
+html[data-theme="dark"] .concept-home .concept-flow article,html[data-theme="dark"] .concept-home .concept-dashboard-frame,html[data-theme="dark"] .concept-home .concept-dash-metrics>div,html[data-theme="dark"] .concept-home .concept-dash-chart{border:0!important}
+html[data-theme="dark"] .concept-home .concept-faq-list details{border:0!important}
+@media(max-width:900px){.catalog-track>.concept-product{flex-basis:calc((100% - 18px)/2)}}
+@media(max-width:680px){.catalog-slider-controls{margin-bottom:12px}.catalog-track{gap:13px!important;margin-right:-19px;padding-right:19px}.catalog-track>.concept-product{flex-basis:84%;scroll-snap-align:center}.catalog-slider-progress{margin-right:19px}}
