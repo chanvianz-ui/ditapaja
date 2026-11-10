@@ -1120,3 +1120,46 @@ html[data-theme="dark"] .benefit-slide p{color:#9aa9bb}
  .concept-product-art{height:260px}
 }
 @media(prefers-reduced-motion:reduce){.benefit-slider-track{animation:none!important}}
+
+/* Navigation refresh: clean, confident, contemporary */
+.mobile-drawer{width:min(420px,90vw);padding:26px 27px 24px;background:#fbfaf7}
+.mobile-drawer-head{padding-bottom:20px}
+.mobile-drawer-kicker{margin:39px 2px 18px;font-size:9px;letter-spacing:2px;color:#87909a}
+.mobile-drawer nav{gap:7px}
+.mobile-drawer nav a{grid-template-columns:1fr 22px;padding:18px 16px;border:1px solid transparent;border-radius:8px;background:transparent}
+.mobile-drawer nav a strong{font:650 22px/1.2 Manrope,sans-serif;letter-spacing:-.8px;color:#1c2735;transition:color .2s,transform .2s}
+.mobile-drawer nav a svg{color:#9aa4b1;transition:color .2s,transform .2s}
+.mobile-drawer nav a:hover{background:#edf2ff;border-color:#e2e9ff;transform:translateX(3px)}
+.mobile-drawer nav a:hover strong,.mobile-drawer nav a:hover svg{color:#345ce8}
+.mobile-drawer nav a:hover svg{transform:translate(2px,-2px)}
+.mobile-drawer-bottom{padding-top:25px}
+.mobile-drawer-bottom p{font-size:13px;font-weight:500}
+.mobile-drawer-bottom>a{border-radius:7px;background:#263fd4;box-shadow:none;padding:16px 18px}
+.mobile-drawer-head>button{border-radius:8px;background:#f0f2f5}
+.concept-home .concept-hero h1{font-size:clamp(60px,7.7vw,102px);letter-spacing:-.09em}
+.concept-home .concept-hero-copy{max-width:590px}
+.concept-home .concept-lead{font-size:15px;line-height:1.8;max-width:420px}
+.concept-home .concept-button{padding:16px 21px;background:#294be0;border-radius:6px}
+.concept-home .concept-section-top h2,.concept-home .concept-experience h2,.concept-home .concept-dashboard h2,.concept-home .concept-faq h2{letter-spacing:-.075em}
+.concept-home .concept-product-grid{gap:20px}
+.concept-home .concept-product{border:1px solid #e8e6df}
+.concept-home .concept-product-art .simple-card{transform:perspective(800px) rotateY(-8deg) rotateZ(-5deg)}
+.concept-home .concept-product:hover .concept-product-art .simple-card{transform:perspective(800px) rotateY(-3deg) rotateZ(-2deg) translateY(-5px)}
+.concept-home .concept-product-buy>a{background:#294be0;border-radius:6px}
+.concept-home .concept-flow article{border:1px solid #dfe3e9;background:#fff}
+.concept-home .concept-dashboard-link{font-weight:800}
+html[data-theme="dark"] .mobile-drawer{background:#101b2a}
+html[data-theme="dark"] .mobile-drawer nav a{background:transparent;border-color:transparent}
+html[data-theme="dark"] .mobile-drawer nav a strong{color:#edf2f8}
+html[data-theme="dark"] .mobile-drawer nav a svg{color:#8798ad}
+html[data-theme="dark"] .mobile-drawer nav a:hover{background:#1b2c43;border-color:#2d4260}
+html[data-theme="dark"] .mobile-drawer nav a:hover strong,html[data-theme="dark"] .mobile-drawer nav a:hover svg{color:#a9bcff}
+html[data-theme="dark"] .mobile-drawer-head>button{background:#1d2d42}
+html[data-theme="dark"] .mobile-drawer-bottom>a{background:#456ff5}
+@media(max-width:680px){
+ .mobile-drawer{padding:21px 20px 20px}
+ .mobile-drawer-kicker{margin-top:34px}
+ .mobile-drawer nav a{padding:17px 14px}
+ .mobile-drawer nav a strong{font-size:21px}
+ .concept-home .concept-hero h1{font-size:clamp(52px,13vw,76px)}
+}
