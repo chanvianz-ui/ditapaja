@@ -216,13 +216,17 @@ export default function DashboardPage() {
     };
   }, [selectedEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId]);
 
-  const cardPerformance = useMemo(() => cards.map((card) => {
-    const rows = eventRows.filter((event) => event.card_id === card.id);
-    const taps = rows.filter((event) => event.event_type === "tap");
-    const clicks = rows.filter((event) => event.event_type === "review_click").length;
-    const visitors = new Set(taps.map((event) => event.visitor_hash).filter(Boolean));
-    return { card, taps: taps.length, clicks, visitors: visitors.size, ctr: taps.length ? clicks / taps.length * 100 : 0 };
-  }).sort((a, b) => b.taps - a.taps), [cards, eventRows]);
+  const cardPerformance = useMemo(() => cards
+    .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
+    .filter((card) => selectedLocationId === "all" || (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
+    .map((card) => {
+      const rows = selectedEventRows.filter((event) => event.card_id === card.id);
+      const taps = rows.filter((event) => event.event_type === "tap");
+      const clicks = rows.filter((event) => event.event_type === "review_click").length;
+      const visitors = new Set(taps.map((event) => event.visitor_hash).filter(Boolean));
+      return { card, taps: taps.length, clicks, visitors: visitors.size, ctr: taps.length ? clicks / taps.length * 100 : 0 };
+    })
+    .sort((a, b) => b.taps - a.taps), [cards, selectedEventRows, selectedCardId, selectedLocationId]);
 
   function exportAnalyticsCsv() {
     const rows = selectedEventRows.map((event) => {
@@ -997,7 +1001,7 @@ export default function DashboardPage() {
             {cards.length > 1 && (
               <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Perbandingan Kartu</h3><p className="mt-1 text-sm text-slate-500">Urutan kartu berdasarkan total tap yang tercatat.</p></div>
-                <div className="overflow-x-auto"><table className="w-full min-w-[560px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">CTR</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
+                <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Visitors</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">CTR</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.visitors.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
               </section>
             )}
 
