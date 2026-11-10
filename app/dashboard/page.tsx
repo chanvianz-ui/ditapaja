@@ -25,6 +25,7 @@ import {
   Download,
   Eye,
   FileSpreadsheet,
+  Building2,
 } from "lucide-react";
 import { QRCodeCanvas } from "qrcode.react";
 import { supabase } from "../../lib/supabase";
@@ -612,6 +613,13 @@ export default function DashboardPage() {
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
             >
               <BarChart3 size={19} /> Analytics
+            </a>
+
+            <a
+              href="/dashboard/business"
+              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
+            >
+              <Building2 size={19} /> Business Profile
             </a>
           </nav>
 
