@@ -24,8 +24,8 @@ export default function SiteHeader(){
   {open&&<div className="mobile-drawer-backdrop" onClick={()=>setOpen(false)}>
    <aside className="mobile-drawer" onClick={e=>e.stopPropagation()} aria-label="Menu navigasi">
     <div className="mobile-drawer-head"><Brand/><button type="button" onClick={()=>setOpen(false)} aria-label="Tutup menu"><X size={23}/></button></div>
-    <div className="mobile-drawer-kicker">EXPLORE DITAPAJA <span>01 — 05</span></div>
-    <nav>{links.map(([label,href],i)=><a key={href} href={href} onClick={()=>setOpen(false)}><span className="drawer-number">0{i+1}</span><strong>{label}</strong><ArrowUpRight size={19}/></a>)}</nav>
+    <div className="mobile-drawer-kicker">JELAJAHI DITAPAJA</div>
+    <nav>{links.map(([label,href])=><a key={href} href={href} onClick={()=>setOpen(false)}><strong>{label}</strong><ArrowUpRight size={19}/></a>)}</nav>
     <div className="mobile-drawer-bottom"><p>Make every customer interaction count.</p><a href="/login" onClick={()=>setOpen(false)}>Masuk ke akun <ArrowUpRight size={17}/></a><small>© 2026 DiTapAja · Made for better connections</small></div>
    </aside>
   </div>}
