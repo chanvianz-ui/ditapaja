@@ -2214,3 +2214,46 @@ html[data-theme="dark"] .feature-page-grid article:hover{border-color:#496184;bo
   .concept-nav-cta,.concept-button,.concept-final-button,
   .catalog-page-benefits>div,.feature-page-intro>div,.feature-page-grid article{transition:none}
 }
+
+
+/* Catalog carousel — clearer controls and deliberate card rhythm */
+.catalog-track{
+  scroll-snap-type:x mandatory;
+  scroll-padding-inline:2px;
+  overscroll-behavior-inline:contain;
+  scrollbar-width:none;
+}
+.catalog-track::-webkit-scrollbar{display:none}
+.catalog-track>.concept-product{scroll-snap-align:start;min-width:0}
+.catalog-slider-controls button{
+  display:grid;place-items:center;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid #dfe4e9;background:transparent;color:#344b64;
+  transition:background .2s,border-color .2s,color .2s,opacity .2s;
+}
+.catalog-slider-controls button:hover:not(:disabled){
+  background:#1d2b3d;border-color:#1d2b3d;color:#fff;
+}
+.catalog-slider-controls button:disabled{opacity:.32;cursor:not-allowed}
+.catalog-slider-progress{overflow:hidden;border-radius:99px}
+.catalog-slider-progress>span{will-change:transform;transition:transform .18s ease}
+.concept-product{height:100%;display:flex;flex-direction:column}
+.concept-product-art{flex:0 0 auto}
+.concept-product-body{display:flex;flex:1;flex-direction:column}
+.concept-product-body>p{flex:1}
+.concept-product-buy{align-items:center}
+.concept-product-buy>a{white-space:nowrap}
+.concept-product-detail-link{width:max-content}
+html[data-theme="dark"] .catalog-slider-controls button{
+  border-color:#344963;color:#c8d5e7;
+}
+html[data-theme="dark"] .catalog-slider-controls button:hover:not(:disabled){
+  background:#4268f5;border-color:#4268f5;color:#fff;
+}
+@media(max-width:680px){
+  .catalog-slider-controls button{width:34px;height:34px}
+  .catalog-track{scroll-padding-inline:1px}
+}
+@media(prefers-reduced-motion:reduce){
+  .catalog-slider-progress>span{transition:none}
+}
