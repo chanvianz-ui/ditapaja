@@ -85,6 +85,7 @@ export default function DashboardPage() {
   const [qrBackground, setQrBackground] = useState("#ffffff");
   const [qrLinkCopied, setQrLinkCopied] = useState(false);
   const [copiedCardId, setCopiedCardId] = useState<string | null>(null);
+  const [cardSearch, setCardSearch] = useState("");
 
   const selectedEventRows = useMemo(() => {
     let rows = eventRows;
@@ -1248,6 +1249,16 @@ export default function DashboardPage() {
                   <p className="mt-1 text-sm text-slate-500">
                     Kelola nama, tujuan, dan status kartu NFC kamu.
                   </p>
+                  <div className="relative mt-3 w-full sm:max-w-xs">
+                    <input
+                      type="search"
+                      value={cardSearch}
+                      onChange={(event) => setCardSearch(event.target.value)}
+                      placeholder="Cari nama, kode, atau link kartu..."
+                      aria-label="Cari kartu NFC"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
@@ -1286,7 +1297,10 @@ export default function DashboardPage() {
                 </div>
               ) : (
                 <div className="divide-y divide-slate-100">
-                  {cards.map((card) => (
+                  {cards.filter((card) => {
+                    const query = cardSearch.trim().toLowerCase();
+                    return !query || [card.card_name || "", card.public_code, card.destination_url].some((value) => value.toLowerCase().includes(query));
+                  }).map((card) => (
                     <div
                       key={card.id}
                       className="flex flex-col justify-between gap-4 p-4 sm:flex-row sm:items-center sm:p-6"
