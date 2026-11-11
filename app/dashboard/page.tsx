@@ -273,16 +273,26 @@ export default function DashboardPage() {
       const card = cards.find((item) => item.id === event.card_id);
       return [card?.card_name || "Untitled Card", event.event_type === "tap" ? "Tap" : "Review Click", new Date(event.created_at).toLocaleString("id-ID")];
     });
+
+    // Prevent spreadsheet formula injection from user-controlled card names.
+    const escapeCsvCell = (value: unknown) => {
+      let safeValue = String(value ?? "");
+      if (/^[\\s\\u0000-\\u001f]*[=+\\-@]/.test(safeValue)) {
+        safeValue = "'" + safeValue;
+      }
+      return '"' + safeValue.replace(/"/g, '""') + '"';
+    };
+
     const csv = [["Nama Kartu", "Aktivitas", "Waktu"], ...rows]
-      .map((row) => row.map((value) => '"' + String(value).replace(/"/g, '""') + '"').join(","))
-      .join("\r\n");
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+      .map((row) => row.map(escapeCsvCell).join(","))
+      .join("\\r\\n");
+    const blob = new Blob(["\\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
     anchor.download = "ditapaja-analytics-" + new Date().toISOString().slice(0, 10) + ".csv";
     anchor.click();
-    URL.revokeObjectURL(url);
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   function downloadQrPng(card: NfcCard) {
