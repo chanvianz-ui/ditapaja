@@ -198,7 +198,8 @@ export async function GET(
     <button class="button" id="reviewButton" type="button" aria-label="Buka Google Maps untuk memberikan ulasan">
       <span class="button-label"><span class="google-mark" aria-hidden="true">G</span> Berikan Ulasan di Google</span>
     </button>
-    <noscript><p class="noscript">JavaScript tidak aktif. <a href="${escapeHtml(fallbackReviewUrl)}" rel="noopener noreferrer">Buka Google Maps untuk memberikan ulasan</a>.</p></noscript>\n    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <noscript><p class="noscript">JavaScript tidak aktif. <a href="${escapeHtml(fallbackReviewUrl)}" rel="noopener noreferrer">Buka Google Maps untuk memberikan ulasan</a>.</p></noscript>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
     <div class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</div>
   </main>
   <script>
