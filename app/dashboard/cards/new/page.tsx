@@ -47,6 +47,7 @@ export default function NewCardPage() {
 
   const [cardName, setCardName] = useState("");
   const [destination, setDestination] = useState("");
+  const [linkTested, setLinkTested] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [locations, setLocations] = useState<{id:string;name:string}[]>([]);
@@ -79,6 +80,11 @@ export default function NewCardPage() {
       return;
     }
 
+    if (!linkTested) {
+      setError("Uji link Google Review terlebih dahulu sebelum menyimpan kartu.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -101,7 +107,7 @@ export default function NewCardPage() {
           card_name: cleanName,
           public_code: publicCode,
           destination_url: cleanDestination,
-          active: true,
+          active: false,
           location_id: locationId || null,
         });
 
@@ -211,7 +217,7 @@ export default function NewCardPage() {
                   required
                   type="url"
                   value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
+                  onChange={(e) => { setDestination(e.target.value); setLinkTested(false); }}
                   placeholder="https://search.google.com/local/writereview?placeid=..."
                   className="w-full rounded-xl border border-slate-200 py-3.5 pl-11 pr-4 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-50"
                 />
@@ -220,6 +226,21 @@ export default function NewCardPage() {
               <p className="mt-2 text-xs text-slate-400">
                 Bisa menggunakan link Google Maps biasa atau link Google Review langsung.
               </p>
+              <button
+                type="button"
+                disabled={!isGoogleMapsUrl(destination.trim())}
+                onClick={() => {
+                  window.open(destination.trim(), "_blank", "noopener,noreferrer");
+                  setLinkTested(true);
+                  setError("");
+                }}
+                className="mt-3 inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                <Link2 size={16} /> Uji link Google Review
+              </button>
+              {linkTested && (
+                <p className="mt-2 text-xs font-medium text-emerald-700">Link sudah dibuka. Pastikan halaman bisnis dan tombol ulasannya benar.</p>
+              )}
             </div>
 
             {error && (
@@ -239,8 +260,8 @@ export default function NewCardPage() {
                     Dashboard gratis selamanya
                   </p>
                   <p className="mt-1 text-xs leading-5 text-blue-700">
-                    Tidak ada biaya langganan bulanan untuk mengelola
-                    kartu dan melihat statistik.
+                    Kartu baru disimpan dalam status nonaktif. Setelah link diuji, aktifkan kartu dari dashboard saat siap digunakan.
+                    Tidak ada biaya langganan bulanan untuk mengelola kartu dan melihat statistik.
                   </p>
                 </div>
               </div>
