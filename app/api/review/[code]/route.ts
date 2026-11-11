@@ -116,9 +116,12 @@ export async function POST(
       .limit(1)
       .maybeSingle();
 
-    if (dedupeError) throw dedupeError;
+    if (dedupeError) {
+      // Analytics must never prevent a customer from reaching Google Reviews.
+      console.error("Review click deduplication check failed:", dedupeError);
+    }
 
-    if (!recentEvent) {
+    if (dedupeError || !recentEvent) {
       const { error: trackingError } = await supabase
         .from("tap_events")
         .insert({
@@ -129,8 +132,8 @@ export async function POST(
         });
 
       if (trackingError) {
+        // Keep the primary customer action available even if analytics is down.
         console.error("Review click tracking error:", trackingError);
-        return NextResponse.json({ error: "Gagal mencatat klik review." }, { status: 500 });
       }
     }
 
