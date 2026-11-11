@@ -109,7 +109,7 @@ export default function NewCardPage() {
           public_code: publicCode,
           destination_url: cleanDestination,
           active: false,
-          location_id: locationId || null,
+          ...(locationId ? { location_id: locationId } : {}),
         });
 
       if (insertError) throw insertError;
