@@ -30,7 +30,7 @@ import {
   Bell,
   Package,
 } from "lucide-react";
-import { QRCodeCanvas } from "qrcode.react";
+import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
 import { supabase } from "../../lib/supabase";
 
 type Profile = {
@@ -130,6 +130,7 @@ export default function DashboardPage() {
   const [nfcMessage, setNfcMessage] = useState("");
   const [nfcError, setNfcError] = useState("");
   const [qrCard, setQrCard] = useState<NfcCard | null>(null);
+  const [showBulkQrSheet, setShowBulkQrSheet] = useState(false);
   const [changeLogs, setChangeLogs] = useState<any[]>([]);
   const [changeLogUnavailable, setChangeLogUnavailable] = useState(false);
 
@@ -1251,6 +1252,7 @@ export default function DashboardPage() {
                   <p className="mt-1 text-sm text-slate-500">
                     Kelola nama, tujuan, dan status kartu NFC kamu.
                   </p>
+                  <button type="button" onClick={() => setShowBulkQrSheet(true)} disabled={!cards.some((card) => card.active)} className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3.5 py-2.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-40"><QrCode size={15}/> Cetak Semua QR</button>
                   <div className="relative mt-3 w-full sm:max-w-xs">
                     <input
                       type="search"
@@ -1423,6 +1425,31 @@ export default function DashboardPage() {
           </div>
         </section>
       </div>
+
+      {/* BULK QR PRINT SHEET */}
+      {showBulkQrSheet && (
+        <div className="fixed inset-0 z-[80] overflow-y-auto bg-slate-950/55 p-3 backdrop-blur-sm sm:p-6">
+          <div className="mx-auto max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-7">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
+              <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR PRINT SHEET</p><h3 className="mt-1 text-lg font-bold text-slate-900">Cetak semua QR Code aktif</h3><p className="mt-1 text-xs text-slate-500">{cards.filter((card) => card.active).length} kartu aktif · Gunakan kertas A4 dan skala 100%.</p></div>
+              <div className="flex gap-2"><button type="button" onClick={() => window.print()} className="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-700"><Printer size={14} className="mr-1 inline"/> Cetak / Simpan PDF</button><button type="button" onClick={() => setShowBulkQrSheet(false)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">Tutup</button></div>
+            </div>
+            <div id="ditapaja-bulk-qr-sheet" className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5">
+              {cards.filter((card) => card.active).map((card) => (
+                <div key={card.id} className="flex break-inside-avoid flex-col items-center rounded-xl border border-slate-200 p-3 text-center sm:p-4">
+                  <p className="w-full truncate text-sm font-bold text-slate-900">{card.card_name || "Untitled Card"}</p>
+                  <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-slate-400">SCAN TO REVIEW</p>
+                  <div className="my-3 rounded-lg bg-white p-2"><QRCodeSVG value={typeof window !== "undefined" ? window.location.origin + "/c/" + card.public_code : "https://ditapaja.web.id/c/" + card.public_code} size={150} level="H" includeMargin fgColor="#111827" bgColor="#ffffff"/></div>
+                  <p className="break-all text-[9px] text-slate-500">ditapaja.web.id/c/{card.public_code}</p>
+                  <p className="mt-2 text-[9px] font-semibold tracking-wide text-slate-400">DiTapAja · YOUR REVIEW STARTS HERE</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-center text-[10px] text-slate-400 print:hidden">Hanya kartu aktif yang disertakan. Setiap QR mengarah ke URL publik kartu masing-masing.</p>
+          </div>
+          <style jsx global>{\`@media print { @page { size: A4; margin: 10mm; } body * { visibility: hidden !important; } #ditapaja-bulk-qr-sheet, #ditapaja-bulk-qr-sheet * { visibility: visible !important; } #ditapaja-bulk-qr-sheet { position: absolute !important; inset: 0 auto auto 0 !important; width: 100% !important; border: 0 !important; } #ditapaja-bulk-qr-sheet > div { break-inside: avoid; } }\`}</style>
+        </div>
+      )}
 
       {/* QR CODE MODAL */}
       {qrCard && (
