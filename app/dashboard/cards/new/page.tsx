@@ -48,6 +48,7 @@ export default function NewCardPage() {
   const [cardName, setCardName] = useState("");
   const [destination, setDestination] = useState("");
   const [linkTested, setLinkTested] = useState(false);
+  const [linkConfirmed, setLinkConfirmed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [locations, setLocations] = useState<{id:string;name:string}[]>([]);
@@ -80,8 +81,8 @@ export default function NewCardPage() {
       return;
     }
 
-    if (!linkTested) {
-      setError("Uji link Google Review terlebih dahulu sebelum menyimpan kartu.");
+    if (!linkTested || !linkConfirmed) {
+      setError("Uji link dan konfirmasi bahwa halaman Google Review sudah benar sebelum menyimpan kartu.");
       return;
     }
 
@@ -217,7 +218,7 @@ export default function NewCardPage() {
                   required
                   type="url"
                   value={destination}
-                  onChange={(e) => { setDestination(e.target.value); setLinkTested(false); }}
+                  onChange={(e) => { setDestination(e.target.value); setLinkTested(false); setLinkConfirmed(false); }}
                   placeholder="https://search.google.com/local/writereview?placeid=..."
                   className="w-full rounded-xl border border-slate-200 py-3.5 pl-11 pr-4 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-50"
                 />
@@ -232,6 +233,7 @@ export default function NewCardPage() {
                 onClick={() => {
                   window.open(destination.trim(), "_blank", "noopener,noreferrer");
                   setLinkTested(true);
+                  setLinkConfirmed(false);
                   setError("");
                 }}
                 className="mt-3 inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-40"
@@ -239,7 +241,20 @@ export default function NewCardPage() {
                 <Link2 size={16} /> Uji link Google Review
               </button>
               {linkTested && (
-                <p className="mt-2 text-xs font-medium text-emerald-700">Link sudah dibuka. Pastikan halaman bisnis dan tombol ulasannya benar.</p>
+                <div className="mt-3 rounded-xl border border-emerald-100 bg-emerald-50 p-4">
+                  <p className="text-xs font-medium leading-5 text-emerald-800">
+                    Link sudah dibuka di tab baru. Periksa nama bisnis dan pastikan halaman ulasan mengarah ke bisnis yang tepat.
+                  </p>
+                  <label className="mt-3 flex cursor-pointer items-start gap-3 text-sm font-medium leading-5 text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={linkConfirmed}
+                      onChange={(e) => setLinkConfirmed(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 shrink-0 accent-emerald-600"
+                    />
+                    Saya sudah memeriksa link dan memastikan halaman Google Review sudah benar.
+                  </label>
+                </div>
               )}
             </div>
 
