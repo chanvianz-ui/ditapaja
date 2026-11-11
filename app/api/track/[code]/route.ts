@@ -11,6 +11,18 @@ export async function POST(
   try {
     const { code } = await params;
 
+    // Browser requests from the public NFC page must be same-origin.
+    const origin = request.headers.get("origin");
+    if (origin) {
+      try {
+        if (new URL(origin).origin !== request.nextUrl.origin) {
+          return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+        }
+      } catch {
+        return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+      }
+    }
+
     if (!/^[a-zA-Z0-9]{12}$/.test(code)) {
       return NextResponse.json({ error: "Kartu tidak ditemukan." }, { status: 404 });
     }
@@ -47,6 +59,22 @@ export async function POST(
     const visitorHash = createHash("sha256")
       .update(clientIp + "|" + userAgent + "|" + secretKey)
       .digest("hex");
+
+    // Ignore retries/repeated requests from the same visitor for this card
+    // within a short window, preventing accidental duplicate analytics rows.
+    const dedupeSince = new Date(Date.now() - 10_000).toISOString();
+    const { data: recentEvent, error: dedupeError } = await supabase
+      .from("tap_events")
+      .select("id")
+      .eq("card_id", card.id)
+      .eq("event_type", "tap")
+      .eq("visitor_hash", visitorHash)
+      .gte("created_at", dedupeSince)
+      .limit(1)
+      .maybeSingle();
+
+    if (dedupeError) throw dedupeError;
+    if (recentEvent) return NextResponse.json({ success: true, duplicate: true });
 
     const { error: insertError } = await supabase.from("tap_events").insert({
       card_id: card.id,
