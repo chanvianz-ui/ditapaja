@@ -134,9 +134,12 @@ export async function GET(
       font-weight: 750; letter-spacing: 2.1px; text-transform: uppercase;
     }
     .business {
-      margin: 0; font-size: 25px; line-height: 1.22;
+      margin: 0; font-size: clamp(21px, 5.8vw, 27px); line-height: 1.22;
       letter-spacing: -.85px; font-weight: 800; overflow-wrap: anywhere;
     }
+    .business-label { display: block; margin: 0 0 8px; color: #98a3b3; font-size: 9px; font-weight: 750; letter-spacing: 1.7px; text-transform: uppercase; }
+    .branch { max-width: 100%; white-space: normal; overflow-wrap: anywhere; justify-content: center; }
+    .address { max-width: 320px; margin-left: auto; margin-right: auto; overflow-wrap: anywhere; }
     .branch {
       display: inline-flex; align-items: center; gap: 6px;
       margin-top: 13px; padding: 8px 12px; border: 1px solid #e8edf5;
@@ -160,6 +163,10 @@ export async function GET(
     .button:active { transform: translateY(1px) scale(.99); }
     .button:focus-visible { outline: 3px solid #a9c4ff; outline-offset: 3px; }
     .button:disabled { opacity: .68; cursor: wait; }
+    .button:focus:not(:focus-visible) { outline: none; }
+    .button-label { display: inline-flex; align-items: center; gap: 8px; }
+    .google-mark { display: inline-grid; width: 21px; height: 21px; place-items: center; border-radius: 50%; background: white; color: #2458c6; font-size: 13px; font-weight: 850; }
+    @media (max-height: 680px) and (min-width: 381px) { body { align-items: flex-start; } .card { margin: 10px auto; padding-top: 28px; padding-bottom: 22px; } .icon { width: 54px; height: 54px; margin-bottom: 17px; } .rule { margin-top: 19px; margin-bottom: 17px; } .footer { margin-top: 18px; } }
     .noscript { margin: 14px 0 0; font-size: 12px; line-height: 1.6; color: #68768b; }
     .noscript a { color: #2458c6; font-weight: 700; }
     .status { min-height: 18px; margin: 11px 0 0; color: #68768b; font-size: 11px; }
@@ -178,6 +185,7 @@ export async function GET(
   <main class="card">
     <div class="icon" aria-hidden="true">★</div>
     <p class="eyebrow">${category || "Terima kasih sudah berkunjung"}</p>
+    <span class="business-label">Kamu berkunjung ke</span>
     <p class="business">${businessName}</p>
     ${branchName ? `<div class="branch">${branchName}</div>` : ""}
     ${branchAddress ? `<p class="address">${branchAddress}</p>` : ""}
@@ -187,8 +195,8 @@ export async function GET(
       Senang bisa menyambut kamu. Bagikan pengalaman dan ulasan
       melalui Google Maps agar lebih banyak orang mengenal kami.
     </p>
-    <button class="button" id="reviewButton" type="button">
-      ★ &nbsp; Berikan Ulasan di Google
+    <button class="button" id="reviewButton" type="button" aria-label="Buka Google Maps untuk memberikan ulasan">
+      <span class="button-label"><span class="google-mark" aria-hidden="true">G</span> Berikan Ulasan di Google</span>
     </button>
     <noscript><p class="noscript">JavaScript tidak aktif. <a href="${escapeHtml(fallbackReviewUrl)}" rel="noopener noreferrer">Buka Google Maps untuk memberikan ulasan</a>.</p></noscript>\n    <p class="status" id="status" role="status" aria-live="polite"></p>
     <div class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</div>
