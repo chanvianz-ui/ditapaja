@@ -1300,6 +1300,15 @@ export default function DashboardPage() {
                   {cards.filter((card) => {
                     const query = cardSearch.trim().toLowerCase();
                     return !query || [card.card_name || "", card.public_code, card.destination_url].some((value) => value.toLowerCase().includes(query));
+                  }).length === 0 ? (
+                    <div className="px-5 py-10 text-center">
+                      <p className="text-sm font-semibold text-slate-700">Kartu tidak ditemukan</p>
+                      <p className="mt-1 text-xs text-slate-500">Coba kata kunci lain atau kosongkan pencarian.</p>
+                      <button type="button" onClick={() => setCardSearch("")} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">Hapus pencarian</button>
+                    </div>
+                  ) : cards.filter((card) => {
+                    const query = cardSearch.trim().toLowerCase();
+                    return !query || [card.card_name || "", card.public_code, card.destination_url].some((value) => value.toLowerCase().includes(query));
                   }).map((card) => (
                     <div
                       key={card.id}
