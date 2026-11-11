@@ -35,6 +35,19 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
 
   function submitOrder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const digits = phone.replace(/\\D/g, "");
+    const normalizedPhone = digits.startsWith("0")
+      ? "62" + digits.slice(1)
+      : digits.startsWith("8")
+        ? "62" + digits
+        : digits;
+    if (normalizedPhone.length < 10 || normalizedPhone.length > 15) {
+      const phoneInput = event.currentTarget.querySelector<HTMLInputElement>('input[name="phone"]');
+      phoneInput?.setCustomValidity("Masukkan nomor WhatsApp yang valid, termasuk kode negara jika diperlukan.");
+      phoneInput?.reportValidity();
+      phoneInput?.focus();
+      return;
+    }
     const message = [
       "Halo DiTapAja, saya ingin melakukan pemesanan.",
       "",
@@ -48,7 +61,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
       "DATA PEMESAN",
       "Nama bisnis: " + business,
       "Nama pemesan: " + customer,
-      "Nomor WhatsApp: " + phone,
+      "Nomor WhatsApp: +" + normalizedPhone,
       "Alamat/kota pengiriman: " + destination,
       "Catatan: " + (notes.trim() || "-"),
       "",
@@ -88,7 +101,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           <div className="order-fields-grid">
             <label className="order-field">Nama bisnis<input required value={business} onChange={event => setBusiness(event.target.value)} placeholder="Contoh: Kopi Senja"/></label>
             <label className="order-field">Nama pemesan<input required value={customer} onChange={event => setCustomer(event.target.value)} placeholder="Nama lengkap"/></label>
-            <label className="order-field">Nomor WhatsApp<input required type="tel" value={phone} onChange={event => setPhone(event.target.value)} placeholder="08xxxxxxxxxx"/></label>
+            <label className="order-field">Nomor WhatsApp<input required type="tel" name="phone" inputMode="tel" autoComplete="tel" value={phone} onChange={event => { event.target.setCustomValidity(""); setPhone(event.target.value); }} placeholder="08xxxxxxxxxx" aria-describedby="order-phone-hint"/></label>
             <label className="order-field">Kota / alamat pengiriman<input required value={destination} onChange={event => setDestination(event.target.value)} placeholder="Kota dan provinsi"/></label>
           </div>
           <label className="order-field order-notes-field">Catatan tambahan <textarea value={notes} onChange={event => setNotes(event.target.value)} rows={3} placeholder="Logo, warna brand, kebutuhan custom, atau pertanyaan lainnya."/></label>
