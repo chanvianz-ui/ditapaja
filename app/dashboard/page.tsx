@@ -1166,10 +1166,11 @@ export default function DashboardPage() {
                         <p className="mt-1 max-w-md truncate text-sm text-slate-500">
                           {card.destination_url}
                         </p>
+                        {!card.active && <p className="mt-2 text-xs font-medium text-amber-700">Aktifkan kartu untuk menggunakan QR Code, Preview, dan penulisan NFC.</p>}
                       </div>
 
                       <div className="flex shrink-0 flex-wrap items-center gap-2">
-                        <button onClick={() => setQrCard(card)} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700" title="Tampilkan QR Code kartu"><QrCode size={16}/> QR Code</button>
+                        <button onClick={() => setQrCard(card)} disabled={!card.active} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600" title={card.active ? "Tampilkan QR Code kartu" : "Aktifkan kartu untuk menggunakan QR Code"}><QrCode size={16}/> QR Code</button>
                         <button onClick={() => window.open(card.destination_url, "_blank", "noopener,noreferrer")} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700" title="Uji tujuan Google Review"><ExternalLink size={16}/> Uji Link</button>
                         <button onClick={() => window.open("/c/" + card.public_code + "?preview=1", "_blank", "noopener,noreferrer")} disabled={!card.active} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-40" title="Preview halaman publik kartu"><Eye size={16}/> Preview</button>
                         <button
