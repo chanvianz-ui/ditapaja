@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Building2, MapPin, Phone, Plus, Save, Trash2, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { ArrowLeft, Building2, MapPin, Phone, Plus, Save, Trash2, Loader2, CheckCircle2, AlertCircle, Pencil, X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 type Location = { id: string; name: string; category: string | null; address: string | null; phone: string | null };
@@ -20,6 +20,11 @@ export default function BusinessSettingsPage() {
   const [locationName, setLocationName] = useState("");
   const [locationAddress, setLocationAddress] = useState("");
   const [locationPhone, setLocationPhone] = useState("");
+  const [editingLocationId, setEditingLocationId] = useState<string | null>(null);
+  const [editLocationName, setEditLocationName] = useState("");
+  const [editLocationAddress, setEditLocationAddress] = useState("");
+  const [editLocationPhone, setEditLocationPhone] = useState("");
+  const [savingLocation, setSavingLocation] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -64,6 +69,42 @@ export default function BusinessSettingsPage() {
     setLocations((current) => [data as Location, ...current]);
     setLocationName(""); setLocationAddress(""); setLocationPhone("");
     setMessage("Lokasi bisnis berhasil ditambahkan.");
+  }
+
+  function startEditLocation(location: Location) {
+    setEditingLocationId(location.id);
+    setEditLocationName(location.name);
+    setEditLocationAddress(location.address || "");
+    setEditLocationPhone(location.phone || "");
+    setError(""); setMessage("");
+  }
+
+  async function saveLocationEdit(event: React.FormEvent) {
+    event.preventDefault();
+    if (!editingLocationId || !editLocationName.trim()) {
+      setError("Nama cabang wajib diisi.");
+      return;
+    }
+    setSavingLocation(true); setError(""); setMessage("");
+    const { data, error: updateError } = await supabase
+      .from("business_locations")
+      .update({
+        name: editLocationName.trim(),
+        address: editLocationAddress.trim() || null,
+        phone: editLocationPhone.trim() || null,
+      })
+      .eq("id", editingLocationId)
+      .eq("user_id", userId)
+      .select("id,name,category,address,phone")
+      .single();
+    if (updateError) {
+      setError("Perubahan cabang gagal disimpan: " + updateError.message);
+    } else {
+      setLocations((current) => current.map((item) => item.id === editingLocationId ? data as Location : item));
+      setEditingLocationId(null);
+      setMessage("Informasi cabang berhasil diperbarui.");
+    }
+    setSavingLocation(false);
   }
 
   async function removeLocation(id: string) {
@@ -111,9 +152,29 @@ export default function BusinessSettingsPage() {
               <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-blue-200 bg-white px-3 py-3 text-sm font-semibold text-blue-700 hover:bg-blue-50"><Plus size={17}/> Tambahkan Cabang</button>
             </form>
             <div className="space-y-3">
-              {locations.length === 0 ? <div className="rounded-xl border border-dashed border-slate-200 px-4 py-8 text-center"><MapPin className="mx-auto mb-2 text-slate-300"/><p className="text-sm font-medium text-slate-500">Belum ada cabang tambahan</p><p className="mt-1 text-xs text-slate-400">Tambahkan cabang untuk mulai menyiapkan pengelolaan multi-lokasi.</p></div> : locations.map((location) => <div key={location.id} className="flex items-start justify-between gap-3 rounded-xl border border-slate-200 p-4"><div className="min-w-0"><p className="font-semibold">{location.name}</p>{location.address && <p className="mt-1 text-xs text-slate-500">{location.address}</p>}{location.phone && <p className="mt-1 flex items-center gap-1 text-xs text-slate-400"><Phone size={12}/>{location.phone}</p>}</div><button onClick={()=>removeLocation(location.id)} aria-label={`Hapus ${location.name}`} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={16}/></button></div>)}
+              {locations.length === 0 ? <div className="rounded-xl border border-dashed border-slate-200 px-4 py-8 text-center"><MapPin className="mx-auto mb-2 text-slate-300"/><p className="text-sm font-medium text-slate-500">Belum ada cabang tambahan</p><p className="mt-1 text-xs text-slate-400">Tambahkan cabang untuk mulai mengelola kartu multi-lokasi.</p></div> : locations.map((location) => <div key={location.id} className="rounded-xl border border-slate-200 p-4">
+                {editingLocationId === location.id ? (
+                  <form onSubmit={saveLocationEdit} className="space-y-3">
+                    <input value={editLocationName} onChange={e=>setEditLocationName(e.target.value)} maxLength={100} required placeholder="Nama cabang" className="w-full rounded-lg border border-slate-200 px-3 py-3 text-sm outline-none focus:border-blue-500"/>
+                    <input value={editLocationAddress} onChange={e=>setEditLocationAddress(e.target.value)} maxLength={300} placeholder="Alamat cabang" className="w-full rounded-lg border border-slate-200 px-3 py-3 text-sm outline-none focus:border-blue-500"/>
+                    <input value={editLocationPhone} onChange={e=>setEditLocationPhone(e.target.value)} maxLength={30} placeholder="Nomor WhatsApp" className="w-full rounded-lg border border-slate-200 px-3 py-3 text-sm outline-none focus:border-blue-500"/>
+                    <div className="flex gap-2">
+                      <button disabled={savingLocation} className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-blue-600 px-3 py-2.5 text-xs font-semibold text-white disabled:opacity-50"><Save size={14}/>{savingLocation ? "Menyimpan..." : "Simpan"}</button>
+                      <button type="button" disabled={savingLocation} onClick={()=>setEditingLocationId(null)} className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-3 py-2.5 text-xs font-semibold text-slate-600"><X size={14}/> Batal</button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0"><p className="font-semibold">{location.name}</p>{location.address && <p className="mt-1 text-xs text-slate-500">{location.address}</p>}{location.phone && <p className="mt-1 flex items-center gap-1 text-xs text-slate-400"><Phone size={12}/>{location.phone}</p>}</div>
+                    <div className="flex shrink-0 items-center gap-1">
+                      <button onClick={()=>startEditLocation(location)} aria-label={`Edit ${location.name}`} className="rounded-lg p-2 text-slate-400 hover:bg-blue-50 hover:text-blue-600"><Pencil size={16}/></button>
+                      <button onClick={()=>removeLocation(location.id)} aria-label={`Hapus ${location.name}`} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={16}/></button>
+                    </div>
+                  </div>
+                )}
+              </div>)}
             </div>
-            <div className="mt-4 rounded-xl border border-blue-100 bg-blue-50 p-4"><p className="text-xs font-semibold text-blue-800">Integrasi multi-cabang</p><p className="mt-1 text-xs leading-5 text-blue-700">Setelah migration multi-lokasi diterapkan di Supabase, kamu bisa memilih cabang saat membuat atau mengedit kartu. Statistik dashboard juga dapat difilter berdasarkan cabang.</p><p className="mt-2 text-[11px] font-medium text-blue-700">Migration: supabase/migrations/202611110001_enable_multi_location_cards.sql</p></div>
+            <div className="mt-4 rounded-xl border border-blue-100 bg-blue-50 p-4"><p className="text-xs font-semibold text-blue-800">Multi-lokasi aktif</p><p className="mt-1 text-xs leading-5 text-blue-700">Pilih cabang saat membuat atau mengedit kartu NFC. Statistik dapat difilter per cabang dari Dashboard Analytics. Menghapus cabang akan melepas kaitan kartu, bukan menghapus kartu atau riwayat aktivitasnya.</p></div>
           </section>
         </div>
       </div>
