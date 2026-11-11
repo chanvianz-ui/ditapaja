@@ -24,6 +24,7 @@ export default function OrdersPage() {
   const [notes, setNotes] = useState("");
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("newest");
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [copiedOrder, setCopiedOrder] = useState<string | null>(null);
   const [invoiceOrder, setInvoiceOrder] = useState<Order | null>(null);
@@ -121,10 +122,16 @@ export default function OrdersPage() {
     const query = search.trim().toLowerCase();
     const matchesSearch = !query || [order.customer_name, order.customer_phone, order.product_name, order.id].some(value => value.toLowerCase().includes(query));
     return matchesSearch && (statusFilter === "all" || order.status === statusFilter);
+  }).sort((a, b) => {
+    if (sortOrder === "oldest") return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    if (sortOrder === "highest") return (b.unit_price * b.quantity) - (a.unit_price * a.quantity);
+    if (sortOrder === "lowest") return (a.unit_price * a.quantity) - (b.unit_price * b.quantity);
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
   });
   const pendingCount = orders.filter(order => order.status === "pending").length;
   const activeCount = orders.filter(order => ["confirmed", "processing", "shipped"].includes(order.status)).length;
   const completedCount = orders.filter(order => order.status === "completed").length;
+  const completedValue = orders.filter(order => order.status === "completed").reduce((sum, order) => sum + order.unit_price * order.quantity, 0);
 
   if (loading) return <div className="flex min-h-screen items-center justify-center"><Loader2 className="animate-spin text-blue-600" /></div>;
 
@@ -137,10 +144,12 @@ export default function OrdersPage() {
           <div><p className="text-xs font-bold uppercase tracking-widest text-blue-600">Sales Workspace</p><h1 className="text-3xl font-bold">Order Management</h1><p className="mt-1 text-sm text-slate-500">Catat dan pantau pesanan kartu DiTapAja.</p></div>
         </div>
         {(error || success) && <div className={`mb-5 flex gap-2 rounded-xl border p-4 text-sm ${error ? "border-red-200 bg-red-50 text-red-700" : "border-emerald-200 bg-emerald-50 text-emerald-700"}`}>{error ? <AlertCircle size={17} /> : <RefreshCw size={17} />}<span>{error || success}</span></div>}
-        <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-slate-500"><Package size={17} /><span className="text-xs font-semibold">Total pesanan</span></div><p className="mt-2 text-2xl font-bold">{orders.length}</p></div>
           <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-amber-600"><Clock size={17} /><span className="text-xs font-semibold">Menunggu konfirmasi</span></div><p className="mt-2 text-2xl font-bold">{pendingCount}</p></div>
           <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-blue-600"><Package size={17} /><span className="text-xs font-semibold">Dalam proses</span></div><p className="mt-2 text-2xl font-bold">{activeCount}</p></div>
           <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-emerald-600"><CheckCircle2 size={17} /><span className="text-xs font-semibold">Selesai</span></div><p className="mt-2 text-2xl font-bold">{completedCount}</p></div>
+          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-emerald-700"><Receipt size={17} /><span className="text-xs font-semibold">Nilai pesanan selesai</span></div><p className="mt-2 break-words text-xl font-bold">Rp{completedValue.toLocaleString("id-ID")}</p></div>
         </div>
         <div className="grid items-start gap-5 lg:grid-cols-[.8fr_1.2fr]">
           <form onSubmit={createOrder} className="h-fit space-y-4 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
@@ -155,9 +164,10 @@ export default function OrdersPage() {
           </form>
           <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 className="font-bold">Daftar pesanan</h2><p className="mt-1 text-xs text-slate-400">{filteredOrders.length} dari {orders.length} pesanan</p></div><button type="button" onClick={exportOrders} disabled={filteredOrders.length===0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40"><Download size={15}/> Ekspor CSV</button></div>
-            <div className="mb-4 grid gap-2 sm:grid-cols-[1fr_160px]">
+            <div className="mb-4 grid gap-2 sm:grid-cols-[1fr_160px_170px]">
               <label className="relative block"><Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" /><input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari nama, WhatsApp, produk, atau ID pesanan..." aria-label="Cari pesanan" className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-9 pr-3 text-xs outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50" /></label>
               <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} aria-label="Filter status pesanan" className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-xs font-semibold text-slate-600 outline-none focus:border-blue-400"><option value="all">Semua status</option>{statuses.map(status => <option key={status} value={status}>{statusLabels[status]}</option>)}</select>
+              <select value={sortOrder} onChange={e => setSortOrder(e.target.value)} aria-label="Urutkan pesanan" className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-xs font-semibold text-slate-600 outline-none focus:border-blue-400"><option value="newest">Terbaru</option><option value="oldest">Terlama</option><option value="highest">Nominal tertinggi</option><option value="lowest">Nominal terendah</option></select>
             </div>
             {orders.length === 0 ? <div className="rounded-xl border border-dashed border-slate-200 py-12 text-center text-sm text-slate-400">Belum ada pesanan.</div> : filteredOrders.length === 0 ? <div className="rounded-xl border border-dashed border-slate-200 py-10 text-center text-sm text-slate-400">Tidak ada pesanan yang cocok dengan pencarian.</div> : (
               <div className="space-y-3">
