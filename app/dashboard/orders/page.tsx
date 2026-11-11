@@ -95,12 +95,7 @@ export default function OrdersPage() {
       statusLabels[order.status] || order.status,
       order.notes || ""
     ]);
-    const escapeCsv = (value: string) => {
-      // Prevent spreadsheet formula injection from customer-controlled order data.
-      let safeValue = String(value ?? "");
-      if (/^[\\s\\u0000-\\u001f]*[=+\\-@]/.test(safeValue)) safeValue = "\'" + safeValue;
-      return '"' + safeValue.replace(/"/g, '""') + '"';
-    };
+    const escapeCsv = (value: string) => '"' + value.replace(/"/g, '""') + '"';
     const csv = "\uFEFF" + [columns, ...rows].map(row => row.map(escapeCsv).join(",")).join("\r\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
