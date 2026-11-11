@@ -38,7 +38,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
 
   async function submitOrder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const digits = phone.replace(/\\D/g, "");
+    const digits = phone.replace(/\D/g, "");
     const normalizedPhone = digits.startsWith("0")
       ? "62" + digits.slice(1)
       : digits.startsWith("8")
