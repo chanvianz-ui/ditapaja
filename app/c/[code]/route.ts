@@ -68,7 +68,8 @@ export async function GET(
 
     const fallbackReviewUrl = card.destination_url;
 
-    const [{ data: profile }, locationResult] = await Promise.all([
+    const previewMode = request.nextUrl.searchParams.get("preview") === "1";
+    const [{ data: profile }, locationResult, pageResult] = await Promise.all([
       supabase
         .from("profiles")
         .select("business_name, business_category")
@@ -82,17 +83,42 @@ export async function GET(
             .eq("user_id", card.user_id)
             .maybeSingle()
         : Promise.resolve({ data: null, error: null }),
+      supabase
+        .from("nfc_card_pages")
+        .select("is_published,headline,description,theme,accent_color,button_style,whatsapp_url,instagram_url,website_url")
+        .eq("card_id", card.id)
+        .eq("user_id", card.user_id)
+        .maybeSingle(),
     ]);
 
     if (locationResult.error) {
       console.error("NFC location lookup error:", locationResult.error);
     }
+    // If the optional migration has not been applied yet, retain the original NFC page.
+    if (pageResult.error) console.warn("Custom NFC page unavailable:", pageResult.error.message);
 
+    const customPage = pageResult.data && (pageResult.data.is_published || previewMode) ? pageResult.data : null;
     const businessName = escapeHtml(profile?.business_name?.trim() || "Bisnis Kami");
     const branchName = escapeHtml(locationResult.data?.name?.trim() || "");
     const branchAddress = escapeHtml(locationResult.data?.address?.trim() || "");
     const category = escapeHtml(profile?.business_category?.trim() || "");
-    const previewMode = request.nextUrl.searchParams.get("preview") === "1";
+    const pageHeadline = escapeHtml(customPage?.headline?.trim() || "Bantu kami menjadi lebih baik");
+    const pageDescription = escapeHtml(customPage?.description?.trim() || "Senang bisa menyambut kamu. Bagikan pengalaman dan ulasan melalui Google Maps agar lebih banyak orang mengenal kami.");
+    const accentColor = /^#[0-9a-fA-F]{6}$/.test(customPage?.accent_color || "") ? customPage!.accent_color : "#2563eb";
+    const themePalette: Record<string, { background: string; card: string; text: string; muted: string; border: string }> = {
+      ocean: { background: "#f3f7ff", card: "#ffffff", text: "#172554", muted: "#64748b", border: "#dbeafe" },
+      midnight: { background: "#0f172a", card: "#172033", text: "#f8fafc", muted: "#cbd5e1", border: "#334155" },
+      rose: { background: "#fff1f2", card: "#ffffff", text: "#881337", muted: "#9f526a", border: "#ffe4e6" },
+      forest: { background: "#f0fdf4", card: "#ffffff", text: "#14532d", muted: "#52765c", border: "#dcfce7" },
+    };
+    const palette = themePalette[customPage?.theme || "ocean"] || themePalette.ocean;
+    const additionalLinks = [
+      ["WhatsApp", customPage?.whatsapp_url],
+      ["Instagram", customPage?.instagram_url],
+      ["Website", customPage?.website_url],
+    ].filter((item): item is [string, string] => typeof item[1] === "string" && /^https:\/\//i.test(item[1]))
+      .map(([label, url]) => `<a class="button secondary" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`)
+      .join("");
 
     const html = `<!DOCTYPE html>
 <html lang="id">
@@ -180,6 +206,17 @@ export async function GET(
     }
     @media (prefers-reduced-motion: reduce) { .button { transition: none; } }
   </style>
+  ${customPage ? `<style>
+    body { background: ${palette.background}; color: ${palette.text}; }
+    .card { background: ${palette.card}; border-color: ${palette.border}; }
+    .card:before { background: ${accentColor}; }
+    .icon { background: ${accentColor}20; color: ${accentColor}; }
+    .business, h1 { color: ${palette.text}; }
+    .eyebrow, .description, .address, .status { color: ${palette.muted}; }
+    .button { background: ${customPage.button_style === "outline" ? "transparent" : accentColor}; color: ${customPage.button_style === "outline" ? accentColor : "#ffffff"}; border: 1px solid ${accentColor}; box-shadow: none; }
+    .button.secondary { margin-top: 10px; }
+    .rule { background: ${accentColor}55; }
+  </style>` : ""}
 </head>
 <body>
   <main class="card">
@@ -190,14 +227,12 @@ export async function GET(
     ${branchName ? `<div class="branch">${branchName}</div>` : ""}
     ${branchAddress ? `<p class="address">${branchAddress}</p>` : ""}
     <div class="rule" aria-hidden="true"></div>
-    <h1>Bantu kami menjadi lebih baik</h1>
-    <p class="description">
-      Senang bisa menyambut kamu. Bagikan pengalaman dan ulasan
-      melalui Google Maps agar lebih banyak orang mengenal kami.
-    </p>
+    <h1>${pageHeadline}</h1>
+    <p class="description">${pageDescription}</p>
     <button class="button" id="reviewButton" type="button" aria-label="Buka Google Maps untuk memberikan ulasan">
       <span class="button-label"><span class="google-mark" aria-hidden="true">G</span> Berikan Ulasan di Google</span>
     </button>
+    ${additionalLinks}
     <noscript><p class="noscript">JavaScript tidak aktif. <a href="${escapeHtml(fallbackReviewUrl)}" rel="noopener noreferrer">Buka Google Maps untuk memberikan ulasan</a>.</p></noscript>
     <p class="status" id="status" role="status" aria-live="polite"></p>
     <div class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</div>
