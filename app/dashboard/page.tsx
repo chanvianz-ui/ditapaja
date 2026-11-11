@@ -919,8 +919,8 @@ export default function DashboardPage() {
             <a href="/dashboard/settings" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Settings</a>
           </nav>
 
-          <div className="mx-auto max-w-7xl space-y-7 p-4 sm:p-5 md:space-y-8 md:p-10">
-            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div className="mx-auto max-w-7xl space-y-6 px-4 py-5 sm:space-y-7 sm:px-6 sm:py-7 xl:px-10 xl:py-9">
+            <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:p-5">
               <div>
                 <p className="text-sm text-slate-500">Welcome back,</p>
                 <h2 className="mt-1 text-2xl font-bold tracking-tight">
@@ -933,7 +933,7 @@ export default function DashboardPage() {
 
               <button
                 onClick={() => router.push("/dashboard/cards/new")}
-                className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"
+                className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:-translate-y-0.5 hover:bg-blue-700"
               >
                 <Plus size={18} /> Add New Card
               </button>
@@ -979,7 +979,7 @@ export default function DashboardPage() {
             {/* ANALYTICS */}
             <div
               id="analytics"
-              className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-4"
+              className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4"
             >
               {analyticsItems.map((item) => (
                 <div
@@ -1003,8 +1003,8 @@ export default function DashboardPage() {
             </div>
 
             {/* DAILY ANALYTICS CHART */}
-            <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+            <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
+              <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:p-5">
                 <div>
                   <h3 className="font-bold">Performance Overview</h3>
                   <p className="mt-1 text-sm text-slate-500">
@@ -1129,7 +1129,7 @@ export default function DashboardPage() {
             </section>
 
             {/* LOCAL ANALYTICS INSIGHTS - DERIVED FROM ALREADY LOADED EVENTS */}
-            <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
               <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">INSIGHT PERFORMA</p>
@@ -1164,7 +1164,7 @@ export default function DashboardPage() {
             </section>
 
             {businessLocations.length > 0 && (
-              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
                 <div className="border-b border-slate-100 px-6 py-5">
                   <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">BUSINESS ANALYTICS</p>
                   <h3 className="mt-1 font-bold text-slate-900">Perbandingan Per Cabang</h3>
@@ -1198,14 +1198,14 @@ export default function DashboardPage() {
             )}
 
             {cards.length > 1 && (
-              <section id="my-nfc-cards" className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <section id="my-nfc-cards" className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
                 <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Perbandingan Kartu</h3><p className="mt-1 text-sm text-slate-500">Urutan kartu berdasarkan total tap yang tercatat.</p></div>
                 <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Visitors</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">CTR</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.visitors.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
               </section>
             )}
 
             {cards.length > 0 && (
-              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
                 <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Riwayat Perubahan</h3><p className="mt-1 text-sm text-slate-500">Perubahan nama, link tujuan, dan status kartu.</p></div>
                 {changeLogUnavailable ? <p className="px-6 py-5 text-xs leading-5 text-slate-400">Riwayat belum diaktifkan. Jalankan migration Supabase yang disertakan pada repository untuk mengaktifkannya.</p> : changeLogs.length === 0 ? <p className="px-6 py-5 text-xs text-slate-400">Belum ada perubahan kartu yang tercatat.</p> : <div className="divide-y divide-slate-100">{changeLogs.map((log) => { const card = cards.find((item) => item.id === log.card_id); const label = log.change_type === "destination_url" ? "Link tujuan diperbarui" : log.change_type === "active" ? "Status kartu diubah" : "Nama kartu diperbarui"; return <div key={log.id} className="flex items-center justify-between gap-3 px-6 py-3"><div className="min-w-0"><p className="text-xs font-semibold text-slate-700">{label}</p><p className="mt-1 truncate text-[11px] text-slate-400">{card?.card_name || "Kartu"}</p></div><time className="shrink-0 text-[10px] text-slate-400">{new Date(log.created_at).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}</time></div>; })}</div>}
               </section>
@@ -1243,7 +1243,7 @@ export default function DashboardPage() {
             {/* NFC CARDS */}
             <div
               id="cards"
-              className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+              className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm"
             >
               <div className="flex flex-col items-start gap-4 border-b border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                 <div>
@@ -1314,7 +1314,7 @@ export default function DashboardPage() {
                   }).map((card) => (
                     <div
                       key={card.id}
-                      className="flex flex-col justify-between gap-4 p-4 sm:flex-row sm:items-center sm:p-6"
+                      className="flex flex-col justify-between gap-4 p-4 transition-colors hover:bg-slate-50/70 sm:flex-row sm:items-center sm:p-5"
                     >
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
@@ -1592,7 +1592,7 @@ export default function DashboardPage() {
                 <button
                   onClick={handleSaveCard}
                   disabled={savingCard}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700 disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:-translate-y-0.5 hover:bg-blue-700 disabled:opacity-50"
                 >
                   {savingCard ? (
                     <Loader2 size={17} className="animate-spin" />
