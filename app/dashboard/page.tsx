@@ -1226,9 +1226,19 @@ export default function DashboardPage() {
                   </p>
                 </div>
 
-                <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
-                  {cards.length} Cards
-                </span>
+                <div className="flex flex-wrap items-center justify-end gap-2">
+                  <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+                    {cards.length} Cards
+                  </span>
+                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                    {cards.filter((card) => card.active).length} Aktif
+                  </span>
+                  {cards.some((card) => !card.active) && (
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                      {cards.filter((card) => !card.active).length} Nonaktif
+                    </span>
+                  )}
+                </div>
               </div>
 
               {cards.length === 0 ? (
