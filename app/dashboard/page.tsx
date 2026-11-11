@@ -29,6 +29,7 @@ import {
   Building2,
   Bell,
   Package,
+  Printer,
 } from "lucide-react";
 import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
 import { supabase } from "../../lib/supabase";
