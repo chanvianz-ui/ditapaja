@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowUpRight, Check, MessageCircle, Minus, Plus, ShieldCheck
 import Link from "next/link";
 
 const products = {
-  noir: { name: "DiTapAja Noir", price: 50000, minimum: 1, type: "Pembelian langsung" },
+  noir: { name: "DiTapAja Noir", price: 50000, minimum: 1, type: "Pesanan reguler · minimum 1 kartu" },
   blanc: { name: "DiTapAja Blanc", price: 50000, minimum: 1, type: "Pembelian langsung" },
   signature: { name: "DiTapAja Signature", price: 60000, minimum: 10, type: "Pre-order custom" },
 } as const;
@@ -81,7 +81,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           <span className="order-kicker"><i/> PEMESANAN DITAPAJA</span>
           <h1>Satu langkah<br/><em>menuju lebih banyak review.</em></h1>
           <p>Isi detail singkat di bawah. Kami akan menerima rangkuman pesananmu melalui WhatsApp untuk konfirmasi selanjutnya.</p>
-          <div className="order-assurance"><span><ShieldCheck size={17}/></span><div><b>Pesanan dikonfirmasi oleh tim kami</b><small>Belum ada pembayaran yang dilakukan melalui formulir ini.</small></div></div>
+          <div className="order-assurance"><span><ShieldCheck size={17}/></span><div><b>Pesanan dikonfirmasi oleh tim kami</b><small>Belum ada pembayaran melalui formulir. Tim kami akan mengonfirmasi pesanan terlebih dahulu.</small></div></div>
           <div className="order-mini-note"><Check size={14}/> NFC + QR Code dalam satu kartu</div>
           <div className="order-mini-note"><Check size={14}/> Dashboard termasuk tanpa biaya bulanan</div>
         </section>
@@ -94,7 +94,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
               <option value="signature">DiTapAja Signature — Rp60.000 / kartu</option>
             </select>
           </label>
-          <div className="order-product-summary"><span>{product.type}</span><b>{product.name}</b><small>{minimum > 1 ? "Minimum " + minimum + " kartu untuk desain custom." : "Tersedia untuk pembelian satuan."}</small></div>
+          <div className="order-product-summary"><span>{product.type}</span><b>{product.name}</b><small>{minimum > 1 ? "Minimum " + minimum + " kartu untuk desain custom." : "Minimum 1 kartu untuk Noir dan Blanc."}</small></div>
           <div className="order-quantity-row"><div><b>Jumlah kartu</b><small>Minimum {minimum} kartu</small></div><div className="order-quantity"><button type="button" aria-label="Kurangi jumlah" disabled={quantity <= minimum} onClick={() => setQuantity(value => Math.max(minimum, value - 1))}><Minus size={15}/></button><output>{quantity}</output><button type="button" aria-label="Tambah jumlah" onClick={() => setQuantity(value => value + 1)}><Plus size={15}/></button></div></div>
           <div className="order-total"><span>Estimasi subtotal</span><b>{formatPrice(total)}</b><small>Belum termasuk ongkos kirim. Harga final dikonfirmasi oleh tim DiTapAja.</small></div>
           <div className="order-form-heading order-customer-heading"><div><span>02 / DATA PEMESAN</span><h2>Ke mana kami menghubungimu?</h2></div></div>
