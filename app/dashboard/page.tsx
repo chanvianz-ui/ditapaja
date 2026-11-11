@@ -725,39 +725,42 @@ export default function DashboardPage() {
       return;
     }
 
-    if (typeof window === "undefined" || !("NDEFReader" in window)) {
-      setNfcError(
-        "Browser ini belum mendukung penulisan NFC. Gunakan Chrome di Android dengan NFC aktif."
-      );
+    if (typeof window === "undefined" || !window.isSecureContext) {
+      setNfcError("Penulisan NFC membutuhkan koneksi HTTPS. Buka dashboard melalui alamat aman (https://).");
       return;
     }
 
-    const nfcUrl = `${window.location.origin}/c/${card.public_code}`;
+    if (!("NDEFReader" in window)) {
+      setNfcError("Browser ini belum mendukung Web NFC. Gunakan Chrome terbaru di Android dan pastikan fitur NFC HP aktif.");
+      return;
+    }
+
+    const nfcUrl = window.location.origin + "/c/" + card.public_code;
     setWritingCardId(card.id);
 
     try {
+      // Keep this call directly inside the button interaction: Web NFC requires a user gesture.
       const NDEFReaderClass = (window as any).NDEFReader;
       const reader = new NDEFReaderClass();
-      await reader.write({
-        records: [{ recordType: "url", data: nfcUrl }],
-      });
-      setNfcMessage(`Berhasil menulis URL ke kartu ${card.card_name || "NFC"}.`);
+      await reader.write({ records: [{ recordType: "url", data: nfcUrl }] });
+      setNfcMessage("Berhasil! Link kartu " + (card.card_name || "NFC") + " sudah tersimpan ke chip. Coba tap kartu untuk mengujinya.");
     } catch (error: any) {
       console.error("NFC write error:", error);
-      if (error?.name === "NotAllowedError") {
-        setNfcError("Izin NFC ditolak. Izinkan akses NFC pada browser.");
+      if (error?.name === "NotAllowedError" || error?.name === "SecurityError") {
+        setNfcError("Izin NFC belum diberikan. Izinkan akses NFC untuk situs ini, lalu coba lagi.");
       } else if (error?.name === "NotSupportedError") {
-        setNfcError("Kartu NFC tidak kompatibel atau tidak dapat ditulis.");
+        setNfcError("NFC tidak didukung perangkat atau chip kartu tidak kompatibel. Pastikan HP Android memiliki NFC.");
       } else if (error?.name === "AbortError") {
-        setNfcError("Penulisan NFC dibatalkan. Coba tempelkan kartu lagi.");
+        setNfcError("Proses dibatalkan. Dekatkan kartu ke bagian belakang HP dan tahan sampai proses selesai.");
+      } else if (error?.name === "InvalidStateError") {
+        setNfcError("Sesi NFC sedang digunakan. Tutup pemindaian NFC lain, lalu coba kembali.");
       } else {
-        setNfcError("Gagal menulis kartu. Pastikan NFC aktif dan dekatkan kartu ke HP.");
+        setNfcError("Belum berhasil menulis kartu. Aktifkan NFC, buka kunci layar HP, lalu tempelkan kartu kembali.");
       }
     } finally {
       setWritingCardId(null);
     }
   }
-
   async function handleDeleteCard() {
     if (!deleteTarget) return;
 
@@ -1282,14 +1285,27 @@ export default function DashboardPage() {
               </div>
             )}
 
+            {writingCardId && (
+              <div role="status" aria-live="polite" className="rounded-2xl border border-blue-200 bg-blue-50 p-4 sm:p-5">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-blue-600"><Nfc size={21} className="animate-pulse" /></div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-blue-900">Siap menerima kartu NFC</p>
+                    <p className="mt-1 text-xs leading-5 text-blue-800">Tempelkan kartu ke bagian belakang HP dan tahan beberapa detik. Jangan jauhkan kartu sampai proses selesai.</p>
+                    <p className="mt-2 text-[11px] font-semibold text-blue-700">Menulis: {cards.find((card) => card.id === writingCardId)?.card_name || "Kartu NFC"}</p>
+                  </div>
+                </div>
+              </div>
+            )}
             {nfcMessage && (
-              <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700">
+              <div role="status" aria-live="polite" className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700">
                 <CheckCircle2 className="mr-2 inline" size={17} />{nfcMessage}
               </div>
             )}
             {nfcError && (
-              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
-                {nfcError}
+              <div role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
+                <p className="font-semibold">Penulisan NFC belum berhasil</p>
+                <p className="mt-1 leading-5">{nfcError}</p>
               </div>
             )}
 
