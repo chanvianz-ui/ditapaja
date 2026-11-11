@@ -90,49 +90,69 @@ export async function GET(
     * { box-sizing: border-box; }
     body {
       margin: 0; min-height: 100vh; display: flex; align-items: center;
-      justify-content: center; padding: 24px; background: #f7f9fc;
-      font-family: Arial, sans-serif; color: #0f172a;
+      justify-content: center; padding: 22px;
+      background: radial-gradient(ellipse at 50% 0%, #eaf1ff 0%, #f6f8fc 48%, #f8fafc 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #101828; -webkit-font-smoothing: antialiased;
     }
     .card {
-      width: 100%; max-width: 440px; padding: 38px 30px 30px;
-      background: white; border: 1px solid #e2e8f0; border-radius: 26px;
-      text-align: center; box-shadow: 0 18px 55px rgba(15, 23, 42, .07);
+      position: relative; overflow: hidden; width: 100%; max-width: 430px;
+      padding: 38px 30px 27px; background: rgba(255,255,255,.96);
+      border: 1px solid rgba(226,232,240,.9); border-radius: 28px;
+      text-align: center; box-shadow: 0 24px 70px rgba(15,23,42,.09), 0 3px 10px rgba(15,23,42,.025);
+    }
+    .card:before {
+      content: ""; position: absolute; inset: 0 0 auto; height: 4px;
+      background: linear-gradient(90deg,#93b4ff,#2563eb 48%,#7c9df5);
     }
     .icon {
-      width: 66px; height: 66px; display: grid; place-items: center;
-      margin: 0 auto 22px; border-radius: 21px; background: #eff6ff;
-      color: #2563eb; font-size: 30px;
+      width: 64px; height: 64px; display: grid; place-items: center;
+      margin: 0 auto 23px; border-radius: 22px;
+      background: linear-gradient(145deg,#eff5ff,#e6edff);
+      color: #2458c6; font-size: 29px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 8px 22px rgba(37,99,235,.09);
     }
     .eyebrow {
-      margin: 0 0 9px; color: #64748b; font-size: 10px;
-      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      margin: 0 0 10px; color: #718096; font-size: 10px;
+      font-weight: 750; letter-spacing: 2.1px; text-transform: uppercase;
     }
     .business {
-      margin: 0; font-size: 23px; line-height: 1.25;
-      letter-spacing: -.7px; font-weight: 800; overflow-wrap: anywhere;
+      margin: 0; font-size: 25px; line-height: 1.22;
+      letter-spacing: -.85px; font-weight: 800; overflow-wrap: anywhere;
     }
     .branch {
-      display: inline-block; margin-top: 12px; padding: 7px 11px;
-      border-radius: 999px; background: #f1f5f9; color: #475569;
-      font-size: 12px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 13px; padding: 8px 12px; border: 1px solid #e8edf5;
+      border-radius: 999px; background: #f8faff; color: #52627a;
+      font-size: 11px; font-weight: 650;
     }
-    .address { margin: 10px 0 0; color: #94a3b8; font-size: 12px; line-height: 1.5; }
-    h1 { margin: 30px 0 10px; font-size: 20px; letter-spacing: -.4px; }
-    .description { margin: 0; color: #64748b; font-size: 14px; line-height: 1.75; }
+    .address { margin: 10px 0 0; color: #8995a7; font-size: 12px; line-height: 1.55; }
+    .rule { width: 38px; height: 3px; margin: 26px auto 22px; border-radius: 9px; background: #dbe6fb; }
+    h1 { margin: 0 0 10px; font-size: 21px; letter-spacing: -.55px; line-height: 1.3; }
+    .description { margin: 0; color: #68768b; font-size: 13.5px; line-height: 1.8; }
     .button {
-      width: 100%; border: 0; cursor: pointer; display: block;
-      margin-top: 27px; padding: 17px; border-radius: 14px;
-      background: #2563eb; color: white; font-size: 15px;
-      font-weight: 700; box-shadow: 0 9px 20px rgba(37, 99, 235, .2);
-      transition: background .2s, transform .2s;
+      width: 100%; border: 0; cursor: pointer; display: flex;
+      align-items: center; justify-content: center; gap: 9px;
+      margin-top: 25px; padding: 17px 18px; border-radius: 15px;
+      background: linear-gradient(135deg,#326fe8,#2458c6); color: white;
+      font-size: 14px; font-weight: 750; letter-spacing: .05px;
+      box-shadow: 0 10px 22px rgba(37,88,198,.22), inset 0 1px 0 rgba(255,255,255,.18);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
-    .button:hover { background: #1d4ed8; }
-    .button:active { transform: scale(.99); }
-    .button:disabled { opacity: .65; cursor: wait; }
-    .status { min-height: 20px; margin: 12px 0 0; color: #64748b; font-size: 12px; }
-    .footer { margin-top: 26px; color: #94a3b8; font-size: 11px; }
-    .footer strong { color: #64748b; }
-    @media (max-width: 380px) { .card { padding: 30px 22px 24px; } .business { font-size: 21px; } }
+    .button:hover { filter: brightness(1.04); box-shadow: 0 13px 26px rgba(37,88,198,.26); }
+    .button:active { transform: translateY(1px) scale(.99); }
+    .button:focus-visible { outline: 3px solid #a9c4ff; outline-offset: 3px; }
+    .button:disabled { opacity: .68; cursor: wait; }
+    .status { min-height: 18px; margin: 11px 0 0; color: #68768b; font-size: 11px; }
+    .footer { margin-top: 25px; padding-top: 17px; border-top: 1px solid #f0f2f6; color: #9aa5b5; font-size: 10px; letter-spacing: .15px; }
+    .footer strong { color: #65748a; font-weight: 750; }
+    @media (max-width: 380px) {
+      body { padding: 15px; }
+      .card { padding: 32px 22px 23px; border-radius: 24px; }
+      .business { font-size: 22px; }
+      h1 { font-size: 19px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .button { transition: none; } }
   </style>
 </head>
 <body>
@@ -142,6 +162,7 @@ export async function GET(
     <p class="business">${businessName}</p>
     ${branchName ? `<div class="branch">${branchName}</div>` : ""}
     ${branchAddress ? `<p class="address">${branchAddress}</p>` : ""}
+    <div class="rule" aria-hidden="true"></div>
     <h1>Bantu kami menjadi lebih baik</h1>
     <p class="description">
       Senang bisa menyambut kamu. Bagikan pengalaman dan ulasan
@@ -164,11 +185,12 @@ export async function GET(
       if (!previewMode) {
         try {
           if (!sessionStorage.getItem(tapKey)) {
-            sessionStorage.setItem(tapKey, "1");
             fetch("/api/track/" + encodeURIComponent(code), {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               keepalive: true
+            }).then(function (response) {
+              if (response.ok) sessionStorage.setItem(tapKey, "1");
             }).catch(function () {});
           }
         } catch (_) {
