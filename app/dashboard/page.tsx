@@ -979,21 +979,23 @@ export default function DashboardPage() {
             {/* ANALYTICS */}
             <div
               id="analytics"
-              className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4"
+              className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-4"
             >
               {analyticsItems.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  className="group min-w-0 rounded-2xl border border-slate-200/90 bg-gradient-to-br from-white via-white to-blue-50/50 p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md sm:p-6"
                 >
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm text-slate-500">{item.label}</p>
-                    <item.icon className="text-blue-600" size={20} />
+                  <div className="flex min-w-0 items-center justify-between gap-2">
+                    <p className="truncate text-xs font-semibold text-slate-500 sm:text-sm">{item.label}</p>
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white sm:h-9 sm:w-9">
+                      <item.icon size={18} />
+                    </span>
                   </div>
-                  <p className="mt-5 text-3xl font-bold tabular-nums">
+                  <p className="mt-4 break-words text-2xl font-bold tracking-tight text-slate-900 tabular-nums sm:mt-5 sm:text-3xl">
                     {item.value}
                   </p>
-                  <p className="mt-2 text-xs text-slate-400">
+                  <p className="mt-1.5 text-[10px] leading-4 text-slate-400 sm:mt-2 sm:text-xs">
                     {item.description}
                   </p>
                 </div>
