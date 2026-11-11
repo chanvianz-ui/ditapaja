@@ -87,6 +87,18 @@ export default function DashboardPage() {
   const [qrLinkCopied, setQrLinkCopied] = useState(false);
   const [copiedCardId, setCopiedCardId] = useState<string | null>(null);
   const [cardSearch, setCardSearch] = useState("");
+  const [cardStatusFilter, setCardStatusFilter] = useState<"all" | "active" | "inactive">("all");
+
+  const visibleCards = useMemo(() => {
+    const query = cardSearch.trim().toLowerCase();
+    return cards.filter((card) => {
+      const matchesQuery = !query || [card.card_name || "", card.public_code, card.destination_url]
+        .some((value) => value.toLowerCase().includes(query));
+      const matchesStatus = cardStatusFilter === "all"
+        || (cardStatusFilter === "active" ? card.active : !card.active);
+      return matchesQuery && matchesStatus;
+    });
+  }, [cards, cardSearch, cardStatusFilter]);
 
   const selectedEventRows = useMemo(() => {
     let rows = eventRows;
@@ -1303,6 +1315,24 @@ export default function DashboardPage() {
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-300 focus:bg-white focus:ring-2 focus:ring-blue-100"
                     />
                   </div>
+                  <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filter status kartu">
+                    {([
+                      { value: "all", label: "Semua", count: cards.length },
+                      { value: "active", label: "Aktif", count: cards.filter((card) => card.active).length },
+                      { value: "inactive", label: "Nonaktif", count: cards.filter((card) => !card.active).length },
+                    ] as const).map((filter) => (
+                      <button
+                        key={filter.value}
+                        type="button"
+                        onClick={() => setCardStatusFilter(filter.value)}
+                        aria-pressed={cardStatusFilter === filter.value}
+                        className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold transition ${cardStatusFilter === filter.value ? "border-blue-200 bg-blue-50 text-blue-700" : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-700"}`}
+                      >
+                        {filter.label}
+                        <span className={`rounded-md px-1.5 py-0.5 text-[10px] ${cardStatusFilter === filter.value ? "bg-white text-blue-700" : "bg-slate-100 text-slate-500"}`}>{filter.count}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
@@ -1341,19 +1371,13 @@ export default function DashboardPage() {
                 </div>
               ) : (
                 <div className="divide-y divide-slate-100">
-                  {cards.filter((card) => {
-                    const query = cardSearch.trim().toLowerCase();
-                    return !query || [card.card_name || "", card.public_code, card.destination_url].some((value) => value.toLowerCase().includes(query));
-                  }).length === 0 ? (
+                  {visibleCards.length === 0 ? (
                     <div className="px-5 py-10 text-center">
-                      <p className="text-sm font-semibold text-slate-700">Kartu tidak ditemukan</p>
-                      <p className="mt-1 text-xs text-slate-500">Coba kata kunci lain atau kosongkan pencarian.</p>
-                      <button type="button" onClick={() => setCardSearch("")} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">Hapus pencarian</button>
+                      <p className="text-sm font-semibold text-slate-700">Tidak ada kartu yang cocok</p>
+                      <p className="mt-1 text-xs text-slate-500">Coba status lain atau ubah kata kunci pencarian.</p>
+                      <button type="button" onClick={() => { setCardSearch(""); setCardStatusFilter("all"); }} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">Reset filter</button>
                     </div>
-                  ) : cards.filter((card) => {
-                    const query = cardSearch.trim().toLowerCase();
-                    return !query || [card.card_name || "", card.public_code, card.destination_url].some((value) => value.toLowerCase().includes(query));
-                  }).map((card) => (
+                  ) : visibleCards.map((card) => (
                     <div
                       key={card.id}
                       className="flex flex-col justify-between gap-4 p-4 transition-colors hover:bg-slate-50/70 sm:flex-row sm:items-center sm:p-5"
