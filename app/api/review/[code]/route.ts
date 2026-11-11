@@ -1,4 +1,5 @@
 
+import { createHash } from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -42,6 +43,18 @@ export async function POST(
   try {
     const { code } = await params;
 
+    // Browser requests from the public NFC page must be same-origin.
+    const origin = request.headers.get("origin");
+    if (origin) {
+      try {
+        if (new URL(origin).origin !== request.nextUrl.origin) {
+          return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+        }
+      } catch {
+        return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+      }
+    }
+
     if (!/^[a-zA-Z0-9]{12}$/.test(code)) {
       return new NextResponse("Kartu tidak ditemukan.", {
         status: 404,
@@ -84,16 +97,41 @@ export async function POST(
       });
     }
 
-    const { error: trackingError } = await supabase
-      .from("tap_events")
-      .insert({
-        card_id: card.id,
-        event_type: "review_click",
-        user_agent: request.headers.get("user-agent") || "",
-      });
+    const forwardedFor = request.headers.get("x-forwarded-for");
+    const clientIp = forwardedFor?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
+    const userAgent = (request.headers.get("user-agent") || "").slice(0, 500);
+    const visitorHash = createHash("sha256")
+      .update(clientIp + "|" + userAgent + "|" + secretKey)
+      .digest("hex");
 
-    if (trackingError) {
-      console.error("Review click tracking error:", trackingError);
+    // Avoid duplicate review-click rows from retries or rapid repeated requests.
+    const dedupeSince = new Date(Date.now() - 10_000).toISOString();
+    const { data: recentEvent, error: dedupeError } = await supabase
+      .from("tap_events")
+      .select("id")
+      .eq("card_id", card.id)
+      .eq("event_type", "review_click")
+      .eq("visitor_hash", visitorHash)
+      .gte("created_at", dedupeSince)
+      .limit(1)
+      .maybeSingle();
+
+    if (dedupeError) throw dedupeError;
+
+    if (!recentEvent) {
+      const { error: trackingError } = await supabase
+        .from("tap_events")
+        .insert({
+          card_id: card.id,
+          event_type: "review_click",
+          visitor_hash: visitorHash,
+          user_agent: userAgent,
+        });
+
+      if (trackingError) {
+        console.error("Review click tracking error:", trackingError);
+        return NextResponse.json({ error: "Gagal mencatat klik review." }, { status: 500 });
+      }
     }
 
     return NextResponse.json({ success: true, url: card.destination_url });
