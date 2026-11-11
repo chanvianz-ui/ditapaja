@@ -1244,7 +1244,7 @@ export default function DashboardPage() {
               id="cards"
               className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
             >
-              <div className="flex items-center justify-between border-b border-slate-100 p-6">
+              <div className="flex flex-col items-start gap-4 border-b border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                 <div>
                   <h3 className="font-bold">My NFC Cards</h3>
                   <p className="mt-1 text-sm text-slate-500">
@@ -1252,7 +1252,7 @@ export default function DashboardPage() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-end gap-2">
+                <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
                   <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
                     {cards.length} Cards
                   </span>
@@ -1291,7 +1291,7 @@ export default function DashboardPage() {
                   {cards.map((card) => (
                     <div
                       key={card.id}
-                      className="flex flex-col justify-between gap-4 p-6 sm:flex-row sm:items-center"
+                      className="flex flex-col justify-between gap-4 p-4 sm:flex-row sm:items-center sm:p-6"
                     >
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
