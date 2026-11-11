@@ -23,6 +23,7 @@ import {
   CheckCircle2,
   QrCode,
   Download,
+  Copy,
   Eye,
   FileSpreadsheet,
   Building2,
@@ -83,6 +84,7 @@ export default function DashboardPage() {
   const [qrForeground, setQrForeground] = useState("#111827");
   const [qrBackground, setQrBackground] = useState("#ffffff");
   const [qrLinkCopied, setQrLinkCopied] = useState(false);
+  const [copiedCardId, setCopiedCardId] = useState<string | null>(null);
 
   const selectedEventRows = useMemo(() => {
     let rows = eventRows;
@@ -334,6 +336,20 @@ export default function DashboardPage() {
     anchor.href = output.toDataURL("image/png");
     anchor.download = "ditapaja-qr-print-" + card.public_code + ".png";
     anchor.click();
+  }
+
+  async function copyPublicCardLink(card: NfcCard) {
+    const publicUrl = window.location.origin + "/c/" + card.public_code;
+    try {
+      await navigator.clipboard.writeText(publicUrl);
+      setCopiedCardId(card.id);
+      setCardError("");
+      window.setTimeout(() => {
+        setCopiedCardId((current) => current === card.id ? null : current);
+      }, 1800);
+    } catch {
+      setCardError("Browser tidak mengizinkan penyalinan otomatis. Buka Preview untuk menyalin link kartu.");
+    }
   }
 
   async function copyQrLink(card: NfcCard) {
@@ -1314,6 +1330,10 @@ export default function DashboardPage() {
                       </div>
 
                       <div className="flex shrink-0 flex-wrap items-center gap-2">
+                        <button onClick={() => copyPublicCardLink(card)} disabled={!card.active} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40" title="Salin link publik kartu">
+                          {copiedCardId === card.id ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                          {copiedCardId === card.id ? "Tersalin" : "Salin Link"}
+                        </button>
                         <button onClick={() => setQrCard(card)} disabled={!card.active} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600" title={card.active ? "Tampilkan QR Code kartu" : "Aktifkan kartu untuk menggunakan QR Code"}><QrCode size={16}/> QR Code</button>
                         <button onClick={() => window.open(card.destination_url, "_blank", "noopener,noreferrer")} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700" title="Uji tujuan Google Review"><ExternalLink size={16}/> Uji Link</button>
                         <button onClick={() => window.open("/c/" + card.public_code + "?preview=1", "_blank", "noopener,noreferrer")} disabled={!card.active} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-40" title="Preview halaman publik kartu"><Eye size={16}/> Preview</button>
