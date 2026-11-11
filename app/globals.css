@@ -2357,3 +2357,8 @@ html[data-theme="dark"] .order-total>span{color:#b9c7d9}
 @media(max-width:800px){.order-layout{gap:35px;padding:48px 0 65px;grid-template-columns:.8fr 1.2fr}.order-intro h1{font-size:43px}.order-form{padding:23px}}
 @media(max-width:650px){.order-page{padding:0 18px}.order-header{height:66px}.order-layout{display:flex;flex-direction:column;gap:25px;padding:35px 0 48px}.order-intro{position:static;padding:0}.order-intro h1{font-size:42px;margin:18px 0 13px}.order-intro>p{font-size:12px}.order-assurance{margin:20px 0 17px}.order-mini-note{display:inline-flex;margin:0 14px 0 0;font-size:9px}.order-form{width:100%;padding:20px 17px}.order-form-heading h2{font-size:20px}.order-fields-grid{grid-template-columns:1fr;gap:0}.order-footer{font-size:8px;gap:12px}.order-footer span:last-child{text-align:right}}
 @media(prefers-reduced-motion:reduce){.order-back,.order-field input,.order-field select,.order-field textarea,.order-submit{transition:none}}
+
+
+/* Order form helper text */
+.order-field-hint{font-size:9px;font-weight:500;color:#8997aa;line-height:1.5;margin-top:-3px}
+html[data-theme="dark"] .order-field-hint{color:#9aabc1}
