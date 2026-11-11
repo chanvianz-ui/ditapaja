@@ -819,7 +819,7 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-[#f7f9fc] text-slate-900">
       <div className="flex min-h-screen">
-        <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white p-6 lg:flex lg:flex-col">
+        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-slate-200/80 bg-white p-5 lg:flex lg:flex-col">
           <a href="/" className="text-2xl font-bold tracking-tight">
             DiTap<span className="text-blue-600">Aja.</span>
           </a>
@@ -828,14 +828,14 @@ export default function DashboardPage() {
             Workspace
           </p>
 
-          <nav className="mt-4 space-y-2">
-            <a className="flex items-center gap-3 rounded-xl bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700">
+          <nav className="mt-4 space-y-1.5">
+            <a className="flex items-center gap-3 rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50 to-blue-50/40 px-4 py-3 text-sm font-semibold text-blue-700 shadow-sm">
               <LayoutDashboard size={19} /> Overview
             </a>
 
             <a
               href="#cards"
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
+              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
             >
               <CreditCard size={19} /> My Cards
             </a>
@@ -881,7 +881,7 @@ export default function DashboardPage() {
         </aside>
 
         <section className="min-w-0 flex-1">
-          <header className="flex items-center justify-between border-b border-slate-200 bg-white px-5 py-5 md:px-10">
+          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200/80 bg-white/95 px-4 py-3.5 backdrop-blur-xl sm:px-5 md:px-10 md:py-4">
             <div>
               <p className="text-xs text-slate-400">
                 Workspace / Overview
@@ -903,7 +903,7 @@ export default function DashboardPage() {
                 <p className="text-xs text-slate-400">{email}</p>
               </div>
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 font-bold text-blue-700 ring-2 ring-white shadow-sm">
                 {displayName.charAt(0).toUpperCase()}
               </div>
             </div>
@@ -919,7 +919,7 @@ export default function DashboardPage() {
             <a href="/dashboard/settings" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Settings</a>
           </nav>
 
-          <div className="mx-auto max-w-7xl space-y-8 p-5 md:p-10">
+          <div className="mx-auto max-w-7xl space-y-7 p-4 sm:p-5 md:space-y-8 md:p-10">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
               <div>
                 <p className="text-sm text-slate-500">Welcome back,</p>
