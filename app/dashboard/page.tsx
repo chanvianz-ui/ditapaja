@@ -375,11 +375,32 @@ export default function DashboardPage() {
         if (userCards.length > 0) {
           const cardIds = userCards.map((card) => card.id);
 
-          const { data: events, error: eventsError } = await supabase
-            .from("tap_events")
-            .select("card_id, event_type, visitor_hash, created_at")
-            .in("card_id", cardIds)
-            .in("event_type", ["tap", "review_click"]);
+          // Supabase/PostgREST commonly returns at most 1,000 rows per request.
+          // Fetch analytics in pages so larger accounts do not silently lose older events.
+          const pageSize = 1000;
+          let offset = 0;
+          let allEvents: AnalyticsEvent[] = [];
+          let eventsError: { message: string } | null = null;
+
+          while (true) {
+            const pageResult = await supabase
+              .from("tap_events")
+              .select("card_id, event_type, visitor_hash, created_at")
+              .in("card_id", cardIds)
+              .in("event_type", ["tap", "review_click"])
+              .order("created_at", { ascending: true })
+              .range(offset, offset + pageSize - 1);
+
+            if (pageResult.error) {
+              eventsError = pageResult.error;
+              break;
+            }
+
+            const page = (pageResult.data ?? []) as AnalyticsEvent[];
+            allEvents = allEvents.concat(page);
+            if (page.length < pageSize) break;
+            offset += pageSize;
+          }
 
           if (eventsError) {
             console.error("Analytics loading error:", eventsError);
@@ -387,7 +408,6 @@ export default function DashboardPage() {
               "Statistik belum dapat dimuat. Periksa izin akses database."
             );
           } else {
-            const allEvents = (events ?? []) as AnalyticsEvent[];
             setEventRows(allEvents);
 
             const tapEvents = allEvents.filter(
