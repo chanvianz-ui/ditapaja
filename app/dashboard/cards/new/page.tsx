@@ -161,7 +161,7 @@ export default function NewCardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f9fc] px-5 py-10">
+    <main className="min-h-screen bg-[#f7f9fc] px-4 py-6 sm:px-6 sm:py-9">
       <div className="mx-auto max-w-2xl">
         <Link
           href="/dashboard"
@@ -171,12 +171,12 @@ export default function NewCardPage() {
           Kembali ke Dashboard
         </Link>
 
-        <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-7 shadow-xl shadow-slate-200/40 sm:p-10">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+        <div className="mt-6 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:mt-8 sm:p-7">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-700 ring-1 ring-blue-100">
             <CreditCard size={27} />
           </div>
 
-          <div className="mt-7">
+          <div className="mt-6">
             <p className="text-xs font-bold tracking-widest text-blue-600">
               NFC CARD MANAGEMENT
             </p>
@@ -191,7 +191,7 @@ export default function NewCardPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-9 space-y-6">
+          <form onSubmit={handleSubmit} className="mt-7 space-y-5">
             <div>
               <label className="mb-2 block text-sm font-semibold text-slate-700">
                 Nama kartu
@@ -208,7 +208,7 @@ export default function NewCardPage() {
                   onChange={(e) => setCardName(e.target.value)}
                   placeholder="Contoh: Kartu Meja Kasir"
                   maxLength={60}
-                  className="w-full rounded-xl border border-slate-200 py-3.5 pl-11 pr-4 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-50"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-3.5 pl-11 pr-4 text-sm outline-none transition-all focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
                 />
               </div>
 
@@ -220,7 +220,7 @@ export default function NewCardPage() {
             {locations.length > 0 && (
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">Lokasi bisnis</label>
-                <select value={locationId} onChange={(e) => setLocationId(e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm outline-none focus:border-blue-500">
+                <select value={locationId} onChange={(e) => setLocationId(e.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3.5 text-sm outline-none transition-all focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50">
                   <option value="">Tanpa lokasi / bisnis utama</option>
                   {locations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
                 </select>
@@ -244,7 +244,7 @@ export default function NewCardPage() {
                   value={destination}
                   onChange={(e) => { setDestination(e.target.value); setLinkTested(false); setLinkConfirmed(false); }}
                   placeholder="https://search.google.com/local/writereview?placeid=..."
-                  className="w-full rounded-xl border border-slate-200 py-3.5 pl-11 pr-4 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-50"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-3.5 pl-11 pr-4 text-sm outline-none transition-all focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
                 />
               </div>
 
@@ -288,7 +288,7 @@ export default function NewCardPage() {
               </div>
             )}
 
-            <div className="rounded-2xl bg-blue-50 p-5">
+            <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-4 sm:p-5">
               <div className="flex items-start gap-3">
                 <CheckCircle2
                   size={20}
@@ -309,7 +309,7 @@ export default function NewCardPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? (
                 <>
