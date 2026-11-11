@@ -26,8 +26,13 @@ export default function OrdersPage() {
 
   async function loadOrders(uid:string) {
     const {data,error:loadError}=await supabase.from("ditapaja_orders").select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,created_at,notes").eq("user_id",uid).order("created_at",{ascending:false});
-    if(loadError) setError("Data pesanan belum tersedia. Jalankan migration platform di Supabase.");
-    else setOrders((data||[]) as Order[]);
+    if(loadError) {
+      console.error("Order loading failed:", loadError);
+      setError(`Gagal memuat pesanan (${loadError.code || "UNKNOWN"}): ${loadError.message}. Periksa tabel ditapaja_orders dan kebijakan RLS di Supabase.`);
+    } else {
+      setError("");
+      setOrders((data||[]) as Order[]);
+    }
   }
   useEffect(()=>{(async()=>{const {data,error:authError}=await supabase.auth.getUser();if(authError||!data.user){router.replace("/login");return;}setUserId(data.user.id);await loadOrders(data.user.id);setLoading(false);})();},[router]);
 
