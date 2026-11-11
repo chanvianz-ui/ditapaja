@@ -1492,7 +1492,7 @@ export default function DashboardPage() {
 
       {/* BULK QR PRINT SHEET */}
       {showBulkQrSheet && (
-        <div className="fixed inset-0 z-[80] overflow-y-auto bg-slate-950/55 p-3 backdrop-blur-sm sm:p-6">
+        <div className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-slate-950/55 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-6">
           <div className="mx-auto max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-7">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
               <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR PRINT SHEET</p><h3 className="mt-1 text-lg font-bold text-slate-900">Cetak semua QR Code aktif</h3><p className="mt-1 text-xs text-slate-500">{cards.filter((card) => card.active).length} kartu aktif · Gunakan kertas A4 dan skala 100%.</p></div>
@@ -1504,7 +1504,7 @@ export default function DashboardPage() {
                   <p className="w-full truncate text-sm font-bold text-slate-900">{card.card_name || "Untitled Card"}</p>
                   <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-slate-400">SCAN TO REVIEW</p>
                   <div className="my-3 rounded-lg bg-white p-2"><QRCodeSVG value={typeof window !== "undefined" ? window.location.origin + "/c/" + card.public_code : "https://ditapaja.web.id/c/" + card.public_code} size={150} level="H" includeMargin fgColor="#111827" bgColor="#ffffff"/></div>
-                  <p className="break-all text-[9px] text-slate-500">ditapaja.web.id/c/{card.public_code}</p>
+                  <p className="break-all text-[9px] text-slate-500">{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.netlify.app"}/c/{card.public_code}</p>
                   <p className="mt-2 text-[9px] font-semibold tracking-wide text-slate-400">DiTapAja · YOUR REVIEW STARTS HERE</p>
                 </div>
               ))}
@@ -1517,11 +1517,11 @@ export default function DashboardPage() {
 
       {/* QR CODE MODAL */}
       {qrCard && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm" onClick={() => setQrCard(null)}>
-          <div role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-2xl" onClick={(event) => event.stopPropagation()}>
+        <div className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto overscroll-contain bg-slate-950/55 p-3 py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-4" onClick={() => setQrCard(null)}>
+          <div role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="my-auto w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-4 text-center shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between text-left"><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR ACCESS</p><h3 id="qr-card-title" className="mt-1 text-lg font-bold text-slate-900">{qrCard.card_name || "Untitled Card"}</h3></div><button type="button" onClick={() => setQrCard(null)} aria-label="Tutup QR Code" className="rounded-full p-2 text-slate-400 hover:bg-slate-100"><X size={19}/></button></div>
-            <div className="mx-auto my-6 inline-flex rounded-2xl border border-slate-100 bg-white p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.web.id/c/" + qrCard.public_code} size={220} level="H" includeMargin fgColor={qrForeground} bgColor={qrBackground} /></div>
-            <p className="break-all text-xs text-slate-400">ditapaja.web.id/c/{qrCard.public_code}</p>
+            <div className="mx-auto my-4 inline-flex max-w-full rounded-2xl border border-slate-100 bg-white p-3 sm:my-6 sm:p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} className="h-auto w-[min(64vw,220px)]" value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.netlify.app/c/" + qrCard.public_code} size={220} level="H" includeMargin fgColor={qrForeground} bgColor={qrBackground} /></div>
+            <p className="break-all px-1 text-[11px] text-slate-400">{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.netlify.app"}/c/{qrCard.public_code}</p>
             <button type="button" onClick={() => copyQrLink(qrCard)} className="mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700">{qrLinkCopied ? "Tautan berhasil disalin" : "Salin tautan kartu"}</button>
             <p className="mt-2 text-xs leading-5 text-slate-500">Scan QR ini untuk membuka halaman review kartu.</p>
             <div className="grid grid-cols-2 gap-3 text-left">
