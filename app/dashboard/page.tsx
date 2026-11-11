@@ -256,6 +256,18 @@ export default function DashboardPage() {
     })
     .sort((a, b) => b.taps - a.taps), [cards, cardEventStats, selectedCardId, selectedLocationId]);
 
+  const locationPerformance = useMemo(() => {
+    const rows = businessLocations.map((location) => {
+      const locationCards = cards.filter((card) => card.location_id === location.id);
+      const cardIds = new Set(locationCards.map((card) => card.id));
+      const events = eventRows.filter((event) => cardIds.has(event.card_id));
+      const taps = events.filter((event) => event.event_type === "tap").length;
+      const clicks = events.filter((event) => event.event_type === "review_click").length;
+      return { ...location, cardCount: locationCards.length, taps, clicks, ctr: taps ? clicks / taps * 100 : 0 };
+    });
+    return rows.sort((a, b) => b.taps - a.taps);
+  }, [businessLocations, cards, eventRows]);
+
   function exportAnalyticsCsv() {
     const rows = selectedEventRows.map((event) => {
       const card = cards.find((item) => item.id === event.card_id);
@@ -1113,6 +1125,40 @@ export default function DashboardPage() {
               </div>
               <p className="mt-4 text-[10px] leading-5 text-slate-400">Persentase perubahan tidak ditampilkan jika periode pembanding belum memiliki aktivitas. Insight ini merupakan ringkasan aktivitas, bukan jumlah ulasan Google yang dipublikasikan.</p>
             </section>
+
+            {businessLocations.length > 0 && (
+              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-100 px-6 py-5">
+                  <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">BUSINESS ANALYTICS</p>
+                  <h3 className="mt-1 font-bold text-slate-900">Perbandingan Per Cabang</h3>
+                  <p className="mt-1 text-sm text-slate-500">Ringkasan aktivitas kartu pada setiap lokasi, tanpa terpengaruh filter lokasi di atas.</p>
+                </div>
+                {locationPerformance.length === 0 ? (
+                  <p className="px-6 py-6 text-sm text-slate-400">Belum ada lokasi bisnis yang dapat dibandingkan.</p>
+                ) : (
+                  <div className="divide-y divide-slate-100">
+                    {locationPerformance.map((location) => {
+                      const maxTaps = Math.max(1, ...locationPerformance.map((item) => item.taps));
+                      return (
+                        <button key={location.id} type="button" onClick={() => { setSelectedLocationId(location.id); setSelectedCardId("all"); }} className="block w-full px-6 py-4 text-left transition hover:bg-slate-50">
+                          <div className="flex items-center justify-between gap-4">
+                            <div className="min-w-0">
+                              <p className="truncate text-sm font-semibold text-slate-800">{location.name}</p>
+                              <p className="mt-1 text-xs text-slate-400">{location.cardCount} kartu · {location.clicks.toLocaleString("id-ID")} review clicks · CTR {location.ctr.toFixed(1)}%</p>
+                            </div>
+                            <p className="shrink-0 text-lg font-bold tabular-nums text-slate-900">{location.taps.toLocaleString("id-ID")} <span className="text-[10px] font-medium text-slate-400">TAPS</span></p>
+                          </div>
+                          <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
+                            <div className="h-full rounded-full bg-blue-600 transition-all" style={{ width: `${(location.taps / maxTaps) * 100}%` }} />
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+                <p className="border-t border-slate-100 px-6 py-3 text-[10px] leading-5 text-slate-400">Ketuk salah satu cabang untuk menerapkan filter statistik. Data hanya menghitung aktivitas yang tercatat pada kartu di cabang tersebut.</p>
+              </section>
+            )}
 
             {cards.length > 1 && (
               <section id="my-nfc-cards" className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
