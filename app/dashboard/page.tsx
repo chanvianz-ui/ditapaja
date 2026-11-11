@@ -1447,7 +1447,7 @@ export default function DashboardPage() {
             </div>
             <p className="mt-4 text-center text-[10px] text-slate-400 print:hidden">Hanya kartu aktif yang disertakan. Setiap QR mengarah ke URL publik kartu masing-masing.</p>
           </div>
-          <style jsx global>{\`@media print { @page { size: A4; margin: 10mm; } body * { visibility: hidden !important; } #ditapaja-bulk-qr-sheet, #ditapaja-bulk-qr-sheet * { visibility: visible !important; } #ditapaja-bulk-qr-sheet { position: absolute !important; inset: 0 auto auto 0 !important; width: 100% !important; border: 0 !important; } #ditapaja-bulk-qr-sheet > div { break-inside: avoid; } }\`}</style>
+          <style jsx global>{`@media print { @page { size: A4; margin: 10mm; } body * { visibility: hidden !important; } #ditapaja-bulk-qr-sheet, #ditapaja-bulk-qr-sheet * { visibility: visible !important; } #ditapaja-bulk-qr-sheet { position: absolute !important; inset: 0 auto auto 0 !important; width: 100% !important; border: 0 !important; } #ditapaja-bulk-qr-sheet > div { break-inside: avoid; } }`}</style>
         </div>
       )}
 
