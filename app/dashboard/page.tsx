@@ -1003,8 +1003,8 @@ export default function DashboardPage() {
             </div>
 
             {/* DAILY ANALYTICS CHART */}
-            <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
-              <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:p-5">
+            <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
+              <div className="flex flex-col justify-between gap-4 rounded-xl bg-slate-50/80 p-4 sm:flex-row sm:items-start sm:p-5">
                 <div>
                   <h3 className="font-bold">Performance Overview</h3>
                   <p className="mt-1 text-sm text-slate-500">
@@ -1015,12 +1015,12 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <div className="flex max-w-full flex-wrap gap-2" role="group" aria-label="Pilih kartu untuk melihat analytics">
+                  <div className="-mx-1 flex max-w-full gap-2 overflow-x-auto px-1 pb-1" role="group" aria-label="Pilih kartu untuk melihat analytics">
                     <button
                       type="button"
                       onClick={() => setSelectedCardId("all")}
                       aria-pressed={selectedCardId === "all"}
-                      className={`rounded-xl border px-4 py-2.5 text-xs font-semibold transition ${
+                      className={`shrink-0 rounded-xl border px-4 py-2.5 text-xs font-semibold transition ${
                         selectedCardId === "all"
                           ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-600/20"
                           : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
@@ -1048,14 +1048,14 @@ export default function DashboardPage() {
                   {businessLocations.length > 0 && (
                     <div className="flex flex-wrap items-center gap-2">
                       <label htmlFor="location-filter" className="text-xs font-semibold text-slate-500">Lokasi</label>
-                      <select id="location-filter" value={selectedLocationId} onChange={(event) => setSelectedLocationId(event.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-600 outline-none focus:border-blue-400">
+                      <select id="location-filter" value={selectedLocationId} onChange={(event) => setSelectedLocationId(event.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-600 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100 sm:w-auto">
                         <option value="all">Semua lokasi</option>
                         {businessLocations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
                         <option value="unassigned">Tanpa lokasi</option>
                       </select>
                     </div>
                   )}
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex w-fit rounded-xl bg-slate-100 p-1">
                       {([7, 30, 90] as const).map((period) => (
                       <button key={period} onClick={() => setChartPeriod(period)} className={`rounded-lg px-3 py-2 text-xs font-semibold transition ${chartPeriod === period ? "bg-white text-blue-700 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}>
@@ -1068,7 +1068,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="mt-7 flex flex-wrap items-center gap-5 text-xs text-slate-500">
+              <div className="mt-6 flex flex-wrap items-center gap-5 border-b border-slate-100 pb-4 text-xs text-slate-500">
                 <span className="flex items-center gap-2">
                   <span className="h-2.5 w-2.5 rounded-sm bg-blue-600" />
                   Total Taps
@@ -1079,8 +1079,8 @@ export default function DashboardPage() {
                 </span>
               </div>
 
-              <div className="mt-5 overflow-x-auto overscroll-x-contain" role="img" aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${chartData.reduce((sum, day) => sum + day.taps, 0)} tap dan ${chartData.reduce((sum, day) => sum + day.clicks, 0)} klik ulasan.`}>
-                <div className={`flex h-56 items-end gap-1 border-b border-slate-100 pb-2 sm:gap-2 ${chartPeriod === 7 ? "min-w-0" : "min-w-[600px] md:min-w-0"}`}>
+              <div className="mt-4 overflow-x-auto overscroll-x-contain rounded-xl bg-slate-50/60 px-2 pt-3" role="img" aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${chartData.reduce((sum, day) => sum + day.taps, 0)} tap dan ${chartData.reduce((sum, day) => sum + day.clicks, 0)} klik ulasan.`}>
+                <div className={`flex h-52 items-end gap-1 border-b border-slate-200 pb-2 sm:h-60 sm:gap-2 ${chartPeriod === 7 ? "min-w-0" : "min-w-[600px] md:min-w-0"}`}>
                   {chartData.map((day, index) => (
                     <div
                       key={day.key}
@@ -1139,7 +1139,7 @@ export default function DashboardPage() {
                 <span className="text-[10px] text-slate-400">Periode: {chartPeriod} hari terakhir</span>
               </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <div className="rounded-xl bg-slate-50 p-4">
+                <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4">
                   <p className="text-xs text-slate-500">Perubahan tap</p>
                   <p className="mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.tapChange === null ? "—" : `${analyticsInsights.tapChange > 0 ? "+" : ""}${analyticsInsights.tapChange.toFixed(1)}%`}</p>
                   <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.current.taps.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.taps.toLocaleString("id-ID")} sebelumnya</p>
