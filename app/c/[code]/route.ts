@@ -3,6 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
+function isGoogleMapsUrl(value: string) {
+  try {
+    const url = new URL(value);
+    const host = url.hostname.toLowerCase();
+    const directReview = host === "search.google.com" && url.pathname === "/local/writereview" && Boolean(url.searchParams.get("placeid")?.trim());
+    const mapsLink = host === "maps.app.goo.gl" || host === "maps.google.com" || host === "goo.gl" || ((host === "google.com" || host === "www.google.com") && url.pathname.startsWith("/maps"));
+    return url.protocol === "https:" && (directReview || mapsLink);
+  } catch { return false; }
+}
+
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => {
     const entities: Record<string, string> = {
@@ -40,7 +50,7 @@ export async function GET(
 
     const { data: card, error } = await supabase
       .from("nfc_cards")
-      .select("id, active, user_id, location_id")
+      .select("id, active, user_id, location_id, destination_url")
       .eq("public_code", code)
       .maybeSingle();
 
@@ -51,6 +61,12 @@ export async function GET(
         status: 404,
       });
     }
+
+    if (!isGoogleMapsUrl(card.destination_url)) {
+      return new NextResponse("Destination URL tidak valid.", { status: 400 });
+    }
+
+    const fallbackReviewUrl = card.destination_url;
 
     const [{ data: profile }, locationResult] = await Promise.all([
       supabase
@@ -180,7 +196,7 @@ export async function GET(
       var button = document.getElementById("reviewButton");
       var status = document.getElementById("status");
       var tapKey = "ditapaja-tap-" + code;
-      var previewMode = ${JSON.stringify(previewMode)};
+      var previewMode = ${JSON.stringify(previewMode)};\n      var fallbackReviewUrl = ${JSON.stringify(fallbackReviewUrl)};
 
       if (!previewMode) {
         try {
@@ -220,9 +236,8 @@ export async function GET(
           }
           window.location.assign(result.url);
         } catch (_) {
-          button.disabled = false;
-          button.textContent = "★  Berikan Ulasan di Google";
-          status.textContent = "Gagal membuka halaman review. Silakan coba lagi.";
+          // Destination validated server-side: preserve the review action if tracking is unavailable.
+          window.location.assign(fallbackReviewUrl);
         }
       });
     })();
