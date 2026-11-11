@@ -100,7 +100,8 @@ export async function GET(
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#f7f9fc">\n  <meta name="description" content="Bagikan pengalaman kamu melalui Google Maps dan bantu bisnis ini berkembang.">
+  <meta name="theme-color" content="#f7f9fc">
+  <meta name="description" content="Bagikan pengalaman kamu melalui Google Maps dan bantu bisnis ini berkembang.">
   <title>Review ${businessName} | DiTapAja</title>
   <style>
     * { box-sizing: border-box; }
@@ -159,7 +160,9 @@ export async function GET(
     .button:active { transform: translateY(1px) scale(.99); }
     .button:focus-visible { outline: 3px solid #a9c4ff; outline-offset: 3px; }
     .button:disabled { opacity: .68; cursor: wait; }
-    .noscript { margin: 14px 0 0; font-size: 12px; line-height: 1.6; color: #68768b; }\n    .noscript a { color: #2458c6; font-weight: 700; }\n    .status { min-height: 18px; margin: 11px 0 0; color: #68768b; font-size: 11px; }
+    .noscript { margin: 14px 0 0; font-size: 12px; line-height: 1.6; color: #68768b; }
+    .noscript a { color: #2458c6; font-weight: 700; }
+    .status { min-height: 18px; margin: 11px 0 0; color: #68768b; font-size: 11px; }
     .footer { margin-top: 25px; padding-top: 17px; border-top: 1px solid #f0f2f6; color: #9aa5b5; font-size: 10px; letter-spacing: .15px; }
     .footer strong { color: #65748a; font-weight: 750; }
     @media (max-width: 380px) {
