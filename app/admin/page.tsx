@@ -136,9 +136,9 @@ export default function AdminPage() {
 
   return (
     <main className="min-h-screen bg-[#f5f7fb] text-[#17243b]">
-      <aside className="fixed left-0 top-0 z-20 hidden h-screen w-[250px] border-r border-slate-200 bg-white p-6 lg:block">
+      <aside className="fixed left-0 top-0 z-20 hidden h-screen w-[250px] border-r border-slate-200 bg-white p-5 lg:block">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#155eef] text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
             <LayoutDashboard size={21} />
           </div>
           <div>
@@ -154,7 +154,7 @@ export default function AdminPage() {
             Management
           </p>
 
-          <div className="flex items-center gap-3 rounded-xl bg-blue-50 px-4 py-3 text-sm font-semibold text-[#155eef]">
+          <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-semibold text-[#155eef]">
             <LayoutDashboard size={18} />
             Overview
           </div>
@@ -190,7 +190,7 @@ export default function AdminPage() {
       </aside>
 
       <section className="lg:ml-[250px]">
-        <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white/90 px-5 py-4 backdrop-blur-xl sm:px-8">
+        <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white/90 px-4 py-3.5 backdrop-blur-xl sm:px-8 sm:py-4">
           <div>
             <p className="text-xs font-medium text-slate-400">
               DiTapAja / Administration
@@ -228,8 +228,8 @@ export default function AdminPage() {
           </div>
         </header>
 
-        <div className="mx-auto max-w-[1400px] p-5 sm:p-8">
-          <div className="mb-8">
+        <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-8 sm:py-8">
+          <div className="mb-7">
             <div className="mb-2 flex items-center gap-2">
               <span className="rounded-full bg-blue-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#155eef]">
                 Super Admin
@@ -255,14 +255,14 @@ export default function AdminPage() {
             </div>
           )}
 
-          <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mb-6 grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
             {statCards.map((item) => {
               const Icon = item.icon;
 
               return (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/40"
+                  className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm shadow-slate-200/40 transition-shadow hover:shadow-md sm:p-5"
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -277,7 +277,7 @@ export default function AdminPage() {
                       </p>
                     </div>
 
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-[#155eef]">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100 text-[#155eef] ring-1 ring-blue-100">
                       <Icon size={21} />
                     </div>
                   </div>
@@ -291,7 +291,7 @@ export default function AdminPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/40 xl:col-span-2">
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm shadow-slate-200/40 sm:p-6 xl:col-span-2">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-bold">Platform Activity</h3>
@@ -341,7 +341,7 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/40">
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm shadow-slate-200/40 sm:p-6">
               <div className="flex items-center gap-2">
                 <ShieldCheck size={20} className="text-[#155eef]" />
                 <h3 className="font-bold">Admin Access</h3>
