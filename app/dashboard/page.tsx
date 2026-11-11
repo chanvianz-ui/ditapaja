@@ -358,7 +358,7 @@ export default function DashboardPage() {
 
         // Older databases may not have the optional multi-location column yet.
         // Retry without it so existing cards remain visible and manageable.
-        let cardsResult = initialCardsResult;
+        let cardsResult: any = initialCardsResult;
         if (
           cardsResult.error &&
           (cardsResult.error.code === "PGRST204" ||
