@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Package, Plus, Loader2, Trash2, RefreshCw, AlertCircle, Search, Clock, CheckCircle2, ChevronDown, Copy, ExternalLink, Receipt, Printer, X } from "lucide-react";
+import { ArrowLeft, Package, Plus, Loader2, Trash2, RefreshCw, AlertCircle, Search, Clock, CheckCircle2, ChevronDown, Copy, ExternalLink, Receipt, Printer, X, Download } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 type Order = { id: string; customer_name: string; customer_phone: string; product_name: string; quantity: number; unit_price: number; status: string; created_at: string; notes: string | null };
@@ -79,6 +79,36 @@ export default function OrdersPage() {
     if (invoiceOrder?.id === id) setInvoiceOrder(current => current ? { ...current, status } : current);
   }
 
+  function exportOrders() {
+    if (filteredOrders.length === 0) { setError("Tidak ada pesanan untuk diekspor."); return; }
+    const columns = ["ID Pesanan", "Tanggal", "Nama Pelanggan", "WhatsApp", "Produk", "Jumlah", "Harga Satuan", "Total", "Status", "Catatan"];
+    const rows = filteredOrders.map(order => [
+      order.id,
+      new Date(order.created_at).toLocaleString("id-ID"),
+      order.customer_name,
+      order.customer_phone,
+      order.product_name,
+      String(order.quantity),
+      String(order.unit_price),
+      String(order.unit_price * order.quantity),
+      statusLabels[order.status] || order.status,
+      order.notes || ""
+    ]);
+    const escapeCsv = (value: string) => '"' + value.replace(/"/g, '""') + '"';
+    const csv = "\\uFEFF" + [columns, ...rows].map(row => row.map(escapeCsv).join(",")).join("\\r\\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "ditapaja-pesanan-" + new Date().toISOString().slice(0, 10) + ".csv";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    setSuccess(filteredOrders.length + " pesanan berhasil diekspor.");
+    setError("");
+  }
+
   async function removeOrder(id: string) {
     if (!window.confirm("Hapus pesanan ini secara permanen?")) return;
     const { error: deleteError } = await supabase.from("ditapaja_orders").delete().eq("id", id).eq("user_id", userId);
@@ -124,7 +154,7 @@ export default function OrdersPage() {
             <p className="text-xs leading-5 text-slate-400">Pencatatan internal. Ini belum memproses pembayaran atau mengirim pesanan ke Shopee.</p>
           </form>
           <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
-            <div className="mb-5 flex items-center justify-between gap-3"><h2 className="font-bold">Daftar pesanan</h2><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold">{filteredOrders.length} / {orders.length}</span></div>
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 className="font-bold">Daftar pesanan</h2><p className="mt-1 text-xs text-slate-400">{filteredOrders.length} dari {orders.length} pesanan</p></div><button type="button" onClick={exportOrders} disabled={filteredOrders.length===0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40"><Download size={15}/> Ekspor CSV</button></div>
             <div className="mb-4 grid gap-2 sm:grid-cols-[1fr_160px]">
               <label className="relative block"><Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" /><input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari nama, WhatsApp, produk, atau ID pesanan..." aria-label="Cari pesanan" className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-9 pr-3 text-xs outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50" /></label>
               <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} aria-label="Filter status pesanan" className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-xs font-semibold text-slate-600 outline-none focus:border-blue-400"><option value="all">Semua status</option>{statuses.map(status => <option key={status} value={status}>{statusLabels[status]}</option>)}</select>
