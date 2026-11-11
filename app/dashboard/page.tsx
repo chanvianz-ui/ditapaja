@@ -1076,41 +1076,39 @@ export default function DashboardPage() {
                 </span>
               </div>
 
-              <div
-                role="img"
-                aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${chartData.reduce((sum, day) => sum + day.taps, 0)} tap dan ${chartData.reduce((sum, day) => sum + day.clicks, 0)} klik ulasan.`}
-                className="mt-5 flex h-56 items-end gap-1 border-b border-slate-100 pb-2 sm:gap-2"
-              >
-                {chartData.map((day, index) => (
-                  <div
-                    key={day.key}
-                    title={`${new Date(day.key + "T00:00:00").toLocaleDateString("id-ID", { dateStyle: "full" })}: ${day.taps} taps, ${day.clicks} review clicks`}
-                    className="flex h-full min-w-0 flex-1 flex-col justify-end"
-                  >
-                    <div className="flex h-full items-end justify-center gap-0.5 sm:gap-1">
-                      <div
-                        className="w-1/2 max-w-5 rounded-t-md bg-blue-600 transition-all"
-                        style={{
-                          height: `${(day.taps / chartMax) * 100}%`,
-                          minHeight: day.taps > 0 ? "3px" : "0",
-                        }}
-                      />
-                      <div
-                        className="w-1/2 max-w-5 rounded-t-md bg-sky-300 transition-all"
-                        style={{
-                          height: `${(day.clicks / chartMax) * 100}%`,
-                          minHeight: day.clicks > 0 ? "3px" : "0",
-                        }}
-                      />
+              <div className="mt-5 overflow-x-auto overscroll-x-contain" role="img" aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${chartData.reduce((sum, day) => sum + day.taps, 0)} tap dan ${chartData.reduce((sum, day) => sum + day.clicks, 0)} klik ulasan.`}>
+                <div className={`flex h-56 items-end gap-1 border-b border-slate-100 pb-2 sm:gap-2 ${chartPeriod === 7 ? "min-w-0" : "min-w-[600px] md:min-w-0"}`}>
+                  {chartData.map((day, index) => (
+                    <div
+                      key={day.key}
+                      title={`${new Date(day.key + "T00:00:00").toLocaleDateString("id-ID", { dateStyle: "full" })}: ${day.taps} taps, ${day.clicks} review clicks`}
+                      className="flex h-full min-w-0 flex-1 flex-col justify-end"
+                    >
+                      <div className="flex h-full items-end justify-center gap-0.5 sm:gap-1">
+                        <div
+                          className="w-1/2 max-w-5 rounded-t-md bg-blue-600 transition-all"
+                          style={{
+                            height: `${(day.taps / chartMax) * 100}%`,
+                            minHeight: day.taps > 0 ? "3px" : "0",
+                          }}
+                        />
+                        <div
+                          className="w-1/2 max-w-5 rounded-t-md bg-sky-300 transition-all"
+                          style={{
+                            height: `${(day.clicks / chartMax) * 100}%`,
+                            minHeight: day.clicks > 0 ? "3px" : "0",
+                          }}
+                        />
+                      </div>
+                      {(chartPeriod === 7 ||
+                        index % (chartPeriod === 30 ? 5 : 15) === 0) && (
+                        <span className="mt-2 truncate text-center text-[10px] text-slate-400">
+                          {day.label}
+                        </span>
+                      )}
                     </div>
-                    {(chartPeriod === 7 ||
-                      index % (chartPeriod === 30 ? 5 : 15) === 0) && (
-                      <span className="mt-2 truncate text-center text-[10px] text-slate-400">
-                        {day.label}
-                      </span>
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
               {selectedEventRows.length === 0 && (
