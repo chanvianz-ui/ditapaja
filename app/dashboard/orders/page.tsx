@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Package, Plus, Loader2, Trash2, RefreshCw, AlertCircle } from "lucide-react";
+import { ArrowLeft, Package, Plus, Loader2, Trash2, RefreshCw, AlertCircle, Search, Clock, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 type Order = { id: string; customer_name: string; customer_phone: string; product_name: string; quantity: number; unit_price: number; status: string; created_at: string; notes: string | null };
@@ -21,6 +21,8 @@ export default function OrdersPage() {
   const [product,setProduct]=useState("DiTapAja Noir");
   const [quantity,setQuantity]=useState("1");
   const [notes,setNotes]=useState("");
+  const [search,setSearch]=useState("");
+  const [statusFilter,setStatusFilter]=useState("all");
 
   async function loadOrders(uid:string) {
     const {data,error:loadError}=await supabase.from("ditapaja_orders").select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,created_at,notes").eq("user_id",uid).order("created_at",{ascending:false});
@@ -47,11 +49,25 @@ export default function OrdersPage() {
     if(deleteError){setError("Pesanan gagal dihapus.");return;}
     setOrders(current=>current.filter(order=>order.id!==id));
   }
+  const filteredOrders = orders.filter(order => {
+    const query = search.trim().toLowerCase();
+    const matchesSearch = !query || [order.customer_name, order.customer_phone, order.product_name].some(value => value.toLowerCase().includes(query));
+    return matchesSearch && (statusFilter === "all" || order.status === statusFilter);
+  });
+  const pendingCount = orders.filter(order => order.status === "pending").length;
+  const activeCount = orders.filter(order => ["confirmed", "processing", "shipped"].includes(order.status)).length;
+  const completedCount = orders.filter(order => order.status === "completed").length;
+
   if(loading)return <div className="flex min-h-screen items-center justify-center"><Loader2 className="animate-spin text-blue-600"/></div>;
   return <main className="min-h-screen bg-[#f7f9fc] px-4 py-6 text-slate-900 sm:px-8 sm:py-9"><div className="mx-auto max-w-5xl">
     <button onClick={()=>router.push("/dashboard")} className="mb-6 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-medium text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-blue-600"><ArrowLeft size={17}/> Dashboard</button>
     <div className="mb-7 flex items-center gap-3"><div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-700 ring-1 ring-blue-100"><Package/></div><div><p className="text-xs font-bold uppercase tracking-widest text-blue-600">Sales Workspace</p><h1 className="text-3xl font-bold">Order Management</h1><p className="mt-1 text-sm text-slate-500">Catat dan pantau pesanan kartu DiTapAja.</p></div></div>
     {(error||success)&&<div className={`mb-5 flex gap-2 rounded-xl border p-4 text-sm ${error?"border-red-200 bg-red-50 text-red-700":"border-emerald-200 bg-emerald-50 text-emerald-700"}`}>{error?<AlertCircle size={17}/>:<RefreshCw size={17}/>}<span>{error||success}</span></div>}
+    <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-amber-600"><Clock size={17}/><span className="text-xs font-semibold">Menunggu konfirmasi</span></div><p className="mt-2 text-2xl font-bold">{pendingCount}</p></div>
+      <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-blue-600"><Package size={17}/><span className="text-xs font-semibold">Dalam proses</span></div><p className="mt-2 text-2xl font-bold">{activeCount}</p></div>
+      <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-emerald-600"><CheckCircle2 size={17}/><span className="text-xs font-semibold">Selesai</span></div><p className="mt-2 text-2xl font-bold">{completedCount}</p></div>
+    </div>
     <div className="grid items-start gap-5 lg:grid-cols-[.8fr_1.2fr]">
       <form onSubmit={createOrder} className="h-fit space-y-4 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6"><h2 className="font-bold">Catat pesanan</h2>
         <label className="block text-sm font-semibold">Nama pelanggan<input value={customer} onChange={e=>setCustomer(e.target.value)} required maxLength={100} className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50/70 px-3 py-3 text-sm outline-none transition-all placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"/></label>
@@ -62,8 +78,12 @@ export default function OrdersPage() {
         <button disabled={saving} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"><Plus size={17}/>{saving?"Menyimpan...":"Tambah Pesanan"}</button>
         <p className="text-xs leading-5 text-slate-400">Pencatatan internal. Ini belum memproses pembayaran atau mengirim pesanan ke Shopee.</p>
       </form>
-      <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6"><div className="mb-5 flex items-center justify-between"><h2 className="font-bold">Daftar pesanan</h2><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold">{orders.length} pesanan</span></div>
-        {orders.length===0?<div className="rounded-xl border border-dashed border-slate-200 py-12 text-center text-sm text-slate-400">Belum ada pesanan.</div>:<div className="space-y-3">{orders.map(order=><article key={order.id} className="rounded-xl border border-slate-200/90 p-4 transition-colors hover:border-blue-100"><div className="flex items-start justify-between gap-3"><div className="min-w-0"><p className="font-semibold">{order.customer_name}</p><p className="mt-1 text-xs text-slate-500">{order.customer_phone} · {order.product_name} × {order.quantity}</p><p className="mt-2 text-sm font-bold">Rp{(order.unit_price*order.quantity).toLocaleString("id-ID")}</p></div><button onClick={()=>removeOrder(order.id)} aria-label="Hapus pesanan" className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={16}/></button></div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-xs text-slate-400">{new Date(order.created_at).toLocaleDateString("id-ID")}</span><select value={order.status} onChange={e=>updateStatus(order.id,e.target.value)} className="max-w-[160px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold capitalize">{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></div>{order.notes&&<p className="mt-3 text-xs text-slate-500">{order.notes}</p>}</article>)}</div>}
+      <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6"><div className="mb-5 flex items-center justify-between gap-3"><h2 className="font-bold">Daftar pesanan</h2><span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold">{filteredOrders.length} / {orders.length}</span></div>
+        <div className="mb-4 grid gap-2 sm:grid-cols-[1fr_160px]">
+          <label className="relative block"><Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Cari nama, WhatsApp, atau produk..." aria-label="Cari pesanan" className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-9 pr-3 text-xs outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"/></label>
+          <select value={statusFilter} onChange={e=>setStatusFilter(e.target.value)} aria-label="Filter status pesanan" className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-xs font-semibold text-slate-600 outline-none focus:border-blue-400"><option value="all">Semua status</option>{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select>
+        </div>
+        {orders.length===0?<div className="rounded-xl border border-dashed border-slate-200 py-12 text-center text-sm text-slate-400">Belum ada pesanan.</div>:filteredOrders.length===0?<div className="rounded-xl border border-dashed border-slate-200 py-10 text-center text-sm text-slate-400">Tidak ada pesanan yang cocok dengan pencarian.</div>:<div className="space-y-3">{filteredOrders.map(order=><article key={order.id} className="rounded-xl border border-slate-200/90 p-4 transition-colors hover:border-blue-100"><div className="flex items-start justify-between gap-3"><div className="min-w-0"><p className="font-semibold">{order.customer_name}</p><p className="mt-1 text-xs text-slate-500">{order.customer_phone} · {order.product_name} × {order.quantity}</p><p className="mt-2 text-sm font-bold">Rp{(order.unit_price*order.quantity).toLocaleString("id-ID")}</p></div><button onClick={()=>removeOrder(order.id)} aria-label="Hapus pesanan" className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={16}/></button></div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-xs text-slate-400">{new Date(order.created_at).toLocaleDateString("id-ID")}</span><select value={order.status} onChange={e=>updateStatus(order.id,e.target.value)} className="max-w-[160px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold capitalize">{statuses.map(status=><option key={status} value={status}>{status}</option>)}</select></div>{order.notes&&<p className="mt-3 text-xs text-slate-500">{order.notes}</p>}</article>)}</div>}
       </section>
     </div>
   </div></main>;
