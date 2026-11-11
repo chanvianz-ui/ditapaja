@@ -172,6 +172,35 @@ export default function DashboardPage() {
     ...chartData.map((day) => Math.max(day.taps, day.clicks))
   );
 
+  // Aggregate analytics once per card instead of repeatedly scanning the full event list.
+  const cardEventStats = useMemo(() => {
+    const stats = new Map<string, { taps: number; clicks: number; visitors: Set<string> }>();
+    for (const event of selectedEventRows) {
+      let item = stats.get(event.card_id);
+      if (!item) {
+        item = { taps: 0, clicks: 0, visitors: new Set<string>() };
+        stats.set(event.card_id, item);
+      }
+      if (event.event_type === "tap") {
+        item.taps += 1;
+        if (event.visitor_hash) item.visitors.add(event.visitor_hash);
+      } else if (event.event_type === "review_click") {
+        item.clicks += 1;
+      }
+    }
+    return stats;
+  }, [selectedEventRows]);
+
+  const latestTapByCard = useMemo(() => {
+    const latest = new Map<string, string>();
+    for (const event of eventRows) {
+      if (event.event_type !== "tap") continue;
+      const previous = latest.get(event.card_id);
+      if (!previous || event.created_at > previous) latest.set(event.card_id, event.created_at);
+    }
+    return latest;
+  }, [eventRows]);
+
   const analyticsInsights = useMemo(() => {
     const end = new Date();
     end.setHours(23, 59, 59, 999);
@@ -182,30 +211,30 @@ export default function DashboardPage() {
     previousStart.setDate(previousStart.getDate() - chartPeriod);
     const previousEnd = new Date(currentStart.getTime() - 1);
 
-    const countEvents = (start: Date, finish: Date) => {
-      const rows = selectedEventRows.filter((event) => {
-        const time = new Date(event.created_at).getTime();
-        return time >= start.getTime() && time <= finish.getTime();
-      });
-      return {
-        taps: rows.filter((event) => event.event_type === "tap").length,
-        clicks: rows.filter((event) => event.event_type === "review_click").length,
-      };
-    };
-    const current = countEvents(currentStart, end);
-    const previous = countEvents(previousStart, previousEnd);
+    const current = { taps: 0, clicks: 0 };
+    const previous = { taps: 0, clicks: 0 };
+    for (const event of selectedEventRows) {
+      const time = new Date(event.created_at).getTime();
+      const target = time >= currentStart.getTime() && time <= end.getTime()
+        ? current
+        : time >= previousStart.getTime() && time <= previousEnd.getTime()
+          ? previous
+          : null;
+      if (!target) continue;
+      if (event.event_type === "tap") target.taps += 1;
+      else if (event.event_type === "review_click") target.clicks += 1;
+    }
+
     const change = (now: number, before: number) => before === 0
       ? (now === 0 ? 0 : null)
       : ((now - before) / before) * 100;
     const bestDay = [...chartData].sort((a, b) => b.taps - a.taps)[0];
-    const filteredCardIds = new Set(cards
+    const cardTotals = cards
       .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
       .filter((card) => selectedLocationId === "all" || (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
-      .map((card) => card.id));
-    const cardTotals = cards.filter((card) => filteredCardIds.has(card.id)).map((card) => {
-      const taps = selectedEventRows.filter((event) => event.card_id === card.id && event.event_type === "tap").length;
-      return { name: card.card_name || "Untitled Card", taps };
-    }).sort((a, b) => b.taps - a.taps);
+      .map((card) => ({ name: card.card_name || "Untitled Card", taps: cardEventStats.get(card.id)?.taps ?? 0 }))
+      .sort((a, b) => b.taps - a.taps);
+
     return {
       current,
       previous,
@@ -214,19 +243,18 @@ export default function DashboardPage() {
       bestDay: bestDay && bestDay.taps > 0 ? bestDay : null,
       topCard: cardTotals[0] && cardTotals[0].taps > 0 ? cardTotals[0] : null,
     };
-  }, [selectedEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId]);
+  }, [selectedEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId, cardEventStats]);
 
   const cardPerformance = useMemo(() => cards
     .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
     .filter((card) => selectedLocationId === "all" || (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
     .map((card) => {
-      const rows = selectedEventRows.filter((event) => event.card_id === card.id);
-      const taps = rows.filter((event) => event.event_type === "tap");
-      const clicks = rows.filter((event) => event.event_type === "review_click").length;
-      const visitors = new Set(taps.map((event) => event.visitor_hash).filter(Boolean));
-      return { card, taps: taps.length, clicks, visitors: visitors.size, ctr: taps.length ? clicks / taps.length * 100 : 0 };
+      const stats = cardEventStats.get(card.id);
+      const taps = stats?.taps ?? 0;
+      const clicks = stats?.clicks ?? 0;
+      return { card, taps, clicks, visitors: stats?.visitors.size ?? 0, ctr: taps ? clicks / taps * 100 : 0 };
     })
-    .sort((a, b) => b.taps - a.taps), [cards, selectedEventRows, selectedCardId, selectedLocationId]);
+    .sort((a, b) => b.taps - a.taps), [cards, cardEventStats, selectedCardId, selectedLocationId]);
 
   function exportAnalyticsCsv() {
     const rows = selectedEventRows.map((event) => {
@@ -1130,10 +1158,9 @@ export default function DashboardPage() {
                             <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold text-slate-500">Belum ditautkan ke cabang</span>
                           )}
                           {(() => {
-                            const cardTaps = eventRows.filter((event) => event.card_id === card.id && event.event_type === "tap");
-                            const latestTap = cardTaps.reduce<string | null>((latest, event) => !latest || event.created_at > latest ? event.created_at : latest, null);
-                            const health = !card.active ? "Nonaktif" : cardTaps.length === 0 ? "Belum pernah digunakan" : "Pernah digunakan · " + new Date(latestTap as string).toLocaleDateString("id-ID");
-                            return <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${!card.active ? "bg-slate-100 text-slate-500" : cardTaps.length === 0 ? "bg-amber-50 text-amber-700" : "bg-emerald-50 text-emerald-700"}`}>{health}</span>;
+                            const latestTap = latestTapByCard.get(card.id);
+                            const health = !card.active ? "Nonaktif" : !latestTap ? "Belum pernah digunakan" : "Pernah digunakan · " + new Date(latestTap).toLocaleDateString("id-ID");
+                            return <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${!card.active ? "bg-slate-100 text-slate-500" : !latestTap ? "bg-amber-50 text-amber-700" : "bg-emerald-50 text-emerald-700"}`}>{health}</span>;
                           })()}
                         </div>
                         <p className="mt-1 max-w-md truncate text-sm text-slate-500">
