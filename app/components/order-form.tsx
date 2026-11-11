@@ -101,7 +101,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           <div className="order-fields-grid">
             <label className="order-field">Nama bisnis<input required value={business} onChange={event => setBusiness(event.target.value)} placeholder="Contoh: Kopi Senja"/></label>
             <label className="order-field">Nama pemesan<input required value={customer} onChange={event => setCustomer(event.target.value)} placeholder="Nama lengkap"/></label>
-            <label className="order-field">Nomor WhatsApp<input required type="tel" name="phone" inputMode="tel" autoComplete="tel" value={phone} onChange={event => { event.target.setCustomValidity(""); setPhone(event.target.value); }} placeholder="08xxxxxxxxxx" aria-describedby="order-phone-hint"/></label>
+            <label className="order-field">Nomor WhatsApp<input required type="tel" name="phone" inputMode="tel" autoComplete="tel" value={phone} onChange={event => { event.target.setCustomValidity(""); setPhone(event.target.value); }} placeholder="08xxxxxxxxxx" aria-describedby="order-phone-hint"/><small id="order-phone-hint" className="order-field-hint">Gunakan nomor aktif yang terhubung ke WhatsApp.</small></label>
             <label className="order-field">Kota / alamat pengiriman<input required value={destination} onChange={event => setDestination(event.target.value)} placeholder="Kota dan provinsi"/></label>
           </div>
           <label className="order-field order-notes-field">Catatan tambahan <textarea value={notes} onChange={event => setNotes(event.target.value)} rows={3} placeholder="Logo, warna brand, kebutuhan custom, atau pertanyaan lainnya."/></label>
