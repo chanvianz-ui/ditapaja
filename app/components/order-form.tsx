@@ -90,7 +90,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
       "Mohon konfirmasi ketersediaan, ongkir, estimasi pengerjaan, dan langkah pembayaran. Terima kasih."
     ].join("\n");
     const whatsappUrl = "https://wa.me/6281321778081?text=" + encodeURIComponent(message);
-    if (whatsappWindow) { whatsappWindow.location.href = whatsappUrl; }
+    if (whatsappWindow) { whatsappWindow.opener = null; whatsappWindow.location.href = whatsappUrl; }
     else { window.location.href = whatsappUrl; }
     setOrderNotice(saveFailed ? "WhatsApp tetap dibuka, tetapi pesanan belum tercatat otomatis. Tim kami akan mencatatnya saat konfirmasi." : "Pesanan berhasil dicatat. Lanjutkan konfirmasi melalui WhatsApp.");
     setSending(false);
@@ -134,7 +134,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           <label className="order-field order-notes-field">Catatan tambahan <textarea value={notes} onChange={event => setNotes(event.target.value)} rows={3} placeholder="Logo, warna brand, kebutuhan custom, atau pertanyaan lainnya."/></label>
           {orderNotice && <p role="status" className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm leading-6 text-blue-800">{orderNotice}</p>}
           <button className="order-submit" type="submit" disabled={sending}><MessageCircle size={17}/> {sending ? "Mencatat pesanan..." : "Kirim detail ke WhatsApp"} <ArrowUpRight size={16}/></button>
-          <p className="order-privacy-note">Dengan melanjutkan, WhatsApp akan terbuka dengan rangkuman pesanan yang kamu isi. Kamu masih bisa memeriksa dan mengedit pesan sebelum mengirimkannya.</p>
+          <p className="order-privacy-note">Pesanan akan dicatat di sistem DiTapAja. WhatsApp kemudian terbuka dengan rangkuman pesanan agar kamu dapat mengirimkannya dan mengonfirmasi detail bersama tim kami.</p>
         </form>
       </div>
       <footer className="order-footer"><span>© 2026 DiTapAja</span><span>Make every customer interaction count.</span></footer>
