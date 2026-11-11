@@ -929,24 +929,46 @@ export default function DashboardPage() {
           </nav>
 
           <div className="mx-auto max-w-7xl space-y-6 px-4 py-5 sm:space-y-7 sm:px-6 sm:py-7 xl:px-10 xl:py-9">
-            <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:p-5">
-              <div>
-                <p className="text-sm text-slate-500">Welcome back,</p>
-                <h2 className="mt-1 text-2xl font-bold tracking-tight">
-                  {displayName} 👋
-                </h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  Pantau performa kartu NFC kamu dari sini.
-                </p>
-              </div>
+            <section className="relative isolate overflow-hidden rounded-2xl border border-blue-100/90 bg-gradient-to-br from-white via-white to-blue-50/90 p-5 shadow-sm sm:p-6 lg:p-7">
+              <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-24 -z-10 h-64 w-64 rounded-full bg-blue-100/70 blur-3xl" />
+              <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">DITAPAJA WORKSPACE</p>
+                  <p className="mt-3 text-sm font-medium text-slate-500">Welcome back,</p>
+                  <h2 className="mt-1 break-words text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+                    {displayName} <span aria-hidden="true">👋</span>
+                  </h2>
+                  <p className="mt-2 max-w-lg text-sm leading-6 text-slate-500">
+                    Pantau performa kartu NFC, kelola pengalaman pelanggan, dan lihat perkembangan interaksi bisnismu.
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm">
+                      <CreditCard size={13} className="text-blue-600" />
+                      {cards.length} {cards.length === 1 ? "kartu" : "kartu"}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm">
+                      <span className={`h-1.5 w-1.5 rounded-full ${cards.some((card) => card.active) ? "bg-emerald-500" : "bg-slate-300"}`} />
+                      {cards.filter((card) => card.active).length} aktif
+                    </span>
+                  </div>
+                </div>
 
-              <button
-                onClick={() => router.push("/dashboard/cards/new")}
-                className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:-translate-y-0.5 hover:bg-blue-700"
-              >
-                <Plus size={18} /> Add New Card
-              </button>
-            </div>
+                <div className="flex shrink-0 flex-col gap-2 sm:min-w-[176px]">
+                  <button
+                    onClick={() => router.push("/dashboard/cards/new")}
+                    className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  >
+                    <Plus size={18} /> Add New Card
+                  </button>
+                  <button
+                    onClick={() => router.push("/dashboard/landing-page")}
+                    className="flex min-h-10 items-center justify-center gap-2 rounded-xl border border-blue-100 bg-white/90 px-4 py-2.5 text-xs font-semibold text-blue-700 transition hover:border-blue-200 hover:bg-blue-50"
+                  >
+                    <Eye size={15} /> Customize Landing Page
+                  </button>
+                </div>
+              </div>
+            </section>
 
             {cards.length === 0 && (
               <section className="rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-5 shadow-sm sm:p-6">
