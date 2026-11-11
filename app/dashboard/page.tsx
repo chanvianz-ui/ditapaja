@@ -336,7 +336,7 @@ export default function DashboardPage() {
 
         setEmail(data.user.email ?? "");
 
-        const [profileResult, cardsResult, locationsResult] = await Promise.all([
+        const [profileResult, initialCardsResult, locationsResult] = await Promise.all([
           supabase
             .from("profiles")
             .select("full_name")
@@ -355,6 +355,22 @@ export default function DashboardPage() {
             .eq("user_id", data.user.id)
             .order("name"),
         ]);
+
+        // Older databases may not have the optional multi-location column yet.
+        // Retry without it so existing cards remain visible and manageable.
+        let cardsResult = initialCardsResult;
+        if (
+          cardsResult.error &&
+          (cardsResult.error.code === "PGRST204" ||
+            cardsResult.error.message?.includes("location_id"))
+        ) {
+          console.warn("Card location column is not available yet; loading cards without location_id.");
+          cardsResult = await supabase
+            .from("nfc_cards")
+            .select("id, card_name, public_code, destination_url, active")
+            .eq("user_id", data.user.id)
+            .order("created_at", { ascending: false });
+        }
 
         if (cardsResult.error) {
           console.error("Card loading error:", cardsResult.error);
@@ -383,7 +399,7 @@ export default function DashboardPage() {
 
         setProfile(currentProfile);
 
-        const userCards = (cardsResult.data ?? []) as NfcCard[];
+        const userCards = ((cardsResult.data ?? []).map((card: any) => ({ ...card, location_id: card.location_id ?? null }))) as NfcCard[];
         setCards(userCards);
         setBusinessLocations(locationsResult.data ?? []);
 
