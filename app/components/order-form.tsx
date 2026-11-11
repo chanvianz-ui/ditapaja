@@ -36,7 +36,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
     setQuantity(products[next].minimum);
   }
 
-  function submitOrder(event: FormEvent<HTMLFormElement>) {
+  async function submitOrder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const digits = phone.replace(/\\D/g, "");
     const normalizedPhone = digits.startsWith("0")
@@ -51,10 +51,29 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
       phoneInput?.focus();
       return;
     }
-    setSending(true);\n    setOrderNotice("");\n    const whatsappWindow = window.open("about:blank", "_blank");\n    let orderReference = "";\n    let saveFailed = false;\n    try {\n      const response = await fetch("/api/orders", {\n        method: "POST",\n        headers: { "Content-Type": "application/json" },\n        body: JSON.stringify({ customer, business, phone: normalizedPhone, destination, product: product.name, quantity, notes, website }),\n      });\n      const result = await response.json();\n      if (!response.ok || !result.success) throw new Error(result.error || "Gagal menyimpan pesanan.");\n      orderReference = result.orderId || "";\n    } catch (error) {\n      saveFailed = true;\n      console.error("Order save failed:", error);\n    }\n    const message = [
+    setSending(true);
+    setOrderNotice("");
+    const whatsappWindow = window.open("about:blank", "_blank");
+    let orderReference = "";
+    let saveFailed = false;
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ customer, business, phone: normalizedPhone, destination, product: product.name, quantity, notes, website }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || "Gagal menyimpan pesanan.");
+      orderReference = result.orderId || "";
+    } catch (error) {
+      saveFailed = true;
+      console.error("Order save failed:", error);
+    }
+    const message = [
       "Halo DiTapAja, saya ingin melakukan pemesanan.",
       "",
-      "DETAIL PESANAN",\n      ...(orderReference ? ["Referensi pesanan: " + orderReference] : []),
+      "DETAIL PESANAN",
+      ...(orderReference ? ["Referensi pesanan: " + orderReference] : []),
       "Produk: " + product.name,
       "Jenis: " + product.type,
       "Harga per kartu: " + formatPrice(product.price),
@@ -70,7 +89,11 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
       "",
       "Mohon konfirmasi ketersediaan, ongkir, estimasi pengerjaan, dan langkah pembayaran. Terima kasih."
     ].join("\n");
-    const whatsappUrl = "https://wa.me/6281321778081?text=" + encodeURIComponent(message);\n    if (whatsappWindow) { whatsappWindow.location.href = whatsappUrl; }\n    else { window.location.href = whatsappUrl; }\n    setOrderNotice(saveFailed ? "WhatsApp tetap dibuka, tetapi pesanan belum tercatat otomatis. Tim kami akan mencatatnya saat konfirmasi." : "Pesanan berhasil dicatat. Lanjutkan konfirmasi melalui WhatsApp.");\n    setSending(false);
+    const whatsappUrl = "https://wa.me/6281321778081?text=" + encodeURIComponent(message);
+    if (whatsappWindow) { whatsappWindow.location.href = whatsappUrl; }
+    else { window.location.href = whatsappUrl; }
+    setOrderNotice(saveFailed ? "WhatsApp tetap dibuka, tetapi pesanan belum tercatat otomatis. Tim kami akan mencatatnya saat konfirmasi." : "Pesanan berhasil dicatat. Lanjutkan konfirmasi melalui WhatsApp.");
+    setSending(false);
   }
 
   return (
@@ -90,7 +113,8 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
         </section>
         <form className="order-form" onSubmit={submitOrder}>
           <div className="order-form-heading"><div><span>01 / PRODUK</span><h2>Detail pesanan</h2></div><small>* Wajib diisi</small></div>
-          <label aria-hidden="true" className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden">Website<input tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)}/></label>\n          <label className="order-field">Pilih kartu
+          <label aria-hidden="true" className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden">Website<input tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)}/></label>
+          <label className="order-field">Pilih kartu
             <select value={productKey} onChange={event => changeProduct(event.target.value)}>
               <option value="noir">DiTapAja Noir — Rp50.000 / kartu</option>
               <option value="blanc">DiTapAja Blanc — Rp50.000 / kartu</option>
@@ -108,7 +132,8 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
             <label className="order-field">Kota / alamat pengiriman<input required value={destination} onChange={event => setDestination(event.target.value)} placeholder="Kota dan provinsi"/></label>
           </div>
           <label className="order-field order-notes-field">Catatan tambahan <textarea value={notes} onChange={event => setNotes(event.target.value)} rows={3} placeholder="Logo, warna brand, kebutuhan custom, atau pertanyaan lainnya."/></label>
-          {orderNotice && <p role="status" className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm leading-6 text-blue-800">{orderNotice}</p>}\n          <button className="order-submit" type="submit" disabled={sending}><MessageCircle size={17}/> {sending ? "Mencatat pesanan..." : "Kirim detail ke WhatsApp"} <ArrowUpRight size={16}/></button>
+          {orderNotice && <p role="status" className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm leading-6 text-blue-800">{orderNotice}</p>}
+          <button className="order-submit" type="submit" disabled={sending}><MessageCircle size={17}/> {sending ? "Mencatat pesanan..." : "Kirim detail ke WhatsApp"} <ArrowUpRight size={16}/></button>
           <p className="order-privacy-note">Dengan melanjutkan, WhatsApp akan terbuka dengan rangkuman pesanan yang kamu isi. Kamu masih bisa memeriksa dan mengedit pesan sebelum mengirimkannya.</p>
         </form>
       </div>
