@@ -1060,15 +1060,19 @@ export default function DashboardPage() {
                 </span>
               </div>
 
-              <div className="mt-5 flex h-56 items-end gap-1 border-b border-slate-100 pb-2 sm:gap-2">
+              <div
+                role="img"
+                aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${chartData.reduce((sum, day) => sum + day.taps, 0)} tap dan ${chartData.reduce((sum, day) => sum + day.clicks, 0)} klik ulasan.`}
+                className="mt-5 flex h-56 items-end gap-1 border-b border-slate-100 pb-2 sm:gap-2"
+              >
                 {chartData.map((day, index) => (
                   <div
                     key={day.key}
+                    title={`${new Date(day.key + "T00:00:00").toLocaleDateString("id-ID", { dateStyle: "full" })}: ${day.taps} taps, ${day.clicks} review clicks`}
                     className="flex h-full min-w-0 flex-1 flex-col justify-end"
                   >
                     <div className="flex h-full items-end justify-center gap-0.5 sm:gap-1">
                       <div
-                        title={`${day.taps} taps`}
                         className="w-1/2 max-w-5 rounded-t-md bg-blue-600 transition-all"
                         style={{
                           height: `${(day.taps / chartMax) * 100}%`,
@@ -1076,7 +1080,6 @@ export default function DashboardPage() {
                         }}
                       />
                       <div
-                        title={`${day.clicks} review clicks`}
                         className="w-1/2 max-w-5 rounded-t-md bg-sky-300 transition-all"
                         style={{
                           height: `${(day.clicks / chartMax) * 100}%`,
@@ -1095,9 +1098,16 @@ export default function DashboardPage() {
               </div>
 
               {selectedEventRows.length === 0 && (
-                <p className="mt-4 text-center text-xs text-slate-400">
-                  Belum ada aktivitas untuk ditampilkan.
-                </p>
+                <div className="mt-5 rounded-xl border border-dashed border-slate-200 bg-slate-50/70 px-5 py-6 text-center">
+                  <BarChart3 className="mx-auto mb-2 text-slate-300" size={22} />
+                  <p className="text-sm font-semibold text-slate-700">Belum ada aktivitas tercatat</p>
+                  <p className="mx-auto mt-1 max-w-md text-xs leading-5 text-slate-500">
+                    Coba tempelkan ponsel pada kartu NFC aktif atau buka QR kartu. Setelah pelanggan membuka halaman kartu, data tap akan muncul di sini.
+                  </p>
+                  <button type="button" onClick={() => document.getElementById("cards")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">
+                    Lihat kartu NFC
+                  </button>
+                </div>
               )}
             </section>
 
