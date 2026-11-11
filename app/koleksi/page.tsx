@@ -29,7 +29,7 @@ export default function KoleksiPage() {
       <ProductCarousel products={products} />
       <div className="catalog-page-note">
         <div><QrCode size={19} /><b>Semua yang kamu butuhkan dalam satu kartu.</b></div>
-        <p>Noir dan Blanc tersedia untuk pembelian langsung melalui Shopee. Untuk desain Signature, pemesanan dilakukan melalui WhatsApp dengan minimum 10 kartu.</p>
+        <p>Noir dan Blanc dapat dipesan mulai satu kartu. DiTapAja Signature tersedia melalui pre-order dengan minimum 10 kartu. Semua pesanan dikonfirmasi melalui WhatsApp.</p>
       </div>
     </InfoPage>
   );
