@@ -1,10 +1,25 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLeft, ArrowUpRight, Check, ChartNoAxesCombined, Link2, MonitorSmartphone, Nfc, QrCode, Settings2, CalendarDays } from "lucide-react";
 const collection = {
  noir:{name:"DiTapAja Noir",edition:"BLACK EDITION",headline:"Elegance in Every Interaction.",description:"Desain hitam yang elegan dan eksklusif untuk bisnis yang ingin menghadirkan kesan modern dan profesional.",detail:"Dengan ukuran 10 × 10 cm, Noir mudah ditempatkan di area kasir maupun meja pelanggan. Cukup satu kali tap NFC atau scan QR Code, pelanggan langsung diarahkan ke halaman Google Review bisnismu.",color:"noir",price:"Rp50.000",mode:"buy",fit:"Specialty coffee, coffee shop, restoran, lounge, bar, dan bisnis dengan konsep modern."},
  blanc:{name:"DiTapAja Blanc",edition:"WHITE EDITION",headline:"Simplicity Meets Elegance.",description:"Desain putih yang bersih, minimalis, dan timeless untuk bisnis yang mengutamakan estetika sederhana tanpa mengesampingkan fungsi.",detail:"Dengan ukuran 10 × 10 cm, Blanc memberikan tampilan rapi dan profesional. Pelanggan cukup melakukan satu kali tap NFC atau scan QR Code untuk membuka halaman Google Review.",color:"blanc",price:"Rp50.000",mode:"buy",fit:"Cafe, bakery, dessert shop, hotel, salon, klinik kecantikan, dan retail."},
  signature:{name:"DiTapAja Signature",edition:"CUSTOM EDITION",headline:"Your Brand. Your Signature.",description:"Desain personal yang mengikuti identitas visual bisnismu. Tampilkan logo, warna, dan elemen visual yang mencerminkan karakter brand.",detail:"Dengan ukuran 10 × 10 cm, kartu dirancang mengikuti identitas visual bisnismu, sekaligus memudahkan pelanggan membuka halaman Google Review melalui NFC atau QR Code.",color:"signature",price:"Rp60.000",mode:"preorder",fit:"Corporate business, franchise, hotel, restoran, coffee shop, salon, dan bisnis yang mengutamakan identitas brand."}
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+ const { slug } = await params;
+ const product = collection[slug as keyof typeof collection];
+ if (!product) return { title: "Produk tidak ditemukan | DiTapAja", robots: { index: false, follow: false } };
+ const description = product.description + " " + product.detail;
+ return {
+  title: product.name + " — Kartu NFC + QR",
+  description,
+  alternates: { canonical: "/products/" + slug },
+  openGraph: { title: product.name + " | DiTapAja", description, url: "/products/" + slug, type: "website", siteName: "DiTapAja" },
+ };
+}
+
 const features=[
 {icon:Nfc,title:"NFC One-Tap Access",desc:"Pelanggan cukup mendekatkan ponsel yang mendukung NFC untuk membuka halaman tujuan."},
 {icon:QrCode,title:"QR Code Access",desc:"Pilihan akses alternatif dengan memindai QR Code menggunakan kamera ponsel."},
