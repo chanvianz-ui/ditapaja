@@ -2257,3 +2257,29 @@ html[data-theme="dark"] .catalog-slider-controls button:hover:not(:disabled){
 @media(prefers-reduced-motion:reduce){
   .catalog-slider-progress>span{transition:none}
 }
+
+
+/* Product detail — transparent order guidance */
+.detail-order-hint{
+  margin:12px 0 0;
+  max-width:390px;
+  color:#8290a5;
+  font-size:10px;
+  line-height:1.7;
+}
+.detail-copy .detail-order-hint{margin-top:10px}
+.detail-price small{
+  display:block;
+  font-size:10px;
+  line-height:1.5;
+  color:#9a7945;
+  font-weight:700;
+}
+.detail-order p{max-width:490px}
+html[data-theme="dark"] .detail-order-hint{color:#a8b6c9}
+html[data-theme="dark"] .detail-price small{color:#d4b77f}
+@media(max-width:700px){
+  .detail-order-hint{font-size:10px}
+  .detail-price{flex-wrap:wrap;row-gap:4px}
+  .detail-price small{width:100%;margin-left:0}
+}
