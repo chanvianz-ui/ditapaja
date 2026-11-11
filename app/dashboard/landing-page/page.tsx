@@ -1,0 +1,136 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Eye, Loader2, Save, Smartphone, ExternalLink } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+
+type Card = { id: string; card_name: string | null; public_code: string; active: boolean };
+type Settings = {
+  id?: string; card_id: string; is_published: boolean; headline: string; description: string;
+  theme: "ocean" | "midnight" | "rose" | "forest"; accent_color: string;
+  button_style: "solid" | "outline"; whatsapp_url: string; instagram_url: string; website_url: string;
+};
+const defaults = (cardId: string): Settings => ({
+  card_id: cardId, is_published: false, headline: "Bagikan pengalaman kamu",
+  description: "Terima kasih sudah berkunjung. Kami menghargai ulasan dan dukungan kamu.",
+  theme: "ocean", accent_color: "#2563eb", button_style: "solid",
+  whatsapp_url: "", instagram_url: "", website_url: ""
+});
+const themes = [
+  { id: "ocean", label: "Ocean", bg: "#f3f7ff", ink: "#172554" },
+  { id: "midnight", label: "Midnight", bg: "#111827", ink: "#f8fafc" },
+  { id: "rose", label: "Rose", bg: "#fff1f2", ink: "#881337" },
+  { id: "forest", label: "Forest", bg: "#f0fdf4", ink: "#14532d" }
+] as const;
+
+function validOptionalUrl(value: string) {
+  if (!value.trim()) return true;
+  try { const url = new URL(value); return url.protocol === "https:"; } catch { return false; }
+}
+
+export default function LandingPageEditor() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [cards, setCards] = useState<Card[]>([]);
+  const [selectedCardId, setSelectedCardId] = useState("");
+  const [settings, setSettings] = useState<Settings>(defaults(""));
+  const [notice, setNotice] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let alive = true;
+    async function load() {
+      const { data: auth, error: authError } = await supabase.auth.getUser();
+      if (authError || !auth.user) { router.replace("/login"); return; }
+      const { data, error: cardsError } = await supabase.from("nfc_cards")
+        .select("id,card_name,public_code,active").eq("user_id", auth.user.id).order("created_at", { ascending: false });
+      if (!alive) return;
+      if (cardsError) { setError("Gagal memuat kartu NFC: " + cardsError.message); setLoading(false); return; }
+      const ownedCards = (data || []) as Card[];
+      setUserId(auth.user.id); setCards(ownedCards);
+      if (ownedCards.length) setSelectedCardId(ownedCards[0].id);
+      setLoading(false);
+    }
+    load();
+    return () => { alive = false; };
+  }, [router]);
+
+  useEffect(() => {
+    if (!selectedCardId || !userId) return;
+    let alive = true;
+    async function loadSettings() {
+      setError(""); setNotice("");
+      const { data, error: readError } = await supabase.from("nfc_card_pages")
+        .select("id,card_id,is_published,headline,description,theme,accent_color,button_style,whatsapp_url,instagram_url,website_url")
+        .eq("card_id", selectedCardId).eq("user_id", userId).maybeSingle();
+      if (!alive) return;
+      if (readError) {
+        setError(readError.message.includes("nfc_card_pages")
+          ? "Tabel pengaturan belum tersedia. Jalankan file migration custom NFC landing page di Supabase SQL Editor."
+          : "Pengaturan halaman gagal dimuat: " + readError.message);
+        setSettings(defaults(selectedCardId));
+      } else {
+        setSettings(data ? { ...defaults(selectedCardId), ...data, whatsapp_url: data.whatsapp_url || "", instagram_url: data.instagram_url || "", website_url: data.website_url || "" } as Settings : defaults(selectedCardId));
+      }
+    }
+    loadSettings();
+    return () => { alive = false; };
+  }, [selectedCardId, userId]);
+
+  const selectedCard = useMemo(() => cards.find(card => card.id === selectedCardId), [cards, selectedCardId]);
+  const theme = themes.find(item => item.id === settings.theme) || themes[0];
+  function update<K extends keyof Settings>(key: K, value: Settings[K]) {
+    setSettings(current => ({ ...current, [key]: value }));
+  }
+
+  async function save(event: React.FormEvent) {
+    event.preventDefault(); setSaving(true); setError(""); setNotice("");
+    if (!selectedCard || !selectedCard.active) { setError("Pilih kartu NFC yang aktif untuk menerbitkan halaman."); setSaving(false); return; }
+    if (![settings.whatsapp_url, settings.instagram_url, settings.website_url].every(validOptionalUrl)) {
+      setError("Semua tautan tambahan harus menggunakan URL HTTPS yang valid."); setSaving(false); return;
+    }
+    if (!/^#[0-9a-fA-F]{6}$/.test(settings.accent_color)) {
+      setError("Warna aksen harus menggunakan format HEX, contoh #2563eb."); setSaving(false); return;
+    }
+    const payload = {
+      user_id: userId, card_id: selectedCardId, is_published: settings.is_published,
+      headline: settings.headline.trim(), description: settings.description.trim(),
+      theme: settings.theme, accent_color: settings.accent_color,
+      button_style: settings.button_style,
+      whatsapp_url: settings.whatsapp_url.trim() || null,
+      instagram_url: settings.instagram_url.trim() || null,
+      website_url: settings.website_url.trim() || null,
+      updated_at: new Date().toISOString()
+    };
+    const { error: saveError } = await supabase.from("nfc_card_pages").upsert(payload, { onConflict: "card_id" });
+    if (saveError) setError("Gagal menyimpan: " + saveError.message);
+    else setNotice("Pengaturan halaman berhasil disimpan.");
+    setSaving(false);
+  }
+
+  if (loading) return <div className="flex min-h-screen items-center justify-center bg-[#f7f9fc]"><Loader2 className="animate-spin text-blue-600" /></div>;
+
+  return <main className="min-h-screen bg-[#f7f9fc] px-4 py-6 text-slate-900 sm:px-8 sm:py-8">
+    <div className="mx-auto max-w-6xl">
+      <button onClick={() => router.push("/dashboard")} className="mb-6 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-600"><ArrowLeft size={17}/> Dashboard</button>
+      <div className="mb-7"><p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">Page Studio</p><h1 className="mt-2 text-3xl font-bold tracking-tight">Custom NFC Landing Page</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">Atur halaman yang dilihat pelanggan setelah menempelkan ponsel ke kartu NFC.</p></div>
+      {error && <div role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>}
+      {notice && <div role="status" className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700">{notice}</div>}
+      {cards.length === 0 ? <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center text-sm text-slate-500">Belum ada kartu NFC. Buat kartu terlebih dahulu dari Dashboard.</div> : <div className="grid items-start gap-6 lg:grid-cols-[1fr_360px]">
+        <form onSubmit={save} className="space-y-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+          <section><label className="mb-2 block text-sm font-semibold">Pilih kartu NFC</label><select value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm">{cards.map(card => <option key={card.id} value={card.id}>{card.card_name || "Untitled Card"} {card.active ? "" : "— Nonaktif"}</option>)}</select><p className="mt-2 text-xs text-slate-400">Pengaturan disimpan terpisah untuk setiap kartu.</p></section>
+          <section className="space-y-3"><h2 className="font-bold">Konten halaman</h2><label className="block text-sm font-medium">Judul utama<input value={settings.headline} onChange={e => update("headline", e.target.value)} maxLength={90} required className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm outline-none focus:border-blue-400"/></label><label className="block text-sm font-medium">Deskripsi<textarea value={settings.description} onChange={e => update("description", e.target.value)} maxLength={240} rows={3} className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm outline-none focus:border-blue-400"/></label></section>
+          <section className="space-y-3"><h2 className="font-bold">Tema tampilan</h2><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{themes.map(item => <button key={item.id} type="button" onClick={() => update("theme", item.id)} className={`rounded-xl border p-3 text-left text-xs font-semibold transition ${settings.theme === item.id ? "border-blue-500 ring-2 ring-blue-100" : "border-slate-200"}`}><span className="mb-2 block h-8 rounded-lg border border-black/5" style={{background:item.bg}}/><span>{item.label}</span></button>)}</div><label className="flex items-center justify-between gap-3 text-sm font-medium">Warna aksen<input type="color" value={settings.accent_color} onChange={e => update("accent_color", e.target.value)} className="h-10 w-16 cursor-pointer rounded-lg border border-slate-200 bg-white p-1"/></label><label className="block text-sm font-medium">Gaya tombol<select value={settings.button_style} onChange={e => update("button_style", e.target.value as Settings["button_style"])} className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"><option value="solid">Solid</option><option value="outline">Outline</option></select></label></section>
+          <section className="space-y-3"><h2 className="font-bold">Tautan tambahan</h2><p className="text-xs text-slate-500">Semua tautan bersifat opsional. Gunakan alamat lengkap HTTPS.</p><label className="block text-sm font-medium">WhatsApp<input type="url" value={settings.whatsapp_url} onChange={e => update("whatsapp_url", e.target.value)} placeholder="https://wa.me/628..." className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label><label className="block text-sm font-medium">Instagram<input type="url" value={settings.instagram_url} onChange={e => update("instagram_url", e.target.value)} placeholder="https://instagram.com/namabisnis" className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label><label className="block text-sm font-medium">Website<input type="url" value={settings.website_url} onChange={e => update("website_url", e.target.value)} placeholder="https://bisnis.com" className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label></section>
+          <section className="rounded-xl border border-slate-200 bg-slate-50 p-4"><label className="flex items-start gap-3"><input type="checkbox" checked={settings.is_published} onChange={e => update("is_published", e.target.checked)} disabled={!selectedCard?.active} className="mt-1 h-4 w-4 accent-blue-600"/><span><span className="block text-sm font-semibold">Terbitkan halaman kustom</span><span className="mt-1 block text-xs leading-5 text-slate-500">Jika dimatikan, halaman NFC akan tetap menggunakan tampilan standar DiTapAja.</span></span></label></section>
+          <button disabled={saving || !selectedCard} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 hover:bg-blue-700 disabled:opacity-50"><Save size={17}/>{saving ? "Menyimpan..." : "Simpan Pengaturan"}</button>
+          {selectedCard && <a href={"/c/"+selectedCard.public_code+"?preview=1"} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 hover:border-blue-200 hover:text-blue-600"><Eye size={16}/> Preview halaman</a>}
+        </form>
+        <aside className="lg:sticky lg:top-6"><div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-600"><Smartphone size={17}/> Live preview</div><div className="mx-auto max-w-[330px] rounded-[2.5rem] border-[7px] border-slate-900 bg-slate-900 p-2 shadow-xl"><div className="overflow-hidden rounded-[2rem] p-5" style={{background:theme.bg,color:theme.ink}}><div className="mx-auto mb-6 h-1.5 w-16 rounded-full bg-slate-400/50"/><div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl text-2xl" style={{background:settings.accent_color+"20",color:settings.accent_color}}>✦</div><p className="text-center text-[9px] font-bold uppercase tracking-[.2em] opacity-60">{selectedCard?.card_name || "DiTapAja"}</p><h2 className="mt-3 text-center text-xl font-extrabold leading-tight">{settings.headline || "Judul halaman"}</h2><p className="mt-3 text-center text-xs leading-5 opacity-70">{settings.description || "Deskripsi bisnis kamu akan tampil di sini."}</p><div className="mt-6 space-y-2"><div className="rounded-xl px-3 py-3 text-center text-xs font-bold text-white" style={{background:settings.accent_color}}>★ Berikan Ulasan di Google</div>{settings.whatsapp_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">WhatsApp</div>}{settings.instagram_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Instagram</div>}{settings.website_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Website</div>}</div><p className="mt-7 text-center text-[9px] opacity-50">Powered by DiTapAja</p></div></div><p className="mx-auto mt-3 max-w-[330px] text-center text-xs leading-5 text-slate-400">Pratinjau visual ini mengikuti pengaturan editor. Buka Preview untuk melihat halaman sebenarnya.</p></aside>
+      </div>}
+    </div>
+  </main>;
+}
