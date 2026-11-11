@@ -1166,7 +1166,7 @@ export default function DashboardPage() {
                         <p className="mt-1 max-w-md truncate text-sm text-slate-500">
                           {card.destination_url}
                         </p>
-                        {!card.active && <p className="mt-2 text-xs font-medium text-amber-700">Aktifkan kartu untuk menggunakan QR Code, Preview, dan penulisan NFC.</p>}
+                        {!card.active && <div className="mt-3 rounded-xl border border-amber-100 bg-amber-50/70 p-3"><p className="text-xs font-semibold text-amber-900">Kartu belum siap digunakan</p><p className="mt-1 text-xs leading-5 text-amber-800">1. Uji link Google Review · 2. Aktifkan kartu · 3. Tulis NFC atau gunakan QR Code.</p><p className="mt-1 text-[11px] text-amber-700">Setelah aktif, halaman kartu dapat diakses oleh pelanggan.</p></div>}
                       </div>
 
                       <div className="flex shrink-0 flex-wrap items-center gap-2">
@@ -1209,7 +1209,7 @@ export default function DashboardPage() {
                           ) : (
                             <Power size={16} />
                           )}
-                          {card.active ? "Deactivate" : "Activate"}
+                          {card.active ? "Deactivate" : "Activate Card"}
                         </button>
 
                         <button
