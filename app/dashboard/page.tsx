@@ -857,6 +857,13 @@ export default function DashboardPage() {
             </a>
 
             <a
+              href="/dashboard/landing-page"
+              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
+            >
+              <Eye size={19} /> Page Studio
+            </a>
+
+            <a
               href="/dashboard/notifications"
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
             >
