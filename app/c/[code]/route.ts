@@ -196,7 +196,8 @@ export async function GET(
       var button = document.getElementById("reviewButton");
       var status = document.getElementById("status");
       var tapKey = "ditapaja-tap-" + code;
-      var previewMode = ${JSON.stringify(previewMode)};\n      var fallbackReviewUrl = ${JSON.stringify(fallbackReviewUrl)};
+      var previewMode = ${JSON.stringify(previewMode)};
+      var fallbackReviewUrl = ${JSON.stringify(fallbackReviewUrl)};
 
       if (!previewMode) {
         try {
