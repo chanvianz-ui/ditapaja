@@ -2026,3 +2026,58 @@ html[data-theme="dark"] .detail-price{color:#edf3fc}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.motion-item{opacity:1!important;transform:none!important}}
 .catalog-track:focus-visible{outline:2px solid #3478f6;outline-offset:5px;border-radius:16px}
 @media(max-width:680px){.concept-proof{row-gap:9px}.concept-proof span{line-height:1.5}}
+
+
+/* Product detail page — unified light/dark surfaces and stronger hierarchy */
+.detail-header{position:sticky;top:0;z-index:30;background:#ffffffed;border-bottom:1px solid #edf0f5;backdrop-filter:blur(14px)}
+.detail-header-inner{width:min(1160px,calc(100% - 48px));height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between}
+.detail-brand{display:inline-flex;align-items:center;gap:9px;font:800 17px Manrope;letter-spacing:-.6px;color:#17243b}
+.detail-brand>span:last-child{color:#3478f6}
+.detail-brand-mark{width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#edf4ff;color:#3478f6;font:800 14px Manrope}
+.detail-back{display:inline-flex;align-items:center;gap:8px;color:#647188;font-size:11px;font-weight:700;transition:color .2s}
+.detail-back:hover{color:#3478f6}
+.detail-copy .eyebrow{line-height:1.6}
+.detail-copy h1{color:#17243b}
+.detail-copy .button{margin-top:3px;min-height:48px}
+.detail-art{isolation:isolate}
+.detail-card{transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.detail-art:hover .detail-card{transform:rotate(-3deg) translateY(-5px);box-shadow:0 35px 55px #15243b40}
+.detail-spec-grid>div{transition:background .2s}
+.detail-spec-grid>div:hover{background:#f8faff}
+.detail-feature-grid article{transition:transform .25s,border-color .25s,box-shadow .25s}
+.detail-feature-grid article:hover{transform:translateY(-3px);border-color:#cbd9fb;box-shadow:0 12px 28px #19345c0d}
+.detail-order .button-white{background:#fff;color:#245fc9;box-shadow:0 10px 24px #123d8a24}
+.detail-order .button-white:hover{background:#f3f7ff}
+html[data-theme="dark"] .detail-header{background:#0d1522ed;border-color:#263449}
+html[data-theme="dark"] .detail-brand{color:#edf3fc}
+html[data-theme="dark"] .detail-back{color:#a9b6ca}
+html[data-theme="dark"] .detail-copy h1,html[data-theme="dark"] .detail-spec-grid b,html[data-theme="dark"] .detail-fit b{color:#edf3fc}
+html[data-theme="dark"] .detail-copy h2{color:#83aaff}
+html[data-theme="dark"] .detail-pills span{background:#17263b;border-color:#2b3d57;color:#c4d0e1}
+html[data-theme="dark"] .detail-spec-section{background:#101927}
+html[data-theme="dark"] .detail-spec-grid{background:#29364a;border-color:#29364a}
+html[data-theme="dark"] .detail-spec-grid>div{background:#142238}
+html[data-theme="dark"] .detail-spec-grid>div:hover{background:#192b44}
+html[data-theme="dark"] .detail-spec-grid span,html[data-theme="dark"] .detail-fit{color:#a8b6c9}
+html[data-theme="dark"] .detail-feature-grid article{background:#121c2b;border-color:#29364a}
+html[data-theme="dark"] .detail-feature-grid h3{color:#edf3fc}
+html[data-theme="dark"] .detail-feature-grid p,html[data-theme="dark"] .detail-feature-intro{color:#a8b6c9}
+html[data-theme="dark"] .detail-footer{background:#0b1019;color:#8292aa;border-top:1px solid #202d40}
+html[data-theme="dark"] .detail-art-caption{color:#a8b6c9}
+@media(max-width:700px){
+ .detail-header-inner{width:calc(100% - 32px)}
+ .detail-hero{padding-top:28px}
+ .detail-art{border-radius:16px}
+ .detail-copy h1{font-size:clamp(34px,9vw,42px);letter-spacing:-1.8px}
+ .detail-copy h2{font-size:15px;line-height:1.45}
+ .detail-copy>p{font-size:12px}
+ .detail-pills{gap:6px;margin:18px 0}
+ .detail-pills span{font-size:9px}
+ .detail-spec-section{padding:48px 0}
+ .detail-spec-grid>div{padding:14px}
+ .detail-feature-grid article{min-height:150px}
+ .detail-order{padding:42px 0}
+ .detail-order-inner{padding-inline:4px}
+ .detail-footer{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.detail-art:hover .detail-card,.detail-feature-grid article:hover{transform:none}}
