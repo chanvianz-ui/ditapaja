@@ -177,6 +177,10 @@ export default function DashboardPage() {
     ...chartData.map((day) => Math.max(day.taps, day.clicks))
   );
 
+  const periodTapTotal = chartData.reduce((sum, day) => sum + day.taps, 0);
+  const periodClickTotal = chartData.reduce((sum, day) => sum + day.clicks, 0);
+  const hasPeriodActivity = periodTapTotal > 0 || periodClickTotal > 0;
+
   // Aggregate analytics once per card instead of repeatedly scanning the full event list.
   const cardEventStats = useMemo(() => {
     const stats = new Map<string, { taps: number; clicks: number; visitors: Set<string> }>();
@@ -796,25 +800,25 @@ export default function DashboardPage() {
       label: "Total Taps",
       value: displayedAnalytics.totalTaps.toLocaleString("id-ID"),
       icon: MousePointerClick,
-      description: "Total aktivitas tap seluruh kartu.",
+      description: "Akumulasi aktivitas sepanjang waktu.",
     },
     {
       label: "Unique Visitors",
       value: displayedAnalytics.uniqueVisitors.toLocaleString("id-ID"),
       icon: Users,
-      description: "Pengunjung dengan identitas hash berbeda.",
+      description: "Pengunjung unik sepanjang waktu.",
     },
     {
       label: "Review Clicks",
       value: displayedAnalytics.reviewClicks.toLocaleString("id-ID"),
       icon: ExternalLink,
-      description: "Jumlah klik menuju Google Maps.",
+      description: "Akumulasi klik review sepanjang waktu.",
     },
     {
       label: "CTR",
       value: `${displayedAnalytics.ctr.toFixed(1)}%`,
       icon: BarChart3,
-      description: "Persentase tap yang berlanjut ke review.",
+      description: "Rasio klik review dari seluruh tap.",
     },
   ];
 
@@ -1099,7 +1103,8 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-5 border-b border-slate-100 pb-4 text-xs text-slate-500">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                <div className="flex flex-wrap items-center gap-5 text-xs text-slate-500">
                 <span className="flex items-center gap-2">
                   <span className="h-2.5 w-2.5 rounded-sm bg-blue-600" />
                   Total Taps
@@ -1108,9 +1113,14 @@ export default function DashboardPage() {
                   <span className="h-2.5 w-2.5 rounded-sm bg-sky-300" />
                   Review Clicks
                 </span>
+                </div>
+                <div className="flex items-center gap-4 text-xs">
+                  <span className="font-semibold text-slate-700">{periodTapTotal.toLocaleString("id-ID")} <span className="font-normal text-slate-400">taps</span></span>
+                  <span className="font-semibold text-slate-700">{periodClickTotal.toLocaleString("id-ID")} <span className="font-normal text-slate-400">clicks</span></span>
+                </div>
               </div>
 
-              <div className="mt-4 overflow-x-auto overscroll-x-contain rounded-xl bg-slate-50/60 px-2 pt-3" role="img" aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${chartData.reduce((sum, day) => sum + day.taps, 0)} tap dan ${chartData.reduce((sum, day) => sum + day.clicks, 0)} klik ulasan.`}>
+              <div className="mt-4 overflow-x-auto overscroll-x-contain rounded-xl bg-slate-50/60 px-2 pt-3" role="img" aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${periodTapTotal} tap dan ${periodClickTotal} klik ulasan.`}>
                 <div className={`flex h-52 items-end gap-1 border-b border-slate-200 pb-2 sm:h-60 sm:gap-2 ${chartPeriod === 7 ? "min-w-0" : "min-w-[600px] md:min-w-0"}`}>
                   {chartData.map((day, index) => (
                     <div
@@ -1145,12 +1155,12 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {selectedEventRows.length === 0 && (
+              {!hasPeriodActivity && (
                 <div className="mt-5 rounded-xl border border-dashed border-slate-200 bg-slate-50/70 px-5 py-6 text-center">
                   <BarChart3 className="mx-auto mb-2 text-slate-300" size={22} />
-                  <p className="text-sm font-semibold text-slate-700">Belum ada aktivitas tercatat</p>
+                  <p className="text-sm font-semibold text-slate-700">Belum ada aktivitas pada periode ini</p>
                   <p className="mx-auto mt-1 max-w-md text-xs leading-5 text-slate-500">
-                    Coba tempelkan ponsel pada kartu NFC aktif atau buka QR kartu. Setelah pelanggan membuka halaman kartu, data tap akan muncul di sini.
+                    Coba tempelkan ponsel pada kartu NFC aktif atau buka QR kartu. Pilih rentang waktu yang lebih panjang atau tunggu aktivitas pelanggan berikutnya. Data sepanjang waktu tetap tersimpan pada ringkasan di atas.
                   </p>
                   <button type="button" onClick={() => document.getElementById("cards")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">
                     Lihat kartu NFC
