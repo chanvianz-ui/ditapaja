@@ -73,8 +73,15 @@ export async function POST(
       .limit(1)
       .maybeSingle();
 
-    if (dedupeError) throw dedupeError;
-    if (recentEvent) return NextResponse.json({ success: true, duplicate: true });
+    if (dedupeError) {
+      // Analytics is best-effort: a temporary deduplication lookup failure
+      // must not prevent us from attempting to record this tap.
+      console.error("Tap deduplication check failed:", dedupeError);
+    }
+
+    if (!dedupeError && recentEvent) {
+      return NextResponse.json({ success: true, duplicate: true });
+    }
 
     const { error: insertError } = await supabase.from("tap_events").insert({
       card_id: card.id,
@@ -83,7 +90,10 @@ export async function POST(
       user_agent: userAgent,
     });
 
-    if (insertError) throw insertError;
+    if (insertError) {
+      // Keep the public NFC experience independent from analytics availability.
+      console.error("Tap tracking insert failed:", insertError);
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
