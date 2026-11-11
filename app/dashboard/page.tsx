@@ -571,32 +571,25 @@ export default function DashboardPage() {
         destination_url: trimmedUrl,
       };
       let updateError: any = null;
-      if (editLocationId) {
-        const result = await supabase
+      const result = await supabase
+        .from("nfc_cards")
+        .update({ ...cardUpdate, location_id: editLocationId || null })
+        .eq("id", editingCard.id)
+        .eq("user_id", authData.user.id);
+      updateError = result.error;
+
+      if (
+        updateError &&
+        (updateError.code === "PGRST204" ||
+          updateError.message?.includes("location_id"))
+      ) {
+        console.warn("Card location column is unavailable; saving card details without location.");
+        const fallback = await supabase
           .from("nfc_cards")
-          .update({ ...cardUpdate, location_id: editLocationId })
+          .update(cardUpdate)
           .eq("id", editingCard.id)
           .eq("user_id", authData.user.id);
-        updateError = result.error;
-      } else {
-        const result = await supabase
-          .from("nfc_cards")
-          .update({ ...cardUpdate, location_id: null })
-          .eq("id", editingCard.id)
-          .eq("user_id", authData.user.id);
-        updateError = result.error;
-        if (
-          updateError &&
-          (updateError.code === "PGRST204" ||
-            updateError.message?.includes("location_id"))
-        ) {
-          const fallback = await supabase
-            .from("nfc_cards")
-            .update(cardUpdate)
-            .eq("id", editingCard.id)
-            .eq("user_id", authData.user.id);
-          updateError = fallback.error;
-        }
+        updateError = fallback.error;
       }
       if (updateError) throw updateError;
 
