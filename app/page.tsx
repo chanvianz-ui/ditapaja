@@ -3,9 +3,9 @@ import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 import ScrollMotion from "./components/scroll-motion";
 const products=[
-{name:"DiTapAja Noir",label:"01 / BLACK EDITION",description:"Karakter tegas untuk bisnis yang ingin tampil standout.",tone:"noir",price:"Rp50.000",before:"Rp60.000",discount:"SAVE 17%",order:"READY TO ORDER",action:"Beli Noir",mode:"buy"},
+{name:"DiTapAja Noir",label:"01 / BLACK EDITION",description:"Karakter tegas untuk bisnis yang ingin tampil standout.",tone:"noir",price:"Rp50.000",order:"READY TO ORDER",action:"Beli Noir",mode:"buy"},
 {name:"DiTapAja Blanc",label:"02 / WHITE EDITION",description:"Minimal, bersih, dan mudah menyatu dengan identitas brand.",tone:"blanc",price:"Rp50.000",before:"Rp60.000",discount:"SAVE 17%",order:"READY TO ORDER",action:"Beli Blanc",mode:"buy"},
-{name:"DiTapAja Signature",label:"03 / CUSTOM EDITION",description:"Kartu dengan identitas visual bisnismu sendiri.",tone:"signature",price:"Rp60.000",before:"Rp70.000",discount:"SAVE 14%",order:"PRE-ORDER · MIN. 10 KARTU",action:"Pre-order",mode:"preorder"}];
+{name:"DiTapAja Signature",label:"03 / CUSTOM EDITION",description:"Kartu dengan identitas visual bisnismu sendiri.",tone:"signature",price:"Rp60.000",order:"PRE-ORDER · MIN. 10 KARTU",action:"Pre-order",mode:"preorder"}];
 const questions=[
 ["Apakah ada biaya dashboard bulanan?","Tidak ada. Akses dashboard sudah termasuk dalam pembelian kartu DiTapAja."],
 ["Bagaimana pelanggan menggunakan kartu?","Pelanggan cukup mendekatkan smartphone yang mendukung NFC atau memindai QR Code pada kartu."],
