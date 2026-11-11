@@ -277,7 +277,7 @@ export default function DashboardPage() {
     // Prevent spreadsheet formula injection from user-controlled card names.
     const escapeCsvCell = (value: unknown) => {
       let safeValue = String(value ?? "");
-      if (/^[\\s\\u0000-\\u001f]*[=+\\-@]/.test(safeValue)) {
+      if (/^[\s\u0000-\u001f]*[=+\-@]/.test(safeValue)) {
         safeValue = "'" + safeValue;
       }
       return '"' + safeValue.replace(/"/g, '""') + '"';
@@ -285,8 +285,8 @@ export default function DashboardPage() {
 
     const csv = [["Nama Kartu", "Aktivitas", "Waktu"], ...rows]
       .map((row) => row.map(escapeCsvCell).join(","))
-      .join("\\r\\n");
-    const blob = new Blob(["\\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+      .join("\r\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
