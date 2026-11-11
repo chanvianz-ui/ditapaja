@@ -50,7 +50,7 @@ export default async function ProductDetail({params}:{params:Promise<{slug:strin
   "Kebutuhan desain / jumlah:",
   "",
   "Mohon info proses pemesanan dan estimasi pengerjaan. Terima kasih."
- ].join("\\n");
+ ].join("\n");
  const orderUrl=product.mode==="preorder"?"https://wa.me/6281321778081?text="+encodeURIComponent(orderMessage):"https://shopee.co.id/bekasidigicam";
  const orderLabel=product.mode==="preorder"?"Konsultasi & pre-order":"Lanjut ke Shopee";
  return <main className="product-detail-page">
