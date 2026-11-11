@@ -101,16 +101,40 @@ export default function NewCardPage() {
         .replace(/-/g, "")
         .slice(0, 12);
 
-      const { error: insertError } = await supabase
-        .from("nfc_cards")
-        .insert({
-          user_id: data.user.id,
-          card_name: cleanName,
-          public_code: publicCode,
-          destination_url: cleanDestination,
-          active: false,
-          ...(locationId ? { location_id: locationId } : {}),
-        });
+      const cardPayload = {
+        user_id: data.user.id,
+        card_name: cleanName,
+        public_code: publicCode,
+        destination_url: cleanDestination,
+        active: false,
+      };
+
+      let insertError: any = null;
+      if (locationId) {
+        const result = await supabase
+          .from("nfc_cards")
+          .insert({ ...cardPayload, location_id: locationId });
+        insertError = result.error;
+
+        // Keep card creation available when the optional location migration
+        // has not been applied to this Supabase project yet.
+        if (
+          insertError &&
+          (insertError.code === "PGRST204" ||
+            insertError.message?.includes("location_id"))
+        ) {
+          console.warn("Card location column is unavailable; retrying without location assignment.");
+          const fallback = await supabase
+            .from("nfc_cards")
+            .insert(cardPayload);
+          insertError = fallback.error;
+        }
+      } else {
+        const result = await supabase
+          .from("nfc_cards")
+          .insert(cardPayload);
+        insertError = result.error;
+      }
 
       if (insertError) throw insertError;
 
