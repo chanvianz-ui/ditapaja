@@ -1,72 +1,67 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function verifyAdmin(request: NextRequest) {
-  const authorization = request.headers.get("authorization");
+function unauthorized(status: 401 | 403 | 500, message: string) {
+  return {
+    authorized: false as const,
+    response: NextResponse.json({ error: message }, { status }),
+  };
+}
 
-  if (!authorization?.startsWith("Bearer ")) {
-    return {
-      authorized: false,
-      response: NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      ),
-    };
+export async function verifyAdmin(request: NextRequest) {
+  const authorization = request.headers.get("authorization") || "";
+  const bearerMatch = authorization.match(/^Bearer\s+(.+)$/i);
+  const token = bearerMatch?.[1]?.trim();
+
+  if (!token) {
+    return unauthorized(401, "Unauthorized");
   }
 
-  const token = authorization.replace("Bearer ", "");
-
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-  const secretKey = process.env.SUPABASE_SECRET_KEY!;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
   const adminUserId = process.env.ADMIN_USER_ID;
 
-  if (!adminUserId || !secretKey) {
-    return {
-      authorized: false,
-      response: NextResponse.json(
-        { error: "Admin configuration missing" },
-        { status: 500 }
-      ),
-    };
+  // Fail closed if any required server configuration is missing.
+  if (!supabaseUrl || !supabaseAnonKey || !secretKey || !adminUserId) {
+    console.error("Admin authentication is missing required server configuration.");
+    return unauthorized(500, "Admin authentication is not configured.");
   }
 
-  const authClient = createClient(
-    supabaseUrl,
-    supabaseAnonKey,
-    {
+  let authClient;
+  try {
+    authClient = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: false,
         autoRefreshToken: false,
+        detectSessionInUrl: false,
       },
-    }
-  );
+    });
+  } catch (error) {
+    console.error("Admin auth client initialization failed:", error);
+    return unauthorized(500, "Admin authentication is unavailable.");
+  }
 
   const { data, error } = await authClient.auth.getUser(token);
 
-  if (error || !data.user || data.user.id !== adminUserId) {
-    return {
-      authorized: false,
-      response: NextResponse.json(
-        { error: "Access denied" },
-        { status: 403 }
-      ),
-    };
+  if (error || !data.user) {
+    return unauthorized(401, "Invalid or expired session.");
   }
 
-  const adminClient = createClient(
-    supabaseUrl,
-    secretKey,
-    {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-      },
-    }
-  );
+  if (data.user.id !== adminUserId) {
+    return unauthorized(403, "Access denied");
+  }
+
+  const adminClient = createClient(supabaseUrl, secretKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  });
 
   return {
-    authorized: true,
+    authorized: true as const,
     user: data.user,
     supabase: adminClient,
   };
