@@ -566,17 +566,39 @@ export default function DashboardPage() {
         return;
       }
 
-      const { error } = await supabase
-        .from("nfc_cards")
-        .update({
-          card_name: trimmedName,
-          destination_url: trimmedUrl,
-          location_id: editLocationId || null,
-        })
-        .eq("id", editingCard.id)
-        .eq("user_id", authData.user.id);
-
-      if (error) throw error;
+      const cardUpdate = {
+        card_name: trimmedName,
+        destination_url: trimmedUrl,
+      };
+      let updateError: any = null;
+      if (editLocationId) {
+        const result = await supabase
+          .from("nfc_cards")
+          .update({ ...cardUpdate, location_id: editLocationId })
+          .eq("id", editingCard.id)
+          .eq("user_id", authData.user.id);
+        updateError = result.error;
+      } else {
+        const result = await supabase
+          .from("nfc_cards")
+          .update({ ...cardUpdate, location_id: null })
+          .eq("id", editingCard.id)
+          .eq("user_id", authData.user.id);
+        updateError = result.error;
+        if (
+          updateError &&
+          (updateError.code === "PGRST204" ||
+            updateError.message?.includes("location_id"))
+        ) {
+          const fallback = await supabase
+            .from("nfc_cards")
+            .update(cardUpdate)
+            .eq("id", editingCard.id)
+            .eq("user_id", authData.user.id);
+          updateError = fallback.error;
+        }
+      }
+      if (updateError) throw updateError;
 
       setCards((current) =>
         current.map((card) =>
@@ -885,6 +907,33 @@ export default function DashboardPage() {
               </section>
             )}
 
+            {cards.length > 0 && !eventRows.some((event) => event.event_type === "tap") && (
+              <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">SETUP CHECKLIST</p>
+                    <h3 className="mt-1 text-lg font-bold text-slate-900">Satu langkah lagi menuju pelanggan pertamamu</h3>
+                    <p className="mt-1 text-sm text-slate-500">Pastikan kartu aktif dan coba lakukan tap pertama untuk mulai melihat data.</p>
+                  </div>
+                  <a href="#my-nfc-cards" className="inline-flex shrink-0 items-center justify-center rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700">Kelola kartu</a>
+                </div>
+                <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-xl bg-emerald-50 p-3">
+                    <p className="text-xs font-semibold text-emerald-700">✓ 01 · Buat kartu</p>
+                    <p className="mt-1 text-xs text-emerald-700/80">Kartu pertamamu sudah tersimpan.</p>
+                  </div>
+                  <div className={`rounded-xl p-3 ${cards.some((card) => card.active) ? "bg-emerald-50" : "bg-amber-50"}`}>
+                    <p className={`text-xs font-semibold ${cards.some((card) => card.active) ? "text-emerald-700" : "text-amber-800"}`}>{cards.some((card) => card.active) ? "✓" : "02"} · Aktifkan kartu</p>
+                    <p className={`mt-1 text-xs ${cards.some((card) => card.active) ? "text-emerald-700/80" : "text-amber-800/80"}`}>{cards.some((card) => card.active) ? "Minimal satu kartu sudah aktif." : "Aktifkan kartu saat siap digunakan."}</p>
+                  </div>
+                  <div className="rounded-xl bg-blue-50 p-3">
+                    <p className="text-xs font-semibold text-blue-700">03 · Tap pertama</p>
+                    <p className="mt-1 text-xs text-blue-700/80">Tempelkan ponsel ke NFC atau pindai QR untuk mulai mencatat aktivitas.</p>
+                  </div>
+                </div>
+              </section>
+            )}
+
             {/* ANALYTICS */}
             <div
               id="analytics"
@@ -1063,7 +1112,7 @@ export default function DashboardPage() {
             </section>
 
             {cards.length > 1 && (
-              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <section id="my-nfc-cards" className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Perbandingan Kartu</h3><p className="mt-1 text-sm text-slate-500">Urutan kartu berdasarkan total tap yang tercatat.</p></div>
                 <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Visitors</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">CTR</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.visitors.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
               </section>
