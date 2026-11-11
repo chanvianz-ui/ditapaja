@@ -870,6 +870,16 @@ export default function DashboardPage() {
             </div>
           </header>
 
+          {/* Mobile workspace navigation: the desktop sidebar is hidden below lg. */}
+          <nav aria-label="Navigasi workspace" className="flex gap-2 overflow-x-auto border-b border-slate-200 bg-white px-4 py-3 lg:hidden">
+            <a href="/dashboard" className="shrink-0 rounded-xl bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Overview</a>
+            <a href="#cards" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">My Cards</a>
+            <a href="#analytics" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Analytics</a>
+            <a href="/dashboard/business" className="shrink-0 rounded-xl border border-blue-100 bg-blue-50/60 px-3 py-2 text-xs font-semibold text-blue-700">Business Profile</a>
+            <a href="/dashboard/orders" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Orders</a>
+            <a href="/dashboard/settings" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Settings</a>
+          </nav>
+
           <div className="mx-auto max-w-7xl space-y-8 p-5 md:p-10">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
               <div>
