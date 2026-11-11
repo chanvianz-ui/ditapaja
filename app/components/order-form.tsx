@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { FormEvent } from "react";
 import { ArrowLeft, ArrowUpRight, Check, MessageCircle, Minus, Plus, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 
@@ -13,7 +14,7 @@ const products = {
 type ProductKey = keyof typeof products;
 
 export default function OrderForm({ initialProduct = "signature" }: { initialProduct?: string }) {
-  const safeInitial = initialProduct in products ? initialProduct as ProductKey : "signature";
+  const safeInitial = Object.prototype.hasOwnProperty.call(products, initialProduct) ? initialProduct as ProductKey : "signature";
   const [productKey, setProductKey] = useState<ProductKey>(safeInitial);
   const [quantity, setQuantity] = useState(products[safeInitial].minimum);
   const [business, setBusiness] = useState("");
@@ -32,7 +33,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
     setQuantity(products[next].minimum);
   }
 
-  function submitOrder(event: React.FormEvent<HTMLFormElement>) {
+  function submitOrder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const message = [
       "Halo DiTapAja, saya ingin melakukan pemesanan.",
