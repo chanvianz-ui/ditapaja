@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Eye, Loader2, Save, Smartphone, Monitor, ImagePlus, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-type Card = { id: string; card_name: string | null; public_code: string; active: boolean };
+type Card = { id: string; card_name: string | null; public_code: string; active: boolean; location_id?: string | null };
 type Settings = {
   id?: string; card_id: string; is_published: boolean; headline: string; description: string;
   theme: "ocean" | "midnight" | "rose" | "forest"; accent_color: string;
@@ -39,6 +39,9 @@ export default function LandingPageEditor() {
   const [previewMode, setPreviewMode] = useState<"mobile" | "desktop">("mobile");
   const [userId, setUserId] = useState("");
   const [businessName, setBusinessName] = useState("");
+  const [businessCategory, setBusinessCategory] = useState("");
+  const [branchName, setBranchName] = useState("");
+  const [branchAddress, setBranchAddress] = useState("");
   const [cards, setCards] = useState<Card[]>([]);
   const [selectedCardId, setSelectedCardId] = useState("");
   const [settings, setSettings] = useState<Settings>(defaults(""));
@@ -51,13 +54,14 @@ export default function LandingPageEditor() {
       const { data: auth, error: authError } = await supabase.auth.getUser();
       if (authError || !auth.user) { router.replace("/login"); return; }
       const [cardsResult, profileResult] = await Promise.all([
-        supabase.from("nfc_cards").select("id,card_name,public_code,active").eq("user_id", auth.user.id).order("created_at", { ascending: false }),
-        supabase.from("profiles").select("business_name").eq("id", auth.user.id).maybeSingle()
+        supabase.from("nfc_cards").select("id,card_name,public_code,active,location_id").eq("user_id", auth.user.id).order("created_at", { ascending: false }),
+        supabase.from("profiles").select("business_name,business_category").eq("id", auth.user.id).maybeSingle()
       ]);
       const data = cardsResult.data;
       const cardsError = cardsResult.error;
       if (!alive) return;
       setBusinessName(profileResult.data?.business_name?.trim() || "");
+      setBusinessCategory(profileResult.data?.business_category?.trim() || "");
       if (cardsError) { setError("Gagal memuat kartu NFC: " + cardsError.message); setLoading(false); return; }
       const ownedCards = (data || []) as Card[];
       setUserId(auth.user.id); setCards(ownedCards);
@@ -93,6 +97,25 @@ export default function LandingPageEditor() {
   }, [selectedCardId, userId]);
 
   const selectedCard = useMemo(() => cards.find(card => card.id === selectedCardId), [cards, selectedCardId]);
+
+  useEffect(() => {
+    let alive = true;
+    async function loadBranch() {
+      setBranchName("");
+      setBranchAddress("");
+      if (!selectedCard?.location_id || !userId) return;
+      const { data } = await supabase.from("business_locations")
+        .select("name,address")
+        .eq("id", selectedCard.location_id)
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (!alive) return;
+      setBranchName(data?.name?.trim() || "");
+      setBranchAddress(data?.address?.trim() || "");
+    }
+    void loadBranch();
+    return () => { alive = false; };
+  }, [selectedCard?.location_id, userId]);
   async function uploadLogo(file?: File) {
     if (!file || !userId || !selectedCardId) return;
     if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) { setError("Logo harus berupa PNG, JPG, atau WebP."); return; }
@@ -159,7 +182,7 @@ export default function LandingPageEditor() {
           <button disabled={saving || settingsLoading || !selectedCard} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 hover:bg-blue-700 disabled:opacity-50"><Save size={17}/>{saving ? "Menyimpan..." : settingsLoading ? "Memuat pengaturan..." : "Simpan Pengaturan"}</button>
           {selectedCard && <a href={"/c/"+selectedCard.public_code+"?preview=1"} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 hover:border-blue-200 hover:text-blue-600"><Eye size={16}/> Preview halaman</a>}
         </form>
-        <aside className="lg:sticky lg:top-6"><div className="mb-3 flex flex-wrap items-center justify-between gap-2"><div className="flex items-center gap-2 text-sm font-semibold text-slate-600"><Eye size={17}/> Live preview</div><div className="inline-flex rounded-xl border border-slate-200 bg-white p-1"><button type="button" onClick={() => setPreviewMode("mobile")} aria-pressed={previewMode === "mobile"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Smartphone size={14}/> Mobile</button><button type="button" onClick={() => setPreviewMode("desktop")} aria-pressed={previewMode === "desktop"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Monitor size={14}/> Desktop</button></div></div><div className={previewMode === "mobile" ? "mx-auto max-w-[330px] rounded-[2.5rem] border-[7px] border-slate-900 bg-slate-900 p-2 shadow-xl" : "mx-auto w-full max-w-[560px] rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"}><div className="overflow-hidden rounded-[2rem] p-5" style={{background:theme.bg,color:theme.ink}}><div className="mx-auto mb-6 h-1.5 w-16 rounded-full bg-slate-400/50"/><div className="mb-5 flex" style={{justifyContent:settings.logo_position}}>{settings.logo_url ? <img src={settings.logo_url} alt="Logo bisnis" className="rounded-xl bg-white object-contain p-2 shadow-sm" style={{width:settings.logo_size,height:settings.logo_size}}/> : <div className="grid h-14 w-14 place-items-center rounded-2xl text-2xl" style={{background:settings.accent_color+"20",color:settings.accent_color}}>✦</div>}</div><p className="text-center text-[9px] font-bold uppercase tracking-[.2em] opacity-60">{businessName || "Nama Bisnis"}</p><p className="mt-1 text-center text-[9px] opacity-50">{selectedCard?.card_name || "Nama Kartu"}</p><h2 className="mt-3 text-center text-xl font-extrabold leading-tight">{settings.headline || "Judul halaman"}</h2><p className="mt-3 text-center text-xs leading-5 opacity-70">{settings.description || "Deskripsi bisnis kamu akan tampil di sini."}</p><div className="mt-6 space-y-2"><div className="rounded-xl px-3 py-3 text-center text-xs font-bold" style={settings.button_style === "solid" ? {background:settings.accent_color,color:"#fff"} : {background:"transparent",border:"2px solid "+settings.accent_color,color:settings.accent_color}}>★ Berikan Ulasan di Google</div>{settings.whatsapp_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">WhatsApp</div>}{settings.instagram_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Instagram</div>}{settings.website_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Website</div>}</div><p className="mt-7 text-center text-[9px] opacity-50">Powered by DiTapAja</p></div></div><p className="mx-auto mt-3 max-w-[330px] text-center text-xs leading-5 text-slate-400">Pratinjau visual ini mengikuti pengaturan editor. Buka Preview untuk melihat halaman sebenarnya.</p></aside>
+        <aside className="lg:sticky lg:top-6"><div className="mb-3 flex flex-wrap items-center justify-between gap-2"><div className="flex items-center gap-2 text-sm font-semibold text-slate-600"><Eye size={17}/> Live preview</div><div className="inline-flex rounded-xl border border-slate-200 bg-white p-1"><button type="button" onClick={() => setPreviewMode("mobile")} aria-pressed={previewMode === "mobile"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Smartphone size={14}/> Mobile</button><button type="button" onClick={() => setPreviewMode("desktop")} aria-pressed={previewMode === "desktop"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Monitor size={14}/> Desktop</button></div></div><div className={previewMode === "mobile" ? "mx-auto max-w-[330px] rounded-[2.5rem] border-[7px] border-slate-900 bg-slate-900 p-2 shadow-xl" : "mx-auto w-full max-w-[560px] rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"}><div className="overflow-hidden rounded-[2rem] p-5" style={{background:theme.bg,color:theme.ink}}><div className="mx-auto mb-6 h-1.5 w-16 rounded-full bg-slate-400/50"/><div className="mb-5 flex" style={{justifyContent:settings.logo_position}}>{settings.logo_url ? <img src={settings.logo_url} alt="Logo bisnis" className="rounded-xl bg-white object-contain p-2 shadow-sm" style={{width:settings.logo_size,height:settings.logo_size}}/> : <div className="grid h-14 w-14 place-items-center rounded-2xl text-2xl" style={{background:settings.accent_color+"20",color:settings.accent_color}}>✦</div>}</div><p className="text-center text-[9px] font-bold uppercase tracking-[.2em] opacity-60">{businessCategory || "Terima kasih sudah berkunjung"}</p><p className="mt-1 text-center text-[9px] font-bold">{businessName || "Bisnis Kami"}</p>{branchName && <p className="mx-auto mt-2 w-fit rounded-full border border-current/10 px-3 py-1 text-[9px] opacity-70">{branchName}</p>}{branchAddress && <p className="mt-2 text-center text-[9px] leading-4 opacity-60">{branchAddress}</p>}<p className="mt-2 text-center text-[9px] opacity-50">{selectedCard?.card_name || "Nama Kartu"}</p><h2 className="mt-3 text-center text-xl font-extrabold leading-tight">{settings.headline || "Judul halaman"}</h2><p className="mt-3 text-center text-xs leading-5 opacity-70">{settings.description || "Deskripsi bisnis kamu akan tampil di sini."}</p><div className="mt-6 space-y-2"><div className="rounded-xl px-3 py-3 text-center text-xs font-bold" style={settings.button_style === "solid" ? {background:settings.accent_color,color:"#fff"} : {background:"transparent",border:"2px solid "+settings.accent_color,color:settings.accent_color}}>★ Berikan Ulasan di Google</div>{settings.whatsapp_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">WhatsApp</div>}{settings.instagram_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Instagram</div>}{settings.website_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Website</div>}</div><p className="mt-7 text-center text-[9px] opacity-50">Powered by DiTapAja</p></div></div><p className="mx-auto mt-3 max-w-[330px] text-center text-xs leading-5 text-slate-400">Pratinjau visual ini mengikuti pengaturan editor. Buka Preview untuk melihat halaman sebenarnya.</p></aside>
       </div>}
     </div>
   </main>;
