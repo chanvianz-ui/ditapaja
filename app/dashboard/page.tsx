@@ -444,7 +444,7 @@ export default function DashboardPage() {
             const { data: repairedProfile, error: profileSyncError } = await supabase
               .from("profiles")
               .upsert({ id: data.user.id, full_name: fullName })
-              .select("full_name")
+              .select("full_name,business_name")
               .single();
 
             if (profileSyncError) {
