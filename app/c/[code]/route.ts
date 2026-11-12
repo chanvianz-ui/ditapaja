@@ -73,8 +73,10 @@ export async function GET(
       if (request.nextUrl.searchParams.get("preview") !== "1") return false;
       const cookieName = "ditapaja_preview_" + code;
       const token = request.cookies.get(cookieName)?.value;
-      if (!token) return false;
-      const [payload, signature] = token.split(".");
+      if (!token || token.length > 2048) return false;
+      const parts = token.split(".");
+      if (parts.length !== 2) return false;
+      const [payload, signature] = parts;
       if (!payload || !signature) return false;
       const expected = createHmac("sha256", secretKey).update(payload).digest("base64url");
       const actualBuffer = Buffer.from(signature);
