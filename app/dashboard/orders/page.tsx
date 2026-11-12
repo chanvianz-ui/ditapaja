@@ -63,7 +63,7 @@ export default function OrdersPage() {
       product_name: product.trim(), quantity: count,
       unit_price: product === "DiTapAja Signature" ? 60000 : 50000,
       notes: notes.trim() || null
-    }).select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,created_at,notes").single();
+    }).select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,payment_status,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes").single();
     if (insertError) setError(insertError.message);
     else {
       setOrders(current => [data as Order, ...current]);
@@ -78,6 +78,7 @@ export default function OrdersPage() {
     if (updateError) { setError("Status pesanan gagal diperbarui: " + updateError.message); return; }
     setOrders(current => current.map(order => order.id === id ? { ...order, status } : order));
     if (invoiceOrder?.id === id) setInvoiceOrder(current => current ? { ...current, status } : current);
+    setError(""); setSuccess("Status pesanan berhasil diperbarui.");
   }
 
   async function updatePaymentStatus(order: Order, payment_status: "unpaid" | "paid" | "refunded") {
@@ -87,6 +88,7 @@ export default function OrdersPage() {
       .eq("id", order.id).eq("user_id", userId);
     if (updateError) { setError("Status pembayaran gagal diperbarui: " + updateError.message); return; }
     setOrders(current => current.map(item => item.id === order.id ? { ...item, payment_status, paid_at } : item));
+    if (invoiceOrder?.id === order.id) setInvoiceOrder(current => current ? { ...current, payment_status, paid_at } : current);
     setSuccess(payment_status === "paid" ? "Pembayaran ditandai lunas." : payment_status === "refunded" ? "Pembayaran ditandai dikembalikan." : "Status pembayaran diperbarui.");
     setError("");
   }
@@ -111,13 +113,14 @@ export default function OrdersPage() {
       .eq("id", order.id).eq("user_id", userId);
     if (updateError) { setError("Informasi pengiriman gagal disimpan: " + updateError.message); return; }
     setOrders(current => current.map(item => item.id === order.id ? { ...item, shipping_courier, tracking_number, shipping_cost, shipped_at } : item));
+    if (invoiceOrder?.id === order.id) setInvoiceOrder(current => current ? { ...current, shipping_courier, tracking_number, shipping_cost, shipped_at } : current);
     setSuccess("Informasi pengiriman berhasil disimpan.");
     setError("");
   }
 
   function exportOrders() {
     if (filteredOrders.length === 0) { setError("Tidak ada pesanan untuk diekspor."); return; }
-    const columns = ["ID Pesanan", "Tanggal", "Nama Pelanggan", "WhatsApp", "Produk", "Jumlah", "Harga Satuan", "Total", "Status", "Catatan"];
+    const columns = ["ID Pesanan", "Tanggal", "Nama Pelanggan", "WhatsApp", "Produk", "Jumlah", "Harga Satuan", "Subtotal Produk", "Ongkir", "Total Tagihan", "Status Pesanan", "Status Pembayaran", "Kurir", "Nomor Resi", "Tanggal Lunas", "Tanggal Dikirim", "Catatan"];
     const rows = filteredOrders.map(order => [
       order.id,
       new Date(order.created_at).toLocaleString("id-ID"),
@@ -127,7 +130,14 @@ export default function OrdersPage() {
       String(order.quantity),
       String(order.unit_price),
       String(order.unit_price * order.quantity),
+      String(order.shipping_cost || 0),
+      String(order.unit_price * order.quantity + (order.shipping_cost || 0)),
       statusLabels[order.status] || order.status,
+      order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar",
+      order.shipping_courier || "",
+      order.tracking_number || "",
+      order.paid_at ? new Date(order.paid_at).toLocaleString("id-ID") : "",
+      order.shipped_at ? new Date(order.shipped_at).toLocaleString("id-ID") : "",
       order.notes || ""
     ]);
     const escapeCsv = (value: string) => '"' + value.replace(/"/g, '""') + '"';
@@ -151,6 +161,7 @@ export default function OrdersPage() {
     if (deleteError) { setError("Pesanan gagal dihapus."); return; }
     setOrders(current => current.filter(order => order.id !== id));
     if (invoiceOrder?.id === id) setInvoiceOrder(null);
+    setError(""); setSuccess("Pesanan berhasil dihapus.");
   }
 
   const filteredOrders = orders.filter(order => {
@@ -159,8 +170,8 @@ export default function OrdersPage() {
     return matchesSearch && (statusFilter === "all" || order.status === statusFilter);
   }).sort((a, b) => {
     if (sortOrder === "oldest") return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-    if (sortOrder === "highest") return (b.unit_price * b.quantity) - (a.unit_price * a.quantity);
-    if (sortOrder === "lowest") return (a.unit_price * a.quantity) - (b.unit_price * b.quantity);
+    if (sortOrder === "highest") return (b.unit_price * b.quantity + (b.shipping_cost || 0)) - (a.unit_price * a.quantity + (a.shipping_cost || 0));
+    if (sortOrder === "lowest") return (a.unit_price * a.quantity + (a.shipping_cost || 0)) - (b.unit_price * b.quantity + (b.shipping_cost || 0));
     return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
   });
   const pendingCount = orders.filter(order => order.status === "pending").length;
