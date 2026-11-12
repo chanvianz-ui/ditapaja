@@ -1497,9 +1497,9 @@ export default function DashboardPage() {
                   </div>
                   <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filter status kartu">
                     {([
-                      { value: "all", label: "Semua", count: cards.length },
-                      { value: "active", label: "Aktif", count: cards.filter((card) => card.active).length },
-                      { value: "inactive", label: "Nonaktif", count: cards.filter((card) => !card.active).length },
+                      { value: "all", label: "Semua", count: cards.filter((card) => Boolean(card.archived_at) === showArchivedCards).length },
+                      { value: "active", label: "Aktif", count: cards.filter((card) => Boolean(card.archived_at) === showArchivedCards && card.active).length },
+                      { value: "inactive", label: "Nonaktif", count: cards.filter((card) => Boolean(card.archived_at) === showArchivedCards && !card.active).length },
                     ] as const).map((filter) => (
                       <button
                         key={filter.value}
