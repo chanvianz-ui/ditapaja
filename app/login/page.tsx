@@ -127,7 +127,7 @@ export default function LoginPage() {
 
         <p className="mt-7 text-center text-sm text-slate-500">
           Belum punya akun?{" "}
-          <Link href="/register" className="font-semibold text-blue-600 hover:underline">
+          <Link href={nextPath ? "/register?next=" + encodeURIComponent(nextPath) : "/register"} className="font-semibold text-blue-600 hover:underline">
             Daftar gratis
           </Link>
         </p>
