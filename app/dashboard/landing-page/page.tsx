@@ -135,6 +135,31 @@ export default function LandingPageEditor() {
     setSettings(current => ({ ...current, [key]: value }));
   }
 
+  async function openPreview() {
+    if (!selectedCard) return;
+    const previewWindow = window.open("about:blank", "_blank");
+    if (!previewWindow) {
+      setError("Izinkan pop-up browser untuk membuka preview.");
+      return;
+    }
+    setError("");
+    try {
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      const accessToken = sessionData.session?.access_token;
+      if (sessionError || !accessToken) throw new Error("Sesi login tidak ditemukan. Silakan login ulang.");
+      const response = await fetch("/api/preview/" + encodeURIComponent(selectedCard.public_code), {
+        method: "POST",
+        headers: { Authorization: "Bearer " + accessToken },
+      });
+      const result = await response.json();
+      if (!response.ok || !result.url) throw new Error(result.error || "Preview tidak dapat dibuka.");
+      previewWindow.location.href = result.url;
+    } catch (previewError) {
+      previewWindow.close();
+      setError(previewError instanceof Error ? previewError.message : "Preview tidak dapat dibuka.");
+    }
+  }
+
   async function save(event: React.FormEvent) {
     event.preventDefault(); setSaving(true); setError(""); setNotice("");
     if (!selectedCard || !selectedCard.active) { setError("Pilih kartu NFC yang aktif untuk menerbitkan halaman."); setSaving(false); return; }
@@ -178,7 +203,7 @@ export default function LandingPageEditor() {
           <section className="space-y-3"><h2 className="font-bold">Tautan tambahan</h2><p className="text-xs text-slate-500">Semua tautan bersifat opsional. Gunakan alamat lengkap HTTPS.</p><label className="block text-sm font-medium">WhatsApp<input type="url" value={settings.whatsapp_url} onChange={e => update("whatsapp_url", e.target.value)} placeholder="https://wa.me/628..." className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label><label className="block text-sm font-medium">Instagram<input type="url" value={settings.instagram_url} onChange={e => update("instagram_url", e.target.value)} placeholder="https://instagram.com/namabisnis" className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label><label className="block text-sm font-medium">Website<input type="url" value={settings.website_url} onChange={e => update("website_url", e.target.value)} placeholder="https://bisnis.com" className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label></section>
           <section className="rounded-xl border border-slate-200 bg-slate-50 p-4"><label className="flex items-start gap-3"><input type="checkbox" checked={settings.is_published} onChange={e => update("is_published", e.target.checked)} disabled={!selectedCard?.active} className="mt-1 h-4 w-4 accent-blue-600"/><span><span className="block text-sm font-semibold">Terbitkan halaman kustom</span><span className="mt-1 block text-xs leading-5 text-slate-500">Jika dimatikan, halaman NFC akan tetap menggunakan tampilan standar DiTapAja.</span></span></label></section>
           <button disabled={saving || settingsLoading || !selectedCard} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 hover:bg-blue-700 disabled:opacity-50"><Save size={17}/>{saving ? "Menyimpan..." : settingsLoading ? "Memuat pengaturan..." : "Simpan Pengaturan"}</button>
-          {selectedCard && <a href={"/c/"+selectedCard.public_code+"?preview=1"} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 hover:border-blue-200 hover:text-blue-600"><Eye size={16}/> Preview halaman</a>}
+          {selectedCard && <button type="button" onClick={() => void openPreview()} className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 hover:border-blue-200 hover:text-blue-600"><Eye size={16}/> Preview halaman</button>}
         </form>
         <aside className="lg:sticky lg:top-6"><div className="mb-3 flex flex-wrap items-center justify-between gap-2"><div className="flex items-center gap-2 text-sm font-semibold text-slate-600"><Eye size={17}/> Live preview</div><div className="inline-flex rounded-xl border border-slate-200 bg-white p-1"><button type="button" onClick={() => setPreviewMode("mobile")} aria-pressed={previewMode === "mobile"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Smartphone size={14}/> Mobile</button><button type="button" onClick={() => setPreviewMode("desktop")} aria-pressed={previewMode === "desktop"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Monitor size={14}/> Desktop</button></div></div><div className={previewMode === "mobile" ? "mx-auto max-w-[330px] rounded-[2.5rem] border-[7px] border-slate-900 bg-slate-900 p-2 shadow-xl" : "mx-auto w-full max-w-[560px] rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"}><div className="overflow-hidden rounded-[2rem] p-5" style={{background:theme.bg,color:theme.ink}}><div className="mx-auto mb-6 h-1.5 w-16 rounded-full bg-slate-400/50"/><div className="mb-5 flex" style={{justifyContent:settings.logo_position}}>{settings.logo_url ? <img src={settings.logo_url} alt="Logo bisnis" className="rounded-xl bg-white object-contain p-2 shadow-sm" style={{width:settings.logo_size,height:settings.logo_size}}/> : <div className="grid h-14 w-14 place-items-center rounded-2xl text-2xl" style={{background:settings.accent_color+"20",color:settings.accent_color}}>✦</div>}</div><p className="text-center text-[9px] font-bold">{businessName || "Bisnis Kami"}</p>{branchName && <p className="mx-auto mt-2 w-fit rounded-full border border-current/10 px-3 py-1 text-[9px] opacity-70">{branchName}</p>}{branchAddress && <p className="mt-2 text-center text-[9px] leading-4 opacity-60">{branchAddress}</p>}<p className="mt-2 text-center text-[9px] opacity-50">{selectedCard?.card_name || "Nama Kartu"}</p><h2 className="mt-3 text-center text-xl font-extrabold leading-tight">{settings.headline || "Judul halaman"}</h2><p className="mt-3 text-center text-xs leading-5 opacity-70">{settings.description || "Deskripsi bisnis kamu akan tampil di sini."}</p><div className="mt-6 space-y-2"><div className="rounded-xl px-3 py-3 text-center text-xs font-bold" style={settings.button_style === "solid" ? {background:settings.accent_color,color:"#fff"} : {background:"transparent",border:"2px solid "+settings.accent_color,color:settings.accent_color}}>★ Berikan Ulasan di Google</div>{settings.whatsapp_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">WhatsApp</div>}{settings.instagram_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Instagram</div>}{settings.website_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Website</div>}</div><p className="mt-7 text-center text-[9px] opacity-50">Powered by DiTapAja</p></div></div><p className="mx-auto mt-3 max-w-[330px] text-center text-xs leading-5 text-slate-400">Pratinjau visual ini mengikuti pengaturan editor. Buka Preview untuk melihat halaman sebenarnya.</p></aside>
       </div>}
