@@ -19,6 +19,7 @@ The `vinext check` report completed successfully:
 - Imports detected by the checker: `next/navigation`, `next/server`, and `next/link`.
 - Repository app source audit found no use of `next/image`, ISR/revalidation APIs, or `"use cache"`.
 - Initial Cloudflare cache/image choices: no custom CDN cache, no data cache, no Cloudflare Images optimizer.
+- Generated `.cloudflare/types` are not included in the shared Next.js `tsconfig` yet because this app does not import Cloudflare Worker bindings directly; including those globals changes the existing `Response.json()` type from the standard DOM type to `unknown` across the legacy Next.js client pages. Add a separate Cloudflare-specific type-check config if application code later imports `cloudflare:workers`.
 
 Compatibility checks do not replace runtime tests. Authentication, order/payment proof uploads, admin operations, card creation, and public NFC routes still need smoke tests on the Worker URL.
 
