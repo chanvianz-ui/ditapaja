@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle } from "lucide-react";
+import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle, Upload, Loader2, FileCheck2 } from "lucide-react";
 
 type Order = {
   id: string; customer_name: string; customer_email: string; customer_phone: string;
   product_name: string; quantity: number; unit_price: number; status: string;
   payment_status: "unpaid" | "pending_verification" | "paid" | "refunded"; payment_method: string | null;
-  payment_reference: string | null; shipping_courier: string | null;
+  payment_reference: string | null; payment_proof_path: string | null; shipping_courier: string | null;
   tracking_number: string | null; shipping_cost: number; paid_at: string | null;
   shipped_at: string | null; created_at: string; notes: string | null;
 };
@@ -27,6 +27,11 @@ export default function CustomerOrdersPage() {
   const [loading,setLoading] = useState(true);
   const [error,setError] = useState("");
   const [email,setEmail] = useState("");
+  const [uploadingOrderId,setUploadingOrderId] = useState<string | null>(null);
+  const [proofMethod,setProofMethod] = useState<Record<string,"bank_transfer"|"qris">>({});
+  const [proofReference,setProofReference] = useState<Record<string,string>>({});
+  const [proofError,setProofError] = useState<Record<string,string>>({});
+  const [proofSuccess,setProofSuccess] = useState<Record<string,string>>({});
 
   async function load() {
     setLoading(true); setError("");
@@ -39,7 +44,7 @@ export default function CustomerOrdersPage() {
       setLoading(false); return;
     }
     const { data, error: orderError } = await supabase.from("ditapaja_orders")
-      .select("id,customer_name,customer_email,customer_phone,product_name,quantity,unit_price,status,payment_status,payment_method,payment_reference,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes")
+      .select("id,customer_name,customer_email,customer_phone,product_name,quantity,unit_price,status,payment_status,payment_method,payment_reference,payment_proof_path,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes")
       .eq("customer_user_id",auth.user.id).order("created_at",{ascending:false});
     if (orderError) { setError("Gagal memuat riwayat transaksi: " + orderError.message); setLoading(false); return; }
     const rows = (data || []) as Order[];
@@ -55,6 +60,70 @@ export default function CustomerOrdersPage() {
       }
     } else setActivities({});
     setLoading(false);
+  }
+
+  async function uploadPaymentProof(order: Order, file: File | undefined) {
+    if (!file) return;
+    const allowedTypes = ["image/jpeg","image/png","image/webp","application/pdf"];
+    if (!allowedTypes.includes(file.type) || file.size < 1 || file.size > 5 * 1024 * 1024) {
+      setProofError(current => ({ ...current, [order.id]: "File harus JPG, PNG, WEBP, atau PDF dengan ukuran maksimal 5 MB." }));
+      return;
+    }
+
+    setUploadingOrderId(order.id);
+    setProofError(current => ({ ...current, [order.id]: "" }));
+    setProofSuccess(current => ({ ...current, [order.id]: "" }));
+    try {
+      // The access token is only forwarded as a credential; the server verifies it with Supabase Auth.
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      const accessToken = sessionData.session?.access_token;
+      if (sessionError || !accessToken) throw new Error("Sesi login tidak ditemukan. Silakan login kembali.");
+
+      const endpoint = "/api/customer/orders/" + encodeURIComponent(order.id) + "/payment-proof";
+      const headers = { "Content-Type": "application/json", Authorization: "Bearer " + accessToken };
+      const createResponse = await fetch(endpoint, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ action: "create", fileType: file.type, fileSize: file.size }),
+      });
+      const createResult = await createResponse.json();
+      if (!createResponse.ok || !createResult.success || !createResult.path || !createResult.token) {
+        throw new Error(createResult.error || "Link upload tidak dapat dibuat.");
+      }
+
+      const { error: uploadError } = await supabase.storage
+        .from("ditapaja-payment-proofs")
+        .uploadToSignedUrl(createResult.path, createResult.token, file, {
+          contentType: file.type,
+          cacheControl: "3600",
+        });
+      if (uploadError) throw new Error("File gagal diunggah: " + uploadError.message);
+
+      const confirmResponse = await fetch(endpoint, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          action: "confirm",
+          path: createResult.path,
+          paymentMethod: proofMethod[order.id] || "bank_transfer",
+          paymentReference: (proofReference[order.id] || "").trim(),
+        }),
+      });
+      const confirmResult = await confirmResponse.json();
+      if (!confirmResponse.ok || !confirmResult.success) {
+        throw new Error(confirmResult.error || "Bukti pembayaran belum berhasil dikirim.");
+      }
+
+      setProofSuccess(current => ({ ...current, [order.id]: "Bukti pembayaran berhasil dikirim. Tim DiTapAja akan memeriksanya secara manual." }));
+      await load();
+    } catch (uploadError) {
+      setProofError(current => ({
+        ...current,
+        [order.id]: uploadError instanceof Error ? uploadError.message : "Bukti pembayaran gagal dikirim.",
+      }));
+    } finally {
+      setUploadingOrderId(null);
+    }
   }
 
   useEffect(()=>{ void load(); },[router]);
@@ -112,6 +181,19 @@ export default function CustomerOrdersPage() {
             {order.payment_method && <p className="mt-3 text-xs text-slate-600">Metode: {methodNames[order.payment_method] || order.payment_method}</p>}
             {order.payment_reference && <p className="mt-1 break-all text-xs text-slate-500">Referensi: {order.payment_reference}</p>}
             {order.paid_at && <p className="mt-1 text-xs text-slate-500">Diverifikasi: {new Date(order.paid_at).toLocaleString("id-ID")}</p>}
+            {order.payment_proof_path ? <div role="status" className="mt-4 flex items-start gap-2 rounded-xl border border-emerald-100 bg-emerald-50 p-3 text-xs leading-5 text-emerald-800"><FileCheck2 size={16} className="mt-0.5 shrink-0"/><span>Bukti pembayaran sudah diterima. Tim DiTapAja akan memperbarui status setelah pemeriksaan.</span></div> : order.status !== "cancelled" && !["paid","refunded"].includes(order.payment_status) ? <div className="mt-4 space-y-3 border-t border-slate-200 pt-4">
+              <div><p className="text-xs font-bold text-slate-800">Kirim bukti pembayaran</p><p className="mt-1 text-[11px] leading-5 text-slate-500">Unggah bukti transfer atau QRIS agar tim kami dapat melakukan verifikasi manual.</p></div>
+              <label className="block text-xs font-semibold text-slate-600">Metode pembayaran<select value={proofMethod[order.id] || "bank_transfer"} onChange={e=>setProofMethod(current=>({...current,[order.id]:e.target.value as "bank_transfer"|"qris"}))} disabled={uploadingOrderId===order.id} className="mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm"><option value="bank_transfer">Transfer bank</option><option value="qris">QRIS</option></select></label>
+              <label className="block text-xs font-semibold text-slate-600">Nomor referensi / berita transfer <span className="font-normal text-slate-400">(opsional)</span><input value={proofReference[order.id] || ""} onChange={e=>setProofReference(current=>({...current,[order.id]:e.target.value.slice(0,120)}))} maxLength={120} disabled={uploadingOrderId===order.id} placeholder="Contoh: 123456789" className="mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm"/></label>
+              <label className={"flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed px-3 py-3 text-xs font-semibold transition "+(uploadingOrderId===order.id?"cursor-wait border-blue-200 bg-blue-50 text-blue-700":"border-slate-300 bg-white text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700")}>
+                {uploadingOrderId===order.id ? <Loader2 size={15} className="animate-spin"/> : <Upload size={15}/>}
+                {uploadingOrderId===order.id ? "Mengunggah dan mengirim..." : "Pilih bukti pembayaran"}
+                <input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" disabled={uploadingOrderId===order.id} className="sr-only" onChange={e=>{const file=e.target.files?.[0];void uploadPaymentProof(order,file);e.currentTarget.value="";}}/>
+              </label>
+              <p className="text-[10px] leading-4 text-slate-400">JPG, PNG, WEBP, atau PDF · Maksimal 5 MB. File disimpan secara privat.</p>
+              {proofError[order.id] && <p role="alert" className="rounded-lg border border-red-100 bg-red-50 p-2.5 text-xs leading-5 text-red-700">{proofError[order.id]}</p>}
+              {proofSuccess[order.id] && <p role="status" className="rounded-lg border border-emerald-100 bg-emerald-50 p-2.5 text-xs leading-5 text-emerald-700">{proofSuccess[order.id]}</p>}
+            </div> : null}
           </div>
         </div>
         {(order.shipping_courier || order.tracking_number) && <div className="mx-5 mb-5 flex items-start gap-3 rounded-xl border border-slate-100 p-4 sm:mx-6"><Truck size={17} className="mt-0.5 text-slate-400"/><div className="min-w-0 text-xs"><b className="text-slate-800">{order.shipping_courier || "Pengiriman"}</b><p className="mt-1 text-slate-500">Nomor resi: <span className="break-all font-semibold text-slate-700">{order.tracking_number || "Belum tersedia"}</span></p>{order.shipped_at && <p className="mt-1 text-slate-400">Dikirim: {new Date(order.shipped_at).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}</p>}</div></div>}
