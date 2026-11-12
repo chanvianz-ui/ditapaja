@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const BUCKET = "ditapaja-payment-proofs";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
