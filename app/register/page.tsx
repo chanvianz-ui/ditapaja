@@ -146,7 +146,7 @@ export default function RegisterPage() {
 
         <p className="mt-7 text-center text-sm text-slate-500">
           Sudah punya akun?{" "}
-          <Link href="/login" className="font-semibold text-blue-600 hover:underline">
+          <Link href={nextPath ? "/login?next=" + encodeURIComponent(nextPath) : "/login"} className="font-semibold text-blue-600 hover:underline">
             Masuk
           </Link>
         </p>
