@@ -75,7 +75,7 @@ export default function OrdersPage() {
       product_name: product.trim(), quantity: count,
       unit_price: product === "DiTapAja Signature" ? 60000 : 50000,
       notes: notes.trim() || null
-    }).select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,payment_status,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes").single();
+    }).select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,payment_status,payment_method,payment_reference,payment_proof_path,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes").single();
     if (insertError) setError(insertError.message);
     else {
       setOrders(current => [data as Order, ...current]);
