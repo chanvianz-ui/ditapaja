@@ -68,6 +68,40 @@ export async function GET(request: NextRequest) {
 
     if (reviewError) throw reviewError;
 
+    // Sales overview: only count confirmed payments as realized revenue.
+    const { data: orderRows, error: ordersError } = await supabase
+      .from("ditapaja_orders")
+      .select("product_name,quantity,unit_price,shipping_cost,status,payment_status,paid_at,created_at")
+      .order("created_at", { ascending: false })
+      .limit(5000);
+
+    if (ordersError) throw ordersError;
+
+    const orders = orderRows ?? [];
+    const totalOrders = orders.length;
+    const paidOrders = orders.filter((order: any) => order.payment_status === "paid");
+    const pendingOrders = orders.filter((order: any) => ["unpaid", "pending_verification"].includes(order.payment_status));
+    const paidRevenue = paidOrders.reduce((sum: number, order: any) =>
+      sum + Number(order.unit_price || 0) * Number(order.quantity || 0) + Number(order.shipping_cost || 0), 0);
+    const monthStart = new Date();
+    monthStart.setDate(1);
+    monthStart.setHours(0, 0, 0, 0);
+    const monthlyRevenue = paidOrders
+      .filter((order: any) => order.paid_at && new Date(order.paid_at).getTime() >= monthStart.getTime())
+      .reduce((sum: number, order: any) =>
+        sum + Number(order.unit_price || 0) * Number(order.quantity || 0) + Number(order.shipping_cost || 0), 0);
+    const topProductsMap = new Map<string, { name: string; quantity: number; revenue: number }>();
+    for (const order of paidOrders as any[]) {
+      const name = String(order.product_name || "Produk");
+      const item = topProductsMap.get(name) || { name, quantity: 0, revenue: 0 };
+      item.quantity += Number(order.quantity || 0);
+      item.revenue += Number(order.unit_price || 0) * Number(order.quantity || 0);
+      topProductsMap.set(name, item);
+    }
+    const topProducts = [...topProductsMap.values()]
+      .sort((a, b) => b.quantity - a.quantity)
+      .slice(0, 5);
+
     return NextResponse.json({
       success: true,
       stats: {
@@ -76,6 +110,12 @@ export async function GET(request: NextRequest) {
         activeCards: activeCards ?? 0,
         totalTaps: totalTaps ?? 0,
         totalReviewClicks: totalReviewClicks ?? 0,
+        totalOrders,
+        paidOrders: paidOrders.length,
+        pendingOrders: pendingOrders.length,
+        paidRevenue,
+        monthlyRevenue,
+        topProducts,
       },
     });
   } catch (error) {
