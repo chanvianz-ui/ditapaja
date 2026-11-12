@@ -8,6 +8,7 @@ import { supabase } from "../../lib/supabase";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const nextPath = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("next") : null;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -47,12 +48,14 @@ export default function RegisterPage() {
 
         if (profileError) throw profileError;
 
-        router.push("/dashboard");
+        const { error: claimError } = await supabase.rpc("claim_my_ditapaja_orders");
+        if (claimError && !claimError.message.includes("Email must be verified")) console.error("Order linking:", claimError.message);
+        router.push(nextPath?.startsWith("/") && !nextPath.startsWith("//") ? nextPath : "/dashboard");
         return;
       }
 
       setMessage(
-        "Registrasi berhasil! Silakan cek email untuk verifikasi akun."
+        "Registrasi berhasil! Silakan cek email untuk verifikasi akun. Setelah verifikasi, masuk dengan email yang sama untuk melihat pesanan."
       );
     } catch (error) {
       setMessage(
