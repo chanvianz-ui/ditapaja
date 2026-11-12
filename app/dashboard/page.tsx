@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
+  Archive,
   LayoutDashboard,
   CreditCard,
   BarChart3,
@@ -46,6 +47,8 @@ type NfcCard = {
   destination_url: string;
   active: boolean;
   location_id?: string | null;
+  archived_at?: string | null;
+  archived_by?: string | null;
 };
 
 type AnalyticsEvent = {
@@ -89,17 +92,19 @@ export default function DashboardPage() {
   const [copiedCardId, setCopiedCardId] = useState<string | null>(null);
   const [cardSearch, setCardSearch] = useState("");
   const [cardStatusFilter, setCardStatusFilter] = useState<"all" | "active" | "inactive">("all");
+  const [showArchivedCards, setShowArchivedCards] = useState(false);
 
   const visibleCards = useMemo(() => {
     const query = cardSearch.trim().toLowerCase();
     return cards.filter((card) => {
+      if (Boolean(card.archived_at) !== showArchivedCards) return false;
       const matchesQuery = !query || [card.card_name || "", card.public_code, card.destination_url]
         .some((value) => value.toLowerCase().includes(query));
       const matchesStatus = cardStatusFilter === "all"
         || (cardStatusFilter === "active" ? card.active : !card.active);
       return matchesQuery && matchesStatus;
     });
-  }, [cards, cardSearch, cardStatusFilter]);
+  }, [cards, cardSearch, cardStatusFilter, showArchivedCards]);
 
   const selectedEventRows = useMemo(() => {
     let rows = eventRows;
@@ -410,7 +415,7 @@ export default function DashboardPage() {
 
           supabase
             .from("nfc_cards")
-            .select("id, card_name, public_code, destination_url, active, location_id")
+            .select("id, card_name, public_code, destination_url, active, location_id, archived_at, archived_by")
             .eq("user_id", data.user.id)
             .order("created_at", { ascending: false }),
 
@@ -432,7 +437,7 @@ export default function DashboardPage() {
           console.warn("Card location column is not available yet; loading cards without location_id.");
           cardsResult = await supabase
             .from("nfc_cards")
-            .select("id, card_name, public_code, destination_url, active")
+            .select("id, card_name, public_code, destination_url, active, archived_at, archived_by")
             .eq("user_id", data.user.id)
             .order("created_at", { ascending: false });
         }
@@ -464,7 +469,7 @@ export default function DashboardPage() {
 
         setProfile(currentProfile);
 
-        const userCards = ((cardsResult.data ?? []).map((card: any) => ({ ...card, location_id: card.location_id ?? null }))) as NfcCard[];
+        const userCards = ((cardsResult.data ?? []).map((card: any) => ({ ...card, location_id: card.location_id ?? null, archived_at: card.archived_at ?? null, archived_by: card.archived_by ?? null }))) as NfcCard[];
         setCards(userCards);
         setBusinessLocations(locationsResult.data ?? []);
 
@@ -769,7 +774,7 @@ export default function DashboardPage() {
       setWritingCardId(null);
     }
   }
-  async function handleDeleteCard() {
+  async function handleArchiveCard() {
     if (!deleteTarget) return;
 
     setDeletingCard(true);
@@ -777,33 +782,62 @@ export default function DashboardPage() {
     setCardMessage("");
 
     try {
-      const { data: authData, error: authError } =
-        await supabase.auth.getUser();
-
+      const { data: authData, error: authError } = await supabase.auth.getUser();
       if (authError || !authData.user) {
         router.replace("/login");
         return;
       }
 
+      const archivedAt = new Date().toISOString();
       const { error } = await supabase
         .from("nfc_cards")
-        .delete()
+        .update({ archived_at: archivedAt, archived_by: authData.user.id, active: false })
         .eq("id", deleteTarget.id)
-        .eq("user_id", authData.user.id);
+        .eq("user_id", authData.user.id)
+        .is("archived_at", null);
 
       if (error) throw error;
 
-      const deletedId = deleteTarget.id;
-      setCards((current) => current.filter((card) => card.id !== deletedId));
-      setEventRows((current) => current.filter((event) => event.card_id !== deletedId));
-      setSelectedCardId((current) => current === deletedId ? "all" : current);
+      setCards((current) => current.map((card) => card.id === deleteTarget.id
+        ? { ...card, archived_at: archivedAt, archived_by: authData.user.id, active: false }
+        : card));
+      setSelectedCardId((current) => current === deleteTarget.id ? "all" : current);
       setDeleteTarget(null);
-      setCardMessage("Kartu dan riwayat aktivitasnya berhasil dihapus.");
+      setCardMessage("Kartu berhasil diarsipkan. Riwayat dan pengaturannya tetap tersimpan.");
     } catch (error) {
-      console.error("Card deletion error:", error);
-      setCardError("Gagal menghapus kartu. Periksa izin DELETE di Supabase, lalu coba lagi.");
+      console.error("Card archive error:", error);
+      setCardError("Gagal mengarsipkan kartu. Coba lagi.");
     } finally {
       setDeletingCard(false);
+    }
+  }
+
+  async function handleRestoreCard(card: NfcCard) {
+    setUpdatingCardId(card.id);
+    setCardError("");
+    setCardMessage("");
+    try {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError || !authData.user) {
+        router.replace("/login");
+        return;
+      }
+      const { error } = await supabase
+        .from("nfc_cards")
+        .update({ archived_at: null, archived_by: null, active: false })
+        .eq("id", card.id)
+        .eq("user_id", authData.user.id)
+        .not("archived_at", "is", null);
+      if (error) throw error;
+      setCards((current) => current.map((item) => item.id === card.id
+        ? { ...item, archived_at: null, archived_by: null, active: false }
+        : item));
+      setCardMessage("Kartu berhasil dipulihkan dalam status Inactive. Aktifkan setelah siap digunakan.");
+    } catch (error) {
+      console.error("Card restore error:", error);
+      setCardError("Gagal memulihkan kartu. Coba lagi.");
+    } finally {
+      setUpdatingCardId(null);
     }
   }
 
@@ -1330,6 +1364,10 @@ export default function DashboardPage() {
                     Kelola nama, tujuan, dan status kartu NFC kamu.
                   </p>
                   <button type="button" onClick={() => setShowBulkQrSheet(true)} disabled={!cards.some((card) => card.active)} className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3.5 py-2.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-40"><QrCode size={15}/> Cetak Semua QR</button>
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <button type="button" onClick={() => { setShowArchivedCards(false); setCardStatusFilter("all"); }} className={`rounded-full px-3 py-1.5 text-xs font-semibold ${!showArchivedCards ? "bg-blue-600 text-white" : "border border-slate-200 text-slate-500 hover:bg-slate-50"}`}>Active Cards ({cards.filter((card) => !card.archived_at).length})</button>
+                    <button type="button" onClick={() => { setShowArchivedCards(true); setCardStatusFilter("all"); }} className={`rounded-full px-3 py-1.5 text-xs font-semibold ${showArchivedCards ? "bg-slate-800 text-white" : "border border-slate-200 text-slate-500 hover:bg-slate-50"}`}>Archived ({cards.filter((card) => Boolean(card.archived_at)).length})</button>
+                  </div>
                   <div className="relative mt-3 w-full sm:max-w-xs">
                     <input
                       type="search"
@@ -1444,6 +1482,12 @@ export default function DashboardPage() {
                       </div>
 
                       <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:shrink-0 sm:flex-wrap sm:items-center">
+                        {card.archived_at ? (
+                          <button onClick={() => handleRestoreCard(card)} disabled={updatingCardId === card.id} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 px-3 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50 disabled:opacity-50">
+                            {updatingCardId === card.id ? <Loader2 size={16} className="animate-spin"/> : <CheckCircle2 size={16}/>} Restore
+                          </button>
+                        ) : (
+
                         <button onClick={() => copyPublicCardLink(card)} disabled={!card.active} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40" title="Salin link publik kartu">
                           {copiedCardId === card.id ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                           {copiedCardId === card.id ? "Tersalin" : "Salin Link"}
@@ -1498,9 +1542,10 @@ export default function DashboardPage() {
                           disabled={updatingCardId === card.id || deletingCard}
                           className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-100 px-3 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-50"
                         >
-                          <Trash2 size={16} />
-                          Delete
+                          <Archive size={16} />
+                          Archive
                         </button>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -1558,7 +1603,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* DELETE CARD CONFIRMATION MODAL */}
+      {/* ARCHIVE CARD CONFIRMATION MODAL */}
       {deleteTarget && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm">
           <div
@@ -1571,11 +1616,10 @@ export default function DashboardPage() {
               <AlertTriangle size={24} />
             </div>
             <h3 id="delete-card-title" className="mt-5 text-lg font-bold text-slate-900">
-              Hapus kartu ini?
+              Arsipkan kartu ini?
             </h3>
             <p className="mt-2 text-sm leading-6 text-slate-600">
-              Kamu akan menghapus <strong>{deleteTarget.card_name || "Untitled Card"}</strong> secara permanen.
-              Seluruh riwayat tap dan review click kartu ini juga akan ikut terhapus. Tindakan ini tidak bisa dibatalkan.
+              Kartu <strong>{deleteTarget.card_name || "Untitled Card"}</strong> akan dipindahkan ke arsip dan dinonaktifkan. Riwayat aktivitas, URL publik, serta pengaturan halaman tetap tersimpan dan kartu dapat dipulihkan kapan saja.
             </p>
 
             {cardError && (
@@ -1600,7 +1644,7 @@ export default function DashboardPage() {
               </button>
               <button
                 type="button"
-                onClick={handleDeleteCard}
+                onClick={handleArchiveCard}
                 disabled={deletingCard}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
               >
@@ -1609,7 +1653,7 @@ export default function DashboardPage() {
                 ) : (
                   <Trash2 size={17} />
                 )}
-                {deletingCard ? "Menghapus..." : "Hapus Permanen"}
+                {deletingCard ? "Mengarsipkan..." : "Arsipkan Kartu"}
               </button>
             </div>
           </div>
