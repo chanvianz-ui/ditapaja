@@ -24,6 +24,12 @@ type AdminStats = {
   activeCards: number;
   totalTaps: number;
   totalReviewClicks: number;
+  totalOrders: number;
+  paidOrders: number;
+  pendingOrders: number;
+  paidRevenue: number;
+  monthlyRevenue: number;
+  topProducts: { name: string; quantity: number; revenue: number }[];
 };
 
 const initialStats: AdminStats = {
@@ -32,6 +38,12 @@ const initialStats: AdminStats = {
   activeCards: 0,
   totalTaps: 0,
   totalReviewClicks: 0,
+  totalOrders: 0,
+  paidOrders: 0,
+  pendingOrders: 0,
+  paidRevenue: 0,
+  monthlyRevenue: 0,
+  topProducts: [],
 };
 
 export default function AdminPage() {
@@ -131,6 +143,24 @@ export default function AdminPage() {
       value: stats.totalReviewClicks,
       icon: MessageSquare,
       description: "Clicks to Google Review",
+    },
+    {
+      label: "Total Orders",
+      value: stats.totalOrders,
+      icon: CreditCard,
+      description: "All recorded transactions",
+    },
+    {
+      label: "Paid Orders",
+      value: stats.paidOrders,
+      icon: ShieldCheck,
+      description: "Payments confirmed by admin",
+    },
+    {
+      label: "Awaiting Payment",
+      value: stats.pendingOrders,
+      icon: RefreshCw,
+      description: "Unpaid or awaiting verification",
     },
   ];
 
@@ -367,6 +397,39 @@ export default function AdminPage() {
               </div>
             </div>
           </div>
+
+          <section className="mt-6 grid grid-cols-1 gap-5 xl:grid-cols-3">
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm sm:p-6 xl:col-span-2">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[.16em] text-blue-600">Sales overview</p>
+                  <h3 className="mt-2 text-xl font-bold text-[#17243b]">Ringkasan penjualan</h3>
+                  <p className="mt-1 text-xs text-slate-400">Pendapatan hanya menghitung pesanan dengan pembayaran berstatus berhasil.</p>
+                </div>
+                <CreditCard size={20} className="text-blue-600" />
+              </div>
+              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="rounded-xl bg-slate-50 p-4">
+                  <p className="text-xs font-medium text-slate-500">Total pendapatan terkonfirmasi</p>
+                  <p className="mt-2 text-2xl font-bold tracking-tight text-slate-900">{loading ? "—" : "Rp" + stats.paidRevenue.toLocaleString("id-ID")}</p>
+                </div>
+                <div className="rounded-xl bg-blue-50/70 p-4">
+                  <p className="text-xs font-medium text-blue-700">Pendapatan bulan ini</p>
+                  <p className="mt-2 text-2xl font-bold tracking-tight text-slate-900">{loading ? "—" : "Rp" + stats.monthlyRevenue.toLocaleString("id-ID")}</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm sm:p-6">
+              <h3 className="font-bold text-slate-900">Produk terjual</h3>
+              <p className="mt-1 text-xs text-slate-400">Berdasarkan jumlah unit pada pesanan yang sudah dibayar.</p>
+              {loading ? <p className="mt-6 text-sm text-slate-400">Memuat data...</p> : stats.topProducts.length === 0 ? <p className="mt-6 rounded-xl bg-slate-50 p-4 text-xs text-slate-500">Belum ada transaksi terkonfirmasi.</p> : <div className="mt-5 space-y-4">
+                {stats.topProducts.map((product) => <div key={product.name} className="flex items-center justify-between gap-3">
+                  <div className="min-w-0"><p className="truncate text-sm font-semibold text-slate-800">{product.name}</p><p className="mt-1 text-xs text-slate-400">{product.quantity.toLocaleString("id-ID")} unit</p></div>
+                  <p className="shrink-0 text-xs font-bold text-slate-700">Rp{product.revenue.toLocaleString("id-ID")}</p>
+                </div>)}
+              </div>}
+            </div>
+          </section>
 
           <footer className="mt-10 border-t border-slate-200 py-6 text-center text-xs text-slate-400">
             DiTapAja Admin Control Center · Tap. Review. Grow.
