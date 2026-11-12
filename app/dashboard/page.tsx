@@ -141,6 +141,7 @@ export default function DashboardPage() {
   const [editLocationId, setEditLocationId] = useState("");
   const [savingCard, setSavingCard] = useState(false);
   const [updatingCardId, setUpdatingCardId] = useState<string | null>(null);
+  const [duplicatingCardId, setDuplicatingCardId] = useState<string | null>(null);
   const [cardMessage, setCardMessage] = useState("");
   const [cardError, setCardError] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<NfcCard | null>(null);
@@ -774,6 +775,74 @@ export default function DashboardPage() {
       setWritingCardId(null);
     }
   }
+  async function handleDuplicateCard(card: NfcCard) {
+    if (card.archived_at) return;
+    setDuplicatingCardId(card.id);
+    setCardError("");
+    setCardMessage("");
+
+    try {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError || !authData.user) {
+        router.replace("/login");
+        return;
+      }
+
+      const { data: source, error: sourceError } = await supabase
+        .from("nfc_cards")
+        .select("id,user_id,card_name,public_code,destination_url,active,location_id,archived_at")
+        .eq("id", card.id)
+        .eq("user_id", authData.user.id)
+        .is("archived_at", null)
+        .maybeSingle();
+      if (sourceError) throw sourceError;
+      if (!source) throw new Error("Kartu sumber tidak ditemukan atau sudah diarsipkan.");
+
+      const newCode = crypto.randomUUID().replace(/-/g, "").slice(0, 12);
+      const newName = ((source.card_name || "Untitled Card") + " (Copy)").slice(0, 80);
+      const { data: newCard, error: insertError } = await supabase
+        .from("nfc_cards")
+        .insert({
+          user_id: authData.user.id,
+          card_name: newName,
+          public_code: newCode,
+          destination_url: source.destination_url,
+          active: false,
+          location_id: source.location_id || null,
+        })
+        .select("id,card_name,public_code,destination_url,active,location_id,archived_at,archived_by")
+        .single();
+      if (insertError) throw insertError;
+
+      let pageCopyWarning = false;
+      const { data: sourcePage, error: pageReadError } = await supabase
+        .from("nfc_card_pages")
+        .select("is_published,headline,description,theme,accent_color,button_style,whatsapp_url,instagram_url,website_url,logo_url,logo_size,logo_position")
+        .eq("card_id", source.id)
+        .eq("user_id", authData.user.id)
+        .maybeSingle();
+
+      if (pageReadError) {
+        pageCopyWarning = true;
+      } else if (sourcePage) {
+        const { error: pageInsertError } = await supabase
+          .from("nfc_card_pages")
+          .insert({ ...sourcePage, user_id: authData.user.id, card_id: newCard.id });
+        if (pageInsertError) pageCopyWarning = true;
+      }
+
+      setCards((current) => [newCard as NfcCard, ...current]);
+      setCardMessage(pageCopyWarning
+        ? "Kartu berhasil diduplikasi dalam status Inactive, tetapi pengaturan halaman kustom tidak berhasil disalin."
+        : "Kartu berhasil diduplikasi dalam status Inactive. Public code dan statistik dibuat terpisah.");
+    } catch (error) {
+      console.error("Card duplication error:", error);
+      setCardError(error instanceof Error ? error.message : "Gagal menduplikasi kartu. Coba lagi.");
+    } finally {
+      setDuplicatingCardId(null);
+    }
+  }
+
   async function handleArchiveCard() {
     if (!deleteTarget) return;
 
@@ -1509,6 +1578,14 @@ export default function DashboardPage() {
                           {writingCardId === card.id ? "Tempelkan Kartu..." : "Tulis NFC"}
                         </button>
 
+                        <button
+                          onClick={() => handleDuplicateCard(card)}
+                          disabled={duplicatingCardId === card.id || updatingCardId === card.id}
+                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-50"
+                        >
+                          {duplicatingCardId === card.id ? <Loader2 size={16} className="animate-spin"/> : <Copy size={16}/>}
+                          {duplicatingCardId === card.id ? "Duplicating..." : "Duplicate"}
+                        </button>
                         <button
                           onClick={() => openEditCard(card)}
                           className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
