@@ -68,24 +68,41 @@ export async function GET(request: NextRequest) {
 
     if (reviewError) throw reviewError;
 
-    // Sales overview: only count confirmed payments as realized revenue.
-    const { data: orderRows, error: ordersError } = await supabase
-      .from("ditapaja_orders")
-      .select("product_name,quantity,unit_price,shipping_cost,status,payment_status,paid_at,created_at")
-      .order("created_at", { ascending: false })
-      .limit(5000);
+    // Sales overview: paginate all rows so large order histories are not silently truncated.
+    const orders: any[] = [];
+    const orderPageSize = 1000;
+    let orderOffset = 0;
+    while (true) {
+      const { data: orderPage, error: ordersError } = await supabase
+        .from("ditapaja_orders")
+        .select("product_name,quantity,unit_price,shipping_cost,status,payment_status,paid_at,created_at")
+        .order("created_at", { ascending: false })
+        .range(orderOffset, orderOffset + orderPageSize - 1);
 
-    if (ordersError) throw ordersError;
-
-    const orders = orderRows ?? [];
+      if (ordersError) throw ordersError;
+      const rows = orderPage ?? [];
+      orders.push(...rows);
+      if (rows.length < orderPageSize) break;
+      orderOffset += orderPageSize;
+    }
     const totalOrders = orders.length;
     const paidOrders = orders.filter((order: any) => order.payment_status === "paid");
     const pendingOrders = orders.filter((order: any) => ["unpaid", "pending_verification"].includes(order.payment_status));
     const paidRevenue = paidOrders.reduce((sum: number, order: any) =>
       sum + Number(order.unit_price || 0) * Number(order.quantity || 0) + Number(order.shipping_cost || 0), 0);
-    const monthStart = new Date();
-    monthStart.setDate(1);
-    monthStart.setHours(0, 0, 0, 0);
+    // Business reporting month follows Indonesia western time (Asia/Jakarta),
+    // independent of the hosting runtime's timezone.
+    const now = new Date();
+    const jakartaNow = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+    const monthStart = new Date(Date.UTC(
+      jakartaNow.getUTCFullYear(),
+      jakartaNow.getUTCMonth(),
+      1,
+      -7,
+      0,
+      0,
+      0
+    ));
     const monthlyRevenue = paidOrders
       .filter((order: any) => order.paid_at && new Date(order.paid_at).getTime() >= monthStart.getTime())
       .reduce((sum: number, order: any) =>
