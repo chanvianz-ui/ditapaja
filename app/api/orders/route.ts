@@ -24,14 +24,14 @@ export async function POST(request: NextRequest) {
 
     const customer = typeof body.customer === "string" ? body.customer.trim() : "";
     const business = typeof body.business === "string" ? body.business.trim() : "";
-    const phone = typeof body.phone === "string" ? body.phone.replace(/[^0-9+]/g, "") : "";
+    const phone = typeof body.phone === "string" ? body.phone.replace(/\D/g, "") : "";
     const destination = typeof body.destination === "string" ? body.destination.trim() : "";
     const productName = typeof body.product === "string" ? body.product : "";
     const quantity = Number(body.quantity);
     const notes = typeof body.notes === "string" ? body.notes.trim() : "";
 
     if (!customer || customer.length > 100 || !business || business.length > 120 ||
-        !destination || destination.length > 250 || phone.length < 9 || phone.length > 20 ||
+        !destination || destination.length > 250 || phone.length < 10 || phone.length > 15 ||
         !Number.isInteger(quantity) || quantity < 1 || quantity > 1000 ||
         notes.length > 1000 || !Object.prototype.hasOwnProperty.call(PRODUCTS, productName)) {
       return NextResponse.json({ error: "Periksa kembali data pesanan." }, { status: 400 });
