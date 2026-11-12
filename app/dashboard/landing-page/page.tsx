@@ -2,19 +2,20 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Eye, Loader2, Save, Smartphone, Monitor, ExternalLink } from "lucide-react";
+import { ArrowLeft, Eye, Loader2, Save, Smartphone, Monitor, ImagePlus, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 type Card = { id: string; card_name: string | null; public_code: string; active: boolean };
 type Settings = {
   id?: string; card_id: string; is_published: boolean; headline: string; description: string;
   theme: "ocean" | "midnight" | "rose" | "forest"; accent_color: string;
-  button_style: "solid" | "outline"; whatsapp_url: string; instagram_url: string; website_url: string;
+  button_style: "solid" | "outline"; logo_url: string | null; logo_size: number; logo_position: "left" | "center" | "right"; whatsapp_url: string; instagram_url: string; website_url: string;
 };
 const defaults = (cardId: string): Settings => ({
   card_id: cardId, is_published: false, headline: "Bagikan pengalaman kamu",
   description: "Terima kasih sudah berkunjung. Kami menghargai ulasan dan dukungan kamu.",
   theme: "ocean", accent_color: "#2563eb", button_style: "solid",
+  logo_url: null, logo_size: 72, logo_position: "center",
   whatsapp_url: "", instagram_url: "", website_url: ""
 });
 const themes = [
@@ -34,6 +35,7 @@ export default function LandingPageEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [settingsLoading, setSettingsLoading] = useState(false);
+  const [logoUploading, setLogoUploading] = useState(false);
   const [previewMode, setPreviewMode] = useState<"mobile" | "desktop">("mobile");
   const [userId, setUserId] = useState("");
   const [cards, setCards] = useState<Card[]>([]);
@@ -67,7 +69,7 @@ export default function LandingPageEditor() {
       setSettingsLoading(true);
       setError(""); setNotice("");
       const { data, error: readError } = await supabase.from("nfc_card_pages")
-        .select("id,card_id,is_published,headline,description,theme,accent_color,button_style,whatsapp_url,instagram_url,website_url")
+        .select("id,card_id,is_published,headline,description,theme,accent_color,button_style,logo_url,logo_size,logo_position,whatsapp_url,instagram_url,website_url")
         .eq("card_id", selectedCardId).eq("user_id", userId).maybeSingle();
       if (!alive) return;
       if (readError) {
@@ -85,6 +87,22 @@ export default function LandingPageEditor() {
   }, [selectedCardId, userId]);
 
   const selectedCard = useMemo(() => cards.find(card => card.id === selectedCardId), [cards, selectedCardId]);
+  async function uploadLogo(file?: File) {
+    if (!file || !userId || !selectedCardId) return;
+    if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) { setError("Logo harus berupa PNG, JPG, atau WebP."); return; }
+    if (file.size > 2 * 1024 * 1024) { setError("Ukuran logo maksimal 2 MB."); return; }
+    setLogoUploading(true); setError(""); setNotice("");
+    const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
+    const path = userId + "/" + selectedCardId + "/" + Date.now() + "." + extension;
+    const { data, error: uploadError } = await supabase.storage.from("ditapaja-brand-assets").upload(path, file, { contentType: file.type, cacheControl: "31536000", upsert: false });
+    if (uploadError) setError("Logo gagal diunggah: " + uploadError.message);
+    else {
+      const { data: publicData } = supabase.storage.from("ditapaja-brand-assets").getPublicUrl(data.path);
+      update("logo_url", publicData.publicUrl);
+      setNotice("Logo berhasil diunggah. Klik Simpan Pengaturan untuk menerapkannya.");
+    }
+    setLogoUploading(false);
+  }
   const theme = themes.find(item => item.id === settings.theme) || themes[0];
   function update<K extends keyof Settings>(key: K, value: Settings[K]) {
     setSettings(current => ({ ...current, [key]: value }));
@@ -104,6 +122,7 @@ export default function LandingPageEditor() {
       headline: settings.headline.trim(), description: settings.description.trim(),
       theme: settings.theme, accent_color: settings.accent_color,
       button_style: settings.button_style,
+      logo_url: settings.logo_url, logo_size: settings.logo_size, logo_position: settings.logo_position,
       whatsapp_url: settings.whatsapp_url.trim() || null,
       instagram_url: settings.instagram_url.trim() || null,
       website_url: settings.website_url.trim() || null,
@@ -126,6 +145,7 @@ export default function LandingPageEditor() {
       {cards.length === 0 ? <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center text-sm text-slate-500">Belum ada kartu NFC. Buat kartu terlebih dahulu dari Dashboard.</div> : <div className="grid items-start gap-6 lg:grid-cols-[1fr_360px]">
         <form onSubmit={save} className="space-y-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
           <section><label className="mb-2 block text-sm font-semibold">Pilih kartu NFC</label><select value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm">{cards.map(card => <option key={card.id} value={card.id}>{card.card_name || "Untitled Card"} {card.active ? "" : "— Nonaktif"}</option>)}</select><p className="mt-2 text-xs text-slate-400">Pengaturan disimpan terpisah untuk setiap kartu.</p></section>
+          <section className="space-y-3"><h2 className="font-bold">Identitas bisnis</h2><div className="rounded-xl border border-slate-200 p-4"><div className="flex items-center gap-3">{settings.logo_url ? <img src={settings.logo_url} alt="Logo bisnis" className="rounded-xl border border-slate-100 bg-white object-contain p-2" style={{width:settings.logo_size,height:settings.logo_size}}/> : <div className="grid h-16 w-16 place-items-center rounded-xl bg-slate-100 text-slate-400"><ImagePlus size={24}/></div>}<div className="min-w-0 flex-1"><p className="text-sm font-semibold">Logo bisnis</p><p className="mt-1 text-xs leading-5 text-slate-500">PNG, JPG, atau WebP · Maksimal 2 MB</p><label className="mt-2 inline-flex cursor-pointer items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">{logoUploading ? <Loader2 size={14} className="animate-spin"/> : <ImagePlus size={14}/>} {logoUploading ? "Mengunggah..." : settings.logo_url ? "Ganti logo" : "Upload logo"}<input type="file" accept="image/png,image/jpeg,image/webp" disabled={logoUploading} className="hidden" onChange={e => { const file=e.target.files?.[0]; void uploadLogo(file); e.currentTarget.value=""; }}/></label>{settings.logo_url && <button type="button" onClick={() => update("logo_url",null)} className="ml-2 inline-flex items-center gap-1 text-xs font-semibold text-red-600"><Trash2 size={13}/> Hapus</button>}</div></div><div className="mt-4 grid grid-cols-2 gap-3"><label className="text-xs font-semibold text-slate-600">Ukuran logo<select value={settings.logo_size} onChange={e=>update("logo_size",Number(e.target.value))} className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm"><option value={48}>Kecil</option><option value={64}>Sedang</option><option value={80}>Besar</option><option value={96}>Ekstra besar</option><option value={112}>Maksimal</option></select></label><label className="text-xs font-semibold text-slate-600">Posisi logo<select value={settings.logo_position} onChange={e=>update("logo_position",e.target.value as Settings["logo_position"])} className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm"><option value="left">Kiri</option><option value="center">Tengah</option><option value="right">Kanan</option></select></label></div></div></section>
           <section className="space-y-3"><h2 className="font-bold">Konten halaman</h2><label className="block text-sm font-medium">Judul utama<input value={settings.headline} onChange={e => update("headline", e.target.value)} maxLength={90} required className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm outline-none focus:border-blue-400"/></label><label className="block text-sm font-medium">Deskripsi<textarea value={settings.description} onChange={e => update("description", e.target.value)} maxLength={240} rows={3} className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm outline-none focus:border-blue-400"/></label></section>
           <section className="space-y-3"><h2 className="font-bold">Tema tampilan</h2><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{themes.map(item => <button key={item.id} type="button" onClick={() => update("theme", item.id)} className={`rounded-xl border p-3 text-left text-xs font-semibold transition ${settings.theme === item.id ? "border-blue-500 ring-2 ring-blue-100" : "border-slate-200"}`}><span className="mb-2 block h-8 rounded-lg border border-black/5" style={{background:item.bg}}/><span>{item.label}</span></button>)}</div><label className="flex items-center justify-between gap-3 text-sm font-medium">Warna aksen<input type="color" value={settings.accent_color} onChange={e => update("accent_color", e.target.value)} className="h-10 w-16 cursor-pointer rounded-lg border border-slate-200 bg-white p-1"/></label><label className="block text-sm font-medium">Gaya tombol<select value={settings.button_style} onChange={e => update("button_style", e.target.value as Settings["button_style"])} className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"><option value="solid">Solid</option><option value="outline">Outline</option></select></label></section>
           <section className="space-y-3"><h2 className="font-bold">Tautan tambahan</h2><p className="text-xs text-slate-500">Semua tautan bersifat opsional. Gunakan alamat lengkap HTTPS.</p><label className="block text-sm font-medium">WhatsApp<input type="url" value={settings.whatsapp_url} onChange={e => update("whatsapp_url", e.target.value)} placeholder="https://wa.me/628..." className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label><label className="block text-sm font-medium">Instagram<input type="url" value={settings.instagram_url} onChange={e => update("instagram_url", e.target.value)} placeholder="https://instagram.com/namabisnis" className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label><label className="block text-sm font-medium">Website<input type="url" value={settings.website_url} onChange={e => update("website_url", e.target.value)} placeholder="https://bisnis.com" className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-3 text-sm"/></label></section>
@@ -133,7 +153,7 @@ export default function LandingPageEditor() {
           <button disabled={saving || settingsLoading || !selectedCard} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 hover:bg-blue-700 disabled:opacity-50"><Save size={17}/>{saving ? "Menyimpan..." : settingsLoading ? "Memuat pengaturan..." : "Simpan Pengaturan"}</button>
           {selectedCard && <a href={"/c/"+selectedCard.public_code+"?preview=1"} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 hover:border-blue-200 hover:text-blue-600"><Eye size={16}/> Preview halaman</a>}
         </form>
-        <aside className="lg:sticky lg:top-6"><div className="mb-3 flex flex-wrap items-center justify-between gap-2"><div className="flex items-center gap-2 text-sm font-semibold text-slate-600"><Eye size={17}/> Live preview</div><div className="inline-flex rounded-xl border border-slate-200 bg-white p-1"><button type="button" onClick={() => setPreviewMode("mobile")} aria-pressed={previewMode === "mobile"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Smartphone size={14}/> Mobile</button><button type="button" onClick={() => setPreviewMode("desktop")} aria-pressed={previewMode === "desktop"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Monitor size={14}/> Desktop</button></div></div><div className={previewMode === "mobile" ? "mx-auto max-w-[330px] rounded-[2.5rem] border-[7px] border-slate-900 bg-slate-900 p-2 shadow-xl" : "mx-auto w-full max-w-[560px] rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"}><div className="overflow-hidden rounded-[2rem] p-5" style={{background:theme.bg,color:theme.ink}}><div className="mx-auto mb-6 h-1.5 w-16 rounded-full bg-slate-400/50"/><div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl text-2xl" style={{background:settings.accent_color+"20",color:settings.accent_color}}>✦</div><p className="text-center text-[9px] font-bold uppercase tracking-[.2em] opacity-60">{selectedCard?.card_name || "DiTapAja"}</p><h2 className="mt-3 text-center text-xl font-extrabold leading-tight">{settings.headline || "Judul halaman"}</h2><p className="mt-3 text-center text-xs leading-5 opacity-70">{settings.description || "Deskripsi bisnis kamu akan tampil di sini."}</p><div className="mt-6 space-y-2"><div className="rounded-xl px-3 py-3 text-center text-xs font-bold" style={settings.button_style === "solid" ? {background:settings.accent_color,color:"#fff"} : {background:"transparent",border:"2px solid "+settings.accent_color,color:settings.accent_color}}>★ Berikan Ulasan di Google</div>{settings.whatsapp_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">WhatsApp</div>}{settings.instagram_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Instagram</div>}{settings.website_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Website</div>}</div><p className="mt-7 text-center text-[9px] opacity-50">Powered by DiTapAja</p></div></div><p className="mx-auto mt-3 max-w-[330px] text-center text-xs leading-5 text-slate-400">Pratinjau visual ini mengikuti pengaturan editor. Buka Preview untuk melihat halaman sebenarnya.</p></aside>
+        <aside className="lg:sticky lg:top-6"><div className="mb-3 flex flex-wrap items-center justify-between gap-2"><div className="flex items-center gap-2 text-sm font-semibold text-slate-600"><Eye size={17}/> Live preview</div><div className="inline-flex rounded-xl border border-slate-200 bg-white p-1"><button type="button" onClick={() => setPreviewMode("mobile")} aria-pressed={previewMode === "mobile"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Smartphone size={14}/> Mobile</button><button type="button" onClick={() => setPreviewMode("desktop")} aria-pressed={previewMode === "desktop"} className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"><Monitor size={14}/> Desktop</button></div></div><div className={previewMode === "mobile" ? "mx-auto max-w-[330px] rounded-[2.5rem] border-[7px] border-slate-900 bg-slate-900 p-2 shadow-xl" : "mx-auto w-full max-w-[560px] rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"}><div className="overflow-hidden rounded-[2rem] p-5" style={{background:theme.bg,color:theme.ink}}><div className="mx-auto mb-6 h-1.5 w-16 rounded-full bg-slate-400/50"/><div className="mb-5 flex" style={{justifyContent:settings.logo_position}}>{settings.logo_url ? <img src={settings.logo_url} alt="Logo bisnis" className="rounded-xl bg-white object-contain p-2 shadow-sm" style={{width:settings.logo_size,height:settings.logo_size}}/> : <div className="grid h-14 w-14 place-items-center rounded-2xl text-2xl" style={{background:settings.accent_color+"20",color:settings.accent_color}}>✦</div>}</div><p className="text-center text-[9px] font-bold uppercase tracking-[.2em] opacity-60">{selectedCard?.card_name || "DiTapAja"}</p><h2 className="mt-3 text-center text-xl font-extrabold leading-tight">{settings.headline || "Judul halaman"}</h2><p className="mt-3 text-center text-xs leading-5 opacity-70">{settings.description || "Deskripsi bisnis kamu akan tampil di sini."}</p><div className="mt-6 space-y-2"><div className="rounded-xl px-3 py-3 text-center text-xs font-bold" style={settings.button_style === "solid" ? {background:settings.accent_color,color:"#fff"} : {background:"transparent",border:"2px solid "+settings.accent_color,color:settings.accent_color}}>★ Berikan Ulasan di Google</div>{settings.whatsapp_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">WhatsApp</div>}{settings.instagram_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Instagram</div>}{settings.website_url && <div className="rounded-xl border px-3 py-3 text-center text-xs font-semibold">Website</div>}</div><p className="mt-7 text-center text-[9px] opacity-50">Powered by DiTapAja</p></div></div><p className="mx-auto mt-3 max-w-[330px] text-center text-xs leading-5 text-slate-400">Pratinjau visual ini mengikuti pengaturan editor. Buka Preview untuk melihat halaman sebenarnya.</p></aside>
       </div>}
     </div>
   </main>;
