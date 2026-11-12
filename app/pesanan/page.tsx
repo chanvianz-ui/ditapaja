@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw } from "lucide-react";
+import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle } from "lucide-react";
 
 type Order = {
   id: string; customer_name: string; customer_email: string; customer_phone: string;
@@ -67,9 +67,16 @@ export default function CustomerOrdersPage() {
       </header>
       <div className="mb-7">
         <Link href="/" className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-slate-700"><ArrowLeft size={14}/> Kembali ke beranda</Link>
-        <p className="mt-5 text-[11px] font-bold uppercase tracking-[.2em] text-blue-600">CUSTOMER ACCOUNT</p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">Detail pesanan</h1>
-        <p className="mt-2 text-sm text-slate-500">Riwayat transaksi dan perkembangan pesanan untuk {email}.</p>
+        <div className="mt-5 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[.2em] text-blue-600">CUSTOMER ACCOUNT</p>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">Detail pesanan</h1>
+            <p className="mt-2 text-sm text-slate-500">Riwayat transaksi dan perkembangan pesanan untuk {email}.</p>
+          </div>
+          <button type="button" onClick={() => void load()} disabled={loading} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-blue-700 disabled:opacity-50">
+            <RefreshCw size={14} className={loading ? "animate-spin" : ""}/> Perbarui status
+          </button>
+        </div>
       </div>
       {error && <div role="alert" className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">{error}</div>}
       {loading ? <div className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white p-12 text-sm text-slate-500"><RefreshCw size={16} className="animate-spin"/> Memuat transaksi...</div>
@@ -79,6 +86,18 @@ export default function CustomerOrdersPage() {
           <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">ORDER · {order.id.slice(0,8).toUpperCase()}</p><h2 className="mt-2 text-lg font-bold text-slate-900">{order.product_name}</h2><p className="mt-1 text-xs text-slate-500">{new Date(order.created_at).toLocaleString("id-ID",{dateStyle:"long",timeStyle:"short"})}</p></div>
           <span className={"rounded-full px-3 py-1.5 text-xs font-bold "+(order.status==="completed"?"bg-emerald-50 text-emerald-700":order.status==="cancelled"?"bg-slate-100 text-slate-500":"bg-blue-50 text-blue-700")}>{statusNames[order.status] || order.status}</span>
         </div>
+        {order.status === "cancelled" ? <div className="mx-5 mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-semibold text-slate-600 sm:mx-6">Pesanan ini telah dibatalkan. Hubungi tim DiTapAja jika membutuhkan bantuan.</div> : <div className="px-5 pt-5 sm:px-6">
+          <div className="grid grid-cols-5 gap-1">
+            {["Diterima","Dikonfirmasi","Diproses","Dikirim","Selesai"].map((step,index) => {
+              const current = Math.max(0, ["pending","confirmed","processing","shipped","completed"].indexOf(order.status));
+              const done = index <= current;
+              return <div key={step} className="min-w-0">
+                <div className={"h-1.5 rounded-full "+(done ? "bg-blue-600" : "bg-slate-100")}/>
+                <p className={"mt-2 text-center text-[9px] leading-4 sm:text-[10px] "+(done ? "font-bold text-blue-700" : "text-slate-400")}>{step}</p>
+              </div>;
+            })}
+          </div>
+        </div>}
         <div className="grid gap-5 p-5 sm:grid-cols-2 sm:p-6">
           <div className="space-y-3 text-sm">
             <div className="flex justify-between gap-3"><span className="text-slate-500">Jumlah</span><b className="text-slate-800">{order.quantity} kartu</b></div>
@@ -95,7 +114,12 @@ export default function CustomerOrdersPage() {
             {order.paid_at && <p className="mt-1 text-xs text-slate-500">Diverifikasi: {new Date(order.paid_at).toLocaleString("id-ID")}</p>}
           </div>
         </div>
-        {(order.shipping_courier || order.tracking_number) && <div className="mx-5 mb-5 flex items-start gap-3 rounded-xl border border-slate-100 p-4 sm:mx-6"><Truck size={17} className="mt-0.5 text-slate-400"/><div className="text-xs"><b className="text-slate-800">{order.shipping_courier || "Pengiriman"}</b><p className="mt-1 text-slate-500">Nomor resi: {order.tracking_number || "Belum tersedia"}</p></div></div>}
+        {(order.shipping_courier || order.tracking_number) && <div className="mx-5 mb-5 flex items-start gap-3 rounded-xl border border-slate-100 p-4 sm:mx-6"><Truck size={17} className="mt-0.5 text-slate-400"/><div className="min-w-0 text-xs"><b className="text-slate-800">{order.shipping_courier || "Pengiriman"}</b><p className="mt-1 text-slate-500">Nomor resi: <span className="break-all font-semibold text-slate-700">{order.tracking_number || "Belum tersedia"}</span></p>{order.shipped_at && <p className="mt-1 text-slate-400">Dikirim: {new Date(order.shipped_at).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}</p>}</div></div>}
+        <div className="px-5 pb-5 sm:px-6">
+          <a href={"https://wa.me/6281321778081?text="+encodeURIComponent("Halo DiTapAja, saya ingin menanyakan pesanan "+order.id+".")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100">
+            <MessageCircle size={15}/> Bantuan terkait pesanan
+          </a>
+        </div>
         <div className="border-t border-slate-100 bg-slate-50/70 p-5 sm:p-6"><div className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500"><Clock3 size={14}/> Riwayat aktivitas</div>
           {(activities[order.id] || []).length===0 ? <p className="text-xs text-slate-400">Belum ada pembaruan aktivitas.</p> : <ol className="ml-2 space-y-4 border-l border-slate-200 pl-5">{activities[order.id].map((a,i)=><li key={a.id} className="relative"><span className={"absolute -left-[26px] top-1 h-3 w-3 rounded-full ring-4 ring-slate-50 "+(i===0?"bg-blue-600":"bg-slate-300")}/><p className="text-xs font-semibold text-slate-800">{a.title}</p>{a.description&&<p className="mt-1 text-xs text-slate-500">{a.description}</p>}<p className="mt-1 text-[10px] text-slate-400">{new Date(a.created_at).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}</p></li>)}</ol>}
         </div>
