@@ -93,6 +93,9 @@ export default function DashboardPage() {
   const [cardSearch, setCardSearch] = useState("");
   const [cardStatusFilter, setCardStatusFilter] = useState<"all" | "active" | "inactive">("all");
   const [showArchivedCards, setShowArchivedCards] = useState(false);
+  const [selectedCardIds, setSelectedCardIds] = useState<string[]>([]);
+  const [bulkActionBusy, setBulkActionBusy] = useState(false);
+  const [bulkLocationId, setBulkLocationId] = useState("");
 
   const visibleCards = useMemo(() => {
     const query = cardSearch.trim().toLowerCase();
@@ -881,6 +884,42 @@ export default function DashboardPage() {
     }
   }
 
+  async function handleBulkCardAction(action: "activate" | "deactivate" | "archive" | "move") {
+    const targetCards = visibleCards.filter((card) => !card.archived_at && selectedCardIds.includes(card.id));
+    if (!targetCards.length || bulkActionBusy) return;
+    setBulkActionBusy(true);
+    setCardError("");
+    setCardMessage("");
+    try {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError || !authData.user) { router.replace("/login"); return; }
+      const ids = targetCards.map((card) => card.id);
+      const archivedAt = new Date().toISOString();
+      const patch: Record<string, unknown> = action === "activate" ? { active: true }
+        : action === "deactivate" ? { active: false }
+        : action === "archive" ? { active: false, archived_at: archivedAt, archived_by: authData.user.id }
+        : { location_id: bulkLocationId || null };
+      const { data: updatedRows, error } = await supabase.from("nfc_cards")
+        .update(patch).eq("user_id", authData.user.id).in("id", ids).is("archived_at", null).select("id");
+      if (error) throw error;
+      const updatedIds = new Set((updatedRows ?? []).map((row: { id: string }) => row.id));
+      if (!updatedIds.size) throw new Error("Tidak ada kartu yang berhasil diperbarui. Muat ulang halaman dan coba lagi.");
+      setCards((current) => current.map((card) => {
+        if (!updatedIds.has(card.id)) return card;
+        if (action === "activate") return { ...card, active: true };
+        if (action === "deactivate") return { ...card, active: false };
+        if (action === "archive") return { ...card, active: false, archived_at: archivedAt, archived_by: authData.user.id };
+        return { ...card, location_id: bulkLocationId || null };
+      }));
+      setSelectedCardIds([]);
+      const label = action === "activate" ? "diaktifkan" : action === "deactivate" ? "dinonaktifkan" : action === "archive" ? "diarsipkan" : "dipindahkan lokasinya";
+      setCardMessage(`${updatedIds.size} kartu berhasil ${label}${updatedIds.size < ids.length ? ` (${ids.length - updatedIds.size} kartu tidak berubah)` : ""}.`);
+    } catch (error) {
+      console.error("Bulk card action error:", error);
+      setCardError(error instanceof Error ? error.message : "Aksi massal gagal. Coba lagi.");
+    } finally { setBulkActionBusy(false); }
+  }
+
   async function handleRestoreCard(card: NfcCard) {
     setUpdatingCardId(card.id);
     setCardError("");
@@ -1465,6 +1504,33 @@ export default function DashboardPage() {
                       </button>
                     ))}
                   </div>
+                  {!showArchivedCards && (
+                    <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50/70 p-3">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <label className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
+                          <input type="checkbox" checked={visibleCards.length > 0 && visibleCards.every((card) => selectedCardIds.includes(card.id))} onChange={(event) => setSelectedCardIds((current) => event.target.checked ? Array.from(new Set([...current, ...visibleCards.filter((card) => !card.archived_at).map((card) => card.id)])) : current.filter((id) => !visibleCards.some((card) => card.id === id)))} className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"/>
+                          Pilih semua yang terlihat
+                        </label>
+                        <span className="text-xs text-slate-500">{visibleCards.filter((card) => selectedCardIds.includes(card.id) && !card.archived_at).length} dipilih</span>
+                      </div>
+                      {visibleCards.some((card) => selectedCardIds.includes(card.id) && !card.archived_at) && (
+                        <div className="mt-3 flex flex-wrap items-center gap-2">
+                          <button type="button" onClick={() => handleBulkCardAction("activate")} disabled={bulkActionBusy} className="rounded-lg border border-emerald-200 bg-white px-3 py-2 text-xs font-semibold text-emerald-700 hover:bg-emerald-50 disabled:opacity-50">Aktifkan</button>
+                          <button type="button" onClick={() => handleBulkCardAction("deactivate")} disabled={bulkActionBusy} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 disabled:opacity-50">Nonaktifkan</button>
+                          <div className="flex min-w-0 flex-1 items-center gap-2">
+                            <select aria-label="Pindahkan ke lokasi" value={bulkLocationId} onChange={(event) => setBulkLocationId(event.target.value)} disabled={bulkActionBusy} className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-600">
+                              <option value="">Tanpa lokasi / bisnis utama</option>
+                              {businessLocations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
+                            </select>
+                            <button type="button" onClick={() => handleBulkCardAction("move")} disabled={bulkActionBusy} className="rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 disabled:opacity-50">Pindah</button>
+                          </div>
+                          <button type="button" onClick={() => handleBulkCardAction("archive")} disabled={bulkActionBusy} className="rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-50">Arsipkan</button>
+                          <button type="button" onClick={() => setSelectedCardIds([])} disabled={bulkActionBusy} className="rounded-lg px-2 py-2 text-xs font-semibold text-slate-500 hover:bg-white disabled:opacity-50">Batal pilih</button>
+                        </div>
+                      )}
+                      {bulkActionBusy && <p className="mt-2 text-[11px] text-blue-600">Memproses perubahan kartu...</p>}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
@@ -1516,6 +1582,7 @@ export default function DashboardPage() {
                     >
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
+                          {!card.archived_at && !showArchivedCards && <input type="checkbox" aria-label={`Pilih kartu ${card.card_name || "Untitled Card"}`} checked={selectedCardIds.includes(card.id)} onChange={(event) => setSelectedCardIds((current) => event.target.checked ? [...current, card.id] : current.filter((id) => id !== card.id))} className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"/>}
                           <p className="font-semibold">
                             {card.card_name || "Untitled Card"}
                           </p>
