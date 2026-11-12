@@ -8,6 +8,7 @@ import { supabase } from "../../lib/supabase";
 
 export default function LoginPage() {
   const router = useRouter();
+  const nextPath = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("next") : null;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +49,9 @@ export default function LoginPage() {
         }
       }
 
-      router.push("/dashboard");
+      const { error: claimError } = await supabase.rpc("claim_my_ditapaja_orders");
+      if (claimError && !claimError.message.includes("Email must be verified")) console.error("Order linking:", claimError.message);
+      router.push(nextPath?.startsWith("/") && !nextPath.startsWith("//") ? nextPath : "/dashboard");
     } catch (error) {
       setMessage(
         error instanceof Error
