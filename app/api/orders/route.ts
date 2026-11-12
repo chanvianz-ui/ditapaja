@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     const customer = typeof body.customer === "string" ? body.customer.trim() : "";
+    const customerEmail = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     const business = typeof body.business === "string" ? body.business.trim() : "";
     const phone = typeof body.phone === "string" ? body.phone.replace(/\D/g, "") : "";
     const destination = typeof body.destination === "string" ? body.destination.trim() : "";
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest) {
     const quantity = Number(body.quantity);
     const notes = typeof body.notes === "string" ? body.notes.trim() : "";
 
-    if (!customer || customer.length > 100 || !business || business.length > 120 ||
+    if (!customer || customer.length > 100 || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(customerEmail) || customerEmail.length > 254 || !business || business.length > 120 ||
         !destination || destination.length > 250 || phone.length < 10 || phone.length > 15 ||
         !Number.isInteger(quantity) || quantity < 1 || quantity > 1000 ||
         notes.length > 1000 || !Object.prototype.hasOwnProperty.call(PRODUCTS, productName)) {
