@@ -1,6 +1,6 @@
 # DiTapAja — Migrasi Cloudflare Workers
 
-Status: Vinext compatibility check passed; Vinext configuration is being added on `main`. Live deployment remains paused until CI and smoke tests pass. DNS has not been changed.
+Status: Vinext compatibility check and both framework builds passed on `main`. Cloudflare Workers build is configured for Vinext; deployment remains intentionally paused until runtime variables and smoke tests are ready. DNS has not been changed.
 
 ## Working model
 
@@ -34,8 +34,10 @@ Compatibility checks do not replace runtime tests. Authentication, order/payment
 ## Cloudflare build state
 
 - Git source is `main`.
-- Workers Builds production build/deploy commands are intentionally paused while Vinext setup is committed and validated.
+- Workers Builds production build command is `npm run build:vinext`; the latest Cloudflare build completed successfully.
+- Workers Builds deploy command is intentionally a no-op placeholder until smoke tests pass; do not replace it with `npm run deploy:vinext` yet.
 - Worker Preview builds are disabled to keep this one-branch migration workflow simple.
+- GitHub Actions currently passes `vinext check`, `npm run build:vinext`, and the existing `npm run build` on Node.js 22.
 - Build-time public Supabase variables currently point to Supabase Staging for testing.
 - Do not put Supabase secret keys in build variables.
 - Runtime server variables/secrets still need separate configuration before testing server-side admin/payment-proof flows:
