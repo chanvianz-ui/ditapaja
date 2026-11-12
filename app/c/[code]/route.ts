@@ -85,7 +85,7 @@ export async function GET(
         : Promise.resolve({ data: null, error: null }),
       supabase
         .from("nfc_card_pages")
-        .select("is_published,headline,description,theme,accent_color,button_style,whatsapp_url,instagram_url,website_url")
+        .select("is_published,headline,description,theme,accent_color,button_style,logo_url,logo_size,logo_position,whatsapp_url,instagram_url,website_url")
         .eq("card_id", card.id)
         .eq("user_id", card.user_id)
         .maybeSingle(),
@@ -112,6 +112,9 @@ export async function GET(
       forest: { background: "#f0fdf4", card: "#ffffff", text: "#14532d", muted: "#52765c", border: "#dcfce7" },
     };
     const palette = themePalette[customPage?.theme || "ocean"] || themePalette.ocean;
+    const logoUrl = typeof customPage?.logo_url === "string" && customPage.logo_url.startsWith(supabaseUrl + "/storage/v1/object/public/ditapaja-brand-assets/") ? customPage.logo_url : "";
+    const logoSize = Number.isInteger(customPage?.logo_size) ? Math.min(128, Math.max(40, customPage!.logo_size)) : 72;
+    const logoPosition = ["left", "center", "right"].includes(customPage?.logo_position || "") ? customPage!.logo_position : "center";
     const additionalLinks = [
       ["WhatsApp", customPage?.whatsapp_url],
       ["Instagram", customPage?.instagram_url],
@@ -211,6 +214,8 @@ export async function GET(
     .card { background: ${palette.card}; border-color: ${palette.border}; }
     .card:before { background: ${accentColor}; }
     .icon { background: ${accentColor}20; color: ${accentColor}; }
+    .brand-logo-wrap { display:flex; justify-content:${logoPosition}; margin:0 0 23px; }
+    .brand-logo { width:${logoSize}px; height:${logoSize}px; object-fit:contain; border-radius:16px; }
     .business, h1 { color: ${palette.text}; }
     .eyebrow, .description, .address, .status { color: ${palette.muted}; }
     .button { background: ${customPage.button_style === "outline" ? "transparent" : accentColor}; color: ${customPage.button_style === "outline" ? accentColor : "#ffffff"}; border: 1px solid ${accentColor}; box-shadow: none; }
@@ -220,7 +225,7 @@ export async function GET(
 </head>
 <body>
   <main class="card">
-    <div class="icon" aria-hidden="true">★</div>
+    ${logoUrl ? `<div class="brand-logo-wrap"><img class="brand-logo" src="${escapeHtml(logoUrl)}" alt="Logo ${businessName}"></div>` : `<div class="icon" aria-hidden="true">★</div>`}
     <p class="eyebrow">${category || "Terima kasih sudah berkunjung"}</p>
     <span class="business-label">Kamu berkunjung ke</span>
     <p class="business">${businessName}</p>
