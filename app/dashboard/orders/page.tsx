@@ -6,6 +6,8 @@ import { ArrowLeft, Package, Plus, Loader2, Trash2, RefreshCw, AlertCircle, Sear
 import { supabase } from "@/lib/supabase";
 
 type Order = { payment_method: "bank_transfer" | "qris" | "cash" | "other" | null; payment_reference: string | null; payment_proof_path: string | null; id: string; customer_name: string; customer_phone: string; product_name: string; quantity: number; unit_price: number; status: string; payment_status: "unpaid" | "paid" | "refunded"; shipping_courier: string | null; tracking_number: string | null; shipping_cost: number; paid_at: string | null; shipped_at: string | null; created_at: string; notes: string | null };
+type OrderActivity = { id: string; order_id: string; event_type: "order_created" | "status_changed" | "payment_changed" | "shipping_changed" | "payment_details_changed"; title: string; description: string | null; metadata: Record<string, unknown>; created_at: string };
+const activityIcons: Record<OrderActivity["event_type"], string> = { order_created: "Pesanan", status_changed: "Status", payment_changed: "Pembayaran", shipping_changed: "Pengiriman", payment_details_changed: "Detail pembayaran" };
 const statuses = ["pending", "confirmed", "processing", "shipped", "completed", "cancelled"];
 const statusLabels: Record<string, string> = { pending: "Menunggu konfirmasi", confirmed: "Dikonfirmasi", processing: "Sedang diproses", shipped: "Dikirim", completed: "Selesai", cancelled: "Dibatalkan" };
 
@@ -13,6 +15,7 @@ export default function OrdersPage() {
   const router = useRouter();
   const [userId, setUserId] = useState("");
   const [orders, setOrders] = useState<Order[]>([]);
+  const [activities, setActivities] = useState<Record<string, OrderActivity[]>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -39,6 +42,24 @@ export default function OrdersPage() {
   const [paymentProof, setPaymentProof] = useState<File | null>(null);
   const [savingPayment, setSavingPayment] = useState(false);
 
+  async function loadOrderActivities(orderIds: string[]) {
+    if (orderIds.length === 0) { setActivities({}); return; }
+    const { data, error: activityError } = await supabase.from("ditapaja_order_activity")
+      .select("id,order_id,event_type,title,description,metadata,created_at")
+      .eq("user_id", userId || (await supabase.auth.getUser()).data.user?.id || "")
+      .in("order_id", orderIds)
+      .order("created_at", { ascending: false });
+    if (activityError) {
+      console.error("Order activity loading failed:", activityError);
+      return;
+    }
+    const grouped: Record<string, OrderActivity[]> = {};
+    for (const item of (data || []) as OrderActivity[]) {
+      (grouped[item.order_id] ||= []).push(item);
+    }
+    setActivities(current => ({ ...current, ...grouped }));
+  }
+
   async function loadOrders(uid: string) {
     const { data, error: loadError } = await supabase.from("ditapaja_orders")
       .select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,payment_status,payment_method,payment_reference,payment_proof_path,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes")
@@ -49,6 +70,7 @@ export default function OrdersPage() {
     } else {
       setError("");
       setOrders((data || []) as Order[]);
+      await loadOrderActivities((data || []).map(order => order.id));
     }
   }
 
@@ -80,6 +102,7 @@ export default function OrdersPage() {
     else {
       setOrders(current => [data as Order, ...current]);
       setCustomer(""); setPhone(""); setQuantity("1"); setNotes("");
+      await loadOrderActivities([data.id]);
       setSuccess("Pesanan berhasil dicatat.");
     }
     setSaving(false);
@@ -90,6 +113,7 @@ export default function OrdersPage() {
     if (updateError) { setError("Status pesanan gagal diperbarui: " + updateError.message); return; }
     setOrders(current => current.map(order => order.id === id ? { ...order, status } : order));
     if (invoiceOrder?.id === id) setInvoiceOrder(current => current ? { ...current, status } : current);
+    await loadOrderActivities([id]);
     setError(""); setSuccess("Status pesanan berhasil diperbarui.");
   }
 
@@ -101,6 +125,7 @@ export default function OrdersPage() {
     if (updateError) { setError("Status pembayaran gagal diperbarui: " + updateError.message); return; }
     setOrders(current => current.map(item => item.id === order.id ? { ...item, payment_status, paid_at } : item));
     if (invoiceOrder?.id === order.id) setInvoiceOrder(current => current ? { ...current, payment_status, paid_at } : current);
+    await loadOrderActivities([order.id]);
     setSuccess(payment_status === "paid" ? "Pembayaran ditandai lunas." : payment_status === "refunded" ? "Pembayaran ditandai dikembalikan." : "Status pembayaran diperbarui.");
     setError("");
   }
@@ -142,6 +167,7 @@ export default function OrdersPage() {
     const updated = { ...paymentOrder, payment_method: paymentMethod, payment_reference: paymentReference.trim() || null, payment_proof_path: proofPath };
     setOrders(current => current.map(item => item.id === paymentOrder.id ? updated : item));
     if (invoiceOrder?.id === paymentOrder.id) setInvoiceOrder(updated);
+    await loadOrderActivities([paymentOrder.id]);
     setPaymentOrder(null); setSavingPayment(false); setSuccess("Informasi pembayaran berhasil disimpan."); setError("");
   }
 
@@ -184,6 +210,7 @@ export default function OrdersPage() {
     const updated = { ...shippingOrder, shipping_courier, tracking_number, shipping_cost: cost, shipped_at };
     setOrders(current => current.map(item => item.id === shippingOrder.id ? updated : item));
     if (invoiceOrder?.id === shippingOrder.id) setInvoiceOrder(updated);
+    await loadOrderActivities([shippingOrder.id]);
     setShippingOrder(null);
     setSuccess("Informasi pengiriman berhasil disimpan.");
     setError("");
@@ -339,6 +366,21 @@ export default function OrdersPage() {
                         <div className="flex items-center justify-between gap-2"><div className="min-w-0"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">ID Pesanan</p><p className="mt-1 break-all font-mono text-xs text-slate-700">{order.id}</p></div><button type="button" onClick={async () => { try { await navigator.clipboard.writeText(order.id); setCopiedOrder(order.id); } catch { setError("Tidak dapat menyalin ID pesanan."); } }} className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs font-semibold text-slate-600 hover:text-blue-600"><Copy size={13} />{copiedOrder === order.id ? "Tersalin" : "Salin"}</button></div>
                         <div className="grid grid-cols-2 gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Status pesanan</p><p className="mt-1 text-sm font-semibold text-slate-700">{statusLabels[order.status] || order.status}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Pembayaran</p><p className={`mt-1 text-sm font-semibold ${order.payment_status === "paid" ? "text-emerald-700" : order.payment_status === "refunded" ? "text-slate-500" : "text-amber-700"}`}>{order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar"}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Ongkir</p><p className="mt-1 text-sm font-semibold text-slate-700">Rp{(order.shipping_cost || 0).toLocaleString("id-ID")}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Total tagihan</p><p className="mt-1 text-sm font-bold text-slate-900">Rp{(order.unit_price * order.quantity + (order.shipping_cost || 0)).toLocaleString("id-ID")}</p></div></div><div className="flex flex-wrap gap-2"><button type="button" onClick={() => openPayment(order)} className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Atur pembayaran</button><button type="button" onClick={() => updatePaymentStatus(order, order.payment_status === "paid" ? "unpaid" : "paid")} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">{order.payment_status === "paid" ? "Tandai belum dibayar" : "Tandai lunas"}</button><button type="button" onClick={() => updatePaymentStatus(order, "refunded")} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600">Tandai refund</button><button type="button" onClick={() => openShipping(order)} className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Atur pengiriman</button></div>{order.payment_proof_path && <button type="button" onClick={() => viewPaymentProof(order)} className="rounded-lg border border-violet-200 bg-violet-50 px-3 py-2 text-xs font-semibold text-violet-700">Lihat bukti transfer</button>}{(order.shipping_courier || order.tracking_number) && <div className="rounded-lg border border-slate-200 bg-white p-3"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Informasi pengiriman</p><p className="mt-1 text-sm font-semibold text-slate-800">{order.shipping_courier || "Kurir belum diisi"}</p><p className="mt-1 break-all font-mono text-xs text-slate-600">Resi: {order.tracking_number || "Belum tersedia"}</p></div>}
                         <a href={"https://wa.me/" + order.customer_phone.replace(/\D/g, "")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:underline"><ExternalLink size={13} /> Hubungi pelanggan via WhatsApp</a>
+                        <div className="border-t border-slate-200 pt-4">
+                          <div className="mb-3 flex items-center justify-between"><p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Riwayat aktivitas</p><span className="text-[10px] text-slate-400">{(activities[order.id] || []).length} aktivitas</span></div>
+                          {(activities[order.id] || []).length === 0 ? <p className="rounded-lg border border-dashed border-slate-200 bg-white p-3 text-xs text-slate-400">Belum ada riwayat aktivitas.</p> : (
+                            <ol className="relative ml-2 space-y-4 border-l border-slate-200 pl-5">
+                              {(activities[order.id] || []).map((activity, index) => (
+                                <li key={activity.id} className="relative">
+                                  <span className={`absolute -left-[26px] top-0.5 flex h-3 w-3 items-center justify-center rounded-full ring-4 ring-slate-50 ${index === 0 ? "bg-blue-600" : "bg-slate-300"}`} />
+                                  <p className="text-xs font-semibold text-slate-800">{activity.title}</p>
+                                  {activity.description && <p className="mt-1 text-[11px] leading-5 text-slate-500">{activity.description}</p>}
+                                  <p className="mt-1 text-[10px] text-slate-400">{new Date(activity.created_at).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}</p>
+                                </li>
+                              ))}
+                            </ol>
+                          )}
+                        </div>
                         {order.notes && <div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Catatan pesanan</p><p className="mt-1 whitespace-pre-wrap text-xs leading-5 text-slate-600">{order.notes}</p></div>}
                       </div>
                     )}
