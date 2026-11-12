@@ -1,3 +1,4 @@
+import { createHmac, timingSafeEqual } from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -68,7 +69,24 @@ export async function GET(
 
     const fallbackReviewUrl = card.destination_url;
 
-    const previewMode = request.nextUrl.searchParams.get("preview") === "1";
+    const previewMode = (() => {
+      if (request.nextUrl.searchParams.get("preview") !== "1") return false;
+      const cookieName = "ditapaja_preview_" + code;
+      const token = request.cookies.get(cookieName)?.value;
+      if (!token) return false;
+      const [payload, signature] = token.split(".");
+      if (!payload || !signature) return false;
+      const expected = createHmac("sha256", secretKey).update(payload).digest("base64url");
+      const actualBuffer = Buffer.from(signature);
+      const expectedBuffer = Buffer.from(expected);
+      if (actualBuffer.length !== expectedBuffer.length || !timingSafeEqual(actualBuffer, expectedBuffer)) return false;
+      try {
+        const data = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { code?: string; userId?: string; exp?: number };
+        return data.code === code && data.userId === card.user_id && typeof data.exp === "number" && data.exp > Math.floor(Date.now() / 1000);
+      } catch {
+        return false;
+      }
+    })();
     const [{ data: profile }, locationResult, pageResult] = await Promise.all([
       supabase
         .from("profiles")
