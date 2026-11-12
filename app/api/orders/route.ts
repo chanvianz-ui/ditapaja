@@ -24,7 +24,6 @@ export async function POST(request: NextRequest) {
 
     const customer = typeof body.customer === "string" ? body.customer.trim() : "";
     const customerEmail = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-    const customerEmail = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     const business = typeof body.business === "string" ? body.business.trim() : "";
     const phone = typeof body.phone === "string" ? body.phone.replace(/\D/g, "") : "";
     const destination = typeof body.destination === "string" ? body.destination.trim() : "";
