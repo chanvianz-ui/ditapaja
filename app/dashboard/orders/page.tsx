@@ -205,6 +205,8 @@ export default function OrdersPage() {
       "Ongkir: Rp" + (order.shipping_cost || 0).toLocaleString("id-ID"),
       "*TOTAL: Rp" + total.toLocaleString("id-ID") + "*",
       "Pembayaran: " + paymentLabel,
+      order.payment_method ? "Metode: " + ({ bank_transfer: "Transfer bank", qris: "QRIS", cash: "Tunai / COD", other: "Lainnya" }[order.payment_method] || order.payment_method) : "",
+      order.payment_reference ? "Referensi: " + order.payment_reference : "",
       order.paid_at ? "Tanggal lunas: " + new Date(order.paid_at).toLocaleString("id-ID") : "",
       order.shipping_courier ? "Kurir: " + order.shipping_courier : "",
       order.tracking_number ? "Resi: " + order.tracking_number : "",
@@ -217,7 +219,7 @@ export default function OrdersPage() {
 
   function exportOrders() {
     if (filteredOrders.length === 0) { setError("Tidak ada pesanan untuk diekspor."); return; }
-    const columns = ["ID Pesanan", "Tanggal", "Nama Pelanggan", "WhatsApp", "Produk", "Jumlah", "Harga Satuan", "Subtotal Produk", "Ongkir", "Total Tagihan", "Status Pesanan", "Status Pembayaran", "Kurir", "Nomor Resi", "Tanggal Lunas", "Tanggal Dikirim", "Catatan"];
+    const columns = ["ID Pesanan", "Tanggal", "Nama Pelanggan", "WhatsApp", "Produk", "Jumlah", "Harga Satuan", "Subtotal Produk", "Ongkir", "Total Tagihan", "Status Pesanan", "Status Pembayaran", "Metode Pembayaran", "Referensi Pembayaran", "Bukti Pembayaran", "Kurir", "Nomor Resi", "Tanggal Lunas", "Tanggal Dikirim", "Catatan"];
     const rows = filteredOrders.map(order => [
       order.id,
       new Date(order.created_at).toLocaleString("id-ID"),
@@ -231,6 +233,9 @@ export default function OrdersPage() {
       String(order.unit_price * order.quantity + (order.shipping_cost || 0)),
       statusLabels[order.status] || order.status,
       order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar",
+      order.payment_method || "",
+      order.payment_reference || "",
+      order.payment_proof_path ? "Tersimpan" : "",
       order.shipping_courier || "",
       order.tracking_number || "",
       order.paid_at ? new Date(order.paid_at).toLocaleString("id-ID") : "",
@@ -397,6 +402,7 @@ export default function OrdersPage() {
                 <div className="overflow-hidden rounded-lg border border-slate-200"><div className="grid grid-cols-[1fr_auto] bg-slate-50 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-500"><span>Produk</span><span>Total</span></div><div className="grid grid-cols-[1fr_auto] gap-3 px-3 py-4 text-xs"><div><p className="font-semibold text-slate-900">{invoiceOrder.product_name}</p><p className="mt-1 text-slate-500">{invoiceOrder.quantity} × Rp{invoiceOrder.unit_price.toLocaleString("id-ID")}</p></div><p className="font-bold text-slate-900">Rp{(invoiceOrder.unit_price * invoiceOrder.quantity).toLocaleString("id-ID")}</p></div><div className="flex items-center justify-between border-t border-slate-200 px-3 py-2 text-xs"><span>Ongkos kirim</span><span>Rp{(invoiceOrder.shipping_cost || 0).toLocaleString("id-ID")}</span></div><div className="flex items-center justify-between border-t border-slate-200 px-3 py-3"><span className="text-xs font-bold text-slate-700">Total pesanan</span><span className="text-base font-black text-slate-900">Rp{(invoiceOrder.unit_price * invoiceOrder.quantity + (invoiceOrder.shipping_cost || 0)).toLocaleString("id-ID")}</span></div></div>
                 <div className="mt-4 grid grid-cols-2 gap-3 rounded-lg bg-slate-50 p-3">
                   <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pembayaran</p><p className={`mt-1 text-xs font-bold ${invoiceOrder.payment_status === "paid" ? "text-emerald-700" : invoiceOrder.payment_status === "refunded" ? "text-slate-500" : "text-amber-700"}`}>{invoiceOrder.payment_status === "paid" ? "Lunas" : invoiceOrder.payment_status === "refunded" ? "Refund" : "Belum dibayar"}</p>{invoiceOrder.paid_at && <p className="mt-1 text-[10px] text-slate-500">{new Date(invoiceOrder.paid_at).toLocaleString("id-ID")}</p>}</div>
+                  <div className="col-span-2 border-t border-slate-200 pt-3"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Metode pembayaran</p><p className="mt-1 text-xs font-semibold text-slate-700">{invoiceOrder.payment_method === "bank_transfer" ? "Transfer bank" : invoiceOrder.payment_method === "qris" ? "QRIS" : invoiceOrder.payment_method === "cash" ? "Tunai / COD" : invoiceOrder.payment_method === "other" ? "Lainnya" : "Belum diatur"}</p>{invoiceOrder.payment_reference && <p className="mt-1 break-all text-[10px] text-slate-500">Referensi: {invoiceOrder.payment_reference}</p>}{invoiceOrder.payment_proof_path && <p className="mt-1 text-[10px] font-semibold text-violet-700">Bukti pembayaran tersimpan di dashboard</p>}</div>
                   <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pengiriman</p><p className="mt-1 text-xs font-semibold text-slate-700">{invoiceOrder.shipping_courier || "Belum diatur"}</p>{invoiceOrder.tracking_number && <p className="mt-1 break-all font-mono text-[10px] text-slate-500">Resi: {invoiceOrder.tracking_number}</p>}</div>
                 </div>
                 {invoiceOrder.notes && <div className="mt-4"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Catatan</p><p className="mt-1 whitespace-pre-wrap text-xs leading-5 text-slate-600">{invoiceOrder.notes}</p></div>}
