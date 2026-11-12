@@ -19,6 +19,8 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
   const [quantity, setQuantity] = useState<number>(products[safeInitial].minimum);
   const [business, setBusiness] = useState("");
   const [customer, setCustomer] = useState("");
+  const [email, setEmail] = useState("");
+  const [showAccountPrompt, setShowAccountPrompt] = useState(false);
   const [phone, setPhone] = useState("");
   const [destination, setDestination] = useState("");
   const [notes, setNotes] = useState("");
@@ -60,11 +62,12 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
       const response = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ customer, business, phone: normalizedPhone, destination, product: product.name, quantity, notes, website }),
+        body: JSON.stringify({ customer, email, business, phone: normalizedPhone, destination, product: product.name, quantity, notes, website }),
       });
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error || "Gagal menyimpan pesanan.");
       orderReference = result.orderId || "";
+      setShowAccountPrompt(true);
     } catch (error) {
       saveFailed = true;
       console.error("Order save failed:", error);
@@ -128,15 +131,17 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           <div className="order-fields-grid">
             <label className="order-field">Nama bisnis<input required maxLength={120} autoComplete="organization" value={business} onChange={event => setBusiness(event.target.value)} placeholder="Contoh: Kopi Senja"/></label>
             <label className="order-field">Nama pemesan<input required maxLength={100} autoComplete="name" value={customer} onChange={event => setCustomer(event.target.value)} placeholder="Nama lengkap"/></label>
+            <label className="order-field">Email aktif<input required type="email" name="email" autoComplete="email" maxLength={254} value={email} onChange={event => setEmail(event.target.value.trimStart())} placeholder="nama@email.com"/><small className="order-field-hint">Gunakan email yang sama saat daftar atau login untuk melihat pesanan.</small></label>
             <label className="order-field">Nomor WhatsApp<input required type="tel" name="phone" inputMode="tel" autoComplete="tel" maxLength={24} value={phone} onChange={event => { event.target.setCustomValidity(""); setPhone(event.target.value); }} placeholder="08xxxxxxxxxx" aria-describedby="order-phone-hint"/><small id="order-phone-hint" className="order-field-hint">Gunakan nomor aktif yang terhubung ke WhatsApp.</small></label>
             <label className="order-field">Kota / alamat pengiriman<input required maxLength={250} autoComplete="shipping street-address" value={destination} onChange={event => setDestination(event.target.value)} placeholder="Kota dan provinsi"/></label>
           </div>
           <label className="order-field order-notes-field">Catatan tambahan <textarea value={notes} onChange={event => setNotes(event.target.value)} maxLength={1000} rows={3} placeholder="Logo, warna brand, kebutuhan custom, atau pertanyaan lainnya."/></label>
           {orderNotice && <p role="status" className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm leading-6 text-blue-800">{orderNotice}</p>}
           <button className="order-submit" type="submit" disabled={sending}><MessageCircle size={17}/> {sending ? "Mencatat pesanan..." : "Kirim detail ke WhatsApp"} <ArrowUpRight size={16}/></button>
-          <p className="order-privacy-note">Pesanan akan dicatat di sistem DiTapAja. WhatsApp kemudian terbuka dengan rangkuman pesanan agar kamu dapat mengirimkannya dan mengonfirmasi detail bersama tim kami.</p>
+          <p className="order-privacy-note">Pesanan dibuat tanpa login. Setelah submit, masuk atau daftar menggunakan email yang sama untuk memantau status dan riwayat transaksi.</p>
         </form>
       </div>
+      {showAccountPrompt && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm"><section role="dialog" aria-modal="true" aria-labelledby="order-account-title" className="w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl"><div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600"><Check size={27}/></div><p className="mt-5 text-center text-[11px] font-bold uppercase tracking-[.2em] text-blue-600">ORDER CREATED</p><h2 id="order-account-title" className="mt-2 text-center text-2xl font-bold tracking-tight text-slate-900">Pesanan berhasil dibuat</h2><p className="mt-3 text-center text-sm leading-6 text-slate-500">Masuk atau buat akun menggunakan email <b className="text-slate-800">{email}</b> untuk melihat detail pesanan dan memantau verifikasi pembayaran.</p><div className="mt-6 grid grid-cols-2 gap-3"><Link href={"/login?next=" + encodeURIComponent("/pesanan")} className="rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700">Masuk</Link><Link href={"/register?next=" + encodeURIComponent("/pesanan")} className="rounded-xl bg-blue-600 px-4 py-3 text-center text-sm font-semibold text-white">Daftar akun</Link></div><button type="button" onClick={() => setShowAccountPrompt(false)} className="mt-3 w-full rounded-xl px-4 py-2.5 text-sm font-medium text-slate-400 hover:bg-slate-50">Nanti saja</button></section></div>}
       <footer className="order-footer"><span>© 2026 DiTapAja</span><span>Make every customer interaction count.</span></footer>
     </main>
   );
