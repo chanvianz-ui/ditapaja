@@ -20,9 +20,6 @@ export default defineConfig({
     env: {
       ASSETS: bindings.assets(),
       IMAGES: bindings.images(),
-      WORKER_SELF_REFERENCE: bindings.worker({
-        worker: "ditapaja-production",
-      }),
       SUPABASE_SECRET_KEY: bindings.secret(),
       ADMIN_USER_ID: bindings.secret(),
     },
