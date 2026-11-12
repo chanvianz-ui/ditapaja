@@ -4,7 +4,7 @@ export default defineConfig({
   worker: defineWorker({
     name: "ditapaja",
     entrypoint: "vinext/server/fetch-handler",
-    compatibilityDate: "2026-11-12",
+    compatibilityDate: "2026-11-10",
     compatibilityFlags: ["global_fetch_strictly_public"],
     observability: {
       enabled: true,
@@ -20,19 +20,11 @@ export default defineConfig({
     env: {
       ASSETS: bindings.assets(),
       IMAGES: bindings.images(),
+      WORKER_SELF_REFERENCE: bindings.worker({
+        worker: "ditapaja-production",
+      }),
       SUPABASE_SECRET_KEY: bindings.secret(),
       ADMIN_USER_ID: bindings.secret(),
-    },
-    unsafe: {
-      metadata: {
-        services: [
-          {
-            binding: "WORKER_SELF_REFERENCE",
-            service: "ditapaja",
-            environment: "production",
-          },
-        ],
-      },
     },
   }),
 });
