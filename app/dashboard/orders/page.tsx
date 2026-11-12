@@ -60,11 +60,13 @@ export default function OrdersPage() {
   async function createOrder(e: React.FormEvent) {
     e.preventDefault(); setSaving(true); setError(""); setSuccess("");
     const count = Number(quantity);
-    if (!customer.trim() || !phone.trim() || !product.trim() || !Number.isInteger(count) || count < 1 || count > 1000) {
-      setError("Lengkapi data pesanan dengan benar."); setSaving(false); return;
+    const normalizedPhone = phone.replace(/\\D/g, "");
+    if (!customer.trim() || !product.trim() || normalizedPhone.length < 10 || normalizedPhone.length > 15 || !Number.isInteger(count) || count < (product === "DiTapAja Signature" ? 10 : 1) || count > 1000) {
+      setError(product === "DiTapAja Signature" ? "Signature minimal 10 kartu. Pastikan nama, nomor WhatsApp (10–15 digit), dan jumlah pesanan sudah benar." : "Lengkapi data pesanan dengan benar. Nomor WhatsApp harus 10–15 digit.");
+      setSaving(false); return;
     }
     const { data, error: insertError } = await supabase.from("ditapaja_orders").insert({
-      user_id: userId, customer_name: customer.trim(), customer_phone: phone.trim(),
+      user_id: userId, customer_name: customer.trim(), customer_phone: normalizedPhone,
       product_name: product.trim(), quantity: count,
       unit_price: product === "DiTapAja Signature" ? 60000 : 50000,
       notes: notes.trim() || null
@@ -133,6 +135,32 @@ export default function OrdersPage() {
     setShippingOrder(null);
     setSuccess("Informasi pengiriman berhasil disimpan.");
     setError("");
+  }
+
+  function shareInvoice(order: Order) {
+    const subtotal = order.unit_price * order.quantity;
+    const total = subtotal + (order.shipping_cost || 0);
+    const paymentLabel = order.payment_status === "paid" ? "LUNAS" : order.payment_status === "refunded" ? "REFUND" : "BELUM DIBAYAR";
+    const lines = [
+      "*INVOICE DITAPAJA*",
+      "ID: " + order.id,
+      "Tanggal: " + new Date(order.created_at).toLocaleDateString("id-ID", { dateStyle: "long" }),
+      "",
+      "Pelanggan: " + order.customer_name,
+      "Produk: " + order.product_name,
+      "Jumlah: " + order.quantity + " × Rp" + order.unit_price.toLocaleString("id-ID"),
+      "Subtotal: Rp" + subtotal.toLocaleString("id-ID"),
+      "Ongkir: Rp" + (order.shipping_cost || 0).toLocaleString("id-ID"),
+      "*TOTAL: Rp" + total.toLocaleString("id-ID") + "*",
+      "Pembayaran: " + paymentLabel,
+      order.paid_at ? "Tanggal lunas: " + new Date(order.paid_at).toLocaleString("id-ID") : "",
+      order.shipping_courier ? "Kurir: " + order.shipping_courier : "",
+      order.tracking_number ? "Resi: " + order.tracking_number : "",
+      "",
+      "Terima kasih telah memilih DiTapAja."
+    ].filter(Boolean);
+    const phoneNumber = order.customer_phone.replace(/\\D/g, "").replace(/^0/, "62");
+    window.open("https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(lines.join("\\n")), "_blank", "noopener,noreferrer");
   }
 
   function exportOrders() {
@@ -300,10 +328,14 @@ export default function OrdersPage() {
                 <div className="flex items-start justify-between gap-4 border-b border-slate-200 pb-5"><div><p className="text-lg font-black tracking-tight text-slate-900">DiTapAja</p><p className="mt-1 text-xs text-slate-500">NFC Review Card</p></div><div className="text-right"><p className="text-xs font-bold uppercase tracking-widest text-blue-700">Invoice</p><p className="mt-1 text-xs text-slate-500">{new Date(invoiceOrder.created_at).toLocaleDateString("id-ID", { dateStyle: "long" })}</p></div></div>
                 <div className="grid grid-cols-2 gap-4 py-5"><div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tagihan kepada</p><p className="mt-1 text-sm font-bold text-slate-900">{invoiceOrder.customer_name}</p><p className="mt-1 text-xs text-slate-500">{invoiceOrder.customer_phone}</p></div><div className="text-right"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">ID Pesanan</p><p className="mt-1 break-all font-mono text-[10px] text-slate-700">{invoiceOrder.id}</p><p className="mt-1 text-xs font-semibold text-blue-700">{statusLabels[invoiceOrder.status] || invoiceOrder.status}</p></div></div>
                 <div className="overflow-hidden rounded-lg border border-slate-200"><div className="grid grid-cols-[1fr_auto] bg-slate-50 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-500"><span>Produk</span><span>Total</span></div><div className="grid grid-cols-[1fr_auto] gap-3 px-3 py-4 text-xs"><div><p className="font-semibold text-slate-900">{invoiceOrder.product_name}</p><p className="mt-1 text-slate-500">{invoiceOrder.quantity} × Rp{invoiceOrder.unit_price.toLocaleString("id-ID")}</p></div><p className="font-bold text-slate-900">Rp{(invoiceOrder.unit_price * invoiceOrder.quantity).toLocaleString("id-ID")}</p></div><div className="flex items-center justify-between border-t border-slate-200 px-3 py-2 text-xs"><span>Ongkos kirim</span><span>Rp{(invoiceOrder.shipping_cost || 0).toLocaleString("id-ID")}</span></div><div className="flex items-center justify-between border-t border-slate-200 px-3 py-3"><span className="text-xs font-bold text-slate-700">Total pesanan</span><span className="text-base font-black text-slate-900">Rp{(invoiceOrder.unit_price * invoiceOrder.quantity + (invoiceOrder.shipping_cost || 0)).toLocaleString("id-ID")}</span></div></div>
+                <div className="mt-4 grid grid-cols-2 gap-3 rounded-lg bg-slate-50 p-3">
+                  <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pembayaran</p><p className={`mt-1 text-xs font-bold ${invoiceOrder.payment_status === "paid" ? "text-emerald-700" : invoiceOrder.payment_status === "refunded" ? "text-slate-500" : "text-amber-700"}`}>{invoiceOrder.payment_status === "paid" ? "Lunas" : invoiceOrder.payment_status === "refunded" ? "Refund" : "Belum dibayar"}</p>{invoiceOrder.paid_at && <p className="mt-1 text-[10px] text-slate-500">{new Date(invoiceOrder.paid_at).toLocaleString("id-ID")}</p>}</div>
+                  <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pengiriman</p><p className="mt-1 text-xs font-semibold text-slate-700">{invoiceOrder.shipping_courier || "Belum diatur"}</p>{invoiceOrder.tracking_number && <p className="mt-1 break-all font-mono text-[10px] text-slate-500">Resi: {invoiceOrder.tracking_number}</p>}</div>
+                </div>
                 {invoiceOrder.notes && <div className="mt-4"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Catatan</p><p className="mt-1 whitespace-pre-wrap text-xs leading-5 text-slate-600">{invoiceOrder.notes}</p></div>}
                 <p className="mt-6 border-t border-dashed border-slate-200 pt-4 text-center text-[10px] leading-5 text-slate-400">Dokumen ini merupakan ringkasan pesanan, bukan bukti pembayaran.</p>
               </div>
-              <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end print:hidden"><button type="button" onClick={() => setInvoiceOrder(null)} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600">Tutup</button><button type="button" onClick={() => window.print()} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700"><Printer size={16} /> Cetak / Simpan PDF</button></div>
+              <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end print:hidden"><button type="button" onClick={() => setInvoiceOrder(null)} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600">Tutup</button><button type="button" onClick={() => shareInvoice(invoiceOrder)} className="inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 hover:bg-emerald-100"><ExternalLink size={16} /> WhatsApp</button><button type="button" onClick={() => window.print()} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700"><Printer size={16} /> Cetak / Simpan PDF</button></div>
             </div>
             <style jsx global>{`@media print { body * { visibility: hidden !important; } #ditapaja-invoice, #ditapaja-invoice * { visibility: visible !important; } #ditapaja-invoice { position: absolute !important; inset: 0 auto auto 0 !important; width: 100% !important; border: 0 !important; } }`}</style>
           </div>
