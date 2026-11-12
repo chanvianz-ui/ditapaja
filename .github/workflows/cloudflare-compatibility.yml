@@ -3,7 +3,9 @@ name: Cloudflare compatibility check
 on:
   push:
     branches:
-      - migrate/cloudflare-workers
+      - main
+  workflow_dispatch:
+
   pull_request:
     branches:
       - main
