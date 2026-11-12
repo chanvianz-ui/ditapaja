@@ -1545,14 +1545,14 @@ export default function DashboardPage() {
 
                 <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
                   <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
-                    {cards.length} Cards
+                    {cards.filter((card) => !card.archived_at).length} Cards
                   </span>
                   <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-                    {cards.filter((card) => card.active).length} Aktif
+                    {cards.filter((card) => !card.archived_at && card.active).length} Aktif
                   </span>
-                  {cards.some((card) => !card.active) && (
+                  {cards.some((card) => !card.archived_at && !card.active) && (
                     <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-                      {cards.filter((card) => !card.active).length} Nonaktif
+                      {cards.filter((card) => !card.archived_at && !card.active).length} Nonaktif
                     </span>
                   )}
                 </div>
