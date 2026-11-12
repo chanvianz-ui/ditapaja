@@ -135,9 +135,15 @@ export async function POST(
     const uploadedFile = (objects || []).find((file) => file.name === fileName);
     if (!uploadedFile) return json({ error: "Upload belum selesai. Silakan coba lagi." }, 400);
     const metadata = uploadedFile.metadata as { size?: number | string; mimetype?: string } | null;
+    const uploadedSize = Number(metadata?.size);
+    const uploadedMime = metadata?.mimetype || "";
+    const pathExtension = fileName.split(".").pop()?.toLowerCase();
     if (
-      (metadata?.size != null && Number(metadata.size) > MAX_FILE_SIZE) ||
-      (metadata?.mimetype && !Object.prototype.hasOwnProperty.call(MIME_EXTENSIONS, metadata.mimetype))
+      !Number.isSafeInteger(uploadedSize) ||
+      uploadedSize < 1 ||
+      uploadedSize > MAX_FILE_SIZE ||
+      !Object.prototype.hasOwnProperty.call(MIME_EXTENSIONS, uploadedMime) ||
+      MIME_EXTENSIONS[uploadedMime] !== pathExtension
     ) {
       await admin.storage.from(BUCKET).remove([path]);
       return json({ error: "Format atau ukuran file tidak diizinkan." }, 400);
