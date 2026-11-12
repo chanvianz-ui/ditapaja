@@ -1,53 +1,59 @@
 # DiTapAja — Migrasi Cloudflare Workers
 
-Status: persiapan migrasi, belum ada deployment Cloudflare dan belum ada perubahan DNS.
+Status: Vinext compatibility check passed; Vinext configuration is being added on `main`. Live deployment remains paused until CI and smoke tests pass. DNS has not been changed.
 
-## Baseline
+## Working model
 
-- Source branch asal: `feature/customer-payment-proof`
-- Baseline commit: `3ca12f47eb3cbfac2b4b2daf8b573d80210249de`
-- Migrasi dikerjakan terpisah pada `migrate/cloudflare-workers`.
-- Production Vercel tetap berjalan sebagai fallback.
-- Supabase Production dan Staging tetap menjadi database terpisah; tidak ada migrasi database.
+- GitHub default branch and only active development branch: `main`.
+- Cloudflare Worker: `ditapaja`, connected to `chanvianz-ui/ditapaja` on `main`.
+- Vercel remains available as a fallback during migration.
+- The existing `next dev`, `next build`, and `next start` scripts remain available.
+- Vinext uses separate namespaced scripts: `dev:vinext`, `build:vinext`, `start:vinext`, and `deploy:vinext`.
 
-## Arsitektur target
+## Compatibility audit
 
-- Next.js App Router dipertahankan.
-- Vinext menjalankan aplikasi Next.js di Vite dan Cloudflare Workers.
-- Supabase tetap dipakai untuk Auth, Postgres, Storage, dan RLS.
-- Deployment awal memakai alamat `workers.dev`; domain khusus belum dipindah.
-- Secret Supabase hanya disimpan sebagai Worker runtime secrets, tidak di-commit atau dicetak ke log.
+The `vinext check` report completed successfully:
 
-## Urutan kerja
+- 100% compatible: 9 supported checks, 0 partial, 0 issues.
+- App Router detected: 27 pages, 1 layout, and 10 route handlers.
+- Imports detected by the checker: `next/navigation`, `next/server`, and `next/link`.
+- Repository app source audit found no use of `next/image`, ISR/revalidation APIs, or `"use cache"`.
+- Initial Cloudflare cache/image choices: no custom CDN cache, no data cache, no Cloudflare Images optimizer.
 
-1. Jalankan `npx vinext check` terhadap kode aplikasi dan tinjau inkompatibilitas yang dilaporkan.
-2. Jalankan `vinext init` secara non-destruktif setelah hasil compatibility check ditinjau. Untuk project ini, kandidat awal tanpa ISR/cache custom adalah `--cdn-cache=none --data-cache=none`; pilihan optimasi gambar perlu dikonfirmasi dari pemakaian `next/image`.
-3. Review seluruh berkas yang dibuat/diubah oleh initializer. Pastikan `next dev`, typecheck, dan build Next.js lama tetap berfungsi.
-4. Jalankan `npm run dev:vinext`, `npm run build:vinext`, dan `npm run start:vinext`; uji halaman publik, login/register, dashboard NFC, analytics, pesanan, upload bukti pembayaran, dan admin.
-5. Buat Worker non-production dan pasang runtime variables/secrets untuk Supabase Staging. Jangan gunakan kredensial Production saat tes.
-6. Integrasikan GitHub melalui Workers Builds, verifikasi Preview build, lalu uji seluruh alur dari browser sampai Supabase Staging.
-7. Setelah stabil, baru rencanakan perpindahan DNS/domain dengan TTL rendah dan jalur rollback ke Vercel.
+Compatibility checks do not replace runtime tests. Authentication, order/payment proof uploads, admin operations, card creation, and public NFC routes still need smoke tests on the Worker URL.
 
-## Environment yang perlu disiapkan
+## Target architecture
 
-Build-time public values (khusus build Preview):
-- `NEXT_PUBLIC_SUPABASE_URL` → URL Supabase Staging
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` → anon/publishable key Supabase Staging
+- Next.js App Router source remains in `app/`.
+- Vinext runs the app on Vite and Cloudflare Workers.
+- Cloudflare Vite plugin v2 beta and the `cf` CLI are used; do not run `wrangler setup` or `npx wrangler deploy` for this project.
+- Supabase remains the Auth, Postgres, Storage, and RLS backend.
+- First deployment target is the Worker URL; custom domains and DNS stay unchanged until explicit cutover approval.
 
-Worker runtime values/secrets (khusus Staging):
-- `SUPABASE_SECRET_KEY` → Supabase Staging secret key (secret)
-- `ADMIN_USER_ID` → UID admin akun Staging
+## Cloudflare build state
 
-Catatan:
-- Environment Workers Builds hanya tersedia pada saat build; runtime secrets/variables harus disetel di Worker settings.
-- Jangan menyalin secret Vercel Production ke Worker uji.
-- Nilai `NEXT_PUBLIC_*` tertanam saat build. Buat build preview dengan URL/key Staging.
-- Jangan pernah menambahkan file `.env` atau nilai secret ke Git.
+- Git source is `main`.
+- Workers Builds production build/deploy commands are intentionally paused while Vinext setup is committed and validated.
+- Worker Preview builds are disabled to keep this one-branch migration workflow simple.
+- Build-time public Supabase variables currently point to Supabase Staging for testing.
+- Do not put Supabase secret keys in build variables.
+- Runtime server variables/secrets still need separate configuration before testing server-side admin/payment-proof flows:
+  - `SUPABASE_SECRET_KEY` — runtime Secret for the selected Supabase environment.
+  - `ADMIN_USER_ID` — runtime variable for the selected admin account.
+- Never commit `.env` files or secret values.
 
-## Hambatan integrasi yang diketahui
+## Safe migration sequence
 
-- Akun Cloudflare tersambung, tetapi belum ada Worker terdaftar.
-- Belum ada Workers Build Token di akun.
-- GitHub App Cloudflare belum terlihat terhubung/diotorisasi untuk repository ini.
-- Zona DNS `ditapaja.web.id` belum terdaftar pada akun Cloudflare yang tersambung.
-- Sampai semua pemeriksaan lulus, jangan tambahkan custom domain, jangan ganti nameserver, dan jangan matikan Vercel.
+1. Keep Vercel and its domains unchanged.
+2. Run compatibility and both framework builds in GitHub Actions.
+3. Configure Cloudflare Builds to use `npm run build:vinext` and `npm run deploy:vinext` only after CI is green.
+4. Configure runtime variables/secrets for the intended Supabase environment.
+5. Deploy and smoke-test the Worker URL: public landing pages, registration/login, dashboard, NFC card creation and tracking, order creation/history, payment proof upload/verification, and admin pages.
+6. Resolve any route/runtime or binding issues before assigning a custom domain.
+7. Plan DNS/domain cutover only after the Worker passes the full test flow. Keep Vercel ready for rollback.
+
+## Rollback
+
+- Keep the current Vercel project and its Production deployment intact.
+- Do not change nameservers, Cloudflare zone records, or Vercel domains during the compatibility/build phase.
+- If a Worker release fails smoke testing, leave the domain on Vercel and fix or roll back the Worker independently.

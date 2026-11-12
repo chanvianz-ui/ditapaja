@@ -1,11 +1,10 @@
-name: Cloudflare compatibility check
+name: Vinext compatibility and build
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
   pull_request:
     branches:
       - main
@@ -16,7 +15,12 @@ permissions:
 jobs:
   vinext-compatibility:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    env:
+      # Safe placeholders for build-time Supabase client initialization.
+      # This workflow never deploys and never uses production credentials.
+      NEXT_PUBLIC_SUPABASE_URL: https://ci-placeholder.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: sb_publishable_ci_placeholder
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -28,8 +32,14 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install current application dependencies
+      - name: Install application dependencies
         run: npm install --no-audit --no-fund
 
       - name: Check vinext compatibility
-        run: npx --yes vinext@1.4.5 check
+        run: npx vinext check
+
+      - name: Build with vinext for Cloudflare
+        run: npm run build:vinext
+
+      - name: Verify the existing Next.js build remains available
+        run: npm run build
