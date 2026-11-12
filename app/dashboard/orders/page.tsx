@@ -219,7 +219,7 @@ export default function OrdersPage() {
   function shareInvoice(order: Order) {
     const subtotal = order.unit_price * order.quantity;
     const total = subtotal + (order.shipping_cost || 0);
-    const paymentLabel = order.payment_status === "paid" ? "LUNAS" : order.payment_status === "refunded" ? "REFUND" : "BELUM DIBAYAR";
+    const paymentLabel = order.payment_status === "paid" ? "LUNAS" : order.payment_status === "pending_verification" ? "MENUNGGU VERIFIKASI" : order.payment_status === "refunded" ? "REFUND" : "BELUM DIBAYAR";
     const lines = [
       "*INVOICE DITAPAJA*",
       "ID: " + order.id,
@@ -259,7 +259,7 @@ export default function OrdersPage() {
       String(order.shipping_cost || 0),
       String(order.unit_price * order.quantity + (order.shipping_cost || 0)),
       statusLabels[order.status] || order.status,
-      order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar",
+      order.payment_status === "paid" ? "Lunas" : order.payment_status === "pending_verification" ? "Menunggu verifikasi" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar",
       order.payment_method || "",
       order.payment_reference || "",
       order.payment_proof_path ? "Tersimpan" : "",
