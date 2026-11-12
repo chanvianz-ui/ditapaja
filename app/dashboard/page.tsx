@@ -96,6 +96,7 @@ export default function DashboardPage() {
   const [selectedCardIds, setSelectedCardIds] = useState<string[]>([]);
   const [bulkActionBusy, setBulkActionBusy] = useState(false);
   const [bulkLocationId, setBulkLocationId] = useState("");
+  const [bulkQrTheme, setBulkQrTheme] = useState<"light" | "dark">("light");
 
   const visibleCards = useMemo(() => {
     const query = cardSearch.trim().toLowerCase();
@@ -1711,16 +1712,16 @@ export default function DashboardPage() {
           <div className="mx-auto max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-7">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
               <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR PRINT SHEET</p><h3 className="mt-1 text-lg font-bold text-slate-900">Cetak semua QR Code aktif</h3><p className="mt-1 text-xs text-slate-500">{cards.filter((card) => card.active).length} kartu aktif · Gunakan kertas A4 dan skala 100%.</p></div>
-              <div className="flex gap-2"><button type="button" onClick={() => window.print()} className="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-700"><Printer size={14} className="mr-1 inline"/> Cetak / Simpan PDF</button><button type="button" onClick={() => setShowBulkQrSheet(false)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">Tutup</button></div>
+              <div className="flex flex-wrap items-center gap-2"><div className="flex rounded-xl border border-slate-200 p-1"><button type="button" onClick={() => setBulkQrTheme("light")} className={`rounded-lg px-3 py-2 text-xs font-semibold ${bulkQrTheme === "light" ? "bg-slate-900 text-white" : "text-slate-500"}`}>Hitam / Putih</button><button type="button" onClick={() => setBulkQrTheme("dark")} className={`rounded-lg px-3 py-2 text-xs font-semibold ${bulkQrTheme === "dark" ? "bg-slate-900 text-white" : "text-slate-500"}`}>Putih / Hitam</button></div><button type="button" onClick={() => window.print()} className="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-700"><Printer size={14} className="mr-1 inline"/> Cetak / Simpan PDF</button><button type="button" onClick={() => setShowBulkQrSheet(false)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">Tutup</button></div>
             </div>
             <div id="ditapaja-bulk-qr-sheet" className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5">
               {cards.filter((card) => card.active).map((card) => (
-                <div key={card.id} className="flex break-inside-avoid flex-col items-center rounded-xl border border-slate-200 p-3 text-center sm:p-4">
-                  <p className="w-full truncate text-sm font-bold text-slate-900">{card.card_name || "Untitled Card"}</p>
-                  <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-slate-400">SCAN TO REVIEW</p>
-                  <div className="my-3 rounded-lg bg-white p-2"><QRCodeSVG value={typeof window !== "undefined" ? window.location.origin + "/c/" + card.public_code : "https://ditapaja.web.id/c/" + card.public_code} size={150} level="H" includeMargin fgColor="#111827" bgColor="#ffffff"/></div>
-                  <p className="break-all text-[9px] text-slate-500">{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.netlify.app"}/c/{card.public_code}</p>
-                  <p className="mt-2 text-[9px] font-semibold tracking-wide text-slate-400">DiTapAja · YOUR REVIEW STARTS HERE</p>
+                <div key={card.id} className={`flex break-inside-avoid flex-col items-center rounded-xl border p-3 text-center sm:p-4 ${bulkQrTheme === "dark" ? "border-slate-700 bg-slate-950" : "border-slate-200 bg-white"}`}>
+                  <p className={`w-full truncate text-sm font-bold ${bulkQrTheme === "dark" ? "text-white" : "text-slate-900"}`}>{card.card_name || "Untitled Card"}</p>
+                  <p className={`mt-1 text-[10px] font-medium uppercase tracking-wider ${bulkQrTheme === "dark" ? "text-slate-400" : "text-slate-400"}`}>SCAN TO REVIEW</p>
+                  <div className={`my-3 rounded-lg p-2 ${bulkQrTheme === "dark" ? "bg-slate-950" : "bg-white"}`}><QRCodeSVG value={typeof window !== "undefined" ? window.location.origin + "/c/" + card.public_code : "https://ditapaja.netlify.app/c/" + card.public_code} size={150} level="H" includeMargin fgColor={bulkQrTheme === "dark" ? "#ffffff" : "#111827"} bgColor={bulkQrTheme === "dark" ? "#000000" : "#ffffff"}/></div>
+                  <p className={`break-all text-[9px] ${bulkQrTheme === "dark" ? "text-slate-400" : "text-slate-500"}`}>{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.netlify.app"}/c/{card.public_code}</p>
+                  <p className={`mt-2 text-[9px] font-semibold tracking-wide ${bulkQrTheme === "dark" ? "text-slate-500" : "text-slate-400"}`}>DiTapAja · YOUR REVIEW STARTS HERE</p>
                 </div>
               ))}
             </div>
@@ -1743,6 +1744,7 @@ export default function DashboardPage() {
               <label className="rounded-xl border border-slate-200 p-3 text-xs font-semibold text-slate-600">Warna QR<input type="color" value={qrForeground} onChange={(event) => setQrForeground(event.target.value)} className="mt-2 h-9 w-full cursor-pointer rounded"/></label>
               <label className="rounded-xl border border-slate-200 p-3 text-xs font-semibold text-slate-600">Warna latar<input type="color" value={qrBackground} onChange={(event) => setQrBackground(event.target.value)} className="mt-2 h-9 w-full cursor-pointer rounded"/></label>
             </div>
+            <div className="grid grid-cols-2 gap-2"><button type="button" onClick={() => { setQrForeground("#111827"); setQrBackground("#ffffff"); }} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-700">Hitam di atas putih</button><button type="button" onClick={() => { setQrForeground("#ffffff"); setQrBackground("#000000"); }} className="rounded-xl border border-slate-800 bg-black px-3 py-2.5 text-xs font-semibold text-white">Putih di atas hitam</button></div>
             <button type="button" onClick={() => downloadQrPng(qrCard)} className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"><Download size={17}/> Download QR Siap Cetak PNG</button>
           </div>
         </div>
