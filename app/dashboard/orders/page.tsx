@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Package, Plus, Loader2, Trash2, RefreshCw, AlertCircle, Search, Clock, CheckCircle2, ChevronDown, Copy, ExternalLink, Receipt, Printer, X, Download } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-type Order = { id: string; customer_name: string; customer_phone: string; product_name: string; quantity: number; unit_price: number; status: string; created_at: string; notes: string | null };
+type Order = { id: string; customer_name: string; customer_phone: string; product_name: string; quantity: number; unit_price: number; status: string; payment_status: "unpaid" | "paid" | "refunded"; shipping_courier: string | null; tracking_number: string | null; shipping_cost: number; paid_at: string | null; shipped_at: string | null; created_at: string; notes: string | null };
 const statuses = ["pending", "confirmed", "processing", "shipped", "completed", "cancelled"];
 const statusLabels: Record<string, string> = { pending: "Menunggu konfirmasi", confirmed: "Dikonfirmasi", processing: "Sedang diproses", shipped: "Dikirim", completed: "Selesai", cancelled: "Dibatalkan" };
 
@@ -31,7 +31,7 @@ export default function OrdersPage() {
 
   async function loadOrders(uid: string) {
     const { data, error: loadError } = await supabase.from("ditapaja_orders")
-      .select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,created_at,notes")
+      .select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,payment_status,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes")
       .eq("user_id", uid).order("created_at", { ascending: false });
     if (loadError) {
       console.error("Order loading failed:", loadError);
@@ -78,6 +78,41 @@ export default function OrdersPage() {
     if (updateError) { setError("Status pesanan gagal diperbarui: " + updateError.message); return; }
     setOrders(current => current.map(order => order.id === id ? { ...order, status } : order));
     if (invoiceOrder?.id === id) setInvoiceOrder(current => current ? { ...current, status } : current);
+  }
+
+  async function updatePaymentStatus(order: Order, payment_status: "unpaid" | "paid" | "refunded") {
+    const paid_at = payment_status === "paid" ? (order.paid_at || new Date().toISOString()) : null;
+    const { error: updateError } = await supabase.from("ditapaja_orders")
+      .update({ payment_status, paid_at, updated_at: new Date().toISOString() })
+      .eq("id", order.id).eq("user_id", userId);
+    if (updateError) { setError("Status pembayaran gagal diperbarui: " + updateError.message); return; }
+    setOrders(current => current.map(item => item.id === order.id ? { ...item, payment_status, paid_at } : item));
+    setSuccess(payment_status === "paid" ? "Pembayaran ditandai lunas." : payment_status === "refunded" ? "Pembayaran ditandai dikembalikan." : "Status pembayaran diperbarui.");
+    setError("");
+  }
+
+  async function updateShipping(order: Order) {
+    const courier = window.prompt("Nama kurir (contoh: JNE, J&T, SiCepat):", order.shipping_courier || "");
+    if (courier === null) return;
+    const tracking = window.prompt("Nomor resi (boleh dikosongkan):", order.tracking_number || "");
+    if (tracking === null) return;
+    const rawCost = window.prompt("Ongkos kirim dalam Rupiah:", String(order.shipping_cost || 0));
+    if (rawCost === null) return;
+    const shipping_cost = Number(rawCost.replace(/[^0-9]/g, ""));
+    if (!Number.isSafeInteger(shipping_cost) || shipping_cost < 0 || shipping_cost > 100000000) {
+      setError("Ongkos kirim harus berupa angka antara Rp0 dan Rp100.000.000.");
+      return;
+    }
+    const shipping_courier = courier.trim().slice(0, 80) || null;
+    const tracking_number = tracking.trim().slice(0, 100) || null;
+    const shipped_at = tracking_number ? (order.shipped_at || new Date().toISOString()) : null;
+    const { error: updateError } = await supabase.from("ditapaja_orders")
+      .update({ shipping_courier, tracking_number, shipping_cost, shipped_at, updated_at: new Date().toISOString() })
+      .eq("id", order.id).eq("user_id", userId);
+    if (updateError) { setError("Informasi pengiriman gagal disimpan: " + updateError.message); return; }
+    setOrders(current => current.map(item => item.id === order.id ? { ...item, shipping_courier, tracking_number, shipping_cost, shipped_at } : item));
+    setSuccess("Informasi pengiriman berhasil disimpan.");
+    setError("");
   }
 
   function exportOrders() {
@@ -131,7 +166,7 @@ export default function OrdersPage() {
   const pendingCount = orders.filter(order => order.status === "pending").length;
   const activeCount = orders.filter(order => ["confirmed", "processing", "shipped"].includes(order.status)).length;
   const completedCount = orders.filter(order => order.status === "completed").length;
-  const completedValue = orders.filter(order => order.status === "completed").reduce((sum, order) => sum + order.unit_price * order.quantity, 0);
+  const completedValue = orders.filter(order => order.status === "completed").reduce((sum, order) => sum + order.unit_price * order.quantity + (order.shipping_cost || 0), 0);\n  const unpaidCount = orders.filter(order => order.payment_status === "unpaid").length;\n  const unpaidValue = orders.filter(order => order.payment_status === "unpaid").reduce((sum, order) => sum + order.unit_price * order.quantity + (order.shipping_cost || 0), 0);
 
   if (loading) return <div className="flex min-h-screen items-center justify-center"><Loader2 className="animate-spin text-blue-600" /></div>;
 
@@ -149,7 +184,7 @@ export default function OrdersPage() {
           <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-amber-600"><Clock size={17} /><span className="text-xs font-semibold">Menunggu konfirmasi</span></div><p className="mt-2 text-2xl font-bold">{pendingCount}</p></div>
           <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-blue-600"><Package size={17} /><span className="text-xs font-semibold">Dalam proses</span></div><p className="mt-2 text-2xl font-bold">{activeCount}</p></div>
           <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-emerald-600"><CheckCircle2 size={17} /><span className="text-xs font-semibold">Selesai</span></div><p className="mt-2 text-2xl font-bold">{completedCount}</p></div>
-          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-emerald-700"><Receipt size={17} /><span className="text-xs font-semibold">Nilai pesanan selesai</span></div><p className="mt-2 break-words text-xl font-bold">Rp{completedValue.toLocaleString("id-ID")}</p></div>
+          <div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-amber-600"><Receipt size={17} /><span className="text-xs font-semibold">Belum dibayar</span></div><p className="mt-2 text-2xl font-bold">{unpaidCount}</p><p className="mt-1 text-xs text-slate-400">Rp{unpaidValue.toLocaleString("id-ID")}</p></div><div className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm"><div className="flex items-center gap-2 text-emerald-700"><CheckCircle2 size={17} /><span className="text-xs font-semibold">Nilai pesanan selesai</span></div><p className="mt-2 break-words text-xl font-bold">Rp{completedValue.toLocaleString("id-ID")}</p></div>
         </div>
         <div className="grid items-start gap-5 lg:grid-cols-[.8fr_1.2fr]">
           <form onSubmit={createOrder} className="h-fit space-y-4 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
@@ -174,7 +209,7 @@ export default function OrdersPage() {
                 {filteredOrders.map(order => (
                   <article key={order.id} className="rounded-xl border border-slate-200/90 p-4 transition-colors hover:border-blue-100">
                     <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0"><p className="font-semibold">{order.customer_name}</p><p className="mt-1 text-xs text-slate-500">{order.customer_phone} · {order.product_name} × {order.quantity}</p><p className="mt-2 text-sm font-bold">Rp{(order.unit_price * order.quantity).toLocaleString("id-ID")}</p></div>
+                      <div className="min-w-0"><p className="font-semibold">{order.customer_name}</p><p className="mt-1 text-xs text-slate-500">{order.customer_phone} · {order.product_name} × {order.quantity}</p><p className="mt-2 text-sm font-bold">Rp{(order.unit_price * order.quantity + (order.shipping_cost || 0)).toLocaleString("id-ID")}</p><p className="mt-1 text-[11px] text-slate-400">Produk Rp{(order.unit_price * order.quantity).toLocaleString("id-ID")} · Ongkir Rp{(order.shipping_cost || 0).toLocaleString("id-ID")}</p></div>
                       <button onClick={() => removeOrder(order.id)} aria-label="Hapus pesanan" className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"><Trash2 size={16} /></button>
                     </div>
                     <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
@@ -187,7 +222,7 @@ export default function OrdersPage() {
                     {expandedOrder === order.id && (
                       <div className="mt-4 space-y-3 rounded-xl bg-slate-50 p-3">
                         <div className="flex items-center justify-between gap-2"><div className="min-w-0"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">ID Pesanan</p><p className="mt-1 break-all font-mono text-xs text-slate-700">{order.id}</p></div><button type="button" onClick={async () => { try { await navigator.clipboard.writeText(order.id); setCopiedOrder(order.id); } catch { setError("Tidak dapat menyalin ID pesanan."); } }} className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs font-semibold text-slate-600 hover:text-blue-600"><Copy size={13} />{copiedOrder === order.id ? "Tersalin" : "Salin"}</button></div>
-                        <div className="grid grid-cols-2 gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Status</p><p className="mt-1 text-sm font-semibold text-slate-700">{statusLabels[order.status] || order.status}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Total</p><p className="mt-1 text-sm font-bold text-slate-900">Rp{(order.unit_price * order.quantity).toLocaleString("id-ID")}</p></div></div>
+                        <div className="grid grid-cols-2 gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Status pesanan</p><p className="mt-1 text-sm font-semibold text-slate-700">{statusLabels[order.status] || order.status}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Pembayaran</p><p className={`mt-1 text-sm font-semibold ${order.payment_status === "paid" ? "text-emerald-700" : order.payment_status === "refunded" ? "text-slate-500" : "text-amber-700"}`}>{order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar"}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Ongkir</p><p className="mt-1 text-sm font-semibold text-slate-700">Rp{(order.shipping_cost || 0).toLocaleString("id-ID")}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Total tagihan</p><p className="mt-1 text-sm font-bold text-slate-900">Rp{(order.unit_price * order.quantity + (order.shipping_cost || 0)).toLocaleString("id-ID")}</p></div></div><div className="flex flex-wrap gap-2"><button type="button" onClick={() => updatePaymentStatus(order, order.payment_status === "paid" ? "unpaid" : "paid")} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">{order.payment_status === "paid" ? "Tandai belum dibayar" : "Tandai lunas"}</button><button type="button" onClick={() => updatePaymentStatus(order, "refunded")} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600">Tandai refund</button><button type="button" onClick={() => updateShipping(order)} className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Atur pengiriman</button></div>{(order.shipping_courier || order.tracking_number) && <div className="rounded-lg border border-slate-200 bg-white p-3"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Informasi pengiriman</p><p className="mt-1 text-sm font-semibold text-slate-800">{order.shipping_courier || "Kurir belum diisi"}</p><p className="mt-1 break-all font-mono text-xs text-slate-600">Resi: {order.tracking_number || "Belum tersedia"}</p></div}>
                         <a href={"https://wa.me/" + order.customer_phone.replace(/\D/g, "")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:underline"><ExternalLink size={13} /> Hubungi pelanggan via WhatsApp</a>
                         {order.notes && <div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Catatan pesanan</p><p className="mt-1 whitespace-pre-wrap text-xs leading-5 text-slate-600">{order.notes}</p></div>}
                       </div>
@@ -206,7 +241,7 @@ export default function OrdersPage() {
               <div id="ditapaja-invoice" className="rounded-xl border border-slate-200 p-5 sm:p-7">
                 <div className="flex items-start justify-between gap-4 border-b border-slate-200 pb-5"><div><p className="text-lg font-black tracking-tight text-slate-900">DiTapAja</p><p className="mt-1 text-xs text-slate-500">NFC Review Card</p></div><div className="text-right"><p className="text-xs font-bold uppercase tracking-widest text-blue-700">Invoice</p><p className="mt-1 text-xs text-slate-500">{new Date(invoiceOrder.created_at).toLocaleDateString("id-ID", { dateStyle: "long" })}</p></div></div>
                 <div className="grid grid-cols-2 gap-4 py-5"><div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tagihan kepada</p><p className="mt-1 text-sm font-bold text-slate-900">{invoiceOrder.customer_name}</p><p className="mt-1 text-xs text-slate-500">{invoiceOrder.customer_phone}</p></div><div className="text-right"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">ID Pesanan</p><p className="mt-1 break-all font-mono text-[10px] text-slate-700">{invoiceOrder.id}</p><p className="mt-1 text-xs font-semibold text-blue-700">{statusLabels[invoiceOrder.status] || invoiceOrder.status}</p></div></div>
-                <div className="overflow-hidden rounded-lg border border-slate-200"><div className="grid grid-cols-[1fr_auto] bg-slate-50 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-500"><span>Produk</span><span>Total</span></div><div className="grid grid-cols-[1fr_auto] gap-3 px-3 py-4 text-xs"><div><p className="font-semibold text-slate-900">{invoiceOrder.product_name}</p><p className="mt-1 text-slate-500">{invoiceOrder.quantity} × Rp{invoiceOrder.unit_price.toLocaleString("id-ID")}</p></div><p className="font-bold text-slate-900">Rp{(invoiceOrder.unit_price * invoiceOrder.quantity).toLocaleString("id-ID")}</p></div><div className="flex items-center justify-between border-t border-slate-200 px-3 py-3"><span className="text-xs font-bold text-slate-700">Total pesanan</span><span className="text-base font-black text-slate-900">Rp{(invoiceOrder.unit_price * invoiceOrder.quantity).toLocaleString("id-ID")}</span></div></div>
+                <div className="overflow-hidden rounded-lg border border-slate-200"><div className="grid grid-cols-[1fr_auto] bg-slate-50 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-500"><span>Produk</span><span>Total</span></div><div className="grid grid-cols-[1fr_auto] gap-3 px-3 py-4 text-xs"><div><p className="font-semibold text-slate-900">{invoiceOrder.product_name}</p><p className="mt-1 text-slate-500">{invoiceOrder.quantity} × Rp{invoiceOrder.unit_price.toLocaleString("id-ID")}</p></div><p className="font-bold text-slate-900">Rp{(invoiceOrder.unit_price * invoiceOrder.quantity).toLocaleString("id-ID")}</p></div><div className="flex items-center justify-between border-t border-slate-200 px-3 py-2 text-xs"><span>Ongkos kirim</span><span>Rp{(invoiceOrder.shipping_cost || 0).toLocaleString("id-ID")}</span></div><div className="flex items-center justify-between border-t border-slate-200 px-3 py-3"><span className="text-xs font-bold text-slate-700">Total pesanan</span><span className="text-base font-black text-slate-900">Rp{(invoiceOrder.unit_price * invoiceOrder.quantity + (invoiceOrder.shipping_cost || 0)).toLocaleString("id-ID")}</span></div></div>
                 {invoiceOrder.notes && <div className="mt-4"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Catatan</p><p className="mt-1 whitespace-pre-wrap text-xs leading-5 text-slate-600">{invoiceOrder.notes}</p></div>}
                 <p className="mt-6 border-t border-dashed border-slate-200 pt-4 text-center text-[10px] leading-5 text-slate-400">Dokumen ini merupakan ringkasan pesanan, bukan bukti pembayaran.</p>
               </div>
