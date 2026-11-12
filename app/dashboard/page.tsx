@@ -1487,7 +1487,7 @@ export default function DashboardPage() {
                             {updatingCardId === card.id ? <Loader2 size={16} className="animate-spin"/> : <CheckCircle2 size={16}/>} Restore
                           </button>
                         ) : (
-
+                        <>
                         <button onClick={() => copyPublicCardLink(card)} disabled={!card.active} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40" title="Salin link publik kartu">
                           {copiedCardId === card.id ? <CheckCircle2 size={16} /> : <Copy size={16} />}
                           {copiedCardId === card.id ? "Tersalin" : "Salin Link"}
@@ -1545,6 +1545,7 @@ export default function DashboardPage() {
                           <Archive size={16} />
                           Archive
                         </button>
+                        </>
                         )}
                       </div>
                     </div>
@@ -1612,8 +1613,8 @@ export default function DashboardPage() {
             aria-labelledby="delete-card-title"
             className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-red-600">
-              <AlertTriangle size={24} />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+              <Archive size={24} />
             </div>
             <h3 id="delete-card-title" className="mt-5 text-lg font-bold text-slate-900">
               Arsipkan kartu ini?
@@ -1651,7 +1652,7 @@ export default function DashboardPage() {
                 {deletingCard ? (
                   <Loader2 size={17} className="animate-spin" />
                 ) : (
-                  <Trash2 size={17} />
+                  <Archive size={17} />
                 )}
                 {deletingCard ? "Mengarsipkan..." : "Arsipkan Kartu"}
               </button>
