@@ -85,7 +85,15 @@ export default function AdminPage() {
         return;
       }
 
-      if (!response.ok || !result.success) {
+      if (!response.ok) {
+        const message =
+          result.success === false
+            ? result.error || "Gagal mengambil data Admin"
+            : "Gagal mengambil data Admin";
+        throw new Error(message);
+      }
+
+      if (result.success === false) {
         throw new Error(result.error || "Gagal mengambil data Admin");
       }
 
