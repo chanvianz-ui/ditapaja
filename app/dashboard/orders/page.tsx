@@ -28,6 +28,11 @@ export default function OrdersPage() {
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [copiedOrder, setCopiedOrder] = useState<string | null>(null);
   const [invoiceOrder, setInvoiceOrder] = useState<Order | null>(null);
+  const [shippingOrder, setShippingOrder] = useState<Order | null>(null);
+  const [shippingCourier, setShippingCourier] = useState("");
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const [shippingCost, setShippingCost] = useState("0");
+  const [savingShipping, setSavingShipping] = useState(false);
 
   async function loadOrders(uid: string) {
     const { data, error: loadError } = await supabase.from("ditapaja_orders")
@@ -93,27 +98,39 @@ export default function OrdersPage() {
     setError("");
   }
 
-  async function updateShipping(order: Order) {
-    const courier = window.prompt("Nama kurir (contoh: JNE, J&T, SiCepat):", order.shipping_courier || "");
-    if (courier === null) return;
-    const tracking = window.prompt("Nomor resi (boleh dikosongkan):", order.tracking_number || "");
-    if (tracking === null) return;
-    const rawCost = window.prompt("Ongkos kirim dalam Rupiah:", String(order.shipping_cost || 0));
-    if (rawCost === null) return;
-    const shipping_cost = Number(rawCost.replace(/[^0-9]/g, ""));
-    if (!Number.isSafeInteger(shipping_cost) || shipping_cost < 0 || shipping_cost > 100000000) {
-      setError("Ongkos kirim harus berupa angka antara Rp0 dan Rp100.000.000.");
+  function openShipping(order: Order) {
+    setShippingOrder(order);
+    setShippingCourier(order.shipping_courier || "");
+    setTrackingNumber(order.tracking_number || "");
+    setShippingCost(String(order.shipping_cost || 0));
+    setError("");
+  }
+
+  async function saveShipping(e: React.FormEvent) {
+    e.preventDefault();
+    if (!shippingOrder) return;
+    const normalizedCost = shippingCost.replace(/[^0-9]/g, "");
+    const cost = normalizedCost ? Number(normalizedCost) : 0;
+    if (!Number.isSafeInteger(cost) || cost < 0 || cost > 100000000) {
+      setError("Ongkos kirim harus antara Rp0 dan Rp100.000.000.");
       return;
     }
-    const shipping_courier = courier.trim().slice(0, 80) || null;
-    const tracking_number = tracking.trim().slice(0, 100) || null;
-    const shipped_at = tracking_number ? (order.shipped_at || new Date().toISOString()) : null;
+    setSavingShipping(true);
+    const shipping_courier = shippingCourier.trim().slice(0, 80) || null;
+    const tracking_number = trackingNumber.trim().slice(0, 100) || null;
+    const shipped_at = tracking_number ? (shippingOrder.shipped_at || new Date().toISOString()) : null;
     const { error: updateError } = await supabase.from("ditapaja_orders")
-      .update({ shipping_courier, tracking_number, shipping_cost, shipped_at, updated_at: new Date().toISOString() })
-      .eq("id", order.id).eq("user_id", userId);
-    if (updateError) { setError("Informasi pengiriman gagal disimpan: " + updateError.message); return; }
-    setOrders(current => current.map(item => item.id === order.id ? { ...item, shipping_courier, tracking_number, shipping_cost, shipped_at } : item));
-    if (invoiceOrder?.id === order.id) setInvoiceOrder(current => current ? { ...current, shipping_courier, tracking_number, shipping_cost, shipped_at } : current);
+      .update({ shipping_courier, tracking_number, shipping_cost: cost, shipped_at, updated_at: new Date().toISOString() })
+      .eq("id", shippingOrder.id).eq("user_id", userId);
+    setSavingShipping(false);
+    if (updateError) {
+      setError("Informasi pengiriman gagal disimpan: " + updateError.message);
+      return;
+    }
+    const updated = { ...shippingOrder, shipping_courier, tracking_number, shipping_cost: cost, shipped_at };
+    setOrders(current => current.map(item => item.id === shippingOrder.id ? updated : item));
+    if (invoiceOrder?.id === shippingOrder.id) setInvoiceOrder(updated);
+    setShippingOrder(null);
     setSuccess("Informasi pengiriman berhasil disimpan.");
     setError("");
   }
@@ -235,7 +252,7 @@ export default function OrdersPage() {
                     {expandedOrder === order.id && (
                       <div className="mt-4 space-y-3 rounded-xl bg-slate-50 p-3">
                         <div className="flex items-center justify-between gap-2"><div className="min-w-0"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">ID Pesanan</p><p className="mt-1 break-all font-mono text-xs text-slate-700">{order.id}</p></div><button type="button" onClick={async () => { try { await navigator.clipboard.writeText(order.id); setCopiedOrder(order.id); } catch { setError("Tidak dapat menyalin ID pesanan."); } }} className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs font-semibold text-slate-600 hover:text-blue-600"><Copy size={13} />{copiedOrder === order.id ? "Tersalin" : "Salin"}</button></div>
-                        <div className="grid grid-cols-2 gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Status pesanan</p><p className="mt-1 text-sm font-semibold text-slate-700">{statusLabels[order.status] || order.status}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Pembayaran</p><p className={`mt-1 text-sm font-semibold ${order.payment_status === "paid" ? "text-emerald-700" : order.payment_status === "refunded" ? "text-slate-500" : "text-amber-700"}`}>{order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar"}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Ongkir</p><p className="mt-1 text-sm font-semibold text-slate-700">Rp{(order.shipping_cost || 0).toLocaleString("id-ID")}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Total tagihan</p><p className="mt-1 text-sm font-bold text-slate-900">Rp{(order.unit_price * order.quantity + (order.shipping_cost || 0)).toLocaleString("id-ID")}</p></div></div><div className="flex flex-wrap gap-2"><button type="button" onClick={() => updatePaymentStatus(order, order.payment_status === "paid" ? "unpaid" : "paid")} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">{order.payment_status === "paid" ? "Tandai belum dibayar" : "Tandai lunas"}</button><button type="button" onClick={() => updatePaymentStatus(order, "refunded")} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600">Tandai refund</button><button type="button" onClick={() => updateShipping(order)} className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Atur pengiriman</button></div>{(order.shipping_courier || order.tracking_number) && <div className="rounded-lg border border-slate-200 bg-white p-3"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Informasi pengiriman</p><p className="mt-1 text-sm font-semibold text-slate-800">{order.shipping_courier || "Kurir belum diisi"}</p><p className="mt-1 break-all font-mono text-xs text-slate-600">Resi: {order.tracking_number || "Belum tersedia"}</p></div>}
+                        <div className="grid grid-cols-2 gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Status pesanan</p><p className="mt-1 text-sm font-semibold text-slate-700">{statusLabels[order.status] || order.status}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Pembayaran</p><p className={`mt-1 text-sm font-semibold ${order.payment_status === "paid" ? "text-emerald-700" : order.payment_status === "refunded" ? "text-slate-500" : "text-amber-700"}`}>{order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar"}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Ongkir</p><p className="mt-1 text-sm font-semibold text-slate-700">Rp{(order.shipping_cost || 0).toLocaleString("id-ID")}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Total tagihan</p><p className="mt-1 text-sm font-bold text-slate-900">Rp{(order.unit_price * order.quantity + (order.shipping_cost || 0)).toLocaleString("id-ID")}</p></div></div><div className="flex flex-wrap gap-2"><button type="button" onClick={() => updatePaymentStatus(order, order.payment_status === "paid" ? "unpaid" : "paid")} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">{order.payment_status === "paid" ? "Tandai belum dibayar" : "Tandai lunas"}</button><button type="button" onClick={() => updatePaymentStatus(order, "refunded")} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600">Tandai refund</button><button type="button" onClick={() => openShipping(order)} className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Atur pengiriman</button></div>{(order.shipping_courier || order.tracking_number) && <div className="rounded-lg border border-slate-200 bg-white p-3"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Informasi pengiriman</p><p className="mt-1 text-sm font-semibold text-slate-800">{order.shipping_courier || "Kurir belum diisi"}</p><p className="mt-1 break-all font-mono text-xs text-slate-600">Resi: {order.tracking_number || "Belum tersedia"}</p></div>}
                         <a href={"https://wa.me/" + order.customer_phone.replace(/\D/g, "")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:underline"><ExternalLink size={13} /> Hubungi pelanggan via WhatsApp</a>
                         {order.notes && <div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Catatan pesanan</p><p className="mt-1 whitespace-pre-wrap text-xs leading-5 text-slate-600">{order.notes}</p></div>}
                       </div>
@@ -247,6 +264,34 @@ export default function OrdersPage() {
             )}
           </section>
         </div>
+        {shippingOrder && (
+          <div className="fixed inset-0 z-[60] flex items-end justify-center overflow-y-auto bg-slate-950/50 p-0 backdrop-blur-sm sm:items-center sm:p-5" onMouseDown={e => { if (e.target === e.currentTarget && !savingShipping) setShippingOrder(null); }}>
+            <form onSubmit={saveShipping} className="w-full max-w-lg rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-7">
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div><p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-600">Order fulfillment</p><h2 className="mt-1 text-xl font-bold text-slate-900">Informasi pengiriman</h2><p className="mt-1 text-xs text-slate-500">Pesanan {shippingOrder.customer_name} · {shippingOrder.product_name}</p></div>
+                <button type="button" disabled={savingShipping} onClick={() => setShippingOrder(null)} aria-label="Tutup pengiriman" className="rounded-xl border border-slate-200 p-2 text-slate-500 hover:bg-slate-50 disabled:opacity-40"><X size={18}/></button>
+              </div>
+              <div className="space-y-4">
+                <label className="block text-sm font-semibold text-slate-700">Kurir
+                  <select value={shippingCourier} onChange={e => setShippingCourier(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm font-normal outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50">
+                    <option value="">Pilih atau isi kurir di bawah</option><option>JNE</option><option>J&T Express</option><option>SiCepat</option><option>AnterAja</option><option>POS Indonesia</option><option>SPX Express</option><option>GoSend</option><option>GrabExpress</option><option value="Lainnya">Lainnya</option>
+                  </select>
+                </label>
+                <label className="block text-sm font-semibold text-slate-700">Nama kurir / layanan
+                  <input value={shippingCourier} onChange={e => setShippingCourier(e.target.value)} maxLength={80} placeholder="Contoh: JNE REG" className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm font-normal outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"/>
+                </label>
+                <label className="block text-sm font-semibold text-slate-700">Nomor resi
+                  <input value={trackingNumber} onChange={e => setTrackingNumber(e.target.value)} maxLength={100} placeholder="Masukkan nomor resi" className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm font-normal outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"/>
+                </label>
+                <label className="block text-sm font-semibold text-slate-700">Ongkos kirim
+                  <div className="mt-2 flex items-center rounded-xl border border-slate-200 bg-slate-50 px-3 focus-within:border-blue-400 focus-within:bg-white focus-within:ring-4 focus-within:ring-blue-50"><span className="text-sm text-slate-400">Rp</span><input inputMode="numeric" value={shippingCost} onChange={e => setShippingCost(e.target.value.replace(/[^0-9]/g, ""))} maxLength={9} className="w-full bg-transparent px-2 py-3 text-sm font-semibold outline-none" placeholder="0"/></div>
+                </label>
+                <div className="rounded-xl border border-blue-100 bg-blue-50/70 p-3"><div className="flex items-center justify-between text-xs text-slate-500"><span>Subtotal produk</span><span>Rp{(shippingOrder.unit_price * shippingOrder.quantity).toLocaleString("id-ID")}</span></div><div className="mt-2 flex items-center justify-between text-sm font-bold text-slate-900"><span>Total tagihan</span><span>Rp{(shippingOrder.unit_price * shippingOrder.quantity + (Number(shippingCost) || 0)).toLocaleString("id-ID")}</span></div></div>
+              </div>
+              <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"><button type="button" disabled={savingShipping} onClick={() => setShippingOrder(null)} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 disabled:opacity-40">Batal</button><button type="submit" disabled={savingShipping} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 hover:bg-blue-700 disabled:opacity-50">{savingShipping ? <Loader2 size={16} className="animate-spin"/> : <CheckCircle2 size={16}/>} {savingShipping ? "Menyimpan..." : "Simpan pengiriman"}</button></div>
+            </form>
+          </div>
+        )}
         {invoiceOrder && (
           <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/50 p-3 sm:p-6">
             <div className="w-full max-w-xl rounded-2xl bg-white p-5 shadow-2xl sm:p-8">
