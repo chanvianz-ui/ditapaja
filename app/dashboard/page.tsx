@@ -185,6 +185,13 @@ export default function DashboardPage() {
     return days;
   }, [selectedEventRows, chartPeriod]);
 
+  const periodEventRows = useMemo(() => {
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    start.setDate(start.getDate() - (chartPeriod - 1));
+    return selectedEventRows.filter((event) => new Date(event.created_at).getTime() >= start.getTime());
+  }, [selectedEventRows, chartPeriod]);
+
   const chartMax = Math.max(
     1,
     ...chartData.map((day) => Math.max(day.taps, day.clicks))
@@ -291,7 +298,7 @@ export default function DashboardPage() {
   }, [businessLocations, cards, eventRows]);
 
   function exportAnalyticsCsv() {
-    const rows = selectedEventRows.map((event) => {
+    const rows = periodEventRows.map((event) => {
       const card = cards.find((item) => item.id === event.card_id);
       return [card?.card_name || "Untitled Card", event.event_type === "tap" ? "Tap" : "Review Click", new Date(event.created_at).toLocaleString("id-ID")];
     });
@@ -1115,7 +1122,7 @@ export default function DashboardPage() {
                       </button>
                       ))}
                     </div>
-                    <button type="button" onClick={exportAnalyticsCsv} disabled={selectedEventRows.length === 0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"><FileSpreadsheet size={15}/> Export CSV</button>
+                    <button type="button" onClick={exportAnalyticsCsv} disabled={periodEventRows.length === 0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"><FileSpreadsheet size={15}/> Export CSV · {chartPeriod} hari</button>
                   </div>
                 </div>
               </div>
