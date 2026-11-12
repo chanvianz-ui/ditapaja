@@ -12,6 +12,8 @@ export default defineConfig({
     },
     env: {
       ASSETS: bindings.assets(),
+      SUPABASE_SECRET_KEY: bindings.secret(),
+      ADMIN_USER_ID: bindings.secret(),
     },
   }),
 });
