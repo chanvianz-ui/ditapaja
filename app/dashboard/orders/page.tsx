@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Package, Plus, Loader2, Trash2, RefreshCw, AlertCircle, Search, Clock, CheckCircle2, ChevronDown, Copy, ExternalLink, Receipt, Printer, X, Download } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-type Order = { id: string; customer_name: string; customer_phone: string; product_name: string; quantity: number; unit_price: number; status: string; payment_status: "unpaid" | "paid" | "refunded"; shipping_courier: string | null; tracking_number: string | null; shipping_cost: number; paid_at: string | null; shipped_at: string | null; created_at: string; notes: string | null };
+type Order = { payment_method: "bank_transfer" | "qris" | "cash" | "other" | null; payment_reference: string | null; payment_proof_path: string | null; id: string; customer_name: string; customer_phone: string; product_name: string; quantity: number; unit_price: number; status: string; payment_status: "unpaid" | "paid" | "refunded"; shipping_courier: string | null; tracking_number: string | null; shipping_cost: number; paid_at: string | null; shipped_at: string | null; created_at: string; notes: string | null };
 const statuses = ["pending", "confirmed", "processing", "shipped", "completed", "cancelled"];
 const statusLabels: Record<string, string> = { pending: "Menunggu konfirmasi", confirmed: "Dikonfirmasi", processing: "Sedang diproses", shipped: "Dikirim", completed: "Selesai", cancelled: "Dibatalkan" };
 
@@ -33,10 +33,15 @@ export default function OrdersPage() {
   const [trackingNumber, setTrackingNumber] = useState("");
   const [shippingCost, setShippingCost] = useState("0");
   const [savingShipping, setSavingShipping] = useState(false);
+  const [paymentOrder, setPaymentOrder] = useState<Order | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<"bank_transfer" | "qris" | "cash" | "other">("bank_transfer");
+  const [paymentReference, setPaymentReference] = useState("");
+  const [paymentProof, setPaymentProof] = useState<File | null>(null);
+  const [savingPayment, setSavingPayment] = useState(false);
 
   async function loadOrders(uid: string) {
     const { data, error: loadError } = await supabase.from("ditapaja_orders")
-      .select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,payment_status,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes")
+      .select("id,customer_name,customer_phone,product_name,quantity,unit_price,status,payment_status,payment_method,payment_reference,payment_proof_path,shipping_courier,tracking_number,shipping_cost,paid_at,shipped_at,created_at,notes")
       .eq("user_id", uid).order("created_at", { ascending: false });
     if (loadError) {
       console.error("Order loading failed:", loadError);
@@ -98,6 +103,53 @@ export default function OrdersPage() {
     if (invoiceOrder?.id === order.id) setInvoiceOrder(current => current ? { ...current, payment_status, paid_at } : current);
     setSuccess(payment_status === "paid" ? "Pembayaran ditandai lunas." : payment_status === "refunded" ? "Pembayaran ditandai dikembalikan." : "Status pembayaran diperbarui.");
     setError("");
+  }
+
+  function openPayment(order: Order) {
+    setPaymentOrder(order);
+    setPaymentMethod(order.payment_method || "bank_transfer");
+    setPaymentReference(order.payment_reference || "");
+    setPaymentProof(null);
+    setError("");
+  }
+
+  async function savePayment(e: React.FormEvent) {
+    e.preventDefault();
+    if (!paymentOrder) return;
+    if (paymentReference.trim().length > 120) { setError("Referensi pembayaran maksimal 120 karakter."); return; }
+    if (paymentProof && (!["image/jpeg", "image/png", "image/webp", "application/pdf"].includes(paymentProof.type) || paymentProof.size > 5 * 1024 * 1024)) {
+      setError("Bukti pembayaran harus JPG, PNG, WEBP, atau PDF dengan ukuran maksimal 5 MB."); return;
+    }
+    setSavingPayment(true);
+    let proofPath = paymentOrder.payment_proof_path;
+    let uploadedPath: string | null = null;
+    if (paymentProof) {
+      const extension = paymentProof.type === "application/pdf" ? "pdf" : paymentProof.type.split("/")[1].replace("jpeg", "jpg");
+      uploadedPath = userId + "/" + paymentOrder.id + "/" + crypto.randomUUID() + "." + extension;
+      const { error: uploadError } = await supabase.storage.from("ditapaja-payment-proofs").upload(uploadedPath, paymentProof, { contentType: paymentProof.type, upsert: false });
+      if (uploadError) { setSavingPayment(false); setError("Bukti pembayaran gagal diunggah: " + uploadError.message); return; }
+      proofPath = uploadedPath;
+    }
+    const { error: updateError } = await supabase.from("ditapaja_orders").update({
+      payment_method: paymentMethod, payment_reference: paymentReference.trim() || null,
+      payment_proof_path: proofPath, updated_at: new Date().toISOString()
+    }).eq("id", paymentOrder.id).eq("user_id", userId);
+    if (updateError) {
+      if (uploadedPath) await supabase.storage.from("ditapaja-payment-proofs").remove([uploadedPath]);
+      setSavingPayment(false); setError("Data pembayaran gagal disimpan: " + updateError.message); return;
+    }
+    if (uploadedPath && paymentOrder.payment_proof_path) await supabase.storage.from("ditapaja-payment-proofs").remove([paymentOrder.payment_proof_path]);
+    const updated = { ...paymentOrder, payment_method: paymentMethod, payment_reference: paymentReference.trim() || null, payment_proof_path: proofPath };
+    setOrders(current => current.map(item => item.id === paymentOrder.id ? updated : item));
+    if (invoiceOrder?.id === paymentOrder.id) setInvoiceOrder(updated);
+    setPaymentOrder(null); setSavingPayment(false); setSuccess("Informasi pembayaran berhasil disimpan."); setError("");
+  }
+
+  async function viewPaymentProof(order: Order) {
+    if (!order.payment_proof_path) return;
+    const { data, error: signedError } = await supabase.storage.from("ditapaja-payment-proofs").createSignedUrl(order.payment_proof_path, 60);
+    if (signedError || !data?.signedUrl) { setError("Bukti pembayaran tidak dapat dibuka: " + (signedError?.message || "URL tidak tersedia")); return; }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
   }
 
   function openShipping(order: Order) {
@@ -280,7 +332,7 @@ export default function OrdersPage() {
                     {expandedOrder === order.id && (
                       <div className="mt-4 space-y-3 rounded-xl bg-slate-50 p-3">
                         <div className="flex items-center justify-between gap-2"><div className="min-w-0"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">ID Pesanan</p><p className="mt-1 break-all font-mono text-xs text-slate-700">{order.id}</p></div><button type="button" onClick={async () => { try { await navigator.clipboard.writeText(order.id); setCopiedOrder(order.id); } catch { setError("Tidak dapat menyalin ID pesanan."); } }} className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs font-semibold text-slate-600 hover:text-blue-600"><Copy size={13} />{copiedOrder === order.id ? "Tersalin" : "Salin"}</button></div>
-                        <div className="grid grid-cols-2 gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Status pesanan</p><p className="mt-1 text-sm font-semibold text-slate-700">{statusLabels[order.status] || order.status}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Pembayaran</p><p className={`mt-1 text-sm font-semibold ${order.payment_status === "paid" ? "text-emerald-700" : order.payment_status === "refunded" ? "text-slate-500" : "text-amber-700"}`}>{order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar"}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Ongkir</p><p className="mt-1 text-sm font-semibold text-slate-700">Rp{(order.shipping_cost || 0).toLocaleString("id-ID")}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Total tagihan</p><p className="mt-1 text-sm font-bold text-slate-900">Rp{(order.unit_price * order.quantity + (order.shipping_cost || 0)).toLocaleString("id-ID")}</p></div></div><div className="flex flex-wrap gap-2"><button type="button" onClick={() => updatePaymentStatus(order, order.payment_status === "paid" ? "unpaid" : "paid")} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">{order.payment_status === "paid" ? "Tandai belum dibayar" : "Tandai lunas"}</button><button type="button" onClick={() => updatePaymentStatus(order, "refunded")} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600">Tandai refund</button><button type="button" onClick={() => openShipping(order)} className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Atur pengiriman</button></div>{(order.shipping_courier || order.tracking_number) && <div className="rounded-lg border border-slate-200 bg-white p-3"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Informasi pengiriman</p><p className="mt-1 text-sm font-semibold text-slate-800">{order.shipping_courier || "Kurir belum diisi"}</p><p className="mt-1 break-all font-mono text-xs text-slate-600">Resi: {order.tracking_number || "Belum tersedia"}</p></div>}
+                        <div className="grid grid-cols-2 gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Status pesanan</p><p className="mt-1 text-sm font-semibold text-slate-700">{statusLabels[order.status] || order.status}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Pembayaran</p><p className={`mt-1 text-sm font-semibold ${order.payment_status === "paid" ? "text-emerald-700" : order.payment_status === "refunded" ? "text-slate-500" : "text-amber-700"}`}>{order.payment_status === "paid" ? "Lunas" : order.payment_status === "refunded" ? "Refund" : "Belum dibayar"}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Ongkir</p><p className="mt-1 text-sm font-semibold text-slate-700">Rp{(order.shipping_cost || 0).toLocaleString("id-ID")}</p></div><div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Total tagihan</p><p className="mt-1 text-sm font-bold text-slate-900">Rp{(order.unit_price * order.quantity + (order.shipping_cost || 0)).toLocaleString("id-ID")}</p></div></div><div className="flex flex-wrap gap-2"><button type="button" onClick={() => openPayment(order)} className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Atur pembayaran</button><button type="button" onClick={() => updatePaymentStatus(order, order.payment_status === "paid" ? "unpaid" : "paid")} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">{order.payment_status === "paid" ? "Tandai belum dibayar" : "Tandai lunas"}</button><button type="button" onClick={() => updatePaymentStatus(order, "refunded")} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600">Tandai refund</button><button type="button" onClick={() => openShipping(order)} className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Atur pengiriman</button></div>{order.payment_proof_path && <button type="button" onClick={() => viewPaymentProof(order)} className="rounded-lg border border-violet-200 bg-violet-50 px-3 py-2 text-xs font-semibold text-violet-700">Lihat bukti transfer</button>}{(order.shipping_courier || order.tracking_number) && <div className="rounded-lg border border-slate-200 bg-white p-3"><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Informasi pengiriman</p><p className="mt-1 text-sm font-semibold text-slate-800">{order.shipping_courier || "Kurir belum diisi"}</p><p className="mt-1 break-all font-mono text-xs text-slate-600">Resi: {order.tracking_number || "Belum tersedia"}</p></div>}
                         <a href={"https://wa.me/" + order.customer_phone.replace(/\D/g, "")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:underline"><ExternalLink size={13} /> Hubungi pelanggan via WhatsApp</a>
                         {order.notes && <div><p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Catatan pesanan</p><p className="mt-1 whitespace-pre-wrap text-xs leading-5 text-slate-600">{order.notes}</p></div>}
                       </div>
@@ -292,6 +344,21 @@ export default function OrdersPage() {
             )}
           </section>
         </div>
+        {paymentOrder && (
+          <div className="fixed inset-0 z-[70] flex items-end justify-center overflow-y-auto bg-slate-950/50 p-0 backdrop-blur-sm sm:items-center sm:p-5" onMouseDown={e => { if (e.target === e.currentTarget && !savingPayment) setPaymentOrder(null); }}>
+            <form onSubmit={savePayment} className="w-full max-w-lg rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-7">
+              <div className="mb-6 flex items-start justify-between gap-4"><div><p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-600">Payment details</p><h2 className="mt-1 text-xl font-bold text-slate-900">Informasi pembayaran</h2><p className="mt-1 text-xs text-slate-500">{paymentOrder.customer_name} · {paymentOrder.id.slice(0, 8)}</p></div><button type="button" disabled={savingPayment} onClick={() => setPaymentOrder(null)} aria-label="Tutup pembayaran" className="rounded-xl border border-slate-200 p-2 text-slate-500"><X size={18}/></button></div>
+              <div className="space-y-4">
+                <label className="block text-sm font-semibold text-slate-700">Metode pembayaran<select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value as typeof paymentMethod)} className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm font-normal outline-none focus:border-blue-400"><option value="bank_transfer">Transfer bank</option><option value="qris">QRIS</option><option value="cash">Tunai / COD</option><option value="other">Lainnya</option></select></label>
+                <label className="block text-sm font-semibold text-slate-700">Nomor referensi / catatan transfer<input value={paymentReference} onChange={e => setPaymentReference(e.target.value)} maxLength={120} placeholder="Contoh: nomor referensi transaksi" className="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm font-normal outline-none focus:border-blue-400"/></label>
+                <label className="block text-sm font-semibold text-slate-700">Bukti pembayaran <span className="font-normal text-slate-400">(opsional)</span><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={e => setPaymentProof(e.target.files?.[0] || null)} className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-xs font-normal file:mr-3 file:rounded-lg file:border-0 file:bg-blue-100 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-blue-700"/><span className="mt-1 block text-[11px] font-normal text-slate-400">JPG, PNG, WEBP, atau PDF · Maksimal 5 MB. File disimpan privat.</span></label>
+                {paymentOrder.payment_proof_path && <p className="text-xs text-violet-700">Sudah ada bukti pembayaran tersimpan. <button type="button" onClick={() => viewPaymentProof(paymentOrder)} className="font-semibold underline">Buka bukti saat ini</button></p>}
+                {paymentProof && <p className="text-xs text-slate-500">File baru: {paymentProof.name}</p>}
+              </div>
+              <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"><button type="button" disabled={savingPayment} onClick={() => setPaymentOrder(null)} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600">Batal</button><button type="submit" disabled={savingPayment} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50">{savingPayment ? <Loader2 size={16} className="animate-spin"/> : <CheckCircle2 size={16}/>} {savingPayment ? "Menyimpan..." : "Simpan pembayaran"}</button></div>
+            </form>
+          </div>
+        )}
         {shippingOrder && (
           <div className="fixed inset-0 z-[60] flex items-end justify-center overflow-y-auto bg-slate-950/50 p-0 backdrop-blur-sm sm:items-center sm:p-5" onMouseDown={e => { if (e.target === e.currentTarget && !savingShipping) setShippingOrder(null); }}>
             <form onSubmit={saveShipping} className="w-full max-w-lg rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-7">
