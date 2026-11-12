@@ -66,7 +66,7 @@ export async function POST(
       exp: Math.floor(Date.now() / 1000) + 300,
     })).toString("base64url");
     const signature = createHmac("sha256", secretKey).update(payload).digest("base64url");
-    const response = NextResponse.json({ url: "/c/" + code + "?preview=1" });
+    const response = NextResponse.json({ url: new URL("/c/" + code + "?preview=1", request.nextUrl.origin).toString() });
     response.cookies.set("ditapaja_preview_" + code, payload + "." + signature, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
