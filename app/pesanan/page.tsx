@@ -9,14 +9,14 @@ import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw 
 type Order = {
   id: string; customer_name: string; customer_email: string; customer_phone: string;
   product_name: string; quantity: number; unit_price: number; status: string;
-  payment_status: "unpaid" | "paid" | "refunded"; payment_method: string | null;
+  payment_status: "unpaid" | "pending_verification" | "paid" | "refunded"; payment_method: string | null;
   payment_reference: string | null; shipping_courier: string | null;
   tracking_number: string | null; shipping_cost: number; paid_at: string | null;
   shipped_at: string | null; created_at: string; notes: string | null;
 };
 type Activity = { id: string; order_id: string; title: string; description: string | null; created_at: string };
 const statusNames: Record<string,string> = { pending:"Menunggu konfirmasi", confirmed:"Dikonfirmasi", processing:"Sedang diproses", shipped:"Dalam pengiriman", completed:"Selesai", cancelled:"Dibatalkan" };
-const paymentNames: Record<string,string> = { unpaid:"Belum dibayar", paid:"Pembayaran berhasil", refunded:"Dana dikembalikan" };
+const paymentNames: Record<string,string> = { unpaid:"Belum dibayar", pending_verification:"Menunggu verifikasi admin", paid:"Pembayaran berhasil", refunded:"Dana dikembalikan" };
 const methodNames: Record<string,string> = { bank_transfer:"Transfer bank", qris:"QRIS", cash:"Tunai / COD", other:"Lainnya" };
 const money = (n:number) => "Rp" + n.toLocaleString("id-ID");
 
@@ -89,7 +89,7 @@ export default function CustomerOrdersPage() {
           <div className="rounded-2xl bg-slate-50 p-4">
             <div className="flex items-center gap-2 text-sm font-bold text-slate-800"><CreditCard size={16}/> Status pembayaran</div>
             <p className={"mt-2 text-sm font-bold "+(order.payment_status==="paid"?"text-emerald-700":order.payment_status==="refunded"?"text-slate-500":"text-amber-700")}>{paymentNames[order.payment_status] || "Menunggu verifikasi"}</p>
-            <p className="mt-1 text-xs leading-5 text-slate-500">{order.payment_status==="paid" ? "Pembayaran telah diperiksa dan dikonfirmasi oleh tim DiTapAja." : order.payment_status==="refunded" ? "Transaksi ini telah ditandai sebagai pengembalian dana." : "Pembayaran akan diperiksa secara manual oleh tim DiTapAja. Status akan diperbarui setelah verifikasi."}</p>
+            <p className="mt-1 text-xs leading-5 text-slate-500">{order.payment_status==="paid" ? "Pembayaran telah diperiksa dan dikonfirmasi oleh tim DiTapAja." : order.payment_status==="pending_verification" ? "Tim DiTapAja sedang memeriksa pembayaranmu. Status akan berubah setelah hasil pengecekan." : order.payment_status==="refunded" ? "Transaksi ini telah ditandai sebagai pengembalian dana." : "Belum ada konfirmasi pembayaran. Setelah pembayaran dilakukan, tim DiTapAja akan memeriksanya secara manual."}</p>
             {order.payment_method && <p className="mt-3 text-xs text-slate-600">Metode: {methodNames[order.payment_method] || order.payment_method}</p>}
             {order.payment_reference && <p className="mt-1 break-all text-xs text-slate-500">Referensi: {order.payment_reference}</p>}
             {order.paid_at && <p className="mt-1 text-xs text-slate-500">Diverifikasi: {new Date(order.paid_at).toLocaleString("id-ID")}</p>}
