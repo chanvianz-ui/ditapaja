@@ -36,6 +36,7 @@ import { supabase } from "../../lib/supabase";
 
 type Profile = {
   full_name: string | null;
+  business_name: string | null;
 };
 
 type NfcCard = {
@@ -396,7 +397,7 @@ export default function DashboardPage() {
         const [profileResult, initialCardsResult, locationsResult] = await Promise.all([
           supabase
             .from("profiles")
-            .select("full_name")
+            .select("full_name,business_name")
             .eq("id", data.user.id)
             .maybeSingle(),
 
@@ -809,6 +810,7 @@ export default function DashboardPage() {
 
   const displayName =
     profile?.full_name || email.split("@")[0] || "User";
+  const workspaceName = profile?.business_name?.trim() || displayName;
 
   const analyticsItems = [
     {
@@ -955,7 +957,7 @@ export default function DashboardPage() {
                   <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">DITAPAJA WORKSPACE</p>
                   <p className="mt-3 text-sm font-medium text-slate-500">Welcome back,</p>
                   <h2 className="mt-1 break-words text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
-                    {displayName} <span aria-hidden="true">👋</span>
+                    {workspaceName} <span aria-hidden="true">👋</span>
                   </h2>
                   <p className="mt-2 max-w-lg text-sm leading-6 text-slate-500">
                     Pantau performa kartu NFC, kelola pengalaman pelanggan, dan lihat perkembangan interaksi bisnismu.
