@@ -95,7 +95,7 @@ export default function DashboardPage() {
   const [showArchivedCards, setShowArchivedCards] = useState(false);
   const [selectedCardIds, setSelectedCardIds] = useState<string[]>([]);
   const [bulkActionBusy, setBulkActionBusy] = useState(false);
-  const [bulkLocationId, setBulkLocationId] = useState("");
+  const [bulkLocationId, setBulkLocationId] = useState("__choose__");
   const [bulkQrTheme, setBulkQrTheme] = useState<"light" | "dark">("light");
 
   const visibleCards = useMemo(() => {
@@ -358,7 +358,7 @@ export default function DashboardPage() {
     ctx.font = "700 34px Arial, sans-serif";
     ctx.fillText((card.card_name || "Review bisnis").slice(0, 32), 450, 225);
     const qrSize = 520;
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = qrBackground;
     ctx.fillRect((900 - qrSize) / 2 - 18, 270, qrSize + 36, qrSize + 36);
     ctx.drawImage(qrCanvas, (900 - qrSize) / 2, 288, qrSize, qrSize);
     ctx.fillStyle = qrForeground;
@@ -888,6 +888,14 @@ export default function DashboardPage() {
   async function handleBulkCardAction(action: "activate" | "deactivate" | "archive" | "move") {
     const targetCards = visibleCards.filter((card) => !card.archived_at && selectedCardIds.includes(card.id));
     if (!targetCards.length || bulkActionBusy) return;
+    if (action === "move" && bulkLocationId === "__choose__") {
+      setCardError("Pilih lokasi tujuan terlebih dahulu.");
+      return;
+    }
+    if (action === "archive") {
+      const confirmed = window.confirm(`Arsipkan ${targetCards.length} kartu terpilih? Semua kartu akan dinonaktifkan. Riwayat dan pengaturan tetap tersimpan dan dapat dipulihkan.`);
+      if (!confirmed) return;
+    }
     setBulkActionBusy(true);
     setCardError("");
     setCardMessage("");
@@ -1520,10 +1528,11 @@ export default function DashboardPage() {
                           <button type="button" onClick={() => handleBulkCardAction("deactivate")} disabled={bulkActionBusy} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 disabled:opacity-50">Nonaktifkan</button>
                           <div className="flex min-w-0 flex-1 items-center gap-2">
                             <select aria-label="Pindahkan ke lokasi" value={bulkLocationId} onChange={(event) => setBulkLocationId(event.target.value)} disabled={bulkActionBusy} className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-600">
+                              <option value="__choose__">Pilih lokasi tujuan...</option>
                               <option value="">Tanpa lokasi / bisnis utama</option>
                               {businessLocations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
                             </select>
-                            <button type="button" onClick={() => handleBulkCardAction("move")} disabled={bulkActionBusy} className="rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 disabled:opacity-50">Pindah</button>
+                            <button type="button" onClick={() => handleBulkCardAction("move")} disabled={bulkActionBusy || bulkLocationId === "__choose__"} className="rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-40">Pindah</button>
                           </div>
                           <button type="button" onClick={() => handleBulkCardAction("archive")} disabled={bulkActionBusy} className="rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-50">Arsipkan</button>
                           <button type="button" onClick={() => setSelectedCardIds([])} disabled={bulkActionBusy} className="rounded-lg px-2 py-2 text-xs font-semibold text-slate-500 hover:bg-white disabled:opacity-50">Batal pilih</button>
