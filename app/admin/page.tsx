@@ -18,6 +18,10 @@ import {
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
+type AdminOverviewResponse =
+  | { success: true; stats: AdminStats }
+  | { success: false; error?: string };
+
 type AdminStats = {
   totalUsers: number;
   totalCards: number;
@@ -74,7 +78,7 @@ export default function AdminPage() {
         cache: "no-store",
       });
 
-      const result = await response.json();
+      const result = (await response.json()) as AdminOverviewResponse;
 
       if (response.status === 401) {
         router.replace("/login");
