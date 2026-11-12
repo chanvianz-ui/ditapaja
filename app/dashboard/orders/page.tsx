@@ -166,7 +166,9 @@ export default function OrdersPage() {
   const pendingCount = orders.filter(order => order.status === "pending").length;
   const activeCount = orders.filter(order => ["confirmed", "processing", "shipped"].includes(order.status)).length;
   const completedCount = orders.filter(order => order.status === "completed").length;
-  const completedValue = orders.filter(order => order.status === "completed").reduce((sum, order) => sum + order.unit_price * order.quantity + (order.shipping_cost || 0), 0);\n  const unpaidCount = orders.filter(order => order.payment_status === "unpaid").length;\n  const unpaidValue = orders.filter(order => order.payment_status === "unpaid").reduce((sum, order) => sum + order.unit_price * order.quantity + (order.shipping_cost || 0), 0);
+  const completedValue = orders.filter(order => order.status === "completed").reduce((sum, order) => sum + order.unit_price * order.quantity + (order.shipping_cost || 0), 0);
+  const unpaidCount = orders.filter(order => order.payment_status === "unpaid").length;
+  const unpaidValue = orders.filter(order => order.payment_status === "unpaid").reduce((sum, order) => sum + order.unit_price * order.quantity + (order.shipping_cost || 0), 0);
 
   if (loading) return <div className="flex min-h-screen items-center justify-center"><Loader2 className="animate-spin text-blue-600" /></div>;
 
