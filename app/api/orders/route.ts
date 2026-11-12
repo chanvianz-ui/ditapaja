@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       "Alamat/kota pengiriman: " + destination,
       "Catatan pelanggan: " + (notes || "-"),
       "Sumber: Formulir pemesanan publik DiTapAja",
-    ].join("\\n");
+    ].join("\n");
 
     const { data, error } = await supabase.from("ditapaja_orders").insert({
       user_id: ownerUserId,
