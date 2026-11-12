@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle, Upload, Loader2, FileCheck2 } from "lucide-react";
+import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle, Upload, Loader2, FileCheck2, Receipt, Printer, X } from "lucide-react";
 
 type Order = {
   id: string; customer_name: string; customer_email: string; customer_phone: string;
@@ -32,6 +32,7 @@ export default function CustomerOrdersPage() {
   const [proofReference,setProofReference] = useState<Record<string,string>>({});
   const [proofError,setProofError] = useState<Record<string,string>>({});
   const [proofSuccess,setProofSuccess] = useState<Record<string,string>>({});
+  const [invoiceOrder,setInvoiceOrder] = useState<Order | null>(null);
 
   async function load() {
     setLoading(true); setError("");
@@ -153,7 +154,10 @@ export default function CustomerOrdersPage() {
       : <div className="space-y-5">{orders.map(order=><article key={order.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 p-5 sm:p-6">
           <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">ORDER · {order.id.slice(0,8).toUpperCase()}</p><h2 className="mt-2 text-lg font-bold text-slate-900">{order.product_name}</h2><p className="mt-1 text-xs text-slate-500">{new Date(order.created_at).toLocaleString("id-ID",{dateStyle:"long",timeStyle:"short"})}</p></div>
-          <span className={"rounded-full px-3 py-1.5 text-xs font-bold "+(order.status==="completed"?"bg-emerald-50 text-emerald-700":order.status==="cancelled"?"bg-slate-100 text-slate-500":"bg-blue-50 text-blue-700")}>{statusNames[order.status] || order.status}</span>
+          <div className="flex items-center gap-2">
+            <button type="button" onClick={() => setInvoiceOrder(order)} className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:text-blue-700"><Receipt size={14}/> Invoice</button>
+            <span className={"rounded-full px-3 py-1.5 text-xs font-bold "+(order.status==="completed"?"bg-emerald-50 text-emerald-700":order.status==="cancelled"?"bg-slate-100 text-slate-500":"bg-blue-50 text-blue-700")}>{statusNames[order.status] || order.status}</span>
+          </div>
         </div>
         {order.status === "cancelled" ? <div className="mx-5 mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-semibold text-slate-600 sm:mx-6">Pesanan ini telah dibatalkan. Hubungi tim DiTapAja jika membutuhkan bantuan.</div> : <div className="px-5 pt-5 sm:px-6">
           <div className="grid grid-cols-5 gap-1">
@@ -208,5 +212,92 @@ export default function CustomerOrdersPage() {
       </article>)}</div>}
       <p className="mt-8 text-center text-[11px] text-slate-400">© 2026 DiTapAja · Informasi pembayaran diperbarui setelah pengecekan manual.</p>
     </div>
+    {invoiceOrder && (
+      <div className="fixed inset-0 z-[100] flex items-end justify-center overflow-y-auto bg-slate-950/50 p-0 backdrop-blur-sm sm:items-center sm:p-5">
+        <section role="dialog" aria-modal="true" aria-labelledby="customer-invoice-title" className="w-full max-w-xl rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-8">
+          <div className="mb-5 flex items-center justify-between print:hidden">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-blue-600">DiTapAja</p>
+              <h2 id="customer-invoice-title" className="text-lg font-bold text-slate-900">Invoice pesanan</h2>
+            </div>
+            <button type="button" onClick={() => setInvoiceOrder(null)} aria-label="Tutup invoice" className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"><X size={18}/></button>
+          </div>
+
+          <div id="ditapaja-customer-invoice" className="rounded-xl border border-slate-200 p-5 sm:p-7">
+            <div className="flex items-start justify-between gap-4 border-b border-slate-200 pb-5">
+              <div>
+                <p className="text-lg font-black tracking-tight text-slate-900">DiTapAja</p>
+                <p className="mt-1 text-xs text-slate-500">NFC Review Card</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs font-bold uppercase tracking-widest text-blue-700">Invoice</p>
+                <p className="mt-1 text-xs text-slate-500">{new Date(invoiceOrder.created_at).toLocaleDateString("id-ID", { dateStyle: "long" })}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 py-5">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tagihan kepada</p>
+                <p className="mt-1 text-sm font-bold text-slate-900">{invoiceOrder.customer_name}</p>
+                <p className="mt-1 break-all text-xs text-slate-500">{invoiceOrder.customer_email}</p>
+                <p className="mt-1 text-xs text-slate-500">{invoiceOrder.customer_phone}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">ID Pesanan</p>
+                <p className="mt-1 break-all font-mono text-[10px] text-slate-700">{invoiceOrder.id}</p>
+                <p className="mt-1 text-xs font-semibold text-blue-700">{statusNames[invoiceOrder.status] || invoiceOrder.status}</p>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-lg border border-slate-200">
+              <div className="grid grid-cols-[1fr_auto] bg-slate-50 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                <span>Produk</span><span>Total</span>
+              </div>
+              <div className="grid grid-cols-[1fr_auto] gap-3 px-3 py-4 text-xs">
+                <div>
+                  <p className="font-semibold text-slate-900">{invoiceOrder.product_name}</p>
+                  <p className="mt-1 text-slate-500">{invoiceOrder.quantity} × {money(invoiceOrder.unit_price)}</p>
+                </div>
+                <p className="font-bold text-slate-900">{money(invoiceOrder.unit_price * invoiceOrder.quantity)}</p>
+              </div>
+              <div className="flex items-center justify-between border-t border-slate-200 px-3 py-2 text-xs">
+                <span>Ongkos kirim</span><span>{money(invoiceOrder.shipping_cost || 0)}</span>
+              </div>
+              <div className="flex items-center justify-between border-t border-slate-200 px-3 py-3">
+                <span className="text-xs font-bold text-slate-700">Total pesanan</span>
+                <span className="text-base font-black text-slate-900">{money(invoiceOrder.unit_price * invoiceOrder.quantity + (invoiceOrder.shipping_cost || 0))}</span>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-2 gap-3 rounded-lg bg-slate-50 p-3">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pembayaran</p>
+                <p className={"mt-1 text-xs font-bold " + (invoiceOrder.payment_status === "paid" ? "text-emerald-700" : invoiceOrder.payment_status === "refunded" ? "text-slate-500" : "text-amber-700")}>{paymentNames[invoiceOrder.payment_status] || "Belum dibayar"}</p>
+                {invoiceOrder.paid_at && <p className="mt-1 text-[10px] text-slate-500">Diverifikasi: {new Date(invoiceOrder.paid_at).toLocaleString("id-ID")}</p>}
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Metode pembayaran</p>
+                <p className="mt-1 text-xs font-semibold text-slate-700">{invoiceOrder.payment_method ? (methodNames[invoiceOrder.payment_method] || invoiceOrder.payment_method) : "Belum diatur"}</p>
+                {invoiceOrder.payment_reference && <p className="mt-1 break-all text-[10px] text-slate-500">Referensi: {invoiceOrder.payment_reference}</p>}
+              </div>
+              <div className="col-span-2 border-t border-slate-200 pt-3">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pengiriman</p>
+                <p className="mt-1 text-xs font-semibold text-slate-700">{invoiceOrder.shipping_courier || "Belum diatur"}</p>
+                {invoiceOrder.tracking_number && <p className="mt-1 break-all font-mono text-[10px] text-slate-500">Resi: {invoiceOrder.tracking_number}</p>}
+                {invoiceOrder.shipped_at && <p className="mt-1 text-[10px] text-slate-500">Dikirim: {new Date(invoiceOrder.shipped_at).toLocaleString("id-ID")}</p>}
+              </div>
+            </div>
+
+            <p className="mt-6 border-t border-dashed border-slate-200 pt-4 text-center text-[10px] leading-5 text-slate-400">Dokumen ini merupakan ringkasan pesanan, bukan bukti pembayaran.</p>
+          </div>
+
+          <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end print:hidden">
+            <button type="button" onClick={() => setInvoiceOrder(null)} className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600">Tutup</button>
+            <button type="button" onClick={() => window.print()} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700"><Printer size={16}/> Cetak / Simpan PDF</button>
+          </div>
+        </section>
+        <style jsx global>{`@page { size: A4; margin: 16mm; } @media print { body * { visibility: hidden !important; } #ditapaja-customer-invoice, #ditapaja-customer-invoice * { visibility: visible !important; } #ditapaja-customer-invoice { position: absolute !important; inset: 0 auto auto 0 !important; width: 100% !important; border: 0 !important; box-shadow: none !important; } }`}</style>
+      </div>
+    )}
   </main>;
 }
