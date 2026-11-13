@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle, Upload, Loader2, FileCheck2, Receipt, Printer, X } from "lucide-react";
+import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle, Upload, Loader2, FileCheck2, Receipt, Printer, Search, X } from "lucide-react";
 
 type Order = {
   id: string; customer_name: string; customer_email: string; customer_phone: string;
@@ -18,11 +18,23 @@ type Activity = { id: string; order_id: string; title: string; description: stri
 const statusNames: Record<string,string> = { pending:"Menunggu konfirmasi", confirmed:"Dikonfirmasi", processing:"Sedang diproses", shipped:"Dalam pengiriman", completed:"Selesai", cancelled:"Dibatalkan" };
 const paymentNames: Record<string,string> = { unpaid:"Belum dibayar", pending_verification:"Menunggu verifikasi admin", paid:"Pembayaran berhasil", refunded:"Dana dikembalikan" };
 const methodNames: Record<string,string> = { bank_transfer:"Transfer bank", qris:"QRIS", cash:"Tunai / COD", other:"Lainnya" };
+const orderFilters = [
+  { value: "all", label: "Semua" },
+  { value: "pending", label: "Menunggu" },
+  { value: "confirmed", label: "Dikonfirmasi" },
+  { value: "processing", label: "Diproses" },
+  { value: "shipped", label: "Dikirim" },
+  { value: "completed", label: "Selesai" },
+  { value: "cancelled", label: "Dibatalkan" },
+] as const;
+type OrderFilter = (typeof orderFilters)[number]["value"];
 const money = (n:number) => "Rp" + n.toLocaleString("id-ID");
 
 export default function CustomerOrdersPage() {
   const router = useRouter();
   const [orders,setOrders] = useState<Order[]>([]);
+  const [orderFilter,setOrderFilter] = useState<OrderFilter>("all");
+  const [orderSearch,setOrderSearch] = useState("");
   const [activities,setActivities] = useState<Record<string,Activity[]>>({});
   const [loading,setLoading] = useState(true);
   const [error,setError] = useState("");
@@ -129,6 +141,18 @@ export default function CustomerOrdersPage() {
 
   useEffect(()=>{ void load(); },[router]);
 
+  const normalizedSearch = orderSearch.trim().toLocaleLowerCase("id-ID");
+  const filteredOrders = orders.filter((order) => {
+    const matchesFilter = orderFilter === "all" || order.status === orderFilter;
+    const searchableText = [
+      order.id,
+      order.id.slice(0, 8),
+      order.product_name,
+      statusNames[order.status] || order.status,
+    ].join(" ").toLocaleLowerCase("id-ID");
+    return matchesFilter && (!normalizedSearch || searchableText.includes(normalizedSearch));
+  });
+
   return <main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6">
     <div className="mx-auto max-w-4xl">
       <header className="mb-8 flex items-center justify-between gap-3">
@@ -149,9 +173,44 @@ export default function CustomerOrdersPage() {
         </div>
       </div>
       {error && <div role="alert" className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">{error}</div>}
+      {!loading && orders.length > 0 && <section className="mb-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+        <label htmlFor="orderSearch" className="mb-2 block text-xs font-semibold text-slate-600">Cari pesanan</label>
+        <div className="relative">
+          <Search size={17} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"/>
+          <input
+            id="orderSearch"
+            type="search"
+            value={orderSearch}
+            onChange={(event) => setOrderSearch(event.target.value)}
+            placeholder="Cari nama produk atau ID pesanan..."
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
+          />
+        </div>
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter status pesanan">
+          {orderFilters.map((filter) => {
+            const count = filter.value === "all"
+              ? orders.length
+              : orders.filter((order) => order.status === filter.value).length;
+            const active = orderFilter === filter.value;
+            return <button
+              key={filter.value}
+              type="button"
+              onClick={() => setOrderFilter(filter.value)}
+              aria-pressed={active}
+              className={"inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition " + (active
+                ? "border-blue-600 bg-blue-600 text-white shadow-sm"
+                : "border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700")}
+            >
+              {filter.label}
+              <span className={"rounded-full px-1.5 py-0.5 text-[10px] tabular-nums " + (active ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500")}>{count}</span>
+            </button>;
+          })}
+        </div>
+      </section>}
       {loading ? <div className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white p-12 text-sm text-slate-500"><RefreshCw size={16} className="animate-spin"/> Memuat transaksi...</div>
       : orders.length === 0 ? <section className="rounded-3xl border border-slate-200 bg-white px-6 py-14 text-center shadow-sm"><Package size={32} className="mx-auto text-slate-300"/><h2 className="mt-4 text-lg font-bold text-slate-900">Belum ada pesanan</h2><p className="mt-2 text-sm text-slate-500">Pastikan kamu login menggunakan email yang sama dengan email saat checkout.</p><Link href="/koleksi" className="mt-6 inline-flex rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white">Lihat koleksi kartu</Link></section>
-      : <div className="space-y-5">{orders.map(order=><article key={order.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+      : filteredOrders.length === 0 ? <section className="rounded-3xl border border-slate-200 bg-white px-6 py-12 text-center shadow-sm"><Search size={28} className="mx-auto text-slate-300"/><h2 className="mt-4 text-base font-bold text-slate-900">Pesanan tidak ditemukan</h2><p className="mt-2 text-sm text-slate-500">Coba kata kunci lain atau ubah filter status pesanan.</p><button type="button" onClick={() => { setOrderSearch(""); setOrderFilter("all"); }} className="mt-5 rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:text-blue-700">Reset pencarian dan filter</button></section>
+      : <div className="space-y-5">{filteredOrders.map(order=><article key={order.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 p-5 sm:p-6">
           <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">ORDER · {order.id.slice(0,8).toUpperCase()}</p><h2 className="mt-2 text-lg font-bold text-slate-900">{order.product_name}</h2><p className="mt-1 text-xs text-slate-500">{new Date(order.created_at).toLocaleString("id-ID",{dateStyle:"long",timeStyle:"short"})}</p></div>
           <div className="flex items-center gap-2">
