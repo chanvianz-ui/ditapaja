@@ -117,16 +117,48 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
         <form className="order-form" onSubmit={submitOrder}>
           <div className="order-form-heading"><div><span>01 / PRODUK</span><h2>Detail pesanan</h2></div><small>* Wajib diisi</small></div>
           <label aria-hidden="true" className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden">Website<input tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)}/></label>
-          <label className="order-field">Pilih kartu
-            <select value={productKey} onChange={event => changeProduct(event.target.value)}>
-              <option value="noir">DiTapAja Noir — Rp50.000 / kartu</option>
-              <option value="blanc">DiTapAja Blanc — Rp50.000 / kartu</option>
-              <option value="signature">DiTapAja Signature — Rp60.000 / kartu</option>
-            </select>
-          </label>
-          <div className="order-product-summary"><span>{product.type}</span><b>{product.name}</b><small>{minimum > 1 ? "Minimum " + minimum + " kartu untuk desain custom." : "Minimum 1 kartu untuk Noir dan Blanc."}</small></div>
-          <div className="order-quantity-row"><div><b>Jumlah kartu</b><small>Minimum {minimum} kartu</small></div><div className="order-quantity"><button type="button" aria-label="Kurangi jumlah" disabled={quantity <= minimum} onClick={() => setQuantity(value => Math.max(minimum, value - 1))}><Minus size={15}/></button><output>{quantity}</output><button type="button" aria-label="Tambah jumlah" disabled={quantity >= 1000} onClick={() => setQuantity(value => Math.min(1000, value + 1))}><Plus size={15}/></button></div></div>
-          <div className="order-total"><span>Estimasi subtotal</span><b>{formatPrice(total)}</b><small>Belum termasuk ongkos kirim. Harga final dikonfirmasi oleh tim DiTapAja.</small></div>
+          <fieldset className="order-field order-product-field">
+            <legend>Pilih desain kartu</legend>
+            <div className="order-product-choices" role="group" aria-label="Pilihan desain kartu">
+              {(["noir", "blanc", "signature"] as ProductKey[]).map((key) => {
+                const option = products[key];
+                const selected = productKey === key;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    aria-pressed={selected}
+                    onClick={() => changeProduct(key)}
+                    className={"order-product-choice" + (selected ? " is-active" : "")}
+                  >
+                    <span className="order-product-choice-name">{option.name.replace("DiTapAja ", "")}</span>
+                    <strong>{formatPrice(option.price)}</strong>
+                    <small>per kartu · min. {option.minimum}</small>
+                    <span className="order-product-choice-state">{selected ? "Dipilih" : "Pilih desain"}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+          <div className="order-product-summary" aria-live="polite">
+            <span>{product.type}</span>
+            <b>{product.name}</b>
+            <small>{minimum > 1 ? "Minimum " + minimum + " kartu untuk desain custom." : "Minimum 1 kartu untuk Noir dan Blanc."}</small>
+          </div>
+          <div className="order-quantity-row">
+            <div><b>Jumlah kartu</b><small>Minimum {minimum} · Maksimal 1.000 kartu</small></div>
+            <div className="order-quantity">
+              <button type="button" aria-label="Kurangi jumlah kartu" disabled={quantity <= minimum} onClick={() => setQuantity(value => Math.max(minimum, value - 1))}><Minus size={15}/></button>
+              <output aria-live="polite">{quantity}</output>
+              <button type="button" aria-label="Tambah jumlah kartu" disabled={quantity >= 1000} onClick={() => setQuantity(value => Math.min(1000, value + 1))}><Plus size={15}/></button>
+            </div>
+          </div>
+          <div className="order-total" aria-live="polite">
+            <div className="order-total-line"><span>Harga per kartu</span><b>{formatPrice(product.price)}</b></div>
+            <div className="order-total-line"><span>Jumlah pesanan</span><b>{quantity} kartu</b></div>
+            <div className="order-total-line is-grand"><span>Estimasi subtotal</span><strong>{formatPrice(total)}</strong></div>
+            <small>Belum termasuk ongkos kirim. Harga final dan ketersediaan akan dikonfirmasi oleh tim DiTapAja.</small>
+          </div>
           <div className="order-form-heading order-customer-heading"><div><span>02 / DATA PEMESAN</span><h2>Ke mana kami menghubungimu?</h2></div></div>
           <div className="order-fields-grid">
             <label className="order-field">Nama bisnis<input required maxLength={120} autoComplete="organization" value={business} onChange={event => setBusiness(event.target.value)} placeholder="Contoh: Kopi Senja"/></label>
