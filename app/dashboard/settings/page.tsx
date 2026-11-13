@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   Settings,
   LockKeyhole,
+  Save,
   Eye,
   EyeOff,
   ShieldCheck,
@@ -26,7 +27,12 @@ export default function AccountSettingsPage() {
   const [saving, setSaving] = useState(false);
 
   const [email, setEmail] = useState("");
+  const [accountUserId, setAccountUserId] = useState("");
   const [fullName, setFullName] = useState("");
+  const [nameDraft, setNameDraft] = useState("");
+  const [savingName, setSavingName] = useState(false);
+  const [profileError, setProfileError] = useState("");
+  const [profileSuccess, setProfileSuccess] = useState("");
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -50,6 +56,7 @@ export default function AccountSettingsPage() {
         }
 
         setEmail(data.user.email ?? "");
+        setAccountUserId(data.user.id);
 
         const { data: profile } = await supabase
           .from("profiles")
@@ -57,11 +64,9 @@ export default function AccountSettingsPage() {
           .eq("id", data.user.id)
           .maybeSingle();
 
-        setFullName(
-          profile?.full_name ||
-          data.user.user_metadata?.full_name ||
-          ""
-        );
+        const currentName = profile?.full_name || data.user.user_metadata?.full_name || "";
+        setFullName(currentName);
+        setNameDraft(currentName);
       } catch (err) {
         console.error("Account loading error:", err);
         setError("Gagal memuat informasi akun.");
@@ -72,6 +77,61 @@ export default function AccountSettingsPage() {
 
     loadAccount();
   }, [router]);
+
+  async function handleSaveName(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setProfileError("");
+    setProfileSuccess("");
+
+    const trimmedName = nameDraft.trim();
+    if (!trimmedName) {
+      setProfileError("Nama lengkap tidak boleh kosong.");
+      return;
+    }
+    if (trimmedName.length > 100) {
+      setProfileError("Nama lengkap maksimal 100 karakter.");
+      return;
+    }
+    if (!accountUserId) {
+      setProfileError("Sesi akun tidak ditemukan. Silakan login ulang.");
+      return;
+    }
+
+    setSavingName(true);
+    try {
+      const { error: profileUpdateError } = await supabase
+        .from("profiles")
+        .upsert(
+          { id: accountUserId, full_name: trimmedName },
+          { onConflict: "id" }
+        );
+
+      if (profileUpdateError) throw profileUpdateError;
+
+      setFullName(trimmedName);
+
+      // Keep Auth metadata aligned with the profile row. The profile row remains
+      // the dashboard's primary source of truth if metadata sync is unavailable.
+      const { error: metadataError } = await supabase.auth.updateUser({
+        data: { full_name: trimmedName },
+      });
+
+      setProfileSuccess(
+        metadataError
+          ? "Nama profil tersimpan. Sinkronisasi metadata akun belum berhasil, tetapi dashboard tetap menggunakan nama profil."
+          : "Nama profil berhasil diperbarui."
+      );
+    } catch (err) {
+      console.error("Profile name update error:", err);
+      setProfileError(
+        err instanceof Error
+          ? "Nama profil gagal disimpan: " + err.message
+          : "Nama profil gagal disimpan. Silakan coba lagi."
+      );
+    } finally {
+      setSavingName(false);
+    }
+  }
 
   async function handleChangePassword(
     event: React.FormEvent<HTMLFormElement>
@@ -242,15 +302,60 @@ export default function AccountSettingsPage() {
             </div>
 
             <div className="mt-6 space-y-5">
-              <div>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  Full Name
-                </p>
-
-                <div className="rounded-xl border border-slate-100 bg-slate-50/80 px-4 py-3.5 text-sm font-semibold">
-                  {fullName || "Belum diatur"}
+              <form onSubmit={handleSaveName} className="space-y-3">
+                <div>
+                  <label
+                    htmlFor="accountFullName"
+                    className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-400"
+                  >
+                    Full Name
+                  </label>
+                  <input
+                    id="accountFullName"
+                    type="text"
+                    value={nameDraft}
+                    onChange={(event) => setNameDraft(event.target.value)}
+                    placeholder="Masukkan nama lengkap"
+                    maxLength={100}
+                    autoComplete="name"
+                    required
+                    disabled={savingName}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold outline-none transition placeholder:font-normal placeholder:text-slate-400 focus:border-blue-400 focus:ring-4 focus:ring-blue-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  />
+                  <p className="mt-2 text-[11px] text-slate-400">
+                    Nama ini digunakan untuk menyapa kamu di workspace DiTapAja.
+                  </p>
                 </div>
-              </div>
+
+                {profileError && (
+                  <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-xs leading-5 text-red-700">
+                    {profileError}
+                  </div>
+                )}
+                {profileSuccess && (
+                  <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-xs leading-5 text-emerald-700">
+                    {profileSuccess}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={savingName || !nameDraft.trim() || nameDraft.trim() === fullName}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 transition hover:border-blue-200 hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {savingName ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      Saving Name...
+                    </>
+                  ) : (
+                    <>
+                      <Save size={16} />
+                      Save Profile Name
+                    </>
+                  )}
+                </button>
+              </form>
 
               <div>
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
