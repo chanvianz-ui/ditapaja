@@ -202,6 +202,26 @@ export default function DashboardPage() {
     return selectedEventRows.filter((event) => new Date(event.created_at).getTime() >= start.getTime());
   }, [selectedEventRows, chartPeriod]);
 
+  // Measures unique visitors who tapped and then generated a review-link click
+  // during the selected period. It does not imply that a Google review was posted.
+  const periodVisitorConversion = useMemo(() => {
+    const tapVisitors = new Set<string>();
+    const reviewVisitors = new Set<string>();
+
+    for (const event of periodEventRows) {
+      if (!event.visitor_hash) continue;
+      if (event.event_type === "tap") tapVisitors.add(event.visitor_hash);
+      else if (event.event_type === "review_click") reviewVisitors.add(event.visitor_hash);
+    }
+
+    const convertedVisitors = [...reviewVisitors].filter((visitor) => tapVisitors.has(visitor)).length;
+    return {
+      visitors: tapVisitors.size,
+      convertedVisitors,
+      rate: tapVisitors.size > 0 ? (convertedVisitors / tapVisitors.size) * 100 : 0,
+    };
+  }, [periodEventRows]);
+
   const chartMax = Math.max(
     1,
     ...chartData.map((day) => Math.max(day.taps, day.clicks))
@@ -213,11 +233,21 @@ export default function DashboardPage() {
 
   // Aggregate analytics once per card instead of repeatedly scanning the full event list.
   const cardEventStats = useMemo(() => {
-    const stats = new Map<string, { taps: number; clicks: number; visitors: Set<string> }>();
+    const stats = new Map<string, {
+      taps: number;
+      clicks: number;
+      visitors: Set<string>;
+      reviewVisitors: Set<string>;
+    }>();
     for (const event of selectedEventRows) {
       let item = stats.get(event.card_id);
       if (!item) {
-        item = { taps: 0, clicks: 0, visitors: new Set<string>() };
+        item = {
+          taps: 0,
+          clicks: 0,
+          visitors: new Set<string>(),
+          reviewVisitors: new Set<string>(),
+        };
         stats.set(event.card_id, item);
       }
       if (event.event_type === "tap") {
@@ -225,6 +255,7 @@ export default function DashboardPage() {
         if (event.visitor_hash) item.visitors.add(event.visitor_hash);
       } else if (event.event_type === "review_click") {
         item.clicks += 1;
+        if (event.visitor_hash) item.reviewVisitors.add(event.visitor_hash);
       }
     }
     return stats;
@@ -291,7 +322,19 @@ export default function DashboardPage() {
       const stats = cardEventStats.get(card.id);
       const taps = stats?.taps ?? 0;
       const clicks = stats?.clicks ?? 0;
-      return { card, taps, clicks, visitors: stats?.visitors.size ?? 0, ctr: taps ? clicks / taps * 100 : 0 };
+      const visitors = stats?.visitors.size ?? 0;
+      const convertedVisitors = stats
+        ? [...stats.reviewVisitors].filter((visitor) => stats.visitors.has(visitor)).length
+        : 0;
+      return {
+        card,
+        taps,
+        clicks,
+        visitors,
+        ctr: taps ? clicks / taps * 100 : 0,
+        convertedVisitors,
+        visitorConversion: visitors ? (convertedVisitors / visitors) * 100 : 0,
+      };
     })
     .sort((a, b) => b.taps - a.taps), [cards, cardEventStats, selectedCardId, selectedLocationId]);
 
@@ -300,9 +343,29 @@ export default function DashboardPage() {
       const locationCards = cards.filter((card) => card.location_id === location.id);
       const cardIds = new Set(locationCards.map((card) => card.id));
       const events = eventRows.filter((event) => cardIds.has(event.card_id));
+      const tapVisitors = new Set(
+        events
+          .filter((event) => event.event_type === "tap" && event.visitor_hash)
+          .map((event) => event.visitor_hash as string)
+      );
+      const reviewVisitors = new Set(
+        events
+          .filter((event) => event.event_type === "review_click" && event.visitor_hash)
+          .map((event) => event.visitor_hash as string)
+      );
+      const convertedVisitors = [...reviewVisitors].filter((visitor) => tapVisitors.has(visitor)).length;
       const taps = events.filter((event) => event.event_type === "tap").length;
       const clicks = events.filter((event) => event.event_type === "review_click").length;
-      return { ...location, cardCount: locationCards.length, taps, clicks, ctr: taps ? clicks / taps * 100 : 0 };
+      return {
+        ...location,
+        cardCount: locationCards.length,
+        taps,
+        clicks,
+        ctr: taps ? clicks / taps * 100 : 0,
+        visitors: tapVisitors.size,
+        convertedVisitors,
+        visitorConversion: tapVisitors.size ? (convertedVisitors / tapVisitors.size) * 100 : 0,
+      };
     });
     return rows.sort((a, b) => b.taps - a.taps);
   }, [businessLocations, cards, eventRows]);
@@ -990,10 +1053,10 @@ export default function DashboardPage() {
       description: "Akumulasi klik review sepanjang waktu.",
     },
     {
-      label: "CTR",
+      label: "Click rate",
       value: `${displayedAnalytics.ctr.toFixed(1)}%`,
       icon: BarChart3,
-      description: "Rasio klik review dari seluruh tap.",
+      description: "Jumlah klik review dibanding jumlah tap (berbasis event).",
     },
   ];
 
@@ -1354,7 +1417,7 @@ export default function DashboardPage() {
                 </div>
                 <span className="text-[10px] text-slate-400">Periode: {chartPeriod} hari terakhir</span>
               </div>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4">
                   <p className="text-xs text-slate-500">Perubahan tap</p>
                   <p className="mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.tapChange === null ? "—" : `${analyticsInsights.tapChange > 0 ? "+" : ""}${analyticsInsights.tapChange.toFixed(1)}%`}</p>
@@ -1374,6 +1437,11 @@ export default function DashboardPage() {
                   <p className="text-xs text-slate-500">Kartu teratas</p>
                   <p className="mt-2 truncate text-lg font-bold text-slate-900">{analyticsInsights.topCard?.name || "Belum ada data"}</p>
                   <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.topCard ? `${analyticsInsights.topCard.taps} tap tercatat` : "Tidak ada tap pada filter ini"}</p>
+                </div>
+                <div className="rounded-xl border border-blue-100 bg-blue-50/60 p-4">
+                  <p className="text-xs font-semibold text-blue-800">Konversi pengunjung</p>
+                  <p className="mt-2 text-xl font-bold tabular-nums text-slate-900">{periodVisitorConversion.rate.toFixed(1)}%</p>
+                  <p className="mt-1 text-[10px] leading-4 text-slate-500">{periodVisitorConversion.convertedVisitors.toLocaleString("id-ID")} dari {periodVisitorConversion.visitors.toLocaleString("id-ID")} pengunjung unik membuka link review</p>
                 </div>
               </div>
               <p className="mt-4 text-[10px] leading-5 text-slate-400">Persentase perubahan tidak ditampilkan jika periode pembanding belum memiliki aktivitas. Insight ini merupakan ringkasan aktivitas, bukan jumlah ulasan Google yang dipublikasikan.</p>
@@ -1397,7 +1465,8 @@ export default function DashboardPage() {
                           <div className="flex items-center justify-between gap-4">
                             <div className="min-w-0">
                               <p className="truncate text-sm font-semibold text-slate-800">{location.name}</p>
-                              <p className="mt-1 text-xs text-slate-400">{location.cardCount} kartu · {location.clicks.toLocaleString("id-ID")} review clicks · CTR {location.ctr.toFixed(1)}%</p>
+                              <p className="mt-1 text-xs text-slate-400">{location.cardCount} kartu · {location.visitors.toLocaleString("id-ID")} visitors · {location.clicks.toLocaleString("id-ID")} clicks</p>
+                              <p className="mt-1 text-[10px] font-semibold text-blue-700">{location.visitorConversion.toFixed(1)}% pengunjung lanjut ke link review ({location.convertedVisitors.toLocaleString("id-ID")})</p>
                             </div>
                             <p className="shrink-0 text-lg font-bold tabular-nums text-slate-900">{location.taps.toLocaleString("id-ID")} <span className="text-[10px] font-medium text-slate-400">TAPS</span></p>
                           </div>
@@ -1416,7 +1485,7 @@ export default function DashboardPage() {
             {cards.length > 1 && (
               <section id="my-nfc-cards" className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
                 <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Perbandingan Kartu</h3><p className="mt-1 text-sm text-slate-500">Urutan kartu berdasarkan total tap yang tercatat.</p></div>
-                <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Visitors</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">CTR</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.visitors.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
+                <div className="overflow-x-auto"><table className="w-full min-w-[760px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Visitors</th><th className="px-4 py-3 font-semibold">Review visitors</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">Click rate</th><th className="px-4 py-3 font-semibold">Visitor conversion</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.visitors.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.convertedVisitors.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-4 py-3 tabular-nums font-semibold text-blue-700">{item.visitorConversion.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
               </section>
             )}
 
