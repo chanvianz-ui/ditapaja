@@ -239,7 +239,23 @@ export async function GET(
     .business, h1 { color: ${palette.text}; }
     .eyebrow, .description, .address, .status { color: ${palette.muted}; }
     .button { background: ${customPage.button_style === "outline" ? "transparent" : accentColor}; color: ${customPage.button_style === "outline" ? accentColor : "#ffffff"}; border: 1px solid ${accentColor}; box-shadow: none; }
-    .button.secondary { margin-top: 10px; }
+    .button.secondary {
+      margin-top: 10px;
+      background: transparent;
+      color: ${palette.text};
+      border: 1px solid ${accentColor}66;
+      box-shadow: none;
+    }
+    .button.secondary:hover {
+      background: ${accentColor}14;
+      color: ${palette.text};
+      filter: none;
+      box-shadow: none;
+    }
+    .button.secondary:focus-visible {
+      outline: 3px solid ${accentColor}66;
+      outline-offset: 3px;
+    }
     .rule { background: ${accentColor}55; }
   </style>` : ""}
 </head>
