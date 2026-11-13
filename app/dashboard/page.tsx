@@ -299,10 +299,16 @@ export default function DashboardPage() {
       ? (now === 0 ? 0 : null)
       : ((now - before) / before) * 100;
     const bestDay = [...chartData].sort((a, b) => b.taps - a.taps)[0];
+    const periodTapsByCard = new Map<string, number>();
+    for (const event of periodEventRows) {
+      if (event.event_type === "tap") {
+        periodTapsByCard.set(event.card_id, (periodTapsByCard.get(event.card_id) ?? 0) + 1);
+      }
+    }
     const cardTotals = cards
       .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
       .filter((card) => selectedLocationId === "all" || (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
-      .map((card) => ({ name: card.card_name || "Untitled Card", taps: cardEventStats.get(card.id)?.taps ?? 0 }))
+      .map((card) => ({ name: card.card_name || "Untitled Card", taps: periodTapsByCard.get(card.id) ?? 0 }))
       .sort((a, b) => b.taps - a.taps);
 
     return {
@@ -313,7 +319,7 @@ export default function DashboardPage() {
       bestDay: bestDay && bestDay.taps > 0 ? bestDay : null,
       topCard: cardTotals[0] && cardTotals[0].taps > 0 ? cardTotals[0] : null,
     };
-  }, [selectedEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId, cardEventStats]);
+  }, [selectedEventRows, periodEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId]);
 
   const cardPerformance = useMemo(() => cards
     .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
