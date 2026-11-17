@@ -24,6 +24,8 @@ export default function AddNewUserPage() {
   const router = useRouter();
 
   const [fullName, setFullName] = useState("");
+  const [accountType, setAccountType] = useState<"email" | "username">("email");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -38,8 +40,8 @@ export default function AddNewUserPage() {
 
     setError("");
 
-    if (!fullName.trim() || !email.trim() || !password) {
-      setError("Semua kolom wajib diisi.");
+    if (!fullName.trim() || !password || (accountType === "email" && !email.trim()) || (accountType === "username" && !username.trim())) {
+      setError("Lengkapi semua kolom yang diperlukan.");
       return;
     }
 
@@ -67,6 +69,8 @@ export default function AddNewUserPage() {
         },
         body: JSON.stringify({
           fullName: fullName.trim(),
+          accountType,
+          username: username.trim().toLowerCase(),
           email: email.trim().toLowerCase(),
           password,
         }),
@@ -96,7 +100,7 @@ export default function AddNewUserPage() {
     const credentials = [
       "DiTapAja - Informasi Login",
       `Nama: ${fullName}`,
-      `Email: ${email.trim().toLowerCase()}`,
+      accountType === "username" ? `Username: ${username.trim().toLowerCase()}` : `Email: ${email.trim().toLowerCase()}`,
       `Password sementara: ${password}`,
       "",
       "Silakan login dan ganti password setelah masuk.",
@@ -201,9 +205,9 @@ export default function AddNewUserPage() {
                   </div>
 
                   <div>
-                    <p className="text-xs text-slate-400">Email</p>
+                    <p className="text-xs text-slate-400">{accountType === "username" ? "Username" : "Email"}</p>
                     <p className="mt-1 break-all text-sm font-semibold">
-                      {email.trim().toLowerCase()}
+                      {accountType === "username" ? username.trim().toLowerCase() : email.trim().toLowerCase()}
                     </p>
                   </div>
 
@@ -263,8 +267,7 @@ export default function AddNewUserPage() {
               </h2>
 
               <p className="mt-2 text-sm leading-6 text-slate-500">
-                Create a new DiTapAja account and assign temporary
-                login credentials.
+                Buat akun dengan email atau username, lalu tentukan kredensial login.
               </p>
             </div>
 
@@ -283,6 +286,20 @@ export default function AddNewUserPage() {
 
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#155eef]">
                   <UserRound size={19} />
+                </div>
+              </div>
+
+              <div className="mb-7">
+                <label className="mb-3 block text-sm font-semibold text-slate-700">Account type</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button type="button" onClick={() => setAccountType("email")} disabled={loading}
+                    className={accountType === "email" ? "rounded-xl border border-[#315b43] bg-[#edf3e9] px-4 py-3 text-left text-[#315b43]" : "rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-slate-500"}>
+                    <span className="block text-sm font-semibold">Email account</span><span className="mt-1 block text-xs opacity-75">Login dengan email</span>
+                  </button>
+                  <button type="button" onClick={() => setAccountType("username")} disabled={loading}
+                    className={accountType === "username" ? "rounded-xl border border-[#315b43] bg-[#edf3e9] px-4 py-3 text-left text-[#315b43]" : "rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-slate-500"}>
+                    <span className="block text-sm font-semibold">Username account</span><span className="mt-1 block text-xs opacity-75">Tanpa email</span>
+                  </button>
                 </div>
               </div>
 
@@ -317,35 +334,33 @@ export default function AddNewUserPage() {
                 </div>
               </div>
 
-              {/* EMAIL */}
-              <div className="mb-5">
-                <label
-                  htmlFor="email"
-                  className="mb-2 block text-sm font-semibold text-slate-700"
-                >
-                  Email Address
-                </label>
-
-                <div className="relative">
-                  <Mail
-                    size={17}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
-                  <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(event) =>
-                      setEmail(event.target.value)
-                    }
-                    placeholder="user@example.com"
-                    required
-                    disabled={loading}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50 disabled:opacity-60"
-                  />
+              {/* USERNAME */}
+              {accountType === "username" && (
+                <div className="mb-5">
+                  <label htmlFor="username" className="mb-2 block text-sm font-semibold text-slate-700">Username</label>
+                  <div className="relative">
+                    <UserRound size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input id="username" type="text" value={username} onChange={(event) => setUsername(event.target.value.toLowerCase())}
+                      placeholder="e.g. admin" minLength={3} maxLength={24} pattern="[a-z0-9][a-z0-9._-]{2,23}"
+                      required disabled={loading} autoCapitalize="none" autoComplete="off"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50 disabled:opacity-60" />
+                  </div>
+                  <p className="mt-2 text-xs text-slate-400">3–24 karakter: huruf kecil, angka, titik, _ atau -.</p>
                 </div>
-              </div>
+              )}
+
+              {/* EMAIL */}
+              {accountType === "email" && (
+                <div className="mb-5">
+                  <label htmlFor="email" className="mb-2 block text-sm font-semibold text-slate-700">Email Address</label>
+                  <div className="relative">
+                    <Mail size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)}
+                      placeholder="user@example.com" required disabled={loading}
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50 disabled:opacity-60" />
+                  </div>
+                </div>
+              )}
 
               {/* PASSWORD */}
               <div className="mb-6">
@@ -408,9 +423,7 @@ export default function AddNewUserPage() {
                 />
 
                 <p className="text-xs leading-5 text-blue-800">
-                  Akun akan dibuat oleh Super Admin dan email akan
-                  otomatis terverifikasi. Berikan kredensial login
-                  kepada pengguna melalui jalur yang aman.
+                  Akun dibuat oleh Super Admin. Untuk akun username, pengguna bisa masuk tanpa alamat email. Bagikan kredensial melalui jalur yang aman.
                 </p>
               </div>
 
