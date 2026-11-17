@@ -3040,3 +3040,83 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .insight-metric-card .insi
     border-radius:20px;
   }
 }
+
+
+/* Workspace navigation system: consistent light/dark surfaces */
+.workspace-sidebar{
+  background:rgba(255,255,255,.96);
+  border-color:#e7ebf1;
+}
+.workspace-header{
+  background:rgba(255,255,255,.92);
+  border-color:#e7ebf1;
+}
+.workspace-mobile-nav{
+  position:sticky;
+  top:68px;
+  z-index:25;
+  scrollbar-width:none;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x proximity;
+  background:rgba(255,255,255,.96);
+  border-color:#e7ebf1;
+}
+.workspace-mobile-nav::-webkit-scrollbar{display:none}
+.workspace-mobile-nav a{
+  min-height:38px;
+  display:inline-flex;
+  align-items:center;
+  scroll-snap-align:start;
+  white-space:nowrap;
+}
+.workspace-sidebar nav a,
+.workspace-mobile-nav a{
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar{
+  background:#151e2a!important;
+  border-color:#2c3949!important;
+  box-shadow:none!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-header{
+  background:rgba(18,26,37,.94)!important;
+  border-color:#2c3949!important;
+  box-shadow:none!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-mobile-nav{
+  background:rgba(18,26,37,.97)!important;
+  border-color:#2c3949!important;
+  box-shadow:none!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar nav a:not(.bg-gradient-to-r){
+  color:#b5c0cf!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar nav a:not(.bg-gradient-to-r):hover{
+  background:#202a38!important;
+  color:#f3f6fb!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar nav a.bg-gradient-to-r{
+  background:#223552!important;
+  border-color:#38557e!important;
+  color:#b9ceff!important;
+  box-shadow:none!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-mobile-nav a{
+  color:#b5c0cf!important;
+  border-color:transparent!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-mobile-nav a[aria-current="page"]{
+  background:#223552!important;
+  border-color:#38557e!important;
+  color:#c5d6ff!important;
+}
+html[data-theme="light"] body:not(:has(.concept-home)) .workspace-mobile-nav a[aria-current="page"]{
+  background:#edf3ff;
+  border-color:#d8e5ff;
+  color:#2857c5;
+}
+@media(max-width:700px){
+  .workspace-header{min-height:64px;padding-top:10px;padding-bottom:10px}
+  .workspace-mobile-nav{top:64px;padding-top:9px;padding-bottom:9px}
+}
