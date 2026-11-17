@@ -119,18 +119,24 @@ export default function BusinessSettingsPage() {
     <main className="dt-business-page dt-workspace-page min-h-screen bg-[radial-gradient(ellipse_at_top,_#eaf1ff_0%,_#f7f9fc_40%,_#f7f9fc_100%)] px-4 py-6 text-slate-900 sm:px-8 sm:py-9">
       <div className="mx-auto max-w-6xl">
         <button onClick={() => router.push("/dashboard")} className="mb-6 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"><ArrowLeft size={17}/> Kembali ke Dashboard</button>
-        <div className="dt-business-hero mb-8 rounded-3xl border border-white/80 bg-white/85 p-6 shadow-[0_18px_55px_-35px_rgba(37,99,235,0.28)] backdrop-blur sm:p-8">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-600 shadow-sm ring-1 ring-blue-100"><Building2 size={23}/></div>
-          <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">Business Workspace</p>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Profil & Lokasi Bisnis</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">Kelola identitas bisnis dan cabang dalam satu akun DiTapAja. Data ini menjadi fondasi pengelolaan kartu multi-lokasi.</p>
+        <div className="dt-business-hero mb-8 grid gap-8 rounded-3xl p-6 sm:p-9 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+          <div className="relative z-10">
+            <div className="mb-7 flex items-center gap-3"><span className="grid h-12 w-12 place-items-center rounded-2xl border border-white/15 bg-white/10 text-emerald-100"><Building2 size={22}/></span><span className="text-[10px] font-bold uppercase tracking-[.24em] text-emerald-100/80">BUSINESS IDENTITY / 01</span></div>
+            <h1 className="max-w-2xl text-3xl font-semibold leading-[1.08] tracking-[-.055em] text-white sm:text-5xl">Satu identitas.<br/><span className="text-emerald-100/70">Semua lokasi.</span></h1>
+            <p className="mt-5 max-w-xl text-sm leading-7 text-white/65">Kelola informasi utama dan cabang bisnis yang terhubung dengan pengalaman NFC pelanggan.</p>
+          </div>
+          <div className="relative z-10 grid grid-cols-2 gap-3 lg:grid-cols-1">
+            <div className="rounded-2xl border border-white/10 bg-black/10 p-4 backdrop-blur"><span className="text-[10px] font-bold uppercase tracking-wider text-white/55">Lokasi terdaftar</span><strong className="mt-2 block text-3xl font-semibold tracking-tight text-white">{locations.length + 1}</strong><span className="mt-1 block text-[11px] text-white/50">Termasuk bisnis utama</span></div>
+            <div className="rounded-2xl border border-white/10 bg-black/10 p-4 backdrop-blur"><span className="text-[10px] font-bold uppercase tracking-wider text-white/55">Profil bisnis</span><strong className="mt-2 block text-lg font-semibold text-white">{businessName.trim() ? "Terisi" : "Belum lengkap"}</strong><span className="mt-1 block text-[11px] text-white/50">Identitas utama akun</span></div>
+          </div>
         </div>
 
         {(error || message) && <div className={`mb-5 flex items-start gap-2 rounded-xl border p-4 text-sm ${error ? "border-red-200 bg-red-50 text-red-700" : "border-emerald-200 bg-emerald-50 text-emerald-700"}`}>{error ? <AlertCircle size={18}/> : <CheckCircle2 size={18}/>}<span>{error || message}</span></div>}
 
-        <div className="grid items-start gap-4 sm:gap-6 lg:grid-cols-[1fr_1fr]">
+        <div className="mb-4 flex items-center justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#779078]">WORKSPACE</p><h2 className="mt-1 text-xl font-semibold tracking-tight text-[#203329]">Informasi bisnis</h2></div><span className="rounded-full border border-[#dce7d9] bg-white px-3 py-1.5 text-[10px] font-bold tracking-wide text-[#557b62]">SETUP & LOCATIONS</span></div>
+        <div className="grid items-start gap-5 lg:grid-cols-[.82fr_1.18fr]">
           <section className="dt-business-profile-panel dt-workspace-panel rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_18px_55px_-38px_rgba(15,23,42,0.24)] transition-shadow hover:shadow-lg sm:p-6">
-            <div className="mb-6 flex items-center gap-3"><Building2 className="text-blue-600"/><div><h2 className="font-bold">Business Profile</h2><p className="text-xs text-slate-400">Informasi utama bisnis kamu</p></div></div>
+            <div className="mb-7 border-b border-[#edf1eb] pb-5"><span className="text-[10px] font-bold uppercase tracking-[.18em] text-[#78917a]">01 / IDENTITY</span><div className="mt-3 flex items-center justify-between gap-3"><div><h2 className="text-lg font-semibold tracking-tight text-[#203329]">Profil utama</h2><p className="mt-1 text-xs text-slate-500">Informasi yang mewakili bisnis kamu</p></div><span className="grid h-10 w-10 place-items-center rounded-xl bg-[#edf4ec] text-[#557b62]"><Building2 size={19}/></span></div></div>
             <form onSubmit={saveProfile} className="dt-business-profile-form space-y-4">
               <label className="block text-sm font-semibold">Nama bisnis<input value={businessName} onChange={e=>setBusinessName(e.target.value)} maxLength={100} required placeholder="Contoh: Kopi Senja" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/></label>
                             <label className="block text-sm font-semibold">Nomor WhatsApp<input value={phone} onChange={e=>setPhone(e.target.value)} maxLength={30} placeholder="08xxxxxxxxxx" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/></label>
@@ -140,7 +146,7 @@ export default function BusinessSettingsPage() {
           </section>
 
           <section className="dt-business-locations-panel dt-workspace-panel rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-6">
-            <div className="mb-6 flex items-center gap-3"><MapPin className="text-blue-600"/><div><h2 className="font-bold">Business Locations</h2><p className="text-xs text-slate-400">Daftar cabang bisnis</p></div></div>
+            <div className="mb-7 flex items-end justify-between gap-3 border-b border-[#edf1eb] pb-5"><div><span className="text-[10px] font-bold uppercase tracking-[.18em] text-[#78917a]">02 / LOCATIONS</span><h2 className="mt-3 text-lg font-semibold tracking-tight text-[#203329]">Lokasi bisnis</h2><p className="mt-1 text-xs text-slate-500">Kelola cabang dan informasi kontaknya</p></div><span className="grid h-10 w-10 place-items-center rounded-xl bg-[#edf4ec] text-[#557b62]"><MapPin size={19}/></span></div>
             <form onSubmit={addLocation} className="dt-business-add-location mb-6 space-y-3 rounded-xl bg-slate-50 p-4">
               <p className="text-sm font-semibold">Tambah lokasi baru</p>
               <input value={locationName} onChange={e=>setLocationName(e.target.value)} maxLength={100} placeholder="Nama cabang, mis. Jakarta Selatan" className="w-full rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/>
