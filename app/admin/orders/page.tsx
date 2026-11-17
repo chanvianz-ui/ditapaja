@@ -1,3 +1,4 @@
+import AdminMenu from "@/app/admin/admin-menu";
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -82,7 +83,7 @@ export default function AdminOrdersPage() {
     <header className="sticky top-0 z-20 border-b border-[#e4e9e1] bg-[#fbfcf9]/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-4 sm:px-8">
         <div className="flex items-center gap-3"><button onClick={()=>router.push("/admin")} className="rounded-xl border border-[#e2e8df] p-2.5 text-[#587060] hover:bg-[#edf3e9]"><ArrowLeft size={18}/></button><div><p className="text-sm font-bold tracking-tight">DiTapAja</p><p className="text-xs text-[#849487]">Superadmin workspace</p></div></div>
-        <div className="flex items-center gap-2"><span className="hidden items-center gap-2 rounded-full bg-[#edf3e9] px-3 py-2 text-xs font-semibold text-[#315b43] sm:flex"><ShieldCheck size={15}/> Superadmin</span><button onClick={logout} className="rounded-xl border border-[#e2e8df] p-2.5 text-[#718176] hover:bg-white"><LogOut size={17}/></button></div>
+        <div className="flex items-center gap-2"><span className="hidden items-center gap-2 rounded-full bg-[#edf3e9] px-3 py-2 text-xs font-semibold text-[#315b43] sm:flex"><ShieldCheck size={15}/> Superadmin</span><AdminMenu /></div>
       </div>
     </header>
     <div className="mx-auto max-w-[1440px] px-4 py-7 sm:px-8 sm:py-10">
