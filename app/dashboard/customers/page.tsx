@@ -166,7 +166,7 @@ export default function CustomerInsightsPage() {
   const hasPeriodActivity = totalTaps > 0;
 
   return (
-    <main className="min-h-screen bg-[#f5f6f8] text-slate-950">
+    <main className="dt-customer-insights min-h-screen text-slate-950">
       <div className="mx-auto max-w-[1440px] px-4 py-5 sm:px-6 sm:py-8 xl:px-10">
         <header className="mb-7 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -184,7 +184,7 @@ export default function CustomerInsightsPage() {
           </div>
         </header>
 
-        <section className="relative isolate overflow-hidden rounded-[30px] bg-[#172b2a] p-6 text-white shadow-[0_28px_70px_-40px_rgba(15,40,38,.6)] sm:p-9 lg:p-11">
+        <section className="relative isolate overflow-hidden dt-ci-hero rounded-[30px] bg-[#172b2a] p-6 text-white shadow-[0_28px_70px_-40px_rgba(15,40,38,.6)] sm:p-9 lg:p-11">
           <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-32 h-80 w-80 rounded-full border border-white/10" />
           <div aria-hidden="true" className="pointer-events-none absolute -right-2 -top-14 h-64 w-64 rounded-full border border-white/10" />
           <div className="relative z-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
@@ -225,7 +225,7 @@ export default function CustomerInsightsPage() {
           </div>
           <div className="inline-flex w-fit rounded-xl border border-slate-200 bg-white p-1 shadow-sm" role="group" aria-label="Pilih periode aktivitas">
             {([7, 30, 90] as const).map((value) => (
-              <button key={value} onClick={() => setPeriod(value)} aria-pressed={period === value} className={`rounded-lg px-4 py-2 text-xs font-semibold transition ${period === value ? "bg-[#172b2a] text-white shadow-sm" : "text-slate-500 hover:bg-slate-50"}`}>
+              <button key={value} onClick={() => setPeriod(value)} aria-pressed={period === value} className={`rounded-lg px-4 py-2 text-xs font-semibold transition ${period === value ? "bg-[#254b3c] text-white shadow-sm" : "text-slate-500 hover:bg-slate-50"}`}>
                 {value} hari
               </button>
             ))}
@@ -239,7 +239,7 @@ export default function CustomerInsightsPage() {
         ) : (
           <>
             <section className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-              <article className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_12px_35px_-30px_rgba(15,23,42,.35)] sm:p-5">
+              <article className="dt-ci-panel rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_12px_35px_-30px_rgba(15,23,42,.35)] sm:p-5">
                 <div className="flex items-center justify-between"><span className="text-xs font-medium text-slate-500">Total interaksi</span><MousePointerClick size={17} className="text-slate-400" /></div>
                 <p className="mt-4 text-2xl font-semibold tracking-tight tabular-nums sm:text-3xl">{totalTaps.toLocaleString("id-ID")}</p>
                 <p className="mt-1 text-[11px] text-slate-400">Tap dalam {period} hari</p>
@@ -262,7 +262,7 @@ export default function CustomerInsightsPage() {
             </section>
 
             <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.55fr)_minmax(300px,.85fr)]">
-              <article className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_16px_45px_-34px_rgba(15,23,42,.3)] sm:p-7">
+              <article className="dt-ci-panel rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_16px_45px_-34px_rgba(15,23,42,.3)] sm:p-7">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div><p className="text-[10px] font-bold uppercase tracking-[.16em] text-slate-400">Engagement timeline</p><h3 className="mt-1 text-lg font-semibold">Ritme kunjungan</h3><p className="mt-1 text-xs text-slate-500">Jumlah tap per hari selama periode terpilih.</p></div>
                   <span className="rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-semibold text-slate-500">{period} hari terakhir</span>
@@ -272,7 +272,7 @@ export default function CustomerInsightsPage() {
                     {insights.daily.map((day, index) => (
                       <div key={day.key} title={`${day.label}: ${day.taps} tap`} className="flex h-full min-w-0 flex-1 flex-col justify-end">
                         <div className="flex flex-1 items-end justify-center">
-                          <div className={`w-full max-w-8 rounded-t-md transition-all duration-300 ${day.taps ? "bg-[#1c5550]" : "bg-slate-100"}`} style={{ height: day.taps ? `${Math.max(3, day.taps / insights.dailyMax * 100)}%` : "3px" }} />
+                          <div className={`w-full max-w-8 rounded-t-md transition-all duration-300 ${day.taps ? "bg-[#557b62]" : "bg-slate-100"}`} style={{ height: day.taps ? `${Math.max(3, day.taps / insights.dailyMax * 100)}%` : "3px" }} />
                         </div>
                         {(period === 7 || (period === 30 && index % 5 === 0) || (period === 90 && index % 15 === 0) || index === insights.daily.length - 1) && <span className="mt-3 truncate text-center text-[9px] text-slate-400 sm:text-[10px]">{day.label}</span>}
                       </div>
@@ -308,7 +308,7 @@ export default function CustomerInsightsPage() {
                   {insights.hours.map((count, hour) => <div key={hour} title={`${formatHour(hour)} · ${count} tap`} className="flex h-full flex-col justify-end"><div className={`min-h-[3px] rounded-t-sm ${count ? "bg-[#1c5550]" : "bg-slate-100"}`} style={{ height: count ? `${count / maxHour * 100}%` : "3px" }} /></div>)}
                 </div>
                 <div className="mt-3 flex justify-between text-[10px] text-slate-400"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div>
-                <div className="mt-5 rounded-xl bg-[#f1f6f4] p-4"><p className="text-[10px] font-bold uppercase tracking-wider text-[#47736d]">Jam terpadat</p><p className="mt-1 text-xl font-semibold text-[#173b37]">{hasAnyActivity ? formatHour(insights.peakHour) : "Belum tersedia"}</p></div>
+                <div className="mt-5 rounded-xl bg-[#eef4ed] p-4"><p className="text-[10px] font-bold uppercase tracking-wider text-[#557b62]">Jam terpadat</p><p className="mt-1 text-xl font-semibold text-[#254b3c]">{hasAnyActivity ? formatHour(insights.peakHour) : "Belum tersedia"}</p></div>
               </article>
 
               <article className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_16px_45px_-34px_rgba(15,23,42,.3)] sm:p-7">
@@ -320,10 +320,10 @@ export default function CustomerInsightsPage() {
               </article>
             </section>
 
-            <section className="mt-5 overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-[0_16px_45px_-34px_rgba(15,23,42,.3)]">
+            <section className="mt-5 overflow-hidden dt-ci-panel rounded-3xl border border-slate-200/80 bg-white shadow-[0_16px_45px_-34px_rgba(15,23,42,.3)]">
               <div className="flex flex-wrap items-end justify-between gap-3 border-b border-slate-100 px-5 py-5 sm:px-7">
                 <div><p className="text-[10px] font-bold uppercase tracking-[.16em] text-slate-400">Card performance</p><h3 className="mt-1 text-lg font-semibold">Kartu dengan interaksi tertinggi</h3><p className="mt-1 text-xs text-slate-500">Diurutkan berdasarkan jumlah tap selama 90 hari.</p></div>
-                <button onClick={() => router.push("/dashboard#cards")} className="inline-flex items-center gap-1 text-xs font-semibold text-[#1c5550] hover:text-[#123d38]">Kelola kartu <ArrowUpRight size={14} /></button>
+                <button onClick={() => router.push("/dashboard#cards")} className="inline-flex items-center gap-1 text-xs font-semibold text-[#557b62] hover:text-[#123d38]">Kelola kartu <ArrowUpRight size={14} /></button>
               </div>
               {insights.topCards.length ? <div className="divide-y divide-slate-100">{insights.topCards.slice(0, 6).map((card, index) => <div key={card.id} className="grid grid-cols-[32px_minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 sm:px-7"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-xs font-bold text-slate-500">{String(index + 1).padStart(2, "0")}</span><div className="min-w-0"><p className="truncate text-sm font-semibold text-slate-800">{card.card_name || "Untitled Card"}</p><p className="mt-1 text-[10px] text-slate-400">{card.active ? "Aktif" : "Nonaktif"} · {card.public_code}</p></div><div className="text-right"><p className="text-lg font-semibold tabular-nums">{card.taps.toLocaleString("id-ID")}</p><p className="text-[10px] text-slate-400">tap</p></div></div>)}</div> : <p className="px-5 py-8 text-center text-sm text-slate-400">Belum ada kartu untuk ditampilkan.</p>}
             </section>
