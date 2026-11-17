@@ -2951,3 +2951,35 @@ html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-amber-700"]{
     border-radius:12px;
   }
 }
+
+
+/* Targeted dark-theme contrast for dashboard insight tiles */
+html[data-theme="dark"] body:not(:has(.concept-home)) .insight-metric-card{
+  background:#202a38!important;
+  background-image:none!important;
+  border:1px solid #344154!important;
+  color:#edf1f6!important;
+  box-shadow:none!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .insight-metric-card .insight-metric-value{
+  color:#f3f6fb!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .insight-metric-card .insight-metric-label{
+  color:#b5c0cf!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .insight-metric-card .insight-metric-detail{
+  color:#91a0b3!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .card-readiness-warning{
+  background:#30291f!important;
+  border-color:#6c5634!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .card-readiness-warning p:first-child{
+  color:#f6d9a5!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .card-readiness-warning p:nth-child(2){
+  color:#e9cb94!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .card-readiness-warning p:nth-child(3){
+  color:#cdb17d!important;
+}
