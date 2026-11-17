@@ -32,13 +32,32 @@ export async function GET(request: NextRequest) {
 
     if (error) throw error;
 
-    const users = data.users.map((user) => ({
-      id: user.id,
-      email: user.email ?? "",
-      createdAt: user.created_at,
-      lastSignInAt: user.last_sign_in_at,
-      emailConfirmedAt: user.email_confirmed_at,
-    }));
+    const userIds = data.users.map((user) => user.id);
+    const { data: usernameRows, error: usernameError } = userIds.length
+      ? await supabase
+          .from("account_usernames")
+          .select("user_id, username")
+          .in("user_id", userIds)
+      : { data: [], error: null };
+
+    if (usernameError) throw usernameError;
+
+    const usernameById = new Map(
+      (usernameRows || []).map((row) => [row.user_id, row.username])
+    );
+
+    const users = data.users.map((user) => {
+      const username = usernameById.get(user.id) || null;
+      return {
+        id: user.id,
+        email: username ? "" : user.email ?? "",
+        username,
+        accountType: username ? "username" : "email",
+        createdAt: user.created_at,
+        lastSignInAt: user.last_sign_in_at,
+        emailConfirmedAt: username ? null : user.email_confirmed_at,
+      };
+    });
 
     return NextResponse.json({
       success: true,
@@ -77,51 +96,68 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const fullName = String(body.fullName || "").trim();
+    const accountType = body.accountType === "username" ? "username" : "email";
     const email = String(body.email || "").trim().toLowerCase();
+    const username = String(body.username || "").trim().toLowerCase();
     const password = String(body.password || "");
 
-    // Validate name
     if (!fullName || fullName.length > 100) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Nama wajib diisi, maksimal 100 karakter.",
-        },
+        { success: false, error: "Nama wajib diisi, maksimal 100 karakter." },
         { status: 400 }
       );
     }
 
-    // Validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Format email tidak valid.",
-        },
-        { status: 400 }
-      );
-    }
-
-    // Validate temporary password
     if (password.length < 8 || password.length > 72) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Password harus terdiri dari 8 sampai 72 karakter.",
-        },
+        { success: false, error: "Password harus terdiri dari 8 sampai 72 karakter." },
         { status: 400 }
       );
     }
 
-    // Create Supabase Auth user
+    let authEmail = email;
+
+    if (accountType === "username") {
+      if (!/^[a-z0-9][a-z0-9._-]{2,23}$/.test(username)) {
+        return NextResponse.json(
+          { success: false, error: "Username 3–24 karakter: huruf kecil, angka, titik, garis bawah, atau strip." },
+          { status: 400 }
+        );
+      }
+
+      authEmail = `${username}@accounts.ditapaja.invalid`;
+
+      const { data: existingUsername, error: usernameLookupError } = await supabase
+        .from("account_usernames")
+        .select("user_id")
+        .eq("username", username)
+        .maybeSingle();
+
+      if (usernameLookupError) throw usernameLookupError;
+      if (existingUsername) {
+        return NextResponse.json(
+          { success: false, error: "Username tersebut sudah digunakan." },
+          { status: 409 }
+        );
+      }
+    } else {
+      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return NextResponse.json(
+          { success: false, error: "Format email tidak valid." },
+          { status: 400 }
+        );
+      }
+    }
+
     const { data, error } = await supabase.auth.admin.createUser({
-      email,
+      email: authEmail,
       password,
       email_confirm: true,
       user_metadata: {
         full_name: fullName,
+        account_type: accountType,
+        ...(accountType === "username" ? { username } : {}),
       },
     });
 
@@ -133,33 +169,47 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           {
             success: false,
-            error: "Email tersebut sudah terdaftar.",
+            error: accountType === "username"
+              ? "Username tersebut sudah digunakan."
+              : "Email tersebut sudah terdaftar.",
           },
           { status: 409 }
         );
       }
-
       throw error;
     }
 
-    if (!data.user) {
-      throw new Error("User creation failed.");
+    if (!data.user) throw new Error("User creation failed.");
+
+    if (accountType === "username") {
+      const { error: mappingError } = await supabase
+        .from("account_usernames")
+        .insert({
+          user_id: data.user.id,
+          username,
+          auth_email: authEmail,
+        });
+
+      if (mappingError) {
+        await supabase.auth.admin.deleteUser(data.user.id);
+        if (mappingError.code === "23505") {
+          return NextResponse.json(
+            { success: false, error: "Username tersebut sudah digunakan." },
+            { status: 409 }
+          );
+        }
+        throw mappingError;
+      }
     }
 
-    // Save user profile
     const { error: profileError } = await supabase
       .from("profiles")
       .upsert(
-        {
-          id: data.user.id,
-          full_name: fullName,
-        },
+        { id: data.user.id, full_name: fullName },
         { onConflict: "id" }
       );
 
-    if (profileError) {
-      console.error("Profile creation error:", profileError);
-    }
+    if (profileError) console.error("Profile creation error:", profileError);
 
     return NextResponse.json(
       {
@@ -167,7 +217,9 @@ export async function POST(request: NextRequest) {
         message: "User berhasil dibuat.",
         user: {
           id: data.user.id,
-          email: data.user.email,
+          email: accountType === "email" ? data.user.email : "",
+          username: accountType === "username" ? username : null,
+          accountType,
           fullName,
           createdAt: data.user.created_at,
         },
