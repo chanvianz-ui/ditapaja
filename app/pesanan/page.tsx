@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle, Upload, Loader2, FileCheck2, Receipt, Printer, Search, X } from "lucide-react";
+import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle, Upload, Loader2, FileCheck2, Receipt, Printer, Search, X, Copy, Check } from "lucide-react";
 
 type Order = {
   id: string; customer_name: string; customer_email: string; customer_phone: string;
@@ -45,6 +45,7 @@ export default function CustomerOrdersPage() {
   const [proofError,setProofError] = useState<Record<string,string>>({});
   const [proofSuccess,setProofSuccess] = useState<Record<string,string>>({});
   const [invoiceOrder,setInvoiceOrder] = useState<Order | null>(null);
+  const [copiedTrackingOrder,setCopiedTrackingOrder] = useState<string | null>(null);
 
   async function load() {
     setLoading(true); setError("");
@@ -294,7 +295,19 @@ export default function CustomerOrdersPage() {
             </div> : null}
           </div>
         </div>
-        {(order.shipping_courier || order.tracking_number) && <div className="mx-5 mb-5 flex items-start gap-3 rounded-xl border border-slate-100 p-4 sm:mx-6"><Truck size={17} className="mt-0.5 text-slate-400"/><div className="min-w-0 text-xs"><b className="text-slate-800">{order.shipping_courier || "Pengiriman"}</b><p className="mt-1 text-slate-500">Nomor resi: <span className="break-all font-semibold text-slate-700">{order.tracking_number || "Belum tersedia"}</span></p>{order.shipped_at && <p className="mt-1 text-slate-400">Dikirim: {new Date(order.shipped_at).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}</p>}</div></div>}
+        {(order.shipping_courier || order.tracking_number || ["shipped","completed"].includes(order.status)) && <section className="mx-5 mb-5 overflow-hidden rounded-2xl border border-slate-200 bg-white sm:mx-6">
+          <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/80 px-4 py-3">
+            <div className="flex items-center gap-2"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-700"><Truck size={16}/></span><div><p className="text-xs font-extrabold text-slate-800">Informasi pengiriman</p><p className="mt-0.5 text-[10px] text-slate-400">Detail perjalanan pesananmu</p></div></div>
+            <span className={"rounded-full px-2.5 py-1 text-[10px] font-bold "+(order.tracking_number?"bg-emerald-50 text-emerald-700":"bg-amber-50 text-amber-700")}>{order.tracking_number?"Resi tersedia":"Menunggu resi"}</span>
+          </div>
+          <div className="grid gap-4 p-4 sm:grid-cols-2">
+            <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Kurir / ekspedisi</p><p className="mt-1.5 text-sm font-bold text-slate-800">{order.shipping_courier || "Belum diinformasikan"}</p></div>
+            <div><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tanggal dikirim</p><p className="mt-1.5 text-sm font-semibold text-slate-700">{order.shipped_at ? new Date(order.shipped_at).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"}) : "Belum dikirim"}</p></div>
+            <div className="sm:col-span-2"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Nomor resi</p>
+              {order.tracking_number ? <div className="mt-1.5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3"><span className="break-all font-mono text-sm font-bold tracking-wide text-slate-800">{order.tracking_number}</span><button type="button" onClick={async()=>{try{await navigator.clipboard.writeText(order.tracking_number || "");setCopiedTrackingOrder(order.id);window.setTimeout(()=>setCopiedTrackingOrder(current=>current===order.id?null:current),1800);}catch{setCopiedTrackingOrder(null);}}} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[11px] font-bold text-slate-600 transition hover:border-blue-200 hover:text-blue-700">{copiedTrackingOrder===order.id?<Check size={13}/>:<Copy size={13}/ >}{copiedTrackingOrder===order.id?"Tersalin":"Salin resi"}</button></div> : <p className="mt-1.5 rounded-xl border border-dashed border-slate-200 px-3 py-3 text-xs text-slate-500">Nomor resi akan ditampilkan di sini setelah pesanan diserahkan ke kurir.</p>}
+            </div>
+          </div>
+        </section>}
         <div className="px-5 pb-5 sm:px-6">
           <a href={"https://wa.me/6281321778081?text="+encodeURIComponent("Halo DiTapAja, saya ingin menanyakan pesanan "+order.id+".")} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100">
             <MessageCircle size={15}/> Bantuan terkait pesanan
