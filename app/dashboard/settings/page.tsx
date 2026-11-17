@@ -150,14 +150,14 @@ export default function AccountSettingsPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#f7f9fc]">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
         <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f9fc] text-[#17243b]">
+    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_#eff6ff_0%,_#f8fafc_44%,_#f8fafc_100%)] text-[#17243b]">
       {/* HEADER */}
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3.5 sm:px-8 sm:py-4">
@@ -193,7 +193,7 @@ export default function AccountSettingsPage() {
       </header>
 
       {/* CONTENT */}
-      <div className="mx-auto max-w-5xl px-4 py-6 sm:px-8 sm:py-9">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-8 sm:py-9">
         {/* BREADCRUMB */}
         <div className="mb-6 flex items-center gap-2 text-xs text-slate-400">
           <button
@@ -211,8 +211,8 @@ export default function AccountSettingsPage() {
         </div>
 
         {/* TITLE */}
-        <div className="mb-7">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-700 ring-1 ring-blue-100">
+        <div className="mb-8 rounded-3xl border border-white/80 bg-white/85 p-5 shadow-[0_12px_40px_-24px_rgba(37,99,235,0.28)] backdrop-blur sm:p-7">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/20">
             <Settings size={23} />
           </div>
 
@@ -225,9 +225,9 @@ export default function AccountSettingsPage() {
           </p>
         </div>
 
-        <div className="grid items-start gap-5 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="grid items-start gap-5 xl:grid-cols-[minmax(280px,0.85fr)_minmax(0,1.15fr)]">
           {/* ACCOUNT INFORMATION */}
-          <section className="h-fit rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-6">
+          <section className="h-fit rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_36px_-24px_rgba(15,23,42,0.28)] transition-shadow hover:shadow-md sm:p-6">
             <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                 <UserRound size={19} />
@@ -281,7 +281,7 @@ export default function AccountSettingsPage() {
           </section>
 
           {/* CHANGE PASSWORD */}
-          <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-7">
+          <section className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_36px_-24px_rgba(15,23,42,0.28)] transition-shadow hover:shadow-md sm:p-7">
             <div className="flex items-center gap-3 border-b border-slate-100 pb-5">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
                 <KeyRound size={19} />
