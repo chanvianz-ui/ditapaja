@@ -1,0 +1,76 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const username = String(body.username || "").trim().toLowerCase();
+    const password = String(body.password || "");
+
+    if (!/^[a-z0-9][a-z0-9._-]{2,23}$/.test(username) || !password) {
+      return NextResponse.json(
+        { success: false, error: "Username atau password salah." },
+        { status: 401 }
+      );
+    }
+
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const secretKey = process.env.SUPABASE_SECRET_KEY;
+
+    if (!url || !anonKey || !secretKey) {
+      console.error("Username login is missing Supabase configuration.");
+      return NextResponse.json(
+        { success: false, error: "Login username sedang tidak tersedia." },
+        { status: 503 }
+      );
+    }
+
+    const admin = createClient(url, secretKey, {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+    });
+    const auth = createClient(url, anonKey, {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+    });
+
+    const { data: account, error: lookupError } = await admin
+      .from("account_usernames")
+      .select("auth_email")
+      .eq("username", username)
+      .maybeSingle();
+
+    if (lookupError) throw lookupError;
+    if (!account?.auth_email) {
+      return NextResponse.json(
+        { success: false, error: "Username atau password salah." },
+        { status: 401 }
+      );
+    }
+
+    const { data, error } = await auth.auth.signInWithPassword({
+      email: account.auth_email,
+      password,
+    });
+
+    if (error || !data.session) {
+      return NextResponse.json(
+        { success: false, error: "Username atau password salah." },
+        { status: 401 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      session: {
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
+      },
+    });
+  } catch (error) {
+    console.error("Username login error:", error);
+    return NextResponse.json(
+      { success: false, error: "Login gagal. Silakan coba lagi." },
+      { status: 500 }
+    );
+  }
+}
