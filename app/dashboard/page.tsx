@@ -1380,7 +1380,7 @@ export default function DashboardPage() {
             </section>
 
             {businessLocations.length > 0 && (
-              <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
+              <section className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm">
                 <div className="border-b border-slate-100 px-6 py-5">
                   <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">BUSINESS ANALYTICS</p>
                   <h3 className="mt-1 font-bold text-slate-900">Perbandingan Per Cabang</h3>
@@ -1389,7 +1389,7 @@ export default function DashboardPage() {
                 {locationPerformance.length === 0 ? (
                   <p className="px-6 py-6 text-sm text-slate-400">Belum ada lokasi bisnis yang dapat dibandingkan.</p>
                 ) : (
-                  <div className="divide-y divide-slate-100">
+                  <div className="space-y-3 bg-slate-50/60 p-3 sm:p-4">
                     {locationPerformance.map((location) => {
                       const maxTaps = Math.max(1, ...locationPerformance.map((item) => item.taps));
                       return (
@@ -1474,7 +1474,7 @@ export default function DashboardPage() {
               id="cards"
               className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm"
             >
-              <div className="flex flex-col items-start gap-4 border-b border-slate-100 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+              <div className="flex flex-col items-start gap-4 border-b border-slate-100 bg-gradient-to-br from-white to-slate-50/70 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                 <div>
                   <h3 className="font-bold">My NFC Cards</h3>
                   <p className="mt-1 text-sm text-slate-500">
@@ -1580,7 +1580,7 @@ export default function DashboardPage() {
               ) : (
                 <div className="divide-y divide-slate-100">
                   {visibleCards.length === 0 ? (
-                    <div className="px-5 py-10 text-center">
+                    <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-5 py-10 text-center">
                       <p className="text-sm font-semibold text-slate-700">Tidak ada kartu yang cocok</p>
                       <p className="mt-1 text-xs text-slate-500">Coba status lain atau ubah kata kunci pencarian.</p>
                       <button type="button" onClick={() => { setCardSearch(""); setCardStatusFilter("all"); }} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">Reset filter</button>
@@ -1588,7 +1588,7 @@ export default function DashboardPage() {
                   ) : visibleCards.map((card) => (
                     <div
                       key={card.id}
-                      className="flex flex-col justify-between gap-4 p-4 transition-colors hover:bg-blue-50/30 sm:flex-row sm:items-center sm:p-5"
+                      className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition-all hover:border-blue-200 hover:shadow-md sm:flex-row sm:items-center sm:p-5"
                     >
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
