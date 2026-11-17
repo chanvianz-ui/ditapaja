@@ -104,7 +104,9 @@ export default function AdminUserDetailPage() {
   const [cards, setCards] = useState<UserCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState("");\n  const [statusLoading, setStatusLoading] = useState(false);\n  const [statusMessage, setStatusMessage] = useState("");
+  const [error, setError] = useState("");
+  const [statusLoading, setStatusLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
 
   const loadDetails = useCallback(async () => {
     setError("");
@@ -291,7 +293,11 @@ export default function AdminUserDetailPage() {
           </button>
         </div>
 
-        {statusMessage && (\n          <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{statusMessage}</div>\n        )}\n\n        {error && (
+        {statusMessage && (
+          <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{statusMessage}</div>
+        )}
+
+        {error && (
           <div className="mb-6 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
             <AlertCircle size={18} className="shrink-0" />
             {error}
