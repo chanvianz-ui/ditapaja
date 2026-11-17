@@ -5460,3 +5460,359 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
   .dt-workspace-page:has(.dt-orders-hero) .grid.grid-cols-2>div,
   .dt-workspace-page:has(.dt-orders-hero) .grid.md\:grid-cols-4>div{min-height:115px!important;padding:15px!important;border-radius:17px!important}
 }
+
+
+/* IMMERSIVE BRAND SYSTEM — storefront, authentication, settings and admin */
+.concept-home{
+  --ink:#172a20;--moss:#244b35;--leaf:#dce9d6;--paper:#f5f6f0;
+  background:var(--paper)!important;color:var(--ink)!important;
+  overflow:clip
+}
+.concept-home .concept-hero{
+  min-height:min(850px,calc(100svh - 70px))!important;
+  padding:clamp(28px,5vw,76px) clamp(20px,6.2vw,100px) 25px!important;
+  background:
+    radial-gradient(ellipse at 76% 18%,rgba(190,218,172,.16),transparent 27%),
+    radial-gradient(ellipse at 4% 92%,rgba(111,151,111,.17),transparent 30%),
+    linear-gradient(128deg,#10241c 0%,#193728 54%,#2c5038 100%)!important;
+  position:relative!important;isolation:isolate
+}
+.concept-home .concept-hero:before{
+  content:"";position:absolute;inset:0;z-index:-1;opacity:.15;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:linear-gradient(110deg,transparent 12%,#000 100%)
+}
+.concept-home .concept-hero-grid{
+  max-width:1600px!important;min-height:680px!important;grid-template-columns:minmax(0,1.03fr) minmax(420px,.97fr)!important;
+  gap:clamp(25px,5vw,90px)!important;align-items:center!important
+}
+.concept-home .concept-hero-copy{max-width:760px!important;padding:30px 0!important}
+.concept-home .concept-eyebrow{font-size:10px!important;letter-spacing:.19em!important;color:#c2d5bd!important}
+.concept-home .concept-eyebrow span{background:#a6c69b!important;box-shadow:0 0 0 5px rgba(166,198,155,.13)!important}
+.concept-home .concept-hero-copy h1{
+  max-width:850px!important;margin:28px 0!important;font-size:clamp(58px,7.2vw,104px)!important;
+  line-height:.91!important;letter-spacing:-.085em!important;font-weight:700!important;color:#f4f6ef!important
+}
+.concept-home .concept-hero-copy h1 em{color:#b9d1ad!important;font-weight:500!important}
+.concept-home .concept-lead{max-width:490px!important;color:rgba(238,245,234,.72)!important;font-size:16px!important;line-height:1.8!important}
+.concept-home .concept-hero-actions{margin-top:34px!important;gap:13px!important}
+.concept-home .concept-button{
+  min-height:56px!important;padding:0 23px!important;border-radius:4px!important;
+  background:#dce9d6!important;color:#1a3827!important;font-weight:700!important;
+  box-shadow:0 16px 35px -22px rgba(0,0,0,.75)!important
+}
+.concept-home .concept-quiet-link{color:#e1eadc!important;padding:12px 8px!important}
+.concept-home .concept-proof{margin-top:42px!important;gap:13px 22px!important}
+.concept-home .concept-proof span{color:rgba(236,245,232,.7)!important;font-size:10px!important;letter-spacing:.02em}
+.concept-home .concept-proof svg{color:#b9d1ad!important}
+.concept-home .concept-hero-stage{min-height:590px!important;transform:scale(1.04)!important}
+.concept-home .concept-stage-circle{
+  width:min(38vw,510px)!important;height:min(38vw,510px)!important;
+  border:1px solid rgba(219,236,211,.19)!important;box-shadow:0 0 0 38px rgba(219,236,211,.025),0 0 0 76px rgba(219,236,211,.02)!important
+}
+.concept-home .concept-hero-card{transform:rotate(-9deg) translate(-7%,0)!important;filter:drop-shadow(0 48px 55px rgba(0,0,0,.45))!important}
+.concept-home .concept-card-back{transform:rotate(10deg) translate(12%,8%)!important;filter:drop-shadow(0 30px 35px rgba(0,0,0,.32))!important}
+.concept-home .simple-card{border-radius:15px!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)!important}
+.concept-home .concept-stage-chip{
+  padding:15px 19px!important;border:1px solid rgba(237,246,231,.18)!important;
+  border-radius:8px!important;background:rgba(13,34,24,.72)!important;backdrop-filter:blur(18px)!important
+}
+.concept-home .concept-stage-index,.concept-home .concept-stage-label{color:rgba(233,243,228,.7)!important;letter-spacing:.16em!important}
+.concept-home .concept-hero-bottom{
+  max-width:1600px!important;border-top:1px solid rgba(232,243,225,.18)!important;
+  color:rgba(235,244,230,.56)!important;padding-top:19px!important;font-size:9px!important;letter-spacing:.16em!important
+}
+.concept-home .benefit-slider{
+  background:#dce8d6!important;border-block:1px solid #cbdcc5!important;padding:9px 0!important
+}
+.concept-home .benefit-slide{padding:23px 32px!important;border-right:1px solid rgba(40,73,48,.14)!important}
+.concept-home .benefit-slide-icon{color:#31563b!important}
+.concept-home .benefit-slide h3{font-size:13px!important;letter-spacing:-.025em!important;color:#203b29!important}
+.concept-home .benefit-slide p{font-size:11px!important;color:#627765!important}
+.concept-home .concept-collection{
+  padding:clamp(76px,10vw,150px) clamp(20px,7vw,112px)!important;
+  background:#f4f5ef!important
+}
+.concept-home .concept-section-top{
+  max-width:1450px!important;margin:0 auto 58px!important;align-items:end!important;
+  grid-template-columns:1fr minmax(260px,.52fr)!important;gap:50px!important
+}
+.concept-home .concept-section-top h2,.concept-home .concept-experience-head h2{
+  margin-top:20px!important;font-size:clamp(48px,6vw,82px)!important;line-height:.98!important;
+  letter-spacing:-.075em!important;color:#203629!important
+}
+.concept-home .concept-section-top h2 em,.concept-home .concept-experience-head h2 em{color:#769477!important}
+.concept-home .concept-section-top>p{max-width:420px!important;font-size:14px!important;line-height:1.85!important;color:#738074!important}
+.concept-home .concept-collection-foot{
+  max-width:1450px!important;margin:35px auto 0!important;padding-top:21px!important;
+  border-top:1px solid #dce3d8!important;color:#788477!important
+}
+.concept-home .concept-experience{
+  padding:clamp(76px,9vw,132px) clamp(20px,7vw,112px)!important;
+  background:#e8eee3!important
+}
+.concept-home .concept-experience-head{max-width:1450px!important;margin:0 auto 62px!important}
+.concept-home .concept-flow{
+  max-width:1450px!important;margin:auto!important;gap:0!important;align-items:stretch!important
+}
+.concept-home .concept-flow article{
+  flex:1!important;min-height:275px!important;padding:30px!important;
+  border:1px solid #d4dfd0!important;background:rgba(250,252,247,.7)!important;
+  border-radius:3px!important;position:relative!important
+}
+.concept-home .concept-step-no{font-size:11px!important;letter-spacing:.15em!important;color:#8a9c87!important}
+.concept-home .concept-step-icon{
+  width:54px!important;height:54px!important;margin:32px 0 25px!important;
+  border-radius:50%!important;background:#dce8d6!important;color:#31563b!important
+}
+.concept-home .concept-flow article h3{font-size:22px!important;letter-spacing:-.05em!important;color:#203629!important}
+.concept-home .concept-flow article p{max-width:270px!important;color:#718071!important;line-height:1.8!important}
+.concept-home .concept-flow-line{width:36px!important;flex:0 0 36px!important;height:1px!important;background:#b8c9b3!important;align-self:center!important}
+.concept-home .concept-experience-note{
+  max-width:1450px!important;margin:28px auto 0!important;padding:17px 20px!important;
+  background:rgba(255,255,255,.55)!important;border:1px solid #d4dfd0!important;color:#617361!important
+}
+.concept-home .concept-dashboard{
+  padding:clamp(75px,9vw,135px) clamp(20px,7vw,112px)!important;
+  background:#f7f8f4!important;gap:clamp(35px,7vw,110px)!important
+}
+.concept-home .concept-dashboard-copy h2{
+  font-size:clamp(46px,5.7vw,76px)!important;line-height:.98!important;letter-spacing:-.075em!important;color:#203629!important
+}
+.concept-home .concept-dashboard-copy h2 em{color:#789477!important}
+.concept-home .concept-dashboard-copy>p{color:#718071!important;line-height:1.8!important}
+.concept-home .concept-dashboard-copy li{padding:12px 0!important;border-bottom:1px solid #e3e9df!important;color:#526653!important}
+.concept-home .concept-dashboard-link{display:inline-flex!important;margin-top:28px!important;padding:16px 22px!important;background:#203c2b!important;color:#f0f5ec!important;border-radius:3px!important}
+.concept-home .concept-dashboard-frame{
+  border:1px solid #dce5d9!important;border-radius:5px!important;background:#fff!important;
+  box-shadow:0 45px 100px -60px rgba(24,54,34,.55)!important;transform:rotate(1.5deg)!important
+}
+.concept-home .concept-dash-top{padding:20px 24px!important;border-bottom:1px solid #e7ece4!important}
+.concept-home .concept-dash-welcome{padding:26px 28px 12px!important}
+.concept-home .concept-dash-welcome h3{font-size:25px!important;letter-spacing:-.06em!important}
+.concept-home .concept-dash-metrics{padding:12px 28px!important;gap:12px!important}
+.concept-home .concept-dash-metrics>div{padding:19px!important;border:1px solid #e5ebe2!important;border-radius:3px!important;background:#fbfcfa!important}
+.concept-home .concept-dash-chart{margin:14px 28px 28px!important;padding:22px!important;border:1px solid #e5ebe2!important;border-radius:3px!important}
+.concept-home .concept-dash-sticker{border-radius:3px!important;background:#dce9d6!important;color:#264b32!important}
+.concept-home .concept-faq{
+  padding:clamp(75px,9vw,130px) clamp(20px,7vw,112px)!important;
+  background:#e9eee5!important;gap:clamp(35px,8vw,130px)!important
+}
+.concept-home .concept-faq h2{font-size:clamp(45px,5.5vw,72px)!important;line-height:.98!important;letter-spacing:-.075em!important;color:#203629!important}
+.concept-home .concept-faq h2 em{color:#789477!important}
+.concept-home .concept-faq-list details{padding:23px 0!important;border-color:#cfdacb!important}
+.concept-home .concept-faq-list summary{font-size:15px!important;color:#2a4432!important}
+.concept-home .concept-faq-list details p{max-width:600px!important;color:#6b7c6c!important;line-height:1.8!important}
+.concept-home .concept-final{
+  min-height:470px!important;padding:clamp(65px,9vw,125px) 20px!important;
+  background:linear-gradient(125deg,#12271e,#234832 62%,#355b3d)!important
+}
+.concept-home .concept-final h2{font-size:clamp(42px,6vw,78px)!important;line-height:.98!important;letter-spacing:-.075em!important}
+.concept-home .concept-final h2 em{color:#b9d1ad!important}
+.concept-home .concept-final-button{border-radius:3px!important;background:#dce9d6!important;color:#1b3927!important;padding:17px 24px!important}
+.concept-home .concept-footer{padding:27px clamp(20px,7vw,112px)!important;background:#10241b!important;color:#a8b9a6!important}
+.concept-home .concept-footer .brand{color:#f0f5ed!important}
+.concept-home .concept-footer a{color:#dce9d6!important}
+
+.dt-auth-page{
+  min-height:100svh!important;padding:clamp(12px,2.5vw,30px)!important;
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(207,226,199,.55),transparent 27%),
+    linear-gradient(135deg,#e8eee5 0%,#f5f6f1 50%,#e6ece2 100%)!important
+}
+.dt-auth-shell{
+  max-width:1480px!important;min-height:calc(100svh - 60px)!important;
+  grid-template-columns:minmax(0,1.13fr) minmax(410px,.87fr)!important;
+  border:1px solid rgba(255,255,255,.8)!important;border-radius:7px!important;
+  overflow:hidden!important;background:#fafbf8!important;
+  box-shadow:0 35px 100px -55px rgba(23,54,34,.4)!important
+}
+.dt-auth-story{
+  min-height:calc(100svh - 60px)!important;padding:clamp(30px,5vw,74px)!important;
+  background:
+    radial-gradient(ellipse at 83% 13%,rgba(184,215,169,.2),transparent 28%),
+    radial-gradient(ellipse at 0% 100%,rgba(115,156,117,.2),transparent 32%),
+    linear-gradient(135deg,#10251c,#1d3b2b 58%,#31553a)!important
+}
+.dt-auth-brand{font-size:24px!important;letter-spacing:-.07em!important;color:#f3f6ef!important}
+.dt-auth-brand span,.dt-auth-mobile-brand span{color:#b8d1ad!important}
+.dt-auth-story-copy{max-width:630px!important;margin-top:clamp(60px,10vh,130px)!important}
+.dt-auth-eyebrow{font-size:9px!important;letter-spacing:.2em!important;color:#bfd3b8!important}
+.dt-auth-story-copy h1{
+  margin:25px 0!important;font-size:clamp(48px,5.4vw,78px)!important;line-height:.97!important;
+  letter-spacing:-.08em!important;font-weight:700!important;color:#f4f6ef!important
+}
+.dt-auth-story-copy h1 em{color:#b8d1ad!important;font-weight:500!important}
+.dt-auth-story-copy p{max-width:450px!important;font-size:15px!important;line-height:1.85!important;color:rgba(239,246,235,.7)!important}
+.dt-auth-preview{
+  max-width:570px!important;margin-top:clamp(45px,8vh,95px)!important;padding:24px!important;
+  border:1px solid rgba(238,248,231,.16)!important;border-radius:4px!important;
+  background:rgba(7,25,17,.34)!important;box-shadow:0 25px 55px -38px rgba(0,0,0,.65)!important;
+  backdrop-filter:blur(15px)!important
+}
+.dt-auth-preview-number strong{font-size:clamp(42px,5vw,66px)!important;letter-spacing:-.07em!important;color:#e7f0e1!important}
+.dt-auth-bars{height:90px!important;gap:9px!important}
+.dt-auth-bars i{background:linear-gradient(180deg,#c6dbbc,#759b78)!important;border-radius:2px 2px 0 0!important}
+.dt-auth-form-side{padding:clamp(25px,5vw,78px)!important;background:#fafbf8!important}
+.dt-auth-form-card{max-width:440px!important}
+.dt-auth-heading{margin-bottom:38px!important}
+.dt-auth-heading h2{font-size:clamp(34px,3.4vw,46px)!important;letter-spacing:-.075em!important;color:#1d3425!important}
+.dt-auth-heading p{font-size:13px!important;line-height:1.8!important;color:#7a8879!important}
+.dt-auth-kicker{font-size:9px!important;letter-spacing:.17em!important;color:#668368!important}
+.dt-auth-field{margin-bottom:21px!important}
+.dt-auth-field label{margin-bottom:9px!important;font-size:11px!important;font-weight:700!important;color:#405b45!important}
+.dt-auth-field input{
+  min-height:54px!important;padding:0 16px!important;border:1px solid #dfe7dc!important;
+  border-radius:3px!important;background:#f6f8f4!important;color:#233b2b!important
+}
+.dt-auth-field input:focus{border-color:#8eac87!important;background:#fff!important;box-shadow:0 0 0 4px rgba(142,172,135,.13)!important}
+.dt-auth-password button{right:15px!important;color:#668368!important;font-size:9px!important;letter-spacing:.1em!important}
+.dt-auth-submit{
+  min-height:56px!important;border-radius:3px!important;background:#1d3b29!important;
+  color:#f3f6ef!important;box-shadow:0 14px 30px -18px rgba(25,60,35,.65)!important
+}
+.dt-auth-switch{margin-top:28px!important;color:#7b897a!important;font-size:12px!important}
+.dt-auth-switch a{color:#315b39!important;font-weight:800!important}
+.dt-auth-back{margin-top:24px!important;color:#879486!important;font-size:11px!important}
+.dt-auth-legal{color:#a1aa9d!important;font-size:10px!important}
+
+.dt-workspace-page:has(#currentPassword){
+  padding-bottom:70px!important;
+  background:
+    radial-gradient(ellipse at 80% 0%,rgba(205,224,198,.45),transparent 30%),
+    linear-gradient(180deg,#f2f5ef,#f8f9f6 48%,#eef2eb)!important;color:#21372a!important
+}
+.dt-workspace-page:has(#currentPassword)>header{
+  background:rgba(249,251,247,.88)!important;border-color:#e0e8dc!important;
+  backdrop-filter:blur(18px)!important
+}
+.dt-workspace-page:has(#currentPassword)>div{
+  max-width:1180px!important;padding-top:42px!important
+}
+.dt-workspace-page:has(#currentPassword) .mb-8.rounded-3xl{
+  min-height:240px!important;padding:clamp(26px,4vw,48px)!important;
+  display:flex!important;flex-direction:column!important;justify-content:end!important;
+  border:1px solid rgba(255,255,255,.8)!important;border-radius:5px!important;
+  background:
+    radial-gradient(ellipse at 86% 15%,rgba(182,212,169,.2),transparent 28%),
+    linear-gradient(125deg,#132a20,#254832 65%,#3b6243)!important;
+  box-shadow:0 30px 75px -48px rgba(17,48,28,.75)!important;color:#f3f6ef!important
+}
+.dt-workspace-page:has(#currentPassword) .mb-8.rounded-3xl>div:first-child{
+  width:48px!important;height:48px!important;border-radius:4px!important;
+  background:rgba(255,255,255,.12)!important;color:#d7e7d0!important;box-shadow:none!important
+}
+.dt-workspace-page:has(#currentPassword) .mb-8.rounded-3xl h1{font-size:clamp(34px,4vw,52px)!important;letter-spacing:-.075em!important;color:#f3f6ef!important}
+.dt-workspace-page:has(#currentPassword) .mb-8.rounded-3xl p{color:rgba(239,246,235,.68)!important}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel{
+  padding:clamp(22px,3vw,34px)!important;border:1px solid #dfe8dc!important;
+  border-radius:5px!important;background:#fbfcf9!important;
+  box-shadow:0 22px 55px -45px rgba(23,52,32,.42)!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel h2{font-size:18px!important;letter-spacing:-.04em!important;color:#263e2d!important}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel input{
+  min-height:50px!important;border-radius:3px!important;border-color:#dce6d9!important;background:#f6f8f4!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel input:focus{
+  border-color:#8eac87!important;box-shadow:0 0 0 4px rgba(142,172,135,.13)!important
+}
+
+/* Admin control center */
+body:has(main>aside.fixed.lg\:block) main.min-h-screen{
+  background:
+    radial-gradient(ellipse at 78% 0%,rgba(205,224,198,.38),transparent 28%),
+    linear-gradient(180deg,#f1f5ef,#f8f9f6 50%,#eff3ed)!important;color:#21372a!important
+}
+body:has(main>aside.fixed.lg\:block) main>aside{
+  width:270px!important;padding:26px!important;background:#14291f!important;
+  border-color:rgba(255,255,255,.08)!important;color:#edf3e9!important
+}
+body:has(main>aside.fixed.lg\:block) main>aside h1{color:#f1f5ed!important;letter-spacing:-.06em!important}
+body:has(main>aside.fixed.lg\:block) main>aside p{color:#91a58f!important}
+body:has(main>aside.fixed.lg\:block) main>aside .bg-gradient-to-br{
+  background:linear-gradient(135deg,#dce9d6,#9fbd96)!important;color:#24452f!important
+}
+body:has(main>aside.fixed.lg\:block) main>aside .bg-blue-50{
+  background:rgba(211,231,203,.13)!important;border-color:rgba(211,231,203,.2)!important;color:#dcebd5!important
+}
+body:has(main>aside.fixed.lg\:block) main>aside button{color:#b4c3b0!important}
+body:has(main>aside.fixed.lg\:block) main>aside button:hover{background:rgba(255,255,255,.08)!important;color:#fff!important}
+body:has(main>aside.fixed.lg\:block) main>aside .bg-blue-50 p{color:#b5c4b1!important}
+body:has(main>aside.fixed.lg\:block) main>section.lg\:ml-\[250px\]{
+  margin-left:270px!important
+}
+body:has(main>aside.fixed.lg\:block) main>section>header{
+  min-height:82px!important;padding-inline:clamp(22px,3vw,46px)!important;
+  background:rgba(249,251,247,.9)!important;border-color:#e0e8dc!important
+}
+body:has(main>aside.fixed.lg\:block) main>section>header h2{
+  font-size:20px!important;letter-spacing:-.05em!important;color:#253c2d!important
+}
+body:has(main>aside.fixed.lg\:block) main>section>div{
+  max-width:1600px!important;padding:clamp(24px,3.5vw,52px)!important
+}
+body:has(main>aside.fixed.lg\:block) main>section>div>div.mb-7 h1{
+  font-size:clamp(38px,4.5vw,62px)!important;letter-spacing:-.075em!important;color:#203729!important
+}
+body:has(main>aside.fixed.lg\:block) main>section>div>div.mb-7 p{color:#778678!important}
+body:has(main>aside.fixed.lg\:block) main>section>div .rounded-2xl.border{
+  border-color:#dfe8dc!important;border-radius:5px!important;background:#fbfcf9!important;
+  box-shadow:0 20px 50px -44px rgba(22,52,31,.45)!important
+}
+body:has(main>aside.fixed.lg\:block) main>section>div .bg-blue-50{
+  background:#e5eee0!important;color:#31573a!important
+}
+body:has(main>aside.fixed.lg\:block) main>section>div .text-blue-600,
+body:has(main>aside.fixed.lg\:block) main>section>div .text-\[\#155eef\]{color:#426d48!important}
+@media(max-width:900px){
+  .concept-home .concept-hero-grid{grid-template-columns:1fr!important;min-height:unset!important}
+  .concept-home .concept-hero-copy{padding:40px 0 0!important}
+  .concept-home .concept-hero-stage{min-height:480px!important;transform:none!important}
+  .concept-home .concept-stage-circle{width:min(70vw,440px)!important;height:min(70vw,440px)!important}
+  .concept-home .concept-section-top{grid-template-columns:1fr!important;gap:20px!important}
+  .dt-auth-shell{grid-template-columns:1fr!important}
+  .dt-auth-story{min-height:unset!important;padding:35px!important}
+  .dt-auth-story-copy{margin-top:60px!important}
+  .dt-auth-preview{margin-top:42px!important}
+  .dt-auth-story-foot{margin-top:35px!important}
+  .dt-auth-form-side{padding:45px 30px!important}
+}
+@media(max-width:640px){
+  .concept-home .concept-hero{padding:25px 20px 18px!important;min-height:unset!important}
+  .concept-home .concept-hero-copy{padding-top:35px!important}
+  .concept-home .concept-hero-copy h1{font-size:clamp(49px,13vw,68px)!important;margin:24px 0!important}
+  .concept-home .concept-lead{font-size:14px!important}
+  .concept-home .concept-proof{display:grid!important;grid-template-columns:1fr 1fr!important;margin-top:28px!important}
+  .concept-home .concept-hero-stage{min-height:380px!important;margin-top:12px!important}
+  .concept-home .concept-stage-circle{width:290px!important;height:290px!important}
+  .concept-home .concept-hero-card{transform:rotate(-8deg) translate(-8%,0) scale(.82)!important}
+  .concept-home .concept-card-back{transform:rotate(9deg) translate(12%,8%) scale(.82)!important}
+  .concept-home .concept-stage-label{font-size:8px!important}
+  .concept-home .concept-hero-bottom{font-size:8px!important}
+  .concept-home .concept-collection,.concept-home .concept-experience,.concept-home .concept-dashboard,.concept-home .concept-faq{padding:70px 20px!important}
+  .concept-home .concept-section-top h2,.concept-home .concept-experience-head h2{font-size:52px!important}
+  .concept-home .concept-flow{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
+  .concept-home .concept-flow article{min-height:unset!important;padding:23px!important}
+  .concept-home .concept-flow-line{display:none!important}
+  .concept-home .concept-step-icon{margin:20px 0!important}
+  .concept-home .concept-dashboard{grid-template-columns:1fr!important}
+  .concept-home .concept-dashboard-frame{transform:none!important}
+  .concept-home .concept-dash-metrics{padding:10px!important}
+  .concept-home .concept-dash-chart{margin:10px!important}
+  .concept-home .concept-faq{grid-template-columns:1fr!important}
+  .concept-home .concept-final{min-height:400px!important;padding:70px 20px!important}
+  .concept-home .concept-final h2{font-size:43px!important}
+  .dt-auth-page{padding:0!important}
+  .dt-auth-shell{min-height:100svh!important;border:0!important;border-radius:0!important}
+  .dt-auth-story{padding:28px 24px!important}
+  .dt-auth-story-copy{margin-top:50px!important}
+  .dt-auth-story-copy h1{font-size:49px!important}
+  .dt-auth-preview{margin-top:35px!important;padding:18px!important}
+  .dt-auth-form-side{padding:38px 25px!important}
+  .dt-auth-heading h2{font-size:36px!important}
+  .dt-workspace-page:has(#currentPassword)>div{padding:24px 15px!important}
+  .dt-workspace-page:has(#currentPassword) .mb-8.rounded-3xl{min-height:210px!important;padding:24px!important}
+  body:has(main>aside.fixed.lg\:block) main>aside{display:none!important}
+  body:has(main>aside.fixed.lg\:block) main>section.lg\:ml-\[250px\]{margin-left:0!important}
+  body:has(main>aside.fixed.lg\:block) main>section>div{padding:22px 15px!important}
+}
