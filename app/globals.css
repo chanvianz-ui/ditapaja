@@ -3120,3 +3120,63 @@ html[data-theme="light"] body:not(:has(.concept-home)) .workspace-mobile-nav a[a
   .workspace-header{min-height:64px;padding-top:10px;padding-bottom:10px}
   .workspace-mobile-nav{top:64px;padding-top:9px;padding-bottom:9px}
 }
+
+
+/* Shared dashboard page language for secondary workspace routes */
+.dt-workspace-page{
+  min-width:0;
+  background:#f5f6f8!important;
+  color:#182230!important;
+}
+.dt-workspace-panel{
+  min-width:0;
+  border-color:#e4e7ec!important;
+  background:#fff!important;
+  box-shadow:0 8px 28px -24px rgba(16,24,40,.24)!important;
+}
+.dt-workspace-page input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+.dt-workspace-page select,
+.dt-workspace-page textarea{
+  border-radius:12px;
+  border-color:#dfe4eb;
+  background-color:#fff;
+  color:#182230;
+  transition:border-color .16s ease,box-shadow .16s ease;
+}
+.dt-workspace-page input:focus,
+.dt-workspace-page select:focus,
+.dt-workspace-page textarea:focus{
+  outline:none;
+  border-color:#8aa8f8;
+  box-shadow:0 0 0 3px rgba(49,95,232,.10);
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page{
+  background:#10151d!important;
+  color:#edf1f6!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-panel{
+  background:#171f2b!important;
+  border-color:#303b49!important;
+  box-shadow:none!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page select,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page textarea{
+  background-color:#121a25!important;
+  border-color:#354254!important;
+  color:#edf1f6!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page input::placeholder,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page textarea::placeholder{
+  color:#8290a3!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page input:focus,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page select:focus,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page textarea:focus{
+  border-color:#7898e8!important;
+  box-shadow:0 0 0 3px rgba(112,145,220,.16)!important;
+}
+@media(max-width:700px){
+  .dt-workspace-page{padding-left:14px!important;padding-right:14px!important;padding-top:20px!important;padding-bottom:28px!important}
+  .dt-workspace-panel{border-radius:20px!important}
+}
