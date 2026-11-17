@@ -2345,8 +2345,8 @@ html[data-theme="dark"] .order-page{background:#0d1523;color:#e7edf6;--order-lin
 html[data-theme="dark"] .order-header{border-color:#29384d}
 html[data-theme="dark"] .order-brand{color:#f1f5fb}
 html[data-theme="dark"] .order-intro h1{color:#f1f5fb}
-html[data-theme="dark"] .order-intro>p,.order-footer{color:#9aaac0}
-html[data-theme="dark"] .order-assurance,.order-form{background:#111f33;border-color:#29384d}
+html[data-theme="dark"] .order-intro>p,html[data-theme="dark"] .order-footer{color:#9aaac0}
+html[data-theme="dark"] .order-assurance,html[data-theme="dark"] .order-form{background:#111f33;border-color:#29384d}
 html[data-theme="dark"] .order-assurance b,html[data-theme="dark"] .order-form-heading h2{color:#e8eef8}
 html[data-theme="dark"] .order-field{color:#b9c7d9}
 html[data-theme="dark"] .order-field input,html[data-theme="dark"] .order-field select,html[data-theme="dark"] .order-field textarea,html[data-theme="dark"] .order-quantity button{background:#0d192a;border-color:#344963;color:#e5edf8}
@@ -2532,8 +2532,4 @@ html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-blue-90
 html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-emerald-600"],
 html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-green-600"]{
   color:#8de0b5!important;
-}
-/* Keep the NFC control-center hero gradient intentional in both themes. */
-html[data-theme="dark"] body:not(:has(.concept-home)) [class*="linear-gradient"]{
-  background-image:var(--tw-gradient-stops,linear-gradient(125deg,#0f172a 0%,#172554 52%,#312e81 100%))!important;
 }
