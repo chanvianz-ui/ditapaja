@@ -141,7 +141,7 @@ export async function POST(request: NextRequest) {
         );
       }
     } else {
-      const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         return NextResponse.json(
           { success: false, error: "Format email tidak valid." },
