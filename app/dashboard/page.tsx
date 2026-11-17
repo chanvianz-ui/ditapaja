@@ -999,7 +999,7 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-[#f7f9fc] text-slate-900">
       <div className="flex min-h-screen">
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-slate-200/80 bg-white/95 p-5 shadow-[8px_0_30px_-28px_rgba(15,23,42,0.3)] backdrop-blur lg:flex lg:flex-col">
+        <aside className="workspace-sidebar sticky top-0 hidden h-screen w-64 shrink-0 border-r border-slate-200/80 bg-white/95 p-5 shadow-[8px_0_30px_-28px_rgba(15,23,42,0.3)] backdrop-blur lg:flex lg:flex-col">
           <a href="/" className="text-2xl font-bold tracking-tight">
             DiTap<span className="text-blue-600">Aja.</span>
           </a>
@@ -1061,7 +1061,7 @@ export default function DashboardPage() {
         </aside>
 
         <section className="min-w-0 flex-1">
-          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200/70 bg-white/90 px-4 py-3.5 shadow-[0_8px_24px_-24px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:px-5 md:px-10 md:py-4">
+          <header className="workspace-header sticky top-0 z-30 flex items-center justify-between border-b border-slate-200/70 bg-white/90 px-4 py-3.5 shadow-[0_8px_24px_-24px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:px-5 md:px-10 md:py-4">
             <div>
               <p className="text-xs text-slate-400">
                 Workspace / Overview
@@ -1090,7 +1090,7 @@ export default function DashboardPage() {
           </header>
 
           {/* Mobile workspace navigation: the desktop sidebar is hidden below lg. */}
-          <nav aria-label="Navigasi workspace" className="flex gap-2 overflow-x-auto border-b border-slate-200/80 bg-white px-4 py-3 shadow-[0_4px_14px_-14px_rgba(15,23,42,0.35)] lg:hidden">
+          <nav aria-label="Navigasi workspace" className="workspace-mobile-nav flex gap-2 overflow-x-auto border-b border-slate-200/80 bg-white px-4 py-3 shadow-[0_4px_14px_-14px_rgba(15,23,42,0.35)] lg:hidden">
             <a href="/dashboard" aria-current="page" className="shrink-0 rounded-xl border border-blue-100 bg-blue-50 px-3.5 py-2 text-xs font-semibold text-blue-700">Overview</a>
             <a href="#cards" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">My Cards</a>
             <a href="#analytics" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Analytics</a>
