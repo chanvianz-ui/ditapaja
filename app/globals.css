@@ -3923,3 +3923,34 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-nfc-card-actions butto
  .dt-nfc-card-actions{padding-top:14px!important;gap:8px!important}
  .dt-nfc-card-actions button{min-height:44px!important;padding:10px 8px!important;font-size:11px!important}
 }
+
+
+/* DiTapAja 360 — Business Profile workspace */
+.dt-business-page{background:radial-gradient(ellipse at 12% 0%,rgba(219,232,255,.72),transparent 34%),#f5f7fa!important}
+.dt-business-hero{position:relative;overflow:hidden;border-color:rgba(255,255,255,.9)!important;background:linear-gradient(115deg,rgba(255,255,255,.98),rgba(245,248,255,.94))!important;box-shadow:0 24px 65px -45px rgba(37,99,235,.34)!important}
+.dt-business-hero:after{content:"";position:absolute;width:300px;height:300px;right:-130px;top:-205px;border:1px solid rgba(74,118,205,.12);border-radius:50%;box-shadow:0 0 0 30px rgba(74,118,205,.035),0 0 0 65px rgba(74,118,205,.025);pointer-events:none}
+.dt-business-hero>*{position:relative;z-index:1}
+.dt-business-profile-panel,.dt-business-locations-panel{border-color:#e3e8f0!important;border-radius:24px!important;background:rgba(255,255,255,.96)!important;box-shadow:0 18px 48px -38px rgba(19,39,73,.28)!important}
+.dt-business-profile-panel>div:first-child,.dt-business-locations-panel>div:first-child{padding-bottom:16px;border-bottom:1px solid #edf0f5}
+.dt-business-profile-form label{display:block;color:#344054;font-size:13px;font-weight:650;letter-spacing:-.01em}
+.dt-business-profile-form input,.dt-business-profile-form textarea,.dt-business-add-location input,.dt-business-location-card input{min-height:46px;border-radius:13px!important;border-color:#dfe5ee!important;background:#fbfcfe!important;color:#182230!important;box-shadow:inset 0 1px 2px rgba(16,24,40,.025);transition:border-color .18s,box-shadow .18s,background .18s}
+.dt-business-profile-form input:focus,.dt-business-profile-form textarea:focus,.dt-business-add-location input:focus,.dt-business-location-card input:focus{border-color:#7da4f7!important;background:#fff!important;box-shadow:0 0 0 4px rgba(49,95,232,.1)!important;outline:0}
+.dt-business-profile-form button[type=submit]{min-height:48px;border-radius:14px!important;background:linear-gradient(110deg,#2859d9,#4778ee)!important;box-shadow:0 10px 22px -14px rgba(37,99,235,.8);transition:transform .18s,box-shadow .18s}
+.dt-business-profile-form button[type=submit]:hover{transform:translateY(-1px);box-shadow:0 14px 25px -14px rgba(37,99,235,.8)}
+.dt-business-add-location{border:1px solid #e8edf5;background:linear-gradient(145deg,#f7f9fd,#f1f5fb)!important;border-radius:17px!important}
+.dt-business-add-location>p{color:#25344b;font-size:13px;letter-spacing:-.01em}
+.dt-business-add-location button{min-height:45px;border-radius:12px!important;border-color:#d8e3f7!important;background:#fff!important}
+.dt-business-location-card{border-color:#e6ebf2!important;border-radius:16px!important;background:linear-gradient(145deg,#fff,#fbfcfe);transition:border-color .18s,box-shadow .18s,transform .18s}
+.dt-business-location-card:hover{transform:translateY(-1px);border-color:#cbd9f3!important;box-shadow:0 14px 30px -24px rgba(37,99,235,.42)}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-page{background:radial-gradient(ellipse at 12% 0%,rgba(45,73,120,.2),transparent 36%),#10151d!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-hero{background:linear-gradient(115deg,#192536,#1a2638)!important;border-color:#303b49!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-profile-panel,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-locations-panel{background:#171f2b!important;border-color:#303b49!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-profile-panel>div:first-child,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-locations-panel>div:first-child{border-color:#303b49}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-profile-form label{color:#dce4ef}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-profile-form input,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-profile-form textarea,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-add-location input,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-location-card input{background:#111a27!important;border-color:#39475a!important;color:#edf1f6!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-add-location{background:#1c2838!important;border-color:#303f53}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-add-location>p{color:#e1e8f2}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-add-location button{background:#202d40!important;border-color:#40516a!important;color:#cbdcff!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-location-card{background:#192536;border-color:#344256!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-location-card:hover{border-color:#536b94!important}
+@media(max-width:640px){.dt-business-hero{border-radius:22px!important;padding:22px!important}.dt-business-profile-panel,.dt-business-locations-panel{border-radius:20px!important}.dt-business-profile-form button[type=submit]{min-height:50px}}
