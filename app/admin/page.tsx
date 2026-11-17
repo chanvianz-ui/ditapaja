@@ -202,6 +202,22 @@ export default function AdminPage() {
           </div>
 
           <button
+            onClick={() => router.push("/admin/orders")}
+            className="mt-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-500 transition hover:bg-blue-50 hover:text-[#155eef]"
+          >
+            <CreditCard size={18} />
+            Order Management
+          </button>
+
+          <button
+            onClick={() => router.push("/admin/users")}
+            className="mt-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-500 transition hover:bg-blue-50 hover:text-[#155eef]"
+          >
+            <Users size={18} />
+            User Management
+          </button>
+
+          <button
             onClick={() => router.push("/admin/pins")}
             className="mt-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-500 transition hover:bg-blue-50 hover:text-[#155eef]"
           >
