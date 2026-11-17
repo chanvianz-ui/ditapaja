@@ -3350,3 +3350,35 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi-1 .dt-an
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi-2 .dt-analytics-kpi-icon{border-color:#24513f;background:#19382d;color:#75d8ae}
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi-3 .dt-analytics-kpi-icon{border-color:#44375f;background:#2b2240;color:#c2a7ff}
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-chart-mark{background:#263956;color:#a9c3ff}
+
+
+/* NFC card creation: guided split-panel experience */
+.dt-card-create-page{background:radial-gradient(ellipse at 12% 4%,rgba(219,232,255,.72),transparent 34%),#f5f6f8!important}
+.dt-card-create-layout{display:grid;grid-template-columns:minmax(250px,.78fr) minmax(0,1.22fr);gap:28px;align-items:start;max-width:980px;margin-left:auto;margin-right:auto;padding:28px!important;border-radius:28px!important;border-color:#e1e7ef!important;box-shadow:0 24px 70px -48px rgba(20,42,75,.34)!important}
+.dt-card-create-intro{position:sticky;top:28px;min-height:100%;overflow:hidden;border-radius:22px;background:linear-gradient(150deg,#17243b 0%,#1d3658 65%,#244a76 100%);padding:26px;color:#fff}
+.dt-card-create-intro>div:first-child{background:rgba(255,255,255,.12)!important;color:#dce9ff!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);border:0}
+.dt-card-create-intro p:first-child{color:#a9c6f7!important;font-size:9px!important;letter-spacing:.18em!important}
+.dt-card-create-intro h1{color:#fff!important;font-size:clamp(27px,3vw,36px)!important;line-height:1.08!important;letter-spacing:-.045em!important}
+.dt-card-create-intro p:last-child{color:#c0cde0!important;font-size:13px!important;line-height:1.75!important}
+.dt-card-create-steps{display:grid;gap:10px;margin-top:30px}
+.dt-card-create-steps span{display:flex;align-items:center;gap:10px;border:1px solid rgba(219,234,254,.15);border-radius:12px;background:rgba(255,255,255,.055);padding:11px 12px;color:#dce8f8;font-size:10px;font-weight:700;letter-spacing:.02em}
+.dt-card-create-steps span:before{content:"";width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#7daaff;box-shadow:0 0 0 4px rgba(125,170,255,.12)}
+.dt-card-create-form{min-width:0;margin-top:0!important;padding:4px 2px}
+.dt-card-create-form>div{margin-bottom:2px}
+.dt-card-create-form input:not([type=checkbox]),.dt-card-create-form select{min-height:49px;border-radius:13px!important;background:#f8fafc!important;border-color:#e1e7ef!important}
+.dt-card-create-form input:focus,.dt-card-create-form select:focus{background:#fff!important;border-color:#8eafff!important;box-shadow:0 0 0 4px rgba(49,95,232,.09)!important}
+.dt-card-create-form label{font-size:12px!important;font-weight:750!important;color:#344054!important}
+.dt-card-create-form>button[type=submit]{min-height:52px;border-radius:14px!important;background:#315fe8!important;box-shadow:0 12px 24px -14px rgba(49,95,232,.7)!important}
+.dt-card-create-note{border-radius:16px!important;background:#f0f5ff!important;border-color:#dbe7ff!important}
+@media(max-width:760px){.dt-card-create-layout{grid-template-columns:1fr;gap:18px;padding:14px!important;border-radius:23px!important}.dt-card-create-intro{position:relative;top:auto;min-height:0;padding:21px;border-radius:18px}.dt-card-create-intro h1{font-size:27px!important}.dt-card-create-steps{grid-template-columns:1fr;gap:7px;margin-top:20px}.dt-card-create-steps span{padding:9px 10px}.dt-card-create-form{padding:3px 1px}.dt-card-create-form input:not([type=checkbox]),.dt-card-create-form select{min-height:47px}}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-page{background:radial-gradient(ellipse at 12% 4%,rgba(43,67,105,.25),transparent 34%),#10151d!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-layout{background:#171f2b!important;border-color:#303b49!important;box-shadow:none!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-form label{color:#dce4ef!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-form input:not([type=checkbox]),
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-form select{background:#121a25!important;border-color:#354254!important;color:#edf1f6!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-form input::placeholder{color:#748399!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-note{background:#1b2b43!important;border-color:#304768!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-note p{color:#c2d7f7!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-form .bg-emerald-50{background:#15352b!important;border-color:#24513f!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-form .text-emerald-800{color:#9ce2c1!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-create-form .text-slate-700{color:#dce4ef!important}
