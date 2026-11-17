@@ -227,6 +227,100 @@ export async function GET(
       .business { font-size: 22px; }
       h1 { font-size: 19px; }
     }
+
+    /* DiTapAja public NFC experience — editorial, calm and conversion-focused */
+    :root { color-scheme: light; }
+    body {
+      min-height: 100svh; align-items: center; padding: clamp(18px,4vw,54px);
+      background: #f1f0e9;
+      background-image: radial-gradient(ellipse at 15% 10%,rgba(192,205,180,.42),transparent 38%), radial-gradient(ellipse at 88% 90%,rgba(220,211,188,.42),transparent 34%);
+      color: #17251e;
+    }
+    .card {
+      width: min(100%, 470px); max-width: 470px; padding: 0;
+      border: 1px solid rgba(35,55,43,.10); border-radius: 30px;
+      background: #fbfaf6; text-align: left; overflow: hidden;
+      box-shadow: 0 34px 90px rgba(31,45,34,.13), 0 3px 12px rgba(31,45,34,.04);
+    }
+    .card:before { height: 0; }
+    .card:after {
+      content: ""; display: block; height: 5px; position: absolute; inset: 0 0 auto;
+      background: linear-gradient(90deg,#9eaf91,#526e58 48%,#c8b995);
+    }
+    .card > :not(.footer) { margin-left: 38px; margin-right: 38px; }
+    .card > .icon, .card > .brand-logo-wrap { margin-top: 38px; margin-bottom: 27px; }
+    .icon {
+      width: 58px; height: 58px; border-radius: 19px; margin-left: 38px;
+      background: #e8ede3; color: #35513d; font-size: 25px;
+      box-shadow: none;
+    }
+    .brand-logo-wrap { margin-left: 38px; }
+    .brand-logo { border-radius: 15px; }
+    .eyebrow {
+      margin-bottom: 17px; color: #81907f; font-size: 9px;
+      letter-spacing: 2.4px; font-weight: 800;
+    }
+    .business-label { color: #8b9387; font-size: 9px; letter-spacing: 1.8px; }
+    .business {
+      color: #1b3022; font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(29px,7vw,37px); line-height: 1.08; font-weight: 500;
+      letter-spacing: -1.15px;
+    }
+    .branch {
+      margin-top: 15px; border: 1px solid #e5e8de; background: #f3f4ed;
+      color: #566653; padding: 9px 13px; font-size: 11px;
+    }
+    .address { color: #858d80; font-size: 11px; }
+    .rule { width: calc(100% - 76px); height: 1px; margin: 29px auto 25px; background: #e8e8df; }
+    h1 {
+      color: #203729; font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(25px,6vw,30px); line-height: 1.14;
+      letter-spacing: -.7px; font-weight: 500; margin-bottom: 12px;
+    }
+    .description { color: #747e72; font-size: 13px; line-height: 1.85; }
+    .rating { gap: 7px; margin-top: 20px; color: #b88d48; font-size: 17px; }
+    .rating-caption { color: #8b9387; }
+    .review-hint { color: #92988e; }
+    .button {
+      width: calc(100% - 76px); margin: 27px auto 0; padding: 18px 20px;
+      border-radius: 14px; background: #294735; color: #fff;
+      box-shadow: 0 10px 22px rgba(36,67,47,.16), inset 0 1px 0 rgba(255,255,255,.12);
+      font-size: 13px; letter-spacing: .1px;
+    }
+    .button:hover { background: #355640; box-shadow: 0 13px 26px rgba(36,67,47,.2); }
+    .button:focus-visible { outline-color: #9fb49e; }
+    .google-mark { color: #294735; }
+    .button.secondary {
+      width: calc(100% - 76px); margin: 10px auto 0; padding: 14px 18px;
+      border-radius: 13px; background: transparent; border: 1px solid #dfe4d9;
+      color: #3e5945; box-shadow: none; font-size: 12px;
+    }
+    .button.secondary:hover { background: #f0f2eb; }
+    .noscript { margin-top: 15px; color: #707d70; }
+    .noscript a { color: #294735; }
+    .status { color: #758174; font-size: 11px; }
+    .footer {
+      margin: 30px 0 0; padding: 20px 38px 24px; border-top: 1px solid #ecece4;
+      color: #9a9e91; font-size: 9px; letter-spacing: .6px; text-align: center;
+      background: #f7f6f0;
+    }
+    .footer strong { color: #4c624f; letter-spacing: .2px; }
+    @media (max-width: 480px) {
+      body { padding: 16px; align-items: center; }
+      .card { border-radius: 25px; }
+      .card > :not(.footer) { margin-left: 25px; margin-right: 25px; }
+      .card > .icon, .card > .brand-logo-wrap { margin-top: 30px; margin-bottom: 24px; }
+      .icon, .brand-logo-wrap { margin-left: 25px; }
+      .rule { width: calc(100% - 50px); margin-top: 25px; margin-bottom: 22px; }
+      .button, .button.secondary { width: calc(100% - 50px); }
+      .footer { padding: 18px 25px 21px; margin-top: 25px; }
+    }
+    @media (max-height: 700px) and (min-width: 481px) {
+      body { align-items: flex-start; }
+      .card { margin: 8px auto; }
+      .card > .icon, .card > .brand-logo-wrap { margin-top: 27px; }
+      .rule { margin-top: 20px; margin-bottom: 18px; }
+    }
     @media (prefers-reduced-motion: reduce) { .button { transition: none; } }
   </style>
   ${customPage ? `<style>
