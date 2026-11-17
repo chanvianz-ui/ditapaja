@@ -1,3 +1,4 @@
+import AdminMenu from "@/app/admin/admin-menu";
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -68,7 +69,7 @@ export default function AdminPinsPage() {
   return <main className="min-h-screen bg-[#f5f7fb] text-[#17243b]">
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur-xl"><div className="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-3.5 sm:px-8 sm:py-4">
       <div className="flex items-center gap-3"><button onClick={() => router.push("/admin")} className="rounded-xl border border-slate-200 p-2.5 text-slate-500 hover:bg-blue-50"><ArrowLeft size={18}/></button><div><h1 className="font-bold">DiTapAja</h1><p className="text-xs text-slate-400">PIN Management</p></div></div>
-      <div className="flex items-center gap-2"><span className="hidden items-center gap-2 rounded-full bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700 sm:flex"><ShieldCheck size={15}/> Super Admin</span><button onClick={logout} className="rounded-xl border border-slate-200 p-2.5 text-slate-500"><LogOut size={17}/></button></div>
+      <div className="flex items-center gap-2"><span className="hidden items-center gap-2 rounded-full bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700 sm:flex"><ShieldCheck size={15}/> Super Admin</span><AdminMenu /></div>
     </div></header>
     <div className="mx-auto max-w-[1200px] px-4 py-6 sm:px-8 sm:py-8">
       <p className="text-xs text-slate-400">Admin Overview / Management</p><h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">NFC Activation PINs</h2><p className="mt-2 text-sm text-slate-500">Buat PIN aktivasi untuk stok kartu NFC dan bagikan kepada customer.</p>
