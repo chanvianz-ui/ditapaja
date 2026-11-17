@@ -140,3 +140,47 @@ export async function GET(
     );
   }
 }
+
+
+export async function PATCH(
+  request: NextRequest,
+  context: RouteContext
+) {
+  try {
+    const auth = await verifyAdmin(request);
+
+    if (!auth.authorized) return auth.response;
+
+    const { id } = await context.params;
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json({ success: false, error: "Invalid user ID" }, { status: 400 });
+    }
+
+    if (auth.user.id === id) {
+      return NextResponse.json({ success: false, error: "Superadmin tidak dapat menangguhkan akunnya sendiri." }, { status: 400 });
+    }
+
+    const body = await request.json();
+    const action = body.action;
+    if (action !== "suspend" && action !== "activate") {
+      return NextResponse.json({ success: false, error: "Aksi tidak valid." }, { status: 400 });
+    }
+
+    const { data, error } = await auth.supabase!.auth.admin.updateUserById(id, {
+      ban_duration: action === "suspend" ? "876000h" : "none",
+    });
+
+    if (error) throw error;
+    if (!data.user) throw new Error("User update returned no user.");
+
+    return NextResponse.json({
+      success: true,
+      message: action === "suspend" ? "Akun berhasil ditangguhkan." : "Akun berhasil diaktifkan kembali.",
+      bannedUntil: data.user.banned_until ?? null,
+    });
+  } catch (error) {
+    console.error("Admin user status update error:", error);
+    return NextResponse.json({ success: false, error: "Gagal memperbarui status akun." }, { status: 500 });
+  }
+}
