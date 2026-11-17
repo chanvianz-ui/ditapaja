@@ -3954,3 +3954,35 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-add-location 
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-location-card{background:#192536;border-color:#344256!important}
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-business-location-card:hover{border-color:#536b94!important}
 @media(max-width:640px){.dt-business-hero{border-radius:22px!important;padding:22px!important}.dt-business-profile-panel,.dt-business-locations-panel{border-radius:20px!important}.dt-business-profile-form button[type=submit]{min-height:50px}}
+
+
+/* DiTapAja 360 — Page Studio editor */
+.dt-page-studio-page{background:radial-gradient(ellipse at 8% 0%,rgba(220,233,255,.78),transparent 34%),#f5f7fa!important}
+.dt-page-studio-topbar button{min-height:42px}
+.dt-page-studio-hero{position:relative;border-color:rgba(255,255,255,.92)!important;background:linear-gradient(115deg,rgba(255,255,255,.98),rgba(242,247,255,.96))!important;box-shadow:0 24px 65px -44px rgba(37,99,235,.35)!important}
+.dt-page-studio-hero:after{content:"";position:absolute;width:360px;height:360px;right:-150px;top:-250px;border:1px solid rgba(74,118,205,.13);border-radius:50%;box-shadow:0 0 0 34px rgba(74,118,205,.035),0 0 0 75px rgba(74,118,205,.025);pointer-events:none}
+.dt-page-studio-hero>*{position:relative;z-index:1}
+.dt-page-studio-editor{border-color:#e1e7f0!important;border-radius:26px!important;background:rgba(255,255,255,.97)!important;box-shadow:0 24px 70px -48px rgba(19,39,73,.3)!important}
+.dt-page-studio-editor>section{border-radius:18px!important}
+.dt-page-studio-editor label{color:#344054}
+.dt-page-studio-editor input:not([type=checkbox]):not([type=color]):not([type=file]),.dt-page-studio-editor textarea,.dt-page-studio-editor select{min-height:45px;border-radius:12px!important;border-color:#dfe5ee!important;background:#fbfcfe!important;color:#182230!important;transition:border-color .18s,box-shadow .18s,background .18s}
+.dt-page-studio-editor input:focus,.dt-page-studio-editor textarea:focus,.dt-page-studio-editor select:focus{border-color:#80a5f5!important;background:#fff!important;box-shadow:0 0 0 4px rgba(49,95,232,.1)!important;outline:0}
+.dt-page-studio-editor input[type=color]{height:44px;width:64px;border-radius:12px!important;overflow:hidden}
+.dt-page-studio-editor button[type=submit]{min-height:50px;border-radius:14px!important;background:linear-gradient(110deg,#2859d9,#4778ee)!important;box-shadow:0 12px 25px -16px rgba(37,99,235,.8);transition:transform .18s,box-shadow .18s}
+.dt-page-studio-editor button[type=submit]:hover{transform:translateY(-1px);box-shadow:0 16px 28px -16px rgba(37,99,235,.8)}
+.dt-page-studio-preview{min-width:0}
+.dt-page-studio-preview-toolbar{border-color:#e1e7f0!important;border-radius:17px!important;background:rgba(255,255,255,.96)!important;box-shadow:0 12px 34px -28px rgba(19,39,73,.35)!important}
+.dt-page-studio-device{transition:max-width .22s ease,box-shadow .22s ease}
+.dt-page-studio-device>div:last-child{box-shadow:inset 0 0 0 1px rgba(15,23,42,.045)}
+.dt-page-studio-device img{max-width:100%;flex-shrink:0}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-page{background:radial-gradient(ellipse at 8% 0%,rgba(45,73,120,.2),transparent 36%),#10151d!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-hero{background:linear-gradient(115deg,#192536,#1a2638)!important;border-color:#303b49!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-preview-toolbar{background:#171f2b!important;border-color:#303b49!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor>section{background:#1b2635!important;border-color:#303b49!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor label{color:#dce4ef}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor input:not([type=checkbox]):not([type=color]):not([type=file]),html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor textarea,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor select{background:#111a27!important;border-color:#39475a!important;color:#edf1f6!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor input:focus,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor textarea:focus,html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-editor select:focus{background:#152237!important;border-color:#6f94df!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-page-studio-preview-toolbar>div:last-child{background:#111a27;border-color:#39475a}
+@media(min-width:1024px){.dt-page-studio-preview{position:sticky;top:24px}.dt-page-studio-device{max-height:calc(100vh - 150px);overflow:auto;scrollbar-width:thin}}
+@media(max-width:1023px){.dt-page-studio-preview{display:grid;grid-template-columns:minmax(0,1fr);gap:0}.dt-page-studio-device{width:100%}}
+@media(max-width:640px){.dt-page-studio-hero{border-radius:22px!important;padding:22px!important}.dt-page-studio-editor{padding:14px!important;border-radius:21px!important}.dt-page-studio-editor>section{padding:14px!important}.dt-page-studio-preview-toolbar{padding:10px!important}.dt-page-studio-device{max-width:100%!important}}
