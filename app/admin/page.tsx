@@ -1,3 +1,4 @@
+import AdminMenu from "@/app/admin/admin-menu";
 
 "use client";
 
@@ -276,13 +277,7 @@ export default function AdminPage() {
               <span className="hidden sm:inline">Refresh</span>
             </button>
 
-            <button
-              onClick={handleLogout}
-              className="rounded-xl border border-slate-200 p-2.5 text-slate-500 hover:bg-red-50 hover:text-red-600 lg:hidden"
-              aria-label="Sign out"
-            >
-              <LogOut size={17} />
-            </button>
+            <AdminMenu />
           </div>
         </header>
 
