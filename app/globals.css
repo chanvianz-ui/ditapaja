@@ -3605,3 +3605,98 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-features .deta
  .concept-product{min-width:min(82vw,330px)}
  .concept-product-art{min-height:220px}
 }
+
+/* Customer order journey — checkout and order tracking */
+.dt-order-checkout{background:#f4f7fb}
+.dt-order-checkout .order-header{max-width:1240px;padding-inline:32px;margin-inline:auto}
+.dt-order-checkout .order-layout{max-width:1160px;gap:clamp(36px,6vw,90px);padding-block:58px 90px}
+.dt-order-intro{position:sticky;top:115px;align-self:start;padding:35px 30px;border-radius:24px;background:linear-gradient(145deg,#14243d 0%,#1d3b67 62%,#285bb0 100%);color:#fff;overflow:hidden;box-shadow:0 28px 60px -38px #10294d}
+.dt-order-intro:after{content:"";position:absolute;width:260px;height:260px;border:1px solid #ffffff24;border-radius:50%;right:-125px;top:-110px;box-shadow:0 0 0 25px #ffffff09,0 0 0 55px #ffffff08}
+.dt-order-intro .order-kicker{color:#b8d0f4}
+.dt-order-intro h1{position:relative;z-index:1;font-size:clamp(35px,4vw,49px);line-height:1.12;letter-spacing:-2px}
+.dt-order-intro h1 em{color:#9dbdff}
+.dt-order-intro>p{color:#c2d0e2;line-height:1.9;font-size:12px}
+.dt-order-intro .order-assurance{position:relative;z-index:1;border:1px solid #ffffff24;background:#ffffff0d;border-radius:15px;padding:15px;margin-top:28px}
+.dt-order-intro .order-assurance b{color:#fff}
+.dt-order-intro .order-assurance small{color:#c2d0e2;line-height:1.7}
+.dt-order-intro .order-assurance>span{background:#ffffff18;color:#b9d1ff}
+.dt-order-intro .order-mini-note{color:#d9e6f7}
+.dt-order-form{border:1px solid #e5eaf2;border-radius:24px;padding:clamp(22px,3vw,36px);background:#fff;box-shadow:0 24px 65px -48px #18365f}
+.dt-order-form .order-form-heading{padding-bottom:17px;border-bottom:1px solid #edf0f5}
+.dt-order-form .order-form-heading>div>span{font-size:9px;letter-spacing:.16em;color:#315fe8}
+.dt-order-form .order-form-heading h2{font-size:21px;letter-spacing:-.7px}
+.dt-order-form .order-field{font-size:11px;color:#43536c;font-weight:750}
+.dt-order-form .order-field input,.dt-order-form .order-field select,.dt-order-form .order-field textarea{min-height:47px;border-radius:11px;border:1px solid #dfe6ef;background:#fbfcfe;padding:12px 14px;font-size:12px;color:#1e2d44;transition:border-color .2s,box-shadow .2s,background .2s}
+.dt-order-form .order-field textarea{min-height:95px}
+.dt-order-form .order-field input:focus,.dt-order-form .order-field select:focus,.dt-order-form .order-field textarea:focus{outline:none;border-color:#7398f4;background:#fff;box-shadow:0 0 0 4px #315fe812}
+.dt-order-form .order-field-hint{font-size:9px;line-height:1.6;color:#8996a9}
+.dt-order-form .order-product-summary{border:1px solid #dce6f8;border-radius:14px;background:linear-gradient(120deg,#f7f9ff,#eef4ff);padding:16px}
+.dt-order-form .order-product-summary>span{font-size:8px;font-weight:800;letter-spacing:.12em;color:#5276bd}
+.dt-order-form .order-product-summary>b{font:850 15px Manrope;color:#1b2d4a}
+.dt-order-form .order-product-summary>small{font-size:10px;color:#75849b}
+.dt-order-form .order-quantity-row{padding-block:16px;border-bottom:1px solid #edf0f5}
+.dt-order-form .order-quantity-row b{font-size:12px;color:#253650}
+.dt-order-form .order-quantity-row small{font-size:9px;color:#8b98aa}
+.dt-order-form .order-quantity{border:1px solid #dfe6ef;border-radius:11px;overflow:hidden}
+.dt-order-form .order-quantity button{width:38px;height:38px;background:#f8faff;color:#315fe8}
+.dt-order-form .order-quantity output{min-width:38px;font-size:13px;font-weight:850;color:#243651}
+.dt-order-total{border:1px solid #dce6f8;border-radius:15px;background:#f7f9ff;padding:17px}
+.dt-order-total span{font-size:10px;color:#687a95}
+.dt-order-total b{font:850 23px Manrope;color:#1c3152}
+.dt-order-total small{font-size:9px;color:#8492a8}
+.dt-order-form .order-submit{min-height:52px;border-radius:12px;background:#315fe8;box-shadow:0 12px 25px -15px #315fe8;color:white;font-size:12px;transition:.2s}
+.dt-order-form .order-submit:hover{background:#244fd0;transform:translateY(-1px)}
+.dt-order-form .order-privacy-note{font-size:9px;line-height:1.7;color:#8794a8}
+.dt-order-checkout .order-footer{max-width:1160px;margin-inline:auto;border-top:1px solid #e3e9f1;color:#8793a6}
+.dt-order-account-overlay>section{border:1px solid #e6ebf2;box-shadow:0 35px 100px #0d1b3040}
+.dt-customer-orders{background:radial-gradient(ellipse at top left,#eaf1ff 0,transparent 34%),#f4f6fa;padding-bottom:65px}
+.dt-customer-orders-inner{max-width:1040px}
+.dt-customer-orders-header{padding:14px 0 22px;border-bottom:1px solid #e5eaf2}
+.dt-customer-orders-header>a:first-child{font:850 19px Manrope;letter-spacing:-.7px}
+.dt-customer-orders-heading{padding:22px 24px;border:1px solid #e1e8f3;border-radius:20px;background:linear-gradient(120deg,#fff,#f7f9fe);box-shadow:0 18px 45px -40px #18365f}
+.dt-customer-orders-heading h1{font:850 34px Manrope;letter-spacing:-1.3px}
+.dt-customer-orders-heading p{font-size:11px}
+.dt-customer-orders-heading button{border-radius:11px}
+.dt-customer-order-card{border-radius:20px;box-shadow:0 20px 55px -45px #142b4b;transition:box-shadow .2s,border-color .2s}
+.dt-customer-order-card:hover{border-color:#cbd8ec;box-shadow:0 25px 55px -42px #142b4b}
+.dt-customer-order-card>div:first-child{background:linear-gradient(120deg,#fff,#fafbfe)}
+.dt-customer-order-card h2{font:850 18px Manrope;letter-spacing:-.4px}
+.dt-customer-order-card .dt-order-progress{gap:5px}
+.dt-customer-order-card .dt-order-payment-panel{border:1px solid #e8edf4;background:#f7f9fc;border-radius:15px}
+.dt-customer-order-card input,.dt-customer-order-card select{min-height:42px;border-radius:9px}
+.dt-customer-order-card>div:last-child{background:#f8f9fc}
+.dt-customer-orders .dt-customer-order-card .bg-slate-50{background:#f7f9fc}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-checkout{background:#10151d}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-form,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-orders-heading,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-order-card,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-order-card>div:first-child{background:#171f2b;border-color:#303b49}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-form .order-field input,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-form .order-field select,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-form .order-field textarea{background:#121a25;border-color:#354254;color:#edf1f6}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-form .order-product-summary,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-total{background:#1b2a40;border-color:#34465f}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-form .order-product-summary>b,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-total b,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-orders-heading h1,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-order-card h2{color:#edf1f6}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-orders{background:radial-gradient(ellipse at top left,#1a2a43 0,transparent 34%),#10151d}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-orders-heading,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-order-card .dt-order-payment-panel,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-order-card>div:last-child{background:#121a25}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-orders-header{border-color:#303b49}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-order-card .border-slate-100,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-order-card .border-slate-200{border-color:#303b49}
+@media(max-width:760px){
+ .dt-order-checkout .order-header{padding-inline:18px}
+ .dt-order-checkout .order-layout{padding:28px 18px 55px;gap:20px}
+ .dt-order-intro{position:relative;top:auto;padding:26px 23px;border-radius:19px}
+ .dt-order-intro h1{font-size:36px}
+ .dt-order-form{border-radius:19px;padding:21px 17px}
+ .dt-order-form .order-form-heading h2{font-size:19px}
+ .dt-customer-orders{padding:18px 14px 50px}
+ .dt-customer-orders-heading{padding:18px}
+ .dt-customer-orders-heading h1{font-size:29px}
+ .dt-customer-order-card>div:first-child{padding:17px}
+ .dt-customer-order-card .grid.grid-cols-5 p{font-size:8px}
+}
