@@ -4743,3 +4743,11 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
   .dt-dashboard-shell .dt-dashboard-hero{border-radius:22px!important}
   .dt-dashboard-shell .dt-dashboard-command-panel{padding:17px!important}
 }
+
+
+/* Correct the dashboard masthead hook to the component's live class */
+.dt-dashboard-shell .dt-dashboard-command{
+  border:1px solid rgba(190,216,194,.18)!important;border-radius:29px!important;
+  box-shadow:0 28px 70px -44px rgba(16,47,35,.62)!important
+}
+@media(max-width:640px){.dt-dashboard-shell .dt-dashboard-command{border-radius:22px!important}}
