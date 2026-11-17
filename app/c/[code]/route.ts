@@ -163,7 +163,7 @@ export async function GET(
     }
     .card {
       position: relative; overflow: hidden; width: 100%; max-width: 430px;
-      padding: 38px 30px 27px; background: rgba(255,255,255,.96);
+      padding: 40px 30px 29px; background: rgba(255,255,255,.97);
       border: 1px solid rgba(226,232,240,.9); border-radius: 28px;
       text-align: center; box-shadow: 0 24px 70px rgba(15,23,42,.09), 0 3px 10px rgba(15,23,42,.025);
     }
@@ -196,13 +196,13 @@ export async function GET(
       font-size: 11px; font-weight: 650;
     }
     .address { margin: 10px 0 0; color: #8995a7; font-size: 12px; line-height: 1.55; }
-    .rule { width: 38px; height: 3px; margin: 26px auto 22px; border-radius: 9px; background: #dbe6fb; }
+    .rule { width: 38px; height: 3px; margin: 25px auto 21px; border-radius: 9px; background: #dbe6fb; }\n    .rating { display:flex; justify-content:center; gap:5px; margin:0 0 12px; color:#f4b740; font-size:19px; letter-spacing:1px; }\n    .rating-caption { margin:0 0 8px; color:#8995a7; font-size:10px; font-weight:650; letter-spacing:.2px; }\n    .review-hint { margin:12px 0 0; color:#8b96a7; font-size:10px; line-height:1.6; }
     h1 { margin: 0 0 10px; font-size: 21px; letter-spacing: -.55px; line-height: 1.3; }
     .description { margin: 0; color: #68768b; font-size: 13.5px; line-height: 1.8; }
     .button {
       width: 100%; border: 0; cursor: pointer; display: flex;
       align-items: center; justify-content: center; gap: 9px;
-      margin-top: 25px; padding: 17px 18px; border-radius: 15px;
+      margin-top: 23px; padding: 18px 18px; border-radius: 16px;
       background: linear-gradient(135deg,#326fe8,#2458c6); color: white;
       font-size: 14px; font-weight: 750; letter-spacing: .05px;
       box-shadow: 0 10px 22px rgba(37,88,198,.22), inset 0 1px 0 rgba(255,255,255,.18);
@@ -246,7 +246,7 @@ export async function GET(
 <body>
   <main class="card">
     ${logoUrl ? `<div class="brand-logo-wrap"><img class="brand-logo" src="${escapeHtml(logoUrl)}" alt="Logo ${businessName}"></div>` : `<div class="icon" aria-hidden="true">★</div>`}
-    <p class="eyebrow">${category || "Terima kasih sudah berkunjung"}</p>
+    <p class="eyebrow">PENGALAMAN KAMU BERARTI</p>
     <span class="business-label">Kamu berkunjung ke</span>
     <p class="business">${businessName}</p>
     ${branchName ? `<div class="branch">${branchName}</div>` : ""}
