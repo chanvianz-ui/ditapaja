@@ -1039,6 +1039,14 @@ export default function DashboardPage() {
     profile?.full_name || email.split("@")[0] || "User";
   const workspaceName = profile?.business_name?.trim() || displayName;
 
+  const setupCards = cards.filter((card) => !card.archived_at);
+  const activeSetupCards = setupCards.filter((card) => card.active);
+  const hasFirstTap = eventRows.some(
+    (event) => event.event_type === "tap" && setupCards.some((card) => card.id === event.card_id)
+  );
+  const setupProgress = Number(setupCards.length > 0) + Number(activeSetupCards.length > 0) + Number(hasFirstTap);
+  const setupComplete = setupProgress === 3;
+
   const analyticsItems = [
     {
       label: "Total Taps",
@@ -1218,39 +1226,62 @@ export default function DashboardPage() {
               </div>
             </section>
 
-            {cards.length === 0 && (
-              <section className="rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-5 shadow-sm sm:p-6">
-                <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">MULAI DI SINI</p>
-                <h3 className="mt-2 text-lg font-bold text-slate-900">Siapkan kartu pertamamu</h3>
-                <p className="mt-1 max-w-xl text-sm leading-6 text-slate-500">Ikuti tiga langkah singkat untuk mulai menerima tap dan memantau aktivitas pelanggan.</p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">01 · Tambahkan</b><p className="mt-1 text-xs text-slate-500">Buat kartu dan masukkan link Google Review.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">02 · Pasang</b><p className="mt-1 text-xs text-slate-500">Tulis NFC atau gunakan QR Code pada kartu.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">03 · Pantau</b><p className="mt-1 text-xs text-slate-500">Lihat tap dan klik review di analytics.</p></div></div>
-                <a href="/panduan" className="mt-4 inline-flex text-xs font-bold text-blue-700 hover:text-blue-800">Buka panduan lengkap →</a>
-              </section>
-            )}
-
-            {cards.length > 0 && !eventRows.some((event) => event.event_type === "tap") && (
-              <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-                <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">SETUP CHECKLIST</p>
-                    <h3 className="mt-1 text-lg font-bold text-slate-900">Satu langkah lagi menuju pelanggan pertamamu</h3>
-                    <p className="mt-1 text-sm text-slate-500">Pastikan kartu aktif dan coba lakukan tap pertama untuk mulai melihat data.</p>
+            {!setupComplete && (
+              <section className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
+                <div className="bg-gradient-to-r from-blue-50 via-white to-indigo-50 p-5 sm:p-6">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">MULAI DI SINI</p>
+                      <h3 className="mt-2 text-lg font-bold text-slate-900">Siapkan DiTapAja dalam 3 langkah</h3>
+                      <p className="mt-1 max-w-xl text-sm leading-6 text-slate-500">Ikuti langkah ini sampai kartu NFC kamu siap digunakan dan aktivitas pertamanya tercatat.</p>
+                    </div>
+                    <span className="rounded-full border border-blue-100 bg-white px-3 py-1.5 text-xs font-bold text-blue-700">{setupProgress}/3 selesai</span>
                   </div>
-                  <a href="#my-nfc-cards" className="inline-flex shrink-0 items-center justify-center rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700">Kelola kartu</a>
+                  <div className="mt-4 h-2 overflow-hidden rounded-full bg-blue-100">
+                    <div className="h-full rounded-full bg-blue-600 transition-all duration-500" style={{ width: (setupProgress / 3 * 100) + "%" }} />
+                  </div>
                 </div>
-                <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-xl bg-emerald-50 p-3">
-                    <p className="text-xs font-semibold text-emerald-700">✓ 01 · Buat kartu</p>
-                    <p className="mt-1 text-xs text-emerald-700/80">Kartu pertamamu sudah tersimpan.</p>
+
+                <div className="grid gap-3 p-4 sm:grid-cols-3 sm:p-5">
+                  <div className={`rounded-xl border p-4 ${setupCards.length > 0 ? "border-emerald-200 bg-emerald-50/70" : "border-slate-200 bg-white"}`}>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className={`text-xs font-bold ${setupCards.length > 0 ? "text-emerald-700" : "text-blue-700"}`}>01 · Buat kartu</span>
+                      {setupCards.length > 0 && <CheckCircle2 size={17} className="text-emerald-600" />}
+                    </div>
+                    <p className="mt-2 text-sm font-semibold text-slate-800">Atur tujuan Google Review</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500">{setupCards.length > 0 ? setupCards.length + " kartu sudah tersimpan beserta link review." : "Buat kartu dan masukkan link Google Review bisnis yang benar."}</p>
                   </div>
-                  <div className={`rounded-xl p-3 ${cards.some((card) => card.active) ? "bg-emerald-50" : "bg-amber-50"}`}>
-                    <p className={`text-xs font-semibold ${cards.some((card) => card.active) ? "text-emerald-700" : "text-amber-800"}`}>{cards.some((card) => card.active) ? "✓" : "02"} · Aktifkan kartu</p>
-                    <p className={`mt-1 text-xs ${cards.some((card) => card.active) ? "text-emerald-700/80" : "text-amber-800/80"}`}>{cards.some((card) => card.active) ? "Minimal satu kartu sudah aktif." : "Aktifkan kartu saat siap digunakan."}</p>
+
+                  <div className={`rounded-xl border p-4 ${activeSetupCards.length > 0 ? "border-emerald-200 bg-emerald-50/70" : "border-slate-200 bg-white"}`}>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className={`text-xs font-bold ${activeSetupCards.length > 0 ? "text-emerald-700" : "text-blue-700"}`}>02 · Aktifkan kartu</span>
+                      {activeSetupCards.length > 0 && <CheckCircle2 size={17} className="text-emerald-600" />}
+                    </div>
+                    <p className="mt-2 text-sm font-semibold text-slate-800">Siapkan kartu untuk digunakan</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500">{activeSetupCards.length > 0 ? activeSetupCards.length + " kartu aktif dan siap menerima pengunjung." : "Kartu baru dibuat nonaktif. Aktifkan dari daftar My Cards saat siap."}</p>
                   </div>
-                  <div className="rounded-xl bg-blue-50 p-3">
-                    <p className="text-xs font-semibold text-blue-700">03 · Tap pertama</p>
-                    <p className="mt-1 text-xs text-blue-700/80">Tempelkan ponsel ke NFC atau pindai QR untuk mulai mencatat aktivitas.</p>
+
+                  <div className={`rounded-xl border p-4 ${hasFirstTap ? "border-emerald-200 bg-emerald-50/70" : "border-slate-200 bg-white"}`}>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className={`text-xs font-bold ${hasFirstTap ? "text-emerald-700" : "text-blue-700"}`}>03 · Tes tap pertama</span>
+                      {hasFirstTap && <CheckCircle2 size={17} className="text-emerald-600" />}
+                    </div>
+                    <p className="mt-2 text-sm font-semibold text-slate-800">Coba NFC atau QR Code</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500">{hasFirstTap ? "Tap pertama berhasil tercatat. Analytics mulai terisi." : "Tulis link ke chip NFC atau gunakan QR Code, lalu coba buka kartu."}</p>
                   </div>
+                </div>
+
+                <div className="flex flex-col gap-3 border-t border-slate-100 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+                  <p className="text-xs leading-5 text-slate-500">Kamu bisa mengatur halaman pelanggan dan desain QR kapan saja dari dashboard.</p>
+                  {setupCards.length === 0 ? (
+                    <button type="button" onClick={() => router.push("/dashboard/cards/new")} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                      <Plus size={15} /> Buat kartu pertama
+                    </button>
+                  ) : (
+                    <button type="button" onClick={() => document.getElementById("cards")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100">
+                      Kelola kartu <ExternalLink size={14} />
+                    </button>
+                  )}
                 </div>
               </section>
             )}
