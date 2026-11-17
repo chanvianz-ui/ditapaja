@@ -1107,8 +1107,8 @@ export default function DashboardPage() {
             <a href="/dashboard/settings" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Settings</a>
           </nav>
 
-          <div className="mx-auto max-w-7xl space-y-6 px-4 py-5 sm:space-y-7 sm:px-6 sm:py-7 xl:px-10 xl:py-9">
-            <section className="relative isolate overflow-hidden rounded-2xl border border-blue-100/90 bg-gradient-to-br from-white via-white to-blue-50/90 p-5 shadow-sm sm:p-6 lg:p-7">
+          <div className="mx-auto max-w-[1440px] space-y-7 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-7 xl:px-10 xl:py-9">
+            <section className="relative isolate overflow-hidden rounded-3xl border border-blue-100/80 bg-gradient-to-br from-white via-white to-blue-50/90 p-5 shadow-[0_12px_40px_-28px_rgba(37,99,235,0.28)] sm:p-7 lg:p-8">
               <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-24 -z-10 h-64 w-64 rounded-full bg-blue-100/70 blur-3xl" />
               <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
                 <div className="min-w-0">
@@ -1194,7 +1194,7 @@ export default function DashboardPage() {
               {analyticsItems.map((item) => (
                 <div
                   key={item.label}
-                  className="group min-w-0 rounded-2xl border border-slate-200/90 bg-gradient-to-br from-white via-white to-blue-50/50 p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md sm:p-6"
+                  className="group min-w-0 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_5px_22px_-18px_rgba(15,23,42,0.35)] transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_14px_30px_-20px_rgba(37,99,235,0.35)] sm:p-5 lg:p-6"
                 >
                   <div className="flex min-w-0 items-center justify-between gap-2">
                     <p className="truncate text-xs font-semibold text-slate-500 sm:text-sm">{item.label}</p>
@@ -1213,8 +1213,8 @@ export default function DashboardPage() {
             </div>
 
             {/* DAILY ANALYTICS CHART */}
-            <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
-              <div className="flex flex-col justify-between gap-4 rounded-xl bg-slate-50/80 p-4 sm:flex-row sm:items-start sm:p-5">
+            <section className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_35px_-28px_rgba(15,23,42,0.28)] sm:p-6 lg:p-7">
+              <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 sm:flex-row sm:items-start sm:p-5">
                 <div>
                   <h3 className="font-bold">Performance Overview</h3>
                   <p className="mt-1 text-sm text-slate-500">
@@ -1295,7 +1295,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="mt-4 overflow-x-auto overscroll-x-contain rounded-xl bg-slate-50/60 px-2 pt-3" role="img" aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${periodTapTotal} tap dan ${periodClickTotal} klik ulasan.`}>
+              <div className="mt-4 overflow-x-auto overscroll-x-contain rounded-2xl border border-slate-100 bg-slate-50/70 px-2 pt-3" role="img" aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${periodTapTotal} tap dan ${periodClickTotal} klik ulasan.`}>
                 <div className={`flex h-52 items-end gap-1 border-b border-slate-200 pb-2 sm:h-60 sm:gap-2 ${chartPeriod === 7 ? "min-w-0" : "min-w-[600px] md:min-w-0"}`}>
                   {chartData.map((day, index) => (
                     <div
@@ -1345,7 +1345,7 @@ export default function DashboardPage() {
             </section>
 
             {/* LOCAL ANALYTICS INSIGHTS - DERIVED FROM ALREADY LOADED EVENTS */}
-            <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
+            <section className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_35px_-28px_rgba(15,23,42,0.28)] sm:p-6 lg:p-7">
               <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">INSIGHT PERFORMA</p>
@@ -1588,7 +1588,7 @@ export default function DashboardPage() {
                   ) : visibleCards.map((card) => (
                     <div
                       key={card.id}
-                      className="flex flex-col justify-between gap-4 p-4 transition-colors hover:bg-slate-50/70 sm:flex-row sm:items-center sm:p-5"
+                      className="flex flex-col justify-between gap-4 p-4 transition-colors hover:bg-blue-50/30 sm:flex-row sm:items-center sm:p-5"
                     >
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
