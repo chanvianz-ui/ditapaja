@@ -4357,3 +4357,72 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
  .dt-auth-mobile-brand{margin-bottom:42px!important}
  .dt-auth-heading h2{letter-spacing:-1.7px!important}
 }
+
+
+/* NFC management — stronger hierarchy for the operational control center */
+.dt-dashboard-shell #cards.dt-card-control-center{
+  border-color:#e1e7df!important;border-radius:27px!important;
+  box-shadow:0 24px 65px -48px rgba(24,59,40,.42)!important
+}
+.dt-dashboard-shell #cards .dt-card-control-hero{
+  background:linear-gradient(118deg,#142b27 0%,#1e4036 58%,#315c49 100%)!important;
+  padding:clamp(22px,3vw,36px)!important
+}
+.dt-dashboard-shell #cards .dt-card-control-hero:after{
+  content:"";position:absolute;right:-150px;top:-270px;width:470px;height:470px;
+  border:1px solid rgba(227,242,226,.12);border-radius:50%;
+  box-shadow:0 0 0 42px rgba(227,242,226,.025),0 0 0 90px rgba(227,242,226,.02);pointer-events:none
+}
+.dt-dashboard-shell #cards .dt-card-control-hero>div{position:relative;z-index:1}
+.dt-dashboard-shell #cards .dt-card-control-hero [class*="text-blue-100"]{color:rgba(236,245,235,.76)!important}
+.dt-dashboard-shell #cards .dt-card-control-hero [class*="text-blue-300"]{color:#c5dfc8!important}
+.dt-dashboard-shell #cards .dt-card-control-hero [class*="text-blue-700"]{color:#426b4e!important}
+.dt-dashboard-shell #cards .dt-card-control-hero input[type="search"]{
+  min-height:48px;border-radius:13px!important;border-color:rgba(255,255,255,.2)!important;
+  background:rgba(255,255,255,.09)!important
+}
+.dt-dashboard-shell #cards .dt-card-control-hero input[type="search"]:focus{
+  border-color:rgba(197,223,200,.7)!important;box-shadow:0 0 0 4px rgba(197,223,200,.1)!important
+}
+.dt-dashboard-shell #cards .dt-card-control-hero input[type="checkbox"]{accent-color:#b8d4b7}
+.dt-dashboard-shell #cards .dt-card-control-hero button{border-radius:11px}
+.dt-dashboard-shell #cards .dt-card-control-hero button:focus-visible,
+.dt-dashboard-shell #cards button:focus-visible{outline:3px solid rgba(109,146,114,.35)!important;outline-offset:2px}
+.dt-dashboard-shell #cards .dt-card-control-hero button[class*="bg-white"]{color:#254b3c!important}
+.dt-dashboard-shell #cards [class*="rounded-2xl"][class*="border-slate-200"],
+.dt-dashboard-shell #cards [class*="rounded-xl"][class*="border-slate-200"]{
+  border-color:#e3e9e1!important
+}
+.dt-dashboard-shell #cards input:not([type=checkbox]):not([type=search]),
+.dt-dashboard-shell #cards select{
+  border-color:#e1e7df!important;border-radius:12px!important;background:#f8faf7!important
+}
+.dt-dashboard-shell #cards input:focus,.dt-dashboard-shell #cards select:focus{
+  border-color:#86a993!important;box-shadow:0 0 0 4px rgba(107,151,119,.12)!important
+}
+.dt-dashboard-shell #cards button[class*="bg-blue-600"],
+.dt-dashboard-shell #cards button[class*="bg-blue-700"]{background:#254b3c!important}
+.dt-dashboard-shell #cards button[class*="hover:bg-blue-700"]:hover{background:#183b2e!important}
+.dt-dashboard-shell #cards [class*="text-blue-600"],
+.dt-dashboard-shell #cards [class*="text-blue-700"]{color:#557b62!important}
+.dt-dashboard-shell #cards [class*="bg-blue-50"]{background:#eef4ed!important}
+.dt-dashboard-shell #cards [class*="border-blue-100"]{border-color:#dce8dc!important}
+.dt-dashboard-shell #cards [class*="shadow-blue-"]{--tw-shadow-color:rgba(37,75,60,.12)!important}
+.dt-dashboard-shell #analytics .dt-analytics-heading h3{letter-spacing:-.045em}
+.dt-dashboard-shell #analytics .dt-analytics-kpi{
+  border-color:#e1e7df!important;border-radius:20px!important;
+  box-shadow:0 14px 34px -30px rgba(27,52,40,.38)!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-kpi-icon{background:#edf4ec!important;color:#557b62!important}
+.dt-dashboard-shell #analytics .dt-analytics-kpi-accent{background:linear-gradient(90deg,#6d9272,#b8d4b7)!important}
+.dt-dashboard-shell #analytics [class*="text-blue-600"]{color:#557b62!important}
+.dt-dashboard-shell #analytics button[aria-pressed="true"]{background:#254b3c!important;border-color:#254b3c!important;color:#fff!important}
+.dt-dashboard-shell #analytics button[class*="bg-slate-950"]{background:#254b3c!important}
+@media(max-width:700px){
+ .dt-dashboard-shell #cards.dt-card-control-center{border-radius:21px!important}
+ .dt-dashboard-shell #cards .dt-card-control-hero{padding:20px!important}
+ .dt-dashboard-shell #cards .dt-card-control-hero>div{min-width:0}
+ .dt-dashboard-shell #cards .dt-card-control-hero [role="group"]{max-width:100%}
+ .dt-dashboard-shell #cards .dt-card-control-hero button{min-height:40px}
+ .dt-dashboard-shell #analytics .dt-analytics-kpi{padding:14px!important}
+}
