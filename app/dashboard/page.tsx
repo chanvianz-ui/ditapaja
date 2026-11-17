@@ -1467,7 +1467,7 @@ export default function DashboardPage() {
               id="cards"
               className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_24px_70px_-34px_rgba(30,64,175,0.35)]"
             >
-              <div className="relative flex flex-col items-start gap-5 overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_85%_10%,rgba(59,130,246,0.42),transparent_28%),linear-gradient(125deg,#0f172a_0%,#172554_52%,#312e81_100%)] p-5 text-white sm:flex-row sm:items-start sm:justify-between sm:p-7">
+              <div className="relative flex flex-col items-start gap-5 overflow-hidden border-b border-white/10 bg-[#17243b] p-5 text-white sm:flex-row sm:items-start sm:justify-between sm:p-7">
                 <div className="relative z-10 w-full sm:max-w-2xl">
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.2em] text-blue-100"><Nfc size={13}/> Card Control Center</div>
                   <h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl">My NFC Cards</h3>
