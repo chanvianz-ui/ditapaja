@@ -161,7 +161,7 @@ export default function NewCardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f9fc] px-4 py-6 sm:px-6 sm:py-9">
+    <main className="dt-card-create-page min-h-screen bg-[#f7f9fc] px-4 py-6 sm:px-6 sm:py-9">
       <div className="mx-auto max-w-2xl">
         <Link
           href="/dashboard"
@@ -171,7 +171,8 @@ export default function NewCardPage() {
           Kembali ke Dashboard
         </Link>
 
-        <div className="mt-6 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:mt-8 sm:p-7">
+        <div className="dt-card-create-layout mt-6 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:mt-8 sm:p-7">
+          <section className="dt-card-create-intro">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-700 ring-1 ring-blue-100">
             <CreditCard size={27} />
           </div>
@@ -190,8 +191,10 @@ export default function NewCardPage() {
               bisnis kamu. Setiap kartu mendapatkan kode unik.
             </p>
           </div>
+          <div className="dt-card-create-steps"><span>01 · Identitas kartu</span><span>02 · Tujuan review</span><span>03 · Verifikasi & simpan</span></div>
+          </section>
 
-          <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+          <form onSubmit={handleSubmit} className="dt-card-create-form mt-7 space-y-5">
             <div>
               <label className="mb-2 block text-sm font-semibold text-slate-700">
                 Nama kartu
@@ -288,7 +291,7 @@ export default function NewCardPage() {
               </div>
             )}
 
-            <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-4 sm:p-5">
+            <div className="dt-card-create-note rounded-2xl border border-blue-100 bg-blue-50/70 p-4 sm:p-5">
               <div className="flex items-start gap-3">
                 <CheckCircle2
                   size={20}
