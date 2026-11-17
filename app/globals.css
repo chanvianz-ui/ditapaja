@@ -2724,3 +2724,71 @@ html[data-theme="dark"] body:not(:has(.concept-home)) table thead,
 html[data-theme="dark"] body:not(:has(.concept-home)) table tr{
   border-color:var(--app-line)!important;
 }
+
+
+/* DiTapAja visual system refresh — unified surfaces and calmer contrast */
+:root{
+  --app-bg:#f4f6fa;
+  --app-surface:#ffffff;
+  --app-surface-muted:#eef2f7;
+  --app-text:#17243b;
+  --app-muted:#68778d;
+  --app-line:#e3e8f0;
+  --app-input:#ffffff;
+  --app-accent:#315fe8;
+  --app-accent-soft:#edf2ff;
+}
+html[data-theme="dark"]{
+  --app-bg:#0c1422;
+  --app-surface:#131f30;
+  --app-surface-muted:#1b2a40;
+  --app-text:#eaf0f8;
+  --app-muted:#9baac0;
+  --app-line:#2b3b52;
+  --app-input:#101b2b;
+  --app-accent:#8baeff;
+  --app-accent-soft:#1b3150;
+}
+html[data-theme="light"] body:not(:has(.concept-home)){
+  background:var(--app-bg);
+  color:var(--app-text);
+}
+html[data-theme="dark"] body:not(:has(.concept-home)){
+  background:var(--app-bg)!important;
+  color:var(--app-text)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/95"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/90"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/85"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/80"]{
+  background-color:var(--app-surface)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/80"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-100"]{
+  background-color:var(--app-surface-muted)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-200"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-200/80"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-white/80"]{
+  border-color:var(--app-line)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+html[data-theme="dark"] body:not(:has(.concept-home)) select,
+html[data-theme="dark"] body:not(:has(.concept-home)) textarea{
+  background:var(--app-input)!important;
+  border-color:var(--app-line)!important;
+}
+html[data-theme="light"] .theme-toggle{
+  background:#ffffff;
+  color:#263650;
+  border-color:#e1e7f0;
+  box-shadow:0 8px 24px rgba(24,42,72,.10);
+}
+html[data-theme="dark"] .theme-toggle{
+  background:#18263a;
+  color:#eaf0f8;
+  border-color:#34465f;
+  box-shadow:0 8px 24px rgba(0,0,0,.28);
+}
