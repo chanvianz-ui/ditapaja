@@ -116,7 +116,7 @@ export default function BusinessSettingsPage() {
   if (loading) return <div className="flex min-h-screen items-center justify-center bg-[#f7f9fc]"><Loader2 className="animate-spin text-blue-600" /></div>;
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_#eaf1ff_0%,_#f7f9fc_40%,_#f7f9fc_100%)] px-4 py-6 text-slate-900 sm:px-8 sm:py-9">
+    <main className="dt-workspace-page min-h-screen bg-[radial-gradient(ellipse_at_top,_#eaf1ff_0%,_#f7f9fc_40%,_#f7f9fc_100%)] px-4 py-6 text-slate-900 sm:px-8 sm:py-9">
       <div className="mx-auto max-w-6xl">
         <button onClick={() => router.push("/dashboard")} className="mb-6 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"><ArrowLeft size={17}/> Kembali ke Dashboard</button>
         <div className="mb-8 rounded-3xl border border-white/80 bg-white/85 p-6 shadow-[0_18px_55px_-35px_rgba(37,99,235,0.28)] backdrop-blur sm:p-8">
@@ -129,7 +129,7 @@ export default function BusinessSettingsPage() {
         {(error || message) && <div className={`mb-5 flex items-start gap-2 rounded-xl border p-4 text-sm ${error ? "border-red-200 bg-red-50 text-red-700" : "border-emerald-200 bg-emerald-50 text-emerald-700"}`}>{error ? <AlertCircle size={18}/> : <CheckCircle2 size={18}/>}<span>{error || message}</span></div>}
 
         <div className="grid items-start gap-4 sm:gap-6 lg:grid-cols-[1fr_1fr]">
-          <section className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_18px_55px_-38px_rgba(15,23,42,0.24)] transition-shadow hover:shadow-lg sm:p-6">
+          <section className="dt-workspace-panel rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_18px_55px_-38px_rgba(15,23,42,0.24)] transition-shadow hover:shadow-lg sm:p-6">
             <div className="mb-6 flex items-center gap-3"><Building2 className="text-blue-600"/><div><h2 className="font-bold">Business Profile</h2><p className="text-xs text-slate-400">Informasi utama bisnis kamu</p></div></div>
             <form onSubmit={saveProfile} className="space-y-4">
               <label className="block text-sm font-semibold">Nama bisnis<input value={businessName} onChange={e=>setBusinessName(e.target.value)} maxLength={100} required placeholder="Contoh: Kopi Senja" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/></label>
@@ -139,7 +139,7 @@ export default function BusinessSettingsPage() {
             </form>
           </section>
 
-          <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-6">
+          <section className="dt-workspace-panel rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-6">
             <div className="mb-6 flex items-center gap-3"><MapPin className="text-blue-600"/><div><h2 className="font-bold">Business Locations</h2><p className="text-xs text-slate-400">Daftar cabang bisnis</p></div></div>
             <form onSubmit={addLocation} className="mb-6 space-y-3 rounded-xl bg-slate-50 p-4">
               <p className="text-sm font-semibold">Tambah lokasi baru</p>
