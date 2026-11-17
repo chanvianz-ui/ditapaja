@@ -3898,3 +3898,28 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-customer-order-card .b
  .info-page .info-content article,.info-page .info-content .info-two-col>div{transition:transform .2s ease,box-shadow .2s ease}
  .info-page .info-content article:hover,.info-page .info-content .info-two-col>div:hover{transform:translateY(-3px);box-shadow:0 20px 45px #17243b12}
 }
+
+
+/* DiTapAja 360 — NFC card workspace finish */
+.dt-card-control-center{border-color:#dfe5ee!important;box-shadow:0 28px 80px -48px rgba(22,44,82,.38)!important}
+.dt-card-control-hero{background:radial-gradient(ellipse at 92% 5%,rgba(92,139,255,.28),transparent 34%),linear-gradient(125deg,#142139 0%,#1b3154 58%,#254879 100%)!important}
+.dt-card-control-hero:after{content:"";position:absolute;width:390px;height:390px;right:-150px;top:-245px;border:1px solid rgba(194,215,255,.15);border-radius:50%;box-shadow:0 0 0 34px rgba(194,215,255,.045),0 0 0 75px rgba(194,215,255,.025);pointer-events:none}
+.dt-card-control-hero>div{position:relative;z-index:1}
+.dt-nfc-card-row{border-color:#e5eaf2!important;border-radius:22px!important;box-shadow:0 8px 28px -22px rgba(20,39,72,.28)!important}
+.dt-nfc-card-row:hover{border-color:#c8d7f5!important;box-shadow:0 24px 50px -32px rgba(37,99,235,.42)!important}
+.dt-nfc-card-actions{border-color:#edf0f5!important}
+.dt-nfc-card-actions button{min-height:42px;border-radius:12px!important;font-size:12px!important}
+.dt-nfc-card-actions button:focus-visible,.dt-card-control-hero button:focus-visible{outline:3px solid rgba(124,166,255,.65);outline-offset:2px}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-card-control-center{background:#151e2b;border-color:#303b49!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-nfc-card-row{background:#182333;border-color:#303d4e!important;box-shadow:0 12px 32px -25px rgba(0,0,0,.8)!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-nfc-card-row:hover{border-color:#536b94!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-nfc-card-actions{border-color:#303b49!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-nfc-card-actions button{background:#202c3c;border-color:#3a4a60;color:#d8e2f1}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-nfc-card-actions button:hover{background:#293b54;border-color:#5876a5;color:#fff}
+@media(max-width:640px){
+ .dt-card-control-center{border-radius:22px!important}
+ .dt-card-control-hero{padding:22px!important}
+ .dt-nfc-card-row{padding:16px!important;gap:16px!important}
+ .dt-nfc-card-actions{padding-top:14px!important;gap:8px!important}
+ .dt-nfc-card-actions button{min-height:44px!important;padding:10px 8px!important;font-size:11px!important}
+}
