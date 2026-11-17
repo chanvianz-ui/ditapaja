@@ -4045,3 +4045,67 @@ html[data-theme="dark"] select:focus-visible,
 html[data-theme="dark"] textarea:focus-visible {
   outline-color: #8fb4f5;
 }
+
+
+/* DiTapAja workspace visual system — calm editorial / premium utility */
+.dt-dashboard-shell{background:#f4f5f1;background-image:radial-gradient(ellipse at 84% 0%,rgba(211,222,210,.34),transparent 34%);min-height:100vh}
+.workspace-sidebar.dt-sidebar,
+html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-sidebar{
+  width:264px;flex:0 0 264px;padding:22px 18px!important;
+  color:#edf4ee!important;background:#142b27!important;border:0!important;
+  box-shadow:12px 0 40px -34px rgba(12,35,30,.55)!important
+}
+.dt-sidebar-brand{color:#f4f8f4;letter-spacing:-.04em}
+.dt-sidebar-mark{width:36px;height:36px;display:flex;align-items:center;justify-content:center;gap:3px;border:1px solid rgba(255,255,255,.13);border-radius:12px;background:rgba(255,255,255,.08)}
+.dt-sidebar-mark i{width:4px;border-radius:4px;background:#b5d5c2;transform:skew(-16deg)}
+.dt-sidebar-mark i:nth-child(1){height:11px}.dt-sidebar-mark i:nth-child(2){height:19px}.dt-sidebar-mark i:nth-child(3){height:14px}
+.dt-sidebar-account{background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.08);color:#edf4ee}
+.dt-sidebar-avatar,.dt-topbar-avatar{display:grid;place-items:center;width:35px;height:35px;flex:0 0 35px;border-radius:12px;background:#dce9df;color:#25483c;font-size:13px;font-weight:800}
+.dt-sidebar-label{padding:0 12px;color:rgba(220,237,223,.4);font-size:9px;font-weight:800;letter-spacing:.17em}
+.dt-sidebar-link{position:relative;display:flex;min-height:43px;align-items:center;gap:12px;border:1px solid transparent;border-radius:12px;padding:0 12px;color:rgba(235,245,237,.68);font-size:12px;font-weight:600;transition:background .18s,color .18s,border-color .18s}
+.dt-sidebar-link svg{color:rgba(205,229,211,.58);transition:color .18s}
+.dt-sidebar-link:hover{background:rgba(255,255,255,.075);color:#fff}
+.dt-sidebar-link:hover svg{color:#d8eddd}
+.dt-sidebar-link.is-active{border-color:rgba(198,226,204,.14);background:#29483e;color:#fff;box-shadow:inset 3px 0 #a8cdb4}
+.dt-sidebar-link.is-active svg{color:#c4e1ca}
+.dt-sidebar-settings,.dt-sidebar-logout{display:flex;width:100%;min-height:42px;align-items:center;gap:10px;border-radius:12px;padding:0 12px;font-size:11px;font-weight:650}
+.dt-sidebar-settings{border:1px solid rgba(255,255,255,.12);color:#d9e8dc}
+.dt-sidebar-settings span{margin-left:auto;color:rgba(255,255,255,.4)}
+.dt-sidebar-settings:hover{background:rgba(255,255,255,.07)}
+.dt-sidebar-logout{color:rgba(255,255,255,.58);text-align:left}
+.dt-sidebar-logout:hover{background:rgba(255,255,255,.07);color:#fff}
+.dt-dashboard-topbar{background:rgba(255,255,255,.88)!important;border-color:#e6e9e2!important;box-shadow:0 8px 28px -26px rgba(20,43,39,.35)!important;backdrop-filter:blur(18px)}
+.dt-topbar-avatar{border:2px solid white;box-shadow:0 0 0 1px #dfe6dc}
+.dt-dashboard-content{max-width:1480px}
+.dt-dashboard-command{background:linear-gradient(118deg,#142b27 0%,#1c3c34 56%,#315d4d 100%)!important;border:1px solid #284b40!important;box-shadow:0 28px 70px -42px rgba(20,52,43,.62)!important}
+.dt-dashboard-orbit{border-color:rgba(214,237,219,.13)}
+.dt-dashboard-eyebrow{border-color:rgba(215,239,220,.2);background:rgba(255,255,255,.075);color:#d1e8d5}
+.dt-dashboard-live{color:#c1d9c7}
+.dt-dashboard-live span{background:#a9d2ae;box-shadow:0 0 0 4px rgba(169,210,174,.13)}
+.dt-dashboard-primary-action{color:#183a30;background:#f0f5ed}
+.dt-dashboard-primary-action:hover{background:#fff}
+.dt-dashboard-secondary-action{border-color:rgba(225,241,227,.22);background:rgba(255,255,255,.07);color:#f1f7f0}
+.dt-dashboard-command-panel{border-color:rgba(220,240,222,.15);background:rgba(8,28,23,.28)}
+.dt-dashboard-device-stat svg{color:#b6d7bd}
+.dt-analytics-kicker{color:#477a65}
+.dt-analytics-kpi-icon{border-color:#e0ebe2;background:#f0f5ef;color:#477a65}
+.dt-analytics-kpi-accent{background:linear-gradient(90deg,#477a65,#b2d2b6)}
+.dt-analytics-kpi-1 .dt-analytics-kpi-icon{background:#eef5f0;border-color:#dce9df;color:#477a65}
+.dt-analytics-kpi-1 .dt-analytics-kpi-accent{background:linear-gradient(90deg,#477a65,#b2d2b6)}
+.dt-analytics-kpi-2 .dt-analytics-kpi-icon{background:#f4f5ec;border-color:#e8ead7;color:#8b8b52}
+.dt-analytics-kpi-2 .dt-analytics-kpi-accent{background:linear-gradient(90deg,#8b8b52,#c9c99a)}
+.dt-analytics-kpi-3 .dt-analytics-kpi-icon{background:#f0f2ed;border-color:#e0e6dc;color:#627b68}
+.dt-analytics-kpi-3 .dt-analytics-kpi-accent{background:linear-gradient(90deg,#627b68,#b8cbb7)}
+@media(min-width:1024px){.dt-dashboard-topbar{padding-left:38px!important;padding-right:38px!important}}
+@media(max-width:1023px){
+ .workspace-mobile-nav{top:64px;padding:10px 16px!important;gap:7px!important;background:rgba(250,251,248,.96)!important}
+ .workspace-mobile-nav a{border:1px solid #e6e9e2!important;border-radius:999px!important;background:#fff!important;padding:0 14px!important;color:#65736b!important;font-size:10px!important}
+ .workspace-mobile-nav a[aria-current="page"]{border-color:#c9d9cc!important;background:#eaf1e9!important;color:#244c3d!important}
+ .dt-dashboard-content{padding-top:22px!important}
+}
+@media(max-width:640px){
+ .dt-dashboard-content{gap:22px!important;padding:18px 14px 32px!important}
+ .dt-dashboard-command{border-radius:23px!important}
+ .dt-dashboard-command h2{font-size:31px!important;line-height:1.06!important}
+ .dt-dashboard-topbar{padding-left:15px!important;padding-right:15px!important}
+}
