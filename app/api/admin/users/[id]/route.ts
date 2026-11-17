@@ -42,6 +42,14 @@ export async function GET(
 
     const user = userData.user;
 
+    const { data: usernameAccount, error: usernameError } = await supabase
+      .from("account_usernames")
+      .select("username")
+      .eq("user_id", id)
+      .maybeSingle();
+
+    if (usernameError) throw usernameError;
+
     const { data: profile, error: profileError } =
       await supabase
         .from("profiles")
@@ -104,10 +112,12 @@ export async function GET(
       success: true,
       user: {
         id: user.id,
-        email: user.email ?? "",
+        email: usernameAccount ? "" : user.email ?? "",
+        username: usernameAccount?.username ?? null,
+        accountType: usernameAccount ? "username" : "email",
         createdAt: user.created_at,
         lastSignInAt: user.last_sign_in_at,
-        emailConfirmedAt: user.email_confirmed_at,
+        emailConfirmedAt: usernameAccount ? null : user.email_confirmed_at,
         fullName: profile?.full_name ?? "",
       },
       stats: {
