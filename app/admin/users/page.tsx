@@ -23,6 +23,8 @@ import { supabase } from "@/lib/supabase";
 type AdminUser = {
   id: string;
   email: string;
+  username?: string | null;
+  accountType?: "email" | "username";
   createdAt: string;
   lastSignInAt: string | null;
   emailConfirmedAt: string | null;
@@ -131,6 +133,7 @@ export default function AdminUsersPage() {
 
     return (
       user.email.toLowerCase().includes(keyword) ||
+      (user.username || "").toLowerCase().includes(keyword) ||
       user.id.toLowerCase().includes(keyword)
     );
   });
@@ -305,7 +308,7 @@ export default function AdminUsersPage() {
                 onChange={(event) =>
                   setSearch(event.target.value)
                 }
-                placeholder="Search email or user ID..."
+                placeholder="Search username, email, or ID..."
                 className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
               />
             </div>
@@ -331,7 +334,7 @@ export default function AdminUsersPage() {
                   <th className="px-6 py-4">User ID</th>
                   <th className="px-6 py-4">Registered</th>
                   <th className="px-6 py-4">Last Login</th>
-                  <th className="px-6 py-4">Email Status</th>
+                  <th className="px-6 py-4">Account Type</th>
                 </tr>
               </thead>
 
@@ -393,7 +396,7 @@ export default function AdminUsersPage() {
 
                           <div>
                             <p className="text-sm font-semibold text-[#17243b]">
-                              {user.email || "No email"}
+                              {user.username ? `@${user.username}` : user.email || "No email"}
                             </p>
 
                             <p className="mt-1 text-xs text-slate-400">
@@ -428,7 +431,12 @@ export default function AdminUsersPage() {
 
                       {/* EMAIL STATUS */}
                       <td className="px-6 py-5">
-                        {user.emailConfirmedAt ? (
+                        {user.accountType === "username" ? (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-semibold text-slate-600">
+                            <UserRound size={13} />
+                            Username login
+                          </span>
+                        ) : user.emailConfirmedAt ? (
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-600">
                             <Mail size={13} />
                             Verified
