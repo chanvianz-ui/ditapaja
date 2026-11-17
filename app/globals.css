@@ -3338,3 +3338,15 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-list-head{borde
 .dark .dt-analytics-kpi-3 .dt-analytics-kpi-icon{border-color:#44375f;background:#2b2240;color:#c2a7ff}
 .dark .dt-analytics-chart-mark{background:#263956;color:#a9c3ff}
 @media(max-width:640px){.dt-analytics-heading{align-items:flex-start;flex-direction:column}.dt-analytics-period-chip{align-self:flex-start}.dt-analytics-kpi{min-height:145px;padding:14px}.dt-analytics-kpi-icon{width:32px;height:32px}}
+
+
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-heading h3{color:#edf1f6}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-heading p:not(.dt-analytics-kicker){color:#a0acbb}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-period-chip{border-color:#303b49;background:#171f2b;color:#c2ccda}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi{border-color:#303b49;background:#171f2b;box-shadow:0 8px 24px -22px rgba(0,0,0,.8)}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi:hover{border-color:#526b98;box-shadow:0 18px 32px -24px rgba(68,111,205,.35)}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi-icon{border-color:#30405a;background:#202e43;color:#a9c3ff}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi-1 .dt-analytics-kpi-icon{border-color:#24475c;background:#193246;color:#7ed2fa}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi-2 .dt-analytics-kpi-icon{border-color:#24513f;background:#19382d;color:#75d8ae}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-kpi-3 .dt-analytics-kpi-icon{border-color:#44375f;background:#2b2240;color:#c2a7ff}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-analytics-chart-mark{background:#263956;color:#a9c3ff}
