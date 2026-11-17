@@ -4030,3 +4030,18 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-studio-preview-frame{b
 @media(max-width:639px){.dt-studio-masthead{border-radius:22px;padding:22px}.dt-studio-step{min-height:78px;padding:11px}.dt-studio-form{border-radius:21px}.dt-studio-form-body{min-height:0;padding:18px}.dt-studio-preview-frame.is-mobile{max-width:100%}.dt-studio-preview-screen{min-height:560px;padding:24px 18px}.dt-studio-form-footer{margin-inline:-1px}}
 
 
+
+
+/* DiTapAja accessibility: visible keyboard focus for form controls */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #668bb8;
+  outline-offset: 3px;
+}
+
+html[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):focus-visible,
+html[data-theme="dark"] select:focus-visible,
+html[data-theme="dark"] textarea:focus-visible {
+  outline-color: #8fb4f5;
+}
