@@ -4588,3 +4588,158 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
   .dt-workspace-page .dt-order-card{padding:15px!important}
   .dt-workspace-page .dt-order-card .dt-order-details{padding:12px!important}
 }
+
+
+/* Dashboard overview — balanced editorial hero and calmer analytics canvas */
+.dt-dashboard-shell .dt-dashboard-hero{
+  border:1px solid rgba(190,216,194,.18)!important;border-radius:29px!important;
+  box-shadow:0 28px 70px -44px rgba(16,47,35,.62)!important
+}
+.dt-dashboard-shell .dt-dashboard-command-panel{
+  border:1px solid rgba(225,241,223,.16)!important;
+  border-radius:22px!important;background:rgba(10,31,25,.28)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07)!important;
+  backdrop-filter:blur(14px)
+}
+.dt-dashboard-shell .dt-dashboard-device-stat{
+  border:1px solid rgba(225,241,223,.12)!important;
+  border-radius:15px!important;background:rgba(255,255,255,.075)!important;
+  padding:15px!important
+}
+.dt-dashboard-shell .dt-dashboard-device-stat svg{color:#c5dfc8!important}
+.dt-dashboard-shell .dt-dashboard-device-stat strong{letter-spacing:-.045em}
+.dt-dashboard-shell .dt-dashboard-primary-action{
+  border-radius:12px!important;background:#d9ead6!important;color:#1b3c2c!important;
+  box-shadow:0 12px 26px -18px rgba(0,0,0,.5)!important
+}
+.dt-dashboard-shell .dt-dashboard-primary-action:hover{background:#e8f2e5!important}
+.dt-dashboard-shell .dt-dashboard-secondary-action{
+  border-radius:12px!important;border-color:rgba(231,243,229,.25)!important;
+  background:rgba(255,255,255,.075)!important;color:#f1f7ef!important
+}
+.dt-dashboard-shell .dt-dashboard-secondary-action:hover{background:rgba(255,255,255,.14)!important}
+.dt-dashboard-shell #analytics{
+  padding:clamp(19px,2.5vw,30px)!important;border:1px solid #e2e9df!important;
+  border-radius:25px!important;background:linear-gradient(145deg,#fff 0%,#fbfcfa 100%)!important;
+  box-shadow:0 20px 52px -45px rgba(27,52,40,.34)!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-heading{
+  align-items:flex-end!important;margin-bottom:22px!important;padding-bottom:19px!important;
+  border-bottom:1px solid #edf1eb!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-heading h3{
+  margin-top:7px!important;color:#203329!important;font-size:clamp(22px,2.5vw,29px)!important;
+  letter-spacing:-.055em!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-heading>div:first-child>p:last-child{
+  max-width:540px;color:#849184!important;line-height:1.65!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-period-chip{
+  border:1px solid #e1e9df!important;border-radius:999px!important;
+  background:#f5f8f3!important;color:#557b62!important;padding:9px 13px!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-kpi{
+  position:relative;overflow:hidden;min-height:145px;padding:19px!important;
+  border:1px solid #e4eae2!important;border-radius:17px!important;
+  background:#fff!important;box-shadow:0 12px 30px -28px rgba(27,52,40,.38)!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-kpi>div:first-child p{color:#778579!important}
+.dt-dashboard-shell #analytics .dt-analytics-kpi>p:nth-child(2){
+  margin-top:20px!important;color:#203329!important;letter-spacing:-.06em!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-kpi>p:nth-child(3){color:#8b978b!important}
+.dt-dashboard-shell #analytics .dt-analytics-kpi-icon{
+  width:36px;height:36px;display:grid;place-items:center;border-radius:11px!important;
+  background:#edf4ec!important;color:#557b62!important
+}
+.dt-dashboard-shell #analytics .dt-analytics-kpi-accent{
+  position:absolute;left:0;right:0;bottom:0;height:3px!important;opacity:.8
+}
+.dt-dashboard-shell .dt-analytics-insights{
+  border-color:#e2e9df!important;border-radius:23px!important;
+  box-shadow:0 18px 48px -42px rgba(27,52,40,.32)!important
+}
+.dt-dashboard-shell .dt-analytics-insights [class*="text-blue-600"]{color:#557b62!important}
+.dt-dashboard-shell .dt-analytics-insights [class*="bg-blue-50"]{background:#f0f5ee!important}
+.dt-dashboard-shell .dt-analytics-insights [class*="border-blue-100"]{border-color:#dce8dc!important}
+
+/* NFC card list — each card reads as a compact operational unit */
+.dt-dashboard-shell #cards .dt-nfc-card-row{
+  display:grid!important;grid-template-columns:minmax(0,1fr) 286px!important;
+  align-items:stretch!important;gap:20px!important;padding:21px!important;
+  border-color:#e2e9df!important;border-radius:20px!important;background:#fff!important;
+  box-shadow:0 14px 34px -31px rgba(27,52,40,.4)!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row:hover{
+  border-color:#c9d9c9!important;box-shadow:0 20px 42px -34px rgba(37,75,60,.34)!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row>div:first-child{
+  min-width:0;align-self:center
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row>div:first-child>div:first-child p{
+  color:#203329!important;font-size:16px!important;letter-spacing:-.025em
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row>div:first-child>p:nth-of-type(1){
+  display:inline-flex;align-items:center;margin-top:7px!important;
+  border:1px solid #edf1eb;border-radius:7px;background:#f8faf7;
+  padding:4px 7px;color:#7c897d!important;font-size:10px!important;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row>div:first-child>div:nth-of-type(1){
+  margin-top:11px!important;gap:7px!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row>div:first-child>div:nth-of-type(1)>span{
+  border:1px solid #e5ece3!important;border-radius:8px!important;
+  background:#f5f8f3!important;color:#607a63!important;padding:6px 9px!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row>div:first-child>p:nth-of-type(2){
+  margin-top:12px!important;color:#899589!important;font-size:12px!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions{
+  width:auto!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-content:center;gap:7px!important;padding:0 0 0 17px!important;
+  border-top:0!important;border-left:1px solid #edf1eb!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions button{
+  min-height:39px!important;padding:8px 9px!important;border-radius:10px!important;
+  border-color:#e5ebe3!important;background:#fff!important;color:#526457!important;
+  font-size:11px!important;white-space:nowrap
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions button:hover{
+  border-color:#cbdccb!important;background:#f2f7f0!important;color:#365b40!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions button:disabled{opacity:.38}
+.dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions button[class*="bg-blue-50"]{
+  border-color:#dce8dc!important;background:#edf4ec!important;color:#426b4e!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions button[class*="text-red-600"]{
+  border-color:#f0e3df!important;background:#fff!important;color:#a15e52!important
+}
+.dt-dashboard-shell #cards .dt-nfc-card-row .card-readiness-warning{
+  max-width:680px;border-color:#eee4c9!important;border-radius:13px!important;
+  background:#fbf8ef!important
+}
+@media(max-width:900px){
+  .dt-dashboard-shell #cards .dt-nfc-card-row{
+    grid-template-columns:minmax(0,1fr)!important;gap:15px!important
+  }
+  .dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    padding:14px 0 0!important;border-left:0!important;border-top:1px solid #edf1eb!important
+  }
+}
+@media(max-width:640px){
+  .dt-dashboard-shell #analytics{padding:17px!important;border-radius:20px!important}
+  .dt-dashboard-shell #analytics .dt-analytics-heading{
+    align-items:flex-start!important;flex-direction:column!important;gap:12px!important
+  }
+  .dt-dashboard-shell #analytics .dt-analytics-kpi{min-height:124px;padding:14px!important}
+  .dt-dashboard-shell #analytics .dt-analytics-kpi>p:nth-child(2){margin-top:14px!important}
+  .dt-dashboard-shell #cards .dt-nfc-card-row{padding:15px!important;border-radius:17px!important}
+  .dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions{gap:7px!important}
+  .dt-dashboard-shell #cards .dt-nfc-card-row .dt-nfc-card-actions button{
+    min-height:42px!important;padding:8px 6px!important;font-size:10px!important
+  }
+  .dt-dashboard-shell .dt-dashboard-hero{border-radius:22px!important}
+  .dt-dashboard-shell .dt-dashboard-command-panel{padding:17px!important}
+}
