@@ -128,15 +128,15 @@ export default function CustomerOrdersPage() {
 
   useEffect(()=>{ void load(); },[router]);
 
-  return <main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6">
-    <div className="mx-auto max-w-4xl">
-      <header className="mb-8 flex items-center justify-between gap-3">
+  return <main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6 dt-customer-orders">
+    <div className="mx-auto max-w-5xl dt-customer-orders-inner">
+      <header className="mb-8 flex dt-customer-orders-header items-center justify-between gap-3">
         <Link href="/" className="text-xl font-black tracking-tight text-slate-900">DiTap<span className="text-blue-600">Aja.</span></Link>
         <Link href="/dashboard" className="text-sm font-semibold text-slate-500 hover:text-blue-600">Dashboard <span aria-hidden>↗</span></Link>
       </header>
       <div className="mb-7">
         <Link href="/" className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-slate-700"><ArrowLeft size={14}/> Kembali ke beranda</Link>
-        <div className="mt-5 flex flex-wrap items-end justify-between gap-3">
+        <div className="mt-5 flex flex-wrap items-end justify-between gap-3 dt-customer-orders-heading">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-[.2em] text-blue-600">CUSTOMER ACCOUNT</p>
             <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">Detail pesanan</h1>
@@ -150,13 +150,13 @@ export default function CustomerOrdersPage() {
       {error && <div role="alert" className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">{error}</div>}
       {loading ? <div className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white p-12 text-sm text-slate-500"><RefreshCw size={16} className="animate-spin"/> Memuat transaksi...</div>
       : orders.length === 0 ? <section className="rounded-3xl border border-slate-200 bg-white px-6 py-14 text-center shadow-sm"><Package size={32} className="mx-auto text-slate-300"/><h2 className="mt-4 text-lg font-bold text-slate-900">Belum ada pesanan</h2><p className="mt-2 text-sm text-slate-500">Pastikan kamu login menggunakan email yang sama dengan email saat checkout.</p><Link href="/koleksi" className="mt-6 inline-flex rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white">Lihat koleksi kartu</Link></section>
-      : <div className="space-y-5">{orders.map(order=><article key={order.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+      : <div className="space-y-5">{orders.map(order=><article key={order.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dt-customer-order-card">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 p-5 sm:p-6">
           <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">ORDER · {order.id.slice(0,8).toUpperCase()}</p><h2 className="mt-2 text-lg font-bold text-slate-900">{order.product_name}</h2><p className="mt-1 text-xs text-slate-500">{new Date(order.created_at).toLocaleString("id-ID",{dateStyle:"long",timeStyle:"short"})}</p></div>
           <span className={"rounded-full px-3 py-1.5 text-xs font-bold "+(order.status==="completed"?"bg-emerald-50 text-emerald-700":order.status==="cancelled"?"bg-slate-100 text-slate-500":"bg-blue-50 text-blue-700")}>{statusNames[order.status] || order.status}</span>
         </div>
         {order.status === "cancelled" ? <div className="mx-5 mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-semibold text-slate-600 sm:mx-6">Pesanan ini telah dibatalkan. Hubungi tim DiTapAja jika membutuhkan bantuan.</div> : <div className="px-5 pt-5 sm:px-6">
-          <div className="grid grid-cols-5 gap-1">
+          <div className="grid grid-cols-5 gap-1 dt-order-progress">
             {["Diterima","Dikonfirmasi","Diproses","Dikirim","Selesai"].map((step,index) => {
               const current = Math.max(0, ["pending","confirmed","processing","shipped","completed"].indexOf(order.status));
               const done = index <= current;
@@ -174,7 +174,7 @@ export default function CustomerOrdersPage() {
             <div className="flex justify-between gap-3"><span className="text-slate-500">Ongkos kirim</span><b className="text-slate-800">{money(order.shipping_cost || 0)}</b></div>
             <div className="flex justify-between gap-3 border-t border-slate-100 pt-3"><span className="font-semibold text-slate-700">Total transaksi</span><b className="text-base text-slate-900">{money(order.unit_price*order.quantity+(order.shipping_cost||0))}</b></div>
           </div>
-          <div className="rounded-2xl bg-slate-50 p-4">
+          <div className="rounded-2xl bg-slate-50 p-4 dt-order-payment-panel">
             <div className="flex items-center gap-2 text-sm font-bold text-slate-800"><CreditCard size={16}/> Status pembayaran</div>
             <p className={"mt-2 text-sm font-bold "+(order.payment_status==="paid"?"text-emerald-700":order.payment_status==="refunded"?"text-slate-500":"text-amber-700")}>{paymentNames[order.payment_status] || "Menunggu verifikasi"}</p>
             <p className="mt-1 text-xs leading-5 text-slate-500">{order.payment_status==="paid" ? "Pembayaran telah diperiksa dan dikonfirmasi oleh tim DiTapAja." : order.payment_status==="pending_verification" ? "Tim DiTapAja sedang memeriksa pembayaranmu. Status akan berubah setelah hasil pengecekan." : order.payment_status==="refunded" ? "Transaksi ini telah ditandai sebagai pengembalian dana." : "Belum ada konfirmasi pembayaran. Setelah pembayaran dilakukan, tim DiTapAja akan memeriksanya secara manual."}</p>
