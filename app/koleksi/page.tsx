@@ -21,13 +21,13 @@ export default function KoleksiPage() {
       title={<>Pilih kartu untuk<br /><em>bisnismu.</em></>}
       lead="Temukan desain yang paling sesuai dengan karakter bisnismu. Setiap kartu menggabungkan NFC dan QR Code, lengkap dengan akses dashboard."
     >
-      <div className="catalog-page-benefits">
+      <div className="catalog-page-benefits dt-catalog-benefits">
         <div><Nfc size={18} /><span><b>NFC + QR</b><small>Dua cara akses</small></span></div>
         <div><BarChart3 size={18} /><span><b>Dashboard termasuk</b><small>Pantau aktivitas kartu</small></span></div>
         <div><Check size={18} /><span><b>Tanpa bulanan</b><small>Satu kali pembelian</small></span></div>
       </div>
       <ProductCarousel products={products} />
-      <div className="catalog-page-note">
+      <div className="catalog-page-note dt-catalog-note">
         <div><QrCode size={19} /><b>Semua yang kamu butuhkan dalam satu kartu.</b></div>
         <p>Noir dan Blanc dapat dipesan mulai satu kartu. DiTapAja Signature tersedia melalui pre-order dengan minimum 10 kartu. Semua pesanan dikonfirmasi melalui WhatsApp.</p>
       </div>
