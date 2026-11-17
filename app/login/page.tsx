@@ -10,7 +10,7 @@ export default function LoginPage() {
   const router = useRouter();
   const nextPath = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("next") : null;
 
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -22,12 +22,25 @@ export default function LoginPage() {
     setMessage("");
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) throw error;
+      if (identifier.includes("@")) {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: identifier.trim(),
+          password,
+        });
+        if (error) throw error;
+      } else {
+        const response = await fetch("/api/auth/username-login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: identifier.trim(), password }),
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success || !result.session) {
+          throw new Error(result.error || "Username atau password salah.");
+        }
+        const { error: sessionError } = await supabase.auth.setSession(result.session);
+        if (sessionError) throw sessionError;
+      }
 
       const { data: userData } = await supabase.auth.getUser();
       if (userData.user) {
@@ -57,7 +70,7 @@ export default function LoginPage() {
       setMessage(
         error instanceof Error
           ? error.message
-          : "Login gagal. Periksa email dan password."
+          : "Login gagal. Periksa email/username dan password."
       );
     } finally {
       setLoading(false);
@@ -93,8 +106,8 @@ export default function LoginPage() {
             </div>
             <form onSubmit={handleLogin} className="dt-auth-form">
               <div className="dt-auth-field">
-                <label htmlFor="login-email">Email</label>
-                <input id="login-email" required type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" />
+                <label htmlFor="login-identifier">Email atau Username</label>
+                <input id="login-identifier" required type="text" autoComplete="username" value={identifier} onChange={(e) => setIdentifier(e.target.value)} placeholder="nama@email.com atau username" />
               </div>
               <div className="dt-auth-field">
                 <label htmlFor="login-password">Password</label>
