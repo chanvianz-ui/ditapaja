@@ -4272,3 +4272,60 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
  .dt-studio-card-select,.dt-studio-section-nav,.dt-studio-form{border-radius:19px!important}
  .dt-card-create-intro{border-radius:20px!important}
 }
+
+
+/* Public storefront — warm editorial palette aligned with the dashboard */
+.concept-home{
+  --dt-forest:#254b3c;--dt-forest-deep:#142b27;--dt-sage:#6d9272;
+  --dt-paper:#f4f5f1;--dt-ink:#1d2b25
+}
+.concept-home .concept-hero{background:radial-gradient(ellipse at 78% 45%,rgba(204,221,202,.52),transparent 34%),#f4f5f1!important}
+.concept-home .concept-hero h1,.concept-home .concept-section-top h2,
+.concept-home .concept-experience h2,.concept-home .concept-dashboard h2,
+.concept-home .concept-faq h2{color:#1d2b25!important}
+.concept-home .concept-hero h1 em,.concept-home .concept-section-top h2 em,
+.concept-home .concept-dashboard h2 em,.concept-home .concept-faq h2 em{color:#557b62!important}
+.concept-home .concept-button,.concept-home .concept-product-buy>a,
+.concept-home .concept-final-button{background:#254b3c!important;color:#fff!important;border-radius:999px!important;box-shadow:0 12px 26px -17px rgba(37,75,60,.72)!important}
+.concept-home .concept-button:hover,.concept-home .concept-product-buy>a:hover,
+.concept-home .concept-final-button:hover{background:#183b2e!important;transform:translateY(-2px)}
+.concept-home .concept-proof svg,.concept-home .concept-hero-bottom b{color:#557b62!important}
+.concept-home .concept-stage-circle{background:radial-gradient(circle,rgba(194,216,192,.68),rgba(194,216,192,0) 70%)!important}
+.concept-home .concept-stage-chip{border-color:#e0e8de!important;background:rgba(255,255,255,.92)!important;box-shadow:0 15px 40px -28px rgba(30,62,42,.4)!important}
+.concept-home .concept-collection,.concept-home .concept-faq{background:#fff!important}
+.concept-home .concept-experience,.concept-home .concept-final{background:#142b27!important}
+.concept-home .concept-experience h2,.concept-home .concept-final h2{color:#f4f5f1!important}
+.concept-home .concept-experience h2 em,.concept-home .concept-final h2 em{color:#b8d4b7!important}
+.concept-home .concept-experience-note svg,.concept-home .concept-flow article .concept-step-icon{color:#b8d4b7!important}
+.concept-home .concept-flow article .concept-step-icon{border-color:rgba(184,212,183,.25)!important;background:rgba(184,212,183,.08)!important}
+.concept-home .concept-dashboard{background:#edf1e9!important}
+.concept-home .concept-dashboard-copy li svg,.concept-home .concept-dashboard-link{color:#557b62!important}
+.concept-home .concept-dashboard-link{border-color:#9db99e!important}
+.concept-home .concept-dashboard-visual{background:#dce5d9!important;border-color:#d0ddcf!important;border-radius:22px!important}
+.concept-home .concept-dashboard-frame{border-radius:15px!important;box-shadow:0 25px 60px -38px rgba(20,52,43,.42)!important}
+.concept-home .concept-faq-list{border-color:#e3e9e1!important}
+.concept-home .concept-faq-list details{border-color:#e3e9e1!important}
+.concept-home .concept-faq-list summary svg,.concept-home .concept-faq>div:first-child>p a{color:#557b62!important}
+.concept-home .concept-footer{background:#142b27!important;border-color:#29463c!important}
+.concept-home .concept-footer .brand-symbol{background:#254b3c!important}
+.concept-home .concept-footer .blue-word{color:#b8d4b7!important}
+.concept-home .concept-final-button{margin-top:28px;padding:16px 23px!important}
+.concept-home .concept-final-mark{color:#8ca99a!important}
+@media(max-width:760px){
+ .concept-home .concept-hero{overflow:hidden}
+ .concept-home .concept-hero-grid{padding-top:44px!important}
+ .concept-home .concept-hero-copy{padding-inline:2px}
+ .concept-home .concept-hero-stage{margin-top:16px}
+ .concept-home .concept-section-top{margin-bottom:32px}
+ .concept-home .concept-collection,.concept-home .concept-experience,
+ .concept-home .concept-dashboard,.concept-home .concept-faq{padding-top:72px!important;padding-bottom:72px!important}
+ .concept-home .concept-dashboard-visual{padding:10px!important}
+ .concept-home .concept-faq-list details{padding:19px 0!important}
+ .concept-home .concept-final{padding:76px 20px 65px!important}
+}
+@media(max-width:380px){
+ .concept-home .concept-hero h1{font-size:44px!important}
+ .concept-home .concept-hero-stage{height:305px!important}
+ .concept-home .concept-hero-stage .simple-card{width:170px!important;height:170px!important}
+ .concept-home .concept-proof{gap:9px!important}
+}
