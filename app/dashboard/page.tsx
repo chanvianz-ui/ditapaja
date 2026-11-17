@@ -1349,24 +1349,24 @@ export default function DashboardPage() {
               </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 <div className="insight-metric-card rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4">
-                  <p className="text-xs text-slate-500">Perubahan tap</p>
+                  <p className="insight-metric-label text-xs text-slate-500">Perubahan tap</p>
                   <p className="insight-metric-value mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.tapChange === null ? "—" : `${analyticsInsights.tapChange > 0 ? "+" : ""}${analyticsInsights.tapChange.toFixed(1)}%`}</p>
                   <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.current.taps.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.taps.toLocaleString("id-ID")} sebelumnya</p>
                 </div>
                 <div className="insight-metric-card rounded-xl bg-slate-50 p-4">
-                  <p className="text-xs text-slate-500">Perubahan review click</p>
-                  <p className="mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.clickChange === null ? "—" : `${analyticsInsights.clickChange > 0 ? "+" : ""}${analyticsInsights.clickChange.toFixed(1)}%`}</p>
-                  <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.current.clicks.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.clicks.toLocaleString("id-ID")} sebelumnya</p>
+                  <p className="insight-metric-label text-xs text-slate-500">Perubahan review click</p>
+                  <p className="insight-metric-value mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.clickChange === null ? "—" : `${analyticsInsights.clickChange > 0 ? "+" : ""}${analyticsInsights.clickChange.toFixed(1)}%`}</p>
+                  <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.current.clicks.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.clicks.toLocaleString("id-ID")} sebelumnya</p>
                 </div>
-                <div className="rounded-xl bg-slate-50 p-4">
-                  <p className="text-xs text-slate-500">Hari paling aktif</p>
-                  <p className="mt-2 text-lg font-bold text-slate-900">{analyticsInsights.bestDay ? analyticsInsights.bestDay.label : "Belum ada data"}</p>
-                  <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.bestDay ? `${analyticsInsights.bestDay.taps} tap tercatat` : "Belum ada tap pada periode ini"}</p>
+                <div className="insight-metric-card rounded-xl bg-slate-50 p-4">
+                  <p className="insight-metric-label text-xs text-slate-500">Hari paling aktif</p>
+                  <p className="insight-metric-value mt-2 text-lg font-bold text-slate-900">{analyticsInsights.bestDay ? analyticsInsights.bestDay.label : "Belum ada data"}</p>
+                  <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.bestDay ? `${analyticsInsights.bestDay.taps} tap tercatat` : "Belum ada tap pada periode ini"}</p>
                 </div>
-                <div className="rounded-xl bg-slate-50 p-4">
-                  <p className="text-xs text-slate-500">Kartu teratas</p>
-                  <p className="mt-2 truncate text-lg font-bold text-slate-900">{analyticsInsights.topCard?.name || "Belum ada data"}</p>
-                  <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.topCard ? `${analyticsInsights.topCard.taps} tap tercatat` : "Tidak ada tap pada filter ini"}</p>
+                <div className="insight-metric-card rounded-xl bg-slate-50 p-4">
+                  <p className="insight-metric-label text-xs text-slate-500">Kartu teratas</p>
+                  <p className="insight-metric-value mt-2 truncate text-lg font-bold text-slate-900">{analyticsInsights.topCard?.name || "Belum ada data"}</p>
+                  <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.topCard ? `${analyticsInsights.topCard.taps} tap tercatat` : "Tidak ada tap pada filter ini"}</p>
                 </div>
               </div>
               <p className="mt-4 text-[10px] leading-5 text-slate-400">Persentase perubahan tidak ditampilkan jika periode pembanding belum memiliki aktivitas. Insight ini merupakan ringkasan aktivitas, bukan jumlah ulasan Google yang dipublikasikan.</p>
