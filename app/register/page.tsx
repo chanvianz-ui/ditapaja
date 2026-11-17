@@ -13,6 +13,7 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -69,91 +70,54 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f9fc] flex items-center justify-center px-5 py-12">
-      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/50">
-        <Link href="/" className="text-2xl font-bold tracking-tight text-slate-900">
-          DiTap<span className="text-blue-600">Aja.</span>
-        </Link>
-
-        <div className="mt-10">
-          <p className="text-sm font-semibold text-blue-600">
-            MULAI GRATIS
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
-            Buat akun kamu
-          </h1>
-          <p className="mt-2 text-sm text-slate-500">
-            Kelola kartu NFC dan pantau performanya dalam satu dashboard.
-          </p>
-        </div>
-
-        <form onSubmit={handleRegister} className="mt-8 space-y-5">
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Nama lengkap
-            </label>
-            <input
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Nama kamu"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-            />
+    <main className="dt-auth-page">
+      <div className="dt-auth-shell">
+        <section className="dt-auth-story dt-auth-story-register">
+          <Link href="/" className="dt-auth-brand">DiTap<span>Aja.</span></Link>
+          <div className="dt-auth-story-copy">
+            <span className="dt-auth-eyebrow"><i /> START WITH A SIMPLE TAP</span>
+            <h1>Semua aktivitas kartu NFC, <em>dalam satu tempat.</em></h1>
+            <p>Buat akun gratis dan mulai kelola pengalaman pelanggan dengan cara yang lebih praktis.</p>
           </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Email
-            </label>
-            <input
-              required
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="nama@email.com"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-            />
+          <div className="dt-auth-benefits">
+            <div><b>01</b><span><strong>Kelola kartu NFC</strong><small>Atur tujuan review dan status kartu.</small></span></div>
+            <div><b>02</b><span><strong>Pantau aktivitas</strong><small>Lihat tap dan interaksi pelanggan.</small></span></div>
+            <div><b>03</b><span><strong>Kenali performa</strong><small>Gunakan insight untuk langkah berikutnya.</small></span></div>
           </div>
-
-          <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Password
-            </label>
-            <input
-              required
-              minLength={8}
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Minimal 8 karakter"
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-            />
+          <div className="dt-auth-story-foot">FREE DASHBOARD. NO COMPLICATED SETUP.</div>
+        </section>
+        <section className="dt-auth-form-side">
+          <div className="dt-auth-form-card">
+            <div className="dt-auth-mobile-brand"><Link href="/">DiTap<span>Aja.</span></Link></div>
+            <div className="dt-auth-heading">
+              <span className="dt-auth-kicker">MULAI GRATIS</span>
+              <h2>Buat akun kamu</h2>
+              <p>Hanya butuh beberapa detail untuk memulai.</p>
+            </div>
+            <form onSubmit={handleRegister} className="dt-auth-form">
+              <div className="dt-auth-field">
+                <label htmlFor="register-name">Nama lengkap</label>
+                <input id="register-name" required autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama kamu" />
+              </div>
+              <div className="dt-auth-field">
+                <label htmlFor="register-email">Email</label>
+                <input id="register-email" required type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" />
+              </div>
+              <div className="dt-auth-field">
+                <label htmlFor="register-password">Password <small>MIN. 8 KARAKTER</small></label>
+                <div className="dt-auth-password">
+                  <input id="register-password" required minLength={8} type={showPassword ? "text" : "password"} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Buat password" />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "LIHAT"}</button>
+                </div>
+              </div>
+              {message && <p role="status" className="dt-auth-message dt-auth-success">{message}</p>}
+              <button disabled={loading} className="dt-auth-submit">{loading ? "Memproses..." : "Buat akun gratis"}<span>→</span></button>
+            </form>
+            <p className="dt-auth-switch">Sudah punya akun? <Link href={nextPath ? "/login?next=" + encodeURIComponent(nextPath) : "/login"}>Masuk</Link></p>
+            <p className="dt-auth-terms">Dengan mendaftar, kamu menyetujui ketentuan layanan DiTapAja.</p>
           </div>
-
-          {message && (
-            <p className="rounded-xl bg-blue-50 p-3 text-sm text-blue-700">
-              {message}
-            </p>
-          )}
-
-          <button
-            disabled={loading}
-            className="w-full rounded-xl bg-blue-600 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
-          >
-            {loading ? "Memproses..." : "Buat Akun Gratis"}
-          </button>
-        </form>
-
-        <p className="mt-7 text-center text-sm text-slate-500">
-          Sudah punya akun?{" "}
-          <Link href={nextPath ? "/login?next=" + encodeURIComponent(nextPath) : "/login"} className="font-semibold text-blue-600 hover:underline">
-            Masuk
-          </Link>
-        </p>
-
-        <p className="mt-8 text-center text-xs text-slate-400">
-          Dengan mendaftar, kamu menyetujui ketentuan layanan DiTapAja.
-        </p>
+          <p className="dt-auth-legal">© {new Date().getFullYear()} DiTapAja. Dibuat untuk bisnis yang terus berkembang.</p>
+        </section>
       </div>
     </main>
   );
