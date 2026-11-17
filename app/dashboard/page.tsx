@@ -1482,9 +1482,9 @@ export default function DashboardPage() {
             {/* NFC CARDS */}
             <div
               id="cards"
-              className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_24px_70px_-34px_rgba(30,64,175,0.35)]"
+              className="dt-card-control-center overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_24px_70px_-34px_rgba(30,64,175,0.35)]"
             >
-              <div className="relative flex flex-col items-start gap-5 overflow-hidden border-b border-white/10 bg-[#17243b] p-5 text-white sm:flex-row sm:items-start sm:justify-between sm:p-7">
+              <div className="dt-card-control-hero relative flex flex-col items-start gap-5 overflow-hidden border-b border-white/10 bg-[#17243b] p-5 text-white sm:flex-row sm:items-start sm:justify-between sm:p-7">
                 <div className="relative z-10 w-full sm:max-w-2xl">
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.2em] text-blue-100"><Nfc size={13}/> Card Control Center</div>
                   <h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl">My NFC Cards</h3>
@@ -1599,7 +1599,7 @@ export default function DashboardPage() {
                   ) : visibleCards.map((card) => (
                     <div
                       key={card.id}
-                      className="group relative flex flex-col justify-between gap-5 overflow-hidden rounded-[24px] border border-slate-200/80 bg-white p-4 shadow-[0_8px_28px_-20px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_22px_48px_-28px_rgba(37,99,235,0.42)] sm:flex-row sm:items-center sm:p-5"
+                      className="dt-nfc-card-row group relative flex flex-col justify-between gap-5 overflow-hidden rounded-[24px] border border-slate-200/80 bg-white p-4 shadow-[0_8px_28px_-20px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_22px_48px_-28px_rgba(37,99,235,0.42)] sm:flex-row sm:items-center sm:p-5"
                     >
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
@@ -1638,7 +1638,7 @@ export default function DashboardPage() {
                         {!card.active && <div className="card-readiness-warning mt-3 rounded-xl border border-amber-100 bg-amber-50/70 p-3"><p className="text-xs font-semibold text-amber-900">Kartu belum siap digunakan</p><p className="mt-1 text-xs leading-5 text-amber-800">1. Uji link Google Review · 2. Aktifkan kartu · 3. Tulis NFC atau gunakan QR Code.</p><p className="mt-1 text-[11px] text-amber-700">Setelah aktif, halaman kartu dapat diakses oleh pelanggan.</p></div>}
                       </div>
 
-                      <div className="grid w-full grid-cols-2 gap-2 border-t border-slate-100 pt-4 sm:w-[280px] sm:shrink-0 sm:grid-cols-2 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0">
+                      <div className="dt-nfc-card-actions grid w-full grid-cols-2 gap-2 border-t border-slate-100 pt-4 sm:w-[280px] sm:shrink-0 sm:grid-cols-2 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0">
                         {card.archived_at ? (
                           <button onClick={() => handleRestoreCard(card)} disabled={updatingCardId === card.id} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 px-3 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50 disabled:opacity-50">
                             {updatingCardId === card.id ? <Loader2 size={16} className="animate-spin"/> : <CheckCircle2 size={16}/>} Restore
