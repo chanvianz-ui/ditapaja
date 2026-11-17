@@ -20,10 +20,9 @@ export async function verifyAdmin(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const secretKey = process.env.SUPABASE_SECRET_KEY;
-  const adminUserId = process.env.ADMIN_USER_ID;
 
   // Fail closed if any required server configuration is missing.
-  if (!supabaseUrl || !supabaseAnonKey || !secretKey || !adminUserId) {
+  if (!supabaseUrl || !supabaseAnonKey || !secretKey) {
     console.error("Admin authentication is missing required server configuration.");
     return unauthorized(500, "Admin authentication is not configured.");
   }
@@ -48,7 +47,8 @@ export async function verifyAdmin(request: NextRequest) {
     return unauthorized(401, "Invalid or expired session.");
   }
 
-  if (data.user.id !== adminUserId) {
+  // Authorization uses trusted Supabase app_metadata, never user-editable user_metadata.
+  if (data.user.app_metadata?.role !== "superadmin") {
     return unauthorized(403, "Access denied");
   }
 
