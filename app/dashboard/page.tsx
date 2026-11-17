@@ -1101,43 +1101,61 @@ export default function DashboardPage() {
           </nav>
 
           <div className="mx-auto max-w-[1440px] space-y-7 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-7 xl:px-10 xl:py-9">
-            <section className="relative isolate overflow-hidden rounded-3xl border border-blue-100/80 bg-gradient-to-br from-white via-white to-blue-50/90 p-5 shadow-[0_12px_40px_-28px_rgba(37,99,235,0.28)] sm:p-7 lg:p-8">
-              <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-24 -z-10 h-64 w-64 rounded-full bg-blue-100/70 blur-3xl" />
-              <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+            <section className="dt-dashboard-command relative isolate overflow-hidden rounded-[30px] p-5 sm:p-7 lg:p-9">
+              <div className="dt-dashboard-orbit dt-dashboard-orbit-one" aria-hidden="true" />
+              <div className="dt-dashboard-orbit dt-dashboard-orbit-two" aria-hidden="true" />
+              <div className="relative z-10 grid gap-7 xl:grid-cols-[minmax(0,1.45fr)_minmax(280px,.75fr)] xl:items-center">
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">DITAPAJA WORKSPACE</p>
-                  <p className="mt-3 text-sm font-medium text-slate-500">Welcome back,</p>
-                  <h2 className="mt-1 break-words text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="dt-dashboard-eyebrow"><LayoutDashboard size={12} /> BUSINESS CONTROL CENTER</span>
+                    <span className="dt-dashboard-live"><span /> WORKSPACE AKTIF</span>
+                  </div>
+                  <p className="mt-6 text-sm font-medium text-blue-100/75">Welcome back,</p>
+                  <h2 className="mt-1 max-w-3xl break-words text-3xl font-black tracking-[-.045em] text-white sm:text-4xl lg:text-[46px]">
                     {workspaceName} <span aria-hidden="true">👋</span>
                   </h2>
-                  <p className="mt-2 max-w-lg text-sm leading-6 text-slate-500">
-                    Pantau performa kartu NFC, kelola pengalaman pelanggan, dan lihat perkembangan interaksi bisnismu.
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-blue-100/75 sm:text-base">
+                    Semua aktivitas NFC dan performa review bisnismu, dalam satu tempat.
                   </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm">
-                      <CreditCard size={13} className="text-blue-600" />
-                      {cards.length} {cards.length === 1 ? "kartu" : "kartu"}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm">
-                      <span className={`h-1.5 w-1.5 rounded-full ${cards.some((card) => card.active) ? "bg-emerald-500" : "bg-slate-300"}`} />
-                      {cards.filter((card) => card.active).length} aktif
-                    </span>
+                  <div className="mt-7 flex flex-wrap gap-3">
+                    <button onClick={() => router.push("/dashboard/cards/new")} className="dt-dashboard-primary-action">
+                      <Plus size={17} /> Buat kartu baru
+                    </button>
+                    <button onClick={() => router.push("/dashboard/landing-page")} className="dt-dashboard-secondary-action">
+                      <Eye size={16} /> Atur landing page
+                    </button>
                   </div>
                 </div>
-
-                <div className="flex shrink-0 flex-col gap-2 sm:min-w-[176px]">
-                  <button
-                    onClick={() => router.push("/dashboard/cards/new")}
-                    className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    <Plus size={18} /> Add New Card
-                  </button>
-                  <button
-                    onClick={() => router.push("/dashboard/landing-page")}
-                    className="flex min-h-10 items-center justify-center gap-2 rounded-xl border border-blue-100 bg-white/90 px-4 py-2.5 text-xs font-semibold text-blue-700 transition hover:border-blue-200 hover:bg-blue-50"
-                  >
-                    <Eye size={15} /> Customize Landing Page
-                  </button>
+                <div className="dt-dashboard-command-panel">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-100/55">RINGKASAN KARTU</p>
+                      <p className="mt-1 text-sm font-semibold text-white">Status perangkatmu</p>
+                    </div>
+                    <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-bold text-blue-100">LIVE OVERVIEW</span>
+                  </div>
+                  <div className="mt-5 grid grid-cols-2 gap-3">
+                    <div className="dt-dashboard-device-stat">
+                      <CreditCard size={17} />
+                      <strong>{cards.filter((card) => !card.archived_at).length}</strong>
+                      <span>Total kartu</span>
+                    </div>
+                    <div className="dt-dashboard-device-stat">
+                      <CheckCircle2 size={17} />
+                      <strong>{cards.filter((card) => card.active && !card.archived_at).length}</strong>
+                      <span>Kartu aktif</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 border-t border-white/10 pt-4">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-blue-100/65">Kesiapan kartu</span>
+                      <strong className="text-white">{cards.filter((card) => card.active && !card.archived_at).length} / {cards.filter((card) => !card.archived_at).length} aktif</strong>
+                    </div>
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                      <div className="h-full rounded-full bg-gradient-to-r from-cyan-300 to-blue-400 transition-all" style={{ width: (cards.filter((card) => !card.archived_at).length ? cards.filter((card) => card.active && !card.archived_at).length / cards.filter((card) => !card.archived_at).length * 100 : 0) + "%" }} />
+                    </div>
+                    <p className="mt-3 text-[11px] leading-5 text-blue-100/55">Aktifkan kartu saat siap ditempatkan agar pelanggan bisa langsung memberikan review.</p>
+                  </div>
                 </div>
               </div>
             </section>
