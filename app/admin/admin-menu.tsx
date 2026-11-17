@@ -42,7 +42,7 @@ export default function AdminMenu() {
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-slate-950/35 backdrop-blur-[2px]"
           />
-          <aside className="absolute right-0 top-0 flex h-full w-[min(340px,88vw)] flex-col border-l border-slate-200 bg-white p-5 shadow-2xl">
+          <div role="dialog" aria-modal="true" aria-label="Admin navigation" className="absolute right-0 top-0 flex h-full w-[min(340px,88vw)] flex-col border-l border-slate-200 bg-white p-5 shadow-2xl">
             <div className="flex items-center justify-between border-b border-slate-100 pb-5">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
@@ -93,7 +93,7 @@ export default function AdminMenu() {
                 Sign out
               </button>
             </div>
-          </aside>
+          </div>
         </div>
       )}
     </>
