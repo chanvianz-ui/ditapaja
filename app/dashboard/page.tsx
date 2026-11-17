@@ -1728,15 +1728,15 @@ export default function DashboardPage() {
 
       {/* BULK QR PRINT SHEET */}
       {showBulkQrSheet && (
-        <div className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-slate-950/55 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-6">
-          <div className="mx-auto max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-7">
+        <div className="dt-bulk-qr-overlay fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-slate-950/55 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-6">
+          <div className="dt-bulk-qr-panel mx-auto max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-7">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
               <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR PRINT SHEET</p><h3 className="mt-1 text-lg font-bold text-slate-900">Cetak semua QR Code aktif</h3><p className="mt-1 text-xs text-slate-500">{cards.filter((card) => card.active).length} kartu aktif · Gunakan kertas A4 dan skala 100%.</p></div>
               <div className="flex flex-wrap items-center gap-2"><div className="flex rounded-xl border border-slate-200 p-1"><button type="button" onClick={() => setBulkQrTheme("light")} className={`rounded-lg px-3 py-2 text-xs font-semibold ${bulkQrTheme === "light" ? "bg-slate-900 text-white" : "text-slate-500"}`}>Hitam / Putih</button><button type="button" onClick={() => setBulkQrTheme("dark")} className={`rounded-lg px-3 py-2 text-xs font-semibold ${bulkQrTheme === "dark" ? "bg-slate-900 text-white" : "text-slate-500"}`}>Putih / Hitam</button></div><button type="button" onClick={() => window.print()} className="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-700"><Printer size={14} className="mr-1 inline"/> Cetak / Simpan PDF</button><button type="button" onClick={() => setShowBulkQrSheet(false)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">Tutup</button></div>
             </div>
-            <div id="ditapaja-bulk-qr-sheet" className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5">
+            <div id="ditapaja-bulk-qr-sheet" className="dt-bulk-qr-grid grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5">
               {cards.filter((card) => card.active).map((card) => (
-                <div key={card.id} className={`flex break-inside-avoid flex-col items-center rounded-xl border p-3 text-center sm:p-4 ${bulkQrTheme === "dark" ? "border-slate-700 bg-slate-950" : "border-slate-200 bg-white"}`}>
+                <div key={card.id} className={`dt-bulk-qr-card flex break-inside-avoid flex-col items-center rounded-xl border p-3 text-center sm:p-4 ${bulkQrTheme === "dark" ? "border-slate-700 bg-slate-950" : "border-slate-200 bg-white"}`}>
                   <p className={`w-full truncate text-sm font-bold ${bulkQrTheme === "dark" ? "text-white" : "text-slate-900"}`}>{card.card_name || "Untitled Card"}</p>
                   <p className={`mt-1 text-[10px] font-medium uppercase tracking-wider ${bulkQrTheme === "dark" ? "text-slate-400" : "text-slate-400"}`}>SCAN TO REVIEW</p>
                   <div className={`my-3 rounded-lg p-2 ${bulkQrTheme === "dark" ? "bg-slate-950" : "bg-white"}`}><QRCodeSVG value={typeof window !== "undefined" ? window.location.origin + "/c/" + card.public_code : "https://ditapaja.netlify.app/c/" + card.public_code} size={150} level="H" includeMargin fgColor={bulkQrTheme === "dark" ? "#ffffff" : "#111827"} bgColor={bulkQrTheme === "dark" ? "#000000" : "#ffffff"}/></div>
@@ -1753,14 +1753,14 @@ export default function DashboardPage() {
 
       {/* QR CODE MODAL */}
       {qrCard && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto overscroll-contain bg-slate-950/55 p-3 py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-4" onClick={() => setQrCard(null)}>
-          <div role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="my-auto w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-4 text-center shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
+        <div className="dt-qr-modal-overlay fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto overscroll-contain bg-slate-950/55 p-3 py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-4" onClick={() => setQrCard(null)}>
+          <div role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="dt-qr-modal-panel my-auto w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-4 text-center shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between text-left"><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR ACCESS</p><h3 id="qr-card-title" className="mt-1 text-lg font-bold text-slate-900">{qrCard.card_name || "Untitled Card"}</h3></div><button type="button" onClick={() => setQrCard(null)} aria-label="Tutup QR Code" className="rounded-full p-2 text-slate-400 hover:bg-slate-100"><X size={19}/></button></div>
-            <div className="mx-auto my-4 inline-flex max-w-full rounded-2xl border border-slate-100 bg-white p-3 sm:my-6 sm:p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} className="h-auto w-[min(64vw,220px)]" value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.netlify.app/c/" + qrCard.public_code} size={220} level="H" includeMargin fgColor={qrForeground} bgColor={qrBackground} /></div>
+            <div className="dt-qr-preview mx-auto my-4 inline-flex max-w-full rounded-2xl border border-slate-100 bg-white p-3 sm:my-6 sm:p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} className="h-auto w-[min(64vw,220px)]" value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.netlify.app/c/" + qrCard.public_code} size={220} level="H" includeMargin fgColor={qrForeground} bgColor={qrBackground} /></div>
             <p className="break-all px-1 text-[11px] text-slate-400">{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.netlify.app"}/c/{qrCard.public_code}</p>
             <button type="button" onClick={() => copyQrLink(qrCard)} className="mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700">{qrLinkCopied ? "Tautan berhasil disalin" : "Salin tautan kartu"}</button>
             <p className="mt-2 text-xs leading-5 text-slate-500">Scan QR ini untuk membuka halaman review kartu.</p>
-            <div className="grid grid-cols-2 gap-3 text-left">
+            <div className="dt-qr-color-controls grid grid-cols-2 gap-3 text-left">
               <label className="rounded-xl border border-slate-200 p-3 text-xs font-semibold text-slate-600">Warna QR<input type="color" value={qrForeground} onChange={(event) => setQrForeground(event.target.value)} className="mt-2 h-9 w-full cursor-pointer rounded"/></label>
               <label className="rounded-xl border border-slate-200 p-3 text-xs font-semibold text-slate-600">Warna latar<input type="color" value={qrBackground} onChange={(event) => setQrBackground(event.target.value)} className="mt-2 h-9 w-full cursor-pointer rounded"/></label>
             </div>
