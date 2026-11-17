@@ -64,7 +64,8 @@ export async function PATCH(request: NextRequest) {
         return NextResponse.json({ success: false, error: "Status pembayaran tidak valid." }, { status: 400 });
       }
       updates.payment_status = body.payment_status;
-      updates.paid_at = body.payment_status === "paid" ? new Date().toISOString() : null;
+      if (body.payment_status === "paid") updates.paid_at = new Date().toISOString();
+      else if (body.payment_status === "unpaid" || body.payment_status === "pending_verification") updates.paid_at = null;
     }
     if (Object.keys(updates).length === 1) {
       return NextResponse.json({ success: false, error: "Tidak ada perubahan yang dikirim." }, { status: 400 });
