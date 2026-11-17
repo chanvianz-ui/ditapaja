@@ -153,39 +153,33 @@ export default function CustomerOrdersPage() {
     return matchesFilter && (!normalizedSearch || searchableText.includes(normalizedSearch));
   });
 
-  return <main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6">
-    <div className="mx-auto max-w-5xl">
-      <header className="mb-8 flex items-center justify-between gap-3">
-        <Link href="/" className="text-xl font-black tracking-tight text-slate-900">DiTap<span className="text-blue-600">Aja.</span></Link>
-        <Link href="/dashboard" className="text-sm font-semibold text-slate-500 hover:text-blue-600">Dashboard <span aria-hidden>↗</span></Link>
+  return <main className="min-h-screen bg-[#f4f6fa] px-4 py-5 sm:px-6 sm:py-8">
+    <div className="mx-auto max-w-6xl">
+      <header className="mb-7 flex items-center justify-between gap-3 border-b border-slate-200/80 pb-5">
+        <Link href="/" className="text-[22px] font-black tracking-tight text-slate-950">DiTap<span className="text-blue-600">Aja.</span></Link>
+        <Link href="/dashboard" className="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-blue-700">Dashboard <span aria-hidden>↗</span></Link>
       </header>
       <div className="mb-6">
         <Link href="/" className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-slate-700"><ArrowLeft size={14}/> Kembali ke beranda</Link>
       </div>
-      <section className="relative mb-6 overflow-hidden rounded-[28px] bg-[#111f35] p-6 text-white shadow-[0_24px_70px_rgba(17,31,53,.18)] sm:p-8">
-        <div className="pointer-events-none absolute -right-16 -top-28 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl"/>
-        <div className="pointer-events-none absolute -bottom-28 left-1/3 h-56 w-56 rounded-full bg-indigo-500/15 blur-3xl"/>
-        <div className="relative">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.22em] text-blue-300"><span className="h-1.5 w-1.5 rounded-full bg-blue-400"/> CUSTOMER SPACE</p>
-              <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">Pesanan kamu<span className="text-blue-400">.</span></h1>
-              <p className="mt-2 max-w-xl break-all text-sm leading-6 text-slate-300">Pantau transaksi, pembayaran, dan pengiriman DiTapAja dalam satu tempat.</p>
-            </div>
-            <button type="button" onClick={() => void load()} disabled={loading} className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2.5 text-xs font-bold text-white backdrop-blur transition hover:bg-white/15 disabled:opacity-50">
-              <RefreshCw size={14} className={loading ? "animate-spin" : ""}/> Perbarui
-            </button>
+      <section className="mb-7">
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div className="max-w-2xl">
+            <p className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[.2em] text-blue-700"><span className="h-2 w-2 rounded-full bg-blue-600"/> CUSTOMER ACCOUNT</p>
+            <h1 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-[42px]">Pesanan & transaksi<span className="text-blue-600">.</span></h1>
+            <p className="mt-2 text-sm leading-6 text-slate-500">Semua informasi pembelian, pembayaran, dan pengiriman kartu DiTapAja tersusun di sini.</p>
           </div>
-          <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] font-semibold text-slate-400">Total pesanan</p><p className="mt-2 text-2xl font-extrabold tabular-nums">{orders.length}</p><p className="mt-1 text-[10px] text-slate-400">Seluruh transaksi</p></div>
-            <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] font-semibold text-slate-400">Perlu pembayaran</p><p className="mt-2 text-2xl font-extrabold tabular-nums">{orders.filter(order => order.payment_status === "unpaid").length}</p><p className="mt-1 text-[10px] text-slate-400">Menunggu bukti bayar</p></div>
-            <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] font-semibold text-slate-400">Diproses / dikirim</p><p className="mt-2 text-2xl font-extrabold tabular-nums">{orders.filter(order => ["confirmed","processing","shipped"].includes(order.status)).length}</p><p className="mt-1 text-[10px] text-slate-400">Pesanan berjalan</p></div>
-            <div className="rounded-2xl border border-white/10 bg-white/[.06] p-4"><p className="text-[10px] font-semibold text-slate-400">Pembayaran berhasil</p><p className="mt-2 text-2xl font-extrabold tabular-nums">{orders.filter(order => order.payment_status === "paid").length}</p><p className="mt-1 text-[10px] text-slate-400">Terverifikasi admin</p></div>
+          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700"><Package size={19}/></div>
+            <div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Akun pelanggan</p><p className="max-w-[220px] truncate text-xs font-bold text-slate-800">{email || "Memuat akun..."}</p></div>
+            <button type="button" onClick={() => void load()} disabled={loading} aria-label="Perbarui pesanan" title="Perbarui pesanan" className="ml-1 rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-50"><RefreshCw size={15} className={loading ? "animate-spin" : ""}/></button>
           </div>
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-4">
-            <p className="min-w-0 break-all text-[11px] text-slate-400">Masuk sebagai <span className="font-semibold text-slate-200">{email || "Memuat akun..."}</span></p>
-            <Link href="/koleksi" className="inline-flex items-center gap-2 text-xs font-bold text-blue-300 transition hover:text-white">Jelajahi kartu <span aria-hidden>↗</span></Link>
-          </div>
+        </div>
+        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_4px_18px_rgba(15,23,42,.035)] sm:p-5"><div className="flex items-center justify-between"><p className="text-xs font-semibold text-slate-500">Total pesanan</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-600"><Package size={17}/></span></div><p className="mt-3 text-3xl font-black tracking-tight text-slate-950 tabular-nums">{orders.length}</p><p className="mt-1 text-[11px] text-slate-400">Seluruh transaksi akun</p></div>
+          <div className="rounded-2xl border border-amber-100 bg-white p-4 shadow-[0_4px_18px_rgba(15,23,42,.035)] sm:p-5"><div className="flex items-center justify-between"><p className="text-xs font-semibold text-slate-500">Perlu pembayaran</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-amber-600"><CreditCard size={17}/></span></div><p className="mt-3 text-3xl font-black tracking-tight text-slate-950 tabular-nums">{orders.filter(order => order.payment_status === "unpaid").length}</p><p className="mt-1 text-[11px] text-slate-400">Menunggu bukti pembayaran</p></div>
+          <div className="rounded-2xl border border-blue-100 bg-white p-4 shadow-[0_4px_18px_rgba(15,23,42,.035)] sm:p-5"><div className="flex items-center justify-between"><p className="text-xs font-semibold text-slate-500">Pesanan berjalan</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-700"><Truck size={17}/></span></div><p className="mt-3 text-3xl font-black tracking-tight text-slate-950 tabular-nums">{orders.filter(order => ["confirmed","processing","shipped"].includes(order.status)).length}</p><p className="mt-1 text-[11px] text-slate-400">Diproses atau dikirim</p></div>
+          <div className="rounded-2xl border border-emerald-100 bg-white p-4 shadow-[0_4px_18px_rgba(15,23,42,.035)] sm:p-5"><div className="flex items-center justify-between"><p className="text-xs font-semibold text-slate-500">Pembayaran berhasil</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700"><CheckCircle2 size={17}/></span></div><p className="mt-3 text-3xl font-black tracking-tight text-slate-950 tabular-nums">{orders.filter(order => order.payment_status === "paid").length}</p><p className="mt-1 text-[11px] text-slate-400">Sudah diverifikasi admin</p></div>
         </div>
       </section>
       {error && <div role="alert" className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">{error}</div>}
@@ -226,8 +220,8 @@ export default function CustomerOrdersPage() {
       {loading ? <div className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white p-12 text-sm text-slate-500"><RefreshCw size={16} className="animate-spin"/> Memuat transaksi...</div>
       : orders.length === 0 ? <section className="rounded-3xl border border-slate-200 bg-white px-6 py-14 text-center shadow-sm"><Package size={32} className="mx-auto text-slate-300"/><h2 className="mt-4 text-lg font-bold text-slate-900">Belum ada pesanan</h2><p className="mt-2 text-sm text-slate-500">Pastikan kamu login menggunakan email yang sama dengan email saat checkout.</p><Link href="/koleksi" className="mt-6 inline-flex rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white">Lihat koleksi kartu</Link></section>
       : filteredOrders.length === 0 ? <section className="rounded-3xl border border-slate-200 bg-white px-6 py-12 text-center shadow-sm"><Search size={28} className="mx-auto text-slate-300"/><h2 className="mt-4 text-base font-bold text-slate-900">Pesanan tidak ditemukan</h2><p className="mt-2 text-sm text-slate-500">Coba kata kunci lain atau ubah filter status pesanan.</p><button type="button" onClick={() => { setOrderSearch(""); setOrderFilter("all"); }} className="mt-5 rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:text-blue-700">Reset pencarian dan filter</button></section>
-      : <div className="space-y-5">{filteredOrders.map(order=><article key={order.id} className="overflow-hidden rounded-[26px] border border-slate-200/90 bg-white shadow-[0_12px_38px_rgba(15,23,42,.045)] transition-shadow hover:shadow-[0_18px_48px_rgba(15,23,42,.075)]">
-        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 bg-gradient-to-r from-white via-white to-blue-50/60 p-5 sm:p-6">
+      : <div className="space-y-5">{filteredOrders.map(order=><article key={order.id} className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_8px_30px_rgba(15,23,42,.045)] transition-shadow hover:shadow-[0_14px_38px_rgba(15,23,42,.075)]">
+        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200 bg-[#fbfcfe] p-5 sm:p-6">
           <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">ORDER · {order.id.slice(0,8).toUpperCase()}</p><h2 className="mt-2 text-lg font-bold text-slate-900">{order.product_name}</h2><p className="mt-1 text-xs text-slate-500">{new Date(order.created_at).toLocaleString("id-ID",{dateStyle:"long",timeStyle:"short"})}</p></div>
           <div className="flex items-center gap-2">
             <button type="button" onClick={() => setInvoiceOrder(order)} className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:text-blue-700"><Receipt size={14}/> Invoice</button>
@@ -246,14 +240,14 @@ export default function CustomerOrdersPage() {
             })}
           </div>
         </div>}
-        <div className="grid gap-5 p-5 sm:grid-cols-2 sm:p-6">
+        <div className="grid gap-5 border-b border-slate-100 p-5 sm:grid-cols-[.9fr_1.1fr] sm:gap-7 sm:p-6 lg:p-7">
           <div className="space-y-3 text-sm">
             <div className="flex justify-between gap-3"><span className="text-slate-500">Jumlah</span><b className="text-slate-800">{order.quantity} kartu</b></div>
             <div className="flex justify-between gap-3"><span className="text-slate-500">Harga satuan</span><b className="text-slate-800">{money(order.unit_price)}</b></div>
             <div className="flex justify-between gap-3"><span className="text-slate-500">Ongkos kirim</span><b className="text-slate-800">{money(order.shipping_cost || 0)}</b></div>
             <div className="flex justify-between gap-3 border-t border-slate-100 pt-3"><span className="font-semibold text-slate-700">Total transaksi</span><b className="text-base text-slate-900">{money(order.unit_price*order.quantity+(order.shipping_cost||0))}</b></div>
           </div>
-          <div className="rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-blue-50/50 p-4">
+          <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5">
             <div className="flex items-center gap-2 text-sm font-bold text-slate-800"><CreditCard size={16}/> Status pembayaran</div>
             <p className={"mt-2 text-sm font-bold "+(order.payment_status==="paid"?"text-emerald-700":order.payment_status==="refunded"?"text-slate-500":"text-amber-700")}>{paymentNames[order.payment_status] || "Menunggu verifikasi"}</p>
             <p className="mt-1 text-xs leading-5 text-slate-500">{order.payment_status==="paid" ? "Pembayaran telah diperiksa dan dikonfirmasi oleh tim DiTapAja." : order.payment_status==="pending_verification" ? "Tim DiTapAja sedang memeriksa pembayaranmu. Status akan berubah setelah hasil pengecekan." : order.payment_status==="refunded" ? "Transaksi ini telah ditandai sebagai pengembalian dana." : "Belum ada konfirmasi pembayaran. Setelah pembayaran dilakukan, tim DiTapAja akan memeriksanya secara manual."}</p>
@@ -281,7 +275,7 @@ export default function CustomerOrdersPage() {
             <MessageCircle size={15}/> Bantuan terkait pesanan
           </a>
         </div>
-        <div className="border-t border-slate-100 bg-slate-50/70 p-5 sm:p-6"><div className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500"><Clock3 size={14}/> Riwayat aktivitas</div>
+        <div className="border-t border-slate-100 bg-[#fbfcfe] p-5 sm:p-6"><div className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500"><Clock3 size={14}/> Riwayat aktivitas</div>
           {(activities[order.id] || []).length===0 ? <p className="text-xs text-slate-400">Belum ada pembaruan aktivitas.</p> : <ol className="ml-2 space-y-4 border-l border-slate-200 pl-5">{activities[order.id].map((a,i)=><li key={a.id} className="relative"><span className={"absolute -left-[26px] top-1 h-3 w-3 rounded-full ring-4 ring-slate-50 "+(i===0?"bg-blue-600":"bg-slate-300")}/><p className="text-xs font-semibold text-slate-800">{a.title}</p>{a.description&&<p className="mt-1 text-xs text-slate-500">{a.description}</p>}<p className="mt-1 text-[10px] text-slate-400">{new Date(a.created_at).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"})}</p></li>)}</ol>}
         </div>
       </article>)}</div>}
