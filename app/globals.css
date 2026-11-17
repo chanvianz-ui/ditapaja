@@ -3488,3 +3488,120 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-auth-terms{color:#7f8d
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-auth-mobile-brand a{color:#edf1f6}
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-auth-error{background:#3b2029;border-color:#713545;color:#ffb4c1}
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-auth-success{background:#173528;border-color:#285b43;color:#a6e7c3}
+
+/* Product catalogue and detail — editorial product experience */
+.dt-catalog-benefits{margin-block:10px 34px;gap:12px}
+.dt-catalog-benefits>div{min-height:78px;border:1px solid #e5eaf2;border-radius:15px;background:linear-gradient(145deg,#fff,#f8faff);padding:16px 18px;box-shadow:0 10px 28px -24px #1d3558}
+.dt-catalog-benefits>div>svg{width:34px;height:34px;padding:8px;border-radius:10px;background:#edf3ff;color:#315fe8}
+.dt-catalog-benefits b{font:800 11px Manrope,sans-serif;color:#1b2b45}
+.dt-catalog-benefits small{font-size:9px;color:#8793a6}
+.dt-catalog-note{border:1px solid #dfe7f4!important;border-radius:18px!important;background:linear-gradient(120deg,#f7f9fd,#eef4ff)!important;padding:22px 25px!important}
+.dt-catalog-note>div{display:flex;align-items:center;gap:10px;color:#203553;font:800 13px Manrope}
+.dt-catalog-note>div svg{color:#315fe8}
+.dt-catalog-note p{max-width:760px;margin:9px 0 0;color:#74839a;font-size:11px;line-height:1.8}
+.catalog-slider{margin-top:8px}
+.catalog-slider-controls{margin-bottom:15px}
+.catalog-slider-controls>span{font-size:10px;font-weight:800;letter-spacing:.08em;color:#69788f;text-transform:uppercase}
+.catalog-slider-controls button{width:38px;height:38px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;color:#315fe8;transition:.2s}
+.catalog-slider-controls button:hover:not(:disabled){background:#315fe8;color:#fff;border-color:#315fe8}
+.catalog-track{gap:20px;padding:8px 3px 20px}
+.concept-product{border:1px solid #e3e9f2;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 15px 40px -34px #172b4d;transition:transform .25s,box-shadow .25s,border-color .25s}
+.concept-product:hover{transform:translateY(-5px);border-color:#cbd8ed;box-shadow:0 22px 45px -32px #172b4d}
+.concept-product-art{min-height:245px}
+.concept-product-body{padding:22px}
+.concept-product-meta{font-size:8px;letter-spacing:.1em;color:#8a97aa;font-weight:800}
+.concept-product-body h3{font:850 20px Manrope,sans-serif;letter-spacing:-.7px}
+.concept-product-body>p{font-size:11px;line-height:1.8;color:#7d899c;min-height:40px}
+.concept-product-includes{gap:7px;margin-top:17px}
+.concept-product-includes span{display:inline-flex;align-items:center;gap:5px;border:1px solid #e8edf5;border-radius:30px;padding:6px 9px;color:#66758b;font-size:8px;font-weight:750}
+.concept-product-buy{border-top:1px solid #edf0f5;margin-top:20px;padding-top:17px}
+.concept-product-buy strong{font:850 18px Manrope;color:#17243b}
+.catalog-order-link{border-radius:10px;background:#315fe8;padding:10px 13px;color:#fff;font-size:9px;font-weight:800;transition:.2s}
+.catalog-order-link:hover{background:#244fd0}
+.concept-product-detail-link{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:13px;color:#6e7e95;font-size:9px;font-weight:800}
+.concept-product-detail-link:hover{color:#315fe8}
+.catalog-slider-progress{height:3px;border-radius:5px;background:#e7ecf4;overflow:hidden}
+.catalog-slider-progress span{display:block;width:33%;height:100%;border-radius:5px;background:#315fe8;transition:transform .25s}
+.dt-product-hero{padding-top:88px;padding-bottom:95px;gap:75px;align-items:center}
+.dt-product-copy{max-width:510px}
+.dt-product-copy>.eyebrow{display:inline-flex;padding:8px 12px;border:1px solid #e2e9f4;border-radius:30px;background:#f7f9fd;color:#62738e;font-size:8px;letter-spacing:.12em}
+.dt-product-copy h1{font:850 clamp(43px,5.2vw,62px)/1.05 Manrope,sans-serif;letter-spacing:-3px;margin:22px 0 13px;color:#17243b}
+.dt-product-copy h2{font:750 19px/1.4 Manrope,sans-serif;letter-spacing:-.5px;color:#315fe8;margin:0 0 18px}
+.dt-product-copy>p{font-size:12px;line-height:1.9;color:#7b899e}
+.dt-product-copy .detail-price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:24px}
+.dt-product-copy .detail-price strong{font:850 30px Manrope;letter-spacing:-1px;color:#17243b}
+.dt-product-copy .detail-price>span{font-size:10px;color:#8995a8}
+.dt-product-copy .detail-price small{flex-basis:100%;font-size:9px;color:#8793a6}
+.dt-product-copy .detail-pills{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 25px}
+.dt-product-copy .detail-pills span{display:inline-flex;align-items:center;gap:6px;border:1px solid #e3e9f2;border-radius:30px;padding:8px 11px;color:#5e6e85;background:#fff;font-size:9px;font-weight:750}
+.dt-product-copy>.button{height:50px;padding:0 23px;border-radius:11px}
+.dt-product-copy .detail-order-hint{font-size:9px;color:#99a4b4;margin-top:11px}
+.dt-product-hero .detail-art{min-height:430px;border-radius:28px;box-shadow:inset 0 0 0 1px #ffffffa6}
+.dt-product-hero .detail-card{transform:rotate(-9deg) scale(1.08);box-shadow:0 35px 55px #132c4d35}
+.dt-product-hero .detail-art-caption{bottom:27px;font-size:8px;letter-spacing:.18em}
+.dt-product-spec{padding:85px 0;background:#f6f8fc;border-top:1px solid #e9edf4;border-bottom:1px solid #e9edf4}
+.dt-product-spec .eyebrow{font-size:8px;letter-spacing:.16em}
+.dt-product-spec h2,.dt-product-features>h2{font:850 34px/1.2 Manrope,sans-serif;letter-spacing:-1.5px;color:#17243b;margin:14px 0 30px}
+.dt-product-spec .detail-spec-grid{gap:0;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;background:#fff}
+.dt-product-spec .detail-spec-grid>div{min-height:90px;padding:20px 22px;border-right:1px solid #edf0f5;border-bottom:1px solid #edf0f5}
+.dt-product-spec .detail-spec-grid span{display:block;color:#8a97aa;font-size:9px;margin-bottom:9px}
+.dt-product-spec .detail-spec-grid b{font:800 12px Manrope;color:#273852}
+.dt-product-spec .detail-fit{margin-top:19px;color:#74839a;font-size:10px;line-height:1.8}
+.dt-product-spec .detail-fit b{color:#34445d}
+.dt-product-features{padding-top:100px;padding-bottom:105px}
+.dt-product-features .eyebrow{font-size:8px;letter-spacing:.16em}
+.dt-product-features>h2{margin-bottom:12px}
+.dt-product-features .detail-feature-intro{max-width:520px;color:#8290a4;font-size:11px;line-height:1.8}
+.dt-product-features .detail-feature-grid{gap:13px;margin-top:35px}
+.dt-product-features .detail-feature-grid article{border:1px solid #e7ecf3;border-radius:16px;padding:22px;background:#fff;transition:transform .2s,box-shadow .2s}
+.dt-product-features .detail-feature-grid article:hover{transform:translateY(-4px);box-shadow:0 18px 35px -28px #1d3558}
+.dt-product-features .detail-feature-grid article>span{width:38px;height:38px;border-radius:11px;background:#edf3ff;color:#315fe8;display:grid;place-items:center}
+.dt-product-features .detail-feature-grid h3{font:800 12px Manrope;color:#253650;margin:15px 0 7px}
+.dt-product-features .detail-feature-grid p{font-size:10px;line-height:1.8;color:#8491a4}
+.dt-product-order{padding:75px 0;background:linear-gradient(120deg,#142640,#1e477d 65%,#285db0)}
+.dt-product-order .detail-order-inner{align-items:center}
+.dt-product-order .eyebrow{color:#a9c4ed}
+.dt-product-order h2{font:850 34px/1.18 Manrope;letter-spacing:-1.4px;color:#fff;margin:14px 0}
+.dt-product-order p{max-width:520px;color:#c0cfe3;font-size:11px;line-height:1.8}
+.dt-product-order .button-white{border-radius:11px;box-shadow:none}
+.dt-product-order .button-white:hover{background:#edf3ff}
+.detail-footer{padding:25px max(32px,calc((100% - 1160px)/2));border-top:1px solid #e9edf4}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-catalog-benefits>div,
+html[data-theme="dark"] body:not(:has(.concept-home)) .concept-product,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-spec .detail-spec-grid,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-features .detail-feature-grid article{background:#171f2b;border-color:#303b49}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-catalog-benefits b,
+html[data-theme="dark"] body:not(:has(.concept-home)) .concept-product-body h3,
+html[data-theme="dark"] body:not(:has(.concept-home)) .concept-product-buy strong,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-copy h1,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-copy .detail-price strong,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-spec h2,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-spec .detail-spec-grid b,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-features>h2,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-features .detail-feature-grid h3{color:#edf1f6}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-catalog-note{background:#1b2a40!important;border-color:#34465f!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-catalog-note>div{color:#edf1f6}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-spec{background:#121a25;border-color:#303b49}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-spec .detail-spec-grid>div{border-color:#303b49}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-copy>.eyebrow,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-copy .detail-pills span{background:#202a38;border-color:#354254;color:#b4c0d0}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-product-features .detail-feature-grid article>span{background:#263957;color:#9bb8ff}
+@media(max-width:760px){
+ .dt-product-hero{padding-top:45px;padding-bottom:55px;gap:28px}
+ .dt-product-copy h1{font-size:43px}
+ .dt-product-hero .detail-art{min-height:300px;border-radius:22px}
+ .dt-product-hero .detail-card{transform:rotate(-8deg) scale(.88)}
+ .dt-product-spec{padding:60px 0}
+ .dt-product-spec h2,.dt-product-features>h2{font-size:28px}
+ .dt-product-spec .detail-spec-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .dt-product-spec .detail-spec-grid>div{min-height:78px;padding:15px}
+ .dt-product-features{padding-top:65px;padding-bottom:70px}
+ .dt-product-order{padding:55px 0}
+ .dt-product-order .detail-order-inner{align-items:flex-start;gap:25px}
+ .dt-product-order h2{font-size:28px}
+ .dt-catalog-benefits{grid-template-columns:1fr;gap:9px}
+ .dt-catalog-benefits>div{min-height:65px}
+ .dt-catalog-note{padding:18px!important}
+ .concept-product{min-width:min(82vw,330px)}
+ .concept-product-art{min-height:220px}
+}
