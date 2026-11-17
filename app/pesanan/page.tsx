@@ -228,17 +228,42 @@ export default function CustomerOrdersPage() {
             <span className={"rounded-full px-3 py-1.5 text-xs font-bold "+(order.status==="completed"?"bg-emerald-50 text-emerald-700":order.status==="cancelled"?"bg-slate-100 text-slate-500":"bg-blue-50 text-blue-700")}>{statusNames[order.status] || order.status}</span>
           </div>
         </div>
-        {order.status === "cancelled" ? <div className="mx-5 mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-semibold text-slate-600 sm:mx-6">Pesanan ini telah dibatalkan. Hubungi tim DiTapAja jika membutuhkan bantuan.</div> : <div className="px-5 pt-5 sm:px-6">
-          <div className="grid grid-cols-5 gap-1">
-            {["Diterima","Dikonfirmasi","Diproses","Dikirim","Selesai"].map((step,index) => {
-              const current = Math.max(0, ["pending","confirmed","processing","shipped","completed"].indexOf(order.status));
-              const done = index <= current;
-              return <div key={step} className="min-w-0">
-                <div className={"h-1.5 rounded-full "+(done ? "bg-blue-600" : "bg-slate-100")}/>
-                <p className={"mt-2 text-center text-[9px] leading-4 sm:text-[10px] "+(done ? "font-bold text-blue-700" : "text-slate-400")}>{step}</p>
-              </div>;
-            })}
-          </div>
+        {order.status === "cancelled" ? <div className="mx-5 mt-5 flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:mx-6"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-slate-500"><X size={17}/></span><div><p className="text-sm font-bold text-slate-800">Pesanan dibatalkan</p><p className="mt-1 text-xs leading-5 text-slate-500">Pesanan ini sudah tidak diproses. Hubungi tim DiTapAja jika kamu membutuhkan bantuan terkait pembatalan.</p></div></div> : <div className="px-5 pt-5 sm:px-6">
+          {(() => {
+            const steps = [
+              { key: "pending", title: "Diterima", detail: "Pesanan sudah masuk ke sistem" },
+              { key: "confirmed", title: "Dikonfirmasi", detail: "Pesanan telah dikonfirmasi" },
+              { key: "processing", title: "Diproses", detail: "Kartu sedang disiapkan" },
+              { key: "shipped", title: "Dikirim", detail: "Pesanan dalam perjalanan" },
+              { key: "completed", title: "Selesai", detail: "Pesanan telah selesai" },
+            ];
+            const current = Math.max(0, steps.findIndex(step => step.key === order.status));
+            const active = steps[current];
+            const progress = (current / (steps.length - 1)) * 100;
+            return <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/80 via-white to-white p-4 sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div><p className="text-[10px] font-extrabold uppercase tracking-[.16em] text-blue-600">Progres pesanan</p><p className="mt-1 text-sm font-extrabold text-slate-900">{active.title}</p><p className="mt-1 text-xs text-slate-500">{active.detail}</p></div>
+                <span className="rounded-full border border-blue-100 bg-white px-3 py-1.5 text-[10px] font-bold text-blue-700">{current + 1} dari {steps.length} tahap</span>
+              </div>
+              <div className="mt-5 overflow-x-auto pb-1">
+                <div className="min-w-[440px]">
+                  <div className="relative flex items-center justify-between">
+                    <div className="absolute left-3 right-3 top-3 h-1 rounded-full bg-slate-200"/>
+                    <div className="absolute left-3 top-3 h-1 rounded-full bg-blue-600 transition-all" style={{ width: `calc((100% - 24px) * ${progress / 100})` }}/>
+                    {steps.map((step,index) => {
+                      const done = index <= current;
+                      const isCurrent = index === current;
+                      return <div key={step.key} className="relative z-10 flex w-20 flex-col items-center text-center">
+                        <span className={"flex h-6 w-6 items-center justify-center rounded-full border-2 text-[10px] font-black " + (done ? "border-blue-600 bg-blue-600 text-white" : "border-slate-200 bg-white text-slate-300")}>{done ? <CheckCircle2 size={13}/> : index + 1}</span>
+                        <span className={"mt-2 text-[10px] " + (isCurrent ? "font-extrabold text-blue-700" : done ? "font-bold text-slate-700" : "font-medium text-slate-400")}>{step.title}</span>
+                      </div>;
+                    })}
+                  </div>
+                </div>
+              </div>
+              <p className="mt-3 border-t border-blue-100 pt-3 text-[11px] leading-5 text-slate-500">Pembaruan status dilakukan oleh tim DiTapAja. Periksa kembali halaman ini secara berkala untuk melihat perkembangan terbaru.</p>
+            </div>;
+          })()}
         </div>}
         <div className="grid gap-5 border-b border-slate-100 p-5 sm:grid-cols-[.9fr_1.1fr] sm:gap-7 sm:p-6 lg:p-7">
           <div className="space-y-3 text-sm">
