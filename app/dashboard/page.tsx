@@ -1213,136 +1213,126 @@ export default function DashboardPage() {
               ))}
             </div>
 
-            {/* DAILY ANALYTICS CHART */}
-            <section className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_35px_-28px_rgba(15,23,42,0.28)] sm:p-6 lg:p-7">
-              <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 sm:flex-row sm:items-start sm:p-5">
-                <div>
-                  <h3 className="font-bold">Performance Overview</h3>
-                  <p className="mt-1 text-sm text-slate-500">
-                    {selectedCardId === "all"
-                      ? "Perbandingan aktivitas seluruh kartu."
-                      : `Performa kartu ${cards.find((card) => card.id === selectedCardId)?.card_name || "terpilih"}.`}
-                  </p>
+            {/* ANALYTICS PERFORMANCE */}
+            <section id="analytics" className="scroll-mt-24 space-y-5">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div className="max-w-xl">
+                  <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">Performance analytics</p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Aktivitas pelanggan</h2>
+                  <p className="mt-2 text-sm leading-6 text-slate-500">Pantau interaksi dari kartu NFC dan QR, lalu lihat bagaimana pelanggan melanjutkan ke halaman ulasan.</p>
                 </div>
-
-                <div className="flex flex-col gap-3">
-                  <div className="-mx-1 flex max-w-full gap-2 overflow-x-auto px-1 pb-1" role="group" aria-label="Pilih kartu untuk melihat analytics">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedCardId("all")}
-                      aria-pressed={selectedCardId === "all"}
-                      className={`shrink-0 rounded-xl border px-4 py-2.5 text-xs font-semibold transition ${
-                        selectedCardId === "all"
-                          ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
-                      }`}
-                    >
-                      Semua Kartu
-                    </button>
-                    {cards.map((card) => (
-                      <button
-                        key={card.id}
-                        type="button"
-                        onClick={() => setSelectedCardId(card.id)}
-                        aria-pressed={selectedCardId === card.id}
-                        className={`rounded-xl border px-4 py-2.5 text-xs font-semibold transition ${
-                          selectedCardId === card.id
-                            ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-600/20"
-                            : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
-                        }`}
-                      >
-                        {card.card_name || "Untitled Card"}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="mr-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Periode</span>
+                  <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-sm" role="group" aria-label="Pilih periode analytics">
+                    {([7, 30, 90] as const).map((period) => (
+                      <button key={period} type="button" onClick={() => setChartPeriod(period)} aria-pressed={chartPeriod === period} className={`rounded-lg px-3.5 py-2 text-xs font-semibold transition ${chartPeriod === period ? "bg-slate-950 text-white shadow-sm" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
+                        {period} hari
                       </button>
                     ))}
                   </div>
+                  <button type="button" onClick={exportAnalyticsCsv} disabled={periodEventRows.length === 0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40">
+                    <FileSpreadsheet size={15}/> Export CSV
+                  </button>
+                </div>
+              </div>
 
+              <div className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_18px_55px_-38px_rgba(15,23,42,.32)]">
+                <div className="grid gap-4 border-b border-slate-100 bg-slate-50/70 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-500"/>
+                      <p className="text-xs font-semibold text-slate-700">Ruang lingkup data</p>
+                    </div>
+                    <div className="mt-3 flex max-w-full gap-2 overflow-x-auto pb-1" role="group" aria-label="Pilih kartu untuk melihat analytics">
+                      <button type="button" onClick={() => setSelectedCardId("all")} aria-pressed={selectedCardId === "all"} className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-semibold transition ${selectedCardId === "all" ? "border-slate-950 bg-slate-950 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-slate-400"}`}>
+                        Semua kartu
+                      </button>
+                      {cards.map((card) => (
+                        <button key={card.id} type="button" onClick={() => setSelectedCardId(card.id)} aria-pressed={selectedCardId === card.id} className={`max-w-[180px] shrink-0 truncate rounded-full border px-3.5 py-2 text-xs font-semibold transition ${selectedCardId === card.id ? "border-slate-950 bg-slate-950 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-slate-400"}`}>
+                          {card.card_name || "Untitled Card"}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   {businessLocations.length > 0 && (
-                    <div className="flex flex-wrap items-center gap-2">
-                      <label htmlFor="location-filter" className="text-xs font-semibold text-slate-500">Lokasi</label>
-                      <select id="location-filter" value={selectedLocationId} onChange={(event) => setSelectedLocationId(event.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-600 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100 sm:w-auto">
+                    <div className="min-w-0 lg:w-52">
+                      <label htmlFor="location-filter" className="mb-2 block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Lokasi bisnis</label>
+                      <select id="location-filter" value={selectedLocationId} onChange={(event) => setSelectedLocationId(event.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-semibold text-slate-700 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-100">
                         <option value="all">Semua lokasi</option>
                         {businessLocations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
                         <option value="unassigned">Tanpa lokasi</option>
                       </select>
                     </div>
                   )}
+                </div>
+
+                <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 sm:divide-y-0">
+                  <div className="p-4 sm:px-5 sm:py-5">
+                    <p className="text-[11px] font-medium text-slate-400">Total tap</p>
+                    <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums">{periodTapTotal.toLocaleString("id-ID")}</p>
+                    <p className="mt-1 text-[10px] text-slate-400">Dalam {chartPeriod} hari</p>
+                  </div>
+                  <div className="p-4 sm:px-5 sm:py-5">
+                    <p className="text-[11px] font-medium text-slate-400">Klik ulasan</p>
+                    <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums">{periodClickTotal.toLocaleString("id-ID")}</p>
+                    <p className="mt-1 text-[10px] text-slate-400">Dalam {chartPeriod} hari</p>
+                  </div>
+                  <div className="p-4 sm:px-5 sm:py-5">
+                    <p className="text-[11px] font-medium text-slate-400">Pengunjung unik</p>
+                    <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums">{new Set(periodEventRows.filter((event) => event.event_type === "tap" && event.visitor_hash).map((event) => event.visitor_hash)).size.toLocaleString("id-ID")}</p>
+                    <p className="mt-1 text-[10px] text-slate-400">Berdasarkan visitor ID</p>
+                  </div>
+                  <div className="p-4 sm:px-5 sm:py-5">
+                    <p className="text-[11px] font-medium text-slate-400">Click-through rate</p>
+                    <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums">{periodTapTotal > 0 ? (periodClickTotal / periodTapTotal * 100).toFixed(1) : "0.0"}%</p>
+                    <p className="mt-1 text-[10px] text-slate-400">Tap yang berlanjut ke ulasan</p>
+                  </div>
+                </div>
+
+                <div className="border-t border-slate-100 p-4 sm:p-6 lg:p-7">
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex w-fit rounded-xl bg-slate-100 p-1">
-                      {([7, 30, 90] as const).map((period) => (
-                      <button key={period} onClick={() => setChartPeriod(period)} className={`rounded-lg px-3 py-2 text-xs font-semibold transition ${chartPeriod === period ? "bg-white text-blue-700 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}>
-                        {period} Hari
-                      </button>
-                      ))}
+                    <div>
+                      <h3 className="text-sm font-semibold text-slate-900">Tren aktivitas</h3>
+                      <p className="mt-1 text-xs text-slate-400">Pergerakan tap dan klik ulasan per hari</p>
                     </div>
-                    <button type="button" onClick={exportAnalyticsCsv} disabled={periodEventRows.length === 0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"><FileSpreadsheet size={15}/> Export CSV · {chartPeriod} hari</button>
+                    <div className="flex flex-wrap items-center gap-4 text-[11px] font-medium text-slate-500">
+                      <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-sm bg-slate-900"/>Tap NFC / QR</span>
+                      <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-sm bg-blue-400"/>Klik ulasan</span>
+                    </div>
+                  </div>
+
+                  <div className="relative mt-5">
+                    {hasPeriodActivity ? (
+                      <div className="relative">
+                        <div className="pointer-events-none absolute inset-0 flex flex-col justify-between pb-7" aria-hidden="true">
+                          {[0, 1, 2, 3].map((line) => <div key={line} className="border-t border-dashed border-slate-100"/>)}
+                        </div>
+                        <div className="relative flex h-52 items-end gap-[3px] sm:h-64 sm:gap-1">
+                          {chartData.map((day, index) => (
+                            <div key={day.key} title={`${new Date(day.key + "T00:00:00").toLocaleDateString("id-ID", { dateStyle: "full" })}: ${day.taps} tap, ${day.clicks} klik ulasan`} className="flex h-full min-w-0 flex-1 flex-col justify-end">
+                              <div className="flex min-h-0 flex-1 items-end justify-center gap-[2px] sm:gap-1">
+                                <div className="w-1/2 max-w-5 rounded-t-[3px] bg-slate-900 transition-[height] duration-300" style={{height: `${day.taps > 0 ? Math.max(2, day.taps / chartMax * 100) : 0}%`}}/>
+                                <div className="w-1/2 max-w-5 rounded-t-[3px] bg-blue-400 transition-[height] duration-300" style={{height: `${day.clicks > 0 ? Math.max(2, day.clicks / chartMax * 100) : 0}%`}}/>
+                              </div>
+                              {(chartPeriod === 7 || (chartPeriod === 30 && index % 5 === 0) || (chartPeriod === 90 && index % 15 === 0) || index === chartData.length - 1) && (
+                                <span className="mt-3 h-4 truncate text-center text-[9px] text-slate-400 sm:text-[10px]">{day.label}</span>
+                              )}
+                              {!((chartPeriod === 7 || (chartPeriod === 30 && index % 5 === 0) || (chartPeriod === 90 && index % 15 === 0) || index === chartData.length - 1)) && <span className="mt-3 h-4"/>}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex min-h-52 flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-5 py-8 text-center">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm"><BarChart3 size={19}/></div>
+                        <p className="mt-3 text-sm font-semibold text-slate-800">Belum ada aktivitas di periode ini</p>
+                        <p className="mt-1 max-w-sm text-xs leading-5 text-slate-500">Aktivitas akan muncul setelah pelanggan mengetuk kartu NFC atau memindai QR Code.</p>
+                        <button type="button" onClick={() => document.getElementById("cards")?.scrollIntoView({behavior:"smooth",block:"start"})} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">Lihat kartu NFC</button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
-                <div className="flex flex-wrap items-center gap-5 text-xs text-slate-500">
-                <span className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-sm bg-blue-600" />
-                  Total Taps
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-sm bg-sky-300" />
-                  Review Clicks
-                </span>
-                </div>
-                <div className="flex items-center gap-4 text-xs">
-                  <span className="font-semibold text-slate-700">{periodTapTotal.toLocaleString("id-ID")} <span className="font-normal text-slate-400">taps</span></span>
-                  <span className="font-semibold text-slate-700">{periodClickTotal.toLocaleString("id-ID")} <span className="font-normal text-slate-400">clicks</span></span>
-                </div>
-              </div>
-
-              <div className="mt-4 overflow-x-auto overscroll-x-contain rounded-2xl border border-slate-100 bg-slate-50/70 px-2 pt-3" role="img" aria-label={`Grafik aktivitas ${chartPeriod} hari. Total ${periodTapTotal} tap dan ${periodClickTotal} klik ulasan.`}>
-                <div className={`flex h-52 items-end gap-1 border-b border-slate-200 pb-2 sm:h-60 sm:gap-2 ${chartPeriod === 7 ? "min-w-0" : "min-w-[600px] md:min-w-0"}`}>
-                  {chartData.map((day, index) => (
-                    <div
-                      key={day.key}
-                      title={`${new Date(day.key + "T00:00:00").toLocaleDateString("id-ID", { dateStyle: "full" })}: ${day.taps} taps, ${day.clicks} review clicks`}
-                      className="flex h-full min-w-0 flex-1 flex-col justify-end"
-                    >
-                      <div className="flex h-full items-end justify-center gap-0.5 sm:gap-1">
-                        <div
-                          className="w-1/2 max-w-5 rounded-t-md bg-blue-600 transition-all"
-                          style={{
-                            height: `${(day.taps / chartMax) * 100}%`,
-                            minHeight: day.taps > 0 ? "3px" : "0",
-                          }}
-                        />
-                        <div
-                          className="w-1/2 max-w-5 rounded-t-md bg-sky-300 transition-all"
-                          style={{
-                            height: `${(day.clicks / chartMax) * 100}%`,
-                            minHeight: day.clicks > 0 ? "3px" : "0",
-                          }}
-                        />
-                      </div>
-                      {(chartPeriod === 7 ||
-                        index % (chartPeriod === 30 ? 5 : 15) === 0) && (
-                        <span className="mt-2 truncate text-center text-[10px] text-slate-400">
-                          {day.label}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {!hasPeriodActivity && (
-                <div className="mt-5 rounded-xl border border-dashed border-slate-200 bg-slate-50/70 px-5 py-6 text-center">
-                  <BarChart3 className="mx-auto mb-2 text-slate-300" size={22} />
-                  <p className="text-sm font-semibold text-slate-700">Belum ada aktivitas pada periode ini</p>
-                  <p className="mx-auto mt-1 max-w-md text-xs leading-5 text-slate-500">
-                    Coba tempelkan ponsel pada kartu NFC aktif atau buka QR kartu. Pilih rentang waktu yang lebih panjang atau tunggu aktivitas pelanggan berikutnya. Data sepanjang waktu tetap tersimpan pada ringkasan di atas.
-                  </p>
-                  <button type="button" onClick={() => document.getElementById("cards")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">
-                    Lihat kartu NFC
-                  </button>
-                </div>
-              )}
             </section>
 
             {/* LOCAL ANALYTICS INSIGHTS - DERIVED FROM ALREADY LOADED EVENTS */}
