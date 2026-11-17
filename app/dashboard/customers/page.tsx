@@ -8,12 +8,10 @@ import {
   CalendarDays,
   Clock3,
   Loader2,
-  RefreshCw,
   Sparkles,
   Users,
   UserRoundCheck,
   MousePointerClick,
-  CreditCard,
   TrendingUp,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -164,7 +162,8 @@ export default function CustomerInsightsPage() {
 
   const maxHour = Math.max(1, ...insights.hours);
   const maxWeekday = Math.max(1, ...insights.weekdays);
-  const hasActivity = events.length > 0;
+  const hasAnyActivity = events.length > 0;
+  const hasPeriodActivity = totalTaps > 0;
 
   return (
     <main className="min-h-screen bg-[#f5f6f8] text-slate-950">
@@ -257,8 +256,8 @@ export default function CustomerInsightsPage() {
               </article>
               <article className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_12px_35px_-30px_rgba(15,23,42,.35)] sm:p-5">
                 <div className="flex items-center justify-between"><span className="text-xs font-medium text-slate-500">Waktu paling ramai</span><Clock3 size={17} className="text-slate-400" /></div>
-                <p className="mt-4 text-2xl font-semibold tracking-tight tabular-nums sm:text-3xl">{hasActivity ? formatHour(insights.peakHour) : "—"}</p>
-                <p className="mt-1 text-[11px] text-slate-400">{hasActivity ? "Jam dengan tap terbanyak" : "Belum ada data"}</p>
+                <p className="mt-4 text-2xl font-semibold tracking-tight tabular-nums sm:text-3xl">{hasAnyActivity ? formatHour(insights.peakHour) : "—"}</p>
+                <p className="mt-1 text-[11px] text-slate-400">{hasAnyActivity ? "Jam dengan tap terbanyak" : "Belum ada data"}</p>
               </article>
             </section>
 
@@ -268,7 +267,7 @@ export default function CustomerInsightsPage() {
                   <div><p className="text-[10px] font-bold uppercase tracking-[.16em] text-slate-400">Engagement timeline</p><h3 className="mt-1 text-lg font-semibold">Ritme kunjungan</h3><p className="mt-1 text-xs text-slate-500">Jumlah tap per hari selama periode terpilih.</p></div>
                   <span className="rounded-full bg-slate-100 px-3 py-1.5 text-[10px] font-semibold text-slate-500">{period} hari terakhir</span>
                 </div>
-                {hasActivity ? (
+                {hasPeriodActivity ? (
                   <div className="mt-8 flex h-52 items-end gap-1.5 sm:h-60 sm:gap-2">
                     {insights.daily.map((day, index) => (
                       <div key={day.key} title={`${day.label}: ${day.taps} tap`} className="flex h-full min-w-0 flex-1 flex-col justify-end">
@@ -309,7 +308,7 @@ export default function CustomerInsightsPage() {
                   {insights.hours.map((count, hour) => <div key={hour} title={`${formatHour(hour)} · ${count} tap`} className="flex h-full flex-col justify-end"><div className={`min-h-[3px] rounded-t-sm ${count ? "bg-[#1c5550]" : "bg-slate-100"}`} style={{ height: count ? `${count / maxHour * 100}%` : "3px" }} /></div>)}
                 </div>
                 <div className="mt-3 flex justify-between text-[10px] text-slate-400"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div>
-                <div className="mt-5 rounded-xl bg-[#f1f6f4] p-4"><p className="text-[10px] font-bold uppercase tracking-wider text-[#47736d]">Jam terpadat</p><p className="mt-1 text-xl font-semibold text-[#173b37]">{hasActivity ? formatHour(insights.peakHour) : "Belum tersedia"}</p></div>
+                <div className="mt-5 rounded-xl bg-[#f1f6f4] p-4"><p className="text-[10px] font-bold uppercase tracking-wider text-[#47736d]">Jam terpadat</p><p className="mt-1 text-xl font-semibold text-[#173b37]">{hasAnyActivity ? formatHour(insights.peakHour) : "Belum tersedia"}</p></div>
               </article>
 
               <article className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_16px_45px_-34px_rgba(15,23,42,.3)] sm:p-7">
@@ -317,7 +316,7 @@ export default function CustomerInsightsPage() {
                 <div className="mt-6 space-y-3">
                   {[1,2,3,4,5,6,0].map((day) => <div key={day} className="grid grid-cols-[72px_minmax(0,1fr)_36px] items-center gap-3"><span className="text-xs font-medium text-slate-500">{["Min","Sen","Sel","Rab","Kam","Jum","Sab"][day]}</span><div className="h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-[#1c5550]" style={{ width: `${insights.weekdays[day] / maxWeekday * 100}%` }} /></div><span className="text-right text-xs tabular-nums text-slate-500">{insights.weekdays[day]}</span></div>)}
                 </div>
-                <div className="mt-5 rounded-xl bg-[#f1f6f4] p-4"><p className="text-[10px] font-bold uppercase tracking-wider text-[#47736d]">Hari terpadat</p><p className="mt-1 text-xl font-semibold text-[#173b37]">{hasActivity ? insights.peakWeekdayName : "Belum tersedia"}</p></div>
+                <div className="mt-5 rounded-xl bg-[#f1f6f4] p-4"><p className="text-[10px] font-bold uppercase tracking-wider text-[#47736d]">Hari terpadat</p><p className="mt-1 text-xl font-semibold text-[#173b37]">{hasAnyActivity ? insights.peakWeekdayName : "Belum tersedia"}</p></div>
               </article>
             </section>
 
