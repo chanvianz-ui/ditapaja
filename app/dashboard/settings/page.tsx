@@ -157,7 +157,7 @@ export default function AccountSettingsPage() {
   }
 
   return (
-    <main className="dt-workspace-page min-h-screen bg-[radial-gradient(ellipse_at_top,_#eff6ff_0%,_#f8fafc_44%,_#f8fafc_100%)] text-[#17243b]">
+    <main className="dt-account-settings-page dt-workspace-page min-h-screen bg-[radial-gradient(ellipse_at_top,_#eff6ff_0%,_#f8fafc_44%,_#f8fafc_100%)] text-[#17243b]">
       {/* HEADER */}
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3.5 sm:px-8 sm:py-4">
