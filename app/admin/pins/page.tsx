@@ -1,5 +1,5 @@
-import AdminMenu from "@/app/admin/admin-menu";
 "use client";
+import AdminMenu from "@/app/admin/admin-menu";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Ban, Copy, KeyRound, Loader2, LogOut, Plus, RefreshCw, ShieldCheck } from "lucide-react";
