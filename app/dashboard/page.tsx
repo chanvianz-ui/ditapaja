@@ -1189,7 +1189,6 @@ export default function DashboardPage() {
 
             {/* ANALYTICS */}
             <div
-              id="analytics"
               className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4"
             >
               {analyticsItems.map((item) => (
