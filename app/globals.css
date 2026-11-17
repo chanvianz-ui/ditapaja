@@ -4979,3 +4979,74 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
   .dt-business-page .dt-business-add-location{padding:13px!important}
   .dt-business-page .dt-business-location-card{padding:13px!important}
 }
+
+
+/* New NFC card — guided setup with stronger hierarchy and less visual noise */
+.dt-card-create-page{
+  background:radial-gradient(ellipse at 85% 0%,rgba(220,234,215,.48),transparent 33%),#f5f7f3!important;
+  color:#203329!important
+}
+.dt-card-create-page .dt-card-create-intro{
+  position:relative;overflow:hidden;border:1px solid rgba(221,236,217,.15)!important;
+  border-radius:27px!important;background:linear-gradient(118deg,#162e27 0%,#284b3a 65%,#426b4e 100%)!important;
+  box-shadow:0 28px 70px -46px rgba(15,42,30,.68)!important
+}
+.dt-card-create-page .dt-card-create-intro:after{
+  content:"";position:absolute;width:300px;height:300px;right:-115px;top:-180px;
+  border:1px solid rgba(238,248,233,.15);border-radius:50%;
+  box-shadow:0 0 0 27px rgba(238,248,233,.035),0 0 0 55px rgba(238,248,233,.025);
+  pointer-events:none
+}
+.dt-card-create-page .dt-card-create-steps{
+  border:1px solid #e2e9df!important;border-radius:18px!important;
+  background:rgba(255,255,255,.88)!important;padding:15px!important;
+  box-shadow:0 14px 36px -32px rgba(27,52,40,.4)!important
+}
+.dt-card-create-page .dt-card-create-form{
+  border:1px solid #e1e9df!important;border-radius:24px!important;
+  background:linear-gradient(155deg,#fff 0%,#fcfdfb 100%)!important;
+  box-shadow:0 24px 60px -48px rgba(27,52,40,.42)!important;padding:clamp(19px,2.5vw,30px)!important
+}
+.dt-card-create-page .dt-card-create-form input,
+.dt-card-create-page .dt-card-create-form textarea,
+.dt-card-create-page .dt-card-create-form select{
+  min-height:47px!important;border:1px solid #dfe7dc!important;border-radius:11px!important;
+  background:#fff!important;color:#26392d!important;box-shadow:0 1px 2px rgba(22,43,29,.025)!important
+}
+.dt-card-create-page .dt-card-create-form input:focus,
+.dt-card-create-page .dt-card-create-form textarea:focus,
+.dt-card-create-page .dt-card-create-form select:focus{
+  border-color:#8eae89!important;box-shadow:0 0 0 3px rgba(142,174,137,.16)!important;outline:0!important
+}
+.dt-card-create-page .dt-card-create-form button[type="submit"]{
+  min-height:48px!important;border-radius:12px!important;background:#315b40!important;
+  box-shadow:0 12px 24px -17px rgba(32,77,48,.6)!important
+}
+.dt-card-create-page .dt-card-create-form button[type="submit"]:hover{background:#254a33!important}
+.dt-card-create-page .dt-card-create-note{
+  border:1px solid #dce8dc!important;border-radius:16px!important;
+  background:#f0f5ee!important;color:#55745b!important
+}
+
+/* Account settings — quiet security-focused form surface */
+.dt-workspace-page:has(.dt-workspace-panel) .dt-workspace-panel{
+  border-color:#e1e9df!important;border-radius:22px!important;
+  background:linear-gradient(155deg,#fff 0%,#fcfdfb 100%)!important;
+  box-shadow:0 22px 55px -47px rgba(27,52,40,.42)!important
+}
+.dt-workspace-page:has(.dt-workspace-panel) .dt-workspace-panel input{
+  min-height:45px!important;border-color:#dfe7dc!important;border-radius:11px!important;
+  background:#fff!important;color:#26392d!important
+}
+.dt-workspace-page:has(.dt-workspace-panel) .dt-workspace-panel input:focus{
+  border-color:#8eae89!important;box-shadow:0 0 0 3px rgba(142,174,137,.16)!important;outline:0!important
+}
+.dt-workspace-page:has(.dt-workspace-panel) .dt-workspace-panel button{
+  border-radius:11px!important
+}
+@media(max-width:640px){
+  .dt-card-create-page .dt-card-create-intro{border-radius:21px!important}
+  .dt-card-create-page .dt-card-create-form{padding:17px!important;border-radius:19px!important}
+  .dt-card-create-page .dt-card-create-steps{padding:11px!important}
+  .dt-workspace-page:has(.dt-workspace-panel) .dt-workspace-panel{border-radius:18px!important}
+}
