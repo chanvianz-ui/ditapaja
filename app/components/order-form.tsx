@@ -100,13 +100,13 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
   }
 
   return (
-    <main className="order-page">
+    <main className="order-page dt-order-checkout">
       <header className="order-header">
         <Link href="/" className="order-brand"><span className="order-brand-mark">D</span>DiTap<span>Aja</span></Link>
         <Link href="/koleksi" className="order-back"><ArrowLeft size={15}/> Kembali ke koleksi</Link>
       </header>
       <div className="order-layout">
-        <section className="order-intro">
+        <section className="order-intro dt-order-intro">
           <span className="order-kicker"><i/> PEMESANAN DITAPAJA</span>
           <h1>Satu langkah<br/><em>menuju lebih banyak review.</em></h1>
           <p>Isi detail singkat di bawah. Kami akan menerima rangkuman pesananmu melalui WhatsApp untuk konfirmasi selanjutnya.</p>
@@ -114,7 +114,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           <div className="order-mini-note"><Check size={14}/> NFC + QR Code dalam satu kartu</div>
           <div className="order-mini-note"><Check size={14}/> Dashboard termasuk tanpa biaya bulanan</div>
         </section>
-        <form className="order-form" onSubmit={submitOrder}>
+        <form className="order-form dt-order-form" onSubmit={submitOrder}>
           <div className="order-form-heading"><div><span>01 / PRODUK</span><h2>Detail pesanan</h2></div><small>* Wajib diisi</small></div>
           <label aria-hidden="true" className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden">Website<input tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)}/></label>
           <label className="order-field">Pilih kartu
@@ -126,7 +126,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           </label>
           <div className="order-product-summary"><span>{product.type}</span><b>{product.name}</b><small>{minimum > 1 ? "Minimum " + minimum + " kartu untuk desain custom." : "Minimum 1 kartu untuk Noir dan Blanc."}</small></div>
           <div className="order-quantity-row"><div><b>Jumlah kartu</b><small>Minimum {minimum} kartu</small></div><div className="order-quantity"><button type="button" aria-label="Kurangi jumlah" disabled={quantity <= minimum} onClick={() => setQuantity(value => Math.max(minimum, value - 1))}><Minus size={15}/></button><output>{quantity}</output><button type="button" aria-label="Tambah jumlah" disabled={quantity >= 1000} onClick={() => setQuantity(value => Math.min(1000, value + 1))}><Plus size={15}/></button></div></div>
-          <div className="order-total"><span>Estimasi subtotal</span><b>{formatPrice(total)}</b><small>Belum termasuk ongkos kirim. Harga final dikonfirmasi oleh tim DiTapAja.</small></div>
+          <div className="order-total dt-order-total"><span>Estimasi subtotal</span><b>{formatPrice(total)}</b><small>Belum termasuk ongkos kirim. Harga final dikonfirmasi oleh tim DiTapAja.</small></div>
           <div className="order-form-heading order-customer-heading"><div><span>02 / DATA PEMESAN</span><h2>Ke mana kami menghubungimu?</h2></div></div>
           <div className="order-fields-grid">
             <label className="order-field">Nama bisnis<input required maxLength={120} autoComplete="organization" value={business} onChange={event => setBusiness(event.target.value)} placeholder="Contoh: Kopi Senja"/></label>
@@ -141,7 +141,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           <p className="order-privacy-note">Pesanan dibuat tanpa login. Setelah submit, masuk atau daftar menggunakan email yang sama untuk memantau status dan riwayat transaksi.</p>
         </form>
       </div>
-      {showAccountPrompt && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm"><section role="dialog" aria-modal="true" aria-labelledby="order-account-title" className="w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl"><div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600"><Check size={27}/></div><p className="mt-5 text-center text-[11px] font-bold uppercase tracking-[.2em] text-blue-600">ORDER CREATED</p><h2 id="order-account-title" className="mt-2 text-center text-2xl font-bold tracking-tight text-slate-900">Pesanan berhasil dibuat</h2><p className="mt-3 text-center text-sm leading-6 text-slate-500">Masuk atau buat akun menggunakan email <b className="text-slate-800">{email}</b> untuk melihat detail pesanan dan memantau verifikasi pembayaran.</p><div className="mt-6 grid grid-cols-2 gap-3"><Link href={"/login?next=" + encodeURIComponent("/pesanan")} className="rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700">Masuk</Link><Link href={"/register?next=" + encodeURIComponent("/pesanan")} className="rounded-xl bg-blue-600 px-4 py-3 text-center text-sm font-semibold text-white">Daftar akun</Link></div><button type="button" onClick={() => setShowAccountPrompt(false)} className="mt-3 w-full rounded-xl px-4 py-2.5 text-sm font-medium text-slate-400 hover:bg-slate-50">Nanti saja</button></section></div>}
+      {showAccountPrompt && <div className="fixed inset-0 z-[100] dt-order-account-overlay flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm"><section role="dialog" aria-modal="true" aria-labelledby="order-account-title" className="w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl"><div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600"><Check size={27}/></div><p className="mt-5 text-center text-[11px] font-bold uppercase tracking-[.2em] text-blue-600">ORDER CREATED</p><h2 id="order-account-title" className="mt-2 text-center text-2xl font-bold tracking-tight text-slate-900">Pesanan berhasil dibuat</h2><p className="mt-3 text-center text-sm leading-6 text-slate-500">Masuk atau buat akun menggunakan email <b className="text-slate-800">{email}</b> untuk melihat detail pesanan dan memantau verifikasi pembayaran.</p><div className="mt-6 grid grid-cols-2 gap-3"><Link href={"/login?next=" + encodeURIComponent("/pesanan")} className="rounded-xl border border-slate-200 px-4 py-3 text-center text-sm font-semibold text-slate-700">Masuk</Link><Link href={"/register?next=" + encodeURIComponent("/pesanan")} className="rounded-xl bg-blue-600 px-4 py-3 text-center text-sm font-semibold text-white">Daftar akun</Link></div><button type="button" onClick={() => setShowAccountPrompt(false)} className="mt-3 w-full rounded-xl px-4 py-2.5 text-sm font-medium text-slate-400 hover:bg-slate-50">Nanti saja</button></section></div>}
       <footer className="order-footer"><span>© 2026 DiTapAja</span><span>Make every customer interaction count.</span></footer>
     </main>
   );
