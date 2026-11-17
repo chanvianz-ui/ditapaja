@@ -1028,6 +1028,13 @@ export default function DashboardPage() {
             </a>
 
             <a
+              href="/dashboard/customers"
+              className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-600 transition duration-200 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-900"
+            >
+              <Users size={19} /> Customer Insights
+            </a>
+
+            <a
               href="/dashboard/business"
               className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
             >
@@ -1094,6 +1101,7 @@ export default function DashboardPage() {
             <a href="/dashboard" aria-current="page" className="shrink-0 rounded-xl border border-blue-100 bg-blue-50 px-3.5 py-2 text-xs font-semibold text-blue-700">Overview</a>
             <a href="#cards" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">My Cards</a>
             <a href="#analytics" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Analytics</a>
+            <a href="/dashboard/customers" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Customer Insights</a>
             <a href="/dashboard/business" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Business Profile</a>
             <a href="/dashboard/landing-page" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Page Studio</a>
             <a href="/dashboard/orders" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Orders</a>
