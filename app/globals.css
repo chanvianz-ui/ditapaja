@@ -5976,3 +5976,48 @@ body:has(main>aside.fixed.lg\:block) main>section>div .text-\[\#155eef\]{color:#
   .dt-page-studio-page .dt-studio-theme{transition:none!important}
   .dt-page-studio-page .dt-studio-theme:hover{transform:none}
 }
+
+
+/* ── Workspace refinement: dashboard + NFC card control ── */
+.dt-dashboard-shell{--dt-forest:#173d34;--dt-forest-deep:#102d27;--dt-sage:#e9eee7;--dt-paper:#f5f5ef;background:#f5f5ef;color:#1c302a}
+.dt-dashboard-shell .workspace-header{background:rgba(250,250,246,.94)!important;border-color:#e4e8df!important;backdrop-filter:blur(18px)}
+.dt-dashboard-shell .workspace-mobile-nav{position:sticky;top:65px;z-index:25;background:rgba(249,250,245,.96)!important;border-color:#e2e7df!important;backdrop-filter:blur(16px);scrollbar-width:none}
+.dt-dashboard-shell .workspace-mobile-nav::-webkit-scrollbar{display:none}
+.dt-dashboard-shell .workspace-mobile-nav a{border-color:#e0e6dd!important;background:#fff!important;color:#52645a!important;border-radius:999px!important;padding:10px 15px!important;font-size:11px!important;font-weight:700!important;letter-spacing:.01em;transition:background .2s,border-color .2s,color .2s}
+.dt-dashboard-shell .workspace-mobile-nav a[aria-current=page]{background:#173d34!important;border-color:#173d34!important;color:#f8f8f0!important;box-shadow:0 5px 16px #173d3426}
+.dt-dashboard-shell .dt-card-control-center{border-color:#dfe5dc!important;border-radius:30px!important;box-shadow:0 22px 65px -42px rgba(22,54,42,.32)!important}
+.dt-dashboard-shell .dt-card-control-hero{background:#173d34!important;border-color:#31594c!important;padding:clamp(22px,3vw,38px)!important}
+.dt-dashboard-shell .dt-card-control-hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,transparent 0 58%,rgba(255,255,255,.045) 58% 58.2%,transparent 58.2%),radial-gradient(ellipse at 90% 0%,rgba(207,224,201,.14),transparent 42%);opacity:.9}
+.dt-dashboard-shell .dt-card-control-hero h3{font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(30px,3.6vw,44px)!important;line-height:1.05!important;letter-spacing:-.045em!important;font-weight:500!important}
+.dt-dashboard-shell .dt-card-control-hero p{max-width:590px;line-height:1.8!important;color:#d1dfd4!important}
+.dt-dashboard-shell .dt-card-control-hero button{border-radius:999px!important}
+.dt-dashboard-shell .dt-card-control-center>div:nth-child(2){background:#f5f6f0!important}
+.dt-dashboard-shell .dt-nfc-card-row{border-color:#e5e9e1!important;border-radius:22px!important;padding:20px 22px!important;box-shadow:0 8px 24px -22px rgba(21,50,38,.3)!important;transition:transform .22s,border-color .22s,box-shadow .22s!important}
+.dt-dashboard-shell .dt-nfc-card-row:hover{border-color:#9db5a2!important;box-shadow:0 18px 34px -26px rgba(23,61,52,.38)!important;transform:translateY(-2px)}
+.dt-dashboard-shell .dt-nfc-card-row>div:first-child>div:first-child p{font-size:15px!important;font-weight:750!important;letter-spacing:-.02em;color:#203a30}
+.dt-dashboard-shell .dt-nfc-card-row>div:first-child>p{color:#8b998e!important;font-size:10px!important;letter-spacing:.09em}
+.dt-dashboard-shell .dt-nfc-card-row button{border-radius:999px!important}
+.dt-dashboard-shell #analytics{scroll-margin-top:105px}
+.dt-dashboard-shell .dt-analytics-overview{border:1px solid #e1e7de;border-radius:28px;background:#fbfcf8;padding:clamp(18px,2.8vw,30px);box-shadow:0 18px 50px -42px rgba(23,61,52,.3)}
+.dt-dashboard-shell .dt-analytics-heading h3{font-family:Georgia,"Times New Roman",serif!important;font-weight:500!important;letter-spacing:-.04em!important;color:#1b392e!important}
+.dt-dashboard-shell .dt-analytics-kpi{border:1px solid #e5e9e1!important;border-radius:20px!important;background:#fff!important;box-shadow:0 12px 26px -25px rgba(23,61,52,.3)!important;padding:20px!important}
+.dt-dashboard-shell .dt-analytics-kpi-icon{background:#edf2e9!important;color:#315b49!important;border-radius:12px!important}
+@media(max-width:767px){
+ .dt-dashboard-shell .workspace-header{top:0;padding:12px 16px!important}
+ .dt-dashboard-shell .workspace-mobile-nav{top:62px;padding:10px 14px!important;gap:7px!important}
+ .dt-dashboard-shell .dt-card-control-center{border-radius:22px!important}
+ .dt-dashboard-shell .dt-card-control-hero{gap:17px!important;padding:22px 18px!important}
+ .dt-dashboard-shell .dt-card-control-hero h3{font-size:34px!important}
+ .dt-dashboard-shell .dt-card-control-hero p{font-size:12px!important;line-height:1.7!important}
+ .dt-dashboard-shell .dt-card-control-hero>div{min-width:0}
+ .dt-dashboard-shell .dt-card-control-hero .mt-3.flex.flex-wrap{gap:7px!important}
+ .dt-dashboard-shell .dt-card-control-hero .mt-3.flex.flex-wrap button{padding:9px 12px!important;font-size:10px!important}
+ .dt-dashboard-shell .dt-card-control-center>div:nth-child(2){padding:14px!important}
+ .dt-dashboard-shell .dt-nfc-card-row{gap:15px!important;padding:17px!important;border-radius:18px!important}
+ .dt-dashboard-shell .dt-nfc-card-row>div:first-child{width:100%}
+ .dt-dashboard-shell .dt-nfc-card-row>div:last-child{width:100%;display:flex;flex-wrap:wrap;gap:7px}
+ .dt-dashboard-shell .dt-nfc-card-row button{min-height:38px}
+ .dt-dashboard-shell .dt-analytics-overview{border-radius:22px;padding:17px}
+ .dt-dashboard-shell .dt-analytics-kpi{padding:15px!important;border-radius:16px!important}
+}
+@media(prefers-reduced-motion:reduce){.dt-dashboard-shell .dt-nfc-card-row,.dt-dashboard-shell .workspace-mobile-nav a{transition:none!important}}
