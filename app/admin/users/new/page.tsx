@@ -100,7 +100,7 @@ export default function AddNewUserPage() {
       `Password sementara: ${password}`,
       "",
       "Silakan login dan ganti password setelah masuk.",
-      "Login: https://ditapaja.vercel.app/login",
+      "Login: https://ditapaja.ditapaja.workers.dev/login",
     ].join("\n");
 
     try {
@@ -113,7 +113,7 @@ export default function AddNewUserPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f7fb] text-[#17243b]">
+    <main className="dt-admin-create-user min-h-screen bg-[#f5f7fb] text-[#17243b]">
       {/* HEADER */}
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1100px] items-center justify-between px-5 py-4 sm:px-8">
