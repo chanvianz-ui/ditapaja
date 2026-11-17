@@ -1,5 +1,5 @@
-import AdminMenu from "@/app/admin/admin-menu";
 "use client";
+import AdminMenu from "@/app/admin/admin-menu";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
