@@ -25,6 +25,8 @@ import { supabase } from "@/lib/supabase";
 type UserDetail = {
   id: string;
   email: string;
+  username?: string | null;
+  accountType?: "email" | "username";
   createdAt: string;
   lastSignInAt: string | null;
   emailConfirmedAt: string | null;
@@ -274,10 +276,10 @@ export default function AdminUserDetailPage() {
 
                 <div className="min-w-0 flex-1">
                   <h3 className="break-all text-xl font-bold">
-                    {user.fullName || user.email || "DiTapAja User"}
+                    {user.fullName || user.username || user.email || "DiTapAja User"}
                   </h3>
                   <p className="mt-1 break-all text-sm text-slate-500">
-                    {user.email || "No email"}
+                    {user.username ? `Username: @${user.username}` : user.email || "No email"}
                   </p>
                   <p className="mt-2 break-all font-mono text-xs text-slate-400">
                     ID: {user.id}
@@ -285,7 +287,12 @@ export default function AdminUserDetailPage() {
                 </div>
 
                 <div>
-                  {user.emailConfirmedAt ? (
+                  {user.accountType === "username" ? (
+                    <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600">
+                      <Users size={15} />
+                      Username account
+                    </span>
+                  ) : user.emailConfirmedAt ? (
                     <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-600">
                       <CheckCircle2 size={15} />
                       Email Verified
