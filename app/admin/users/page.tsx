@@ -1,3 +1,4 @@
+import AdminMenu from "@/app/admin/admin-menu";
 
 "use client";
 
@@ -172,13 +173,7 @@ export default function AdminUsersPage() {
               Super Admin
             </div>
 
-            <button
-              onClick={handleLogout}
-              className="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
-              aria-label="Sign out"
-            >
-              <LogOut size={17} />
-            </button>
+            <AdminMenu />
           </div>
         </div>
       </header>
