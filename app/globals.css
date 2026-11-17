@@ -2919,3 +2919,35 @@ html[data-theme="dark"] .theme-toggle{
   border-radius:12px;
   min-height:42px;
 }
+
+
+/* Screenshot QA fixes: dark-mode gradient cards, warning callout and mobile theme control */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="from-slate-50"][class*="to-white"]{
+  background-image:none!important;
+  background-color:#202a38!important;
+  border-color:#303b49!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-amber-50/70"]{
+  background-color:#382d1e!important;
+  border-color:#66502b!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-amber-900"]{
+  color:#f6d79b!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-amber-800"]{
+  color:#eacb8d!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-amber-700"]{
+  color:#d9b978!important;
+}
+@media(max-width:700px){
+  html[data-theme="light"] .theme-toggle,
+  html[data-theme="dark"] .theme-toggle{
+    right:12px;
+    bottom:calc(76px + env(safe-area-inset-bottom));
+    min-height:40px;
+    height:40px;
+    padding:0 12px;
+    border-radius:12px;
+  }
+}
