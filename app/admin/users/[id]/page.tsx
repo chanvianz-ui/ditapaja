@@ -104,7 +104,7 @@ export default function AdminUserDetailPage() {
   const [cards, setCards] = useState<UserCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("");\n  const [statusLoading, setStatusLoading] = useState(false);\n  const [statusMessage, setStatusMessage] = useState("");
 
   const loadDetails = useCallback(async () => {
     setError("");
@@ -166,6 +166,42 @@ export default function AdminUserDetailPage() {
   async function handleRefresh() {
     setRefreshing(true);
     await loadDetails();
+  }
+
+  async function updateAccountStatus(action: "suspend" | "activate") {
+    const prompt = action === "suspend"
+      ? "Tangguhkan akun ini? Pengguna tidak akan bisa login sampai akun diaktifkan kembali."
+      : "Aktifkan kembali akun ini agar pengguna bisa login?";
+    if (!window.confirm(prompt)) return;
+
+    setStatusLoading(true);
+    setStatusMessage("");
+    setError("");
+    try {
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !sessionData.session) {
+        router.replace("/login");
+        return;
+      }
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${sessionData.session.access_token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || "Gagal memperbarui status akun.");
+      }
+      setStatusMessage(result.message);
+      await loadDetails();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan.");
+    } finally {
+      setStatusLoading(false);
+    }
   }
 
   async function handleLogout() {
@@ -255,7 +291,7 @@ export default function AdminUserDetailPage() {
           </button>
         </div>
 
-        {error && (
+        {statusMessage && (\n          <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{statusMessage}</div>\n        )}\n\n        {error && (
           <div className="mb-6 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
             <AlertCircle size={18} className="shrink-0" />
             {error}
@@ -286,7 +322,27 @@ export default function AdminUserDetailPage() {
                   </p>
                 </div>
 
-                <div>
+                <div className="flex flex-col items-start gap-3 sm:items-end">
+                  {user.bannedUntil ? (
+                    <span className="inline-flex items-center gap-2 rounded-full bg-red-50 px-3 py-2 text-xs font-semibold text-red-700">
+                      <Ban size={15} /> Account suspended
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">
+                      <UserCheck size={15} /> Account active
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => updateAccountStatus(user.bannedUntil ? "activate" : "suspend")}
+                    disabled={statusLoading}
+                    className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${user.bannedUntil ? "bg-emerald-700 text-white hover:bg-emerald-800" : "border border-red-200 bg-white text-red-700 hover:bg-red-50"}`}
+                  >
+                    {statusLoading ? <RefreshCw size={15} className="animate-spin" /> : user.bannedUntil ? <UserCheck size={15} /> : <Ban size={15} />}
+                    {user.bannedUntil ? "Activate account" : "Suspend account"}
+                  </button>
+                </div>
+                <div className="sr-only">
                   {user.accountType === "username" ? (
                     <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600">
                       <Users size={15} />
