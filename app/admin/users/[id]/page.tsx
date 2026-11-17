@@ -172,7 +172,7 @@ export default function AdminUserDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f7fb] text-[#17243b]">
+    <main className="dt-admin-user-detail min-h-screen bg-[#f5f7fb] text-[#17243b]">
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] items-center justify-between px-5 py-4 sm:px-8">
           <div className="flex items-center gap-3">
