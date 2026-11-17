@@ -1223,7 +1223,7 @@ export default function DashboardPage() {
             </section>
 
             {/* ANALYTICS PERFORMANCE */}
-            <section id="analytics" className="scroll-mt-24 space-y-5">
+            <section className="scroll-mt-24 space-y-5">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-xl">
                   <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">Performance analytics</p>
