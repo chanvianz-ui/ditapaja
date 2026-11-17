@@ -3253,3 +3253,33 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-invoice{backgrou
  .dt-order-modal>div:last-child{position:sticky;bottom:-1px;background:inherit;padding-top:12px}
  .dt-order-invoice{max-height:calc(100dvh - 20px);padding:16px!important}
 }
+
+
+/* Order Management visual redesign: operations hero, pipeline and queue */
+.dt-orders-hero{position:relative;isolation:isolate;border-color:#263954!important;background:linear-gradient(115deg,#17243b 0%,#1c3150 62%,#203b62 100%)!important;box-shadow:0 24px 60px -28px rgba(15,23,42,.55)!important}
+.dt-orders-hero:after{content:"";position:absolute;z-index:-1;width:340px;height:340px;right:12%;top:-230px;border:1px solid rgba(147,197,253,.18);border-radius:50%;box-shadow:0 0 0 34px rgba(147,197,253,.035),0 0 0 70px rgba(147,197,253,.025)}
+.dt-orders-statboard{gap:12px}
+.dt-orders-stat{min-height:112px;position:relative;overflow:hidden;border-color:#e4e7ec!important;background:#fff!important;box-shadow:0 8px 22px -18px rgba(15,23,42,.28)!important}
+.dt-orders-stat p.mt-2{font-size:30px;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.dt-order-flow{border-color:#e4e7ec!important;background:#fff!important}
+.dt-flow-step{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:5px 10px;min-width:0;padding:15px;border:1px solid #e6eaf0;border-radius:18px;background:#f8fafc;transition:transform .18s,border-color .18s,background .18s}
+.dt-flow-step:hover{transform:translateY(-2px);border-color:#b8c9ff;background:#f4f7ff}
+.dt-flow-index{grid-row:span 2;display:flex;width:36px;height:36px;align-items:center;justify-content:center;border-radius:12px;background:#e8efff;color:#315fe8;font-size:11px;font-weight:800}
+.dt-flow-label{font-size:12px;font-weight:650;color:#697586}
+.dt-flow-step strong{grid-column:3;grid-row:1/3;font-size:28px;letter-spacing:-.04em;color:#182230;font-variant-numeric:tabular-nums}
+.dt-flow-track{grid-column:2/-1;height:5px;overflow:hidden;border-radius:99px;background:#e8edf4}
+.dt-flow-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#315fe8,#7597ff);transition:width .25s ease}
+.dt-orders-create{border-color:#dce3ed!important;box-shadow:0 14px 36px -26px rgba(15,23,42,.35)!important}
+.dt-orders-list-head{padding-bottom:16px;border-bottom:1px solid #edf0f4}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-hero{background:linear-gradient(115deg,#17243b 0%,#1c3150 62%,#203b62 100%)!important;border-color:#30435e!important;color:#fff!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-stat,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-flow{background:#171f2b!important;border-color:#303b49!important;color:#edf1f6!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-stat p.mt-2{color:#edf1f6!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-flow-step{background:#202a38;border-color:#354254}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-flow-step:hover{background:#26364b;border-color:#536b91}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-flow-label{color:#a0acbb}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-flow-step strong{color:#edf1f6}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-flow-index{background:#263a5b;color:#a9c1ff}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-flow-track{background:#354254}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-list-head{border-color:#303b49}
+@media(max-width:700px){.dt-orders-statboard{gap:9px}.dt-orders-stat{min-height:100px;padding:13px!important}.dt-orders-stat p.mt-2{font-size:25px}.dt-flow-step{padding:12px;grid-template-columns:32px 1fr auto}.dt-flow-index{width:31px;height:31px;border-radius:10px}.dt-flow-label{font-size:11px}.dt-flow-step strong{font-size:24px}.dt-orders-hero:after{right:-130px;top:-220px}}
