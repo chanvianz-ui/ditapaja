@@ -6089,3 +6089,92 @@ body:has(main>aside.fixed.lg\:block) main>section>div .text-\[\#155eef\]{color:#
  .dt-orders-page .dt-order-modal{border-radius:22px 22px 0 0!important;padding:19px!important}
 }
 @media(prefers-reduced-motion:reduce){.dt-orders-page .dt-flow-step,.dt-orders-page .dt-order-card{transition:none!important}}
+
+
+
+/* ── Business identity: profile and branch directory ── */
+.dt-business-page{--biz-forest:#173d34;--biz-ink:#20382e;--biz-paper:#f4f5ee;background:var(--biz-paper)!important;color:var(--biz-ink)!important}
+.dt-business-page>.mx-auto>button:first-child{border:1px solid #dce5d9!important;border-radius:999px!important;background:#fbfcf8!important;color:#52685a!important;padding:10px 16px!important;font-size:11px!important}
+.dt-business-page .dt-business-hero{position:relative;isolation:isolate;overflow:hidden;min-height:290px;border:1px solid #31584b!important;border-radius:30px!important;background:linear-gradient(118deg,#173d34 0%,#1b4337 60%,#294f3e 100%)!important;box-shadow:0 28px 65px -43px #102d27b8!important;padding:clamp(27px,4vw,46px)!important}
+.dt-business-page .dt-business-hero:after{content:"IDENTITY";position:absolute;z-index:-1;right:-12px;bottom:-33px;color:#ffffff09;font:700 clamp(72px,13vw,156px)/.9 Georgia,serif;letter-spacing:-.09em;pointer-events:none}
+.dt-business-page .dt-business-hero h1{font:500 clamp(39px,5vw,59px)/1.02 Georgia,"Times New Roman",serif!important;letter-spacing:-.06em!important}
+.dt-business-page .dt-business-hero p{max-width:510px!important;line-height:1.85!important;color:#d2dfd4!important}
+.dt-business-page .dt-business-hero>div:last-child{max-width:290px!important}
+.dt-business-page .dt-business-hero>div:last-child>div{border:1px solid #ffffff20!important;border-radius:18px!important;background:#ffffff0d!important;padding:18px!important;backdrop-filter:blur(10px)}
+.dt-business-page .dt-business-hero>div:last-child strong{font:500 31px/1 Georgia,serif!important;letter-spacing:-.04em}
+.dt-business-page .dt-business-profile-panel,.dt-business-page .dt-business-locations-panel{border:1px solid #e0e6dc!important;border-radius:25px!important;background:#fbfcf8!important;box-shadow:0 20px 50px -42px #173d3470!important;padding:clamp(19px,2.7vw,29px)!important}
+.dt-business-page .dt-business-profile-panel>div:first-child,.dt-business-page .dt-business-locations-panel>div:first-child{border-color:#e8ede5!important}
+.dt-business-page .dt-business-profile-panel h2,.dt-business-page .dt-business-locations-panel h2{font:500 26px/1.1 Georgia,"Times New Roman",serif!important;letter-spacing:-.04em!important;color:#203b30!important}
+.dt-business-page .dt-business-profile-form{display:grid!important;gap:19px!important}
+.dt-business-page .dt-business-profile-form label{font-size:12px!important;font-weight:700!important;color:#496052!important}
+.dt-business-page .dt-business-profile-form input,.dt-business-page .dt-business-profile-form textarea,
+.dt-business-page .dt-business-add-location input,.dt-business-page .dt-business-location-card input{margin-top:8px!important;border:1px solid #dfe6dc!important;border-radius:12px!important;background:#f6f8f3!important;color:#263d31!important;min-height:48px!important;padding:13px 14px!important;font-size:13px!important}
+.dt-business-page .dt-business-profile-form textarea{min-height:112px!important}
+.dt-business-page .dt-business-profile-form input:focus,.dt-business-page .dt-business-profile-form textarea:focus,
+.dt-business-page .dt-business-add-location input:focus,.dt-business-page .dt-business-location-card input:focus{outline:0!important;border-color:#8ba88e!important;background:#fff!important;box-shadow:0 0 0 4px #eaf0e7!important}
+.dt-business-page .dt-business-profile-form button[type=submit]{min-height:49px!important;border-radius:999px!important;background:#173d34!important;box-shadow:0 12px 24px -16px #173d34a8!important}
+.dt-business-page .dt-business-add-location{border:1px solid #e4eae1!important;border-radius:18px!important;background:#f2f5ef!important;padding:19px!important}
+.dt-business-page .dt-business-add-location>p{font:500 19px Georgia,serif!important;color:#294534!important}
+.dt-business-page .dt-business-add-location input{background:#fff!important}
+.dt-business-page .dt-business-add-location button{border:1px solid #cbd9c9!important;border-radius:999px!important;background:#fff!important;color:#315b43!important;min-height:45px}
+.dt-business-page .dt-business-location-card{border:1px solid #e3e9e0!important;border-radius:17px!important;background:#fff!important;padding:18px!important;transition:border-color .2s,box-shadow .2s}
+.dt-business-page .dt-business-location-card:hover{border-color:#b5c7b2!important;box-shadow:0 12px 25px -22px #173d3480}
+.dt-business-page .dt-business-location-card>div>div:first-child p:first-child{font-size:14px!important;font-weight:750!important;letter-spacing:-.02em;color:#263e31}
+.dt-business-page .dt-business-location-card button{border-radius:10px!important}
+.dt-business-page .dt-business-locations-panel>div:last-child{border-radius:16px!important;background:#edf3e9!important;border-color:#dce7d8!important}
+.dt-business-page .dt-business-locations-panel>div:last-child p:first-child{color:#345a40!important}
+.dt-business-page .dt-business-locations-panel>div:last-child p:last-child{color:#58735d!important;line-height:1.75!important}
+.dt-business-page>div>div:nth-child(3){border-radius:15px!important}
+@media(max-width:767px){
+ .dt-business-page{padding:16px 13px 30px!important}
+ .dt-business-page .dt-business-hero{min-height:0;gap:18px!important;border-radius:23px!important;padding:24px 20px!important}
+ .dt-business-page .dt-business-hero h1{font-size:40px!important}
+ .dt-business-page .dt-business-hero>div:last-child{max-width:none!important;width:100%;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .dt-business-page .dt-business-hero>div:last-child>div{padding:14px!important}
+ .dt-business-page .dt-business-hero>div:last-child strong{font-size:27px!important}
+ .dt-business-page .grid.items-start.gap-5.lg\:grid-cols-\[\.82fr_1\.18fr\]{grid-template-columns:minmax(0,1fr)!important}
+ .dt-business-page .dt-business-profile-panel,.dt-business-page .dt-business-locations-panel{border-radius:21px!important;padding:18px!important}
+ .dt-business-page .dt-business-profile-form{gap:15px!important}
+ .dt-business-page .dt-business-location-card{padding:15px!important}
+}
+
+/* ── Account settings: calm security-focused layout ── */
+.dt-account-settings-page{--account-forest:#173d34;--account-ink:#20382e;--account-paper:#f4f5ee;background:var(--account-paper)!important;color:var(--account-ink)!important}
+.dt-account-settings-page>header{position:relative!important;background:#f9faf5f2!important;border-color:#e1e7de!important;backdrop-filter:blur(18px)}
+.dt-account-settings-page>header>div{max-width:1180px!important}
+.dt-account-settings-page>header a{font:600 19px Georgia,serif!important;color:#203b30!important}
+.dt-account-settings-page>header a span{color:#66836d!important}
+.dt-account-settings-page>header button:first-child{border-radius:50%!important;border-color:#dfe6dc!important;background:#fff!important}
+.dt-account-settings-page>header button:last-child{border-radius:999px!important;border-color:#e1e6de!important;background:#fff!important;color:#65746a!important}
+.dt-account-settings-page>div{max-width:1120px!important;padding-top:35px!important}
+.dt-account-settings-page>div>div:first-child{color:#8a998d!important}
+.dt-account-settings-page>div>div:first-child button:hover{color:#315b43!important}
+.dt-account-settings-page>div>div:nth-child(2){position:relative;overflow:hidden;min-height:225px;border:1px solid #31584b!important;border-radius:28px!important;background:linear-gradient(115deg,#173d34,#254b3b)!important;padding:clamp(25px,4vw,39px)!important;box-shadow:0 25px 60px -42px #102d27b8!important}
+.dt-account-settings-page>div>div:nth-child(2):after{content:"ACCOUNT";position:absolute;right:15px;bottom:-24px;color:#ffffff0a;font:700 clamp(65px,12vw,130px)/1 Georgia,serif;letter-spacing:-.08em;pointer-events:none}
+.dt-account-settings-page>div>div:nth-child(2)>div:first-child{background:#ffffff13!important;color:#e4eee3!important;border:1px solid #ffffff20!important;border-radius:15px!important;box-shadow:none!important}
+.dt-account-settings-page>div>div:nth-child(2) h1{position:relative;z-index:1;font:500 clamp(36px,4.5vw,51px)/1.05 Georgia,serif!important;letter-spacing:-.055em!important;color:#f5f5ed!important}
+.dt-account-settings-page>div>div:nth-child(2) p{position:relative;z-index:1;color:#d0dfd3!important;max-width:520px;line-height:1.8!important}
+.dt-account-settings-page .dt-workspace-panel{border:1px solid #e0e6dc!important;border-radius:24px!important;background:#fbfcf8!important;padding:clamp(20px,2.8vw,30px)!important;box-shadow:0 20px 50px -42px #173d3470!important}
+.dt-account-settings-page .dt-workspace-panel h2{font:500 25px Georgia,"Times New Roman",serif!important;letter-spacing:-.04em!important;color:#203b30!important}
+.dt-account-settings-page .dt-workspace-panel .border-b{border-color:#e8ede5!important}
+.dt-account-settings-page .dt-workspace-panel .bg-blue-50,.dt-account-settings-page .dt-workspace-panel .bg-indigo-50{background:#edf3e9!important;color:#42634a!important}
+.dt-account-settings-page .dt-workspace-panel .bg-blue-50 p{color:#55725a!important;line-height:1.75!important}
+.dt-account-settings-page .dt-workspace-panel input{border-color:#dfe6dc!important;border-radius:12px!important;background:#f6f8f3!important;color:#263d31!important;min-height:49px!important}
+.dt-account-settings-page .dt-workspace-panel input:focus{border-color:#8ba88e!important;background:#fff!important;box-shadow:0 0 0 4px #eaf0e7!important}
+.dt-account-settings-page .dt-workspace-panel form>div>p{color:#849287!important}
+.dt-account-settings-page .dt-workspace-panel form>button[type=submit]{min-height:50px!important;border-radius:999px!important;background:#173d34!important;box-shadow:0 12px 24px -16px #173d34a8!important}
+.dt-account-settings-page .dt-workspace-panel form>button[type=submit]:hover{background:#28523e!important}
+.dt-account-settings-page .dt-workspace-panel .border-red-200{border-color:#efd4cc!important;background:#fbefeb!important}
+.dt-account-settings-page .dt-workspace-panel .border-emerald-200{border-color:#d6e4d2!important;background:#edf4e9!important}
+.dt-account-settings-page footer{color:#91a095!important}
+@media(max-width:767px){
+ .dt-account-settings-page>header>div{padding:11px 14px!important}
+ .dt-account-settings-page>div{padding:22px 14px 30px!important}
+ .dt-account-settings-page>div>div:nth-child(2){min-height:0;border-radius:23px!important;padding:25px 21px!important}
+ .dt-account-settings-page>div>div:nth-child(2) h1{font-size:39px!important}
+ .dt-account-settings-page .grid.items-start.gap-5.xl\:grid-cols-\[minmax\(280px\,0\.85fr\)_minmax\(0\,1\.15fr\)\]{grid-template-columns:minmax(0,1fr)!important}
+ .dt-account-settings-page .dt-workspace-panel{border-radius:21px!important;padding:19px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-business-page .dt-business-location-card{transition:none!important}
+}
