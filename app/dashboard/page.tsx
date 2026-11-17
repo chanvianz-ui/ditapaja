@@ -997,78 +997,45 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#f7f9fc] text-slate-900">
+    <main className="dt-dashboard-shell min-h-screen text-slate-900">
       <div className="flex min-h-screen">
-        <aside className="workspace-sidebar sticky top-0 hidden h-screen w-64 shrink-0 border-r border-slate-200/80 bg-white/95 p-5 shadow-[8px_0_30px_-28px_rgba(15,23,42,0.3)] backdrop-blur lg:flex lg:flex-col">
-          <a href="/" className="text-2xl font-bold tracking-tight">
-            DiTap<span className="text-blue-600">Aja.</span>
+        <aside className="workspace-sidebar dt-sidebar sticky top-0 hidden h-screen w-[264px] shrink-0 flex-col p-5 lg:flex">
+          <a href="/" className="dt-sidebar-brand flex items-center gap-3 px-2 py-2">
+            <span className="dt-sidebar-mark"><i/><i/><i/></span>
+            <span className="text-[21px] font-extrabold tracking-[-.06em]">DiTapAja<span className="opacity-60">.</span><small className="mt-0.5 block text-[8px] font-bold uppercase tracking-[.2em] opacity-55">Business workspace</small></span>
           </a>
-
-          <p className="mt-12 text-xs font-semibold uppercase tracking-widest text-slate-400">
-            Workspace
-          </p>
-
-          <nav className="mt-4 space-y-1.5">
-            <a className="flex items-center gap-3 rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50 to-blue-50/40 px-4 py-3 text-sm font-semibold text-blue-700 shadow-sm">
-              <LayoutDashboard size={19} /> Overview
-            </a>
-
-            <a
-              href="#cards"
-              className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-600 transition duration-200 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-900"
-            >
-              <CreditCard size={19} /> My Cards
-            </a>
-
-            <a
-              href="#analytics"
-              className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-600 transition duration-200 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-900"
-            >
-              <BarChart3 size={19} /> Analytics
-            </a>
-
-            <a
-              href="/dashboard/customers"
-              className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-600 transition duration-200 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-900"
-            >
-              <Users size={19} /> Customer Insights
-            </a>
-
-            <a
-              href="/dashboard/business"
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              <Building2 size={19} /> Business Profile
-            </a>
-
-            <a
-              href="/dashboard/landing-page"
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              <Eye size={19} /> Page Studio
-            </a>
-
-            <a
-              href="/dashboard/orders"
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              <Package size={19} /> Orders
-            </a>
-
+          <div className="dt-sidebar-account mt-8 flex items-center gap-3 rounded-2xl p-3">
+            <span className="dt-sidebar-avatar">{displayName.charAt(0).toUpperCase()}</span>
+            <span className="min-w-0"><strong className="block truncate text-xs">{displayName}</strong><small className="mt-0.5 block truncate text-[10px] opacity-55">{email}</small></span>
+          </div>
+          <nav aria-label="Navigasi utama" className="mt-8 space-y-7">
+            <div>
+              <p className="dt-sidebar-label">MENU UTAMA</p>
+              <div className="mt-2 space-y-1">
+                <a href="/dashboard" aria-current="page" className="dt-sidebar-link is-active"><LayoutDashboard size={17}/> Ringkasan</a>
+                <a href="#cards" className="dt-sidebar-link"><CreditCard size={17}/> Kartu NFC</a>
+                <a href="#analytics" className="dt-sidebar-link"><BarChart3 size={17}/> Analytics</a>
+                <a href="/dashboard/customers" className="dt-sidebar-link"><Users size={17}/> Customer Insights</a>
+              </div>
+            </div>
+            <div>
+              <p className="dt-sidebar-label">PENGELOLAAN</p>
+              <div className="mt-2 space-y-1">
+                <a href="/dashboard/orders" className="dt-sidebar-link"><Package size={17}/> Pesanan</a>
+                <a href="/dashboard/business" className="dt-sidebar-link"><Building2 size={17}/> Profil bisnis</a>
+                <a href="/dashboard/landing-page" className="dt-sidebar-link"><Eye size={17}/> Page Studio</a>
+              </div>
+            </div>
           </nav>
-
-          <div className="mt-auto border-t border-slate-100 pt-5">
-            <button
-              onClick={handleLogout}
-              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-500 hover:bg-red-50 hover:text-red-600"
-            >
-              <LogOut size={19} /> Sign Out
-            </button>
+          <div className="mt-auto space-y-3 pt-6">
+            <a href="/dashboard/settings" className="dt-sidebar-settings"><Settings size={16}/> Pengaturan akun <span>↗</span></a>
+            <button onClick={handleLogout} className="dt-sidebar-logout"><LogOut size={17}/> Keluar dari akun</button>
+            <p className="px-3 pt-2 text-[9px] tracking-wide text-white/30">DiTapAja · Workspace</p>
           </div>
         </aside>
 
         <section className="min-w-0 flex-1">
-          <header className="workspace-header sticky top-0 z-30 flex items-center justify-between border-b border-slate-200/70 bg-white/90 px-4 py-3.5 shadow-[0_8px_24px_-24px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:px-5 md:px-10 md:py-4">
+          <header className="workspace-header dt-dashboard-topbar sticky top-0 z-30 flex items-center justify-between border-b px-4 py-3.5 sm:px-5 md:px-10 md:py-4">
             <div>
               <p className="text-xs text-slate-400">
                 Workspace / Overview
@@ -1090,7 +1057,7 @@ export default function DashboardPage() {
                 <p className="text-xs text-slate-400">{email}</p>
               </div>
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 font-bold text-blue-700 ring-2 ring-white shadow-sm">
+              <div className="dt-topbar-avatar flex h-10 w-10 items-center justify-center rounded-full font-bold ring-2 ring-white">
                 {displayName.charAt(0).toUpperCase()}
               </div>
             </div>
@@ -1108,7 +1075,7 @@ export default function DashboardPage() {
             <a href="/dashboard/settings" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Settings</a>
           </nav>
 
-          <div className="mx-auto max-w-[1440px] space-y-7 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-7 xl:px-10 xl:py-9">
+          <div className="dt-dashboard-content mx-auto max-w-[1480px] space-y-8 px-4 py-6 sm:space-y-9 sm:px-6 sm:py-8 xl:px-10 xl:py-10">
             <section className="dt-dashboard-command relative isolate overflow-hidden rounded-[30px] p-5 sm:p-7 lg:p-9">
               <div className="dt-dashboard-orbit dt-dashboard-orbit-one" aria-hidden="true" />
               <div className="dt-dashboard-orbit dt-dashboard-orbit-two" aria-hidden="true" />
