@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Building2, MapPin, Phone, Plus, Save, Trash2, Loader2, CheckCircle2, AlertCircle, Pencil, X } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-type Location = { id: string; name: string; category: string | null; address: string | null; phone: string | null };
+type Location = { id: string; name: string; address: string | null; phone: string | null };
 
 export default function BusinessSettingsPage() {
   const router = useRouter();
@@ -13,7 +13,6 @@ export default function BusinessSettingsPage() {
   const [saving, setSaving] = useState(false);
   const [userId, setUserId] = useState("");
   const [businessName, setBusinessName] = useState("");
-  const [category, setCategory] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [locations, setLocations] = useState<Location[]>([]);
@@ -34,12 +33,11 @@ export default function BusinessSettingsPage() {
       if (authError || !auth.user) { router.replace("/login"); return; }
       setUserId(auth.user.id);
       const [{ data: profile, error: profileError }, { data: rows, error: locationsError }] = await Promise.all([
-        supabase.from("profiles").select("business_name,business_category,business_phone,business_address").eq("id", auth.user.id).maybeSingle(),
-        supabase.from("business_locations").select("id,name,category,address,phone").eq("user_id", auth.user.id).order("created_at", { ascending: false })
+        supabase.from("profiles").select("business_name,business_phone,business_address").eq("id", auth.user.id).maybeSingle(),
+        supabase.from("business_locations").select("id,name,address,phone").eq("user_id", auth.user.id).order("created_at", { ascending: false })
       ]);
       if (profileError || locationsError) setError("Gagal memuat data bisnis. Pastikan migration platform sudah dijalankan di Supabase.");
       setBusinessName(profile?.business_name || "");
-      setCategory(profile?.business_category || "");
       setPhone(profile?.business_phone || "");
       setAddress(profile?.business_address || "");
       setLocations((rows || []) as Location[]);
@@ -51,7 +49,7 @@ export default function BusinessSettingsPage() {
   async function saveProfile(event: React.FormEvent) {
     event.preventDefault(); setSaving(true); setError(""); setMessage("");
     const { error: saveError } = await supabase.from("profiles").upsert({
-      id: userId, business_name: businessName.trim(), business_category: category.trim() || null,
+      id: userId, business_name: businessName.trim(),
       business_phone: phone.trim() || null, business_address: address.trim() || null
     }, { onConflict: "id" });
     if (saveError) setError("Profil bisnis gagal disimpan: " + saveError.message);
@@ -63,8 +61,8 @@ export default function BusinessSettingsPage() {
     event.preventDefault(); setError(""); setMessage("");
     if (!locationName.trim()) { setError("Nama cabang wajib diisi."); return; }
     const { data, error: insertError } = await supabase.from("business_locations").insert({
-      user_id: userId, name: locationName.trim(), address: locationAddress.trim() || null, phone: locationPhone.trim() || null, category: category.trim() || null
-    }).select("id,name,category,address,phone").single();
+      user_id: userId, name: locationName.trim(), address: locationAddress.trim() || null, phone: locationPhone.trim() || null
+    }).select("id,name,address,phone").single();
     if (insertError) { setError("Cabang gagal ditambahkan: " + insertError.message); return; }
     setLocations((current) => [data as Location, ...current]);
     setLocationName(""); setLocationAddress(""); setLocationPhone("");
@@ -95,7 +93,7 @@ export default function BusinessSettingsPage() {
       })
       .eq("id", editingLocationId)
       .eq("user_id", userId)
-      .select("id,name,category,address,phone")
+      .select("id,name,address,phone")
       .single();
     if (updateError) {
       setError("Perubahan cabang gagal disimpan: " + updateError.message);
@@ -118,10 +116,10 @@ export default function BusinessSettingsPage() {
   if (loading) return <div className="flex min-h-screen items-center justify-center bg-[#f7f9fc]"><Loader2 className="animate-spin text-blue-600" /></div>;
 
   return (
-    <main className="min-h-screen bg-[#f7f9fc] px-4 py-6 text-slate-900 sm:px-8 sm:py-8">
-      <div className="mx-auto max-w-5xl">
+    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_#eaf1ff_0%,_#f7f9fc_40%,_#f7f9fc_100%)] px-4 py-6 text-slate-900 sm:px-8 sm:py-9">
+      <div className="mx-auto max-w-6xl">
         <button onClick={() => router.push("/dashboard")} className="mb-6 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"><ArrowLeft size={17}/> Kembali ke Dashboard</button>
-        <div className="mb-8">
+        <div className="mb-8 rounded-3xl border border-white/80 bg-white/85 p-6 shadow-[0_18px_55px_-35px_rgba(37,99,235,0.28)] backdrop-blur sm:p-8">
           <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-600 shadow-sm ring-1 ring-blue-100"><Building2 size={23}/></div>
           <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">Business Workspace</p>
           <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Profil & Lokasi Bisnis</h1>
@@ -131,12 +129,11 @@ export default function BusinessSettingsPage() {
         {(error || message) && <div className={`mb-5 flex items-start gap-2 rounded-xl border p-4 text-sm ${error ? "border-red-200 bg-red-50 text-red-700" : "border-emerald-200 bg-emerald-50 text-emerald-700"}`}>{error ? <AlertCircle size={18}/> : <CheckCircle2 size={18}/>}<span>{error || message}</span></div>}
 
         <div className="grid items-start gap-4 sm:gap-6 lg:grid-cols-[1fr_1fr]">
-          <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-6">
+          <section className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_18px_55px_-38px_rgba(15,23,42,0.24)] transition-shadow hover:shadow-lg sm:p-6">
             <div className="mb-6 flex items-center gap-3"><Building2 className="text-blue-600"/><div><h2 className="font-bold">Business Profile</h2><p className="text-xs text-slate-400">Informasi utama bisnis kamu</p></div></div>
             <form onSubmit={saveProfile} className="space-y-4">
               <label className="block text-sm font-semibold">Nama bisnis<input value={businessName} onChange={e=>setBusinessName(e.target.value)} maxLength={100} required placeholder="Contoh: Kopi Senja" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/></label>
-              <label className="block text-sm font-semibold">Kategori bisnis<input value={category} onChange={e=>setCategory(e.target.value)} maxLength={80} placeholder="Cafe, restoran, salon..." className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/></label>
-              <label className="block text-sm font-semibold">Nomor WhatsApp<input value={phone} onChange={e=>setPhone(e.target.value)} maxLength={30} placeholder="08xxxxxxxxxx" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/></label>
+                            <label className="block text-sm font-semibold">Nomor WhatsApp<input value={phone} onChange={e=>setPhone(e.target.value)} maxLength={30} placeholder="08xxxxxxxxxx" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/></label>
               <label className="block text-sm font-semibold">Alamat utama<textarea value={address} onChange={e=>setAddress(e.target.value)} maxLength={300} rows={3} placeholder="Alamat bisnis..." className="mt-2 w-full resize-y rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm transition outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100"/></label>
               <button disabled={saving} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50"><Save size={17}/>{saving ? "Menyimpan..." : "Simpan Profil Bisnis"}</button>
             </form>
