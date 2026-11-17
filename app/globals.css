@@ -3283,3 +3283,24 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-flow-index{background:
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-flow-track{background:#354254}
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-list-head{border-color:#303b49}
 @media(max-width:700px){.dt-orders-statboard{gap:9px}.dt-orders-stat{min-height:100px;padding:13px!important}.dt-orders-stat p.mt-2{font-size:25px}.dt-flow-step{padding:12px;grid-template-columns:32px 1fr auto}.dt-flow-index{width:31px;height:31px;border-radius:10px}.dt-flow-label{font-size:11px}.dt-flow-step strong{font-size:24px}.dt-orders-hero:after{right:-130px;top:-220px}}
+
+
+/* Dashboard command center redesign */
+.dt-dashboard-command{isolation:isolate;min-height:340px;background:linear-gradient(116deg,#14233a 0%,#1b3150 54%,#24466e 100%);border:1px solid #304968;box-shadow:0 28px 70px -38px rgba(16,35,61,.72);color:#fff}
+.dt-dashboard-orbit{position:absolute;z-index:-1;pointer-events:none;border:1px solid rgba(179,207,255,.12);border-radius:50%}
+.dt-dashboard-orbit-one{width:460px;height:460px;right:-110px;top:-275px;box-shadow:0 0 0 42px rgba(179,207,255,.025),0 0 0 90px rgba(179,207,255,.02)}
+.dt-dashboard-orbit-two{width:300px;height:300px;right:23%;bottom:-260px;box-shadow:0 0 0 32px rgba(179,207,255,.025)}
+.dt-dashboard-eyebrow{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(191,219,254,.2);border-radius:999px;background:rgba(255,255,255,.08);padding:7px 11px;color:#c7dcff;font-size:9px;font-weight:800;letter-spacing:.16em}
+.dt-dashboard-live{display:inline-flex;align-items:center;gap:7px;color:#b7c9df;font-size:9px;font-weight:750;letter-spacing:.1em}
+.dt-dashboard-live span{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.12)}
+.dt-dashboard-primary-action,.dt-dashboard-secondary-action{display:inline-flex;min-height:46px;align-items:center;justify-content:center;gap:9px;border-radius:13px;padding:0 17px;font-size:12px;font-weight:750;transition:transform .18s,background .18s,border-color .18s}
+.dt-dashboard-primary-action{background:#fff;color:#18345a;box-shadow:0 10px 25px -14px rgba(0,0,0,.6)}
+.dt-dashboard-primary-action:hover,.dt-dashboard-secondary-action:hover{transform:translateY(-2px)}
+.dt-dashboard-secondary-action{border:1px solid rgba(219,234,254,.24);background:rgba(255,255,255,.08);color:#eff6ff}
+.dt-dashboard-secondary-action:hover{background:rgba(255,255,255,.14);border-color:rgba(219,234,254,.4)}
+.dt-dashboard-command-panel{border:1px solid rgba(219,234,254,.16);border-radius:22px;background:rgba(7,20,39,.3);padding:19px;backdrop-filter:blur(14px);box-shadow:inset 0 1px rgba(255,255,255,.06)}
+.dt-dashboard-device-stat{display:grid;grid-template-columns:22px 1fr;align-items:center;gap:5px 9px;border:1px solid rgba(219,234,254,.12);border-radius:15px;background:rgba(255,255,255,.055);padding:13px}
+.dt-dashboard-device-stat svg{grid-row:span 2;color:#9fc2ff}
+.dt-dashboard-device-stat strong{color:#fff;font-size:25px;line-height:1;font-weight:850;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.dt-dashboard-device-stat span{color:#a9bdd5;font-size:10px;font-weight:600}
+@media(max-width:700px){.dt-dashboard-command{min-height:0;border-radius:24px!important}.dt-dashboard-orbit-one{right:-270px}.dt-dashboard-command-panel{padding:15px}.dt-dashboard-primary-action,.dt-dashboard-secondary-action{flex:1;padding:0 12px;font-size:11px}}
