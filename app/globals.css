@@ -4751,3 +4751,51 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
   box-shadow:0 28px 70px -44px rgba(16,47,35,.62)!important
 }
 @media(max-width:640px){.dt-dashboard-shell .dt-dashboard-command{border-radius:22px!important}}
+
+
+/* Customer Insights — chart surfaces, metric rhythm and mobile readability */
+.dt-customer-insights>div{max-width:1440px!important}
+.dt-customer-insights .dt-ci-hero{
+  border:1px solid rgba(196,222,195,.14)!important;border-radius:28px!important;
+  background:linear-gradient(118deg,#142b27 0%,#1e4036 58%,#315c49 100%)!important;
+  box-shadow:0 28px 70px -44px rgba(16,47,35,.58)!important
+}
+.dt-customer-insights .dt-ci-hero [class*="text-emerald-100"]{color:#c5dfc8!important}
+.dt-customer-insights .dt-ci-hero [class*="bg-white/[.07]"]{
+  border-color:rgba(225,241,223,.16)!important;background:rgba(10,31,25,.25)!important;
+  border-radius:18px!important;backdrop-filter:blur(12px)
+}
+.dt-customer-insights .dt-ci-panel{
+  border-color:#e2e9df!important;border-radius:21px!important;
+  box-shadow:0 18px 46px -40px rgba(27,52,40,.34)!important
+}
+.dt-customer-insights .dt-ci-panel h3{
+  color:#203329!important;letter-spacing:-.035em!important
+}
+.dt-customer-insights .dt-ci-panel [class*="text-emerald-"]{color:#557b62!important}
+.dt-customer-insights .dt-ci-panel [class*="bg-emerald-50"]{background:#edf4ec!important}
+.dt-customer-insights .dt-ci-panel [class*="border-emerald-200"]{border-color:#dce8dc!important}
+.dt-customer-insights .dt-ci-panel [class*="bg-slate-100"]{background:#f0f3ee!important}
+.dt-customer-insights .dt-ci-panel [class*="bg-slate-50"]{background:#f7f9f6!important}
+.dt-customer-insights .dt-ci-panel button:hover{background:#f6f9f4}
+.dt-customer-insights .dt-ci-panel .rounded-full.bg-slate-100{color:#718071!important}
+.dt-customer-insights .dt-ci-panel .h-2.overflow-hidden{background:#edf1eb!important}
+.dt-customer-insights .dt-ci-panel .h-full.rounded-full{background:linear-gradient(90deg,#426b4e,#8eae89)!important}
+.dt-customer-insights header button{
+  border-color:#e1e8df!important;border-radius:12px!important;
+  box-shadow:0 8px 20px -18px rgba(27,52,40,.3)
+}
+.dt-customer-insights header button:hover{background:#f2f7f0!important;color:#426b4e!important}
+.dt-customer-insights [role="group"] button,
+.dt-customer-insights button[aria-pressed]{
+  border-radius:10px!important
+}
+@media(max-width:640px){
+  .dt-customer-insights>div{padding:14px 12px 25px!important}
+  .dt-customer-insights .dt-ci-hero{padding:20px!important;border-radius:21px!important}
+  .dt-customer-insights .dt-ci-panel{border-radius:18px!important;padding:15px!important}
+  .dt-customer-insights .dt-ci-panel.mt-5.overflow-hidden{padding:0!important}
+  .dt-customer-insights .mt-8.flex.h-52{gap:4px!important}
+  .dt-customer-insights .mt-6.grid.h-36{gap:4px!important}
+  .dt-customer-insights footer{font-size:10px!important}
+}
