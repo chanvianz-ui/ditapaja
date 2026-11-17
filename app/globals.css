@@ -4329,3 +4329,31 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
  .concept-home .concept-hero-stage .simple-card{width:170px!important;height:170px!important}
  .concept-home .concept-proof{gap:9px!important}
 }
+
+
+/* Sign-in and registration — same brand language, calmer form hierarchy */
+.dt-auth-page{background:radial-gradient(ellipse at 12% 0%,rgba(213,229,211,.62),transparent 35%),#f4f5f1!important}
+.dt-auth-shell{border-color:#e1e7df!important;border-radius:28px!important;box-shadow:0 32px 90px -55px rgba(20,52,35,.34)!important}
+.dt-auth-story{background:linear-gradient(145deg,#142b27 0%,#1e4036 58%,#315c49 100%)!important}
+.dt-auth-story:before,.dt-auth-story:after{border-color:rgba(203,226,201,.14)!important}
+.dt-auth-brand span,.dt-auth-mobile-brand span{color:#b8d4b7!important}
+.dt-auth-eyebrow{color:#c5dfc8!important}
+.dt-auth-eyebrow i{background:#b8d4b7!important;box-shadow:0 0 0 5px rgba(184,212,183,.13)!important}
+.dt-auth-story-copy h1 em{color:#b8d4b7!important}
+.dt-auth-preview-number{color:#c5dfc8!important}
+.dt-auth-bars i{background:linear-gradient(180deg,#b8d4b7,rgba(109,146,114,.2))!important}
+.dt-auth-preview-top b i{background:#a8d2a9!important}
+.dt-auth-benefits>div>b{background:rgba(184,212,183,.14)!important;color:#c5dfc8!important}
+.dt-auth-kicker{color:#557b62!important}
+.dt-auth-field input:focus{border-color:#86a993!important;box-shadow:0 0 0 4px rgba(107,151,119,.12)!important}
+.dt-auth-password button,.dt-auth-switch a,.dt-auth-back:hover{color:#557b62!important}
+.dt-auth-submit{background:#254b3c!important;box-shadow:0 12px 25px -15px rgba(37,75,60,.55)!important}
+.dt-auth-submit:hover{background:#183b2e!important}
+.dt-auth-mobile-brand a{color:#1d2b25!important}
+@media(max-width:760px){
+ .dt-auth-page{background:#f4f5f1!important}
+ .dt-auth-form-side{background:#f4f5f1!important}
+ .dt-auth-form-card{padding:0 2px}
+ .dt-auth-mobile-brand{margin-bottom:42px!important}
+ .dt-auth-heading h2{letter-spacing:-1.7px!important}
+}
