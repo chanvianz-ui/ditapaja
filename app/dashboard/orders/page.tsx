@@ -326,7 +326,7 @@ export default function OrdersPage() {
   if (loading) return <div className="flex min-h-screen items-center justify-center"><Loader2 className="animate-spin text-blue-600" /></div>;
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_#eff6ff_0%,_#f8fafc_42%,_#f8fafc_100%)] px-4 py-6 text-slate-900 sm:px-8 sm:py-9">
+    <main className="dt-workspace-page min-h-screen bg-[radial-gradient(ellipse_at_top,_#eff6ff_0%,_#f8fafc_42%,_#f8fafc_100%)] px-4 py-6 text-slate-900 sm:px-8 sm:py-9">
       <div className="mx-auto max-w-6xl">
         <button onClick={() => router.push("/dashboard")} className="mb-6 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm font-medium text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-blue-600"><ArrowLeft size={17} /> Dashboard</button>
         <div className="mb-8 flex items-center gap-4 rounded-3xl border border-white/80 bg-white/85 p-5 shadow-[0_12px_40px_-24px_rgba(37,99,235,0.28)] backdrop-blur sm:p-6">
@@ -352,7 +352,7 @@ export default function OrdersPage() {
             <button disabled={saving} className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/15 transition hover:bg-blue-700 disabled:opacity-50"><Plus size={17} />{saving ? "Menyimpan..." : "Tambah Pesanan"}</button>
             <p className="text-xs leading-5 text-slate-400">Pencatatan internal. Ini belum memproses pembayaran atau mengirim pesanan ke Shopee.</p>
           </form>
-          <section className="min-w-0 rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_12px_36px_-24px_rgba(15,23,42,0.28)] sm:p-6">
+          <section className="dt-workspace-panel min-w-0 rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_12px_36px_-24px_rgba(15,23,42,0.28)] sm:p-6">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div><h2 className="text-lg font-bold tracking-tight">Daftar pesanan</h2><p className="mt-1 text-xs text-slate-400">{filteredOrders.length} dari {orders.length} pesanan</p></div><button type="button" onClick={exportOrders} disabled={filteredOrders.length===0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40"><Download size={15}/> Ekspor CSV</button></div>
             <div className="mb-4 grid gap-2 sm:grid-cols-2">
               <label className="relative block"><Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" /><input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari nama, WhatsApp, produk, atau ID pesanan..." aria-label="Cari pesanan" className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-9 pr-3 text-xs outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50" /></label>
