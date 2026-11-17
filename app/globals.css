@@ -4519,3 +4519,72 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
     padding:19px!important;border-radius:19px!important
   }
 }
+
+
+/* Orders workspace — clearer separation between overview, workflow and records */
+.dt-workspace-page .dt-orders-hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  border:1px solid #29483b!important;border-radius:27px!important;
+  background:linear-gradient(118deg,#142b27 0%,#1e4036 58%,#315c49 100%)!important;
+  box-shadow:0 26px 64px -42px rgba(20,52,43,.58)!important
+}
+.dt-workspace-page .dt-orders-hero:after{
+  content:"";position:absolute;z-index:-1;width:390px;height:390px;right:-130px;top:-265px;
+  border:1px solid rgba(226,241,224,.15);border-radius:50%;
+  box-shadow:0 0 0 36px rgba(226,241,224,.035),0 0 0 76px rgba(226,241,224,.025)
+}
+.dt-workspace-page .dt-orders-hero [class*="text-blue-300"],
+.dt-workspace-page .dt-orders-hero [class*="text-blue-200"]{color:#c5dfc8!important}
+.dt-workspace-page .dt-orders-hero [class*="text-slate-300"]{color:rgba(238,246,236,.7)!important}
+.dt-workspace-page .dt-orders-statboard{gap:13px!important}
+.dt-workspace-page .dt-orders-stat{
+  min-height:112px;border-radius:18px!important;border-color:#e2e9df!important;
+  box-shadow:0 15px 36px -32px rgba(27,52,40,.4)!important
+}
+.dt-workspace-page .dt-orders-stat [class*="text-blue-600"]{color:#557b62!important}
+.dt-workspace-page .dt-order-flow{
+  border-color:#e2e9df!important;border-radius:23px!important;
+  box-shadow:0 16px 42px -38px rgba(27,52,40,.34)!important
+}
+.dt-workspace-page .dt-order-flow h2{color:#25382d!important}
+.dt-workspace-page .dt-orders-create{
+  top:24px!important;border-color:#e2e9df!important;border-radius:22px!important;
+  box-shadow:0 18px 46px -40px rgba(27,52,40,.35)!important
+}
+.dt-workspace-page .dt-orders-create h2{color:#25382d!important}
+.dt-workspace-page .dt-orders-create input,
+.dt-workspace-page .dt-orders-create select,
+.dt-workspace-page .dt-orders-create textarea{
+  min-height:46px;border-color:#e2e9df!important;border-radius:11px!important;background:#f8faf7!important
+}
+.dt-workspace-page .dt-orders-create input:focus,
+.dt-workspace-page .dt-orders-create select:focus,
+.dt-workspace-page .dt-orders-create textarea:focus{
+  border-color:#86a993!important;box-shadow:0 0 0 4px rgba(107,151,119,.12)!important
+}
+.dt-workspace-page .dt-orders-list-head{padding-bottom:15px;border-bottom:1px solid #e7ece5}
+.dt-workspace-page .dt-order-card{
+  border-color:#e2e9df!important;border-radius:18px!important;
+  box-shadow:0 12px 32px -30px rgba(27,52,40,.42)!important
+}
+.dt-workspace-page .dt-order-card:hover{
+  border-color:#c8d9ca!important;box-shadow:0 18px 38px -30px rgba(27,52,40,.3)!important
+}
+.dt-workspace-page .dt-order-card .dt-order-details{
+  border-color:#e5ebe3!important;border-radius:15px!important;background:#f7f9f6!important
+}
+.dt-workspace-page .dt-order-card button{border-radius:10px}
+.dt-workspace-page .dt-order-modal,
+.dt-workspace-page .dt-order-invoice{
+  border-color:#e1e8df!important;box-shadow:0 28px 80px -40px rgba(17,39,28,.42)!important
+}
+@media(max-width:700px){
+  .dt-workspace-page .dt-orders-hero{padding:22px!important}
+  .dt-workspace-page .dt-orders-statboard{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .dt-workspace-page .dt-orders-stat{min-height:96px;padding:13px!important}
+  .dt-workspace-page .dt-order-flow{padding:17px!important}
+  .dt-workspace-page .dt-orders-create{position:static!important}
+  .dt-workspace-page .dt-orders-list-head{align-items:flex-start!important}
+  .dt-workspace-page .dt-order-card{padding:15px!important}
+  .dt-workspace-page .dt-order-card .dt-order-details{padding:12px!important}
+}
