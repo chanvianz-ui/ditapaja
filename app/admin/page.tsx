@@ -177,7 +177,7 @@ export default function AdminPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#f5f7fb] text-[#17243b]">
+    <main className="dt-admin-overview min-h-screen bg-[#f5f7fb] text-[#17243b]">
       <aside className="fixed left-0 top-0 z-20 hidden h-screen w-[250px] border-r border-slate-200 bg-white p-5 lg:block">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
