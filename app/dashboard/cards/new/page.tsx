@@ -171,8 +171,8 @@ export default function NewCardPage() {
           Kembali ke Dashboard
         </Link>
 
-        <div className="dt-card-create-layout mt-6 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:mt-8 sm:p-7">
-          <section className="dt-card-create-intro">
+        <div className="dt-card-create-layout mt-7 grid items-stretch gap-5 lg:grid-cols-[.78fr_1.22fr] lg:gap-7">
+          <section className="dt-card-create-intro flex flex-col justify-between rounded-[28px] p-6 sm:p-8 lg:min-h-[720px]">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-700 ring-1 ring-blue-100">
             <CreditCard size={27} />
           </div>
@@ -191,10 +191,10 @@ export default function NewCardPage() {
               bisnis kamu. Setiap kartu mendapatkan kode unik.
             </p>
           </div>
-          <div className="dt-card-create-steps"><span>01 · Identitas kartu</span><span>02 · Tujuan review</span><span>03 · Verifikasi & simpan</span></div>
+          <div className="dt-card-create-steps mt-10 grid gap-0 overflow-hidden"><div className="flex items-center gap-4 border-b border-white/10 py-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white/10 text-xs font-bold text-white">01</span><span><strong className="block text-sm text-white">Identitas kartu</strong><small className="text-xs text-white/55">Beri nama agar mudah dikenali</small></span></div><div className="flex items-center gap-4 border-b border-white/10 py-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white/10 text-xs font-bold text-white">02</span><span><strong className="block text-sm text-white">Tujuan review</strong><small className="text-xs text-white/55">Hubungkan ke Google Review</small></span></div><div className="flex items-center gap-4 py-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-white/10 text-xs font-bold text-white">03</span><span><strong className="block text-sm text-white">Verifikasi & simpan</strong><small className="text-xs text-white/55">Pastikan tautan sudah benar</small></span></div></div><div className="mt-10 hidden rounded-2xl border border-white/10 bg-white/[.06] p-5 lg:block"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-emerald-100/65">THE NFC EXPERIENCE</p><div className="mt-5 flex items-center gap-4"><div className="grid h-16 w-16 place-items-center rounded-2xl border border-white/10 bg-white/10 text-emerald-100"><CreditCard size={30}/></div><div><strong className="block text-sm text-white">Tap. Review. Grow.</strong><span className="mt-1 block text-xs leading-5 text-white/55">Satu sentuhan untuk pengalaman ulasan yang lebih mudah.</span></div></div></div>
           </section>
 
-          <form onSubmit={handleSubmit} className="dt-card-create-form mt-7 space-y-5">
+          <form onSubmit={handleSubmit} className="dt-card-create-form space-y-7 rounded-[28px] p-5 sm:p-8">
             <div>
               <label className="mb-2 block text-sm font-semibold text-slate-700">
                 Nama kartu
@@ -329,7 +329,7 @@ export default function NewCardPage() {
           </form>
         </div>
 
-        <p className="mt-6 text-center text-xs text-slate-400">
+        <p className="mt-6 text-center text-xs text-slate-400 lg:col-span-2">
           DiTapAja · Tap. Review. Grow.
         </p>
       </div>
