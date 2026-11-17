@@ -1185,106 +1185,132 @@ export default function DashboardPage() {
           </nav>
 
           <div className="mx-auto max-w-7xl space-y-6 px-4 py-5 sm:space-y-7 sm:px-6 sm:py-7 xl:px-10 xl:py-9">
-            <section className="relative isolate overflow-hidden rounded-2xl border border-blue-100/90 bg-gradient-to-br from-white via-white to-blue-50/90 p-5 shadow-sm sm:p-6 lg:p-7">
-              <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-24 -z-10 h-64 w-64 rounded-full bg-blue-100/70 blur-3xl" />
-              <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+            {/* DASHBOARD HERO */}
+            <section className="relative isolate overflow-hidden rounded-[2rem] bg-[#101827] text-white shadow-xl shadow-slate-900/10">
+              <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-28 -z-10 h-96 w-96 rounded-full bg-blue-500/25 blur-3xl" />
+              <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 left-1/3 -z-10 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl" />
+              <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center lg:gap-10 lg:p-10">
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">DITAPAJA WORKSPACE</p>
-                  <p className="mt-3 text-sm font-medium text-slate-500">Welcome back,</p>
-                  <h2 className="mt-1 break-words text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.2em] text-blue-200">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,.9)]" />
+                    DITAPAJA WORKSPACE
+                  </div>
+                  <p className="mt-6 text-sm font-medium text-slate-400">Selamat datang kembali,</p>
+                  <h2 className="mt-2 max-w-2xl break-words text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-[2.8rem]">
                     {workspaceName} <span aria-hidden="true">👋</span>
                   </h2>
-                  <p className="mt-2 max-w-lg text-sm leading-6 text-slate-500">
-                    Pantau performa kartu NFC, kelola pengalaman pelanggan, dan lihat perkembangan interaksi bisnismu.
+                  <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
+                    Setiap tap bisa menjadi awal dari ulasan baru. Kelola kartu, bagikan akses, dan pantau interaksi pelanggan dari satu tempat.
                   </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm">
-                      <CreditCard size={13} className="text-blue-600" />
-                      {cards.length} {cards.length === 1 ? "kartu" : "kartu"}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm">
-                      <span className={`h-1.5 w-1.5 rounded-full ${cards.some((card) => card.active) ? "bg-emerald-500" : "bg-slate-300"}`} />
-                      {cards.filter((card) => card.active).length} aktif
-                    </span>
+                  <div className="mt-7 flex flex-wrap gap-3">
+                    <button type="button" onClick={() => router.push("/dashboard/cards/new")} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-blue-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-950/30 transition hover:-translate-y-0.5 hover:bg-blue-400">
+                      <Plus size={18} /> Buat kartu baru
+                    </button>
+                    <button type="button" onClick={() => router.push("/dashboard/landing-page")} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                      <Eye size={17} /> Atur halaman
+                    </button>
+                  </div>
+                  <div className="mt-8 flex flex-wrap gap-3 border-t border-white/10 pt-6">
+                    <div className="min-w-[112px] rounded-xl bg-white/[0.06] px-4 py-3">
+                      <p className="text-2xl font-bold tabular-nums">{setupCards.length}</p>
+                      <p className="mt-1 text-[11px] font-medium text-slate-400">Kartu tersimpan</p>
+                    </div>
+                    <div className="min-w-[112px] rounded-xl bg-white/[0.06] px-4 py-3">
+                      <p className="text-2xl font-bold tabular-nums">{activeSetupCards.length}</p>
+                      <p className="mt-1 text-[11px] font-medium text-slate-400">Kartu aktif</p>
+                    </div>
+                    <div className="min-w-[112px] rounded-xl bg-white/[0.06] px-4 py-3">
+                      <p className="text-2xl font-bold tabular-nums">{setupProgress}/3</p>
+                      <p className="mt-1 text-[11px] font-medium text-slate-400">Setup selesai</p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex shrink-0 flex-col gap-2 sm:min-w-[176px]">
-                  <button
-                    onClick={() => router.push("/dashboard/cards/new")}
-                    className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    <Plus size={18} /> Add New Card
-                  </button>
-                  <button
-                    onClick={() => router.push("/dashboard/landing-page")}
-                    className="flex min-h-10 items-center justify-center gap-2 rounded-xl border border-blue-100 bg-white/90 px-4 py-2.5 text-xs font-semibold text-blue-700 transition hover:border-blue-200 hover:bg-blue-50"
-                  >
-                    <Eye size={15} /> Customize Landing Page
-                  </button>
+                <div className="relative mx-auto w-full max-w-sm">
+                  <div className="absolute -inset-5 rounded-[2rem] bg-blue-400/10 blur-2xl" />
+                  <div className="relative overflow-hidden rounded-[1.7rem] border border-white/15 bg-gradient-to-br from-white/[0.13] to-white/[0.04] p-5 shadow-2xl backdrop-blur-sm sm:p-6">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-200">YOUR NFC CARD</p>
+                        <p className="mt-1 text-sm font-semibold text-white">{activeSetupCards[0]?.card_name || "DiTapAja Review Card"}</p>
+                      </div>
+                      <span className="rounded-full border border-emerald-300/20 bg-emerald-300/10 px-2.5 py-1 text-[10px] font-bold text-emerald-200">{activeSetupCards.length > 0 ? "ACTIVE" : "READY TO START"}</span>
+                    </div>
+                    <div className="mt-5 flex min-h-[190px] items-center justify-between gap-4 rounded-2xl border border-white/10 bg-[#080f1c]/80 p-5">
+                      <div className="min-w-0">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-400/15 text-blue-200"><Nfc size={23}/></div>
+                        <p className="mt-5 text-xl font-bold tracking-tight text-white">Tap. Review.</p>
+                        <p className="mt-1 text-xl font-bold tracking-tight text-blue-300">Grow.</p>
+                        <p className="mt-3 max-w-[150px] text-[10px] leading-5 text-slate-400">A simple tap brings customers to your review page.</p>
+                      </div>
+                      <div className="shrink-0 rounded-2xl bg-white p-2.5 shadow-xl shadow-black/20">
+                        {activeSetupCards[0] ? (
+                          <QRCodeSVG value={typeof window !== "undefined" ? window.location.origin + "/c/" + activeSetupCards[0].public_code : "https://ditapaja.workers.dev/c/" + activeSetupCards[0].public_code} size={112} level="H" includeMargin={false} fgColor="#101827" bgColor="#ffffff"/>
+                        ) : (
+                          <div className="flex h-[112px] w-[112px] flex-col items-center justify-center gap-2 text-slate-400">
+                            <QrCode size={42}/>
+                            <span className="text-[9px] font-bold uppercase tracking-wider">Your QR here</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between gap-3 text-[11px]">
+                      <span className="text-slate-400">{activeSetupCards[0] ? "QR kartu aktif kamu" : "Preview kartu NFC kamu"}</span>
+                      {activeSetupCards[0] && <button type="button" onClick={() => setQrCard(activeSetupCards[0])} className="font-semibold text-blue-200 transition hover:text-white">Lihat QR <ExternalLink size={12} className="ml-1 inline"/></button>}
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-4 -left-3 hidden items-center gap-2 rounded-xl border border-white/10 bg-[#1d2b40] px-3 py-2.5 shadow-xl sm:flex">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-400/15 text-emerald-300"><CheckCircle2 size={16}/></span>
+                    <span className="text-[10px] font-semibold text-slate-200">Dashboard siap digunakan</span>
+                  </div>
                 </div>
               </div>
             </section>
 
-            {!setupComplete && (
-              <section className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
-                <div className="bg-gradient-to-r from-blue-50 via-white to-indigo-50 p-5 sm:p-6">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">MULAI DI SINI</p>
-                      <h3 className="mt-2 text-lg font-bold text-slate-900">Siapkan DiTapAja dalam 3 langkah</h3>
-                      <p className="mt-1 max-w-xl text-sm leading-6 text-slate-500">Ikuti langkah ini sampai kartu NFC kamu siap digunakan dan aktivitas pertamanya tercatat.</p>
-                    </div>
-                    <span className="rounded-full border border-blue-100 bg-white px-3 py-1.5 text-xs font-bold text-blue-700">{setupProgress}/3 selesai</span>
-                  </div>
-                  <div className="mt-4 h-2 overflow-hidden rounded-full bg-blue-100">
-                    <div className="h-full rounded-full bg-blue-600 transition-all duration-500" style={{ width: (setupProgress / 3 * 100) + "%" }} />
-                  </div>
+            {/* GETTING STARTED */}
+            <section className="overflow-hidden rounded-[1.7rem] border border-slate-200 bg-white shadow-sm">
+              <div className="flex flex-col gap-4 border-b border-slate-100 p-5 sm:flex-row sm:items-end sm:justify-between sm:p-7">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">QUICK START GUIDE</p>
+                  <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{setupComplete ? "Setup kamu sudah lengkap!" : "Mulai dari sini, cuma 3 langkah."}</h3>
+                  <p className="mt-1.5 max-w-xl text-sm leading-6 text-slate-500">{setupComplete ? "Kartu sudah aktif dan aktivitas pertama tercatat. Kamu bisa lanjut mengelola kartu dan melihat performanya." : "Ikuti panduan singkat ini untuk membuat kartu NFC pertamamu siap dipakai pelanggan."}</p>
                 </div>
-
-                <div className="grid gap-3 p-4 sm:grid-cols-3 sm:p-5">
-                  <div className={`rounded-xl border p-4 ${setupCards.length > 0 ? "border-emerald-200 bg-emerald-50/70" : "border-slate-200 bg-white"}`}>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className={`text-xs font-bold ${setupCards.length > 0 ? "text-emerald-700" : "text-blue-700"}`}>01 · Buat kartu</span>
-                      {setupCards.length > 0 && <CheckCircle2 size={17} className="text-emerald-600" />}
-                    </div>
-                    <p className="mt-2 text-sm font-semibold text-slate-800">Atur tujuan Google Review</p>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">{setupCards.length > 0 ? setupCards.length + " kartu sudah tersimpan beserta link review." : "Buat kartu dan masukkan link Google Review bisnis yang benar."}</p>
-                  </div>
-
-                  <div className={`rounded-xl border p-4 ${activeSetupCards.length > 0 ? "border-emerald-200 bg-emerald-50/70" : "border-slate-200 bg-white"}`}>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className={`text-xs font-bold ${activeSetupCards.length > 0 ? "text-emerald-700" : "text-blue-700"}`}>02 · Aktifkan kartu</span>
-                      {activeSetupCards.length > 0 && <CheckCircle2 size={17} className="text-emerald-600" />}
-                    </div>
-                    <p className="mt-2 text-sm font-semibold text-slate-800">Siapkan kartu untuk digunakan</p>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">{activeSetupCards.length > 0 ? activeSetupCards.length + " kartu aktif dan siap menerima pengunjung." : "Kartu baru dibuat nonaktif. Aktifkan dari daftar My Cards saat siap."}</p>
-                  </div>
-
-                  <div className={`rounded-xl border p-4 ${hasFirstTap ? "border-emerald-200 bg-emerald-50/70" : "border-slate-200 bg-white"}`}>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className={`text-xs font-bold ${hasFirstTap ? "text-emerald-700" : "text-blue-700"}`}>03 · Tes tap pertama</span>
-                      {hasFirstTap && <CheckCircle2 size={17} className="text-emerald-600" />}
-                    </div>
-                    <p className="mt-2 text-sm font-semibold text-slate-800">Coba NFC atau QR Code</p>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">{hasFirstTap ? "Tap pertama berhasil tercatat. Analytics mulai terisi." : "Tulis link ke chip NFC atau gunakan QR Code, lalu coba buka kartu."}</p>
-                  </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <div className="h-2 w-28 overflow-hidden rounded-full bg-slate-100 sm:w-36"><div className="h-full rounded-full bg-blue-600 transition-all duration-500" style={{width:(setupProgress/3*100)+"%"}}/></div>
+                  <span className="text-sm font-bold tabular-nums text-slate-700">{setupProgress}/3</span>
                 </div>
-
-                <div className="flex flex-col gap-3 border-t border-slate-100 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
-                  <p className="text-xs leading-5 text-slate-500">Kamu bisa mengatur halaman pelanggan dan desain QR kapan saja dari dashboard.</p>
-                  {setupCards.length === 0 ? (
-                    <button type="button" onClick={() => router.push("/dashboard/cards/new")} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700">
-                      <Plus size={15} /> Buat kartu pertama
-                    </button>
-                  ) : (
-                    <button type="button" onClick={() => document.getElementById("cards")?.scrollIntoView({ behavior: "smooth", block: "start" })} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100">
-                      Kelola kartu <ExternalLink size={14} />
-                    </button>
-                  )}
+              </div>
+              <div className="grid gap-0 md:grid-cols-3">
+                <div className="group border-b border-slate-100 p-5 transition hover:bg-slate-50/70 md:border-b-0 md:border-r md:p-6">
+                  <div className="flex items-center justify-between">
+                    <span className={`flex h-11 w-11 items-center justify-center rounded-2xl ${setupCards.length ? "bg-emerald-50 text-emerald-600" : "bg-blue-50 text-blue-600"}`}>{setupCards.length ? <CheckCircle2 size={21}/> : <CreditCard size={21}/>}</span>
+                    <span className="text-xs font-bold tracking-widest text-slate-300">01 / 03</span>
+                  </div>
+                  <h4 className="mt-5 text-base font-bold text-slate-900">Buat kartu NFC</h4>
+                  <p className="mt-2 min-h-[48px] text-xs leading-6 text-slate-500">{setupCards.length ? setupCards.length + " kartu sudah tersimpan. Kamu bisa menambah atau mengubah link review kapan saja." : "Tambahkan kartu dan hubungkan ke link Google Review bisnismu."}</p>
+                  <button type="button" onClick={() => router.push(setupCards.length ? "/dashboard#cards" : "/dashboard/cards/new")} className="mt-5 inline-flex items-center gap-2 text-xs font-bold text-blue-700 transition group-hover:gap-3">{setupCards.length ? "Kelola kartu" : "Buat kartu pertama"} <ExternalLink size={13}/></button>
                 </div>
-              </section>
-            )}
+                <div className="group border-b border-slate-100 p-5 transition hover:bg-slate-50/70 md:border-b-0 md:border-r md:p-6">
+                  <div className="flex items-center justify-between">
+                    <span className={`flex h-11 w-11 items-center justify-center rounded-2xl ${activeSetupCards.length ? "bg-emerald-50 text-emerald-600" : "bg-violet-50 text-violet-600"}`}>{activeSetupCards.length ? <CheckCircle2 size={21}/> : <Power size={21}/>}</span>
+                    <span className="text-xs font-bold tracking-widest text-slate-300">02 / 03</span>
+                  </div>
+                  <h4 className="mt-5 text-base font-bold text-slate-900">Aktifkan kartu</h4>
+                  <p className="mt-2 min-h-[48px] text-xs leading-6 text-slate-500">{activeSetupCards.length ? activeSetupCards.length + " kartu sudah aktif dan siap menerima tap." : "Aktifkan kartu yang sudah kamu siapkan agar halaman review bisa diakses."}</p>
+                  <button type="button" onClick={() => document.getElementById("cards")?.scrollIntoView({behavior:"smooth",block:"start"})} className="mt-5 inline-flex items-center gap-2 text-xs font-bold text-blue-700 transition group-hover:gap-3">Lihat status kartu <ExternalLink size={13}/></button>
+                </div>
+                <div className="group p-5 transition hover:bg-slate-50/70 md:p-6">
+                  <div className="flex items-center justify-between">
+                    <span className={`flex h-11 w-11 items-center justify-center rounded-2xl ${hasFirstTap ? "bg-emerald-50 text-emerald-600" : "bg-amber-50 text-amber-600"}`}>{hasFirstTap ? <CheckCircle2 size={21}/> : <QrCode size={21}/>}</span>
+                    <span className="text-xs font-bold tracking-widest text-slate-300">03 / 03</span>
+                  </div>
+                  <h4 className="mt-5 text-base font-bold text-slate-900">Tes tap pertamamu</h4>
+                  <p className="mt-2 min-h-[48px] text-xs leading-6 text-slate-500">{hasFirstTap ? "Berhasil! Aktivitas tap pertama sudah tercatat di analytics." : "Scan QR kartu atau tempelkan HP ke kartu NFC untuk mencoba alurnya."}</p>
+                  <button type="button" disabled={!activeSetupCards[0]} onClick={() => activeSetupCards[0] && setQrCard(activeSetupCards[0])} className="mt-5 inline-flex items-center gap-2 text-xs font-bold text-blue-700 transition hover:gap-3 disabled:cursor-not-allowed disabled:text-slate-300">Tampilkan QR untuk tes <ExternalLink size={13}/></button>
+                </div>
+              </div>
+              {setupComplete && <div className="border-t border-emerald-100 bg-emerald-50/60 px-5 py-3 text-xs font-medium text-emerald-700 sm:px-7">Mantap! DiTapAja kamu sudah siap digunakan. Lanjut pantau performa dari bagian Analytics di bawah.</div>}
+            </section>
 
             {/* ANALYTICS */}
             <div
