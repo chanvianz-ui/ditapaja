@@ -2587,7 +2587,7 @@ html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-neutral-100"]{
 /* Remove pale decorative gradients that otherwise stay bright in dark mode. */
 html[data-theme="dark"] body:not(:has(.concept-home)) [class*="from-white"],
 html[data-theme="dark"] body:not(:has(.concept-home)) [class*="from-blue-50"],
-html[data-theme="dark"] body:not(:has(.concept-home)) [class*="bg-[radial-gradient"]{
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="ellipse_at_top"]{
   background-image:none!important;
   background-color:var(--app-surface-muted)!important;
 }
