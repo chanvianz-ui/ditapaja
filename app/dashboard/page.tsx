@@ -1197,37 +1197,36 @@ export default function DashboardPage() {
               </section>
             )}
 
-            {/* ANALYTICS */}
-            <div
-              id="analytics"
-              className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4"
-            >
-              {analyticsItems.map((item) => (
-                <div
-                  key={item.label}
-                  className="group min-w-0 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_5px_22px_-18px_rgba(15,23,42,0.35)] transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_14px_30px_-20px_rgba(37,99,235,0.35)] sm:p-5 lg:p-6"
-                >
-                  <div className="flex min-w-0 items-center justify-between gap-2">
-                    <p className="truncate text-xs font-semibold text-slate-500 sm:text-sm">{item.label}</p>
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white sm:h-9 sm:w-9">
-                      <item.icon size={18} />
-                    </span>
-                  </div>
-                  <p className="mt-4 break-words text-2xl font-bold tracking-tight text-slate-900 tabular-nums sm:mt-5 sm:text-3xl">
-                    {item.value}
-                  </p>
-                  <p className="mt-1.5 text-[10px] leading-4 text-slate-400 sm:mt-2 sm:text-xs">
-                    {item.description}
-                  </p>
+            {/* ANALYTICS COMMAND SUMMARY */}
+            <section id="analytics" className="dt-analytics-overview">
+              <div className="dt-analytics-heading">
+                <div>
+                  <p className="dt-analytics-kicker">PERFORMANCE INTELLIGENCE</p>
+                  <h3>Analytics Overview</h3>
+                  <p>Pahami jangkauan kartu dan seberapa banyak pengunjung melanjutkan ke Google Review.</p>
                 </div>
-              ))}
-            </div>
+                <div className="dt-analytics-period-chip"><Activity size={14} /> Ringkasan aktivitas</div>
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+                {analyticsItems.map((item, index) => (
+                  <div key={item.label} className={`dt-analytics-kpi dt-analytics-kpi-${index} group min-w-0`}>
+                    <div className="flex min-w-0 items-center justify-between gap-2">
+                      <p className="truncate text-xs font-semibold text-slate-500 sm:text-sm">{item.label}</p>
+                      <span className="dt-analytics-kpi-icon"><item.icon size={18} /></span>
+                    </div>
+                    <p className="mt-5 break-words text-2xl font-black tracking-tight text-slate-900 tabular-nums sm:text-3xl">{item.value}</p>
+                    <p className="mt-2 text-[10px] leading-4 text-slate-400 sm:text-xs">{item.description}</p>
+                    <div className="dt-analytics-kpi-accent" />
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* DAILY ANALYTICS CHART */}
-            <section className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_35px_-28px_rgba(15,23,42,0.28)] sm:p-6 lg:p-7">
-              <div className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 sm:flex-row sm:items-start sm:p-5">
+            <section className="dt-analytics-chart overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_35px_-28px_rgba(15,23,42,0.28)] sm:p-6 lg:p-7">
+              <div className="dt-analytics-chart-toolbar flex flex-col justify-between gap-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 sm:flex-row sm:items-start sm:p-5">
                 <div>
-                  <h3 className="font-bold">Performance Overview</h3>
+                  <div className="flex items-center gap-2"><span className="dt-analytics-chart-mark"><Activity size={16}/></span><h3 className="font-bold">Traffic & Review Activity</h3></div>
                   <p className="mt-1 text-sm text-slate-500">
                     {selectedCardId === "all"
                       ? "Perbandingan aktivitas seluruh kartu."
@@ -1356,7 +1355,7 @@ export default function DashboardPage() {
             </section>
 
             {/* LOCAL ANALYTICS INSIGHTS - DERIVED FROM ALREADY LOADED EVENTS */}
-            <section className="rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_35px_-28px_rgba(15,23,42,0.28)] sm:p-6 lg:p-7">
+            <section className="dt-analytics-insights rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_35px_-28px_rgba(15,23,42,0.28)] sm:p-6 lg:p-7">
               <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">INSIGHT PERFORMA</p>
