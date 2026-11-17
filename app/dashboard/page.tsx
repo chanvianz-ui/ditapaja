@@ -1098,13 +1098,14 @@ export default function DashboardPage() {
           </header>
 
           {/* Mobile workspace navigation: the desktop sidebar is hidden below lg. */}
-          <nav aria-label="Navigasi workspace" className="flex gap-2 overflow-x-auto border-b border-slate-200 bg-white px-4 py-3 lg:hidden">
-            <a href="/dashboard" className="shrink-0 rounded-xl bg-blue-50 px-3 py-2 text-xs font-semibold text-blue-700">Overview</a>
-            <a href="#cards" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">My Cards</a>
-            <a href="#analytics" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Analytics</a>
-            <a href="/dashboard/business" className="shrink-0 rounded-xl border border-blue-100 bg-blue-50/60 px-3 py-2 text-xs font-semibold text-blue-700">Business Profile</a>
-            <a href="/dashboard/orders" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Orders</a>
-            <a href="/dashboard/settings" className="shrink-0 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50">Settings</a>
+          <nav aria-label="Navigasi workspace" className="flex gap-2 overflow-x-auto border-b border-slate-200/80 bg-white px-4 py-3 shadow-[0_4px_14px_-14px_rgba(15,23,42,0.35)] lg:hidden">
+            <a href="/dashboard" aria-current="page" className="shrink-0 rounded-xl border border-blue-100 bg-blue-50 px-3.5 py-2 text-xs font-semibold text-blue-700">Overview</a>
+            <a href="#cards" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">My Cards</a>
+            <a href="#analytics" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Analytics</a>
+            <a href="/dashboard/business" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Business Profile</a>
+            <a href="/dashboard/landing-page" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Page Studio</a>
+            <a href="/dashboard/orders" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Orders</a>
+            <a href="/dashboard/settings" className="shrink-0 rounded-xl border border-transparent px-3.5 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-slate-50">Settings</a>
           </nav>
 
           <div className="mx-auto max-w-[1440px] space-y-7 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-7 xl:px-10 xl:py-9">
