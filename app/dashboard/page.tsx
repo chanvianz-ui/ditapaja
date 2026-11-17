@@ -1145,9 +1145,9 @@ export default function DashboardPage() {
             {cards.length === 0 && (
               <section className="rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-5 shadow-sm sm:p-6">
                 <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">MULAI DI SINI</p>
-                <h3 className="mt-2 text-lg font-bold text-slate-900">Siapkan kartu pertamamu</h3>
+                <h3 className="insight-metric-value mt-2 text-lg font-bold text-slate-900">Siapkan kartu pertamamu</h3>
                 <p className="mt-1 max-w-xl text-sm leading-6 text-slate-500">Ikuti tiga langkah singkat untuk mulai menerima tap dan memantau aktivitas pelanggan.</p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">01 · Tambahkan</b><p className="mt-1 text-xs text-slate-500">Buat kartu dan masukkan link Google Review.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">02 · Pasang</b><p className="mt-1 text-xs text-slate-500">Tulis NFC atau gunakan QR Code pada kartu.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">03 · Pantau</b><p className="mt-1 text-xs text-slate-500">Lihat tap dan klik review di analytics.</p></div></div>
+                <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">01 · Tambahkan</b><p className="insight-metric-label mt-1 text-xs text-slate-500">Buat kartu dan masukkan link Google Review.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">02 · Pasang</b><p className="mt-1 text-xs text-slate-500">Tulis NFC atau gunakan QR Code pada kartu.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">03 · Pantau</b><p className="mt-1 text-xs text-slate-500">Lihat tap dan klik review di analytics.</p></div></div>
                 <a href="/panduan" className="mt-4 inline-flex text-xs font-bold text-blue-700 hover:text-blue-800">Buka panduan lengkap →</a>
               </section>
             )}
@@ -1348,12 +1348,12 @@ export default function DashboardPage() {
                 <span className="text-[10px] text-slate-400">Periode: {chartPeriod} hari terakhir</span>
               </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <div className="rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4">
+                <div className="insight-metric-card rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4">
                   <p className="text-xs text-slate-500">Perubahan tap</p>
-                  <p className="mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.tapChange === null ? "—" : `${analyticsInsights.tapChange > 0 ? "+" : ""}${analyticsInsights.tapChange.toFixed(1)}%`}</p>
-                  <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.current.taps.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.taps.toLocaleString("id-ID")} sebelumnya</p>
+                  <p className="insight-metric-value mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.tapChange === null ? "—" : `${analyticsInsights.tapChange > 0 ? "+" : ""}${analyticsInsights.tapChange.toFixed(1)}%`}</p>
+                  <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.current.taps.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.taps.toLocaleString("id-ID")} sebelumnya</p>
                 </div>
-                <div className="rounded-xl bg-slate-50 p-4">
+                <div className="insight-metric-card rounded-xl bg-slate-50 p-4">
                   <p className="text-xs text-slate-500">Perubahan review click</p>
                   <p className="mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.clickChange === null ? "—" : `${analyticsInsights.clickChange > 0 ? "+" : ""}${analyticsInsights.clickChange.toFixed(1)}%`}</p>
                   <p className="mt-1 text-[10px] text-slate-400">{analyticsInsights.current.clicks.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.clicks.toLocaleString("id-ID")} sebelumnya</p>
@@ -1618,7 +1618,7 @@ export default function DashboardPage() {
                         <p className="mt-1 max-w-md truncate text-sm text-slate-500">
                           {card.destination_url}
                         </p>
-                        {!card.active && <div className="mt-3 rounded-xl border border-amber-100 bg-amber-50/70 p-3"><p className="text-xs font-semibold text-amber-900">Kartu belum siap digunakan</p><p className="mt-1 text-xs leading-5 text-amber-800">1. Uji link Google Review · 2. Aktifkan kartu · 3. Tulis NFC atau gunakan QR Code.</p><p className="mt-1 text-[11px] text-amber-700">Setelah aktif, halaman kartu dapat diakses oleh pelanggan.</p></div>}
+                        {!card.active && <div className="card-readiness-warning mt-3 rounded-xl border border-amber-100 bg-amber-50/70 p-3"><p className="text-xs font-semibold text-amber-900">Kartu belum siap digunakan</p><p className="mt-1 text-xs leading-5 text-amber-800">1. Uji link Google Review · 2. Aktifkan kartu · 3. Tulis NFC atau gunakan QR Code.</p><p className="mt-1 text-[11px] text-amber-700">Setelah aktif, halaman kartu dapat diakses oleh pelanggan.</p></div>}
                       </div>
 
                       <div className="grid w-full grid-cols-2 gap-2 border-t border-slate-100 pt-4 sm:w-[280px] sm:shrink-0 sm:grid-cols-2 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0">
