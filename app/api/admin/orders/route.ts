@@ -24,7 +24,10 @@ export async function GET(request: NextRequest) {
 
     if (status !== "all" && (orderStatuses as readonly string[]).includes(status)) query = query.eq("status", status);
     if (paymentStatus !== "all" && (paymentStatuses as readonly string[]).includes(paymentStatus)) query = query.eq("payment_status", paymentStatus);
-    if (search) {\n      const safeSearch = search.replace(/[^a-zA-Z0-9@+._ -]/g, " ").trim();\n      if (safeSearch) query = query.or(`customer_name.ilike.%${safeSearch}%,customer_email.ilike.%${safeSearch}%,customer_phone.ilike.%${safeSearch}%,product_name.ilike.%${safeSearch}%`);\n    }
+    if (search) {
+      const safeSearch = search.replace(/[^a-zA-Z0-9@+._ -]/g, " ").trim();
+      if (safeSearch) query = query.or(`customer_name.ilike.%${safeSearch}%,customer_email.ilike.%${safeSearch}%,customer_phone.ilike.%${safeSearch}%,product_name.ilike.%${safeSearch}%`);
+    }
 
     const from = (page - 1) * pageSize;
     const { data, count, error } = await query.range(from, from + pageSize - 1);
