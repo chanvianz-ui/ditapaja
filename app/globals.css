@@ -3219,3 +3219,37 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form .bg-sla
 html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form .border-slate-200{
   border-color:#354254!important;
 }
+
+
+/* Order management: focused responsive surfaces and modal ergonomics */
+.dt-orders-hero,.dt-orders-create,.dt-order-card,.dt-order-modal,.dt-order-invoice{min-width:0}
+.dt-orders-hero{border-color:#e4e7ec!important;background:#fff!important;box-shadow:0 8px 28px -24px rgba(16,24,40,.22)!important}
+.dt-orders-create{border-color:#e4e7ec!important;background:#fff!important}
+.dt-order-card{transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.dt-order-details{border-color:#e5e9ef!important;background:#f7f8fa!important}
+.dt-orders-list-head{min-width:0}
+.dt-order-modal{max-height:min(88dvh,820px);overflow-y:auto;overscroll-behavior:contain;padding-bottom:max(20px,env(safe-area-inset-bottom))}
+.dt-order-invoice{max-height:calc(100dvh - 24px);overflow-y:auto}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-hero,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-create,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-card,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-modal{background:#171f2b!important;border-color:#303b49!important;box-shadow:none!important;color:#edf1f6!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-hero h1,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-orders-create h2,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-card>div:first-child>div:first-child>p:first-child{color:#edf1f6!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-details{background:#202a38!important;border-color:#354254!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-details .bg-white{background:#171f2b!important;border-color:#354254!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-modal label{color:#d8e0eb!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-modal input[type="file"]{background:#121a25!important;border-color:#354254!important;color:#d8e0eb!important}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-order-invoice{background:#fff!important;color:#182230!important}
+@media(max-width:700px){
+ .dt-orders-hero{align-items:flex-start!important;border-radius:22px!important;padding:16px!important;gap:12px!important}
+ .dt-orders-hero>div:first-child{width:46px!important;height:46px!important;flex:0 0 46px!important;border-radius:15px!important}
+ .dt-orders-hero h1{font-size:21px!important;line-height:1.2!important}
+ .dt-order-card{padding:14px!important;border-radius:18px!important}
+ .dt-order-card select{max-width:145px!important;min-width:0!important}
+ .dt-order-card .dt-order-details button{min-height:40px}
+ .dt-order-modal{width:100%;max-height:90dvh!important;border-radius:24px 24px 0 0!important;padding:20px 16px calc(18px + env(safe-area-inset-bottom))!important}
+ .dt-order-modal>div:last-child{position:sticky;bottom:-1px;background:inherit;padding-top:12px}
+ .dt-order-invoice{max-height:calc(100dvh - 20px);padding:16px!important}
+}
