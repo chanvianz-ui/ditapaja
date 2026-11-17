@@ -2400,8 +2400,7 @@ html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/80"],
 html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/70"],
 html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-100"],
 html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-gray-50"],
-html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-gray-100"],
-html[data-theme="dark"] body:not(:has(.concept-home)) [class*="bg-[radial-gradient"]{
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-gray-100"]{
   background-color:var(--app-surface)!important;
   background-image:none!important;
 }
@@ -2500,4 +2499,41 @@ html[data-theme="light"] .theme-toggle{
   html[data-theme="dark"] .theme-toggle,html[data-theme="light"] .theme-toggle{
     right:14px;bottom:14px;
   }
+}
+
+
+/* Dark theme coverage for custom page surfaces and brand colors */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-[#f7f9fc]"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-[#f5f7fb]"]{
+  background-color:var(--app-bg)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-[#17243b]"]{
+  color:var(--app-text)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-[#155eef]"]{
+  color:#a9c5ff!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-[#e2e8f0]"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-[#e5e7eb]"]{
+  border-color:var(--app-line)!important;
+}
+/* Auth and admin screens */
+html[data-theme="dark"] body:not(:has(.concept-home)) main{
+  color:var(--app-text);
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="bg-white/90"],
+html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="bg-white/95"]{
+  background-color:rgba(18,30,46,.94)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-blue-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-blue-900"]{
+  color:#c3d8ff!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-emerald-600"],
+html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-green-600"]{
+  color:#8de0b5!important;
+}
+/* Keep the NFC control-center hero gradient intentional in both themes. */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="linear-gradient"]{
+  background-image:var(--tw-gradient-stops,linear-gradient(125deg,#0f172a 0%,#172554 52%,#312e81 100%))!important;
 }
