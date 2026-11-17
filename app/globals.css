@@ -3180,3 +3180,42 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-page textare
   .dt-workspace-page{padding-left:14px!important;padding-right:14px!important;padding-top:20px!important;padding-bottom:28px!important}
   .dt-workspace-panel{border-radius:20px!important}
 }
+
+
+/* Page Studio editor shell and preview toolbar */
+.dt-workspace-hero,
+.dt-workspace-form,
+.dt-workspace-preview-bar{
+  min-width:0;
+  border-color:#e4e7ec!important;
+  background:#fff!important;
+  box-shadow:0 8px 28px -24px rgba(16,24,40,.22)!important;
+}
+.dt-workspace-form{border-radius:24px}
+.dt-workspace-hero h1{letter-spacing:-.035em}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-hero,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-preview-bar{
+  background:#171f2b!important;
+  border-color:#303b49!important;
+  box-shadow:none!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-hero h1,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form h2,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form label{
+  color:#edf1f6;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-hero p:not([class*="text-blue"]),
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form p{
+  color:#a0acbb;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form .border-b{
+  border-color:#303b49!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form .bg-slate-50,
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form .bg-slate-50\/80{
+  background:#202a38!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) .dt-workspace-form .border-slate-200{
+  border-color:#354254!important;
+}
