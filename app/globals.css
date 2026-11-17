@@ -5204,3 +5204,259 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
  .dt-page-studio-page .dt-studio-form>div:first-child{padding:19px!important}
  .dt-page-studio-page .dt-studio-preview-screen{min-height:unset}
 }
+
+
+/* SIGNATURE REDESIGN — dashboard, audience intelligence & sales workspace */
+.dt-dashboard-shell{
+  background:
+    radial-gradient(ellipse at 72% 0%,rgba(206,224,204,.42),transparent 30%),
+    linear-gradient(180deg,#f5f7f2 0%,#f7f8f5 48%,#f1f4ef 100%)!important;
+}
+.dt-dashboard-shell .dt-dashboard-topbar{
+  min-height:82px!important;padding:17px clamp(20px,3vw,42px)!important;
+  border-color:#e4eae1!important;background:rgba(250,252,248,.88)!important;
+  backdrop-filter:blur(18px)!important
+}
+.dt-dashboard-shell .dt-dashboard-content{
+  max-width:1600px!important;padding:clamp(18px,3vw,46px)!important;
+  gap:clamp(24px,3vw,42px)!important
+}
+.dt-dashboard-shell .dt-dashboard-command{
+  min-height:390px!important;padding:clamp(28px,4vw,58px)!important;
+  border:1px solid rgba(221,238,218,.12)!important;border-radius:34px!important;
+  background:
+    radial-gradient(ellipse at 78% 15%,rgba(174,208,157,.22),transparent 28%),
+    radial-gradient(ellipse at 4% 100%,rgba(113,155,113,.18),transparent 36%),
+    linear-gradient(122deg,#10251f 0%,#1d3a2c 52%,#345b40 100%)!important;
+  box-shadow:0 34px 90px -54px rgba(15,42,30,.8)!important
+}
+.dt-dashboard-shell .dt-dashboard-command:after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.13;
+  background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);
+  background-size:46px 46px;mask-image:linear-gradient(90deg,transparent,#000 70%)
+}
+.dt-dashboard-shell .dt-dashboard-command h2{
+  max-width:820px!important;font-size:clamp(40px,5.2vw,72px)!important;
+  line-height:.99!important;letter-spacing:-.075em!important;font-weight:750!important
+}
+.dt-dashboard-shell .dt-dashboard-command>div{position:relative;z-index:1}
+.dt-dashboard-shell .dt-dashboard-command-panel{
+  padding:clamp(20px,2.4vw,30px)!important;border:1px solid rgba(239,248,234,.16)!important;
+  border-radius:25px!important;background:rgba(7,26,19,.32)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.08),0 24px 50px -35px rgba(0,0,0,.55)!important;
+  backdrop-filter:blur(16px)!important
+}
+.dt-dashboard-shell .dt-dashboard-device-stat{
+  min-height:112px!important;padding:18px!important;border-radius:18px!important;
+  border:1px solid rgba(255,255,255,.1)!important;background:rgba(255,255,255,.075)!important
+}
+.dt-dashboard-shell .dt-dashboard-device-stat strong{font-size:34px!important;letter-spacing:-.06em!important}
+.dt-dashboard-shell .dt-dashboard-primary-action,
+.dt-dashboard-shell .dt-dashboard-secondary-action{
+  min-height:50px!important;padding:0 19px!important;border-radius:13px!important;font-size:12px!important
+}
+.dt-dashboard-shell .dt-dashboard-primary-action{
+  background:#dcebd5!important;color:#1c3d2a!important;box-shadow:0 12px 30px -18px rgba(0,0,0,.6)!important
+}
+.dt-dashboard-shell .dt-dashboard-secondary-action{
+  border:1px solid rgba(255,255,255,.2)!important;background:rgba(255,255,255,.08)!important;color:#f1f6ed!important
+}
+.dt-dashboard-shell #analytics,
+.dt-dashboard-shell #my-nfc-cards,
+.dt-dashboard-shell .dt-card-control-center,
+.dt-dashboard-shell .dt-dashboard-content>section:not(.dt-dashboard-command){
+  border-radius:25px!important
+}
+.dt-dashboard-shell #analytics,
+.dt-dashboard-shell #my-nfc-cards{
+  border-color:#e1e9df!important;background:linear-gradient(150deg,#fff,#fbfcfa)!important;
+  box-shadow:0 20px 55px -44px rgba(24,49,34,.42)!important
+}
+.dt-dashboard-shell #analytics>div:first-child,
+.dt-dashboard-shell #my-nfc-cards>div:first-child{
+  padding:clamp(20px,2.5vw,30px)!important;border-color:#e9eee7!important
+}
+.dt-dashboard-shell #analytics h3,
+.dt-dashboard-shell #my-nfc-cards h3{font-size:17px!important;letter-spacing:-.035em!important;color:#263b2d!important}
+.dt-dashboard-shell .dt-card-control-center{
+  border-color:#dfe8dd!important;box-shadow:0 25px 70px -50px rgba(24,49,34,.5)!important
+}
+.dt-dashboard-shell .dt-card-control-hero{
+  min-height:350px!important;padding:clamp(24px,3vw,42px)!important;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(185,216,172,.18),transparent 26%),
+    linear-gradient(125deg,#142b24,#294b37 70%,#3c6348)!important
+}
+.dt-dashboard-shell .dt-card-control-hero h3{font-size:clamp(28px,3vw,42px)!important;letter-spacing:-.06em!important}
+.dt-dashboard-shell .dt-card-control-center>div:not(.dt-card-control-hero){background:#fbfcfa}
+.dt-dashboard-shell .dt-dashboard-content section.rounded-2xl,
+.dt-dashboard-shell .dt-dashboard-content section.rounded-3xl{
+  border-color:#e1e9df!important;box-shadow:0 18px 48px -42px rgba(27,52,40,.38)!important
+}
+.dt-dashboard-shell .dt-dashboard-content table thead{background:#f3f6f1!important}
+.dt-dashboard-shell .dt-dashboard-content table th{
+  color:#758476!important;font-size:10px!important;letter-spacing:.1em!important
+}
+
+/* Customer insights — editorial intelligence report */
+.dt-customer-insights{
+  background:
+    radial-gradient(ellipse at 84% 0%,rgba(205,224,199,.46),transparent 28%),
+    linear-gradient(180deg,#f3f6f0 0%,#f8f9f6 42%,#f1f4ef 100%)!important;
+  color:#1e3327!important
+}
+.dt-customer-insights>.mx-auto{max-width:1540px!important;padding:clamp(18px,3.5vw,52px)!important}
+.dt-customer-insights>div>header{margin-bottom:30px!important}
+.dt-customer-insights>div>header h1{font-size:clamp(24px,3vw,34px)!important;letter-spacing:-.055em!important;color:#21372a!important}
+.dt-customer-insights .dt-ci-hero{
+  min-height:370px!important;padding:clamp(28px,4.5vw,62px)!important;
+  border:1px solid rgba(221,238,218,.12)!important;border-radius:34px!important;
+  background:
+    radial-gradient(ellipse at 85% 15%,rgba(171,211,157,.2),transparent 27%),
+    radial-gradient(ellipse at 8% 100%,rgba(103,151,111,.2),transparent 36%),
+    linear-gradient(125deg,#11271f 0%,#1d3c2c 58%,#365c41 100%)!important;
+  box-shadow:0 35px 85px -52px rgba(16,44,29,.78)!important
+}
+.dt-customer-insights .dt-ci-hero h2{
+  max-width:760px!important;font-size:clamp(40px,5.4vw,70px)!important;
+  line-height:.98!important;letter-spacing:-.075em!important;font-weight:700!important
+}
+.dt-customer-insights .dt-ci-hero>div>div:last-child{
+  min-height:190px!important;display:flex;flex-direction:column;justify-content:space-between;
+  padding:25px!important;border-radius:23px!important;background:rgba(4,24,16,.3)!important;
+  border-color:rgba(255,255,255,.16)!important
+}
+.dt-customer-insights .dt-ci-hero>div>div:last-child>div span:first-child{
+  font-size:clamp(42px,5vw,64px)!important;letter-spacing:-.07em!important
+}
+.dt-customer-insights section.mt-7{margin-top:44px!important;padding:0 2px}
+.dt-customer-insights section.mt-7 h2{font-size:clamp(22px,2.5vw,30px)!important;letter-spacing:-.055em!important;color:#20382a!important}
+.dt-customer-insights .dt-ci-panel,
+.dt-customer-insights article.rounded-3xl{
+  border:1px solid #e1e9df!important;border-radius:25px!important;
+  background:linear-gradient(150deg,#fff 0%,#fbfcfa 100%)!important;
+  box-shadow:0 22px 55px -46px rgba(26,52,35,.42)!important
+}
+.dt-customer-insights section.grid.grid-cols-2.lg\:grid-cols-4{gap:12px!important}
+.dt-customer-insights section.grid.grid-cols-2.lg\:grid-cols-4 article{
+  min-height:160px!important;padding:23px!important;position:relative;overflow:hidden
+}
+.dt-customer-insights section.grid.grid-cols-2.lg\:grid-cols-4 article:after{
+  content:"";position:absolute;width:90px;height:90px;right:-34px;bottom:-42px;
+  border:1px solid #dfe9dc;border-radius:50%;box-shadow:0 0 0 13px #f6f9f4
+}
+.dt-customer-insights section.grid.grid-cols-2.lg\:grid-cols-4 article p.mt-4{
+  font-size:clamp(28px,3vw,38px)!important;letter-spacing:-.07em!important;color:#233d2c!important
+}
+.dt-customer-insights section.grid.xl\:grid-cols-\[minmax\(0\,1\.55fr\)_minmax\(300px\,\.85fr\)\]{
+  gap:18px!important;align-items:stretch
+}
+.dt-customer-insights article h3{font-size:19px!important;letter-spacing:-.045em!important;color:#253b2d!important}
+.dt-customer-insights article .h-52,
+.dt-customer-insights article .sm\:h-60{min-height:250px!important}
+.dt-customer-insights article .rounded-full[style*="conic-gradient"]{
+  width:145px!important;height:145px!important;background-color:#edf2eb!important
+}
+.dt-customer-insights article .rounded-full[style*="conic-gradient"]>div{
+  width:111px!important;height:111px!important
+}
+
+/* Orders — operational command center */
+.dt-workspace-page:has(.dt-orders-hero){
+  padding:clamp(16px,3vw,42px)!important;
+  background:
+    radial-gradient(ellipse at 85% 0%,rgba(204,222,197,.42),transparent 28%),
+    linear-gradient(180deg,#f3f6f0,#f8f9f6 48%,#f0f3ee)!important;
+  color:#203329!important
+}
+.dt-workspace-page:has(.dt-orders-hero)>.mx-auto{max-width:1500px!important}
+.dt-workspace-page:has(.dt-orders-hero)>div>button:first-child{
+  min-height:42px!important;padding:0 14px!important;border-radius:11px!important;
+  border-color:#dfe8dc!important;background:rgba(255,255,255,.8)!important;color:#617365!important
+}
+.dt-orders-hero{
+  min-height:340px!important;padding:clamp(28px,4.5vw,58px)!important;
+  border:1px solid rgba(222,239,218,.12)!important;border-radius:34px!important;
+  background:
+    radial-gradient(circle at 87% 10%,rgba(183,215,168,.2),transparent 28%),
+    radial-gradient(circle at 5% 100%,rgba(112,160,117,.18),transparent 32%),
+    linear-gradient(123deg,#12271f 0%,#203d2d 56%,#385e43 100%)!important;
+  box-shadow:0 35px 85px -52px rgba(16,44,29,.78)!important
+}
+.dt-orders-hero h1{
+  font-size:clamp(40px,5.2vw,68px)!important;line-height:.98!important;
+  letter-spacing:-.075em!important;font-weight:750!important
+}
+.dt-orders-hero>div:last-child>div{
+  min-height:125px!important;padding:21px!important;border-radius:19px!important;
+  border:1px solid rgba(255,255,255,.13)!important;background:rgba(5,25,17,.28)!important
+}
+.dt-orders-hero>div:last-child>div p:last-child{
+  font-size:clamp(27px,3vw,38px)!important;letter-spacing:-.06em!important
+}
+.dt-workspace-page:has(.dt-orders-hero) .grid.grid-cols-2,
+.dt-workspace-page:has(.dt-orders-hero) .grid.md\:grid-cols-4{
+  gap:12px!important
+}
+.dt-workspace-page:has(.dt-orders-hero) .grid.grid-cols-2>div,
+.dt-workspace-page:has(.dt-orders-hero) .grid.md\:grid-cols-4>div{
+  min-height:135px!important;padding:21px!important;border:1px solid #e0e8dd!important;
+  border-radius:20px!important;background:linear-gradient(145deg,#fff,#f9fbf8)!important;
+  box-shadow:0 18px 44px -40px rgba(26,52,35,.5)!important
+}
+.dt-workspace-page:has(.dt-orders-hero) .rounded-2xl.border,
+.dt-workspace-page:has(.dt-orders-hero) .rounded-3xl.border{
+  border-color:#e0e8dd!important;border-radius:23px!important;
+  box-shadow:0 20px 50px -44px rgba(26,52,35,.42)!important
+}
+.dt-workspace-page:has(.dt-orders-hero) input,
+.dt-workspace-page:has(.dt-orders-hero) select{
+  min-height:46px!important;border-radius:11px!important;border-color:#dfe7dc!important;
+  background:#fbfcfa!important;color:#304536!important
+}
+.dt-workspace-page:has(.dt-orders-hero) input:focus,
+.dt-workspace-page:has(.dt-orders-hero) select:focus{
+  border-color:#8eae89!important;box-shadow:0 0 0 3px rgba(142,174,137,.16)!important;outline:0!important
+}
+.dt-workspace-page:has(.dt-orders-hero) table thead{background:#f1f5ef!important}
+.dt-workspace-page:has(.dt-orders-hero) table th{
+  padding-top:15px!important;padding-bottom:15px!important;color:#758476!important;
+  font-size:10px!important;letter-spacing:.1em!important
+}
+.dt-workspace-page:has(.dt-orders-hero) table td{padding-top:16px!important;padding-bottom:16px!important}
+@media(min-width:1100px){
+  .dt-customer-insights section.grid.grid-cols-2.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .dt-customer-insights section.grid.xl\:grid-cols-\[minmax\(0\,1\.55fr\)_minmax\(300px\,\.85fr\)\]{
+    grid-template-columns:minmax(0,1.65fr) minmax(340px,.8fr)!important
+  }
+}
+@media(max-width:900px){
+  .dt-dashboard-shell .dt-dashboard-command{min-height:unset!important}
+  .dt-dashboard-shell .dt-dashboard-command h2{font-size:clamp(38px,7vw,56px)!important}
+  .dt-customer-insights .dt-ci-hero{min-height:unset!important}
+  .dt-customer-insights .dt-ci-hero h2{font-size:clamp(38px,7vw,54px)!important}
+  .dt-orders-hero{min-height:unset!important}
+}
+@media(max-width:640px){
+  .dt-dashboard-shell .dt-dashboard-content{padding:15px!important;gap:22px!important}
+  .dt-dashboard-shell .dt-dashboard-command{padding:23px!important;border-radius:24px!important}
+  .dt-dashboard-shell .dt-dashboard-command h2{font-size:39px!important}
+  .dt-dashboard-shell .dt-dashboard-command-panel{padding:17px!important;border-radius:19px!important}
+  .dt-dashboard-shell .dt-card-control-hero{padding:22px!important;min-height:unset!important}
+  .dt-dashboard-shell .dt-card-control-center{border-radius:22px!important}
+  .dt-customer-insights>.mx-auto{padding:15px!important}
+  .dt-customer-insights .dt-ci-hero{padding:24px!important;border-radius:24px!important}
+  .dt-customer-insights .dt-ci-hero h2{font-size:39px!important}
+  .dt-customer-insights .dt-ci-hero>div>div:last-child{min-height:145px!important;padding:19px!important}
+  .dt-customer-insights section.mt-7{margin-top:30px!important}
+  .dt-customer-insights section.grid.grid-cols-2.lg\:grid-cols-4{gap:9px!important}
+  .dt-customer-insights section.grid.grid-cols-2.lg\:grid-cols-4 article{min-height:132px!important;padding:14px!important;border-radius:17px!important}
+  .dt-customer-insights section.grid.grid-cols-2.lg\:grid-cols-4 article p.mt-4{font-size:27px!important}
+  .dt-customer-insights .dt-ci-panel,.dt-customer-insights article.rounded-3xl{border-radius:20px!important;padding:18px!important}
+  .dt-workspace-page:has(.dt-orders-hero){padding:14px!important}
+  .dt-orders-hero{padding:24px!important;border-radius:24px!important}
+  .dt-orders-hero h1{font-size:40px!important}
+  .dt-orders-hero>div:last-child>div{min-height:100px!important;padding:15px!important}
+  .dt-workspace-page:has(.dt-orders-hero) .grid.grid-cols-2>div,
+  .dt-workspace-page:has(.dt-orders-hero) .grid.md\:grid-cols-4>div{min-height:115px!important;padding:15px!important;border-radius:17px!important}
+}
