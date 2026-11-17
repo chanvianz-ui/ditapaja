@@ -4426,3 +4426,96 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
  .dt-dashboard-shell #cards .dt-card-control-hero button{min-height:40px}
  .dt-dashboard-shell #analytics .dt-analytics-kpi{padding:14px!important}
 }
+
+
+/* Account settings — editorial security workspace */
+.dt-workspace-page:has(#currentPassword){
+  background:
+    radial-gradient(ellipse at 90% 2%,rgba(207,224,204,.34),transparent 32%),
+    #f3f5f0!important;
+  color:#1d2b25!important
+}
+.dt-workspace-page:has(#currentPassword)>header{
+  border-bottom-color:#e2e9df!important;
+  background:rgba(250,251,248,.88)!important
+}
+.dt-workspace-page:has(#currentPassword)>header>div{
+  max-width:1120px!important;padding-block:17px!important
+}
+.dt-workspace-page:has(#currentPassword)>div{
+  max-width:1120px!important;padding-top:38px!important
+}
+.dt-workspace-page:has(#currentPassword)>div>div:first-child{
+  margin-bottom:22px!important;color:#849184!important
+}
+.dt-workspace-page:has(#currentPassword)>div>div:nth-child(2){
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"icon title" "icon copy";
+  align-items:center;column-gap:22px;row-gap:4px;
+  min-height:150px;padding:28px 34px!important;margin-bottom:24px!important;
+  border:1px solid #e1e8df!important;border-radius:23px!important;
+  background:linear-gradient(112deg,#fff 0%,#f7faf5 100%)!important;
+  box-shadow:0 18px 50px -42px rgba(31,65,43,.28)!important
+}
+.dt-workspace-page:has(#currentPassword)>div>div:nth-child(2)>div{
+  grid-area:icon;width:58px!important;height:58px!important;margin:0!important;
+  border-radius:17px!important;background:#edf4ec!important;color:#557b62!important;
+  box-shadow:inset 0 0 0 1px #dce8dc!important
+}
+.dt-workspace-page:has(#currentPassword)>div>div:nth-child(2)>h1{
+  grid-area:title;align-self:end;margin:0!important;font-size:clamp(25px,3vw,34px)!important;
+  color:#1d2b25!important;letter-spacing:-.055em!important
+}
+.dt-workspace-page:has(#currentPassword)>div>div:nth-child(2)>p{
+  grid-area:copy;align-self:start;margin:0!important;color:#788779!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel{
+  border:1px solid #e1e8df!important;border-radius:22px!important;
+  background:#fff!important;box-shadow:0 20px 54px -45px rgba(31,65,43,.3)!important;
+  padding:26px!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel>div:first-child{
+  border-bottom-color:#edf1eb!important;padding-bottom:18px!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel>div:first-child>div:first-child{
+  background:#edf4ec!important;color:#557b62!important;border-radius:13px!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel h2{
+  color:#25382d!important;letter-spacing:-.035em!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel input{
+  min-height:49px!important;border-radius:12px!important;background:#f8faf7!important;
+  border-color:#e2e9df!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel input:focus{
+  border-color:#86a993!important;box-shadow:0 0 0 4px rgba(107,151,119,.12)!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel button[type=submit]{
+  min-height:49px;border-radius:12px!important;background:#254b3c!important;
+  box-shadow:0 12px 25px -18px rgba(37,75,60,.7)!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel button[type=submit]:hover{
+  background:#183b2e!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel [class*="bg-blue-50"]{
+  background:#f0f5ee!important;border-color:#dce8dc!important
+}
+.dt-workspace-page:has(#currentPassword) .dt-workspace-panel [class*="text-blue-800"]{
+  color:#4d7054!important
+}
+.dt-workspace-page:has(#currentPassword)>div>footer{color:#9aa69a!important}
+@media(max-width:700px){
+  .dt-workspace-page:has(#currentPassword){padding:12px 12px 24px!important}
+  .dt-workspace-page:has(#currentPassword)>header>div{padding-inline:5px!important}
+  .dt-workspace-page:has(#currentPassword)>div{padding:24px 3px!important}
+  .dt-workspace-page:has(#currentPassword)>div>div:nth-child(2){
+    grid-template-columns:1fr;grid-template-areas:"icon" "title" "copy";
+    gap:12px;padding:21px!important;min-height:0
+  }
+  .dt-workspace-page:has(#currentPassword)>div>div:nth-child(2)>div{
+    width:48px!important;height:48px!important
+  }
+  .dt-workspace-page:has(#currentPassword) .dt-workspace-panel{
+    padding:19px!important;border-radius:19px!important
+  }
+}
