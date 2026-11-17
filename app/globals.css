@@ -2533,3 +2533,194 @@ html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-emerald
 html[data-theme="dark"] body:not(:has(.concept-home)) main [class~="text-green-600"]{
   color:#8de0b5!important;
 }
+
+/* =========================================================
+   DARK THEME PATCH — neutral surfaces, gradients and states
+   Keep brand gradients and semantic status colors intentional.
+   ========================================================= */
+html[data-theme="dark"] body:not(:has(.concept-home)){
+  color-scheme:dark;
+  background:var(--app-bg)!important;
+  color:var(--app-text)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) main[class*="bg-"]{
+  color:var(--app-text);
+}
+/* Neutral card and page surfaces, including translucent Tailwind variants. */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/95"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/90"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/85"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/80"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/90"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/80"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/70"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/60"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-200"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-gray-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-gray-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-zinc-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-zinc-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-neutral-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-neutral-100"]{
+  background-color:var(--app-surface)!important;
+  background-image:none!important;
+}
+/* Muted secondary panels should remain distinguishable from cards. */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/80"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/70"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/60"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50/50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-200"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-gray-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-gray-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-zinc-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-zinc-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-neutral-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-neutral-100"]{
+  background-color:var(--app-surface-muted)!important;
+}
+/* Remove pale decorative gradients that otherwise stay bright in dark mode. */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="from-white"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="from-blue-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="bg-[radial-gradient"]{
+  background-image:none!important;
+  background-color:var(--app-surface-muted)!important;
+}
+/* Neutral text hierarchy. Do not recolor white text or vivid brand labels. */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-950"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-900"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-gray-950"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-gray-900"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-gray-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-gray-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-zinc-900"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-zinc-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-zinc-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-neutral-900"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-neutral-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-neutral-700"]{
+  color:var(--app-text)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-600"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-500"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-gray-600"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-gray-500"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-zinc-600"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-zinc-500"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-neutral-600"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-neutral-500"]{
+  color:var(--app-muted)!important;
+}
+/* Borders and dividers. */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-200"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-300"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-gray-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-gray-200"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-zinc-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-zinc-200"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-neutral-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-neutral-200"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-white/80"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-white/15"]{
+  border-color:var(--app-line)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="divide-slate-"]>*+*,
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="divide-gray-"]>*+*{
+  border-color:var(--app-line)!important;
+}
+/* Pale semantic surfaces: keep blue/green/amber/red/violet meaning, darken the fill. */
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-blue-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-blue-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-indigo-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-indigo-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-violet-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-purple-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-sky-50"]{
+  background-color:#1b3150!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-emerald-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-green-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-emerald-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-green-100"]{
+  background-color:#15372e!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-amber-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-amber-50/60"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-yellow-50"]{
+  background-color:#3a3020!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-red-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-red-100"]{
+  background-color:#3a2029!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-violet-50"]{
+  background-color:#30264b!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-indigo-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-violet-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-purple-700"]{
+  color:#c4b5fd!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-blue-900"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-blue-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-blue-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-blue-600"]{
+  color:#a9c5ff!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-emerald-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-emerald-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-green-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-green-700"]{
+  color:#8de0b5!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-amber-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-amber-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-yellow-800"]{
+  color:#f5d28b!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-red-800"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-red-700"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-red-600"]{
+  color:#ffabb4!important;
+}
+/* Form controls, menus, focus rings and hover states. */
+html[data-theme="dark"] body:not(:has(.concept-home)) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+html[data-theme="dark"] body:not(:has(.concept-home)) select,
+html[data-theme="dark"] body:not(:has(.concept-home)) textarea{
+  color:var(--app-text)!important;
+  background-color:var(--app-input)!important;
+  border-color:var(--app-line)!important;
+  color-scheme:dark;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) input::placeholder,
+html[data-theme="dark"] body:not(:has(.concept-home)) textarea::placeholder{
+  color:#8292a9!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) option{
+  background:#121e2e;
+  color:#edf3fb;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="hover:bg-slate-"]:hover,
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="hover:bg-gray-"]:hover,
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="hover:bg-white"]:hover{
+  background-color:#1c2d45!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="ring-white"]{
+  --tw-ring-color:#27384f!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="ring-blue-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class*="ring-blue-100"]{
+  --tw-ring-color:#29466b!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) table thead,
+html[data-theme="dark"] body:not(:has(.concept-home)) table tr{
+  border-color:var(--app-line)!important;
+}
