@@ -4212,3 +4212,63 @@ html[data-theme="dark"] body:not(:has(.concept-home)) .workspace-sidebar.dt-side
  .dt-workspace-page .dt-order-card{padding:14px!important}
  .dt-workspace-page .dt-order-card .dt-order-details{padding:12px!important}
 }
+
+
+/* Finish the forest palette across editor, profile, security and card setup */
+.dt-business-page .dt-business-hero{
+  border-color:#e0e8df!important;background:linear-gradient(118deg,#fff 0%,#f4f7f1 100%)!important;
+  box-shadow:0 20px 54px -42px rgba(37,76,52,.32)!important
+}
+.dt-business-page .dt-business-hero [class*="text-blue-600"],
+.dt-business-page .dt-business-profile-panel [class*="text-blue-600"],
+.dt-business-page .dt-business-locations-panel [class*="text-blue-600"]{color:#557b62!important}
+.dt-business-page .dt-business-hero [class*="bg-gradient-to-br"]{background:#edf4ec!important;color:#557b62!important;box-shadow:inset 0 0 0 1px #dce8dc!important}
+.dt-business-page .dt-business-locations-panel .dt-business-location-card{border-color:#e5eae3!important;border-radius:15px!important;background:#fff!important}
+.dt-business-page .dt-business-locations-panel>div:last-child{border-color:#dce8dc!important;background:#f0f5ee!important}
+.dt-business-page .dt-business-locations-panel>div:last-child p{color:#4f7558!important}
+.dt-page-studio-page{
+  background:radial-gradient(ellipse at 10% 0%,rgba(216,230,215,.56),transparent 34%),#f4f5f1!important
+}
+.dt-studio-masthead{
+  background:linear-gradient(118deg,#142b27 0%,#1e4036 58%,#315c49 100%)!important;
+  box-shadow:0 26px 65px -42px rgba(20,52,43,.62)!important
+}
+.dt-studio-masthead [class*="text-blue-300"]{color:#c5dfc8!important}
+.dt-studio-masthead [class*="text-slate-300"]{color:rgba(236,245,235,.72)!important}
+.dt-studio-card-select,.dt-studio-section-nav,.dt-studio-form{
+  border-color:#e1e7df!important;background:#fff!important;
+  box-shadow:0 14px 38px -32px rgba(27,52,40,.36)!important
+}
+.dt-studio-step.is-active{background:#edf4ec!important;color:#426b4e!important;box-shadow:inset 0 0 0 1px #d5e3d4!important}
+.dt-studio-step:not(.is-active):hover{background:#f7faf6!important;color:#365640!important}
+.dt-studio-input{border-color:#e1e7df!important;background:#f8faf7!important}
+.dt-studio-input:focus{border-color:#86a993!important;box-shadow:0 0 0 4px rgba(107,151,119,.12)!important}
+.dt-studio-theme.is-active{border-color:#9db99e!important;background:#f0f5ee!important;box-shadow:0 0 0 2px rgba(91,132,96,.12)!important}
+.dt-studio-form-footer button[type="submit"]{background:#254b3c!important;box-shadow:0 12px 25px -16px rgba(37,75,60,.55)!important}
+.dt-studio-form-footer button[type="submit"]:hover{background:#183b2e!important}
+.dt-studio-preview-frame{border-color:#dce5da!important;box-shadow:0 25px 60px -38px rgba(26,55,36,.38)!important}
+.dt-studio-preview-frame.is-mobile{border-color:#20362d!important;background:#20362d!important}
+.dt-studio-nav>div{border-color:#dce8dc!important;background:#edf4ec!important;color:#557b62!important}
+.dt-studio-nav>div>span{background:#6c9873!important}
+.dt-card-create-page{background:radial-gradient(ellipse at 12% 4%,rgba(211,228,211,.55),transparent 34%),#f4f5f1!important}
+.dt-card-create-layout{border-color:#e1e7df!important;background:#fff!important;box-shadow:0 22px 65px -44px rgba(27,52,40,.34)!important}
+.dt-card-create-intro{background:linear-gradient(118deg,#142b27 0%,#1e4036 58%,#315c49 100%)!important}
+.dt-card-create-intro p:first-child{color:#c5dfc8!important}
+.dt-card-create-steps span:before{background:#b5d5b8!important;box-shadow:0 0 0 4px rgba(181,213,184,.12)!important}
+.dt-card-create-form input:not([type=checkbox]),.dt-card-create-form select{border-color:#e1e7df!important;background:#f8faf7!important}
+.dt-card-create-form input:focus,.dt-card-create-form select:focus{border-color:#86a993!important;box-shadow:0 0 0 4px rgba(107,151,119,.12)!important}
+.dt-card-create-form>button[type=submit]{background:#254b3c!important;box-shadow:0 12px 24px -14px rgba(37,75,60,.55)!important}
+.dt-card-create-note{border-color:#dce8dc!important;background:#f0f5ee!important}
+.dt-card-create-note [class*="text-blue-900"]{color:#345a3e!important}
+.dt-card-create-note [class*="text-blue-700"]{color:#557b62!important}
+.dt-card-create-note [class*="text-blue-600"]{color:#557b62!important}
+.dt-workspace-page>header{background:rgba(255,255,255,.9)!important;border-color:#e1e7df!important}
+.dt-workspace-page>header [class*="text-blue-600"],
+.dt-workspace-page>header [class*="hover:text-blue-600"]:hover{color:#557b62!important}
+.dt-workspace-page .dt-workspace-panel button[type="submit"]{background:#254b3c!important}
+.dt-workspace-page .dt-workspace-panel button[type="submit"]:hover{background:#183b2e!important}
+@media(max-width:640px){
+ .dt-studio-masthead{border-radius:22px!important;padding:21px!important}
+ .dt-studio-card-select,.dt-studio-section-nav,.dt-studio-form{border-radius:19px!important}
+ .dt-card-create-intro{border-radius:20px!important}
+}
