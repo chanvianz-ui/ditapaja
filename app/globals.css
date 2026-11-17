@@ -2792,3 +2792,130 @@ html[data-theme="dark"] .theme-toggle{
   border-color:#34465f;
   box-shadow:0 8px 24px rgba(0,0,0,.28);
 }
+
+
+/* =========================================================
+   DiTapAja Minimal UI System — light/dark parity
+   Consistent neutral surfaces, restrained shadows and spacing.
+   ========================================================= */
+:root{
+  --app-bg:#f5f6f8;
+  --app-surface:#ffffff;
+  --app-surface-muted:#f0f2f5;
+  --app-text:#182230;
+  --app-muted:#697586;
+  --app-line:#e4e7ec;
+  --app-input:#ffffff;
+  --app-accent:#315fe8;
+  --app-accent-soft:#eef3ff;
+  --app-shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.035);
+}
+html[data-theme="dark"]{
+  --app-bg:#10151d;
+  --app-surface:#171f2b;
+  --app-surface-muted:#202a38;
+  --app-text:#edf1f6;
+  --app-muted:#a0acbb;
+  --app-line:#303b49;
+  --app-input:#121a25;
+  --app-accent:#91adff;
+  --app-accent-soft:#202f4b;
+  --app-shadow:0 1px 2px rgba(0,0,0,.18),0 10px 28px rgba(0,0,0,.12);
+}
+html[data-theme="light"] body:not(:has(.concept-home)){
+  background:var(--app-bg)!important;
+  color:var(--app-text);
+}
+html[data-theme="dark"] body:not(:has(.concept-home)){
+  background:var(--app-bg)!important;
+  color:var(--app-text)!important;
+}
+/* Shared neutral panels */
+body:not(:has(.concept-home)) [class~="bg-white"],
+body:not(:has(.concept-home)) [class~="bg-white/95"],
+body:not(:has(.concept-home)) [class~="bg-white/90"],
+body:not(:has(.concept-home)) [class~="bg-white/85"]{
+  background-color:var(--app-surface);
+}
+body:not(:has(.concept-home)) [class~="border-slate-100"],
+body:not(:has(.concept-home)) [class~="border-slate-200"],
+body:not(:has(.concept-home)) [class~="border-slate-200/80"],
+body:not(:has(.concept-home)) [class~="border-slate-200/90"]{
+  border-color:var(--app-line);
+}
+html[data-theme="light"] body:not(:has(.concept-home)) [class~="bg-slate-50"],
+html[data-theme="light"] body:not(:has(.concept-home)) [class~="bg-slate-100"]{
+  background-color:var(--app-surface-muted);
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/95"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/90"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-white/85"]{
+  background-color:var(--app-surface)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-50"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="bg-slate-100"]{
+  background-color:var(--app-surface-muted)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-100"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-200"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-200/80"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="border-slate-200/90"]{
+  border-color:var(--app-line)!important;
+}
+/* Remove decorative pale page glows; keep purposeful brand gradients and previews */
+body:not(:has(.concept-home)) main[class*="radial-gradient"],
+body:not(:has(.concept-home)) main[class*="bg-[#f7f9fc]"]{
+  background-image:none!important;
+  background-color:var(--app-bg)!important;
+}
+/* A calmer elevation system */
+body:not(:has(.concept-home)) [class~="shadow-sm"],
+body:not(:has(.concept-home)) [class~="shadow-md"],
+body:not(:has(.concept-home)) [class~="shadow-lg"]{
+  box-shadow:var(--app-shadow);
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="shadow-sm"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="shadow-md"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="shadow-lg"]{
+  box-shadow:var(--app-shadow)!important;
+}
+/* Inputs should feel consistent across every dashboard section */
+body:not(:has(.concept-home)) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+body:not(:has(.concept-home)) select,
+body:not(:has(.concept-home)) textarea{
+  border-radius:12px;
+  border-color:var(--app-line);
+}
+html[data-theme="light"] body:not(:has(.concept-home)) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+html[data-theme="light"] body:not(:has(.concept-home)) select,
+html[data-theme="light"] body:not(:has(.concept-home)) textarea{
+  background-color:var(--app-input);
+  color:var(--app-text);
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]),
+html[data-theme="dark"] body:not(:has(.concept-home)) select,
+html[data-theme="dark"] body:not(:has(.concept-home)) textarea{
+  background-color:var(--app-input)!important;
+  color:var(--app-text)!important;
+  border-color:var(--app-line)!important;
+}
+body:not(:has(.concept-home)) input::placeholder,
+body:not(:has(.concept-home)) textarea::placeholder{
+  color:var(--app-muted);
+  opacity:.8;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-900"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-800"]{
+  color:var(--app-text)!important;
+}
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-600"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-500"],
+html[data-theme="dark"] body:not(:has(.concept-home)) [class~="text-slate-400"]{
+  color:var(--app-muted)!important;
+}
+html[data-theme="light"] .theme-toggle,
+html[data-theme="dark"] .theme-toggle{
+  border-radius:12px;
+  min-height:42px;
+}
