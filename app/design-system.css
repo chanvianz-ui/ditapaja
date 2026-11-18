@@ -494,3 +494,48 @@
 .dt-collection-page .info-footer{background:#e9e7df}
 @media(max-width:900px){.dt-collection-page .dt-collection-grid{grid-template-columns:1fr 1fr}.dt-collection-page .dt-collection-grid .concept-product.is-featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}.dt-collection-page .dt-collection-grid .concept-product.is-featured .concept-product-art{min-height:100%}}
 @media(max-width:640px){.dt-collection-page .info-hero{padding:72px 20px 68px}.dt-collection-page .info-hero h1{margin:22px 0 17px;font-size:clamp(49px,12vw,66px);line-height:1.02}.dt-collection-page .info-hero p{max-width:390px;font-size:12px;line-height:1.8}.dt-collection-page .info-content{padding:0 20px 62px}.dt-collection-page .catalog-page-benefits{grid-template-columns:1fr;margin-bottom:28px}.dt-collection-page .catalog-page-benefits>div{padding:14px 0}.dt-collection-page .catalog-page-benefits>div+div{padding-left:0;border-left:0;border-top:1px solid var(--dt-color-line)}.dt-collection-page .catalog-page-benefits b{font-size:11px}.dt-collection-page .dt-collection-grid{grid-template-columns:minmax(0,1fr);gap:15px}.dt-collection-page .dt-collection-grid .concept-product.is-featured{display:flex;grid-column:auto}.dt-collection-page .dt-collection-grid .concept-product-art,.dt-collection-page .dt-collection-grid .concept-product.is-featured .concept-product-art{min-height:230px}.dt-collection-page .simple-card{width:min(78%,280px)}.dt-collection-page .concept-product-body{padding:19px}.dt-collection-page .concept-product-body h3{margin:13px 0 7px;font-size:22px}.dt-collection-page .concept-product-body>p{min-height:0;font-size:12px}.dt-collection-page .concept-product-buy{gap:10px}.dt-collection-page .catalog-order-link{min-height:43px}.dt-collection-page .dt-catalog-note{grid-template-columns:1fr;gap:10px;margin-top:30px;padding:21px 0}.dt-collection-page .dt-catalog-note p{font-size:11px}.dt-collection-page .info-contact-strip{margin-top:38px}}
+
+
+/* GLOBAL LAYOUT SAFETY — shared by public, customer and admin surfaces.
+   Keep children inside their parent columns instead of masking overflow. */
+*,*::before,*::after{box-sizing:border-box}
+html,body{width:100%;max-width:100%;min-width:0}
+body{margin:0}
+main,section,article,aside,header,footer,nav,form,fieldset,figure{min-width:0;max-width:100%}
+:where([class*="grid"],[class*="flex"])>*{min-width:0}
+:where(h1,h2,h3,h4,h5,h6,p,li,dd,dt,figcaption){min-width:0;overflow-wrap:break-word}
+img,picture,video,canvas,iframe{display:block;max-width:100%}
+img,video{height:auto}
+svg{max-width:100%;flex-shrink:0}
+input,select,textarea,button{max-width:100%;min-width:0}
+textarea{white-space:pre-wrap;overflow-wrap:anywhere}
+pre{max-width:100%;overflow-x:auto;white-space:pre}
+code{overflow-wrap:anywhere}
+table{max-width:100%}
+:where(.container,.info-wrap,.dt-ui-page,.dt-dashboard-content,.dt-dashboard-main,.dt-admin-content){width:100%;max-width:100%;min-width:0}
+:where(.container,.info-wrap){margin-inline:auto}
+:where(.dt-ui-page){width:min(var(--dt-content-width),calc(100% - (var(--dt-page-gutter)*2)))}
+:where(.dt-dashboard-content){margin-inline:auto}
+:where(.overflow-x-auto,[data-overflow-x="auto"]){max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+:where(.dt-dashboard-content,.dt-admin-content) :where(.grid,.flex){min-width:0}
+:where(.dt-dashboard-content,.dt-admin-content) :where(.grid,.flex)>*{min-width:0;max-width:100%}
+:where(.dt-dashboard-content,.dt-admin-content) :where(input,select,textarea){width:100%;max-width:100%}
+:where(.dt-dashboard-content,.dt-admin-content) :where(button,a[role="button"]){max-width:100%;white-space:normal;overflow-wrap:anywhere}
+:where(.dt-dashboard-content,.dt-admin-content) :where(table){display:block;width:100%;overflow-x:auto;white-space:nowrap}
+:where(.dt-collection-page,.dt-editorial-home) :where(.dt-collection-grid,.concept-flow,.concept-dashboard,.concept-faq){min-width:0}
+:where(.dt-collection-page,.dt-editorial-home) :where(.dt-collection-grid,.concept-flow,.concept-dashboard,.concept-faq)>*{min-width:0;max-width:100%}
+@media(max-width:768px){
+  :root{--dt-page-gutter:16px}
+  .container{width:calc(100% - 32px);max-width:100%}
+  .dt-ui-page{width:calc(100% - 32px)}
+  :where(.dt-dashboard-content,.dt-admin-content){padding-inline:16px!important}
+  :where(.dt-dashboard-content,.dt-admin-content) :where(.grid){grid-template-columns:minmax(0,1fr)!important}
+  :where(.dt-dashboard-content,.dt-admin-content) :where(.grid.grid-cols-2){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  :where(.dt-dashboard-content,.dt-admin-content) :where(.flex){flex-wrap:wrap}
+  :where(.dt-dashboard-content,.dt-admin-content) :where(.flex.items-center.justify-between){align-items:flex-start}
+}
+@media(max-width:420px){
+  :where(.dt-dashboard-content,.dt-admin-content){padding-inline:12px!important}
+  :where(.dt-dashboard-content,.dt-admin-content) :where(.grid.grid-cols-2){grid-template-columns:minmax(0,1fr)!important}
+  :where(.dt-dashboard-content,.dt-admin-content) :where(button,a[role="button"]){max-width:100%;min-width:0}
+}
