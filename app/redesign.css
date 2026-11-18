@@ -444,3 +444,86 @@ input,select,textarea { accent-color:var(--dt-primary); }
 .dt-home-mobile-first .concept-experience{padding:110px clamp(32px,7vw,100px)!important}.dt-home-mobile-first .concept-flow{grid-template-columns:1fr auto 1fr auto 1fr!important;align-items:start!important;gap:18px!important}.dt-home-mobile-first .concept-flow article{display:flex!important;flex-direction:column!important;align-items:flex-start!important;border:0!important;padding:18px 0!important}.dt-home-mobile-first .concept-step-no{margin-bottom:20px!important}.dt-home-mobile-first .concept-step-icon{margin-bottom:18px!important}.dt-home-mobile-first .concept-flow-line{display:block!important;width:55px!important;height:1px!important;margin-top:80px!important;background:#c8d3c6!important}.dt-home-mobile-first .concept-dashboard{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)!important;align-items:center!important;gap:clamp(35px,7vw,100px)!important;padding:110px clamp(32px,7vw,100px)!important}.dt-home-mobile-first .concept-dash-sticker{display:flex!important}.dt-home-mobile-first .concept-faq{grid-template-columns:.8fr 1.2fr!important;gap:clamp(45px,9vw,130px)!important;padding:110px clamp(32px,7vw,100px)!important}.dt-home-mobile-first .concept-final{padding:110px clamp(32px,9vw,130px) 38px!important}.dt-home-mobile-first .concept-final h2{font-size:clamp(70px,8vw,108px)!important}.dt-home-mobile-first .concept-footer{grid-template-columns:1fr auto auto!important;padding:25px clamp(32px,7vw,100px)!important}.dt-home-mobile-first .concept-footer>span{grid-column:auto!important;grid-row:auto!important}
 }
 @media(max-width:390px){.dt-home-mobile-first .concept-hero{padding-inline:18px!important}.dt-home-mobile-first .concept-hero h1{font-size:45px!important}.dt-home-mobile-first .dt-collection-grid{gap:8px!important}.dt-home-mobile-first .dt-collection-grid .concept-product-body{padding:11px!important}.dt-home-mobile-first .dt-collection-grid .concept-product-body h3{font-size:15px!important}.dt-home-mobile-first .dt-collection-grid .concept-product-meta{font-size:6px!important}.dt-home-mobile-first .dt-collection-grid .concept-product-includes{gap:5px!important}.dt-home-mobile-first .dt-collection-grid .concept-product-includes span{font-size:7px!important}.dt-home-mobile-first .dt-collection-grid .catalog-order-link{font-size:8px!important}}
+
+
+/* Homepage refinement v2: calmer mobile rhythm, fewer competing elements */
+@media(max-width:699px){
+  .dt-home-mobile-first{background:#f7f7f2!important}
+  .dt-home-mobile-first .concept-header{height:64px!important;padding:0 18px!important}
+  .dt-home-mobile-first .concept-nav{height:64px!important;display:flex!important;align-items:center!important;justify-content:space-between!important}
+  .dt-home-mobile-first .concept-nav .brand{font-size:20px!important;font-weight:750!important}
+  .dt-home-mobile-first .concept-mobile-actions{display:flex!important}
+  .dt-home-mobile-first .concept-hero{padding:55px 22px 22px!important;min-height:unset!important}
+  .dt-home-mobile-first .concept-eyebrow{font-size:8px!important;letter-spacing:.13em!important}
+  .dt-home-mobile-first .concept-hero h1{font-size:clamp(43px,11vw,58px)!important;line-height:1.01!important;letter-spacing:-.055em!important;margin:34px 0 18px!important}
+  .dt-home-mobile-first .concept-lead{font-size:14px!important;line-height:1.75!important;max-width:390px!important}
+  .dt-home-mobile-first .concept-hero-actions{gap:14px!important;margin-top:25px!important}
+  .dt-home-mobile-first .concept-button{min-height:46px!important;padding:0 17px!important;font-size:11px!important}
+  .dt-home-mobile-first .concept-quiet-link{font-size:11px!important}
+  .dt-home-mobile-first .dt-hero-proof{gap:9px 14px!important;margin-top:29px!important;padding-top:16px!important}
+  .dt-home-mobile-first .dt-hero-proof span{font-size:9px!important}
+  .dt-home-mobile-first .dt-hero-index{margin-top:37px!important;font-size:7px!important}
+  .dt-home-mobile-first .concept-collection{padding:62px 20px 58px!important}
+  .dt-home-mobile-first .concept-section-top{gap:12px!important;margin-bottom:24px!important}
+  .dt-home-mobile-first .concept-section-top h2{font-size:clamp(38px,9.8vw,49px)!important;line-height:1.02!important;margin-top:12px!important}
+  .dt-home-mobile-first .concept-section-top>p{font-size:12px!important;line-height:1.7!important;max-width:360px!important}
+  /* One-column catalog prevents cramped cards and tiny labels on phones. */
+  .dt-home-mobile-first .dt-collection-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:16px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product,
+  .dt-home-mobile-first .dt-collection-grid .concept-product.is-featured{display:grid!important;grid-template-columns:1fr!important;grid-column:auto!important;grid-row:auto!important;border-radius:18px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-art,
+  .dt-home-mobile-first .dt-collection-grid .concept-product.is-featured .concept-product-art{height:225px!important;min-height:225px!important;padding:16px!important}
+  .dt-home-mobile-first .dt-collection-grid .simple-card,
+  .dt-home-mobile-first .dt-collection-grid .is-featured .simple-card{width:min(72%,270px)!important;height:145px!important;padding:12px!important}
+  .dt-home-mobile-first .dt-collection-grid .simple-card-center strong,
+  .dt-home-mobile-first .dt-collection-grid .is-featured .simple-card-center strong{font-size:18px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-body{padding:18px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-meta{font-size:8px!important;letter-spacing:.08em!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-body h3,
+  .dt-home-mobile-first .dt-collection-grid .is-featured .concept-product-body h3{font-size:22px!important;margin:12px 0 7px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-body>p,
+  .dt-home-mobile-first .dt-collection-grid .is-featured .concept-product-body>p{font-size:12px!important;line-height:1.65!important;min-height:0!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-includes{gap:12px!important;margin-top:14px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-includes span{font-size:10px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-buy{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-top:16px!important;padding-top:14px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-buy strong{font-size:19px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-buy>div>span{font-size:10px!important}
+  .dt-home-mobile-first .dt-collection-grid .catalog-order-link{min-height:42px!important;padding:0 14px!important;font-size:10px!important}
+  .dt-home-mobile-first .dt-collection-grid .concept-product-detail-link{font-size:10px!important;margin-top:12px!important}
+  .dt-home-mobile-first .concept-collection-foot{margin-top:20px!important}
+  .dt-home-mobile-first .concept-collection-foot>span{font-size:8px!important}
+  .dt-home-mobile-first .concept-collection-foot p{font-size:11px!important;line-height:1.65!important}
+  .dt-home-mobile-first .concept-experience{padding:62px 21px!important}
+  .dt-home-mobile-first .concept-experience-head{margin-bottom:20px!important}
+  .dt-home-mobile-first .concept-experience-head h2,
+  .dt-home-mobile-first .concept-dashboard-copy h2,
+  .dt-home-mobile-first .concept-faq h2{font-size:clamp(39px,9.8vw,50px)!important;line-height:1.02!important;margin-top:12px!important}
+  .dt-home-mobile-first .concept-experience-head>p,
+  .dt-home-mobile-first .concept-dashboard-copy>p{font-size:12px!important;line-height:1.7!important}
+  .dt-home-mobile-first .concept-flow article{grid-template-columns:30px 42px minmax(0,1fr)!important;column-gap:11px!important;padding:16px 0!important}
+  .dt-home-mobile-first .concept-flow article h3{font-size:16px!important}
+  .dt-home-mobile-first .concept-flow article p{font-size:10px!important;line-height:1.55!important}
+  .dt-home-mobile-first .concept-step-icon{width:40px!important;height:40px!important}
+  .dt-home-mobile-first .concept-experience-note{font-size:10px!important;line-height:1.6!important}
+  .dt-home-mobile-first .concept-dashboard{padding:62px 20px!important;gap:26px!important}
+  .dt-home-mobile-first .concept-dashboard-copy ul{grid-template-columns:1fr!important;gap:10px!important;margin:19px 0!important}
+  .dt-home-mobile-first .concept-dashboard-copy li{font-size:11px!important}
+  .dt-home-mobile-first .concept-dashboard-frame{padding:14px!important;border-radius:17px!important}
+  .dt-home-mobile-first .concept-dash-metrics>div{padding:11px!important}
+  .dt-home-mobile-first .concept-dash-metrics b{font-size:21px!important}
+  .dt-home-mobile-first .concept-faq{padding:62px 21px!important;gap:22px!important}
+  .dt-home-mobile-first .concept-faq>div:first-child>p{font-size:11px!important;line-height:1.65!important}
+  .dt-home-mobile-first .concept-faq-list summary{min-height:59px!important;font-size:11px!important}
+  .dt-home-mobile-first .concept-faq-list details>p{font-size:11px!important;line-height:1.7!important}
+  .dt-home-mobile-first .concept-final{padding:64px 22px 28px!important}
+  .dt-home-mobile-first .concept-final h2{font-size:clamp(42px,10vw,55px)!important;line-height:1.02!important;margin:24px 0 14px!important}
+  .dt-home-mobile-first .concept-final>p{font-size:12px!important;line-height:1.7!important}
+  .dt-home-mobile-first .concept-final-button{min-height:46px!important;font-size:10px!important}
+  .dt-home-mobile-first .concept-final-mark{margin-top:42px!important;font-size:15px!important}
+  .dt-home-mobile-first .concept-footer{grid-template-columns:1fr!important;gap:10px!important;padding:22px 20px calc(22px + env(safe-area-inset-bottom))!important}
+  .dt-home-mobile-first .concept-footer>span{grid-column:auto!important;grid-row:auto!important}
+  .dt-home-mobile-first .concept-footer>a:last-child{justify-self:start!important}
+}
+@media(min-width:700px){
+  .dt-home-mobile-first .dt-collection-grid .concept-product.is-compact .concept-product-buy{flex-direction:row!important;align-items:center!important}
+}
