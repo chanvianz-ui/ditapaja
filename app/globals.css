@@ -6079,7 +6079,7 @@ body:has(main>aside.fixed.lg\:block) main>section>div .text-\[\#155eef\]{color:#
  .dt-orders-page .dt-orders-stat>p:nth-child(2){font-size:27px!important;margin-top:12px!important}
  .dt-orders-page .dt-order-flow{padding:17px!important;border-radius:21px!important}
  .dt-orders-page .dt-flow-step{padding:14px!important}
- .dt-orders-page .grid.items-start.gap-5.xl\\:grid-cols-\\[minmax\\(280px\\,0\\.72fr\\)_minmax\\(0\\,1\\.28fr\\)\\]{display:flex!important;flex-direction:column!important}
+ .dt-orders-page .grid.items-start.gap-5.xl\:grid-cols-\[minmax\(280px\,0\.72fr\)_minmax\(0\,1\.28fr\)\]{display:flex!important;flex-direction:column!important}
  .dt-orders-page .dt-workspace-panel{order:1;width:100%}
  .dt-orders-page .dt-orders-create{order:2;width:100%;position:static!important}
  .dt-orders-page .dt-workspace-panel,.dt-orders-page .dt-orders-create{border-radius:21px!important;padding:17px!important}
