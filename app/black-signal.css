@@ -318,3 +318,44 @@ a{color:inherit}
 .concept-product-detail-link{color:#b8c7ba!important;font:9px var(--dt-mono)!important;text-transform:uppercase!important}
 @media(max-width:850px){.dt-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:580px){.dt-collection-grid{grid-template-columns:1fr!important}.concept-product-art{height:250px!important}}
+
+ 
+/* BLACK SIGNAL refinement — restrained luxury industrial, less neon */
+:root{
+ --dt-black:#101210;--dt-panel:#191c19;--dt-panel-2:#202520;--dt-panel-3:#292f29;
+ --dt-line:#343a34;--dt-white:#eeefe9;--dt-dim:#a3a79e;--dt-lime:#a8b98a;
+ --dt-acid:#a8b98a;--dt-red:#c9786c;
+}
+::selection{background:#a8b98a;color:#151813}
+:focus-visible{outline-color:#a8b98a!important}
+.dt-editorial-home .concept-eyebrow,.dt-editorial-home .concept-step-no{color:#a8b98a!important}
+.dt-editorial-home .concept-hero h1 em,.dt-editorial-home h2 em{color:#c1c8b6!important}
+.dt-editorial-home .concept-button,.dt-editorial-home .concept-final-button{
+ background:#c1c8b6!important;color:#171b16!important;border-color:#c1c8b6!important;box-shadow:4px 4px 0 #555d4c!important
+}
+.dt-editorial-home .concept-step-icon{background:#c1c8b6!important;color:#171b16!important}
+.dt-editorial-home .concept-dash-metrics b,.dt-editorial-home .concept-chart-bars i{color:#c1c8b6!important;background:#a8b98a!important}
+.dt-editorial-home .concept-final{background:#c1c8b6!important;color:#171b16!important}
+.dt-editorial-home .concept-final h2,.dt-editorial-home .concept-final h2 em,
+.dt-editorial-home .concept-final p,.dt-editorial-home .concept-final .concept-eyebrow{color:#171b16!important}
+.dt-editorial-home .brand-symbol,.dt-workspace-editorial .dt-sidebar-mark{background:#a8b98a!important}
+.dt-editorial-home .brand-symbol i{background:#171b16!important}
+.dt-workspace-editorial .dt-sidebar-link.is-active{
+ background:#c1c8b6!important;color:#171b16!important;box-shadow:3px 3px 0 #555d4c!important
+}
+.dt-workspace-editorial .dt-dashboard-command{
+ background:#202520!important;border-color:#41483f!important;box-shadow:7px 7px 0 #171b18!important
+}
+.dt-workspace-editorial .dt-dashboard-command:before{opacity:.18!important}
+.dt-workspace-editorial .dt-dashboard-eyebrow,.dt-workspace-editorial .dt-dashboard-live{
+ background:#a8b98a18!important;border-color:#a8b98a55!important;color:#c1c8b6!important
+}
+.dt-workspace-editorial .dt-dashboard-primary-action{
+ background:#c1c8b6!important;color:#171b16!important;box-shadow:3px 3px 0 #555d4c!important
+}
+.dt-page-studio-page .dt-studio-masthead{border-color:#596052!important;box-shadow:7px 7px 0 #171b18!important}
+.dt-page-studio-page .dt-studio-masthead:after{border-color:#a8b98a30!important;box-shadow:0 0 0 34px #a8b98a08,0 0 0 68px #a8b98a04!important}
+.dt-collection-page .concept-product-art:after{opacity:.25!important}
+.dt-collection-page .catalog-order-link{background:#c1c8b6!important;color:#171b16!important;box-shadow:3px 3px 0 #555d4c!important}
+.dt-collection-page .concept-product{border-color:#3a4039!important;box-shadow:8px 8px 0 #171b18!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
