@@ -2,7 +2,7 @@
 import Link from "next/link";
 import {ArrowUpRight,BarChart3,Nfc,QrCode} from "lucide-react";
 type Product={name:string;label:string;description:string;tone:string;price:string;order:string;action:string;mode:string};
-function CardMock({tone}:{tone:string}){return <div className={`simple-card ${tone}`}><div className="simple-card-top"><b>DiTapAja<span>.</span></b><Nfc size={23}/></div><div className="simple-card-center"><span>YOUR BUSINESS</span><strong>MAKE EVERY<br/>TAP COUNT.</strong></div></div>}
+function CardMock({tone}:{tone:string}){return <div className={`simple-card ${tone}`}><div className="simple-card-top"><b>REVIEW CARD</b><Nfc size={23}/></div><div className="simple-card-center"><span>YOUR BUSINESS</span><strong>MAKE EVERY<br/>TAP COUNT.</strong></div></div>}
 export default function ProductCarousel({products}:{products:Product[]}){
  return <div className="catalog-slider dt-collection-grid">
   {products.map((p,i)=><article className={`concept-product ${i===0?"is-featured":"is-compact"}`} key={p.tone}>
