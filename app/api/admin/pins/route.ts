@@ -60,10 +60,6 @@ export async function PATCH(request: NextRequest) {
     if (!auth.authorized) return auth.response;
 
     const { id, action = "revoke", ids = [] } = await request.json();
-    if (!/^[0-9a-f-]{36}$/i.test(String(id || ""))) {
-      return NextResponse.json({ success: false, error: "ID PIN tidak valid." }, { status: 400 });
-    }
-
     if (action === "bulk_archive" || action === "bulk_revoke") {
       const requestedIds = Array.isArray(ids) ? ids : [];
       const uniqueIds = [...new Set(requestedIds.filter((value: unknown) => typeof value === "string" && /^[0-9a-f-]{36}$/i.test(value)))];
@@ -95,6 +91,10 @@ export async function PATCH(request: NextRequest) {
         if (revokeError) throw revokeError;
       }
       return NextResponse.json({ success: true, updated: archivedIds.length });
+    }
+
+    if (!/^[0-9a-f-]{36}$/i.test(String(id || ""))) {
+      return NextResponse.json({ success: false, error: "ID PIN tidak valid." }, { status: 400 });
     }
 
     if (action === "archive") {
