@@ -324,3 +324,89 @@ input,select,textarea { accent-color:var(--dt-primary); }
 .concept-home .concept-lead { max-width:610px !important; }
 .concept-home .concept-proof { max-width:680px !important; }
 .concept-home .concept-hero-bottom { margin-top:0; }
+
+
+/* Homepage bold-modern art direction + restrained motion system */
+.concept-home {
+  --concept-ink:#202a23; --concept-muted:#778178; --concept-line:#e3e8e0;
+  --concept-green:#193b2b; --concept-green-2:#244a38; --concept-sage:#dce8d7;
+  background:#f5f5f0 !important; color:var(--concept-ink) !important;
+}
+.concept-home .concept-header,.concept-home .site-header { background:rgba(250,251,248,.94) !important; border-color:#e5e9e2 !important; }
+.concept-home .concept-nav .brand,.concept-home .brand { color:#202a23 !important; }
+.concept-home .concept-nav nav a:hover,.concept-home .concept-nav-actions>a:first-child:hover { color:var(--concept-green) !important; }
+.concept-home .concept-nav-cta,.concept-home .concept-button,.concept-home .concept-dashboard-link,.concept-home .concept-final-button { background:var(--concept-green) !important; color:#fff !important; border-radius:8px !important; box-shadow:none !important; }
+.concept-home .concept-nav-cta:hover,.concept-home .concept-button:hover,.concept-home .concept-dashboard-link:hover,.concept-home .concept-final-button:hover { background:#102d20 !important; transform:translateY(-2px); }
+.concept-home .concept-hero { background:var(--concept-green) !important; color:#fff !important; overflow:hidden; }
+.concept-home .concept-hero:before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.14; background-image:linear-gradient(rgba(255,255,255,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.11) 1px,transparent 1px); background-size:56px 56px; mask-image:linear-gradient(to bottom,black,transparent 85%); }
+.concept-home .concept-hero-grid { width:min(1120px,calc(100% - 40px)) !important; min-height:0 !important; display:flex !important; justify-content:center !important; text-align:center !important; padding:clamp(54px,8vw,100px) 0 clamp(38px,6vw,70px) !important; }
+.concept-home .concept-hero-copy { width:100%; max-width:980px !important; margin-inline:auto; display:flex; flex-direction:column; align-items:center; padding:0 !important; animation:dtHeroEnter .8s cubic-bezier(.2,.75,.25,1) both; }
+.concept-home .concept-eyebrow { justify-content:center; color:#c3d4c5 !important; }
+.concept-home .concept-eyebrow>span { background:#b9d7ad !important; box-shadow:0 0 0 5px #b9d7ad20 !important; }
+.concept-home .concept-eyebrow i { background:#92aa94 !important; }
+.concept-home .concept-hero h1 { max-width:1000px; margin:24px 0 18px !important; color:#fff !important; font-size:clamp(54px,8.4vw,108px) !important; line-height:.94 !important; letter-spacing:-.075em !important; text-wrap:balance; }
+.concept-home .concept-hero h1 em { color:#cfe3c5 !important; }
+.concept-home .concept-lead { max-width:650px !important; color:#d4dfd4 !important; font-size:clamp(14px,1.4vw,17px) !important; line-height:1.75 !important; margin:0 auto !important; text-wrap:balance; }
+.concept-home .concept-hero-actions { justify-content:center; gap:14px !important; margin-top:27px !important; }
+.concept-home .concept-button { background:#e5eddd !important; color:#193b2b !important; padding:16px 22px !important; }
+.concept-home .concept-button:hover { background:#fff !important; }
+.concept-home .concept-quiet-link { color:#f0f4ed !important; padding:14px 10px; }
+.concept-home .concept-quiet-link svg { transition:transform .2s ease; }
+.concept-home .concept-quiet-link:hover svg { transform:translateX(4px); }
+.concept-home .concept-proof { max-width:760px !important; width:100%; justify-content:center; gap:12px 26px !important; margin-top:30px !important; padding-top:20px !important; border-top-color:#ffffff30 !important; }
+.concept-home .concept-proof span { color:#e1e9df !important; font-size:11px !important; }
+.concept-home .concept-proof svg { color:#c6dfba !important; }
+.concept-home .concept-hero-bottom { width:min(1120px,calc(100% - 40px)); margin:0 auto; border-top:1px solid #ffffff35 !important; color:#d0ddd0 !important; }
+.concept-home .concept-hero-bottom span { color:#d0ddd0 !important; }
+.concept-home .concept-hero-bottom b { color:#d0e3c7 !important; }
+.concept-home .concept-collection { background:#f5f5f0 !important; padding-top:clamp(56px,7vw,88px) !important; padding-bottom:clamp(54px,7vw,88px) !important; }
+.concept-home .concept-section-top h2,.concept-home .concept-experience h2,.concept-home .concept-dashboard h2,.concept-home .concept-faq h2 { color:#202a23 !important; }
+.concept-home .concept-section-top h2 em,.concept-home .concept-experience h2 em,.concept-home .concept-dashboard h2 em,.concept-home .concept-faq h2 em { color:#456b4d !important; }
+.concept-home .concept-experience { padding-top:clamp(58px,7vw,88px) !important; padding-bottom:clamp(58px,7vw,88px) !important; background:#e9eee6 !important; }
+.concept-home .concept-experience-head { text-align:center; max-width:720px; margin:0 auto 34px; }
+.concept-home .concept-experience-head>p { color:#68766b !important; }
+.concept-home .concept-flow article { background:#f9faf7 !important; border-color:#dce5da !important; border-radius:14px !important; }
+.concept-home .concept-step-no { color:#8a9a8b !important; }
+.concept-home .concept-step-icon { background:#eaf1e8 !important; color:#315b3d !important; }
+.concept-home .concept-experience-note { border-color:#d5e0d3 !important; color:#5c6e60 !important; }
+.concept-home .concept-dashboard { padding-top:clamp(60px,7vw,92px) !important; padding-bottom:clamp(60px,7vw,92px) !important; }
+.concept-home .concept-dashboard-visual { transform:translateZ(0); }
+.concept-home .concept-chart-bars i { transform-origin:bottom; animation:dtBarRise .9s cubic-bezier(.2,.7,.2,1) both; animation-delay:calc(var(--bar-index,0) * 55ms + 180ms); }
+.concept-home .concept-chart-bars i:nth-child(1){--bar-index:1}.concept-home .concept-chart-bars i:nth-child(2){--bar-index:2}.concept-home .concept-chart-bars i:nth-child(3){--bar-index:3}.concept-home .concept-chart-bars i:nth-child(4){--bar-index:4}.concept-home .concept-chart-bars i:nth-child(5){--bar-index:5}.concept-home .concept-chart-bars i:nth-child(6){--bar-index:6}.concept-home .concept-chart-bars i:nth-child(7){--bar-index:7}.concept-home .concept-chart-bars i:nth-child(8){--bar-index:8}.concept-home .concept-chart-bars i:nth-child(9){--bar-index:9}.concept-home .concept-chart-bars i:nth-child(10){--bar-index:10}.concept-home .concept-chart-bars i:nth-child(11){--bar-index:11}.concept-home .concept-chart-bars i:nth-child(12){--bar-index:12}
+.concept-home .concept-faq { padding-top:clamp(56px,7vw,86px) !important; padding-bottom:clamp(56px,7vw,86px) !important; }
+.concept-home .concept-faq details { transition:background .2s ease,border-color .2s ease; }
+.concept-home .concept-faq summary svg { transition:transform .22s ease; }
+.concept-home .concept-faq details[open] summary svg { transform:rotate(180deg); }
+.concept-home .concept-final { background:#193b2b !important; padding:clamp(58px,8vw,96px) 20px !important; }
+.concept-home .concept-final h2 { color:#fff !important; }
+.concept-home .concept-final h2 em { color:#cfe3c5 !important; }
+.concept-home .concept-final p { color:#d4dfd4 !important; }
+.concept-home .concept-final-orbit { border-color:#ffffff20 !important; }
+.concept-home .concept-footer { background:#f5f5f0 !important; border-color:#e2e8df !important; }
+.concept-home .concept-product { border-radius:14px !important; border-color:#e3e8e0 !important; transition:transform .28s cubic-bezier(.2,.75,.25,1),box-shadow .28s ease !important; }
+.concept-home .concept-product:hover { transform:translateY(-7px) !important; box-shadow:0 22px 42px rgba(27,48,35,.12) !important; }
+.concept-home .catalog-order-link { background:#244a38 !important; color:#fff !important; border-radius:8px !important; transition:background .2s ease,transform .2s ease; }
+.concept-home .catalog-order-link:hover { background:#193b2b !important; transform:translateY(-1px); }
+
+/* Scroll reveal: elements enter once, with short stagger and no layout shift. */
+.concept-home .motion-item { opacity:0; transform:translate3d(0,22px,0); transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1); transition-delay:var(--motion-delay,0ms); will-change:opacity,transform; }
+.concept-home .motion-item.is-visible { opacity:1; transform:translate3d(0,0,0); }
+@keyframes dtHeroEnter { from {opacity:0;transform:translate3d(0,18px,0)} to {opacity:1;transform:translate3d(0,0,0)} }
+@keyframes dtBarRise { from {transform:scaleY(.12);opacity:.45} to {transform:scaleY(1);opacity:1} }
+.concept-home .concept-button svg,.concept-home .concept-final-button svg,.concept-home .concept-dashboard-link svg { transition:transform .22s ease; }
+.concept-home .concept-button:hover svg,.concept-home .concept-final-button:hover svg,.concept-home .concept-dashboard-link:hover svg { transform:translate(3px,-3px); }
+@media(max-width:760px) {
+  .concept-home .concept-hero-grid { width:calc(100% - 36px) !important; padding-top:58px !important; padding-bottom:38px !important; }
+  .concept-home .concept-hero h1 { font-size:clamp(48px,12vw,72px) !important; letter-spacing:-.075em !important; }
+  .concept-home .concept-lead { max-width:520px !important; font-size:14px !important; }
+  .concept-home .concept-proof { display:grid !important; grid-template-columns:1fr 1fr; justify-content:center; text-align:left; max-width:460px !important; gap:13px 16px !important; }
+  .concept-home .concept-proof span:last-child { grid-column:1 / -1; justify-content:center; }
+  .concept-home .concept-hero-bottom { width:calc(100% - 36px); }
+  .concept-home .concept-collection { padding-inline:18px !important; }
+  .concept-home .concept-experience { padding-inline:18px !important; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .concept-home .motion-item { opacity:1 !important; transform:none !important; transition:none !important; }
+  .concept-home .concept-hero-copy,.concept-home .concept-chart-bars i { animation:none !important; }
+  .concept-home .concept-product,.concept-home .concept-button,.concept-home .catalog-order-link { transition:none !important; }
+}
