@@ -316,3 +316,11 @@ input,select,textarea { accent-color:var(--dt-primary); }
   .concept-home .concept-dash-chart { min-width:0; }
   .concept-home .concept-chart-bars { min-width:0; }
 }
+
+
+/* Homepage hero after removing the decorative NFC mockup and moving benefit rail. */
+.concept-home .concept-hero-grid { grid-template-columns:minmax(0,1fr) !important; min-height:0 !important; padding-top:clamp(54px,8vw,100px) !important; padding-bottom:clamp(48px,7vw,82px) !important; }
+.concept-home .concept-hero-copy { max-width:920px; padding:0 !important; }
+.concept-home .concept-lead { max-width:610px !important; }
+.concept-home .concept-proof { max-width:680px !important; }
+.concept-home .concept-hero-bottom { margin-top:0; }
