@@ -4,7 +4,7 @@ import AdminMenu from "@/app/admin/admin-menu";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  AlertCircle, Ban, Check, Copy, CreditCard, KeyRound, LayoutDashboard,
+  AlertCircle, Ban, Check, Copy, CreditCard, KeyRound, LayoutDashboard, Pencil, X,
   Loader2, LogOut, Plus, RefreshCw, Search, ShieldCheck, Users,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -24,7 +24,7 @@ export default function AdminPinsPage() {
   const [inventoryName, setInventoryName] = useState("");
   const [inventoryUrl, setInventoryUrl] = useState("");
   const [inventoryCreating, setInventoryCreating] = useState(false);
-  const [inventoryResult, setInventoryResult] = useState<{pin:string;cardUrl:string;cardName:string}|null>(null);
+  const [inventoryResult, setInventoryResult] = useState<{pin:string;cardUrl:string;cardName:string}|null>(null);\n  const [editingCard, setEditingCard] = useState<{id:string;cardName:string;destinationUrl:string}|null>(null);\n  const [savingCard, setSavingCard] = useState(false);
 
   const token = useCallback(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -60,6 +60,32 @@ export default function AdminPinsPage() {
       await loadPins();
     } catch (err) { setError(err instanceof Error ? err.message : "Terjadi kesalahan."); }
     finally { setInventoryCreating(false); }
+  }
+
+  async function saveCardEdit() {
+    if (!editingCard) return;
+    if (!editingCard.cardName.trim() || !editingCard.destinationUrl.trim()) {
+      setError("Nama kartu dan URL tujuan wajib diisi.");
+      return;
+    }
+    setSavingCard(true); setError(""); setMessage("");
+    try {
+      const accessToken = await token();
+      const response = await fetch("/api/admin/cards", {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+        body: JSON.stringify(editingCard),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || "Gagal memperbarui kartu.");
+      setEditingCard(null);
+      setMessage("Detail kartu berhasil diperbarui.");
+      await loadPins();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan.");
+    } finally {
+      setSavingCard(false);
+    }
   }
 
   async function archiveCard(id: string) {
@@ -193,12 +219,22 @@ export default function AdminPinsPage() {
                 const stateTone = archived ? "bg-[#f0f1ee] text-[#858d82]" : pin.card?.user_id ? "bg-[#edf1f7] text-[#627b9a]" : pin.card?.active ? "bg-[#fbf3e5] text-[#9a7740]" : "bg-[#edf3e9] text-[#55744e]";
                 return <div key={pin.id} className="flex flex-col justify-between gap-4 px-5 py-4 transition-colors hover:bg-[#fafbf9] sm:flex-row sm:items-center sm:px-6">
                   <div className="flex min-w-0 items-start gap-3"><div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f1f4ef] text-[#758570]"><CreditCard size={17}/></div><div className="min-w-0"><p className="truncate text-sm font-semibold text-[#303a30]">{pin.card?.card_name || "Kartu tanpa nama"}</p><p className="mt-1 text-[11px] text-[#899386]">PIN ••••-{pin.pin_hint} <span className="mx-1">·</span> NFC {pin.card?.public_code || "Belum terpasang"}</p><p className="mt-1 break-all text-[10px] text-[#9aa296]">{pin.card?.destination_url || "URL tujuan tidak tersedia"}</p><p className="mt-1 text-[10px] text-[#9aa296]">{pin.card?.user_id ? `Pemilik: ${pin.owner?.full_name || pin.owner?.username || "Akun terhubung"}` : "Belum terhubung ke akun"} <span className="mx-1">·</span> Dibuat {new Date(pin.created_at).toLocaleDateString("id-ID")}</p></div></div>
-                  <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end"><span className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${stateTone}`}>{cardState}</span>{!archived && pin.status === "available" && <button onClick={() => void revokePin(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]"><Ban size={13}/> Revoke PIN</button>}{!archived && <button onClick={() => void archiveCard(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Ban size={13}/> Arsipkan</button>}</div>
+                  <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end"><span className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${stateTone}`}>{cardState}</span>{!archived && <button onClick={() => setEditingCard({ id: pin.card!.id, cardName: pin.card!.card_name || "", destinationUrl: pin.card!.destination_url || "" })} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Pencil size={13}/> Edit</button>}{!archived && pin.status === "available" && <button onClick={() => void revokePin(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]"><Ban size={13}/> Revoke PIN</button>}{!archived && <button onClick={() => void archiveCard(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Ban size={13}/> Arsipkan</button>}</div>
                 </div>;
               })}
             </div>}
             {!loading && pins.length > 0 && visiblePins.length === 0 && <div className="px-5 py-14 text-center"><Search size={24} className="mx-auto mb-3 text-[#c3cbc0]"/><p className="text-sm font-semibold text-[#687365]">Tidak ada kartu yang cocok</p><p className="mt-1 text-xs text-[#a0a89d]">Coba ubah kata kunci atau filter yang dipilih.</p></div>}
           </section>
+          {editingCard && <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#182219]/55 p-4 backdrop-blur-sm" onMouseDown={e => { if (e.target === e.currentTarget && !savingCard) setEditingCard(null); }}>
+            <section role="dialog" aria-modal="true" aria-labelledby="edit-card-title" className="w-full max-w-lg rounded-2xl border border-[#e2e7df] bg-white p-5 shadow-2xl sm:p-7">
+              <div className="flex items-start justify-between gap-4"><div><p className="text-[10px] font-bold uppercase tracking-[.17em] text-[#879681]">Card management</p><h3 id="edit-card-title" className="mt-2 text-xl font-semibold tracking-tight text-[#293329]">Edit detail kartu</h3><p className="mt-1 text-xs leading-5 text-[#8c9688]">Perubahan URL tujuan akan langsung berlaku saat kartu NFC dipindai berikutnya.</p></div><button aria-label="Tutup" disabled={savingCard} onClick={() => setEditingCard(null)} className="rounded-lg border border-[#e5e9e2] p-2 text-[#778273] hover:bg-[#f7f9f5]"><X size={16}/></button></div>
+              <div className="mt-6 grid gap-4">
+                <label className="grid gap-2 text-xs font-semibold text-[#596556]">Nama kartu<input value={editingCard.cardName} onChange={e=>setEditingCard(v=>v?{...v,cardName:e.target.value}:v)} maxLength={60} className="h-11 rounded-xl border border-[#e2e7df] bg-[#fafbf9] px-3 text-sm font-normal outline-none focus:border-[#9bad94]"/></label>
+                <label className="grid gap-2 text-xs font-semibold text-[#596556]">Google Maps Review URL<input type="url" value={editingCard.destinationUrl} onChange={e=>setEditingCard(v=>v?{...v,destinationUrl:e.target.value}:v)} className="h-11 rounded-xl border border-[#e2e7df] bg-[#fafbf9] px-3 text-sm font-normal outline-none focus:border-[#9bad94]"/></label>
+              </div>
+              <div className="mt-7 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"><button disabled={savingCard} onClick={()=>setEditingCard(null)} className="h-11 rounded-xl border border-[#e2e7df] px-5 text-xs font-semibold text-[#687365] hover:bg-[#f7f9f5] disabled:opacity-50">Batal</button><button disabled={savingCard} onClick={()=>void saveCardEdit()} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#29382b] px-5 text-xs font-semibold text-white hover:bg-[#3a4b3b] disabled:opacity-50">{savingCard ? <Loader2 size={14} className="animate-spin"/> : <Check size={14}/>} Simpan perubahan</button></div>
+            </section>
+          </div>}
           <p className="mt-5 text-center text-[10px] text-[#a0a89d]">DiTapAja Control Center <span className="mx-1">·</span> Activation PIN inventory</p>
         </div>
       </section>
