@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { CheckCircle2, KeyRound, Loader2, ShieldCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function ActivateCardPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [pin, setPin] = useState("");
   const [signedIn, setSignedIn] = useState(false);
   const [checking, setChecking] = useState(true);
@@ -26,11 +25,6 @@ export default function ActivateCardPage() {
     });
     return () => { alive = false; };
   }, []);
-
-  const normalizedPin = pin.toUpperCase().replace(/[^A-Z0-9]/g, "");
-  const formattedPin = normalizedPin.length > 3
-    ? `DTJ-${normalizedPin.slice(3, 7)}-${normalizedPin.slice(7, 11)}`
-    : normalizedPin;
 
   async function submit(action: "activate" | "link") {
     setError("");
