@@ -14,7 +14,7 @@ function CardMock({tone}:{tone:string}){
 
 export default function ProductCarousel({products}:{products:Product[]}){
  return <div className="catalog-slider dt-collection-grid">
-  {products.map((p)=>(
+  {products.map((p,i)=>(
    <article className={`concept-product dt-product-card ${i===0?"is-featured":"is-compact"}`} key={p.tone}>
     <div className="dt-product-card-head">
      <span className="dt-product-family">DITAPAJA / COLLECTION</span>
