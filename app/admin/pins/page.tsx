@@ -118,6 +118,26 @@ export default function AdminPinsPage() {
     finally { setBulkLoading(false); }
   }
 
+  async function setCardStatus(id: string, active: boolean) {
+    const actionLabel = active ? "mengaktifkan kembali" : "menonaktifkan sementara";
+    if (!window.confirm(`Yakin ingin ${actionLabel} kartu ini?`)) return;
+    setError(""); setMessage("");
+    try {
+      const accessToken = await token();
+      const response = await fetch("/api/admin/cards", {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ id, action: "set_status", active }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || "Status kartu gagal diperbarui.");
+      setMessage(active ? "Kartu berhasil diaktifkan kembali." : "Kartu berhasil dinonaktifkan sementara.");
+      await loadPins();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan.");
+    }
+  }
+
   async function archiveCard(id: string) {
     if (!window.confirm("Arsipkan kartu ini? Kartu tidak bisa diaktifkan lagi setelah diarsipkan.")) return;
     try {
@@ -291,11 +311,11 @@ export default function AdminPinsPage() {
             {loading ? <div className="px-5 py-16 text-center text-xs text-[#929b90]">Memuat data PIN...</div> : pins.length === 0 ? <div className="px-5 py-16 text-center"><KeyRound size={26} className="mx-auto mb-3 text-[#c3cbc0]"/><p className="text-sm font-semibold text-[#687365]">Belum ada PIN aktivasi</p><p className="mt-1 text-xs text-[#a0a89d]">Generate PIN pertama untuk mulai mengisi stok.</p></div> : <div className="divide-y divide-[#f0f2ee]">
               {visiblePins.map(pin => {
                 const archived = Boolean(pin.card?.archived_at);
-                const cardState = archived ? "Diarsipkan" : pin.card?.user_id ? "Terhubung ke akun" : pin.card?.active ? "Aktif · Tanpa akun" : "Tersedia";
-                const stateTone = archived ? "bg-[#f0f1ee] text-[#858d82]" : pin.card?.user_id ? "bg-[#edf1f7] text-[#627b9a]" : pin.card?.active ? "bg-[#fbf3e5] text-[#9a7740]" : "bg-[#edf3e9] text-[#55744e]";
+                const cardState = archived ? "Diarsipkan" : pin.card?.active ? (pin.card?.user_id ? "Aktif · Terhubung akun" : "Aktif · Tanpa akun") : pin.status === "claimed" ? "Dinonaktifkan sementara" : "Belum diaktivasi";
+                const stateTone = archived ? "bg-[#f0f1ee] text-[#858d82]" : pin.card?.active ? "bg-[#edf3e9] text-[#55744e]" : pin.status === "claimed" ? "bg-[#fbf3e5] text-[#9a7740]" : "bg-[#f0f1ee] text-[#858d82]";
                 return <div key={pin.id} className="flex flex-col justify-between gap-4 px-5 py-4 transition-colors hover:bg-[#fafbf9] sm:flex-row sm:items-center sm:px-6">
                   <div className="flex min-w-0 items-start gap-3"><input aria-label={`Pilih ${pin.card?.card_name || "kartu"}`} type="checkbox" checked={selectedIds.includes(pin.id)} disabled={archived} onChange={e => setSelectedIds(current => e.target.checked ? [...current, pin.id] : current.filter(id => id !== pin.id))} className="mt-3 h-4 w-4 accent-[#526b4e] disabled:opacity-30"/><div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f1f4ef] text-[#758570]"><CreditCard size={17}/></div><div className="min-w-0"><p className="truncate text-sm font-semibold text-[#303a30]">{pin.card?.card_name || "Kartu tanpa nama"}</p><p className="mt-1 text-[11px] text-[#899386]">PIN ••••-{pin.pin_hint} <span className="mx-1">·</span> NFC {pin.card?.public_code || "Belum terpasang"}</p><p className="mt-1 break-all text-[10px] text-[#9aa296]">{pin.card?.destination_url || "URL tujuan tidak tersedia"}</p><p className="mt-1 text-[10px] text-[#9aa296]">{pin.card?.user_id ? `Pemilik: ${pin.owner?.full_name || pin.owner?.username || "Akun terhubung"}` : "Belum terhubung ke akun"} <span className="mx-1">·</span> Dibuat {new Date(pin.created_at).toLocaleDateString("id-ID")}</p></div></div>
-                  <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end"><span className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${stateTone}`}>{cardState}</span>{!archived && <button onClick={() => setQrCard({ id: pin.card!.id, cardName: pin.card!.card_name || "Kartu DiTapAja", publicCode: pin.card!.public_code })} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#dce5d7] bg-[#f7faf5] px-3 text-[11px] font-semibold text-[#526b4e] transition hover:bg-[#edf3e9]"><QrCode size={13}/> QR / Cetak</button>}{!archived && <button onClick={() => setEditingCard({ id: pin.card!.id, cardName: pin.card!.card_name || "", destinationUrl: pin.card!.destination_url || "" })} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Pencil size={13}/> Edit</button>}{!archived && pin.status === "available" && <button onClick={() => void revokePin(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]"><Ban size={13}/> Revoke PIN</button>}{!archived && <button onClick={() => void archiveCard(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Ban size={13}/> Arsipkan</button>}</div>
+                  <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end"><span className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${stateTone}`}>{cardState}</span>{!archived && pin.status === "claimed" && <button onClick={() => void setCardStatus(pin.card!.id, !Boolean(pin.card!.active))} className={pin.card?.active ? "inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]" : "inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#dce5d7] px-3 text-[11px] font-semibold text-[#526b4e] transition hover:bg-[#edf3e9]"}>{pin.card?.active ? <Ban size={13}/> : <Check size={13}/>} {pin.card?.active ? "Nonaktifkan" : "Aktifkan"}</button>}{!archived && pin.status === "claimed" && <button onClick={() => setQrCard({ id: pin.card!.id, cardName: pin.card!.card_name || "Kartu DiTapAja", publicCode: pin.card!.public_code })} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#dce5d7] bg-[#f7faf5] px-3 text-[11px] font-semibold text-[#526b4e] transition hover:bg-[#edf3e9]"><QrCode size={13}/> QR / Cetak</button>}{!archived && <button onClick={() => setEditingCard({ id: pin.card!.id, cardName: pin.card!.card_name || "", destinationUrl: pin.card!.destination_url || "" })} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Pencil size={13}/> Edit</button>}{!archived && pin.status === "available" && <button onClick={() => void revokePin(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]"><Ban size={13}/> Revoke PIN</button>}{!archived && <button onClick={() => void archiveCard(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Ban size={13}/> Arsipkan</button>}</div>
                 </div>;
               })}
             </div>}
