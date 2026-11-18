@@ -66,3 +66,39 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: false, error: "Gagal membuat kartu dan PIN. Silakan coba lagi." }, { status: 500 });
   }
 }
+
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const auth = await verifyAdmin(request);
+    if (!auth.authorized) return auth.response;
+
+    const body = await request.json();
+    const id = String(body.id || "");
+    const cardName = String(body.cardName || "").trim();
+    const destinationUrl = String(body.destinationUrl || "").trim();
+
+    if (!/^[0-9a-f-]{36}$/i.test(id)) {
+      return NextResponse.json({ success: false, error: "ID kartu tidak valid." }, { status: 400 });
+    }
+    if (!cardName || cardName.length > 60) {
+      return NextResponse.json({ success: false, error: "Nama kartu wajib diisi (maksimal 60 karakter)." }, { status: 400 });
+    }
+    if (!validReviewUrl(destinationUrl)) {
+      return NextResponse.json({ success: false, error: "Masukkan tautan Google Maps Review yang valid." }, { status: 400 });
+    }
+
+    const { data, error } = await auth.supabase!.from("nfc_cards")
+      .update({ card_name: cardName, destination_url: destinationUrl })
+      .eq("id", id).is("archived_at", null)
+      .select("id").maybeSingle();
+    if (error) throw error;
+    if (!data) {
+      return NextResponse.json({ success: false, error: "Kartu tidak ditemukan atau sudah diarsipkan." }, { status: 404 });
+    }
+    return NextResponse.json({ success: true, message: "Detail kartu berhasil diperbarui." });
+  } catch (error) {
+    console.error("Admin card update error:", error);
+    return NextResponse.json({ success: false, error: "Gagal memperbarui kartu." }, { status: 500 });
+  }
+}
