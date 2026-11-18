@@ -1164,3 +1164,86 @@ input,select,textarea { accent-color:var(--dt-primary); }
   .dt-page-studio-page .dt-studio-masthead{padding:17px 14px!important}
   .dt-account-settings-page{padding-inline:10px!important}
 }
+
+
+/* Superadmin control room — structural redesign */
+.dt-control{--control-ink:#242820;--control-muted:#85877c;--control-line:#deddd3;--control-paper:#f0eee6;--control-green:#344b3b;min-height:100vh;background:var(--control-paper);color:var(--control-ink);font-family:Inter, sans-serif}
+.dt-control *{box-sizing:border-box}
+.dt-control-rail{position:fixed;inset:0 auto 0 0;width:248px;background:#242b25;color:#f2f0e8;padding:27px 19px 20px;display:flex;flex-direction:column;z-index:40}
+.dt-control-brand{display:flex;align-items:center;gap:11px;padding:0 7px;color:inherit;text-decoration:none}
+.dt-control-symbol{width:38px;height:38px;display:grid;place-items:center;background:#e9e6da;color:#27372c;font:800 22px/1 Manrope, sans-serif}
+.dt-control-brand b{display:block;font:750 16px Manrope,sans-serif;letter-spacing:-.05em}
+.dt-control-brand small{display:block;margin-top:4px;color:#a9b0a4;font-size:8px;letter-spacing:.18em}
+.dt-control-nav-label{margin:64px 9px 14px;color:#919b8e;font-size:9px;font-weight:800;letter-spacing:.19em}
+.dt-control-rail nav{display:grid;gap:5px}
+.dt-control-rail nav button,.dt-control-rail-bottom>button{height:46px;display:flex;align-items:center;gap:12px;padding:0 12px;border:0;background:transparent;color:#c0c6ba;text-align:left;font-size:12px;font-weight:600;cursor:pointer}
+.dt-control-rail nav button.active{background:#e8e7dc;color:#28382c}
+.dt-control-rail nav button i{width:6px;height:6px;margin-left:auto;border-radius:50%;background:#66846b}
+.dt-control-rail-bottom{margin-top:auto}
+.dt-control-access{display:flex;gap:10px;align-items:center;padding:14px 10px;border-top:1px solid #ffffff20;border-bottom:1px solid #ffffff20;color:#d8e1d3}
+.dt-control-access b,.dt-control-access small{display:block}.dt-control-access b{font-size:11px}.dt-control-access small{margin-top:3px;color:#a2ad9e;font-size:9px}
+.dt-control-rail-bottom>button{margin-top:12px;width:100%}
+.dt-control-main{min-height:100vh;margin-left:248px}
+.dt-control-top{height:74px;padding:0 clamp(22px,4vw,58px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--control-line);background:#f5f3ec}
+.dt-control-top>div:first-child span,.dt-control-date span{display:block;color:#929487;font-size:8px;font-weight:800;letter-spacing:.2em}
+.dt-control-top>div:first-child b{display:block;margin-top:5px;font-size:11px;font-weight:650}.dt-control-top>div:first-child i{padding:0 6px;color:#b5b4a9;font-style:normal}
+.dt-control-top-actions{display:flex;align-items:center;gap:17px}
+.dt-control-live{display:flex;align-items:center;gap:7px;color:#63745e;font-size:10px;font-weight:650}
+.dt-control-live i{width:7px;height:7px;border-radius:50%;background:#75966d;box-shadow:0 0 0 4px #75966d20}
+.dt-control-top-actions>button{height:37px;padding:0 12px;display:flex;align-items:center;gap:8px;border:1px solid #d7d8cd;background:transparent;color:#4e584c;font-size:10px;font-weight:700;cursor:pointer}
+.dt-control-top-actions .dt-control-menu-trigger{display:none}
+.dt-control-content{max-width:1540px;margin:auto;padding:clamp(26px,4vw,58px)}
+.dt-control-intro{min-height:260px;display:flex;align-items:flex-end;justify-content:space-between;gap:35px;padding:0 0 37px;border-bottom:1px solid #d6d5ca}
+.dt-control-kicker{margin:0 0 22px;color:#79816f;font-size:9px;font-weight:800;letter-spacing:.2em}
+.dt-control-kicker span{padding:0 7px;color:#b0aa97}
+.dt-control-intro h1{margin:0;font:650 clamp(42px,5vw,72px)/.99 Manrope,sans-serif;letter-spacing:-.075em}
+.dt-control-intro h1 em{color:#68745d;font-weight:500}
+.dt-control-intro-copy{max-width:470px;margin:20px 0 0;color:#7b7d72;font-size:12px;line-height:1.8}
+.dt-control-date{min-width:205px;padding:18px 0 5px 22px;border-left:1px solid #d6d5ca}
+.dt-control-date b{display:block;margin-top:10px;font:650 15px Manrope,sans-serif}
+.dt-control-date small{display:block;margin-top:7px;color:#929487;font-size:9px;line-height:1.6}
+.dt-control-error{display:flex;align-items:center;gap:10px;margin-top:20px;padding:14px 16px;background:#f8e9e4;color:#9c5145;font-size:11px}
+.dt-control-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:29px;border-top:1px solid #d6d5ca;border-bottom:1px solid #d6d5ca}
+.dt-control-metrics article{position:relative;min-height:154px;padding:20px 22px;border-right:1px solid #d6d5ca;overflow:hidden}
+.dt-control-metrics article:first-child{padding-left:0}.dt-control-metrics article:last-child{border:0}
+.metric-top{display:flex;align-items:center;justify-content:space-between;color:#777d70;font-size:10px;font-weight:650}.metric-top svg{color:#73816b}
+.dt-control-metrics article strong{display:block;margin-top:24px;font:650 36px/1 Manrope,sans-serif;letter-spacing:-.06em}
+.dt-control-metrics article small{display:block;margin-top:9px;color:#96978b;font-size:9px}
+.metric-index{position:absolute;right:16px;bottom:8px;color:#d8d6cb;font:500 34px Manrope,sans-serif}
+.dt-control-workgrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.8fr);gap:18px;margin-top:34px}
+.dt-control-revenue,.dt-control-engagement,.dt-control-status,.dt-control-products{padding:24px;background:#faf9f4;border:1px solid #dfded4}
+.panel-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}
+.panel-heading>div>span,.dt-control-shortcuts>div>span{color:#8c907f;font-size:8px;font-weight:800;letter-spacing:.19em}
+.panel-heading h2,.dt-control-shortcuts h2{margin:8px 0 0;font:650 19px Manrope,sans-serif;letter-spacing:-.045em}
+.panel-heading>svg{color:#6e7b65}
+.revenue-primary{margin-top:34px;padding:0 0 25px;border-bottom:1px solid #e5e3d9}
+.revenue-primary small,.revenue-secondary small{display:block;color:#85887c;font-size:10px}
+.revenue-primary strong{display:block;margin-top:9px;font:650 clamp(28px,3vw,42px) Manrope,sans-serif;letter-spacing:-.06em}
+.revenue-primary span{display:flex;align-items:center;gap:6px;margin-top:9px;color:#75846d;font-size:9px}
+.revenue-secondary{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px 0}
+.revenue-secondary b{display:block;margin-top:8px;font:650 18px Manrope,sans-serif}
+.dt-control-revenue>button{display:flex;align-items:center;gap:8px;padding:0;border:0;background:none;color:#536a4e;font-size:10px;font-weight:750;cursor:pointer}
+.dt-control-engagement{background:#34483a;color:#f1f0e8;border-color:#34483a}
+.dt-control-engagement .panel-heading>div>span,.dt-control-engagement .panel-heading>svg{color:#c3cdbb}
+.dt-control-engagement .panel-heading h2{color:#f5f2e9}
+.engagement-total{margin-top:38px}.engagement-total strong{display:block;font:650 52px/1 Manrope,sans-serif;letter-spacing:-.07em}.engagement-total small{display:block;margin-top:8px;color:#c0cbb9;font-size:10px}
+.engagement-track{height:4px;margin-top:27px;background:#ffffff28}.engagement-track i{display:block;height:100%;background:#d9d8c5}
+.engagement-foot{display:flex;justify-content:space-between;gap:10px;margin-top:13px;color:#c5cfbf;font-size:10px}.engagement-foot b{color:white}
+.dt-control-engagement>p{margin-top:27px;color:#c0cbb9;font-size:9px;line-height:1.7}
+.dt-control-lower{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.status-live{padding:5px 7px;background:#edf0e8;color:#718269;font-size:8px;font-weight:800;letter-spacing:.1em}
+.status-list{display:grid;grid-template-columns:1fr 1fr;margin-top:24px}
+.status-list>div{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid #e7e5dc;font-size:10px}
+.status-list>div:nth-child(odd){margin-right:15px}.status-list span{color:#85887c}.status-list b{font-size:12px}.status-list b.status-warn{color:#a8793d}
+.empty-state{padding:26px 0;color:#929487;font-size:10px}
+.product-line{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 0;border-bottom:1px solid #e7e5dc}.product-line:first-of-type{margin-top:14px}.product-line:last-child{border:0}
+.product-line b,.product-line small{display:block}.product-line b{font-size:11px}.product-line small{margin-top:5px;color:#929487;font-size:9px}.product-line strong{font-size:10px;white-space:nowrap}
+.dt-control-shortcuts{display:grid;grid-template-columns:1fr repeat(3,minmax(145px,.7fr));align-items:center;gap:10px;margin-top:35px;padding:20px 0;border-top:1px solid #d6d5ca;border-bottom:1px solid #d6d5ca}
+.dt-control-shortcuts h2{font-size:16px}
+.dt-control-shortcuts>button{min-height:58px;display:flex;align-items:center;gap:9px;padding:0 12px;border:1px solid #d9d8cd;background:transparent;color:#465442;text-align:left;font-size:10px;font-weight:700;cursor:pointer}
+.dt-control-shortcuts>button svg:last-child{margin-left:auto;color:#929487}
+.dt-control-footer{padding:26px 0 5px;color:#96978b;font-size:9px}.dt-control-footer span{padding:0 5px}
+.dt-control-mobile-menu{display:none}
+@media(max-width:1100px){.dt-control-rail{width:218px}.dt-control-main{margin-left:218px}.dt-control-content{padding:28px}.dt-control-metrics article{padding-inline:15px}.dt-control-shortcuts{grid-template-columns:repeat(3,1fr)}.dt-control-shortcuts>div{grid-column:1/-1}}
+@media(max-width:760px){.dt-control-rail{display:none}.dt-control-main{margin-left:0}.dt-control-top{height:62px;padding:0 17px}.dt-control-top>div:first-child span{font-size:7px}.dt-control-top>div:first-child b{font-size:10px}.dt-control-live{display:none}.dt-control-top-actions{gap:8px}.dt-control-top-actions>button{height:34px;padding:0 9px}.dt-control-top-actions .dt-control-menu-trigger{display:grid;place-items:center;width:36px;padding:0}.dt-control-top-actions>button span{font-size:9px}.dt-control-content{padding:25px 17px 42px}.dt-control-intro{min-height:0;display:block;padding-bottom:26px}.dt-control-intro h1{font-size:clamp(43px,11vw,61px)}.dt-control-intro-copy{max-width:350px;font-size:11px}.dt-control-date{margin-top:24px;padding:0;border:0}.dt-control-date small{display:inline;margin-left:9px}.dt-control-metrics{grid-template-columns:1fr 1fr;margin-top:22px}.dt-control-metrics article{min-height:125px;padding:15px 12px;border-right:1px solid #d6d5ca;border-bottom:1px solid #d6d5ca}.dt-control-metrics article:first-child{padding-left:12px}.dt-control-metrics article:nth-child(2){border-right:0}.dt-control-metrics article:nth-child(3),.dt-control-metrics article:nth-child(4){border-bottom:0}.dt-control-metrics article strong{margin-top:19px;font-size:30px}.metric-top{font-size:9px}.metric-top svg{width:15px}.metric-index{font-size:25px}.dt-control-workgrid,.dt-control-lower{grid-template-columns:1fr;gap:12px;margin-top:22px}.dt-control-revenue,.dt-control-engagement,.dt-control-status,.dt-control-products{padding:19px}.revenue-primary{margin-top:27px}.revenue-primary strong{font-size:32px}.dt-control-shortcuts{grid-template-columns:1fr;margin-top:26px;padding:20px 0;gap:8px}.dt-control-shortcuts>div{grid-column:auto;margin-bottom:5px}.dt-control-shortcuts>button{min-height:51px}.dt-control-mobile-menu{position:fixed;inset:0 0 0 auto;z-index:80;width:min(88vw,360px);display:block;padding:23px;background:#242b25;color:#f3f0e8;box-shadow:-30px 0 80px #171d1750}.dt-control-mobile-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:22px;border-bottom:1px solid #ffffff24;font:700 17px Manrope}.dt-control-mobile-head button{border:0;background:none;color:inherit}.dt-control-mobile-menu>button{width:100%;height:54px;display:flex;align-items:center;gap:12px;border:0;border-bottom:1px solid #ffffff18;background:none;color:#e9e9df;text-align:left;font-size:12px}.dt-control-mobile-menu>button svg:last-child{margin-left:auto}.dt-control-footer{padding-bottom:30px}}
+@media(prefers-reduced-motion:no-preference){.dt-control-metrics article,.dt-control-revenue,.dt-control-engagement,.dt-control-status,.dt-control-products{animation:dt-control-enter .5s both}.dt-control-metrics article:nth-child(2){animation-delay:.05s}.dt-control-metrics article:nth-child(3){animation-delay:.1s}.dt-control-metrics article:nth-child(4){animation-delay:.15s}@keyframes dt-control-enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}}
