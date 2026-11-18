@@ -97,7 +97,7 @@ export default function AdminPinsPage() {
   async function logout() { await supabase.auth.signOut(); router.replace("/login"); }
   const available = pins.filter(p => p.status === "available" && p.card && !p.card.archived_at).length;
   const claimed = pins.filter(p => p.status === "claimed" && p.card && !p.card.archived_at).length;
-  const revoked = pins.filter(p => p.status === "revoked" || !p.card || Boolean(p.card.archived_at)).length;
+  const revoked = pins.filter(p => p.status === "revoked" && p.card && !p.card.archived_at).length;
   const linked = pins.filter(p => p.card?.user_id && !p.card.archived_at).length;
   const activeWithoutAccount = pins.filter(p => p.card?.active && !p.card.user_id && !p.card.archived_at).length;
   const visiblePins = pins.filter(pin => {
