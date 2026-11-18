@@ -59,9 +59,42 @@ export async function PATCH(request: NextRequest) {
     const auth = await verifyAdmin(request);
     if (!auth.authorized) return auth.response;
 
-    const { id, action = "revoke" } = await request.json();
+    const { id, action = "revoke", ids = [] } = await request.json();
     if (!/^[0-9a-f-]{36}$/i.test(String(id || ""))) {
       return NextResponse.json({ success: false, error: "ID PIN tidak valid." }, { status: 400 });
+    }
+
+    if (action === "bulk_archive" || action === "bulk_revoke") {
+      const requestedIds = Array.isArray(ids) ? ids : [];
+      const uniqueIds = [...new Set(requestedIds.filter((value: unknown) => typeof value === "string" && /^[0-9a-f-]{36}$/i.test(value)))];
+      if (!uniqueIds.length || uniqueIds.length > 200) {
+        return NextResponse.json({ success: false, error: "Pilih antara 1 sampai 200 item." }, { status: 400 });
+      }
+      const { data: selectedPins, error: selectedError } = await auth.supabase!.from("nfc_activation_pins")
+        .select("id,status,card_id").in("id", uniqueIds);
+      if (selectedError) throw selectedError;
+      if (action === "bulk_revoke") {
+        const availableIds = (selectedPins ?? []).filter((pin: any) => pin.status === "available").map((pin: any) => pin.id);
+        if (!availableIds.length) return NextResponse.json({ success: false, error: "Tidak ada PIN tersedia dalam pilihan." }, { status: 409 });
+        const { data: updated, error: updateError } = await auth.supabase!.from("nfc_activation_pins")
+          .update({ status: "revoked" }).in("id", availableIds).eq("status", "available").select("id");
+        if (updateError) throw updateError;
+        return NextResponse.json({ success: true, updated: updated?.length ?? 0 });
+      }
+      const cardIds = [...new Set((selectedPins ?? []).map((pin: any) => pin.card_id).filter(Boolean))];
+      if (!cardIds.length) return NextResponse.json({ success: false, error: "Tidak ada kartu valid dalam pilihan." }, { status: 404 });
+      const { data: archivedCards, error: archiveError } = await auth.supabase!.from("nfc_cards")
+        .update({ archived_at: new Date().toISOString(), archived_by: auth.user!.id })
+        .in("id", cardIds).is("archived_at", null).select("id");
+      if (archiveError) throw archiveError;
+      const archivedIds = (archivedCards ?? []).map((card: any) => card.id);
+      const availablePinIds = (selectedPins ?? []).filter((pin: any) => pin.status === "available" && archivedIds.includes(pin.card_id)).map((pin: any) => pin.id);
+      if (availablePinIds.length) {
+        const { error: revokeError } = await auth.supabase!.from("nfc_activation_pins")
+          .update({ status: "revoked" }).in("id", availablePinIds).eq("status", "available");
+        if (revokeError) throw revokeError;
+      }
+      return NextResponse.json({ success: true, updated: archivedIds.length });
     }
 
     if (action === "archive") {
