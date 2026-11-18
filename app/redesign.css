@@ -306,3 +306,84 @@ html[data-theme="dark"] .dt-admin-shell [class*="text-[#20251f]"],
 html[data-theme="dark"] .dt-admin-shell [class*="text-[#252d25]"] { color:var(--dt-ink) !important; }
 html[data-theme="dark"] .dt-admin-shell [class*="bg-white"] { background:var(--dt-surface) !important; }
 html[data-theme="dark"] .dt-admin-shell [class*="border-[#"] { border-color:var(--dt-line) !important; }
+
+
+/* Theme consistency pass — one forest/graphite palette across the app */
+:root {
+  --dt-accent: #315b43;
+  --dt-accent-soft: #eaf1e9;
+  --dt-on-accent: #ffffff;
+}
+html[data-theme="dark"] {
+  --dt-accent: #a9c8ad;
+  --dt-accent-soft: #293b30;
+  --dt-on-accent: #17231b;
+}
+
+/* Keep the public header and authentication surfaces on the same palette. */
+.site-header {
+  background: color-mix(in srgb, var(--dt-surface) 94%, transparent) !important;
+  border-color: var(--dt-line) !important;
+}
+.site-header .brand, .site-header .mobile-menu { color: var(--dt-ink) !important; }
+.site-header .desktop-nav a, .site-header .login-link { color: var(--dt-muted) !important; }
+.site-header .desktop-nav a:hover, .site-header .login-link:hover { color: var(--dt-primary) !important; }
+.site-header .button, .site-header .button-small { background: var(--dt-primary) !important; color: var(--dt-on-accent) !important; box-shadow: none !important; }
+.site-header .button:hover, .site-header .button-small:hover { background: var(--dt-primary-hover) !important; }
+.dt-auth-page {
+  background: radial-gradient(ellipse at 12% 0%, color-mix(in srgb, var(--dt-primary-soft) 85%, transparent), transparent 36%), var(--dt-bg) !important;
+}
+.dt-auth-shell, .dt-auth-form-side { background: var(--dt-surface) !important; border-color: var(--dt-line) !important; }
+.dt-auth-shell { box-shadow: var(--dt-shadow) !important; }
+.dt-auth-story { background: linear-gradient(145deg,#1b3527 0%,#244a36 58%,#355a42 100%) !important; }
+.dt-auth-story .dt-auth-brand span,
+.dt-auth-story-copy h1 em { color: #c3d9bd !important; }
+.dt-auth-eyebrow, .dt-auth-story-copy p { color: #d1dfd0 !important; }
+.dt-auth-eyebrow i { background: #b6d2ad !important; box-shadow: 0 0 0 5px #b6d2ad22 !important; }
+.dt-auth-heading h2, .dt-auth-field > label { color: var(--dt-ink) !important; }
+.dt-auth-heading p, .dt-auth-legal, .dt-auth-switch, .dt-auth-back { color: var(--dt-muted) !important; }
+.dt-auth-kicker, .dt-auth-password button, .dt-auth-switch a, .dt-auth-back:hover { color: var(--dt-primary) !important; }
+.dt-auth-field input {
+  background: var(--dt-surface-soft) !important; border-color: var(--dt-line) !important; color: var(--dt-ink) !important;
+}
+.dt-auth-field input:focus { border-color: var(--dt-primary) !important; box-shadow: 0 0 0 4px color-mix(in srgb,var(--dt-primary) 14%,transparent) !important; }
+.dt-auth-submit { background: var(--dt-primary) !important; color: var(--dt-on-accent) !important; box-shadow: none !important; }
+.dt-auth-submit:hover { background: var(--dt-primary-hover) !important; }
+.dt-auth-form-card { color: var(--dt-ink); }
+
+/* Admin pages: normalize legacy charcoal/navy text and pale surfaces. */
+.dt-admin-shell [class*="text-[#394338]"],
+.dt-admin-shell [class*="text-[#536052]"],
+.dt-admin-shell [class*="text-[#687365]"],
+.dt-admin-shell [class*="text-[#7d877b]"],
+.dt-admin-shell [class*="text-[#7f897c]"],
+.dt-admin-shell [class*="text-[#879184]"],
+.dt-admin-shell [class*="text-[#929b90]"],
+.dt-admin-shell [class*="text-[#9aa296]"],
+.dt-admin-shell [class*="text-[#a0a89d]"] { color: var(--dt-muted) !important; }
+.dt-admin-shell [class*="text-[#20251f]"],
+.dt-admin-shell [class*="text-[#252d25]"] { color: var(--dt-ink) !important; }
+.dt-admin-shell [class*="bg-[#edf3e9]"],
+.dt-admin-shell [class*="bg-[#eaf1e7]"] { background: var(--dt-primary-soft) !important; }
+.dt-admin-shell [class*="text-[#668060]"],
+.dt-admin-shell [class*="text-[#63805c]"],
+.dt-admin-shell [class*="text-[#526b4e]"] { color: var(--dt-primary) !important; }
+html[data-theme="dark"] .dt-admin-shell [class*="text-[#"] { color: var(--dt-ink) !important; }
+html[data-theme="dark"] .dt-admin-shell [class*="bg-[#"] { background-color: var(--dt-surface-soft) !important; }
+html[data-theme="dark"] .dt-admin-shell [class*="hover\\:bg-[#"] { background-color: var(--dt-surface-muted) !important; }
+html[data-theme="dark"] .dt-admin-shell aside { color: #edf2e9 !important; }
+html[data-theme="dark"] .dt-admin-shell aside [class*="text-[#"] { color: #c4d0c2 !important; }
+html[data-theme="dark"] .dt-admin-shell aside [class*="bg-[#"] { background-color: #263b2d !important; }
+
+/* Dark theme: avoid leftover white and navy panels on public and workspace pages. */
+html[data-theme="dark"] .site-header,
+html[data-theme="dark"] .dt-auth-form-side,
+html[data-theme="dark"] .dt-auth-shell { background-color: var(--dt-surface) !important; }
+html[data-theme="dark"] .dt-auth-field input { background: var(--dt-surface-soft) !important; }
+html[data-theme="dark"] .dt-dashboard-shell,
+html[data-theme="dark"] .dt-admin-shell,
+html[data-theme="dark"] .dt-customer-insights,
+html[data-theme="dark"] .dt-orders-page,
+html[data-theme="dark"] .dt-business-page,
+html[data-theme="dark"] .dt-account-settings-page { background: var(--dt-bg) !important; color: var(--dt-ink) !important; }
+html[data-theme="dark"] body { background: var(--dt-bg); color: var(--dt-ink); }
