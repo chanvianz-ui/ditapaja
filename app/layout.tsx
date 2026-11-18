@@ -5,6 +5,7 @@ import "./design-system.css";
 import "./black-signal.css";
 import "./live-workspace.css";
 import "./refined-workspace.css";
+import "./premium-interface.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
