@@ -274,3 +274,45 @@ body { background:var(--dt-bg); color:var(--dt-ink); }
 .button,.button-primary,.dt-auth-submit { background:var(--dt-primary) !important; color:#fff !important; box-shadow:none !important; }
 .button:hover,.button-primary:hover,.dt-auth-submit:hover { background:var(--dt-primary-hover) !important; }
 input,select,textarea { accent-color:var(--dt-primary); }
+
+
+/* Public homepage mobile QA — unify navigation, chart and accents with the forest/sage identity. */
+.concept-home { --concept-ink:#202a23; --concept-muted:#78837b; --concept-line:#e4e9e1; --concept-green:#244a38; --concept-green-deep:#193b2b; --concept-sage:#eaf1e9; }
+.concept-home .brand { color:var(--concept-ink) !important; }
+.concept-home .brand .blue-word { color:var(--concept-green) !important; }
+.concept-home .brand-symbol { background:#edf2eb !important; box-shadow:inset 0 0 0 1px #dce7dc; }
+.concept-home .brand-symbol i { background:var(--concept-green) !important; }
+.concept-home .concept-nav-cta,
+.concept-home .concept-dashboard-link,
+.concept-home .concept-final-button { background:var(--concept-green) !important; color:#fff !important; box-shadow:none !important; }
+.concept-home .concept-nav-cta:hover,
+.concept-home .concept-dashboard-link:hover,
+.concept-home .concept-final-button:hover { background:var(--concept-green-deep) !important; }
+.concept-home .concept-chart-bars i { background:linear-gradient(180deg,#8eaa8e,#456b4d) !important; }
+.concept-home .concept-dash-sticker { background:#e4eddf !important; color:#244a38 !important; }
+.concept-home .concept-dash-sticker span { color:#718273 !important; }
+.concept-home .concept-dash-sticker b { color:#244a38 !important; }
+.concept-home .concept-stage-chip { background:#244a38 !important; border-color:#45634f !important; color:#f5f7f1 !important; }
+.concept-home .concept-stage-chip svg { color:#c4d8bd !important; }
+.concept-home .concept-stage-chip small { color:#d1ded0 !important; }
+.mobile-drawer-backdrop { background:rgba(17,31,23,.48) !important; backdrop-filter:blur(3px); }
+.mobile-drawer { background:#fbfcfa !important; color:var(--concept-ink) !important; border-left:1px solid #e2e8e0; }
+.mobile-drawer .brand { color:var(--concept-ink) !important; }
+.mobile-drawer .brand .blue-word { color:var(--concept-green) !important; }
+.mobile-drawer .mobile-drawer-head { border-bottom-color:var(--concept-line) !important; }
+.mobile-drawer .mobile-drawer-head button { color:var(--concept-ink) !important; }
+.mobile-drawer .mobile-drawer-kicker { color:#89948b !important; }
+.mobile-drawer nav a { color:var(--concept-ink) !important; }
+.mobile-drawer nav a svg { color:#9aa69b !important; }
+.mobile-drawer nav a:active { background:var(--concept-sage) !important; }
+.mobile-drawer .mobile-drawer-bottom a { background:var(--concept-green) !important; color:#fff !important; border-color:var(--concept-green) !important; }
+.mobile-drawer .mobile-drawer-bottom a:hover { background:var(--concept-green-deep) !important; }
+.mobile-drawer .mobile-drawer-bottom p { color:#7d8980 !important; }
+@media(max-width:760px) {
+  .mobile-drawer { width:min(88vw,460px) !important; max-width:460px; height:100dvh !important; overflow-y:auto; overscroll-behavior:contain; padding-bottom:calc(22px + env(safe-area-inset-bottom)) !important; }
+  .mobile-drawer .mobile-drawer-bottom { padding-bottom:env(safe-area-inset-bottom); }
+  .concept-home .concept-dashboard-visual { min-width:0; }
+  .concept-home .concept-dashboard-frame { min-width:0; }
+  .concept-home .concept-dash-chart { min-width:0; }
+  .concept-home .concept-chart-bars { min-width:0; }
+}
