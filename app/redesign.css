@@ -1087,3 +1087,80 @@ input,select,textarea { accent-color:var(--dt-primary); }
   .dt-dashboard-shell .dt-card-control-hero{padding:16px 13px!important}
   .dt-dashboard-shell .dt-nfc-card-row{padding:12px!important}
 }
+
+
+/* WORKSPACE SUBPAGES — mobile-first consistency pass */
+@media(max-width:700px){
+  .dt-orders-page,.dt-business-page,.dt-page-studio-page,.dt-account-settings-page{
+    width:100%!important;max-width:100%!important;overflow-x:clip!important;
+    padding:16px 12px 96px!important;
+    background:#f3f1eb!important;color:#252822!important;
+  }
+  .dt-orders-page>.mx-auto,.dt-business-page>.mx-auto,
+  .dt-page-studio-page>.mx-auto,.dt-account-settings-page>.mx-auto{
+    width:100%!important;max-width:100%!important;min-width:0!important;
+  }
+  .dt-orders-page .dt-orders-hero,.dt-business-page .dt-business-hero,
+  .dt-page-studio-page .dt-studio-masthead{
+    display:flex!important;flex-direction:column!important;align-items:stretch!important;
+    gap:18px!important;margin-bottom:18px!important;padding:20px 17px!important;
+    border-radius:20px!important;box-shadow:none!important;
+  }
+  .dt-orders-page .dt-orders-hero h1,.dt-business-page .dt-business-hero h1,
+  .dt-page-studio-page .dt-studio-masthead h1{
+    max-width:100%!important;font-size:clamp(27px,8vw,36px)!important;
+    line-height:1.08!important;overflow-wrap:anywhere!important;
+  }
+  .dt-orders-page .dt-orders-statboard{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;margin-bottom:17px!important;
+  }
+  .dt-orders-page .dt-orders-stat{min-width:0!important;padding:13px!important;border-radius:15px!important;box-shadow:none!important}
+  .dt-orders-page .dt-order-flow,.dt-orders-page .dt-orders-create,
+  .dt-orders-page .dt-workspace-panel,.dt-business-page .dt-workspace-panel{
+    min-width:0!important;max-width:100%!important;padding:16px!important;
+    border-radius:18px!important;box-shadow:none!important;
+  }
+  .dt-orders-page .dt-order-flow .grid{grid-template-columns:minmax(0,1fr)!important}
+  .dt-orders-page .dt-flow-step{min-width:0!important;width:100%!important}
+  .dt-orders-page .grid.items-start.gap-5{grid-template-columns:minmax(0,1fr)!important}
+  .dt-orders-page .dt-orders-list-head{align-items:flex-start!important}
+  .dt-orders-page input,.dt-orders-page select,.dt-orders-page textarea,
+  .dt-business-page input,.dt-business-page select,.dt-business-page textarea,
+  .dt-page-studio-page input,.dt-page-studio-page select,.dt-page-studio-page textarea,
+  .dt-account-settings-page input{
+    max-width:100%!important;min-width:0!important;
+  }
+  .dt-orders-page .dt-order-card{min-width:0!important;padding:14px!important;box-shadow:none!important}
+  .dt-orders-page .dt-order-card>div:first-child{min-width:0!important}
+  .dt-orders-page .dt-order-card .mt-3.flex{align-items:flex-start!important;flex-direction:column!important}
+  .dt-orders-page .dt-order-card .mt-3.flex>div{width:100%!important;flex-wrap:wrap!important}
+  .dt-orders-page .dt-order-modal{max-height:88dvh!important;overflow-y:auto!important;padding:18px!important}
+  .dt-orders-page .dt-order-invoice{max-width:100%!important;padding:14px!important}
+  .dt-business-page .dt-business-hero{gap:15px!important}
+  .dt-business-page .grid.items-start.gap-5{grid-template-columns:minmax(0,1fr)!important}
+  .dt-business-page .dt-business-profile-panel,
+  .dt-business-page .dt-business-locations-panel{padding:16px!important}
+  .dt-business-page .dt-business-profile-form button{width:100%!important}
+  .dt-page-studio-page .dt-studio-nav{align-items:center!important;flex-wrap:wrap!important}
+  .dt-page-studio-page .dt-studio-card-select{padding:14px!important}
+  .dt-page-studio-page .dt-studio-section-nav{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;padding:7px!important;
+  }
+  .dt-page-studio-page .dt-studio-section-nav button{min-width:0!important;padding:11px 9px!important}
+  .dt-page-studio-page .grid.items-start.gap-6{grid-template-columns:minmax(0,1fr)!important}
+  .dt-page-studio-page .dt-studio-form-body{padding:16px!important}
+  .dt-page-studio-page .dt-studio-form-footer{padding:14px 16px!important}
+  .dt-page-studio-page .dt-studio-form-footer button{min-height:44px!important}
+  .dt-page-studio-page .dt-studio-preview-col{position:static!important;min-width:0!important;width:100%!important}
+  .dt-page-studio-page .dt-studio-preview-frame{max-width:100%!important;margin-inline:auto!important}
+  .dt-account-settings-page header{position:relative!important}
+  .dt-account-settings-page .grid.items-start{grid-template-columns:minmax(0,1fr)!important}
+  .dt-account-settings-page section{min-width:0!important;padding:17px!important;border-radius:18px!important;box-shadow:none!important}
+}
+@media(max-width:380px){
+  .dt-orders-page .dt-orders-stat{padding:10px!important}
+  .dt-orders-page .dt-order-card .mt-3.flex>div{align-items:stretch!important}
+  .dt-orders-page .dt-order-card select{max-width:100%!important;width:100%!important}
+  .dt-page-studio-page .dt-studio-masthead{padding:17px 14px!important}
+  .dt-account-settings-page{padding-inline:10px!important}
+}
