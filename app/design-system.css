@@ -1,20 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=Manrope:wght@400;500;600;650;700;750;800&display=swap");
 
 /* DiTapAja Design System
-   Editorial Luxury foundation. Opt-in primitives only:
+   Futuristic Modern foundation. Opt-in primitives only:
    legacy pages keep their current styling until they are migrated.
 */
 :root {
-  --dt-color-canvas: #F3F1EB;
+  --dt-color-canvas: #F4F6F5;
   --dt-color-surface: #FFFFFF;
-  --dt-color-surface-muted: #EAE7DE;
-  --dt-color-ink: #252822;
-  --dt-color-ink-soft: #596057;
-  --dt-color-muted: #74796F;
-  --dt-color-line: #D9D5CB;
-  --dt-color-primary: #34483A;
-  --dt-color-primary-hover: #293B30;
-  --dt-color-accent: #A5A58B;
+  --dt-color-surface-muted: #E8EEEB;
+  --dt-color-ink: #182522;
+  --dt-color-ink-soft: #52645F;
+  --dt-color-muted: #778782;
+  --dt-color-line: #D8E2DE;
+  --dt-color-primary: #173F38;
+  --dt-color-primary-hover: #102F2A;
+  --dt-color-accent: #B7F36B;
   --dt-color-danger: #A33F35;
   --dt-color-success: #356B4B;
 
@@ -44,7 +44,7 @@
 
   --dt-content-width: 1200px;
   --dt-page-gutter: 24px;
-  --dt-focus-ring: 0 0 0 3px rgba(52, 72, 58, 0.22);
+  --dt-focus-ring: 0 0 0 3px rgba(28, 190, 150, 0.24);
 }
 
 .dt-ui-page {
