@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Activity, ArrowDownRight, ArrowUpRight, Bell, ChevronDown, CreditCard, LayoutDashboard, Menu, MoreHorizontal, MousePointer2, Package, Plus, Search, Settings, Sparkles, Users, X } from "lucide-react";
+import { Activity, ArrowDownRight, ArrowUpRight, Bell, Check, ChevronDown, CircleDollarSign, Copy, CreditCard, Download, Eye, Filter, LayoutDashboard, MapPin, Menu, MoreHorizontal, MousePointer2, Package, Pencil, Plus, Search, Settings, SlidersHorizontal, Sparkles, Users, X, Archive } from "lucide-react";
 import "./prototype.css";
 
 const nav = [
