@@ -1042,11 +1042,14 @@ export default function DashboardPage() {
 
         <section className="min-w-0 flex-1">
           <header className="workspace-header dt-dashboard-topbar sticky top-0 z-30 flex items-center justify-between border-b px-4 py-3.5 sm:px-5 md:px-10 md:py-4">
-            <div>
+            <div className="flex min-w-0 items-center gap-3">
+              <button type="button" className="dt-sidebar-collapse hidden lg:grid" onClick={() => setSidebarCollapsed((value) => !value)} aria-label={sidebarCollapsed ? "Perluas sidebar" : "Ciutkan sidebar"} title={sidebarCollapsed ? "Perluas sidebar" : "Ciutkan sidebar"}>{sidebarCollapsed ? <PanelLeftOpen size={17}/> : <PanelLeftClose size={17}/>}</button>
+              <div className="min-w-0">
               <p className="text-xs text-slate-400">
                 Workspace / Overview
               </p>
               <h1 className="mt-1 text-xl font-extrabold tracking-tight text-slate-900">Dashboard</h1>
+              </div>
             </div>
 
             <div className="flex items-center gap-3">
