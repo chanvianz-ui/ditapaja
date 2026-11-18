@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   AlertCircle, Ban, Check, Copy, CreditCard, KeyRound, LayoutDashboard,
-  Loader2, LogOut, Plus, RefreshCw, ShieldCheck, Users,
+  Loader2, LogOut, Plus, RefreshCw, Search, ShieldCheck, Users,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -22,6 +22,8 @@ export default function AdminPinsPage() {
   const [message, setMessage] = useState("");
   const [newPins, setNewPins] = useState<string[]>([]);
   const [copied, setCopied] = useState("");
+  const [filter, setFilter] = useState<"all" | "available" | "claimed" | "revoked">("all");
+  const [search, setSearch] = useState("");
   const [inventoryName, setInventoryName] = useState("");
   const [inventoryUrl, setInventoryUrl] = useState("");
   const [inventoryCreating, setInventoryCreating] = useState(false);
@@ -103,6 +105,11 @@ export default function AdminPinsPage() {
   const revoked = pins.filter(p => p.status === "revoked").length;
   const statusStyle = (status: PinRow["status"]) => status === "available" ? "bg-[#edf3e9] text-[#55744e]" : status === "claimed" ? "bg-[#edf1f7] text-[#627b9a]" : "bg-[#f0f1ee] text-[#858d82]";
   const statusLabel = (status: PinRow["status"]) => status === "available" ? "Available" : status === "claimed" ? "Claimed" : "Revoked";
+  const visiblePins = pins.filter(pin => {
+    const matchesFilter = filter === "all" || pin.status === filter;
+    const matchesSearch = !search || pin.pin_hint.toLowerCase().includes(search.toLowerCase()) || pin.id.toLowerCase().includes(search.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <main className="min-h-screen bg-[#f4f5f2] text-[#20251f]">
