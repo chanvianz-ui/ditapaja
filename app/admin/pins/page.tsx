@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-type PinRow = { id: string; pin_hint: string; status: "available" | "claimed" | "revoked"; created_at: string; claimed_at: string | null };
+type PinRow = { id: string; pin_hint: string; status: "available" | "claimed" | "revoked"; created_at: string; claimed_at: string | null; card_id: string | null; card: { id: string; card_name: string | null; public_code: string; destination_url: string; user_id: string | null; active: boolean | null; created_at: string | null; archived_at: string | null } | null; owner: { full_name: string | null; username: string | null } | null };
 
 export default function AdminPinsPage() {
   const router = useRouter();
@@ -79,6 +79,18 @@ export default function AdminPinsPage() {
     finally { setInventoryCreating(false); }
   }
 
+  async function archiveCard(id: string) {
+    if (!window.confirm("Arsipkan kartu ini? Kartu tidak bisa diaktifkan lagi setelah diarsipkan.")) return;
+    try {
+      const accessToken = await token();
+      const response = await fetch("/api/admin/pins", { method: "PATCH", headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" }, body: JSON.stringify({ id, action: "archive" }) });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || "Gagal mengarsipkan kartu.");
+      setMessage("Kartu berhasil diarsipkan.");
+      await loadPins();
+    } catch (err) { setError(err instanceof Error ? err.message : "Terjadi kesalahan."); }
+  }
+
   async function revokePin(id: string) {
     if (!window.confirm("Nonaktifkan PIN ini?")) return;
     try {
@@ -100,14 +112,16 @@ export default function AdminPinsPage() {
   }
 
   async function logout() { await supabase.auth.signOut(); router.replace("/login"); }
-  const available = pins.filter(p => p.status === "available").length;
-  const claimed = pins.filter(p => p.status === "claimed").length;
-  const revoked = pins.filter(p => p.status === "revoked").length;
+  const available = pins.filter(p => p.status === "available" && p.card && !p.card.archived_at).length;
+  const claimed = pins.filter(p => p.status === "claimed" && p.card && !p.card.archived_at).length;
+  const revoked = pins.filter(p => p.status === "revoked" || !p.card || Boolean(p.card.archived_at)).length;
+  const linked = pins.filter(p => p.card?.user_id && !p.card.archived_at).length;
+  const activeWithoutAccount = pins.filter(p => p.card?.active && !p.card.user_id && !p.card.archived_at).length;
   const statusStyle = (status: PinRow["status"]) => status === "available" ? "bg-[#edf3e9] text-[#55744e]" : status === "claimed" ? "bg-[#edf1f7] text-[#627b9a]" : "bg-[#f0f1ee] text-[#858d82]";
   const statusLabel = (status: PinRow["status"]) => status === "available" ? "Available" : status === "claimed" ? "Claimed" : "Revoked";
   const visiblePins = pins.filter(pin => {
     const matchesFilter = filter === "all" || pin.status === filter;
-    const matchesSearch = !search || pin.pin_hint.toLowerCase().includes(search.toLowerCase()) || pin.id.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = !search || pin.pin_hint.toLowerCase().includes(search.toLowerCase()) || pin.id.toLowerCase().includes(search.toLowerCase()) || (pin.card?.card_name ?? "").toLowerCase().includes(search.toLowerCase()) || (pin.card?.public_code ?? "").toLowerCase().includes(search.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
@@ -170,10 +184,10 @@ export default function AdminPinsPage() {
 
           <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {[
-              { label: "Total PIN tercatat", value: pins.length, note: "Maksimal 200 PIN terbaru", tone: "bg-[#edf1f7] text-[#627b9a]", icon: KeyRound },
+              { label: "Total kartu", value: pins.filter(p => p.card).length, note: "Kartu dengan PIN terpasang", tone: "bg-[#edf1f7] text-[#627b9a]", icon: CreditCard },
               { label: "Siap digunakan", value: available, note: "Belum diaktifkan customer", tone: "bg-[#edf3e9] text-[#63805c]", icon: ShieldCheck },
-              { label: "Sudah digunakan", value: claimed, note: "Telah diklaim customer", tone: "bg-[#f2eef7] text-[#796a9c]", icon: Check },
-              { label: "Dinonaktifkan", value: revoked, note: "Tidak dapat digunakan", tone: "bg-[#f0f1ee] text-[#858d82]", icon: Ban },
+              { label: "Aktif tanpa akun", value: activeWithoutAccount, note: "Aktivasi PIN tanpa login", tone: "bg-[#fbf3e5] text-[#9a7740]", icon: Check },
+              { label: "Terhubung akun", value: linked, note: "Dimiliki pengguna dashboard", tone: "bg-[#f2eef7] text-[#796a9c]", icon: Users },
             ].map(item => { const Icon = item.icon; return <article key={item.label} className="rounded-2xl border border-[#e5e8e1] bg-white p-5 sm:p-6"><div className="flex items-start justify-between"><p className="text-xs font-medium text-[#7e887c]">{item.label}</p><span className={`flex h-9 w-9 items-center justify-center rounded-xl ${item.tone}`}><Icon size={17}/></span></div><p className="mt-5 text-[32px] font-semibold leading-none tracking-[-.04em]">{loading ? "—" : item.value.toLocaleString("id-ID")}</p><p className="mt-3 text-[11px] text-[#9aa296]">{item.note}</p></article>; })}
           </section>
 
@@ -213,12 +227,17 @@ export default function AdminPinsPage() {
           </section>}
 
           <section className="mt-7 overflow-hidden rounded-2xl border border-[#e2e7df] bg-white">
-            <div className="border-b border-[#edf0eb] px-5 py-5 sm:px-6"><div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end"><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#8b9887]">Activation inventory</p><h3 className="mt-2 text-lg font-semibold tracking-tight">Daftar PIN</h3><p className="mt-1 text-xs text-[#929b90]">Maksimal 200 PIN terbaru ditampilkan. Kode penuh tidak disimpan di daftar ini.</p></div><span className="text-[11px] font-medium text-[#929b90]">{visiblePins.length} dari {pins.length} data</span></div><div className="mt-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><div className="flex flex-wrap gap-2">{([{key:"all",label:"Semua",count:pins.length},{key:"available",label:"Tersedia",count:available},{key:"claimed",label:"Digunakan",count:claimed},{key:"revoked",label:"Dinonaktifkan",count:revoked}] as const).map(item => <button key={item.key} onClick={() => setFilter(item.key)} className={filter === item.key ? "rounded-full bg-[#29382b] px-3.5 py-2 text-[10px] font-semibold text-white" : "rounded-full border border-[#e4e8e1] bg-white px-3.5 py-2 text-[10px] font-semibold text-[#778273] transition hover:bg-[#f7f9f5]"}>{item.label} <span className={filter === item.key ? "ml-1 text-[#d8e5d2]" : "ml-1 text-[#a0a89d]"}>{item.count}</span></button>)}</div><div className="relative w-full lg:max-w-[280px]"><Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9aa296]"/><input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari kode atau ID PIN..." className="h-10 w-full rounded-xl border border-[#e5e9e2] bg-[#f8f9f6] pl-10 pr-4 text-xs text-[#394338] outline-none transition placeholder:text-[#a1a99e] focus:border-[#aebfa7] focus:bg-white focus:ring-4 focus:ring-[#edf3e9]"/></div></div></div>
+            <div className="border-b border-[#edf0eb] px-5 py-5 sm:px-6"><div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end"><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#8b9887]">Activation inventory</p><h3 className="mt-2 text-lg font-semibold tracking-tight">Daftar PIN</h3><p className="mt-1 text-xs text-[#929b90]">Maksimal 200 PIN terbaru ditampilkan. Kode penuh tidak disimpan di daftar ini.</p></div><span className="text-[11px] font-medium text-[#929b90]">{visiblePins.length} dari {pins.length} data</span></div><div className="mt-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><div className="flex flex-wrap gap-2">{([{key:"all",label:"Semua",count:pins.length},{key:"available",label:"Tersedia",count:available},{key:"claimed",label:"Digunakan",count:claimed},{key:"revoked",label:"Dinonaktifkan",count:revoked}] as const).map(item => <button key={item.key} onClick={() => setFilter(item.key)} className={filter === item.key ? "rounded-full bg-[#29382b] px-3.5 py-2 text-[10px] font-semibold text-white" : "rounded-full border border-[#e4e8e1] bg-white px-3.5 py-2 text-[10px] font-semibold text-[#778273] transition hover:bg-[#f7f9f5]"}>{item.label} <span className={filter === item.key ? "ml-1 text-[#d8e5d2]" : "ml-1 text-[#a0a89d]"}>{item.count}</span></button>)}</div><div className="relative w-full lg:max-w-[280px]"><Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9aa296]"/><input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari nama kartu, PIN, atau kode NFC..." className="h-10 w-full rounded-xl border border-[#e5e9e2] bg-[#f8f9f6] pl-10 pr-4 text-xs text-[#394338] outline-none transition placeholder:text-[#a1a99e] focus:border-[#aebfa7] focus:bg-white focus:ring-4 focus:ring-[#edf3e9]"/></div></div></div>
             {loading ? <div className="px-5 py-16 text-center text-xs text-[#929b90]">Memuat data PIN...</div> : pins.length === 0 ? <div className="px-5 py-16 text-center"><KeyRound size={26} className="mx-auto mb-3 text-[#c3cbc0]"/><p className="text-sm font-semibold text-[#687365]">Belum ada PIN aktivasi</p><p className="mt-1 text-xs text-[#a0a89d]">Generate PIN pertama untuk mulai mengisi stok.</p></div> : <div className="divide-y divide-[#f0f2ee]">
-              {pins.map(pin => <div key={pin.id} className="flex flex-col justify-between gap-3 px-5 py-4 transition-colors hover:bg-[#fafbf9] sm:flex-row sm:items-center sm:px-6">
-                <div className="flex items-center gap-3"><div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f1f4ef] text-[#758570]"><KeyRound size={17}/></div><div><p className="font-mono text-sm font-bold tracking-[.08em] text-[#303a30]">••••-{pin.pin_hint}</p><p className="mt-1 text-[11px] text-[#9aa296]">Dibuat {new Date(pin.created_at).toLocaleString("id-ID", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}</p>{pin.claimed_at && <p className="mt-0.5 text-[10px] text-[#9aa296]">Digunakan {new Date(pin.claimed_at).toLocaleString("id-ID")}</p>}</div></div>
-                <div className="flex items-center justify-between gap-3 sm:justify-end"><span className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${statusStyle(pin.status)}`}>{statusLabel(pin.status)}</span>{pin.status === "available" && <button onClick={() => void revokePin(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]"><Ban size={13}/> Revoke</button>}</div>
-              </div>)}
+              {pins.map(pin => {
+                const archived = Boolean(pin.card?.archived_at);
+                const cardState = archived ? "Diarsipkan" : pin.card?.user_id ? "Terhubung ke akun" : pin.card?.active ? "Aktif · Tanpa akun" : "Tersedia";
+                const stateTone = archived ? "bg-[#f0f1ee] text-[#858d82]" : pin.card?.user_id ? "bg-[#edf1f7] text-[#627b9a]" : pin.card?.active ? "bg-[#fbf3e5] text-[#9a7740]" : "bg-[#edf3e9] text-[#55744e]";
+                return <div key={pin.id} className="flex flex-col justify-between gap-4 px-5 py-4 transition-colors hover:bg-[#fafbf9] sm:flex-row sm:items-center sm:px-6">
+                  <div className="flex min-w-0 items-start gap-3"><div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f1f4ef] text-[#758570]"><CreditCard size={17}/></div><div className="min-w-0"><p className="truncate text-sm font-semibold text-[#303a30]">{pin.card?.card_name || "Kartu tanpa nama"}</p><p className="mt-1 text-[11px] text-[#899386]">PIN ••••-{pin.pin_hint} <span className="mx-1">·</span> NFC {pin.card?.public_code || "Belum terpasang"}</p><p className="mt-1 break-all text-[10px] text-[#9aa296]">{pin.card?.destination_url || "URL tujuan tidak tersedia"}</p><p className="mt-1 text-[10px] text-[#9aa296]">{pin.card?.user_id ? `Pemilik: ${pin.owner?.full_name || pin.owner?.username || "Akun terhubung"}` : "Belum terhubung ke akun"} <span className="mx-1">·</span> Dibuat {new Date(pin.created_at).toLocaleDateString("id-ID")}</p></div></div>
+                  <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end"><span className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${stateTone}`}>{cardState}</span>{!archived && pin.status === "available" && <button onClick={() => void revokePin(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]"><Ban size={13}/> Revoke PIN</button>}{!archived && <button onClick={() => void archiveCard(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Ban size={13}/> Arsipkan</button>}</div>
+                </div>;
+              })}
             </div>}
           </section>
           <p className="mt-5 text-center text-[10px] text-[#a0a89d]">DiTapAja Control Center <span className="mx-1">·</span> Activation PIN inventory</p>
