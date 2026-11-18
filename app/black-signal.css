@@ -161,7 +161,7 @@ a{color:inherit}
 .dt-control-rail nav button.active{background:var(--dt-lime)!important;color:#0a100b!important;box-shadow:4px 4px 0 #476a24!important}
 .dt-control-main,.dt-admin-shell section{background:#080b0a!important}
 .dt-control-top,.dt-admin-shell header{background:#090d0beF!important;border-color:var(--dt-line)!important;color:var(--dt-white)!important}
-.dt-control-content,.dt-admin-shell .max-w-\\[1480px\\]{color:var(--dt-white)!important}
+.dt-control-content,.dt-admin-shell .max-w-\[1480px\]{color:var(--dt-white)!important}
 .dt-control-intro,.dt-admin-shell [class*="bg-white"]{background:#111815!important;color:var(--dt-white)!important;border-color:var(--dt-line)!important}
 .dt-control-intro{border:1px solid #465a49!important;border-radius:2px!important;box-shadow:9px 9px 0 #26372a!important}
 .dt-control-kicker,.dt-control-intro-copyblock>p{color:#b4c2b6!important}
@@ -379,7 +379,7 @@ a{color:inherit}
  border-radius:4px!important;transition:background .18s ease,color .18s ease,border-color .18s ease!important
 }
 .dt-admin-shell aside.fixed button:hover{background:#ffffff0b!important;color:#f4f5ef!important}
-.dt-admin-shell aside.fixed .bg-\\[\\#354337\\]{
+.dt-admin-shell aside.fixed .bg-\[\#354337\]{
  background:#c1c8b6!important;color:#171b16!important;border-radius:4px!important
 }
 .dt-admin-shell section.min-h-screen{background:#101210!important}
@@ -399,18 +399,18 @@ a{color:inherit}
 .dt-admin-shell .rounded-2xl,.dt-admin-shell .rounded-xl,.dt-admin-shell .rounded-full{
  border-radius:4px!important
 }
-.dt-admin-shell article,.dt-admin-shell [class*="bg-white"],.dt-admin-shell [class*="bg-\\[\\#f"]{
+.dt-admin-shell article,.dt-admin-shell [class*="bg-white"],.dt-admin-shell [class*="bg-\[\#f"]{
  background:#191c19!important;border-color:#343a34!important;color:#eeefe9!important;
  box-shadow:0 8px 24px #00000014!important
 }
-.dt-admin-shell [class*="text-\\[\\#7"],.dt-admin-shell [class*="text-\\[\\#8"],.dt-admin-shell [class*="text-\\[\\#9"]{
+.dt-admin-shell [class*="text-\[\#7"],.dt-admin-shell [class*="text-\[\#8"],.dt-admin-shell [class*="text-\[\#9"]{
  color:#a3a79e!important
 }
 .dt-admin-shell input,.dt-admin-shell select,.dt-admin-shell textarea{
  background:#101210!important;border:1px solid #41483f!important;color:#eeefe9!important;border-radius:4px!important
 }
-.dt-admin-shell button[class*="bg-\\[\\#29382b\\]"],
-.dt-admin-shell button[class*="bg-\\[\\#202720\\]"]{
+.dt-admin-shell button[class*="bg-\[\#29382b\]"],
+.dt-admin-shell button[class*="bg-\[\#202720\]"]{
  background:#c1c8b6!important;color:#171b16!important;border-radius:4px!important;box-shadow:3px 3px 0 #555d4c!important
 }
 .dt-admin-shell table{color:#eeefe9!important;border-collapse:separate!important;border-spacing:0!important}
