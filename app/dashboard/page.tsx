@@ -33,7 +33,6 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Home,
-  ChartNoAxesCombined,
   ShoppingBag,
   Menu,
 } from "lucide-react";
@@ -1073,7 +1072,7 @@ export default function DashboardPage() {
           <nav aria-label="Navigasi mobile" className="dt-mobile-bottom-nav lg:hidden">
             <a href="/dashboard" className="is-active"><Home/><span>Home</span></a>
             <a href="#cards"><CreditCard/><span>Kartu</span></a>
-            <a href="/dashboard/customers"><ChartNoAxesCombined/><span>Insights</span></a>
+            <a href="/dashboard/customers"><BarChart3/><span>Insights</span></a>
             <a href="/dashboard/orders"><ShoppingBag/><span>Pesanan</span></a>
             <a href="/dashboard/settings"><Menu/><span>Lainnya</span></a>
           </nav>
