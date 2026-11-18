@@ -4,10 +4,11 @@ import AdminMenu from "@/app/admin/admin-menu";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  AlertCircle, Ban, Check, Copy, CreditCard, KeyRound, LayoutDashboard, Pencil, X,
+  AlertCircle, Ban, Check, Copy, CreditCard, Download, KeyRound, LayoutDashboard, Pencil, Printer, QrCode, X,
   Loader2, LogOut, Plus, RefreshCw, Search, ShieldCheck, Users,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { QRCodeSVG } from "qrcode.react";
 
 type PinRow = { id: string; pin_hint: string; status: "available" | "claimed" | "revoked"; created_at: string; claimed_at: string | null; card_id: string | null; card: { id: string; card_name: string | null; public_code: string; destination_url: string; user_id: string | null; active: boolean | null; created_at: string | null; archived_at: string | null } | null; owner: { full_name: string | null; username: string | null } | null };
 
@@ -30,6 +31,7 @@ export default function AdminPinsPage() {
   const [savingCard, setSavingCard] = useState(false);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkLoading, setBulkLoading] = useState(false);
+  const [qrCard, setQrCard] = useState<{id:string;cardName:string;publicCode:string}|null>(null);
 
   const token = useCallback(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -148,6 +150,48 @@ export default function AdminPinsPage() {
     } catch { setError("Tidak dapat menyalin otomatis. Silakan pilih dan salin PIN secara manual."); }
   }
 
+  function getCardUrl(publicCode: string) {
+    return `${window.location.origin}/c/${publicCode}`;
+  }
+
+  function downloadQr() {
+    const svg = document.getElementById("ditapaja-qr-preview");
+    if (!svg || !qrCard) return;
+    const source = new XMLSerializer().serializeToString(svg);
+    const blob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+    const objectUrl = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = objectUrl;
+    anchor.download = `ditapaja-qr-${qrCard.publicCode}.svg`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(objectUrl);
+  }
+
+  function printQr() {
+    const svg = document.getElementById("ditapaja-qr-preview");
+    if (!svg || !qrCard) return;
+    const popup = window.open("", "_blank", "width=640,height=760");
+    if (!popup) {
+      setError("Popup diblokir browser. Izinkan popup untuk mencetak QR.");
+      return;
+    }
+    const escapeHtml = (value: string) => value.replace(/[&<>"']/g, char => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    }[char] || char));
+    const url = getCardUrl(qrCard.publicCode);
+    popup.document.write(`<!doctype html><html><head><title>QR ${escapeHtml(qrCard.cardName)}</title><style>
+      *{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;padding:36px;color:#20251f}
+      .sheet{width:100%;max-width:420px;margin:0 auto;border:1px solid #dfe5dc;border-radius:20px;padding:30px;text-align:center}
+      h1{font-size:22px;margin:0 0 8px}p{font-size:12px;color:#697568;line-height:1.5;overflow-wrap:anywhere}
+      .qr{display:flex;justify-content:center;margin:24px 0}.qr svg{width:240px;height:240px}
+      .brand{font-size:10px;letter-spacing:2px;font-weight:bold;color:#61765b;margin-top:22px}
+      @media print{body{padding:0}.sheet{border:0}}
+    </style></head><body><main class="sheet"><div class="brand">DITAPAJA</div><h1>${escapeHtml(qrCard.cardName)}</h1><p>Scan QR untuk membuka halaman kartu NFC</p><div class="qr">${svg.outerHTML}</div><p>${escapeHtml(url)}</p></main><script>window.onload=()=>window.print()</script></body></html>`);
+    popup.document.close();
+  }
+
   async function logout() { await supabase.auth.signOut(); router.replace("/login"); }
   const available = pins.filter(p => p.status === "available" && p.card && !p.card.archived_at).length;
   const claimed = pins.filter(p => p.status === "claimed" && p.card && !p.card.archived_at).length;
@@ -251,12 +295,27 @@ export default function AdminPinsPage() {
                 const stateTone = archived ? "bg-[#f0f1ee] text-[#858d82]" : pin.card?.user_id ? "bg-[#edf1f7] text-[#627b9a]" : pin.card?.active ? "bg-[#fbf3e5] text-[#9a7740]" : "bg-[#edf3e9] text-[#55744e]";
                 return <div key={pin.id} className="flex flex-col justify-between gap-4 px-5 py-4 transition-colors hover:bg-[#fafbf9] sm:flex-row sm:items-center sm:px-6">
                   <div className="flex min-w-0 items-start gap-3"><input aria-label={`Pilih ${pin.card?.card_name || "kartu"}`} type="checkbox" checked={selectedIds.includes(pin.id)} disabled={archived} onChange={e => setSelectedIds(current => e.target.checked ? [...current, pin.id] : current.filter(id => id !== pin.id))} className="mt-3 h-4 w-4 accent-[#526b4e] disabled:opacity-30"/><div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f1f4ef] text-[#758570]"><CreditCard size={17}/></div><div className="min-w-0"><p className="truncate text-sm font-semibold text-[#303a30]">{pin.card?.card_name || "Kartu tanpa nama"}</p><p className="mt-1 text-[11px] text-[#899386]">PIN ••••-{pin.pin_hint} <span className="mx-1">·</span> NFC {pin.card?.public_code || "Belum terpasang"}</p><p className="mt-1 break-all text-[10px] text-[#9aa296]">{pin.card?.destination_url || "URL tujuan tidak tersedia"}</p><p className="mt-1 text-[10px] text-[#9aa296]">{pin.card?.user_id ? `Pemilik: ${pin.owner?.full_name || pin.owner?.username || "Akun terhubung"}` : "Belum terhubung ke akun"} <span className="mx-1">·</span> Dibuat {new Date(pin.created_at).toLocaleDateString("id-ID")}</p></div></div>
-                  <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end"><span className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${stateTone}`}>{cardState}</span>{!archived && <button onClick={() => setEditingCard({ id: pin.card!.id, cardName: pin.card!.card_name || "", destinationUrl: pin.card!.destination_url || "" })} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Pencil size={13}/> Edit</button>}{!archived && pin.status === "available" && <button onClick={() => void revokePin(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]"><Ban size={13}/> Revoke PIN</button>}{!archived && <button onClick={() => void archiveCard(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Ban size={13}/> Arsipkan</button>}</div>
+                  <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end"><span className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${stateTone}`}>{cardState}</span>{!archived && <button onClick={() => setQrCard({ id: pin.card!.id, cardName: pin.card!.card_name || "Kartu DiTapAja", publicCode: pin.card!.public_code })} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#dce5d7] bg-[#f7faf5] px-3 text-[11px] font-semibold text-[#526b4e] transition hover:bg-[#edf3e9]"><QrCode size={13}/> QR / Cetak</button>}{!archived && <button onClick={() => setEditingCard({ id: pin.card!.id, cardName: pin.card!.card_name || "", destinationUrl: pin.card!.destination_url || "" })} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Pencil size={13}/> Edit</button>}{!archived && pin.status === "available" && <button onClick={() => void revokePin(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#efdfdc] px-3 text-[11px] font-semibold text-[#a45e54] transition hover:bg-[#fff4f1]"><Ban size={13}/> Revoke PIN</button>}{!archived && <button onClick={() => void archiveCard(pin.id)} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e1e6dc] px-3 text-[11px] font-semibold text-[#64765e] transition hover:bg-[#f2f6ef]"><Ban size={13}/> Arsipkan</button>}</div>
                 </div>;
               })}
             </div>}
             {!loading && pins.length > 0 && visiblePins.length === 0 && <div className="px-5 py-14 text-center"><Search size={24} className="mx-auto mb-3 text-[#c3cbc0]"/><p className="text-sm font-semibold text-[#687365]">Tidak ada kartu yang cocok</p><p className="mt-1 text-xs text-[#a0a89d]">Coba ubah kata kunci atau filter yang dipilih.</p></div>}
           </section>
+          {qrCard && <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#182219]/60 p-4 backdrop-blur-sm" onMouseDown={e => { if (e.target === e.currentTarget) setQrCard(null); }}>
+            <section role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="w-full max-w-md rounded-2xl border border-[#e2e7df] bg-white p-5 shadow-2xl sm:p-7">
+              <div className="flex items-start justify-between gap-4"><div><p className="text-[10px] font-bold uppercase tracking-[.17em] text-[#879681]">QR & print studio</p><h3 id="qr-card-title" className="mt-2 text-xl font-semibold tracking-tight text-[#293329]">QR kartu</h3><p className="mt-1 text-xs text-[#8c9688]">{qrCard.cardName}</p></div><button aria-label="Tutup QR" onClick={() => setQrCard(null)} className="rounded-lg border border-[#e5e9e2] p-2 text-[#778273] hover:bg-[#f7f9f5]"><X size={16}/></button></div>
+              <div className="mt-6 rounded-2xl border border-[#e8ece5] bg-[#fafbf9] p-5 text-center">
+                <div className="mx-auto inline-flex rounded-xl bg-white p-3 shadow-sm"><QRCodeSVG id="ditapaja-qr-preview" value={getCardUrl(qrCard.publicCode)} size={224} level="H" includeMargin /></div>
+                <p className="mt-4 text-xs font-semibold text-[#3f4d3d]">Scan untuk membuka kartu</p>
+                <p className="mt-2 break-all text-[10px] leading-5 text-[#8a9586]">{getCardUrl(qrCard.publicCode)}</p>
+              </div>
+              <div className="mt-5 grid grid-cols-2 gap-2">
+                <button onClick={downloadQr} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[#dfe5db] bg-white text-xs font-semibold text-[#596b54] hover:bg-[#f7f9f5]"><Download size={15}/> Unduh SVG</button>
+                <button onClick={printQr} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#29382b] text-xs font-semibold text-white hover:bg-[#3a4b3b]"><Printer size={15}/> Cetak QR</button>
+              </div>
+              <p className="mt-3 text-[10px] leading-5 text-[#9aa296]">QR berisi URL publik kartu NFC, bukan PIN aktivasi. PIN tetap dibagikan secara terpisah kepada pembeli.</p>
+            </section>
+          </div>}
           {editingCard && <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#182219]/55 p-4 backdrop-blur-sm" onMouseDown={e => { if (e.target === e.currentTarget && !savingCard) setEditingCard(null); }}>
             <section role="dialog" aria-modal="true" aria-labelledby="edit-card-title" className="w-full max-w-lg rounded-2xl border border-[#e2e7df] bg-white p-5 shadow-2xl sm:p-7">
               <div className="flex items-start justify-between gap-4"><div><p className="text-[10px] font-bold uppercase tracking-[.17em] text-[#879681]">Card management</p><h3 id="edit-card-title" className="mt-2 text-xl font-semibold tracking-tight text-[#293329]">Edit detail kartu</h3><p className="mt-1 text-xs leading-5 text-[#8c9688]">Perubahan URL tujuan akan langsung berlaku saat kartu NFC dipindai berikutnya.</p></div><button aria-label="Tutup" disabled={savingCard} onClick={() => setEditingCard(null)} className="rounded-lg border border-[#e5e9e2] p-2 text-[#778273] hover:bg-[#f7f9f5]"><X size={16}/></button></div>
