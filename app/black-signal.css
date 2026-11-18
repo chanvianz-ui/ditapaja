@@ -290,3 +290,31 @@ a{color:inherit}
  .concept-dashboard-frame{transform:none!important}
  .dt-dashboard-command:after,.dt-control-intro:after{width:100px;height:70px;right:5%;top:8%;opacity:.5}
 }
+
+/* Product carousel: tangible NFC hardware mockups */
+.dt-collection-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:22px!important;align-items:stretch!important}
+.concept-product{display:flex!important;flex-direction:column!important;background:#101713!important;border:1px solid #344238!important;border-radius:3px!important;overflow:hidden!important;box-shadow:7px 7px 0 #1b2920!important;min-width:0;transition:transform .25s ease,box-shadow .25s ease!important}
+.concept-product:hover{transform:translateY(-7px)!important;box-shadow:12px 14px 0 #26372a!important}
+.concept-product-art{height:280px!important;display:grid!important;place-items:center!important;position:relative!important;overflow:hidden!important;background:radial-gradient(ellipse at 50% 48%,#304334 0,#151e18 44%,#0a0f0c 78%)!important}
+.concept-product-art:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#c5ff5512 1px,transparent 1px),linear-gradient(90deg,#c5ff5512 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse,#000,transparent 80%)}
+.simple-card{position:relative!important;width:min(74%,280px)!important;aspect-ratio:1.58!important;border-radius:12px!important;padding:18px!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;overflow:hidden!important;transform:perspective(900px) rotateY(-24deg) rotateX(16deg) rotateZ(-10deg)!important;box-shadow:inset 0 1px 1px #ffffff70,0 28px 45px #000b,0 0 45px #c5ff5520!important;transition:transform .35s ease!important}
+.concept-product:hover .simple-card{transform:perspective(900px) rotateY(-12deg) rotateX(8deg) rotateZ(-4deg) translateY(-7px)!important}
+.simple-card:before{content:"";position:absolute;inset:0;background:linear-gradient(125deg,#ffffff1c,transparent 38%,#ffffff09 70%,transparent);pointer-events:none}
+.simple-card.noir{background:linear-gradient(145deg,#46534a,#111713 35%,#050706 85%)!important;border:1px solid #788779!important;color:#f4f8f2!important}
+.simple-card.blanc{background:linear-gradient(145deg,#f0f4e9,#b7c4b5 48%,#657267)!important;border:1px solid #fff!important;color:#111!important}
+.simple-card.signature{background:linear-gradient(145deg,#293b30,#0b110d 55%,#263c2c)!important;border:1px solid #c5ff5570!important;color:#f4f8f2!important}
+.simple-card-top{display:flex!important;align-items:center!important;justify-content:space-between!important;font:600 8px var(--dt-mono)!important;letter-spacing:.16em!important;opacity:.9}
+.simple-card-center{display:flex!important;flex-direction:column!important;gap:8px!important}
+.simple-card-center span{font:8px var(--dt-mono)!important;letter-spacing:.18em!important;opacity:.7}
+.simple-card-center strong{font:700 clamp(17px,2vw,24px)/.95 var(--dt-display)!important;letter-spacing:-.07em!important}
+.concept-product-body{padding:23px!important;display:flex!important;flex:1;flex-direction:column!important}
+.concept-product-body h3{font:700 25px var(--dt-display)!important;letter-spacing:-.06em!important;color:var(--dt-white)!important;text-transform:uppercase}
+.concept-product-body>p{color:#aab8ad!important;font-size:12px!important;line-height:1.7!important}
+.concept-product-includes{border-block:1px solid var(--dt-line)!important;padding:13px 0!important;color:#aab8ad!important;font:9px var(--dt-mono)!important}
+.concept-product-includes svg{color:var(--dt-lime)!important}
+.concept-product-buy{margin-top:auto!important;padding-top:18px!important}
+.concept-product-buy strong{color:var(--dt-lime)!important;font:700 23px var(--dt-display)!important}
+.catalog-order-link{background:var(--dt-lime)!important;color:#080b0a!important;border-radius:2px!important;font:700 9px var(--dt-mono)!important;text-transform:uppercase!important;padding:12px!important;box-shadow:4px 4px 0 #486b27!important}
+.concept-product-detail-link{color:#b8c7ba!important;font:9px var(--dt-mono)!important;text-transform:uppercase!important}
+@media(max-width:850px){.dt-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:580px){.dt-collection-grid{grid-template-columns:1fr!important}.concept-product-art{height:250px!important}}
