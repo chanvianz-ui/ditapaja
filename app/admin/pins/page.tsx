@@ -24,6 +24,7 @@ export default function AdminPinsPage() {
   const [inventoryName, setInventoryName] = useState("");
   const [inventoryUrl, setInventoryUrl] = useState("");
   const [inventoryCreating, setInventoryCreating] = useState(false);
+  // Hasil pembuatan kartu hanya ditampilkan sekali setelah berhasil dibuat.
   const [inventoryResult, setInventoryResult] = useState<{pin:string;cardUrl:string;cardName:string}|null>(null);
   const [editingCard, setEditingCard] = useState<{id:string;cardName:string;destinationUrl:string}|null>(null);
   const [savingCard, setSavingCard] = useState(false);
