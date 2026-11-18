@@ -140,7 +140,7 @@ export default function AdminPinsPage() {
             <button onClick={() => router.push("/admin")} className="mb-5 inline-flex items-center gap-2 text-[11px] font-medium text-[#879184] transition hover:text-[#526b4e]"><span aria-hidden="true">←</span> Kembali ke overview</button>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#dce5d7] bg-[#edf3e9] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.15em] text-[#526b4e]"><KeyRound size={12}/> Card activation</div>
             <h2 className="text-[30px] font-semibold leading-tight tracking-[-.045em] sm:text-[38px]">Activation PINs.</h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#7d877b]">Kelola stok kode aktivasi kartu NFC. Buat PIN dalam jumlah banyak, simpan kode yang baru dibuat, dan pantau status penggunaannya.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#7d877b]">Kelola stok kode aktivasi kartu NFC. Pasangkan setiap PIN dengan satu kartu fisik. Buat paket kartu dan PIN dari form di bawah, lalu pantau status aktivasi.</p>
           </div>
 
           {error && <div className="mb-5 flex items-start gap-3 rounded-xl border border-[#f0c9c4] bg-[#fff4f1] p-4 text-sm text-[#a3453a]"><AlertCircle size={18} className="mt-0.5 shrink-0"/><div><p className="font-semibold">Ada kendala</p><p className="mt-1">{error}</p></div></div>}
@@ -172,14 +172,14 @@ export default function AdminPinsPage() {
 
           <section className="mt-7 grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(320px,.9fr)]">
             <article className="rounded-2xl border border-[#e2e7df] bg-white p-5 sm:p-6">
-              <div className="flex items-start gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#edf3e9] text-[#607c59]"><Plus size={19}/></span><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#8b9887]">Inventory production</p><h3 className="mt-1.5 text-lg font-semibold tracking-tight">Generate activation PIN</h3><p className="mt-1 text-xs leading-5 text-[#929b90]">Terbitkan kode aktivasi baru untuk stok kartu NFC.</p></div></div>
+              <div className="flex items-start gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#edf3e9] text-[#607c59]"><Plus size={19}/></span><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#8b9887]">Inventory production</p><h3 className="mt-1.5 text-lg font-semibold tracking-tight">PIN mandiri (legacy)</h3><p className="mt-1 text-xs leading-5 text-[#929b90]">PIN mandiri tidak lagi digunakan untuk aktivasi. Buat kartu dan PIN sebagai satu paket di atas.</p></div></div>
               <div className="mt-6 rounded-xl bg-[#f7f8f5] p-4 sm:p-5">
                 <label htmlFor="pin-quantity" className="mb-2 block text-[11px] font-semibold text-[#687365]">Jumlah PIN yang ingin dibuat</label>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <input id="pin-quantity" type="number" min="1" max="100" value={quantity} onChange={e => setQuantity(e.target.value)} className="h-12 w-full rounded-xl border border-[#e1e6dc] bg-white px-4 text-sm font-semibold outline-none transition focus:border-[#aebfa7] focus:ring-4 focus:ring-[#edf3e9] sm:max-w-[150px]"/>
-                  <button onClick={createPins} disabled={creating} className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#29382b] px-5 text-sm font-semibold text-white transition hover:bg-[#3a4b3b] disabled:cursor-not-allowed disabled:opacity-50">{creating ? <Loader2 size={17} className="animate-spin"/> : <Plus size={17}/>} {creating ? "Membuat PIN..." : Number(quantity) === 1 ? "Generate 1 PIN" : "Generate PIN"}</button>
+                  <button onClick={createPins} disabled={true} className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#29382b] px-5 text-sm font-semibold text-white transition hover:bg-[#3a4b3b] disabled:cursor-not-allowed disabled:opacity-50">{creating ? <Loader2 size={17} className="animate-spin"/> : <Plus size={17}/>} "Gunakan form kartu + PIN di atas"</button>
                 </div>
-                <p className="mt-3 text-[11px] leading-5 text-[#929b90]">Bisa membuat 1–100 PIN dalam satu proses. Pastikan jumlah sudah benar sebelum generate.</p>
+                <p className="mt-3 text-[11px] leading-5 text-[#929b90]">PIN harus terikat ke kartu agar dapat diaktifkan. Pembuatan PIN mandiri dinonaktifkan.</p>
               </div>
               <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-[#eee8d9] bg-[#fbf8f0] p-3.5 text-[11px] leading-5 text-[#897b5d]"><ShieldCheck size={15} className="mt-0.5 shrink-0"/> PIN lengkap hanya ditampilkan satu kali setelah dibuat. Simpan atau salin sebelum meninggalkan halaman.</div>
             </article>
