@@ -22,6 +22,10 @@ export default function AdminPinsPage() {
   const [message, setMessage] = useState("");
   const [newPins, setNewPins] = useState<string[]>([]);
   const [copied, setCopied] = useState("");
+  const [inventoryName, setInventoryName] = useState("");
+  const [inventoryUrl, setInventoryUrl] = useState("");
+  const [inventoryCreating, setInventoryCreating] = useState(false);
+  const [inventoryResult, setInventoryResult] = useState<{pin:string;cardUrl:string;cardName:string}|null>(null);
 
   const token = useCallback(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -55,6 +59,22 @@ export default function AdminPinsPage() {
       setNewPins(result.pins); setMessage(result.message); await loadPins();
     } catch (err) { setError(err instanceof Error ? err.message : "Terjadi kesalahan."); }
     finally { setCreating(false); }
+  }
+
+  async function createCardInventory() {
+    setError(""); setMessage(""); setInventoryResult(null);
+    if (!inventoryName.trim() || !inventoryUrl.trim()) { setError("Nama kartu dan Google Maps Review URL wajib diisi."); return; }
+    setInventoryCreating(true);
+    try {
+      const accessToken = await token();
+      const response = await fetch("/api/admin/cards", { method: "POST", headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" }, body: JSON.stringify({ cardName: inventoryName, destinationUrl: inventoryUrl }) });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || "Gagal membuat kartu.");
+      setInventoryResult({ pin: result.pin, cardUrl: result.cardUrl, cardName: result.cardName });
+      setInventoryName(""); setInventoryUrl(""); setMessage("Kartu dan PIN berhasil dibuat sebagai satu paket.");
+      await loadPins();
+    } catch (err) { setError(err instanceof Error ? err.message : "Terjadi kesalahan."); }
+    finally { setInventoryCreating(false); }
   }
 
   async function revokePin(id: string) {
@@ -125,6 +145,21 @@ export default function AdminPinsPage() {
 
           {error && <div className="mb-5 flex items-start gap-3 rounded-xl border border-[#f0c9c4] bg-[#fff4f1] p-4 text-sm text-[#a3453a]"><AlertCircle size={18} className="mt-0.5 shrink-0"/><div><p className="font-semibold">Ada kendala</p><p className="mt-1">{error}</p></div></div>}
           {message && <div className="mb-5 flex items-start gap-3 rounded-xl border border-[#dce5d7] bg-[#edf3e9] p-4 text-sm text-[#526b4e]"><Check size={18} className="mt-0.5 shrink-0"/><p className="font-medium">{message}</p></div>}
+
+          <section className="mb-7 grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(300px,.8fr)]">
+            <article className="rounded-2xl border border-[#e2e7df] bg-white p-5 sm:p-6">
+              <div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-[#edf3e9] text-[#607c59]"><CreditCard size={18}/></span><div><h3 className="text-sm font-semibold">Siapkan kartu + PIN</h3><p className="mt-1 text-xs text-[#899386]">Buat kartu fisik dan PIN aktivasi dalam satu proses.</p></div></div>
+              <div className="mt-5 grid gap-4">
+                <label className="grid gap-2 text-xs font-semibold text-[#596556]">Nama kartu<input value={inventoryName} onChange={e=>setInventoryName(e.target.value)} maxLength={60} placeholder="Contoh: Kartu Meja Kasir" className="h-11 rounded-xl border border-[#e2e7df] bg-[#fafbf9] px-3 text-sm font-normal outline-none focus:border-[#9bad94]"/></label>
+                <label className="grid gap-2 text-xs font-semibold text-[#596556]">Google Maps Review URL<input type="url" value={inventoryUrl} onChange={e=>setInventoryUrl(e.target.value)} placeholder="https://search.google.com/local/writereview?placeid=..." className="h-11 rounded-xl border border-[#e2e7df] bg-[#fafbf9] px-3 text-sm font-normal outline-none focus:border-[#9bad94]"/></label>
+                <button onClick={()=>void createCardInventory()} disabled={inventoryCreating} className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#263b2b] px-4 text-xs font-bold text-white hover:bg-[#354c39] disabled:opacity-50">{inventoryCreating ? <Loader2 size={15} className="animate-spin"/> : <Plus size={15}/>} Buat kartu dan PIN</button>
+              </div>
+            </article>
+            <article className="rounded-2xl border border-[#e2e7df] bg-[#f9fbf7] p-5 sm:p-6">
+              <p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#82917d]">Paket aktivasi</p>
+              {inventoryResult ? <><h3 className="mt-3 text-lg font-semibold">{inventoryResult.cardName}</h3><p className="mt-1 text-xs text-[#849080]">Simpan PIN ini dan berikan kepada pembeli bersama kartu.</p><div className="mt-5 rounded-xl border border-[#dfe7da] bg-white p-4"><p className="text-[10px] font-bold uppercase tracking-[.14em] text-[#8b9686]">PIN kartu</p><div className="mt-2 flex items-center justify-between gap-2"><strong className="font-mono text-lg tracking-wider">{inventoryResult.pin}</strong><button onClick={()=>void copyText(inventoryResult.pin,"inventory-pin")} className="rounded-lg border border-[#e3e8df] p-2 text-[#61765b]"><Copy size={15}/></button></div></div><div className="mt-3 rounded-xl border border-[#dfe7da] bg-white p-3"><p className="text-[10px] font-bold uppercase tracking-[.14em] text-[#8b9686]">URL NFC untuk ditulis ke kartu</p><p className="mt-2 break-all text-xs text-[#596556]">{inventoryResult.cardUrl}</p><button onClick={()=>void copyText(inventoryResult.cardUrl,"inventory-url")} className="mt-2 inline-flex items-center gap-2 text-xs font-bold text-[#526b4e]"><Copy size={13}/> Salin URL kartu</button></div></> : <div className="flex h-full min-h-[220px] flex-col justify-center"><div className="grid h-11 w-11 place-items-center rounded-xl bg-white text-[#6d8166]"><ShieldCheck size={20}/></div><h3 className="mt-4 text-sm font-semibold">Satu paket, satu kepemilikan</h3><p className="mt-2 max-w-xs text-xs leading-6 text-[#849080]">Setiap kartu mendapat URL NFC unik dan satu PIN. Pembeli hanya perlu PIN untuk aktivasi atau menghubungkan kartu ke akun.</p></div>}
+            </article>
+          </section>
 
           <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {[
