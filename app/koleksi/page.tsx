@@ -16,6 +16,7 @@ const products = [
 
 export default function KoleksiPage() {
   return (
+    <div className="dt-collection-page">
     <InfoPage
       eyebrow="KOLEKSI / DITAPAJA"
       title={<>Pilih kartu untuk<br /><em>bisnismu.</em></>}
@@ -32,5 +33,6 @@ export default function KoleksiPage() {
         <p>Noir dan Blanc dapat dipesan mulai satu kartu. DiTapAja Signature tersedia melalui pre-order dengan minimum 10 kartu. Semua pesanan dikonfirmasi melalui WhatsApp.</p>
       </div>
     </InfoPage>
+    </div>
   );
 }
