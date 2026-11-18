@@ -219,3 +219,25 @@
 @media (prefers-reduced-motion: reduce) {
   .dt-ui-button { transition: none; }
 }
+
+
+.dt-ui-field-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--dt-color-ink-soft);
+  font: 650 12px/1.4 var(--dt-font-body);
+}
+
+.dt-ui-input:disabled,
+.dt-ui-select:disabled,
+.dt-ui-textarea:disabled {
+  cursor: not-allowed;
+  background: var(--dt-color-surface-muted);
+  color: var(--dt-color-muted);
+}
+
+.dt-ui-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
