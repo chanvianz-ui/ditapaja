@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       pin,
-      cardUrl: `${request.nextUrl.origin}/review/${publicCode}`,
+      cardUrl: `${request.nextUrl.origin}/c/${publicCode}`,
       cardName,
       message: "Kartu dan PIN berhasil dibuat sebagai satu paket.",
     }, { status: 201 });
