@@ -74,6 +74,34 @@ export async function PATCH(request: NextRequest) {
     if (!auth.authorized) return auth.response;
 
     const body = await request.json();
+
+    if (body.action === "set_status") {
+      const id = String(body.id || "");
+      const active = body.active;
+      if (!/^[0-9a-f-]{36}$/i.test(id) || typeof active !== "boolean") {
+        return NextResponse.json({ success: false, error: "Data status kartu tidak valid." }, { status: 400 });
+      }
+      const { data: card, error: cardError } = await auth.supabase!.from("nfc_cards")
+        .select("id,active,user_id,archived_at").eq("id", id).maybeSingle();
+      if (cardError) throw cardError;
+      if (!card || card.archived_at) {
+        return NextResponse.json({ success: false, error: "Kartu tidak ditemukan atau sudah diarsipkan." }, { status: 404 });
+      }
+      if (active && !card.active) {
+        const { data: pin, error: pinError } = await auth.supabase!.from("nfc_activation_pins")
+          .select("id,status").eq("card_id", id).maybeSingle();
+        if (pinError) throw pinError;
+        if (pin?.status !== "claimed") {
+          return NextResponse.json({ success: false, error: "Kartu belum menyelesaikan aktivasi PIN." }, { status: 409 });
+        }
+      }
+      const { data: updated, error: updateError } = await auth.supabase!.from("nfc_cards")
+        .update({ active }).eq("id", id).is("archived_at", null).select("id,active").maybeSingle();
+      if (updateError) throw updateError;
+      if (!updated) return NextResponse.json({ success: false, error: "Status kartu gagal diperbarui." }, { status: 409 });
+      return NextResponse.json({ success: true, active: updated.active });
+    }
+
     const id = String(body.id || "");
     const cardName = String(body.cardName || "").trim();
     const destinationUrl = String(body.destinationUrl || "").trim();
