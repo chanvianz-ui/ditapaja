@@ -43,7 +43,6 @@
 .dt-admin-shell{background:var(--dt-paper)!important;color:var(--dt-ink)!important}
 .dt-admin-shell header{background:#fbfaf6ed!important;border-color:var(--dt-line)!important}
 .dt-admin-shell .rounded-2xl,.dt-admin-shell .rounded-xl{border-radius:5px!important}
-.dt-admin-shell .border-[#e5e8e1],.dt-admin-shell .border-[#e2e7df],.dt-admin-shell .border-[#edf0eb]{border-color:var(--dt-line)!important}
 .dt-admin-shell .bg-white{background:var(--dt-panel)!important}
 .dt-admin-shell input,.dt-admin-shell select{border-radius:7px!important;border-color:#dfdfd6!important}
 .dt-admin-shell button.bg-\[\#29382b\]{background:var(--dt-olive)!important}
