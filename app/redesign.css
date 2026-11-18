@@ -126,7 +126,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .dt-dashboard-shell.is-sidebar-collapsed .dt-sidebar-brand > span:last-child,
 .dt-dashboard-shell.is-sidebar-collapsed .dt-sidebar-account > span:last-child,
 .dt-dashboard-shell.is-sidebar-collapsed .dt-sidebar-label,
-.dt-dashboard-shell.is-sidebar-collapsed .dt-sidebar-link:not(.is-active) { font-size:0 !important; }
+.dt-dashboard-shell.is-sidebar-collapsed .dt-sidebar-link { font-size:0 !important; }
 .dt-dashboard-shell.is-sidebar-collapsed .dt-sidebar-brand > span:last-child,
 .dt-dashboard-shell.is-sidebar-collapsed .dt-sidebar-account > span:last-child { display:none; }
 .dt-dashboard-shell.is-sidebar-collapsed .dt-sidebar-account { justify-content:center; padding:10px !important; }
@@ -188,3 +188,43 @@ html[data-theme="dark"] .dt-dashboard-shell .dt-dashboard-content [class*="text-
 @media (prefers-reduced-motion:reduce) {
   *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
+
+/* Shared admin drawer and cross-page primitives */
+[role="dialog"][aria-label="Admin navigation"] {
+  width:min(360px,90vw) !important; padding:24px !important;
+  border-color:var(--dt-line) !important; background:var(--dt-surface) !important;
+  color:var(--dt-ink) !important; box-shadow:0 30px 90px -35px rgba(0,0,0,.35) !important;
+}
+[role="dialog"][aria-label="Admin navigation"] .border-slate-100,
+[role="dialog"][aria-label="Admin navigation"] .border-slate-200 { border-color:var(--dt-line) !important; }
+[role="dialog"][aria-label="Admin navigation"] .text-slate-900,
+[role="dialog"][aria-label="Admin navigation"] .text-slate-700 { color:var(--dt-ink) !important; }
+[role="dialog"][aria-label="Admin navigation"] .text-slate-600,
+[role="dialog"][aria-label="Admin navigation"] .text-slate-500,
+[role="dialog"][aria-label="Admin navigation"] .text-slate-400 { color:var(--dt-muted) !important; }
+[role="dialog"][aria-label="Admin navigation"] .bg-white,
+[role="dialog"][aria-label="Admin navigation"] .bg-slate-50 { background:var(--dt-surface-soft) !important; }
+[role="dialog"][aria-label="Admin navigation"] nav button { min-height:46px; border-radius:12px !important; }
+[role="dialog"][aria-label="Admin navigation"] nav button.bg-slate-900 { background:var(--dt-primary) !important; color:#fff !important; }
+[role="dialog"][aria-label="Admin navigation"] nav button:not(.bg-slate-900):hover { background:var(--dt-surface-muted) !important; }
+[role="dialog"][aria-label="Admin navigation"] button.text-rose-600:hover { background:color-mix(in srgb,var(--dt-danger) 10%,transparent) !important; }
+html[data-theme="dark"] body [class*="bg-white"] { background-color:var(--dt-surface) !important; }
+html[data-theme="dark"] body [class*="bg-slate-50"],
+html[data-theme="dark"] body [class*="bg-gray-50"] { background-color:var(--dt-surface-soft) !important; }
+html[data-theme="dark"] body [class*="text-slate-900"],
+html[data-theme="dark"] body [class*="text-slate-800"],
+html[data-theme="dark"] body [class*="text-gray-900"] { color:var(--dt-ink) !important; }
+html[data-theme="dark"] body [class*="text-slate-600"],
+html[data-theme="dark"] body [class*="text-slate-500"],
+html[data-theme="dark"] body [class*="text-slate-400"],
+html[data-theme="dark"] body [class*="text-gray-500"] { color:var(--dt-muted) !important; }
+html[data-theme="dark"] body [class*="border-slate-"],
+html[data-theme="dark"] body [class*="border-gray-"] { border-color:var(--dt-line) !important; }
+html[data-theme="dark"] body input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme="dark"] body select,
+html[data-theme="dark"] body textarea { background-color:var(--dt-surface-soft) !important; color:var(--dt-ink) !important; border-color:var(--dt-line) !important; }
+html[data-theme="dark"] body input::placeholder,
+html[data-theme="dark"] body textarea::placeholder { color:var(--dt-muted) !important; opacity:.8; }
+html[data-theme="dark"] body table thead { background:var(--dt-surface-soft) !important; }
+html[data-theme="dark"] body table td,
+html[data-theme="dark"] body table th { border-color:var(--dt-line) !important; }
