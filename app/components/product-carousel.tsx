@@ -14,7 +14,7 @@ function CardMock({tone}:{tone:string}){
 
 export default function ProductCarousel({products}:{products:Product[]}){
  return <div className="catalog-slider dt-collection-grid">
-  {products.map((p,i)=>(
+  {products.map((p)=>(
    <article className={`concept-product dt-product-card ${i===0?"is-featured":"is-compact"}`} key={p.tone}>
     <div className="dt-product-card-head">
      <span className="dt-product-family">DITAPAJA / COLLECTION</span>
@@ -25,7 +25,7 @@ export default function ProductCarousel({products}:{products:Product[]}){
      <span className="dt-product-object-caption">NFC REVIEW CARD</span>
     </Link>
     <div className="concept-product-body">
-     <div className="dt-product-title-row"><h3><Link href={`/products/${p.tone}`}>{p.name}</Link></h3><span className="dt-product-index">{String(i+1).padStart(2,"0")}</span></div>
+     <div className="dt-product-title-row"><h3><Link href={`/products/${p.tone}`}>{p.name}</Link></h3></div>
      <p>{p.description}</p>
      <div className="concept-product-includes"><span><Nfc size={13}/> NFC</span><span><QrCode size={13}/> QR Code</span><span><BarChart3 size={13}/> Dashboard</span></div>
      <div className="concept-product-buy"><div><strong>{p.price}</strong><span> / kartu</span></div><Link href={`/pesan?product=${p.tone}`} className="catalog-order-link">{p.mode==="preorder"?"Pre-order":"Pesan kartu"}<ArrowUpRight size={16}/></Link></div>
