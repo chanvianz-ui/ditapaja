@@ -143,7 +143,7 @@ export default function AdminPage() {
           <section className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
             {primaryStats.map((item) => {
               const Icon = item.icon;
-              const tone = item.tone === "blue" ? "bg-[#eaf0f8] text-[#56769e]" : item.tone === "violet" ? "bg-[#efebf6] text-[#796a9c]" : item.tone === "amber" ? "bg-[#f7f0e3] text-[#a17b3e]" : "bg-[#eaf1e7] text-[#63805c]";
+              const tone = "bg-[#eaf1e9] text-[#456b4d]";
               return <article key={item.label} className="rounded-2xl border border-[#e5e8e1] bg-white p-5 sm:p-6">
                 <div className="flex items-start justify-between"><p className="text-[12px] font-medium text-[#7e887c]">{item.label}</p><span className={`flex h-9 w-9 items-center justify-center rounded-xl ${tone}`}><Icon size={17}/></span></div>
                 <p className="mt-5 text-[32px] font-semibold leading-none tracking-[-.04em] text-[#252d25]">{loading ? "—" : number(item.value)}</p>
@@ -165,12 +165,12 @@ export default function AdminPage() {
               <button onClick={() => router.push("/admin/orders")} className="flex w-full items-center justify-between border-t border-[#edf0eb] px-5 py-4 text-xs font-semibold text-[#61775b] transition hover:bg-[#f8faf6] sm:px-6">Buka manajemen pesanan <ArrowUpRight size={15}/></button>
             </article>
 
-            <article className="rounded-2xl border border-[#e2e7df] bg-[#263329] p-5 text-white sm:p-6">
-              <div className="flex items-center justify-between"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#a7b6a2]">Platform engagement</p><Activity size={18} className="text-[#c3d5b9]"/></div>
+            <article className="rounded-2xl border border-[#dfe8dc] bg-[#edf3e9] p-5 text-[#26372b] shadow-[0_14px_35px_-28px_rgba(39,70,47,.35)] sm:p-6">
+              <div className="flex items-center justify-between"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#6c8068]">Platform engagement</p><Activity size={18} className="text-[#52734e]"/></div>
               <p className="mt-6 text-[34px] font-semibold tracking-[-.045em]">{loading ? "—" : number(stats.totalTaps)}</p>
-              <p className="mt-1 text-xs text-[#b4c0b0]">Total interaksi NFC</p>
-              <div className="my-5 h-px bg-white/10"/>
-              <div className="flex items-end justify-between gap-3"><div><p className="text-xl font-semibold">{loading ? "—" : number(stats.totalReviewClicks)}</p><p className="mt-1 text-[11px] text-[#a7b6a2]">Klik tombol Google Review</p></div><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-[#d5e3cf]"><MousePointerClick size={18}/></div></div>
+              <p className="mt-1 text-xs text-[#657760]">Total interaksi NFC</p>
+              <div className="my-5 h-px bg-[#dce8d8]"/>
+              <div className="flex items-end justify-between gap-3"><div><p className="text-xl font-semibold">{loading ? "—" : number(stats.totalReviewClicks)}</p><p className="mt-1 text-[11px] text-[#a7b6a2]">Klik tombol Google Review</p></div><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#dce8d8] text-[#52734e]"><MousePointerClick size={18}/></div></div>
             </article>
           </section>
 
