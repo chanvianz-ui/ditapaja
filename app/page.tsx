@@ -4,9 +4,9 @@ import ProductCarousel from "./components/product-carousel";
 import ScrollMotion from "./components/scroll-motion";
 
 const products=[
-{name:"DiTapAja Noir",label:"01 / BLACK EDITION",description:"Karakter tegas untuk bisnis yang ingin tampil standout.",tone:"noir",price:"Rp50.000",order:"READY TO ORDER",action:"Beli Noir",mode:"buy"},
-{name:"DiTapAja Blanc",label:"02 / WHITE EDITION",description:"Minimal, bersih, dan mudah menyatu dengan identitas brand.",tone:"blanc",price:"Rp50.000",order:"READY TO ORDER",action:"Beli Blanc",mode:"buy"},
-{name:"DiTapAja Signature",label:"03 / CUSTOM EDITION",description:"Kartu dengan identitas visual bisnismu sendiri.",tone:"signature",price:"Rp60.000",order:"PRE-ORDER · MIN. 10 KARTU",action:"Pre-order",mode:"preorder"}];
+{name:"DiTapAja Noir",description:"Karakter tegas untuk bisnis yang ingin tampil standout.",tone:"noir",price:"Rp50.000",order:"READY TO ORDER",action:"Beli Noir",mode:"buy"},
+{name:"DiTapAja Blanc",description:"Minimal, bersih, dan mudah menyatu dengan identitas brand.",tone:"blanc",price:"Rp50.000",order:"READY TO ORDER",action:"Beli Blanc",mode:"buy"},
+{name:"DiTapAja Signature",description:"Kartu dengan identitas visual bisnismu sendiri.",tone:"signature",price:"Rp60.000",order:"PRE-ORDER · MIN. 10 KARTU",action:"Pre-order",mode:"preorder"}];
 const questions=[
 ["Apakah ada biaya dashboard bulanan?","Tidak ada. Akses dashboard sudah termasuk dalam pembelian kartu DiTapAja."],
 ["Bagaimana pelanggan menggunakan kartu?","Pelanggan cukup mendekatkan smartphone yang mendukung NFC atau memindai QR Code pada kartu."],
@@ -24,7 +24,7 @@ export default function Home(){return <main className="concept-home dt-home-mobi
   <div className="concept-hero-actions"><a className="concept-button" href="#koleksi">Temukan kartu <ArrowUpRight size={17}/></a><a className="concept-quiet-link" href="#experience">Lihat cara kerja <ArrowRight size={15}/></a></div>
   <div className="dt-hero-proof"><span><Check size={14}/> NFC + QR</span><span><Check size={14}/> Dashboard gratis</span><span><Check size={14}/> Tanpa biaya bulanan</span></div>
  </div>
- <div className="dt-hero-index"><span>DITAPAJA® / 2026</span><a href="#koleksi">SCROLL TO EXPLORE <span>↓</span></a></div>
+ <a className="dt-hero-scroll" href="#koleksi">SCROLL TO EXPLORE <span>↓</span></a>
 </section>
 <section className="concept-collection dt-home-collection" id="koleksi">
  <div className="concept-section-top dt-home-section-heading"><div><div className="concept-eyebrow dark-eyebrow">THE COLLECTION</div><h2>Designed to<br/><em>make an impact.</em></h2></div><p>Kartu review yang praktis digunakan, mudah dikelola, dan siap menjadi bagian dari pengalaman bisnismu.</p></div>
