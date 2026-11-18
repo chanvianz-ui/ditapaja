@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Check, ChevronDown, Nfc, QrCode, BarChart3, Link2, Smartphone, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, ChevronDown, QrCode, BarChart3, Link2, Smartphone, Sparkles, ShieldCheck } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 import ScrollMotion from "./components/scroll-motion";
@@ -11,7 +11,6 @@ const questions=[
 ["Bagaimana pelanggan menggunakan kartu?","Pelanggan cukup mendekatkan smartphone yang mendukung NFC atau memindai QR Code pada kartu."],
 ["Apakah link tujuan bisa diganti?","Bisa. Kamu dapat mengubah tujuan kartu melalui dashboard tanpa perlu mengganti kartu."],
 ["Data apa yang tersedia di dashboard?","Kamu dapat memantau jumlah tap, estimasi pengunjung unik, dan klik menuju Google Review. Angka ini bukan jumlah ulasan yang dipublikasikan."]];
-function CardMock({tone}:{tone:string}){return <div className={`simple-card ${tone}`}><div className="simple-card-top"><b>DiTapAja<span>.</span></b><Nfc size={23}/></div><div className="simple-card-center"><span>YOUR BUSINESS</span><strong>MAKE EVERY<br/>TAP COUNT.</strong></div><div className="simple-card-bottom"><span>NFC · QR CODE</span><span>10 × 10 CM</span></div></div>}
 function Brand(){return <a href="/" className="brand"><span className="brand-symbol"><i/><i/><i/></span><span>DiTap<span className="blue-word">Aja</span></span></a>}
 export default function Home(){return <main className="concept-home" id="top">
 <ScrollMotion/>
