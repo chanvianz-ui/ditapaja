@@ -1,0 +1,99 @@
+/* DITAPAJA — PREMIUM WORKSPACE
+   A deliberate editorial system: warm mineral canvas, ink typography,
+   restrained olive accents, crisp data surfaces. Scoped to app workspace. */
+:root{
+  --dt-premium-ink:#20251f;
+  --dt-premium-muted:#777d72;
+  --dt-premium-line:#e5e4dc;
+  --dt-premium-paper:#fbfaf6;
+  --dt-premium-panel:#fffefa;
+  --dt-premium-olive:#52634b;
+  --dt-premium-olive-dark:#354432;
+}
+body:has(.workspace-sidebar.dt-sidebar){background:var(--dt-premium-paper);color:var(--dt-premium-ink)}
+.workspace-sidebar.dt-sidebar{
+  width:248px!important;padding:25px 18px!important;
+  background:#202720!important;color:#f4f2e9!important;
+  border-right:1px solid #303a30!important;
+}
+.dt-sidebar-brand{padding:4px 8px 18px!important}
+.dt-sidebar-mark{background:#dce4d3!important;color:#263126!important;border-radius:9px!important}
+.dt-sidebar-account{margin-top:17px!important;background:#ffffff0b!important;border:1px solid #ffffff12!important;border-radius:12px!important;padding:12px!important}
+.dt-sidebar-label{color:#9da99a!important;font-size:9px!important;letter-spacing:.17em!important}
+.dt-sidebar-link{min-height:42px!important;border-radius:9px!important;color:#c3c9bf!important;font-size:12px!important;font-weight:550!important;padding:0 12px!important;transition:background .18s,color .18s!important}
+.dt-sidebar-link:hover{background:#ffffff0c!important;color:#fff!important}
+.dt-sidebar-link.is-active{background:#dce4d3!important;color:#263126!important;box-shadow:none!important;font-weight:700!important}
+.dt-sidebar-settings,.dt-sidebar-logout{border-radius:9px!important}
+.dt-dashboard-topbar{
+  min-height:82px!important;padding:15px clamp(18px,3vw,42px)!important;
+  background:#fbfaf6ed!important;border:0!important;border-bottom:1px solid var(--dt-premium-line)!important;
+  backdrop-filter:blur(16px)!important;
+}
+.dt-dashboard-topbar h1{font-size:23px!important;letter-spacing:-.055em!important;color:var(--dt-premium-ink)!important;font-weight:720!important}
+.dt-dashboard-topbar .dt-sidebar-collapse{border-color:var(--dt-premium-line)!important;border-radius:9px!important}
+.dt-dashboard-content{max-width:1540px!important;padding:34px clamp(18px,3vw,42px) 56px!important;gap:30px!important}
+.dt-dashboard-command{
+  border-radius:5px!important;padding:clamp(25px,3.2vw,44px)!important;
+  background:#344536!important;border:1px solid #344536!important;
+  box-shadow:0 24px 60px -42px #253325a6!important;
+}
+.dt-dashboard-command:before{opacity:.14!important}
+.dt-dashboard-command .dt-dashboard-eyebrow{color:#c9d4c2!important;letter-spacing:.19em!important;font-size:9px!important}
+.dt-dashboard-command h2,.dt-dashboard-command h1{font-size:clamp(30px,3.3vw,48px)!important;line-height:1.03!important;letter-spacing:-.06em!important;font-weight:650!important;max-width:720px!important}
+.dt-dashboard-command p{color:#d6dfd1!important}
+.dt-dashboard-live{background:#dbe5d4!important;color:#344536!important;border:0!important}
+.dt-dashboard-primary-action{background:#e8eee2!important;color:#2e3b2e!important;border-radius:8px!important;box-shadow:none!important;font-weight:700!important}
+.dt-dashboard-secondary-action{border-radius:8px!important;border-color:#ffffff45!important;background:#ffffff0b!important}
+.dt-dashboard-command-panel{background:#26382b!important;border:1px solid #ffffff1c!important;border-radius:5px!important;box-shadow:none!important}
+.dt-dashboard-device-stat{background:#ffffff0b!important;border:1px solid #ffffff17!important;border-radius:5px!important}
+.dt-dashboard-device-stat strong{color:#fff!important}
+.dt-analytics-overview{padding-top:5px}
+.dt-analytics-heading{margin-bottom:18px!important}
+.dt-analytics-kicker{color:var(--dt-premium-olive)!important;letter-spacing:.18em!important;font-size:9px!important}
+.dt-analytics-heading h2{font-size:25px!important;letter-spacing:-.055em!important;color:var(--dt-premium-ink)!important;font-weight:700!important}
+.dt-analytics-period-chip{border-radius:7px!important;background:#eeeee7!important;color:#465344!important}
+.dt-dashboard-content .rounded-2xl.border,
+.dt-dashboard-content .rounded-3xl.border,
+.dt-dashboard-content .dt-analytics-insights,
+.dt-dashboard-content .overflow-hidden.rounded-2xl,
+.dt-dashboard-content .overflow-hidden.rounded-3xl{
+  border-color:var(--dt-premium-line)!important;
+  background:var(--dt-premium-panel)!important;
+  border-radius:5px!important;box-shadow:0 8px 28px -25px #20251f55!important;
+}
+.dt-dashboard-content .bg-slate-50\/70,
+.dt-dashboard-content .bg-slate-50\/60,
+.dt-dashboard-content .bg-slate-50\/80{background:#f3f2eb!important}
+.dt-dashboard-content .text-blue-600,.dt-dashboard-content .text-blue-700{color:var(--dt-premium-olive)!important}
+.dt-dashboard-content .bg-blue-600,.dt-dashboard-content .bg-blue-700{background:var(--dt-premium-olive)!important}
+.dt-dashboard-content .border-blue-100,.dt-dashboard-content .border-blue-200{border-color:#dce2d5!important}
+.dt-dashboard-content .bg-blue-50{background:#eff2eb!important}
+.dt-dashboard-content .text-slate-900,.dt-dashboard-content .text-slate-950{color:var(--dt-premium-ink)!important}
+.dt-dashboard-content .text-slate-500{color:#747a70!important}
+.dt-dashboard-content input,.dt-dashboard-content select,.dt-dashboard-content textarea{
+  border-color:#dfdfd6!important;border-radius:7px!important;background:#fffefa!important;color:#283027!important;box-shadow:none!important
+}
+.dt-dashboard-content input:focus,.dt-dashboard-content select:focus,.dt-dashboard-content textarea:focus{
+  border-color:#87957e!important;box-shadow:0 0 0 3px #87957e20!important
+}
+.dt-nfc-card-row{border-radius:5px!important;border-color:var(--dt-premium-line)!important;box-shadow:none!important}
+.dt-nfc-card-row:hover{border-color:#aab5a1!important;box-shadow:0 12px 28px -24px #26332670!important}
+.dt-nfc-card-actions button{border-radius:6px!important}
+.dt-dashboard-content table th{background:#f3f2eb!important;color:#73796f!important;font-size:9px!important;letter-spacing:.12em!important}
+.dt-dashboard-content table td{color:#424a40!important}
+.dt-dashboard-content .insight-metric-card{border-radius:5px!important;background:#f4f3ed!important;border-color:#e7e6de!important}
+.dt-dashboard-content .dt-analytics-insights{padding:25px!important}
+.dt-mobile-bottom-nav{background:#202720!important;border-top:1px solid #364136!important}
+.dt-mobile-bottom-nav a,.dt-mobile-bottom-nav button{color:#c9d0c5!important}
+.dt-mobile-bottom-nav .is-active{color:#e3ebda!important}
+@media(max-width:1023px){
+ .dt-dashboard-content{padding-top:23px!important;gap:23px!important}
+ .dt-dashboard-topbar{min-height:70px!important}
+}
+@media(max-width:640px){
+ .dt-dashboard-content{padding:18px 14px 35px!important;gap:20px!important}
+ .dt-dashboard-command{padding:23px 19px!important;border-radius:4px!important}
+ .dt-dashboard-command h1,.dt-dashboard-command h2{font-size:32px!important}
+ .dt-analytics-heading h2{font-size:22px!important}
+ .dt-dashboard-content .dt-analytics-insights{padding:17px!important}
+}
