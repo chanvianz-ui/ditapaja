@@ -1003,7 +1003,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className={`dt-dashboard-shell min-h-screen text-slate-900${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}>
+    <main className={`dt-dashboard-shell dt-workspace-editorial min-h-screen text-slate-900${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}>
       <div className="flex min-h-screen">
         <aside className="workspace-sidebar dt-sidebar sticky top-0 hidden h-screen w-[264px] shrink-0 flex-col p-5 lg:flex">
           <a href="/" className="dt-sidebar-brand flex items-center gap-3 px-2 py-2">
@@ -1087,15 +1087,15 @@ export default function DashboardPage() {
               <div className="relative z-10 grid gap-7 xl:grid-cols-[minmax(0,1.45fr)_minmax(280px,.75fr)] xl:items-center">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="dt-dashboard-eyebrow"><LayoutDashboard size={12} /> BUSINESS CONTROL CENTER</span>
+                    <span className="dt-dashboard-eyebrow"><LayoutDashboard size={12} /> YOUR BUSINESS, IN FOCUS</span>
                     <span className="dt-dashboard-live"><span /> WORKSPACE AKTIF</span>
                   </div>
-                  <p className="mt-6 text-sm font-medium text-blue-100/75">Welcome back,</p>
+                  <p className="mt-6 text-sm font-medium text-blue-100/75">WORKSPACE OVERVIEW</p>
                   <h2 className="mt-1 max-w-3xl break-words text-3xl font-black tracking-[-.045em] text-white sm:text-4xl lg:text-[46px]">
                     {workspaceName} <span aria-hidden="true">👋</span>
                   </h2>
                   <p className="mt-3 max-w-xl text-sm leading-7 text-blue-100/75 sm:text-base">
-                    Semua aktivitas NFC dan performa review bisnismu, dalam satu tempat.
+                    Kelola kartu, pahami interaksi pelanggan, dan lihat perkembangan reputasi bisnismu dari satu ruang kerja.
                   </p>
                   <div className="mt-7 flex flex-wrap gap-3">
                     <button onClick={() => router.push("/dashboard/cards/new")} className="dt-dashboard-primary-action">
@@ -1109,10 +1109,10 @@ export default function DashboardPage() {
                 <div className="dt-dashboard-command-panel">
                   <div className="flex items-center justify-between gap-3">
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-100/55">RINGKASAN KARTU</p>
-                      <p className="mt-1 text-sm font-semibold text-white">Status perangkatmu</p>
+                      <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-100/55">YOUR NFC INVENTORY</p>
+                      <p className="mt-1 text-sm font-semibold text-white">Ringkasan kartu</p>
                     </div>
-                    <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-bold text-blue-100">LIVE OVERVIEW</span>
+                    <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-bold text-blue-100">CARD STATUS</span>
                   </div>
                   <div className="mt-5 grid grid-cols-2 gap-3">
                     <div className="dt-dashboard-device-stat">
@@ -1128,7 +1128,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="mt-4 border-t border-white/10 pt-4">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-blue-100/65">Kesiapan kartu</span>
+                      <span className="text-blue-100/65">Kartu yang siap digunakan</span>
                       <strong className="text-white">{cards.filter((card) => card.active && !card.archived_at).length} / {cards.filter((card) => !card.archived_at).length} aktif</strong>
                     </div>
                     <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
@@ -1182,8 +1182,8 @@ export default function DashboardPage() {
               <div className="dt-analytics-heading">
                 <div>
                   <p className="dt-analytics-kicker">PERFORMANCE INTELLIGENCE</p>
-                  <h3>Analytics Overview</h3>
-                  <p>Pahami jangkauan kartu dan seberapa banyak pengunjung melanjutkan ke Google Review.</p>
+                  <h3>Performa interaksi</h3>
+                  <p>Lihat bagaimana pelanggan menemukan kartu dan melanjutkan ke halaman ulasan.</p>
                 </div>
                 <div className="dt-analytics-period-chip"><BarChart3 size={14} /> Ringkasan aktivitas</div>
               </div>
@@ -1206,7 +1206,7 @@ export default function DashboardPage() {
             <section className="scroll-mt-24 space-y-5">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-xl">
-                  <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">Performance analytics</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">CUSTOMER ACTIVITY</p>
                   <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Aktivitas pelanggan</h2>
                   <p className="mt-2 text-sm leading-6 text-slate-500">Pantau interaksi dari kartu NFC dan QR, lalu lihat bagaimana pelanggan melanjutkan ke halaman ulasan.</p>
                 </div>
