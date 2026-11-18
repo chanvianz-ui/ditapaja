@@ -527,3 +527,122 @@ input,select,textarea { accent-color:var(--dt-primary); }
 @media(min-width:700px){
   .dt-home-mobile-first .dt-collection-grid .concept-product.is-compact .concept-product-buy{flex-direction:row!important;align-items:center!important}
 }
+
+
+/* Homepage visual safety pass: explicit typography, contrast and overflow rules */
+.dt-home-mobile-first,
+.dt-home-mobile-first *{box-sizing:border-box}
+.dt-home-mobile-first{color:#26372d!important;background:#f6f6f1!important}
+.dt-home-mobile-first .blue-word{color:inherit!important}
+.dt-home-mobile-first a{text-decoration:none!important}
+.dt-home-mobile-first h1,.dt-home-mobile-first h2,.dt-home-mobile-first h3,
+.dt-home-mobile-first p,.dt-home-mobile-first span{overflow-wrap:normal}
+.dt-home-mobile-first .concept-hero{background:#173d34!important;color:#f7f6ef!important}
+.dt-home-mobile-first .concept-hero h1{display:block!important;max-width:100%!important;color:#fbfaf4!important;font-family:Georgia,serif!important;font-weight:500!important;line-height:1.06!important;letter-spacing:-.045em!important;white-space:normal!important;overflow-wrap:normal!important}
+.dt-home-mobile-first .concept-hero h1 em{display:inline!important;color:#c4d4bf!important;font-style:italic!important}
+.dt-home-mobile-first .concept-hero .concept-eyebrow{color:#d4e0d2!important}
+.dt-home-mobile-first .concept-lead{color:#e0e8dd!important;line-height:1.75!important}
+.dt-home-mobile-first .concept-hero-actions{align-items:center!important}
+.dt-home-mobile-first .concept-button{background:#f4f3eb!important;color:#173d34!important}
+.dt-home-mobile-first .concept-quiet-link{color:#f0f3eb!important}
+.dt-home-mobile-first .dt-hero-proof span{color:#e0e8dd!important}
+.dt-home-mobile-first .dt-hero-index{color:#c6d3c4!important}
+.dt-home-mobile-first .dt-hero-index a{color:#f2f4ed!important}
+.dt-home-mobile-first .concept-collection,
+.dt-home-mobile-first .concept-dashboard,
+.dt-home-mobile-first .concept-faq{background:#f6f6f1!important;color:#26372d!important}
+.dt-home-mobile-first .concept-section-top h2,
+.dt-home-mobile-first .concept-experience-head h2,
+.dt-home-mobile-first .concept-dashboard-copy h2,
+.dt-home-mobile-first .concept-faq h2{color:#263c30!important;line-height:1.08!important;font-weight:500!important}
+.dt-home-mobile-first .concept-section-top h2 em,
+.dt-home-mobile-first .concept-experience-head h2 em,
+.dt-home-mobile-first .concept-dashboard-copy h2 em,
+.dt-home-mobile-first .concept-faq h2 em{color:#718a72!important}
+.dt-home-mobile-first .concept-section-top>p,
+.dt-home-mobile-first .concept-experience-head>p,
+.dt-home-mobile-first .concept-dashboard-copy>p,
+.dt-home-mobile-first .concept-faq>div:first-child>p{color:#5e6d61!important;line-height:1.75!important}
+.dt-home-mobile-first .dark-eyebrow,
+.dt-home-mobile-first .concept-dashboard-copy .concept-eyebrow,
+.dt-home-mobile-first .concept-experience-head .concept-eyebrow{color:#657966!important}
+.dt-home-mobile-first .dt-collection-grid{align-items:stretch!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product{background:#fff!important;border:1px solid #e1e7df!important;color:#26372d!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-art{position:relative!important;isolation:isolate!important;overflow:hidden!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-art-top,
+.dt-home-mobile-first .dt-collection-grid .concept-product-art-bottom{position:relative!important;z-index:2!important;color:#fff!important;font-size:9px!important;letter-spacing:.12em!important}
+.dt-home-mobile-first .dt-collection-grid .simple-card{position:relative!important;z-index:1!important;flex:none!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;overflow:hidden!important;max-width:100%!important;box-sizing:border-box!important}
+.dt-home-mobile-first .dt-collection-grid .simple-card-top,
+.dt-home-mobile-first .dt-collection-grid .simple-card-bottom{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;line-height:1.2!important}
+.dt-home-mobile-first .dt-collection-grid .simple-card-center{display:flex!important;flex-direction:column!important;gap:5px!important;line-height:1.1!important}
+.dt-home-mobile-first .dt-collection-grid .simple-card-center span{font-size:7px!important;letter-spacing:.14em!important}
+.dt-home-mobile-first .dt-collection-grid .simple-card-center strong{display:block!important;line-height:1.08!important;letter-spacing:-.03em!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-body{min-width:0!important;color:#26372d!important;background:#fff!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-meta{display:flex!important;justify-content:space-between!important;gap:10px!important;color:#69796b!important;line-height:1.4!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-body h3{display:block!important;color:#263c30!important;line-height:1.15!important;overflow-wrap:anywhere!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-body h3 a{color:inherit!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-body>p{color:#667468!important;line-height:1.65!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-includes{align-items:center!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-includes span{color:#526b58!important;white-space:nowrap!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-buy{color:#263c30!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-buy>div{display:flex!important;align-items:baseline!important;gap:5px!important;flex-wrap:wrap!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-buy strong{color:#203d2d!important;line-height:1.2!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-buy>div>span{color:#718074!important}
+.dt-home-mobile-first .dt-collection-grid .catalog-order-link{background:#214b37!important;color:#fff!important;line-height:1.2!important}
+.dt-home-mobile-first .dt-collection-grid .concept-product-detail-link{color:#365f43!important}
+.dt-home-mobile-first .concept-experience{background:#e9eee6!important;color:#263c30!important}
+.dt-home-mobile-first .concept-flow article{min-width:0!important}
+.dt-home-mobile-first .concept-flow article h3{color:#263c30!important;line-height:1.25!important}
+.dt-home-mobile-first .concept-flow article p{color:#5e6f61!important;line-height:1.65!important}
+.dt-home-mobile-first .concept-step-no{color:#657c68!important}
+.dt-home-mobile-first .concept-step-icon{color:#28543a!important;background:#f8faf5!important}
+.dt-home-mobile-first .concept-experience-note{color:#526657!important;line-height:1.65!important}
+.dt-home-mobile-first .concept-dashboard-frame{color:#263c30!important;background:#fff!important}
+.dt-home-mobile-first .concept-dash-top .brand{color:#263c30!important}
+.dt-home-mobile-first .concept-dash-top .brand .blue-word{color:inherit!important}
+.dt-home-mobile-first .concept-dash-top>span{color:#617464!important}
+.dt-home-mobile-first .concept-dash-welcome h3{color:#263c30!important;line-height:1.2!important}
+.dt-home-mobile-first .concept-dash-welcome p,
+.dt-home-mobile-first .concept-dash-welcome small{color:#69796c!important}
+.dt-home-mobile-first .concept-dash-metrics>div{background:#f8faf6!important;border-color:#e1e8df!important}
+.dt-home-mobile-first .concept-dash-metrics span,
+.dt-home-mobile-first .concept-dash-metrics small{color:#647466!important}
+.dt-home-mobile-first .concept-dash-metrics b{color:#214832!important}
+.dt-home-mobile-first .concept-dash-chart>div:first-child{color:#536b58!important}
+.dt-home-mobile-first .concept-faq{background:#f0f2eb!important}
+.dt-home-mobile-first .concept-faq-list details{border-color:#d7e0d6!important}
+.dt-home-mobile-first .concept-faq-list summary{color:#263c30!important;line-height:1.45!important}
+.dt-home-mobile-first .concept-faq-list summary svg{color:#54715a!important;flex:none!important}
+.dt-home-mobile-first .concept-faq-list details>p{color:#5f6f62!important;line-height:1.7!important}
+.dt-home-mobile-first .concept-final{background:#173d34!important;color:#f7f6ef!important}
+.dt-home-mobile-first .concept-final .concept-eyebrow{color:#d4e0d2!important}
+.dt-home-mobile-first .concept-final h2{color:#fbfaf4!important;line-height:1.06!important}
+.dt-home-mobile-first .concept-final>p{color:#e0e8dd!important;line-height:1.75!important}
+.dt-home-mobile-first .concept-final-button{background:#f4f3eb!important;color:#173d34!important}
+.dt-home-mobile-first .concept-final-mark{color:#d2dfd1!important}
+.dt-home-mobile-first .concept-footer{background:#f6f6f1!important;color:#263c30!important}
+.dt-home-mobile-first .concept-footer .brand,
+.dt-home-mobile-first .concept-footer .brand .blue-word{color:#263c30!important}
+.dt-home-mobile-first .concept-footer>span{color:#647366!important}
+.dt-home-mobile-first .concept-footer>a:last-child{color:#28543a!important}
+@media(max-width:699px){
+ .dt-home-mobile-first .concept-hero h1{font-size:clamp(39px,10.2vw,53px)!important;line-height:1.12!important;margin:29px 0 18px!important}
+ .dt-home-mobile-first .concept-hero h1 br{display:block!important}
+ .dt-home-mobile-first .concept-section-top h2,
+ .dt-home-mobile-first .concept-experience-head h2,
+ .dt-home-mobile-first .concept-dashboard-copy h2,
+ .dt-home-mobile-first .concept-faq h2{font-size:clamp(36px,9vw,46px)!important;line-height:1.12!important}
+ .dt-home-mobile-first .dt-collection-grid .concept-product-art,
+ .dt-home-mobile-first .dt-collection-grid .concept-product.is-featured .concept-product-art{height:215px!important;min-height:215px!important}
+ .dt-home-mobile-first .dt-collection-grid .simple-card,
+ .dt-home-mobile-first .dt-collection-grid .is-featured .simple-card{width:min(78%,280px)!important;height:148px!important}
+ .dt-home-mobile-first .dt-collection-grid .concept-product-body h3,
+ .dt-home-mobile-first .dt-collection-grid .is-featured .concept-product-body h3{font-size:21px!important;line-height:1.2!important}
+ .dt-home-mobile-first .dt-collection-grid .concept-product-buy{flex-wrap:wrap!important}
+ .dt-home-mobile-first .dt-collection-grid .catalog-order-link{flex:0 0 auto!important;max-width:100%!important}
+ .dt-home-mobile-first .concept-flow article{grid-template-columns:27px 40px minmax(0,1fr)!important;column-gap:10px!important}
+ .dt-home-mobile-first .concept-flow article h3{font-size:15px!important;line-height:1.3!important}
+ .dt-home-mobile-first .concept-flow article p{font-size:11px!important}
+ .dt-home-mobile-first .concept-dashboard-copy ul{grid-template-columns:1fr!important}
+ .dt-home-mobile-first .concept-footer{grid-template-columns:1fr!important}
+}
