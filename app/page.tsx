@@ -13,7 +13,7 @@ const questions=[
 ["Apakah link tujuan bisa diganti?","Bisa. Kamu dapat mengubah tujuan kartu melalui dashboard tanpa perlu mengganti kartu."],
 ["Data apa yang tersedia di dashboard?","Kamu dapat memantau jumlah tap, estimasi pengunjung unik, dan klik menuju Google Review. Angka ini bukan jumlah ulasan yang dipublikasikan."]];
 function Brand(){return <a href="/" className="brand"><span className="brand-symbol"><i/><i/><i/></span><span>DiTap<span className="blue-word">Aja</span></span></a>}
-export default function Home(){return <main className="concept-home dt-home-mobile-first" id="top">
+export default function Home(){return <main className="concept-home dt-home-mobile-first dt-editorial-home" id="top">
 <ScrollMotion/>
 <SiteHeader/>
 <section className="concept-hero dt-home-hero">
