@@ -388,3 +388,104 @@
  .dt-editorial-home .concept-flow{grid-template-columns:1fr!important}
  .dt-editorial-home .concept-final{padding:78px 20px!important}
 }
+
+
+/* Final approved brand palette: Deep Navy / Electric Blue / Off-white. */
+.dt-editorial-home{
+ --home-ink:#0B2340!important;--home-muted:#64748b!important;
+ --home-paper:#F7F9FC!important;--home-line:#E6ECF3!important;
+ background:#F7F9FC!important;color:#0B2340!important;
+}
+.dt-editorial-home .concept-header{
+ background:rgba(255,255,255,.97)!important;border-bottom:1px solid #E9EEF5!important;
+ box-shadow:0 5px 24px rgba(11,35,64,.045)!important;
+}
+.dt-editorial-home .brand{color:#0B2340!important}
+.dt-editorial-home .brand-symbol{background:#0B2340!important;box-shadow:0 5px 14px rgba(11,35,64,.12)!important}
+.dt-editorial-home .brand-symbol i{background:#fff!important}
+.dt-editorial-home .blue-word{color:#3A86FF!important}
+.dt-editorial-home .concept-nav nav a,.dt-editorial-home .concept-nav-actions>a{color:#52647a!important}
+.dt-editorial-home .concept-nav nav a:hover,.dt-editorial-home .concept-nav-actions>a:hover{color:#3A86FF!important}
+.dt-editorial-home .concept-nav .concept-nav-cta{background:#0B2340!important;color:#fff!important;box-shadow:0 8px 18px rgba(11,35,64,.15)!important}
+.dt-editorial-home .concept-mobile-actions a,.dt-editorial-home .concept-mobile-actions button{border-color:#E4EAF2!important;color:#0B2340!important}
+
+/* Hero: off-white canvas, navy typography, blue signal. */
+.dt-editorial-home .concept-hero{
+ background:
+  radial-gradient(ellipse at 82% 22%,rgba(58,134,255,.13),transparent 30%),
+  radial-gradient(ellipse at 8% 100%,rgba(11,35,64,.045),transparent 38%),
+  linear-gradient(135deg,#FFFFFF 0%,#F7F9FC 62%,#F1F5FA 100%)!important;
+}
+.dt-editorial-home .concept-hero:before{
+ opacity:.34!important;background-image:radial-gradient(rgba(11,35,64,.17) .7px,transparent .7px)!important;
+ background-size:20px 20px!important;
+}
+.dt-editorial-home .concept-hero:after{
+ border-color:rgba(58,134,255,.22)!important;
+ box-shadow:0 0 0 36px rgba(58,134,255,.045),0 0 0 76px rgba(58,134,255,.025)!important;
+}
+.dt-editorial-home .concept-eyebrow{color:#4777b8!important}
+.dt-editorial-home .concept-eyebrow span{background:#3A86FF!important}
+.dt-editorial-home .concept-hero h1{color:#0B2340!important}
+.dt-editorial-home .concept-hero h1 em{color:#3A86FF!important}
+.dt-editorial-home .concept-lead{color:#64748b!important}
+.dt-editorial-home .concept-button{
+ background:#3A86FF!important;color:#fff!important;
+ box-shadow:0 10px 24px rgba(58,134,255,.22)!important;
+}
+.dt-editorial-home .concept-button:hover{background:#2875ed!important;box-shadow:0 14px 28px rgba(58,134,255,.27)!important}
+.dt-editorial-home .concept-quiet-link{color:#0B2340!important}
+.dt-editorial-home .dt-hero-proof{color:#64748b!important}
+.dt-editorial-home .dt-hero-proof svg{color:#3A86FF!important}
+.dt-editorial-home .dt-hero-scroll{color:#718198!important}
+
+/* Product collection — product artwork remains unchanged. */
+.dt-editorial-home .concept-collection{background:#fff!important}
+.dt-editorial-home .concept-section-top h2,.dt-editorial-home .concept-experience-head h2,.dt-editorial-home .concept-dashboard-copy h2,.dt-editorial-home .concept-faq h2{
+ color:#0B2340!important;
+}
+.dt-editorial-home .concept-section-top h2 em,.dt-editorial-home .concept-experience-head h2 em,.dt-editorial-home .concept-dashboard-copy h2 em,.dt-editorial-home .concept-faq h2 em{
+ color:#3A86FF!important;
+}
+.dt-editorial-home .concept-section-top>p,.dt-editorial-home .concept-experience-head>p,.dt-editorial-home .concept-dashboard-copy>p{color:#64748b!important}
+.dt-editorial-home .concept-collection .concept-product{
+ border-color:#E6ECF3!important;box-shadow:0 15px 40px rgba(11,35,64,.065)!important;
+}
+.dt-editorial-home .concept-collection .concept-product:hover{box-shadow:0 22px 48px rgba(11,35,64,.11)!important}
+.dt-editorial-home .concept-product-body h3,.dt-editorial-home .concept-product-body h3 a{color:#0B2340!important}
+.dt-editorial-home .concept-product-body>p{color:#64748b!important}
+.dt-editorial-home .concept-product-includes span{background:#F2F6FC!important;border-color:#E4EBF5!important;color:#42658f!important}
+.dt-editorial-home .concept-product-buy strong{color:#0B2340!important}
+.dt-editorial-home .catalog-order-link{background:#0B2340!important;box-shadow:0 8px 18px rgba(11,35,64,.16)!important}
+.dt-editorial-home .concept-product-detail-link{color:#3A86FF!important}
+.dt-editorial-home .concept-collection-foot{border-color:#E6ECF3!important;color:#718198!important}
+
+/* Alternating off-white sections, white cards and restrained blue details. */
+.dt-editorial-home .concept-experience{background:#F2F6FB!important;color:#0B2340!important}
+.dt-editorial-home .concept-flow article{background:#fff!important;border-color:#E4EBF4!important;box-shadow:0 10px 28px rgba(11,35,64,.045)!important}
+.dt-editorial-home .concept-step-no{color:#3A86FF!important}
+.dt-editorial-home .concept-step-icon{background:#EAF2FF!important;color:#2875ed!important}
+.dt-editorial-home .concept-flow article h3{color:#0B2340!important}
+.dt-editorial-home .concept-flow article p,.dt-editorial-home .concept-experience-note{color:#64748b!important}
+.dt-editorial-home .concept-flow-line{background:#DCE6F3!important}
+.dt-editorial-home .concept-dashboard{background:#fff!important}
+.dt-editorial-home .concept-dashboard-frame{background:#FBFCFE!important;border-color:#E6ECF3!important;box-shadow:0 26px 64px -45px rgba(11,35,64,.24)!important}
+.dt-editorial-home .concept-dash-sticker{background:#EAF2FF!important;color:#245da9!important}
+.dt-editorial-home .concept-dashboard-copy ul li{color:#52647a!important}
+.dt-editorial-home .concept-faq{background:#F7F9FC!important}
+.dt-editorial-home .concept-faq-list,.dt-editorial-home .concept-faq-list details{border-color:#E4EAF2!important}
+.dt-editorial-home .concept-faq-list summary{color:#0B2340!important}
+.dt-editorial-home .concept-faq-list details p{color:#64748b!important}
+
+/* Navy closing panel, blue CTA, clean white footer. */
+.dt-editorial-home .concept-final{
+ background:radial-gradient(ellipse at 82% 0%,rgba(58,134,255,.27),transparent 42%),linear-gradient(130deg,#0B2340,#12365d)!important;
+}
+.dt-editorial-home .concept-final h2{color:#fff!important}
+.dt-editorial-home .concept-final h2 em{color:#8dbaff!important}
+.dt-editorial-home .concept-final>p{color:#d2deed!important}
+.dt-editorial-home .concept-final-button{background:#3A86FF!important;color:#fff!important}
+.dt-editorial-home .concept-footer{background:#fff!important;color:#64748b!important;border-top:1px solid #E6ECF3!important}
+.dt-editorial-home .concept-footer .brand{color:#0B2340!important}
+.dt-editorial-home .concept-footer .brand-symbol{background:#0B2340!important}
+.dt-editorial-home .concept-footer .brand-symbol i{background:#fff!important}
