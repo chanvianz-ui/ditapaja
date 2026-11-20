@@ -1003,45 +1003,29 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className={`dt-dashboard-shell dt-workspace-editorial min-h-screen text-slate-900${sidebarCollapsed ? " is-sidebar-collapsed" : ""}`}>
+    <main className="dt-dashboard-shell dt-dashboard-v2 min-h-screen text-slate-900">
       <div className="flex min-h-screen">
-        <aside className="workspace-sidebar dt-sidebar sticky top-0 hidden h-screen w-[264px] shrink-0 flex-col p-5 lg:flex">
-          <a href="/" className="dt-sidebar-brand flex items-center gap-3 px-2 py-2">
-            <span className="dt-sidebar-mark"><i/><i/><i/></span>
-            <span className="text-[21px] font-extrabold tracking-[-.06em]">DiTapAja<span className="opacity-60">.</span><small className="mt-0.5 block text-[8px] font-bold uppercase tracking-[.2em] opacity-55">Business workspace</small></span>
-          </a>
-          <div className="dt-sidebar-account mt-8 flex items-center gap-3 rounded-2xl p-3">
-            <span className="dt-sidebar-avatar">{displayName.charAt(0).toUpperCase()}</span>
-            <span className="min-w-0"><strong className="block truncate text-xs">{displayName}</strong><small className="mt-0.5 block truncate text-[10px] opacity-55">{email}</small></span>
-          </div>
-          <nav aria-label="Navigasi utama" className="mt-8 space-y-7">
-            <div>
-              <p className="dt-sidebar-label">MENU UTAMA</p>
-              <div className="mt-2 space-y-1">
-                <a href="/dashboard" aria-current="page" className="dt-sidebar-link is-active"><LayoutDashboard size={17}/> Ringkasan</a>
-                <a href="#cards" className="dt-sidebar-link"><CreditCard size={17}/> Kartu NFC</a>
-                <a href="#analytics" className="dt-sidebar-link"><BarChart3 size={17}/> Analytics</a>
-                <a href="/dashboard/customers" className="dt-sidebar-link"><Users size={17}/> Customer Insights</a>
-              </div>
-            </div>
-            <div>
-              <p className="dt-sidebar-label">PENGELOLAAN</p>
-              <div className="mt-2 space-y-1">
-                <a href="/dashboard/orders" className="dt-sidebar-link"><Package size={17}/> Pesanan</a>
-                <a href="/dashboard/business" className="dt-sidebar-link"><Building2 size={17}/> Profil bisnis</a>
-                <a href="/dashboard/landing-page" className="dt-sidebar-link"><Eye size={17}/> Page Studio</a>
-              </div>
-            </div>
+        <aside className="dt-rail-v2 sticky top-0 hidden h-screen w-[86px] shrink-0 flex-col items-center py-5 lg:flex">
+          <a href="/" aria-label="DiTapAja home" className="dt-rail-brand">D.</a>
+          <div className="dt-rail-divider"/>
+          <nav aria-label="Navigasi utama" className="dt-rail-nav">
+            <a href="/dashboard" aria-current="page" title="Ringkasan" className="is-active"><LayoutDashboard size={19}/><span>Ringkasan</span></a>
+            <a href="#cards" title="Kartu NFC"><CreditCard size={19}/><span>Kartu NFC</span></a>
+            <a href="#analytics" title="Analytics"><BarChart3 size={19}/><span>Analytics</span></a>
+            <a href="/dashboard/customers" title="Customer Insights"><Users size={19}/><span>Insights</span></a>
+            <a href="/dashboard/orders" title="Pesanan"><Package size={19}/><span>Pesanan</span></a>
+            <a href="/dashboard/business" title="Profil bisnis"><Building2 size={19}/><span>Bisnis</span></a>
+            <a href="/dashboard/landing-page" title="Page Studio"><Eye size={19}/><span>Studio</span></a>
           </nav>
-          <div className="mt-auto space-y-3 pt-6">
-            <a href="/dashboard/settings" className="dt-sidebar-settings"><Settings size={16}/> Pengaturan akun <span>↗</span></a>
-            <button onClick={handleLogout} className="dt-sidebar-logout"><LogOut size={17}/> Keluar dari akun</button>
-            <p className="px-3 pt-2 text-[9px] tracking-wide text-white/30">DiTapAja · Workspace</p>
+          <div className="dt-rail-bottom">
+            <a href="/dashboard/settings" title="Pengaturan akun"><Settings size={19}/><span>Pengaturan</span></a>
+            <button onClick={handleLogout} title="Keluar dari akun"><LogOut size={19}/><span>Keluar</span></button>
+            <div className="dt-rail-avatar" title={displayName}>{displayName.charAt(0).toUpperCase()}</div>
           </div>
         </aside>
 
         <section className="min-w-0 flex-1">
-          <header className="workspace-header dt-dashboard-topbar sticky top-0 z-30 flex items-center justify-between border-b px-4 py-3.5 sm:px-5 md:px-10 md:py-4">
+          <header className="workspace-header dt-dashboard-topbar dt-topbar-v2 sticky top-0 z-30 flex items-center justify-between border-b px-4 py-3.5 sm:px-6 lg:px-9">
             <div className="flex min-w-0 items-center gap-3">
               <button type="button" className="dt-sidebar-collapse hidden lg:grid" onClick={() => setSidebarCollapsed((value) => !value)} aria-label={sidebarCollapsed ? "Perluas sidebar" : "Ciutkan sidebar"} title={sidebarCollapsed ? "Perluas sidebar" : "Ciutkan sidebar"}>{sidebarCollapsed ? <PanelLeftOpen size={17}/> : <PanelLeftClose size={17}/>}</button>
               <div className="min-w-0">
@@ -1080,7 +1064,7 @@ export default function DashboardPage() {
             <a href="/dashboard/settings"><Menu/><span>Lainnya</span></a>
           </nav>
 
-          <div className="dt-dashboard-content mx-auto max-w-[1480px] space-y-8 px-4 py-6 sm:space-y-9 sm:px-6 sm:py-8 xl:px-10 xl:py-10">
+          <div className="dt-dashboard-content dt-dashboard-content-v2 mx-auto max-w-[1600px] space-y-8 px-4 py-6 sm:space-y-9 sm:px-6 sm:py-8 2xl:px-12 2xl:py-11">
             <section className="dt-dashboard-command relative isolate overflow-hidden rounded-[30px] p-5 sm:p-7 lg:p-9">
               <div className="dt-dashboard-orbit dt-dashboard-orbit-one" aria-hidden="true" />
               <div className="dt-dashboard-orbit dt-dashboard-orbit-two" aria-hidden="true" />
