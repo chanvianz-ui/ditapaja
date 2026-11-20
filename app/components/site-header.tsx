@@ -12,11 +12,11 @@ function Brand() {
 }
 
 const links = [
-  ["01", "Beranda", "/#top"],
-  ["02", "Koleksi kartu", "/#koleksi"],
-  ["03", "Dashboard", "/#dashboard"],
-  ["04", "Cara kerja", "/#cara-kerja"],
-  ["05", "FAQ", "/faq"]
+  ["Beranda", "/#top"],
+  ["Koleksi kartu", "/#koleksi"],
+  ["Dashboard", "/#dashboard"],
+  ["Cara kerja", "/#cara-kerja"],
+  ["FAQ", "/faq"]
 ];
 
 export default function SiteHeader() {
@@ -38,7 +38,7 @@ export default function SiteHeader() {
     <header className="concept-header">
       <div className="concept-nav">
         <Brand />
-        <nav aria-label="Navigasi utama">{links.slice(1, 5).map(([number, label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
+        <nav aria-label="Navigasi utama">{links.slice(1, 5).map(([label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
         <div className="concept-nav-actions">
           <a href="/activate">Aktivasi kartu</a>
           <a href="/login">Masuk</a>
@@ -61,11 +61,11 @@ export default function SiteHeader() {
           <button className="dt-menu-close" type="button" onClick={() => setOpen(false)} aria-label="Tutup menu"><span>TUTUP</span><X size={18}/></button>
         </div>
         <div className="dt-menu-content">
-          <div className="dt-menu-label"><span>JELAJAHI DITAPAJA</span><span>MENU / 01—05</span></div>
+          <div className="dt-menu-label"><span>JELAJAHI DITAPAJA</span><span>EXPLORE THE EXPERIENCE</span></div>
           <div className="dt-menu-grid">
             <nav className="dt-menu-links" aria-label="Menu halaman">
-              {links.map(([number, label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>
-                <span>{number}</span><strong>{label}</strong><ArrowUpRight size={18}/>
+              {links.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>
+                <strong>{label}</strong><ArrowUpRight size={19}/>
               </a>)}
             </nav>
             <aside className="dt-menu-quick">
@@ -80,7 +80,6 @@ export default function SiteHeader() {
                 <span className="dt-menu-action-copy"><small>AREA PENGGUNA</small><strong>Login dashboard</strong><em>Kelola kartu dan pantau performa</em></span>
                 <ArrowUpRight className="dt-menu-action-arrow" size={19}/>
               </a>
-              <a className="dt-menu-contact" href="https://wa.me/6281321778081" onClick={() => setOpen(false)}>Butuh bantuan? Hubungi kami <ArrowUpRight size={13}/></a>
             </aside>
           </div>
         </div>
