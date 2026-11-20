@@ -9,6 +9,7 @@ import "./premium-interface.css";
 import "./premium-secondary.css";
 import "./premium-public.css";
 import "./total-overhaul.css";
+import "./home-refresh.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
