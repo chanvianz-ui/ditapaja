@@ -12,6 +12,7 @@ import "./total-overhaul.css";
 import "./home-refresh.css";
 import "./home-v2.css";
 import "./home-v3.css";
+import "./home-v4.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
