@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { ArrowUpRight, ShoppingBag, X } from "lucide-react";
+import { ArrowUpRight, ShoppingBag, X, Nfc, LayoutDashboard } from "lucide-react";
 
 function Brand() {
   return <a href="/" className="brand" aria-label="DiTapAja beranda">
@@ -61,16 +61,27 @@ export default function SiteHeader() {
           <button className="dt-menu-close" type="button" onClick={() => setOpen(false)} aria-label="Tutup menu"><span>TUTUP</span><X size={18}/></button>
         </div>
         <div className="dt-menu-content">
-          <div className="dt-menu-label"><span>MENU UTAMA</span><span>DITAPAJA / 2026</span></div>
-          <nav className="dt-menu-links" aria-label="Menu halaman">
-            {links.map(([number, label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>
-              <span>{number}</span><strong>{label}</strong><ArrowUpRight size={18}/>
-            </a>)}
-          </nav>
-          <div className="dt-menu-bottom">
-            <a href="/activate" onClick={() => setOpen(false)}>Aktivasi kartu <ArrowUpRight size={14}/></a>
-            <a href="/login" onClick={() => setOpen(false)}>Masuk dashboard <ArrowUpRight size={14}/></a>
-            <a className="dt-menu-contact" href="https://wa.me/6281321778081">Hubungi kami <ArrowUpRight size={14}/></a>
+          <div className="dt-menu-label"><span>JELAJAHI DITAPAJA</span><span>MENU / 01—05</span></div>
+          <div className="dt-menu-grid">
+            <nav className="dt-menu-links" aria-label="Menu halaman">
+              {links.map(([number, label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>
+                <span>{number}</span><strong>{label}</strong><ArrowUpRight size={18}/>
+              </a>)}
+            </nav>
+            <aside className="dt-menu-quick">
+              <span className="dt-menu-quick-label">AKSES CEPAT</span>
+              <a className="dt-menu-action-card dt-menu-activate" href="/activate" onClick={() => setOpen(false)}>
+                <span className="dt-menu-action-icon"><Nfc size={20}/></span>
+                <span className="dt-menu-action-copy"><small>SUDAH PUNYA KARTU?</small><strong>Aktivasi kartu</strong><em>Hubungkan kartu NFC ke bisnismu</em></span>
+                <ArrowUpRight className="dt-menu-action-arrow" size={19}/>
+              </a>
+              <a className="dt-menu-action-card dt-menu-login" href="/login" onClick={() => setOpen(false)}>
+                <span className="dt-menu-action-icon"><LayoutDashboard size={19}/></span>
+                <span className="dt-menu-action-copy"><small>AREA PENGGUNA</small><strong>Login dashboard</strong><em>Kelola kartu dan pantau performa</em></span>
+                <ArrowUpRight className="dt-menu-action-arrow" size={19}/>
+              </a>
+              <a className="dt-menu-contact" href="https://wa.me/6281321778081" onClick={() => setOpen(false)}>Butuh bantuan? Hubungi kami <ArrowUpRight size={13}/></a>
+            </aside>
           </div>
         </div>
         <div className="dt-menu-foot"><span>© 2026 DITAPAJA</span><span>ONE CARD. MORE CONNECTIONS.</span></div>
