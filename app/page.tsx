@@ -61,7 +61,7 @@ export default function Home() {
           </div>
           <div className="dt-v2-glass-stat"><span className="dt-v2-stat-icon"><BarChart3 size={17} /></span><span><small>YOUR DASHBOARD</small><b>Every tap, in view.</b></span><ArrowUpRight size={15} /></div>
         </div>
-        <div className="dt-v2-hero-index"><span>01</span><i /> A SMALL TAP. A BETTER CONNECTION.</div>
+        <div className="dt-v2-hero-index"><span>DESIGNED FOR BETTER CONNECTIONS</span></div>
       </section>
 
       <section className="dt-v2-collection" id="koleksi">
@@ -70,7 +70,7 @@ export default function Home() {
           <p>Dirancang untuk pengalaman yang praktis, tampilan yang berkarakter, dan pengelolaan yang sederhana.</p>
         </div>
         <ProductCarousel products={products} />
-        <div className="dt-v2-collection-foot"><span>01 — 03</span><p>Setiap kartu dilengkapi NFC, QR Code, dan akses dashboard tanpa biaya bulanan.</p></div>
+        <div className="dt-v2-collection-foot"><span>INCLUDED WITH EVERY CARD</span><p>NFC, QR Code, dan akses dashboard gratis. Tidak ada biaya langganan bulanan.</p></div>
       </section>
 
       <section className="dt-v2-dashboard" id="dashboard">
