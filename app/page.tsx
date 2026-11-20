@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, ArrowUpRight, BarChart3, Check, ChevronDown, Link2, Nfc, QrCode, ShieldCheck, Smartphone, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BarChart3, Check, ChevronDown, Link2, Nfc, QrCode, Search, ShieldCheck, Smartphone, Sparkles, X } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 import ScrollMotion from "./components/scroll-motion";
@@ -13,16 +13,16 @@ const products = [
 ];
 
 const questions = [
-  ["Apakah ada biaya dashboard bulanan?", "Tidak ada. Akses dashboard sudah termasuk dalam pembelian kartu DiTapAja, tanpa biaya langganan bulanan."],
-  ["Bagaimana pelanggan menggunakan kartu NFC?", "Pelanggan cukup mendekatkan smartphone yang mendukung NFC ke kartu. Halaman tujuan akan terbuka otomatis di browser."],
-  ["Bagaimana jika smartphone pelanggan tidak memiliki NFC?", "Pelanggan tetap bisa mengakses halaman yang sama dengan memindai QR Code yang tersedia pada kartu."],
-  ["Apakah pelanggan perlu mengunduh aplikasi?", "Tidak perlu. NFC akan membuka browser secara langsung, sedangkan QR Code dapat dipindai menggunakan kamera smartphone."],
-  ["Apakah link Google Review bisa diganti?", "Bisa. Kamu dapat memperbarui link tujuan melalui dashboard kapan saja tanpa perlu mengganti kartu fisik."],
-  ["Data apa saja yang bisa dilihat di dashboard?", "Dashboard menampilkan aktivitas tap, estimasi pengunjung unik, dan klik menuju Google Review. Klik bukan berarti ulasan sudah berhasil dipublikasikan."],
-  ["Apakah satu kartu hanya bisa digunakan untuk satu bisnis?", "Setiap kartu memiliki satu link tujuan aktif. Kamu bisa mengubah link tersebut melalui dashboard sesuai kebutuhan bisnismu."],
-  ["Apakah kartu bisa digunakan di semua smartphone?", "Kartu dapat digunakan pada smartphone yang mendukung NFC. Untuk perangkat yang tidak mendukung NFC, pelanggan bisa menggunakan QR Code."],
-  ["Berapa lama proses pengaturan kartu?", "Setelah kartu diterima, kamu dapat mengatur link tujuan melalui dashboard. Kartu siap digunakan setelah pengaturannya selesai."],
-  ["Bagaimana cara memesan kartu DiTapAja?", "Pilih desain kartu pada bagian koleksi, lalu lanjutkan pemesanan melalui tombol yang tersedia pada produk."]
+  ["Apakah ada biaya dashboard bulanan?", "Tidak ada. Akses dashboard sudah termasuk dalam pembelian kartu DiTapAja, tanpa biaya langganan bulanan.", "Dashboard"],
+  ["Bagaimana pelanggan menggunakan kartu NFC?", "Pelanggan cukup mendekatkan smartphone yang mendukung NFC ke kartu. Halaman tujuan akan terbuka otomatis di browser.", "NFC & QR"],
+  ["Bagaimana jika smartphone pelanggan tidak memiliki NFC?", "Pelanggan tetap bisa mengakses halaman yang sama dengan memindai QR Code yang tersedia pada kartu.", "NFC & QR"],
+  ["Apakah pelanggan perlu mengunduh aplikasi?", "Tidak perlu. NFC akan membuka browser secara langsung, sedangkan QR Code dapat dipindai menggunakan kamera smartphone.", "NFC & QR"],
+  ["Apakah link Google Review bisa diganti?", "Bisa. Kamu dapat memperbarui link tujuan melalui dashboard kapan saja tanpa perlu mengganti kartu fisik.", "Dashboard"],
+  ["Data apa saja yang bisa dilihat di dashboard?", "Dashboard menampilkan aktivitas tap, estimasi pengunjung unik, dan klik menuju Google Review. Klik bukan berarti ulasan sudah berhasil dipublikasikan.", "Dashboard"],
+  ["Apakah satu kartu hanya bisa digunakan untuk satu bisnis?", "Setiap kartu memiliki satu link tujuan aktif. Kamu bisa mengubah link tersebut melalui dashboard sesuai kebutuhan bisnismu.", "Kartu"],
+  ["Apakah kartu bisa digunakan di semua smartphone?", "Kartu dapat digunakan pada smartphone yang mendukung NFC. Untuk perangkat yang tidak mendukung NFC, pelanggan bisa menggunakan QR Code.", "NFC & QR"],
+  ["Berapa lama proses pengaturan kartu?", "Setelah kartu diterima, kamu dapat mengatur link tujuan melalui dashboard. Kartu siap digunakan setelah pengaturannya selesai.", "Kartu"],
+  ["Bagaimana cara memesan kartu DiTapAja?", "Pilih desain kartu pada bagian koleksi, lalu lanjutkan pemesanan melalui tombol yang tersedia pada produk.", "Pesanan"]
 ];
 
 function BrandMark() {
@@ -30,7 +30,14 @@ function BrandMark() {
 }
 
 export default function Home() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openFaq, setOpenFaq] = useState<string | null>(questions[0][0]);
+  const [faqCategory, setFaqCategory] = useState("Semua");
+  const [faqSearch, setFaqSearch] = useState("");
+  const faqCategories = ["Semua", "Kartu", "NFC & QR", "Dashboard", "Pesanan"];
+  const filteredQuestions = questions.filter(([question, answer, category]) =>
+    (faqCategory === "Semua" || category === faqCategory) &&
+    (question + " " + answer).toLowerCase().includes(faqSearch.trim().toLowerCase())
+  );
 
   return (
     <main className="concept-home dt-editorial-home dt-home-v2 dt-home-v4" id="top">
@@ -112,23 +119,39 @@ export default function Home() {
       </section>
 
       <section className="dt-v2-faq" id="faq">
-        <div className="dt-v2-faq-heading"><div className="dt-v2-kicker dt-v2-kicker-dark">GOOD TO KNOW <i /></div><h2>A few things<br />you might <em>wonder.</em></h2><p>Masih ada pertanyaan? <a href="https://wa.me/6281321778081">Hubungi kami <ArrowUpRight size={13} /></a></p></div>
-        <div className="dt-v2-faq-list">{questions.map(([question, answer], index) => {
-          const isOpen = openFaq === index;
-          return <article className={`dt-faq-item${isOpen ? " is-open" : ""}`} key={question}>
-            <button className="dt-faq-trigger" type="button" aria-expanded={isOpen} aria-controls={`dt-faq-answer-${index}`} onClick={() => setOpenFaq(isOpen ? null : index)}>
-              <span className="dt-faq-number">{String(index + 1).padStart(2, "0")}</span>
-              <span className="dt-faq-question">{question}</span>
-              <span className="dt-faq-icon"><ChevronDown size={17} /></span>
-            </button>
-            <div className="dt-faq-answer" id={`dt-faq-answer-${index}`} hidden={!isOpen}>
-              <p>{answer}</p>
+        <div className="dt-faq-shell">
+          <div className="dt-v2-faq-heading">
+            <div className="dt-v2-kicker dt-v2-kicker-dark">HELP CENTER <i /></div>
+            <h2>Questions,<br />meet <em>answers.</em></h2>
+            <p>Temukan jawaban seputar kartu, cara penggunaan, dan dashboard DiTapAja.</p>
+            <a className="dt-faq-contact" href="https://wa.me/6281321778081">Masih butuh bantuan? <span>Chat dengan kami <ArrowUpRight size={14} /></span></a>
+          </div>
+          <div className="dt-faq-content">
+            <div className="dt-faq-tools">
+              <label className="dt-faq-search"><Search size={17} /><input aria-label="Cari pertanyaan" value={faqSearch} onChange={event => setFaqSearch(event.target.value)} placeholder="Cari pertanyaan..." />{faqSearch && <button type="button" aria-label="Hapus pencarian" onClick={() => setFaqSearch("")}><X size={15} /></button>}</label>
+              <div className="dt-faq-categories" aria-label="Filter kategori FAQ">
+                {faqCategories.map(category => <button key={category} type="button" className={faqCategory === category ? "active" : ""} aria-pressed={faqCategory === category} onClick={() => { setFaqCategory(category); setOpenFaq(null); }}>{category}</button>)}
+              </div>
             </div>
-          </article>;
-        })}</div>
+            <div className="dt-v2-faq-list" aria-live="polite">
+              {filteredQuestions.length ? filteredQuestions.map(([question, answer, category], index) => {
+                const isOpen = openFaq === question;
+                return <article className={`dt-faq-item${isOpen ? " is-open" : ""}`} key={question}>
+                  <button className="dt-faq-trigger" type="button" aria-expanded={isOpen} onClick={() => setOpenFaq(isOpen ? null : question)}>
+                    <span className="dt-faq-number">{String(questions.findIndex(item => item[0] === question) + 1).padStart(2, "0")}</span>
+                    <span className="dt-faq-question">{question}<small>{category}</small></span>
+                    <span className="dt-faq-icon"><ChevronDown size={17} /></span>
+                  </button>
+                  {isOpen && <div className="dt-faq-answer"><p>{answer}</p></div>}
+                </article>;
+              }) : <div className="dt-faq-empty"><Search size={19} /><b>Pertanyaan tidak ditemukan</b><span>Coba kata kunci lain atau pilih kategori berbeda.</span><button type="button" onClick={() => { setFaqSearch(""); setFaqCategory("Semua"); }}>Reset pencarian</button></div>}
+            </div>
+            <div className="dt-faq-count">MENAMPILKAN <b>{filteredQuestions.length}</b> DARI <b>{questions.length}</b> PERTANYAAN</div>
+          </div>
+        </div>
       </section>
 
-      <footer className="dt-v2-footer dt-v2-footer-expanded">
+            <footer className="dt-v2-footer dt-v2-footer-expanded">
         <div className="dt-footer-main">
           <div className="dt-footer-about">
             <a href="#top" className="dt-v2-footer-brand"><BrandMark /> DiTapAja<span>.</span></a>
