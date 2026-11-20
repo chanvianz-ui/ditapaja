@@ -1,3 +1,4 @@
+import SiteHeader from "../components/site-header";
 
 "use client";
 
@@ -78,7 +79,9 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="dt-auth-page">
+    <>
+      <SiteHeader />
+      <main className="dt-auth-page">
       <div className="dt-auth-shell">
         <section className="dt-auth-story">
           <Link href="/" className="dt-auth-brand">DiTap<span>Aja.</span></Link>
@@ -125,6 +128,7 @@ export default function LoginPage() {
           <p className="dt-auth-legal">© {new Date().getFullYear()} DiTapAja. Dibuat untuk bisnis yang terus berkembang.</p>
         </section>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
