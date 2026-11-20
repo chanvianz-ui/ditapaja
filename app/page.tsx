@@ -104,34 +104,6 @@ export default function Home() {
         <div className="dt-v2-how-note"><ShieldCheck size={17} /> NFC yang kompatibel atau kamera untuk scan QR. Tidak perlu install aplikasi.</div>
       </section>
 
-      <section className="dt-v2-faq" id="faq">
-        <div className="dt-faq-shell">
-          <div className="dt-v2-faq-heading">
-            <div className="dt-v2-kicker dt-v2-kicker-dark">A LITTLE CLARITY <i /></div>
-            <h2>Good to<br /> <em>know.</em></h2>
-            <p>Hal penting tentang kartu, cara penggunaan, dan dashboard DiTapAja. Singkat, jelas, tanpa berputar-putar.</p>
-            <a className="dt-faq-contact" href="https://wa.me/6281321778081">Masih ada yang ingin ditanyakan? <span>Hubungi kami <ArrowUpRight size={14} /></span></a>
-          </div>
-          <div className="dt-faq-content">
-            <div className="dt-faq-topline"><span>FAQ / DI TAP AJA</span><b>03 JAWABAN</b></div>
-            <div className="dt-v2-faq-list">
-              {questions.map(([question, answer], index) => {
-                const isOpen = openFaq === question;
-                return <article className={`dt-faq-item${isOpen ? " is-open" : ""}`} key={question}>
-                  <button className="dt-faq-trigger" type="button" aria-expanded={isOpen} onClick={() => setOpenFaq(isOpen ? null : question)}>
-                    <span className="dt-faq-number">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="dt-faq-question">{question}</span>
-                    <span className="dt-faq-icon"><ChevronDown size={18} /></span>
-                  </button>
-                  {isOpen && <div className="dt-faq-answer"><p>{answer}</p></div>}
-                </article>;
-              })}
-            </div>
-            <div className="dt-faq-bottomline"><span>MASIH BUTUH BANTUAN?</span><a href="https://wa.me/6281321778081">Tanya langsung ke tim kami <ArrowUpRight size={14} /></a></div>
-          </div>
-        </div>
-      </section>
-
       <footer className="dt-v2-footer dt-v2-footer-expanded">
         <div className="dt-footer-main">
           <div className="dt-footer-about">
