@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import SiteHeader from "../components/site-header";
 import { ArrowLeft, Clock3, Package, CheckCircle2, CreditCard, Truck, RefreshCw, MessageCircle, Upload, Loader2, FileCheck2 } from "lucide-react";
 
 type Order = {
@@ -128,7 +129,7 @@ export default function CustomerOrdersPage() {
 
   useEffect(()=>{ void load(); },[router]);
 
-  return <main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6 dt-customer-orders">
+  return <><SiteHeader /><main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6 dt-customer-orders">
     <div className="mx-auto max-w-5xl dt-customer-orders-inner">
       <header className="mb-8 flex dt-customer-orders-header items-center justify-between gap-3">
         <Link href="/" className="text-xl font-black tracking-tight text-slate-900">DiTap<span className="text-blue-600">Aja.</span></Link>
@@ -208,5 +209,5 @@ export default function CustomerOrdersPage() {
       </article>)}</div>}
       <p className="mt-8 text-center text-[11px] text-slate-400">© 2026 DiTapAja · Informasi pembayaran diperbarui setelah pengecekan manual.</p>
     </div>
-  </main>;
+  </main></>;
 }
