@@ -1,5 +1,7 @@
 "use client";
 
+import "./dashboard-reset.css";
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
