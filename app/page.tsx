@@ -24,7 +24,7 @@ function BrandMark() {
 
 export default function Home() {
   return (
-    <main className="concept-home dt-editorial-home dt-home-v2" id="top">
+    <main className="concept-home dt-editorial-home dt-home-v2 dt-home-v4" id="top">
       <ScrollMotion />
       <SiteHeader />
 
