@@ -1847,3 +1847,65 @@
  .dt-menu-overlay,.dt-menu-panel,.dt-menu-links a{animation:none!important}
  .dt-menu-links a,.dt-menu-links a svg,.dt-menu-action-card,.dt-menu-action-card:before,.dt-menu-action-arrow{transition:none!important}
 }
+
+
+/* Shared public-page header: same navigation, adapted outside the homepage */
+body:not(:has(.dt-home-v4)) .dt-public-header{
+ position:sticky!important;top:0!important;z-index:120!important;height:72px!important;
+ background:rgba(10,16,27,.97)!important;border-bottom:1px solid #263443!important;
+ box-shadow:0 8px 26px rgba(0,0,0,.12)!important;backdrop-filter:blur(12px)!important;
+}
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav{
+ width:min(1240px,calc(100% - 72px))!important;height:100%!important;
+ margin-inline:auto!important;display:flex!important;align-items:center!important;justify-content:space-between!important;
+}
+body:not(:has(.dt-home-v4)) .dt-public-header .brand{
+ display:inline-flex!important;align-items:center!important;gap:10px!important;
+ color:#f2f6f8!important;font:800 20px/1 Manrope,sans-serif!important;letter-spacing:-.8px!important;
+}
+body:not(:has(.dt-home-v4)) .dt-public-header .brand-symbol{
+ width:30px!important;height:30px!important;border-radius:8px!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;gap:2px!important;
+ background:#dceaf0!important;box-shadow:none!important;
+}
+body:not(:has(.dt-home-v4)) .dt-public-header .brand-symbol i{background:#162638!important}
+body:not(:has(.dt-home-v4)) .dt-public-header .blue-word{color:#a8c9d1!important}
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav nav{
+ display:flex!important;align-items:center!important;gap:clamp(15px,2.2vw,28px)!important;margin-left:auto!important;margin-right:35px!important;
+}
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav nav a,
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav-actions>a{
+ color:#b4c1cc!important;font:650 11px/1.2 Manrope,sans-serif!important;transition:color .2s ease!important;
+}
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav nav a:hover,
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav-actions>a:hover{color:#e6f4f6!important}
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav-actions{
+ display:flex!important;align-items:center!important;gap:19px!important;
+}
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav-actions .concept-nav-cta{
+ display:inline-flex!important;align-items:center!important;gap:8px!important;padding:11px 14px!important;
+ border:1px solid #a9cbd2!important;border-radius:7px!important;background:#dceaf0!important;
+ color:#152535!important;font:800 10px/1 Manrope,sans-serif!important;
+}
+body:not(:has(.dt-home-v4)) .dt-public-header .concept-mobile-actions{display:none!important}
+@media(max-width:760px){
+ body:not(:has(.dt-home-v4)) .dt-public-header{height:66px!important}
+ body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav{width:calc(100% - 36px)!important}
+ body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav nav,
+ body:not(:has(.dt-home-v4)) .dt-public-header .concept-nav-actions{display:none!important}
+ body:not(:has(.dt-home-v4)) .dt-public-header .concept-mobile-actions{
+  display:flex!important;align-items:center!important;gap:10px!important;
+ }
+ body:not(:has(.dt-home-v4)) .dt-public-header .concept-mobile-actions>a,
+ body:not(:has(.dt-home-v4)) .dt-public-header .concept-mobile-actions>button{
+  display:grid!important;place-items:center!important;width:39px!important;height:39px!important;
+  border:1px solid rgba(169,203,210,.24)!important;border-radius:8px!important;
+  background:#142431!important;color:#d6e5e9!important;
+ }
+ body:not(:has(.dt-home-v4)) .dt-public-header .concept-mobile-actions>button{
+  display:flex!important;width:auto!important;min-width:66px!important;gap:8px!important;padding:0 10px!important;cursor:pointer!important;
+ }
+ body:not(:has(.dt-home-v4)) .dt-public-header .concept-mobile-actions>button small{
+  font:800 8px/1 Manrope,sans-serif!important;letter-spacing:.12em!important;
+ }
+}
