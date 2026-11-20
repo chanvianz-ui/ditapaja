@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { ArrowUpRight, ShoppingBag, X } from "lucide-react";
 
 function Brand() {
@@ -56,7 +57,7 @@ export default function SiteHeader() {
       </div>
     </header>
 
-    {open && <div className="dt-menu-overlay" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setOpen(false); }}>
+    {open && createPortal(<div className="dt-menu-overlay" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setOpen(false); }}>
       <section className="dt-menu-panel" role="dialog" aria-modal="true" aria-label="Menu utama DiTapAja">
         <div className="dt-menu-top">
           <Brand />
@@ -86,6 +87,6 @@ export default function SiteHeader() {
         </div>
         <div className="dt-menu-bottom"><span>© 2026 DITAPAJA</span><span>ONE CARD. MORE CONNECTIONS.</span><a href="https://wa.me/6281321778081">LET'S TALK <ArrowUpRight size={13}/></a></div>
       </section>
-    </div>}
+    </div>, document.body)}
   </>;
 }
