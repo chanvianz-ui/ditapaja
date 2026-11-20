@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteHeader from "../../components/site-header";
 import type { Metadata } from "next";
 import { ArrowLeft, ArrowUpRight, Check, ChartNoAxesCombined, Link2, MonitorSmartphone, Nfc, QrCode, Settings2, CalendarDays } from "lucide-react";
 const collection = {
@@ -38,7 +39,7 @@ export default async function ProductDetail({params}:{params:Promise<{slug:strin
  const minimumTotal=Number(product.price.replace(/[^0-9]/g,""))*minimumQuantity;
  const orderUrl="/pesan?product="+slug;
  const orderLabel=product.mode==="preorder"?"Mulai pre-order":"Pesan sekarang";
- return <main className="product-detail-page">
+ return <main className="product-detail-page"><SiteHeader />
  <header className="detail-header"><div className="detail-header-inner"><Link href="/" className="detail-brand"><span className="detail-brand-mark">D</span>DiTap<span>Aja</span></Link><Link href="/koleksi" className="detail-back"><ArrowLeft size={16}/> Semua koleksi</Link></div></header>
  <section className="detail-hero container dt-product-hero"><div className="detail-copy dt-product-copy"><div className="eyebrow">DITAPAJA PREMIUM COLLECTION / {product.edition}</div><h1>{product.name}</h1><h2>{product.headline}</h2><p>{product.description}</p><p>{product.detail}</p><div className="detail-price"><strong>{product.price}</strong><span>/ kartu</span>{product.mode==="preorder"&&<small>Min. 10 kartu · Total mulai Rp{minimumTotal.toLocaleString("id-ID")}</small>}</div><div className="detail-pills"><span><Nfc size={14}/> NFC</span><span><QrCode size={14}/> QR Code</span><span><Check size={14}/> Dashboard gratis</span></div><Link className="button" href={orderUrl}>{orderLabel} <ArrowUpRight size={16}/></Link><p className="detail-order-hint">{product.mode==="preorder"?"Diskusikan kebutuhan desain custom melalui WhatsApp.":"Isi detail pesanan, lalu lanjutkan konfirmasi melalui WhatsApp."}</p></div><ProductArtwork tone={product.color}/></section>
  <section className="detail-spec-section dt-product-spec"><div className="container"><div className="eyebrow">PRODUCT SPECIFICATIONS</div><h2>Detail produk</h2><div className="detail-spec-grid"><div><span>Material</span><b>PVC Card</b></div><div><span>Ukuran</span><b>10 × 10 cm</b></div><div><span>Teknologi</span><b>NFC</b></div><div><span>Akses alternatif</span><b>QR Code</b></div><div><span>Warna / desain</span><b>{product.edition.replace(" EDITION","")}</b></div><div><span>Tujuan penggunaan</span><b>Google Review</b></div></div><p className="detail-fit"><b>Cocok untuk:</b> {product.fit}</p></div></section>
