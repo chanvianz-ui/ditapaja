@@ -2963,3 +2963,34 @@ body:has(.dt-auth-page){background:#09121d!important}
  .dt-auth-page .dt-auth-switch{margin-top:28px!important;font-size:13px!important}
 }
 @media(prefers-reduced-motion:reduce){.dt-auth-page *{animation:none!important;transition:none!important}}
+
+
+/* AUTH TEXTURE PASS — tactile graphite, fine grain and contour relief */
+.dt-auth-page{
+ overflow:hidden!important;
+ background:
+  radial-gradient(ellipse 680px 520px at 50% 8%,rgba(91,139,157,.16),transparent 68%),
+  radial-gradient(ellipse 460px 380px at 6% 88%,rgba(42,82,100,.13),transparent 72%),
+  radial-gradient(ellipse 520px 440px at 96% 70%,rgba(76,94,113,.10),transparent 72%),
+  repeating-linear-gradient(112deg,rgba(255,255,255,.012) 0 1px,transparent 1px 5px),
+  #09131f!important;
+}
+.dt-auth-page:after{
+ content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;
+ opacity:.34;
+ background-image:
+  url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E"),
+  repeating-radial-gradient(ellipse at 50% 50%,transparent 0 34px,rgba(176,207,218,.045) 35px 36px,transparent 37px 68px),
+  linear-gradient(90deg,transparent 0 7%,rgba(169,203,210,.035) 7.05%,transparent 7.12% 92.8%,rgba(169,203,210,.035) 92.9%,transparent 93%);
+ background-size:180px 180px,780px 780px,100% 100%;
+ background-position:center,center 44%,center;
+ mix-blend-mode:screen;
+}
+.dt-auth-page .dt-auth-form-card{position:relative!important;z-index:1!important}
+@media(max-width:760px){
+ .dt-auth-page:after{
+  opacity:.24;
+  background-size:150px 150px,620px 620px,100% 100%;
+  background-position:center,center 36%,center;
+ }
+}
