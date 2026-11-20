@@ -6377,3 +6377,160 @@ body:has(main>aside.fixed.lg\:block) main>section>div .text-\[\#155eef\]{color:#
 .dt-admin-user-detail>div>section:nth-of-type(3)>div:first-child{padding:18px!important}
 }
 @media(prefers-reduced-motion:reduce){.dt-admin-user-detail>div>section:nth-of-type(3) tbody tr{transition:none!important}}
+
+
+/* AUTH + FAQ — consistent DiTapAja dark public interface */
+.dt-auth-page{
+ min-height:calc(100svh - 76px)!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ padding:clamp(18px,3vw,42px)!important;
+ background:radial-gradient(ellipse at 10% 0%,rgba(64,112,143,.2),transparent 38%),#0b1420!important;
+ color:#edf3f5!important;
+}
+.dt-auth-shell{
+ width:min(1180px,100%)!important;max-width:1180px!important;
+ min-height:680px!important;
+ grid-template-columns:minmax(0,1.08fr) minmax(390px,.92fr)!important;
+ overflow:hidden!important;
+ border:1px solid rgba(164,192,210,.17)!important;border-radius:22px!important;
+ background:#101e2b!important;
+ box-shadow:0 28px 90px rgba(0,0,0,.32)!important;
+}
+.dt-auth-story{
+ min-width:0!important;padding:clamp(28px,4vw,52px)!important;
+ color:#edf3f5!important;
+ background:radial-gradient(ellipse at 85% 15%,rgba(122,174,195,.18),transparent 42%),linear-gradient(145deg,#172d3d,#0e1c29)!important;
+}
+.dt-auth-story:before,.dt-auth-story:after{border-color:rgba(180,211,224,.12)!important}
+.dt-auth-brand,.dt-auth-brand span{color:#edf3f5!important}
+.dt-auth-brand span{color:#a9cbd2!important}
+.dt-auth-story-copy h1{color:#f1f6f8!important}
+.dt-auth-story-copy h1 em{color:#a9cbd2!important}
+.dt-auth-story-copy p,.dt-auth-story-foot{color:#aab8c2!important}
+.dt-auth-eyebrow{color:#a9cbd2!important}
+.dt-auth-preview{
+ background:rgba(9,21,32,.5)!important;border:1px solid rgba(164,192,210,.18)!important;
+ border-radius:14px!important;box-shadow:none!important;
+}
+.dt-auth-preview-top,.dt-auth-preview-caption,.dt-auth-preview-foot{color:#aab8c2!important}
+.dt-auth-preview-number,.dt-auth-preview-number strong{color:#f1f6f8!important}
+.dt-auth-preview-foot strong{color:#a9cbd2!important}
+.dt-auth-bars i{background:linear-gradient(180deg,#a9cbd2,#456d80)!important}
+.dt-auth-benefits>div{border-color:rgba(164,192,210,.15)!important}
+.dt-auth-benefits b{color:#a9cbd2!important}
+.dt-auth-benefits strong{color:#edf3f5!important}
+.dt-auth-benefits small{color:#9eafba!important}
+.dt-auth-form-side{
+ min-width:0!important;padding:clamp(28px,4vw,58px)!important;
+ background:#101e2b!important;
+}
+.dt-auth-form-card{width:100%!important;max-width:420px!important}
+.dt-auth-heading{margin-bottom:30px!important}
+.dt-auth-kicker{color:#a9cbd2!important}
+.dt-auth-heading h2{color:#f1f6f8!important;font-size:clamp(30px,3vw,40px)!important;letter-spacing:-.055em!important}
+.dt-auth-heading p{color:#aab8c2!important;font-size:14px!important;line-height:1.75!important}
+.dt-auth-field label{color:#dce6eb!important;font-size:13px!important;font-weight:700!important}
+.dt-auth-field label small{color:#8fa5b2!important}
+.dt-auth-field input{
+ width:100%!important;min-height:52px!important;padding:0 15px!important;
+ color:#edf3f5!important;background:#0b1722!important;
+ border:1px solid rgba(164,192,210,.22)!important;border-radius:9px!important;
+ outline:none!important;box-shadow:none!important;
+}
+.dt-auth-field input:focus{border-color:#91b9c7!important;box-shadow:0 0 0 3px rgba(145,185,199,.12)!important}
+.dt-auth-field input::placeholder{color:#708493!important}
+.dt-auth-password{background:#0b1722!important;border:1px solid rgba(164,192,210,.22)!important;border-radius:9px!important}
+.dt-auth-password:focus-within{border-color:#91b9c7!important}
+.dt-auth-password input{border:0!important;background:transparent!important;box-shadow:none!important}
+.dt-auth-password button{color:#a9cbd2!important;font-size:10px!important;font-weight:800!important}
+.dt-auth-submit{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ width:100%!important;min-height:54px!important;margin-top:8px!important;padding:0 18px!important;
+ border:1px solid #dceaf0!important;border-radius:9px!important;
+ background:#dceaf0!important;color:#142635!important;
+ font-weight:800!important;opacity:1!important;
+}
+.dt-auth-submit:disabled{opacity:.58!important}
+.dt-auth-submit span{color:#345766!important}
+.dt-auth-message{padding:12px 14px!important;border-radius:9px!important;font-size:13px!important;line-height:1.6!important}
+.dt-auth-error{background:rgba(150,57,57,.14)!important;border:1px solid rgba(230,130,130,.25)!important;color:#ffc2c2!important}
+.dt-auth-success{background:rgba(67,133,111,.14)!important;border:1px solid rgba(126,193,165,.25)!important;color:#b9e5d1!important}
+.dt-auth-switch{color:#aab8c2!important;font-size:13px!important}
+.dt-auth-switch a{color:#b8dce4!important;font-weight:800!important}
+.dt-auth-back{color:#9eafba!important}
+.dt-auth-terms,.dt-auth-legal{color:#8194a1!important}
+.dt-auth-mobile-brand{display:none!important}
+
+/* FAQ and all InfoPage content surfaces */
+.info-page{
+ min-height:100vh!important;background:#0b1420!important;color:#edf3f5!important;
+}
+.info-page .info-hero{
+ padding:clamp(70px,9vw,112px) 24px clamp(54px,7vw,82px)!important;
+ background:radial-gradient(ellipse at 80% 5%,rgba(70,117,145,.18),transparent 48%),linear-gradient(135deg,#102131,#0c1926)!important;
+ border-bottom:1px solid rgba(164,192,210,.15)!important;
+}
+.info-page .info-eyebrow{color:#a9cbd2!important}
+.info-page .info-hero h1{color:#f1f6f8!important}
+.info-page .info-hero p{color:#aab8c2!important}
+.info-page .info-content{padding:clamp(38px,6vw,72px) 0!important;background:#0b1420!important;color:#edf3f5!important}
+.info-page .info-content p{color:#aab8c2!important}
+.info-page .info-faq{
+ overflow:hidden!important;border-top:1px solid rgba(164,192,210,.18)!important;
+ border-bottom:1px solid rgba(164,192,210,.18)!important;
+}
+.info-page .info-faq details{padding:22px 4px!important;border-bottom:1px solid rgba(164,192,210,.15)!important}
+.info-page .info-faq details:last-child{border-bottom:0!important}
+.info-page .info-faq summary{
+ color:#edf3f5!important;font:700 16px/1.5 Manrope,sans-serif!important;
+ list-style:none!important;cursor:pointer!important;
+}
+.info-page .info-faq summary::-webkit-details-marker{display:none!important}
+.info-page .info-faq summary:after{color:#a9cbd2!important;font-size:24px!important}
+.info-page .info-faq details[open] summary{color:#c8e1e7!important}
+.info-page .info-faq p{
+ max-width:760px!important;margin:14px 34px 2px 0!important;
+ color:#aab8c2!important;font:400 14px/1.85 "DM Sans",sans-serif!important;
+}
+.info-page .info-contact-strip{
+ background:linear-gradient(135deg,#172d3d,#112332)!important;
+ border:1px solid rgba(164,192,210,.17)!important;
+}
+.info-page .info-footer{
+ background:#09121c!important;border-color:rgba(164,192,210,.15)!important;
+ color:#9eafba!important;
+}
+.info-page .info-footer a:first-child{color:#edf3f5!important}
+.info-page .info-footer a:first-child span{color:#a9cbd2!important}
+
+@media(max-width:760px){
+ .dt-auth-page{
+  min-height:calc(100svh - 66px)!important;
+  display:block!important;padding:24px 16px 36px!important;
+  background:radial-gradient(ellipse at 10% 0%,rgba(64,112,143,.2),transparent 38%),#0b1420!important;
+ }
+ .dt-auth-shell{
+  display:block!important;width:100%!important;min-height:0!important;
+  border:1px solid rgba(164,192,210,.16)!important;border-radius:17px!important;
+  background:#101e2b!important;box-shadow:0 18px 55px rgba(0,0,0,.25)!important;
+ }
+ .dt-auth-story{display:none!important}
+ .dt-auth-form-side{
+  min-height:0!important;display:flex!important;align-items:center!important;
+  justify-content:center!important;padding:30px 22px 26px!important;
+  background:transparent!important;
+ }
+ .dt-auth-form-card{max-width:460px!important;padding:0!important}
+ .dt-auth-mobile-brand{display:block!important;margin:0 0 34px!important}
+ .dt-auth-mobile-brand a{color:#edf3f5!important;font:800 22px Manrope,sans-serif!important}
+ .dt-auth-mobile-brand span{color:#a9cbd2!important}
+ .dt-auth-heading{margin-bottom:26px!important}
+ .dt-auth-heading h2{font-size:32px!important;letter-spacing:-1.5px!important}
+ .dt-auth-legal{margin-top:22px!important;text-align:center!important}
+ .info-page .info-hero{padding:68px 20px 54px!important}
+ .info-page .info-content{padding:34px 0!important}
+ .info-page .info-wrap{width:calc(100% - 40px)!important}
+ .info-page .info-faq details{padding:18px 2px!important}
+ .info-page .info-faq summary{font-size:15px!important}
+ .info-page .info-faq p{font-size:13px!important;margin-right:24px!important}
+}
