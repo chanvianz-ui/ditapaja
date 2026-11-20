@@ -12,10 +12,10 @@ function Brand() {
 }
 
 const links = [
-  ["Beranda", "/#top"],
-  ["Koleksi kartu", "/#koleksi"],
-  ["Dashboard", "/#dashboard"],
-  ["Cara kerja", "/#cara-kerja"],
+  ["Beranda", "/"],
+  ["Koleksi kartu", "/koleksi"],
+  ["Dashboard", "/dashboard"],
+  ["Cara kerja", "/cara-kerja"],
   ["FAQ", "/faq"]
 ];
 
@@ -35,7 +35,7 @@ export default function SiteHeader() {
   }, [open]);
 
   return <>
-    <header className="concept-header">
+    <header className="concept-header dt-public-header">
       <div className="concept-nav">
         <Brand />
         <nav aria-label="Navigasi utama">{links.slice(1, 5).map(([label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
