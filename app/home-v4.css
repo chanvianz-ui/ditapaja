@@ -273,3 +273,62 @@
  .dt-home-v4 .dt-v2-hero-art{filter:none!important}
 }
 @media(prefers-reduced-motion:reduce){.dt-home-v4 .dt-v2-orbit-one,.dt-home-v4 .dt-v2-orbit-two{animation:none!important}}
+
+
+/* VISUAL REFINEMENT — richer glass, cleaner type hierarchy */
+.dt-home-v4 .dt-v2-phone{
+ background:linear-gradient(145deg,rgba(255,255,255,.25),rgba(112,145,213,.16) 42%,rgba(12,22,47,.78))!important;
+ backdrop-filter:blur(16px) saturate(145%)!important;
+ border-color:rgba(211,235,255,.68)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.62),inset 0 0 32px rgba(137,196,255,.18),0 22px 52px rgba(0,0,0,.34)!important
+}
+.dt-home-v4 .dt-v2-floating-card{
+ background:linear-gradient(135deg,rgba(116,224,255,.34),rgba(79,119,207,.4) 48%,rgba(157,126,255,.34))!important;
+ backdrop-filter:blur(18px) saturate(150%)!important;
+ border-color:rgba(226,244,255,.72)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.62),inset 0 0 34px rgba(167,214,255,.18),0 22px 48px rgba(0,0,0,.3)!important
+}
+.dt-home-v4 .dt-v2-glass-note,.dt-home-v4 .dt-v2-glass-stat{
+ background:linear-gradient(135deg,rgba(235,247,255,.24),rgba(105,146,218,.16) 55%,rgba(151,119,228,.17))!important;
+ backdrop-filter:blur(16px) saturate(145%)!important;
+ border-color:rgba(220,240,255,.52)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.34),0 14px 32px rgba(0,0,0,.22)!important
+}
+.dt-home-v4 .dt-v2-dashboard-glass{
+ background:linear-gradient(145deg,rgba(255,255,255,.2),rgba(89,128,201,.14) 48%,rgba(128,94,206,.17))!important;
+ backdrop-filter:blur(16px) saturate(150%)!important;
+ border-color:rgba(211,234,255,.46)!important
+}
+.dt-home-v4 .dt-v2-collection .concept-product,
+.dt-home-v4 .dt-v2-steps article,.dt-home-v4 .dt-v2-steps article+article{
+ background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(94,129,194,.1) 48%,rgba(140,108,220,.12))!important;
+ backdrop-filter:blur(12px) saturate(135%)!important;
+ border-color:rgba(190,218,255,.3)!important
+}
+.dt-home-v4 .dt-v2-dashboard-stamp{
+ background:linear-gradient(135deg,rgba(168,218,255,.24),rgba(125,137,231,.2))!important;
+ backdrop-filter:blur(12px)!important
+}
+/* Remove hollow/outlined display type; use a deliberate bold + regular rhythm */
+.dt-home-v4 .dt-v2-hero h1{font-weight:800!important;letter-spacing:-.075em!important}
+.dt-home-v4 .dt-v2-hero h1 em{
+ color:#9CEBFF!important;-webkit-text-stroke:0!important;text-shadow:none!important;
+ font-weight:500!important;letter-spacing:-.065em!important
+}
+.dt-home-v4 .dt-v2-section-heading h2 em,
+.dt-home-v4 .dt-v2-dashboard-copy h2 em,
+.dt-home-v4 .dt-v2-how-heading h2 em,
+.dt-home-v4 .dt-v2-faq-heading h2 em{
+ color:#9CEBFF!important;-webkit-text-stroke:0!important;font-weight:500!important
+}
+.dt-home-v4 .dt-v2-final h2 em{
+ color:#A8EFFF!important;-webkit-text-stroke:0!important;font-weight:500!important
+}
+.dt-home-v4 .dt-v2-card-word{font-weight:800!important}
+@media(max-width:760px){
+ .dt-home-v4 .dt-v2-phone,.dt-home-v4 .dt-v2-floating-card,
+ .dt-home-v4 .dt-v2-glass-note,.dt-home-v4 .dt-v2-glass-stat,
+ .dt-home-v4 .dt-v2-collection .concept-product,.dt-home-v4 .dt-v2-dashboard-glass,
+ .dt-home-v4 .dt-v2-dashboard-stamp,.dt-home-v4 .dt-v2-steps article,
+ .dt-home-v4 .dt-v2-steps article+article{backdrop-filter:blur(8px) saturate(125%)!important}
+}
