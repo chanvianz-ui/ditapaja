@@ -162,3 +162,98 @@
  .dt-editorial-home .concept-final{padding:82px 20px!important}
  .dt-editorial-home .concept-footer{gap:13px!important;flex-wrap:wrap!important;padding:24px 20px!important}
 }
+
+
+/* Color refinement v2 — cloud white, soft stone and muted blue-grey. */
+.dt-editorial-home{
+  --home-ink:#202633!important;--home-muted:#737d8b!important;
+}
+.dt-editorial-home .concept-header{
+  background:rgba(255,255,255,.94)!important;border-bottom-color:#edf0f3!important;
+  box-shadow:0 7px 28px rgba(31,43,61,.035)!important;
+}
+.dt-editorial-home .brand{color:#252d3a!important}
+.dt-editorial-home .brand-symbol{background:#273342!important;box-shadow:0 5px 14px rgba(39,51,66,.13)!important}
+.dt-editorial-home .brand-symbol i{background:#e8edf3!important}
+.dt-editorial-home .blue-word{color:#71839d!important}
+.dt-editorial-home .concept-nav nav a,.dt-editorial-home .concept-nav-actions>a{color:#667181!important}
+.dt-editorial-home .concept-nav nav a:hover,.dt-editorial-home .concept-nav-actions>a:hover{color:#34445b!important}
+.dt-editorial-home .concept-nav .concept-nav-cta{background:#303e52!important;color:#fff!important;box-shadow:0 8px 20px rgba(48,62,82,.14)!important}
+.dt-editorial-home .concept-mobile-actions a,.dt-editorial-home .concept-mobile-actions button{border-color:#e8ebef!important;color:#39475a!important}
+
+/* Light hero — keep the typography bold, not the background. */
+.dt-editorial-home .concept-hero{
+  background:
+    radial-gradient(ellipse at 82% 18%,rgba(205,218,235,.48),transparent 34%),
+    radial-gradient(ellipse at 8% 100%,rgba(231,235,241,.78),transparent 42%),
+    linear-gradient(135deg,#fff 0%,#f8f9fb 58%,#f1f4f8 100%)!important;
+}
+.dt-editorial-home .concept-hero:before{
+  opacity:.42!important;
+  background-image:linear-gradient(rgba(88,105,129,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(88,105,129,.055) 1px,transparent 1px)!important;
+}
+.dt-editorial-home .concept-hero:after{
+  border-color:rgba(105,126,154,.16)!important;
+  box-shadow:0 0 0 44px rgba(105,126,154,.035),0 0 0 92px rgba(105,126,154,.025)!important;
+}
+.dt-editorial-home .concept-eyebrow{color:#73839a!important}
+.dt-editorial-home .concept-eyebrow span{background:#91a3bb!important}
+.dt-editorial-home .concept-hero h1{color:#252d3a!important}
+.dt-editorial-home .concept-hero h1 em{color:#71839d!important}
+.dt-editorial-home .concept-lead{color:#687384!important}
+.dt-editorial-home .concept-button{background:#34445b!important;color:#fff!important;box-shadow:0 10px 24px rgba(52,68,91,.15)!important}
+.dt-editorial-home .concept-button:hover{box-shadow:0 14px 30px rgba(52,68,91,.2)!important}
+.dt-editorial-home .concept-quiet-link{color:#48566a!important}
+.dt-editorial-home .dt-hero-proof{color:#697687!important}
+.dt-editorial-home .dt-hero-proof svg{color:#7f94b0!important}
+.dt-editorial-home .dt-hero-scroll{color:#758297!important}
+
+/* White product gallery; preserve the dark Noir/Blanc/Signature artwork itself. */
+.dt-editorial-home .concept-collection{background:#fff!important}
+.dt-editorial-home .concept-section-top h2 em,.dt-editorial-home .concept-experience-head h2 em,.dt-editorial-home .concept-dashboard-copy h2 em,.dt-editorial-home .concept-faq h2 em{color:#778aa5!important}
+.dt-editorial-home .concept-section-top>p{color:#788291!important}
+.dt-editorial-home .concept-collection .concept-product{
+  border-color:#e9edf1!important;box-shadow:0 16px 42px rgba(35,48,66,.055)!important;
+}
+.dt-editorial-home .concept-collection .concept-product:hover{box-shadow:0 24px 55px rgba(35,48,66,.1)!important}
+.dt-editorial-home .dt-product-card-head{color:#7b8491!important}
+.dt-editorial-home .concept-product-body h3,.dt-editorial-home .concept-product-body h3 a{color:#293445!important}
+.dt-editorial-home .concept-product-body>p{color:#788291!important}
+.dt-editorial-home .concept-product-includes span{border-color:#e8edf2!important;background:#f7f9fb!important;color:#687b95!important}
+.dt-editorial-home .concept-product-buy strong{color:#29394e!important}
+.dt-editorial-home .catalog-order-link{background:#34445b!important;box-shadow:0 8px 18px rgba(52,68,91,.13)!important}
+.dt-editorial-home .concept-product-detail-link{color:#71839d!important}
+.dt-editorial-home .concept-collection-foot{border-top-color:#e9edf1!important;color:#7d8794!important}
+
+/* Alternating barely tinted surfaces to create rhythm without colored blocks. */
+.dt-editorial-home .concept-experience{background:#f4f6f9!important;color:#252d3a!important}
+.dt-editorial-home .concept-experience-head>p,.dt-editorial-home .concept-dashboard-copy>p{color:#788291!important}
+.dt-editorial-home .concept-flow article{border-color:#e8edf2!important;box-shadow:0 12px 30px rgba(35,48,66,.035)!important}
+.dt-editorial-home .concept-step-no{color:#8293aa!important}
+.dt-editorial-home .concept-step-icon{background:#edf1f6!important;color:#536985!important}
+.dt-editorial-home .concept-flow article p{color:#788291!important}
+.dt-editorial-home .concept-experience-note{color:#748195!important}
+.dt-editorial-home .concept-dashboard{background:#fff!important}
+.dt-editorial-home .concept-dashboard-copy ul li{color:#536174!important}
+.dt-editorial-home .concept-dashboard-frame{border-color:#e8edf2!important;background:#fbfcfd!important;box-shadow:0 30px 70px -48px rgba(35,48,66,.2)!important}
+.dt-editorial-home .concept-dash-sticker{background:#edf1f6!important;color:#465a74!important}
+.dt-editorial-home .concept-faq{background:#f5f7fa!important}
+.dt-editorial-home .concept-faq-list,.dt-editorial-home .concept-faq-list details{border-color:#e4e9ef!important}
+.dt-editorial-home .concept-faq-list summary{color:#344154!important}
+.dt-editorial-home .concept-faq-list details p{color:#778291!important}
+
+/* Close with a soft slate panel instead of a saturated green block. */
+.dt-editorial-home .concept-final{
+  background:radial-gradient(ellipse at 50% 0%,#596b83 0%,transparent 58%),linear-gradient(135deg,#303d50,#3d4b60)!important;
+}
+.dt-editorial-home .concept-final h2{color:#fff!important}
+.dt-editorial-home .concept-final h2 em{color:#d9e2ed!important}
+.dt-editorial-home .concept-final>p{color:#e0e6ee!important}
+.dt-editorial-home .concept-final-button{background:#fff!important;color:#34445b!important}
+.dt-editorial-home .concept-footer{background:#f0f3f7!important;color:#667386!important;border-top:1px solid #e5eaf0!important}
+.dt-editorial-home .concept-footer .brand{color:#293445!important}
+.dt-editorial-home .concept-footer .brand-symbol{background:#34445b!important}
+.dt-editorial-home .concept-footer .brand-symbol i{background:#e8edf3!important}
+@media(max-width:640px){
+ .dt-editorial-home .concept-header{background:rgba(255,255,255,.97)!important}
+}
