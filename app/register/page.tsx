@@ -98,9 +98,9 @@ export default function RegisterPage() {
                 <button type="button" aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"} onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "TAMPILKAN"}</button>
               </div>
             </div>
-            {password.length > 0 && <div className="dt-password-strength" aria-live="polite"><div className="dt-password-strength-track">{[1,2,3,4].map((step) => <i key={step} className={passwordScore >= step ? "is-filled" : ""} />)}</div><span>{passwordStrength}</span><small>Gunakan kombinasi huruf besar, angka, dan simbol agar lebih aman.</small></div>}
+            {password.length > 0 && <div className="dt-password-strength" aria-live="polite"><div className="dt-password-strength-track">{[1,2,3,4].map((step) => <i key={step} className={passwordScore >= step ? "is-filled" : ""} />)}</div><span>{passwordStrength}</span><small className="dt-password-rules"><span className={password.length >= 8 ? "is-valid" : ""}>8+ karakter</span><span className={/[A-Z]/.test(password) ? "is-valid" : ""}>Huruf besar</span><span className={/[0-9]/.test(password) ? "is-valid" : ""}>Angka</span><span className={/[^A-Za-z0-9]/.test(password) ? "is-valid" : ""}>Simbol</span></small></div>}
             {message && <p role="status" className={message.startsWith("Registrasi berhasil") ? "dt-auth-message dt-auth-success" : "dt-auth-message dt-auth-error"}>{message}</p>}
-            <button disabled={loading} className="dt-auth-submit">{loading ? "Memproses..." : "Daftar gratis"}<span>→</span></button>
+            <button disabled={loading} className="dt-auth-submit">{loading ? <><i className="dt-auth-spinner" />Membuat akun...</> : <>Buat akun DiTapAja<span>↗</span></>}</button>
           </form>
           <p className="dt-auth-switch">Sudah punya akun? <Link href={nextPath ? "/login?next=" + encodeURIComponent(nextPath) : "/login"}>Masuk</Link></p>
           <Link href="/" className="dt-auth-back">← Kembali ke halaman utama</Link>
