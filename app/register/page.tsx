@@ -1,3 +1,4 @@
+import SiteHeader from "../components/site-header";
 
 "use client";
 
@@ -70,7 +71,9 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="dt-auth-page">
+    <>
+      <SiteHeader />
+      <main className="dt-auth-page">
       <div className="dt-auth-shell">
         <section className="dt-auth-story dt-auth-story-register">
           <Link href="/" className="dt-auth-brand">DiTap<span>Aja.</span></Link>
@@ -119,6 +122,7 @@ export default function RegisterPage() {
           <p className="dt-auth-legal">© {new Date().getFullYear()} DiTapAja. Dibuat untuk bisnis yang terus berkembang.</p>
         </section>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
