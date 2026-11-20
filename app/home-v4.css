@@ -1035,3 +1035,75 @@
  .dt-home-v4 .dt-edition-content{padding:22px 20px 19px!important}
  .dt-home-v4 .dt-edition-description{min-height:0!important}
 }
+
+
+/* DARK EDITION CARDS — restrained, product-first, conversion focused */
+.dt-home-v4 .dt-collection-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:20px!important;align-items:stretch!important}
+.dt-home-v4 .dt-edition-card{
+ display:flex!important;flex-direction:column!important;min-width:0!important;overflow:hidden!important;
+ border:1px solid #2a3949!important;border-radius:18px!important;background:#121d2a!important;color:#f2f5f7!important;
+ box-shadow:0 16px 36px rgba(0,0,0,.2)!important;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease!important
+}
+.dt-home-v4 .dt-edition-card:hover{transform:translateY(-4px)!important;border-color:#50677a!important;box-shadow:0 22px 42px rgba(0,0,0,.27)!important}
+.dt-home-v4 .dt-edition-visual{
+ position:relative!important;isolation:isolate!important;display:flex!important;align-items:center!important;justify-content:center!important;
+ min-height:245px!important;overflow:hidden!important;padding:28px!important;background:#172535!important
+}
+.dt-home-v4 .dt-edition-noir .dt-edition-visual{background:linear-gradient(145deg,#1b2b3b,#111b27)!important}
+.dt-home-v4 .dt-edition-blanc .dt-edition-visual{background:linear-gradient(145deg,#253440,#182632)!important}
+.dt-home-v4 .dt-edition-signature .dt-edition-visual{background:linear-gradient(145deg,#292a3a,#1a1d2a)!important}
+.dt-home-v4 .dt-edition-visual-glow{position:absolute!important;z-index:-1!important;width:64%!important;height:52%!important;border-radius:50%!important;background:rgba(139,180,194,.12)!important;filter:blur(35px)!important}
+.dt-home-v4 .dt-edition-blanc .dt-edition-visual-glow{background:rgba(205,218,220,.13)!important}
+.dt-home-v4 .dt-edition-signature .dt-edition-visual-glow{background:rgba(171,151,196,.16)!important}
+.dt-home-v4 .dt-showcase-card{
+ position:relative!important;width:min(100%,330px)!important;aspect-ratio:1.58!important;height:auto!important;
+ display:flex!important;flex-direction:column!important;justify-content:space-between!important;padding:18px 20px!important;
+ border-radius:13px!important;overflow:hidden!important;transform:rotate(-3deg)!important;
+ box-shadow:0 22px 32px rgba(0,0,0,.35)!important;border:1px solid rgba(255,255,255,.15)!important
+}
+.dt-home-v4 .dt-showcase-card:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.14),transparent 48%,rgba(0,0,0,.12))}
+.dt-home-v4 .dt-showcase-noir{background:linear-gradient(135deg,#3b4652,#151d27 76%)!important;color:#f5f5f1!important}
+.dt-home-v4 .dt-showcase-blanc{background:linear-gradient(135deg,#f0f0e9,#cbd1cc 85%)!important;color:#27333b!important;border-color:rgba(255,255,255,.7)!important}
+.dt-home-v4 .dt-showcase-signature{background:linear-gradient(135deg,#6a6877,#292b38 85%)!important;color:#f7f5f2!important}
+.dt-home-v4 .dt-showcase-card-top,.dt-home-v4 .dt-showcase-card-bottom{position:relative!important;z-index:1!important;display:flex!important;justify-content:space-between!important;align-items:center!important}
+.dt-home-v4 .dt-showcase-card-top span{font-size:7px!important;font-weight:600!important;letter-spacing:.16em!important;opacity:.7!important}
+.dt-home-v4 .dt-showcase-card-top svg{opacity:.82!important}
+.dt-home-v4 .dt-showcase-card-main{position:relative!important;z-index:1!important;display:flex!important;flex-direction:column!important;gap:9px!important}
+.dt-home-v4 .dt-showcase-card-main strong{font-size:clamp(29px,3vw,39px)!important;line-height:1!important;font-weight:600!important;letter-spacing:-.065em!important}
+.dt-home-v4 .dt-showcase-card-main i{width:28px!important;height:2px!important;border-radius:2px!important;background:#9ecbd0!important}
+.dt-home-v4 .dt-showcase-card-bottom{font-size:6px!important;font-weight:600!important;letter-spacing:.12em!important;opacity:.72!important}
+.dt-home-v4 .dt-edition-status{position:absolute!important;right:14px!important;top:14px!important;z-index:2!important;padding:6px 9px!important;border:1px solid rgba(193,218,218,.15)!important;border-radius:30px!important;background:rgba(13,24,34,.72)!important;color:#c1d7d7!important;font-size:7px!important;font-weight:600!important;letter-spacing:.08em!important}
+.dt-home-v4 .dt-edition-status.is-preorder{color:#d7c5e5!important;border-color:rgba(215,197,229,.18)!important}
+.dt-home-v4 .dt-edition-content{display:flex!important;flex:1!important;flex-direction:column!important;padding:21px 21px 17px!important;background:#121d2a!important}
+.dt-home-v4 .dt-edition-heading{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important}
+.dt-home-v4 .dt-edition-kicker{font-size:8px!important;font-weight:600!important;letter-spacing:.12em!important;color:#8fa3b4!important}
+.dt-home-v4 .dt-edition-heading h3{margin:5px 0 0!important;color:#f4f6f7!important;font-size:29px!important;line-height:1.1!important;font-weight:600!important;letter-spacing:-.06em!important}
+.dt-home-v4 .dt-edition-more{display:grid!important;place-items:center!important;flex:none!important;width:34px!important;height:34px!important;border-radius:50%!important;background:#203243!important;color:#c5d9dc!important}
+.dt-home-v4 .dt-edition-description{min-height:42px!important;margin:10px 0 15px!important;color:#aab7c4!important;font-size:10px!important;line-height:1.75!important}
+.dt-home-v4 .dt-edition-benefits{display:flex!important;flex-wrap:wrap!important;gap:7px!important;margin:0 0 17px!important}
+.dt-home-v4 .dt-edition-benefits span{display:inline-flex!important;align-items:center!important;gap:6px!important;padding:7px 8px!important;border:1px solid rgba(180,203,220,.12)!important;border-radius:7px!important;background:#192938!important;color:#c2ced8!important;font-size:8px!important;font-weight:500!important}
+.dt-home-v4 .dt-edition-benefits svg{color:#a8cbd0!important}
+.dt-home-v4 .dt-edition-purchase{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:9px!important;margin-top:auto!important;padding-top:15px!important;border-top:1px solid rgba(180,203,220,.13)!important}
+.dt-home-v4 .dt-edition-price{display:flex!important;align-items:baseline!important;gap:4px!important;white-space:nowrap!important}
+.dt-home-v4 .dt-edition-price strong{color:#f5f7f8!important;font-size:21px!important;font-weight:600!important;letter-spacing:-.05em!important;line-height:1.2!important}
+.dt-home-v4 .dt-edition-price span{color:#91a1b0!important;font-size:8px!important}
+.dt-home-v4 .dt-edition-cta{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-height:40px!important;padding:0 12px!important;border-radius:9px!important;background:#dcebed!important;color:#172a38!important;font-size:9px!important;font-weight:600!important;white-space:nowrap!important;transition:background .2s ease!important}
+.dt-home-v4 .dt-edition-cta:hover{background:#f0f6f5!important}
+.dt-home-v4 .dt-edition-footnote{margin-top:12px!important;color:#91aaa8!important;font-size:8px!important}
+@media(max-width:1050px){
+ .dt-home-v4 .dt-collection-grid{gap:13px!important}
+ .dt-home-v4 .dt-edition-content{padding:18px 15px 16px!important}
+ .dt-home-v4 .dt-edition-price strong{font-size:18px!important}
+ .dt-home-v4 .dt-edition-cta{padding:0 9px!important;font-size:8px!important}
+ .dt-home-v4 .dt-edition-visual{min-height:220px!important;padding:20px!important}
+}
+@media(max-width:760px){
+ .dt-home-v4 .dt-collection-grid{grid-template-columns:1fr!important;gap:16px!important}
+ .dt-home-v4 .dt-edition-visual{min-height:245px!important;padding:26px!important}
+ .dt-home-v4 .dt-showcase-card{width:min(100%,350px)!important;padding:19px 21px!important}
+ .dt-home-v4 .dt-showcase-card-main strong{font-size:36px!important}
+ .dt-home-v4 .dt-edition-content{padding:21px 19px 17px!important}
+ .dt-home-v4 .dt-edition-description{min-height:0!important}
+ .dt-home-v4 .dt-edition-price strong{font-size:21px!important}
+ .dt-home-v4 .dt-edition-cta{padding:0 12px!important;font-size:9px!important}
+}
