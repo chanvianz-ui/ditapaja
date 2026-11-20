@@ -1,17 +1,46 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+export const dynamic = "force-dynamic";
+
+function json(data: Record<string, unknown>, status = 200) {
+  return NextResponse.json(data, {
+    status,
+    headers: { "Cache-Control": "no-store, max-age=0" },
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const username = String(body.username || "").trim().toLowerCase();
-    const password = String(body.password || "");
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > 4096) {
+      return json({ success: false, error: "Permintaan terlalu besar." }, 413);
+    }
 
-    if (!/^[a-z0-9][a-z0-9._-]{2,23}$/.test(username) || !password) {
-      return NextResponse.json(
-        { success: false, error: "Username atau password salah." },
-        { status: 401 }
-      );
+    const origin = request.headers.get("origin");
+    if (origin) {
+      try {
+        if (new URL(origin).origin !== request.nextUrl.origin) {
+          return json({ success: false, error: "Permintaan tidak valid." }, 403);
+        }
+      } catch {
+        return json({ success: false, error: "Permintaan tidak valid." }, 403);
+      }
+    }
+
+    const body: unknown = await request.json();
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return json({ success: false, error: "Username atau password salah." }, 401);
+    }
+
+    const payload = body as Record<string, unknown>;
+    const username = typeof payload.username === "string"
+      ? payload.username.trim().toLowerCase()
+      : "";
+    const password = typeof payload.password === "string" ? payload.password : "";
+
+    if (!/^[a-z0-9][a-z0-9._-]{2,23}$/.test(username) || password.length < 8 || password.length > 72) {
+      return json({ success: false, error: "Username atau password salah." }, 401);
     }
 
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -20,10 +49,7 @@ export async function POST(request: NextRequest) {
 
     if (!url || !anonKey || !secretKey) {
       console.error("Username login is missing Supabase configuration.");
-      return NextResponse.json(
-        { success: false, error: "Login username sedang tidak tersedia." },
-        { status: 503 }
-      );
+      return json({ success: false, error: "Login username sedang tidak tersedia." }, 503);
     }
 
     const admin = createClient(url, secretKey, {
@@ -41,10 +67,7 @@ export async function POST(request: NextRequest) {
 
     if (lookupError) throw lookupError;
     if (!account?.auth_email) {
-      return NextResponse.json(
-        { success: false, error: "Username atau password salah." },
-        { status: 401 }
-      );
+      return json({ success: false, error: "Username atau password salah." }, 401);
     }
 
     const { data, error } = await auth.auth.signInWithPassword({
@@ -53,13 +76,10 @@ export async function POST(request: NextRequest) {
     });
 
     if (error || !data.session) {
-      return NextResponse.json(
-        { success: false, error: "Username atau password salah." },
-        { status: 401 }
-      );
+      return json({ success: false, error: "Username atau password salah." }, 401);
     }
 
-    return NextResponse.json({
+    return json({
       success: true,
       session: {
         access_token: data.session.access_token,
@@ -68,9 +88,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Username login error:", error);
-    return NextResponse.json(
-      { success: false, error: "Login gagal. Silakan coba lagi." },
-      { status: 500 }
-    );
+    return json({ success: false, error: "Login gagal. Silakan coba lagi." }, 500);
   }
 }
