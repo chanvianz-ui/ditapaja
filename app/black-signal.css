@@ -4,10 +4,9 @@
  --dt-black:#080b0a;--dt-panel:#101614;--dt-panel-2:#151d19;--dt-panel-3:#1c2721;
  --dt-line:#29352e;--dt-white:#f0f5ef;--dt-dim:#9aa89d;--dt-lime:#c5ff55;
  --dt-acid:#a6e83f;--dt-red:#ff5b4d;--dt-mono:'IBM Plex Mono',monospace;--dt-display:'Space Grotesk',sans-serif;
- color-scheme:dark;
 }
-html{background:var(--dt-black);scroll-behavior:smooth}
-body{background:var(--dt-black)!important;color:var(--dt-white)!important;font-family:var(--dt-display)!important}
+html:has(.dt-editorial-home),html:has(.dt-collection-page),html:has(.dt-workspace-editorial),html:has(.dt-page-studio-page),html:has(.dt-customer-insights),html:has(.dt-orders-page),html:has(.dt-business-page),html:has(.dt-account-settings-page),html:has(.dt-card-create-page),html:has(.dt-auth-page){background:var(--dt-black);scroll-behavior:smooth}
+body:has(.dt-editorial-home),body:has(.dt-collection-page),body:has(.dt-workspace-editorial),body:has(.dt-page-studio-page),body:has(.dt-customer-insights),body:has(.dt-orders-page),body:has(.dt-business-page),body:has(.dt-account-settings-page),body:has(.dt-card-create-page),body:has(.dt-auth-page){background:var(--dt-black)!important;color:var(--dt-white)!important;font-family:var(--dt-display)!important}
 button,input,select,textarea{font-family:inherit}
 ::selection{background:var(--dt-lime);color:var(--dt-black)}
 a{color:inherit}
