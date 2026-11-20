@@ -6534,3 +6534,188 @@ body:has(main>aside.fixed.lg\:block) main>section>div .text-\[\#155eef\]{color:#
  .info-page .info-faq summary{font-size:15px!important}
  .info-page .info-faq p{font-size:13px!important;margin-right:24px!important}
 }
+
+
+/* =========================================================
+   DiTapAja — DARK TACTILE WORKSPACE / dashboard family
+   Visual-only layer. Existing application logic is untouched.
+   ========================================================= */
+.dt-dashboard-shell,
+.dt-orders-page,
+.dt-customer-insights,
+.dt-business-page,
+.dt-page-studio-page,
+.dt-account-settings-page{
+  --ws-bg:#101214;--ws-surface:#191d1f;--ws-raised:#202527;
+  --ws-line:rgba(225,232,222,.105);--ws-text:#edf0e9;
+  --ws-muted:#929c96;--ws-accent:#c2a77b;--ws-accent-soft:rgba(194,167,123,.13);
+  background-color:var(--ws-bg)!important;color:var(--ws-text)!important;
+  background-image:radial-gradient(ellipse at 78% 0%,rgba(143,125,94,.11),transparent 34%),linear-gradient(135deg,rgba(255,255,255,.018) 0 1px,transparent 1px 100%)!important;
+  background-size:auto,8px 8px!important;
+}
+.dt-dashboard-shell{min-height:100vh}
+.dt-dashboard-shell .workspace-sidebar,
+.dt-dashboard-shell .dt-sidebar{background:#15191b!important;border-color:var(--ws-line)!important;color:var(--ws-text)!important}
+.dt-dashboard-shell .dt-sidebar-brand{color:#f1f0e9!important}
+.dt-dashboard-shell .dt-sidebar-mark{background:#c2a77b!important;box-shadow:0 8px 24px #c2a77b30}
+.dt-dashboard-shell .dt-sidebar-account{background:#202527!important;border:1px solid var(--ws-line)!important}
+.dt-dashboard-shell .dt-sidebar-avatar,
+.dt-dashboard-shell .dt-topbar-avatar{background:#c2a77b!important;color:#17191a!important}
+.dt-dashboard-shell .dt-sidebar-label{color:#78827c!important;letter-spacing:.18em!important}
+.dt-dashboard-shell .dt-sidebar-link{color:#a5aea8!important;border:1px solid transparent!important;border-radius:12px!important;transition:background .2s,border-color .2s,color .2s}
+.dt-dashboard-shell .dt-sidebar-link:hover{background:#22292a!important;color:#f4f1e9!important}
+.dt-dashboard-shell .dt-sidebar-link.is-active{background:#2a302e!important;border-color:#41463e!important;color:#e7d4ad!important}
+.dt-dashboard-shell .dt-sidebar-settings,.dt-dashboard-shell .dt-sidebar-logout{color:#aeb7b0!important}
+.dt-dashboard-shell .dt-sidebar-settings:hover,.dt-dashboard-shell .dt-sidebar-logout:hover{color:#e7d4ad!important}
+.dt-dashboard-shell .dt-dashboard-topbar{background:rgba(16,18,20,.91)!important;border-color:var(--ws-line)!important;color:var(--ws-text)!important;backdrop-filter:blur(18px)}
+.dt-dashboard-shell .dt-dashboard-topbar h1{color:#f1f0e9!important;letter-spacing:-.035em!important}
+.dt-dashboard-shell .dt-dashboard-topbar p,.dt-dashboard-shell .dt-dashboard-topbar .text-slate-400{color:#87928b!important}
+.dt-dashboard-shell .dt-sidebar-collapse,.dt-dashboard-shell .dt-dashboard-topbar button{border-color:var(--ws-line)!important;color:#b6beb8!important}
+.dt-dashboard-shell .dt-dashboard-topbar button:hover{background:#252b2c!important;color:#e7d4ad!important}
+.dt-dashboard-shell .dt-mobile-bottom-nav{background:rgba(20,24,25,.96)!important;border-color:var(--ws-line)!important;backdrop-filter:blur(18px)}
+.dt-dashboard-shell .dt-mobile-bottom-nav a{color:#87928b!important}
+.dt-dashboard-shell .dt-mobile-bottom-nav a.is-active{color:#e4cda3!important}
+.dt-dashboard-shell .dt-dashboard-content{color:var(--ws-text)!important}
+.dt-dashboard-shell .dt-dashboard-command{min-height:300px;border:1px solid rgba(216,196,159,.2)!important;border-radius:26px!important;background:linear-gradient(112deg,#282d2b 0%,#1b2020 58%,#29271f 100%)!important;box-shadow:0 30px 90px -58px #000!important}
+.dt-dashboard-shell .dt-dashboard-command:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.2;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E")}
+.dt-dashboard-shell .dt-dashboard-eyebrow{color:#d4bc92!important;letter-spacing:.17em!important}
+.dt-dashboard-shell .dt-dashboard-live{color:#b6c1b7!important;border-color:#ffffff20!important;background:#ffffff0a!important}
+.dt-dashboard-shell .dt-dashboard-command h2,.dt-dashboard-shell .dt-dashboard-command h1{color:#f2f0e8!important;letter-spacing:-.045em!important}
+.dt-dashboard-shell .dt-dashboard-command p{color:#aeb8b0!important}
+.dt-dashboard-shell .dt-dashboard-primary-action{background:#c2a77b!important;color:#171a19!important;border-radius:999px!important;box-shadow:none!important}
+.dt-dashboard-shell .dt-dashboard-primary-action:hover{background:#d4bd98!important}
+.dt-dashboard-shell .dt-dashboard-secondary-action{border:1px solid #ffffff35!important;background:#ffffff09!important;color:#e8e8df!important;border-radius:999px!important}
+.dt-dashboard-shell .dt-dashboard-command-panel{background:#171c1c!important;border:1px solid #ffffff19!important;border-radius:20px!important}
+.dt-dashboard-shell .dt-dashboard-device-stat{border-color:#ffffff18!important}
+.dt-dashboard-shell .dt-dashboard-device-stat strong,.dt-dashboard-shell .dt-dashboard-device-stat b{color:#e9d6b2!important}
+.dt-dashboard-shell .dt-dashboard-content section:not(.dt-dashboard-command){scroll-margin-top:100px}
+.dt-dashboard-shell .dt-dashboard-content .bg-white,
+.dt-dashboard-shell .dt-dashboard-content .from-white{background-color:#1a1f20!important;background-image:none!important}
+.dt-dashboard-shell .dt-dashboard-content .bg-blue-50,
+.dt-dashboard-shell .dt-dashboard-content .bg-slate-50{background:#222827!important}
+.dt-dashboard-shell .dt-dashboard-content .border-slate-200,
+.dt-dashboard-shell .dt-dashboard-content .border-slate-200\/80,
+.dt-dashboard-shell .dt-dashboard-content .border-slate-200\/90{border-color:var(--ws-line)!important}
+.dt-dashboard-shell .dt-dashboard-content .text-slate-900,
+.dt-dashboard-shell .dt-dashboard-content .text-slate-800,
+.dt-dashboard-shell .dt-dashboard-content .text-slate-700{color:#e4e9e2!important}
+.dt-dashboard-shell .dt-dashboard-content .text-slate-600,
+.dt-dashboard-shell .dt-dashboard-content .text-slate-500{color:#a0aaa3!important}
+.dt-dashboard-shell .dt-dashboard-content .text-slate-400{color:#77827b!important}
+.dt-dashboard-shell .dt-dashboard-content .text-blue-600,
+.dt-dashboard-shell .dt-dashboard-content .text-blue-700{color:#d2b789!important}
+.dt-dashboard-shell .dt-dashboard-content input,
+.dt-dashboard-shell .dt-dashboard-content select,
+.dt-dashboard-shell .dt-dashboard-content textarea{background:#121718!important;color:#edf0e9!important;border-color:#ffffff22!important}
+.dt-dashboard-shell .dt-dashboard-content input::placeholder,
+.dt-dashboard-shell .dt-dashboard-content textarea::placeholder{color:#737f78!important}
+.dt-dashboard-shell .dt-dashboard-content button{transition:background .2s,border-color .2s,color .2s}
+.dt-dashboard-shell .dt-dashboard-content .dt-analytics-overview,
+.dt-dashboard-shell .dt-dashboard-content .dt-analytics-insights,
+.dt-dashboard-shell .dt-dashboard-content #my-nfc-cards,
+.dt-dashboard-shell .dt-dashboard-content .dt-nfc-card-row,
+.dt-dashboard-shell .dt-dashboard-content .dt-analytics-kpi{background:#191f20!important;border-color:var(--ws-line)!important;box-shadow:0 20px 55px -45px #000!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-analytics-kpi-icon{background:#302c24!important;color:#ddc49a!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-analytics-heading h3{color:#eee9dd!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-nfc-card-row:hover{border-color:#a48e68!important;background:#202625!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-nfc-card-row>div:first-child>div:first-child p{color:#e9e9df!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-nfc-card-row>div:first-child>p{color:#87928a!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-card-control-center{background:#191f20!important;border-color:var(--ws-line)!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-card-control-hero{background:linear-gradient(120deg,#292e2b,#1c2221)!important;border-color:#ffffff1c!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-card-control-hero h3{color:#f0e9dc!important}
+.dt-dashboard-shell .dt-dashboard-content .dt-card-control-hero p{color:#b3bcb4!important}
+.dt-dashboard-shell .dt-dashboard-content table th{color:#9ca79f!important}
+.dt-dashboard-shell .dt-dashboard-content table td{color:#d7ded7!important;border-color:var(--ws-line)!important}
+.dt-dashboard-shell .dt-dashboard-content .bg-emerald-50{background:#1d2b25!important;color:#b9d3bf!important}
+.dt-dashboard-shell .dt-dashboard-content .bg-amber-50{background:#30291e!important;color:#e2c99b!important}
+.dt-dashboard-shell .dt-dashboard-content .bg-red-50{background:#30211f!important;color:#e4b7ad!important}
+
+/* Orders */
+.dt-orders-page .dt-orders-hero{background:linear-gradient(112deg,#292f2c,#1a2020 64%,#302b22)!important;border-color:#ffffff1c!important;box-shadow:0 28px 80px -55px #000!important}
+.dt-orders-page .dt-orders-hero:after{color:#ffffff08!important}
+.dt-orders-page .dt-orders-hero h1{color:#f1eee5!important}
+.dt-orders-page .dt-orders-hero p{color:#aeb8b0!important}
+.dt-orders-page .dt-orders-hero>div:last-child>div{background:#ffffff09!important;border-color:#ffffff1b!important}
+.dt-orders-page .dt-orders-hero>div:last-child>div p:last-child{color:#e4c99b!important}
+.dt-orders-page .dt-orders-stat,.dt-orders-page .dt-order-flow,.dt-orders-page .dt-orders-create,.dt-orders-page .dt-workspace-panel,.dt-orders-page .dt-order-card{background:#1a2021!important;border-color:var(--ws-line)!important;box-shadow:0 18px 48px -42px #000!important;color:#e6eae3!important}
+.dt-orders-page .dt-orders-stat>div,.dt-orders-page .dt-orders-stat>p:nth-child(3){color:#9ba69e!important}
+.dt-orders-page .dt-orders-stat>p:nth-child(2){color:#eee9de!important}
+.dt-orders-page .dt-orders-stat>div span{color:#aeb8b0!important}
+.dt-orders-page .dt-order-flow h2,.dt-orders-page .dt-orders-create h2,.dt-orders-page .dt-orders-list-head h2{color:#eee9de!important}
+.dt-orders-page .dt-flow-step{background:#222929!important;border-color:var(--ws-line)!important;color:#dce2db!important}
+.dt-orders-page .dt-flow-step strong{color:#dfc59a!important}
+.dt-orders-page .dt-flow-track{background:#343c38!important}
+.dt-orders-page .dt-flow-track i{background:#c2a77b!important}
+.dt-orders-page .dt-orders-create label{color:#b8c1b9!important}
+.dt-orders-page .dt-orders-create input,.dt-orders-page .dt-orders-create select,.dt-orders-page .dt-orders-create textarea,.dt-orders-page .dt-workspace-panel input,.dt-orders-page .dt-workspace-panel select{background:#121718!important;border-color:#ffffff22!important;color:#edf0e9!important}
+.dt-orders-page .dt-orders-create>button[type=submit]{background:#c2a77b!important;color:#171a19!important}
+.dt-orders-page .dt-orders-list-head{border-color:var(--ws-line)!important}
+.dt-orders-page .dt-orders-list-head>button{background:#222827!important;border-color:var(--ws-line)!important;color:#dce2db!important}
+.dt-orders-page .dt-order-details{background:#222827!important;border-color:var(--ws-line)!important}
+.dt-orders-page .dt-order-card:hover{border-color:#a48e68!important}
+.dt-orders-page .dt-order-modal{background:#1b2222!important;color:#edf0e9!important;border:1px solid var(--ws-line)!important}
+.dt-orders-page .dt-order-invoice{background:#202726!important;color:#e7ebe4!important}
+
+/* Customer insights */
+.dt-customer-insights .dt-ci-hero{background:linear-gradient(112deg,#292f2c,#1b2121 65%,#302b22)!important;border:1px solid #ffffff1c!important;box-shadow:0 28px 80px -55px #000!important}
+.dt-customer-insights .dt-ci-hero h1{color:#f1eee5!important}
+.dt-customer-insights .dt-ci-hero p{color:#b5beb6!important}
+.dt-customer-insights .dt-ci-hero .rounded-2xl{background:#ffffff09!important;border-color:#ffffff1c!important}
+.dt-customer-insights .dt-ci-panel,.dt-customer-insights section .bg-white,.dt-customer-insights .rounded-2xl.border,.dt-customer-insights .rounded-3xl.border{background:#1a2021!important;border-color:var(--ws-line)!important;color:#e6eae3!important;box-shadow:0 18px 48px -42px #000!important}
+.dt-customer-insights h2,.dt-customer-insights h3{color:#eee9de!important}
+.dt-customer-insights p,.dt-customer-insights span{ }
+.dt-customer-insights .text-slate-950,.dt-customer-insights .text-slate-900,.dt-customer-insights .text-slate-800,.dt-customer-insights .text-slate-700{color:#e4e9e2!important}
+.dt-customer-insights .text-slate-600,.dt-customer-insights .text-slate-500{color:#a0aaa3!important}
+.dt-customer-insights .text-slate-400{color:#77827b!important}
+.dt-customer-insights input,.dt-customer-insights select{background:#121718!important;border-color:#ffffff22!important;color:#edf0e9!important}
+.dt-customer-insights .bg-emerald-50{background:#1d2b25!important;color:#c1d6c5!important}
+.dt-customer-insights .bg-amber-50{background:#30291e!important;color:#e2c99b!important}
+
+/* Business profile */
+.dt-business-page .dt-business-hero{background:linear-gradient(112deg,#292f2c,#1b2121 65%,#302b22)!important;border:1px solid #ffffff1c!important}
+.dt-business-page .dt-business-hero h1,.dt-business-page .dt-business-hero h2{color:#f1eee5!important}
+.dt-business-page .dt-business-hero p{color:#b5beb6!important}
+.dt-business-page .dt-workspace-panel{background:#1a2021!important;border-color:var(--ws-line)!important;color:#e6eae3!important;box-shadow:0 18px 48px -42px #000!important}
+.dt-business-page .dt-workspace-panel h2,.dt-business-page .dt-workspace-panel h3{color:#eee9de!important}
+.dt-business-page .dt-workspace-panel label{color:#b8c1b9!important}
+.dt-business-page .dt-workspace-panel input,.dt-business-page .dt-workspace-panel textarea{background:#121718!important;border-color:#ffffff22!important;color:#edf0e9!important}
+.dt-business-page .dt-business-add-location{background:#222827!important}
+.dt-business-page .dt-business-profile-form button,.dt-business-page .dt-business-add-location button{background:#c2a77b!important;color:#171a19!important;border-color:#c2a77b!important}
+.dt-business-page .text-slate-500,.dt-business-page .text-slate-400{color:#9ba69e!important}
+
+/* Page Studio */
+.dt-page-studio-page{color:#e8ece5!important}
+.dt-page-studio-page .dt-studio-masthead{background:linear-gradient(112deg,#292f2c,#1b2121 65%,#302b22)!important;border:1px solid #ffffff1c!important}
+.dt-page-studio-page .dt-studio-masthead h1{color:#f1eee5!important}
+.dt-page-studio-page .dt-studio-masthead p{color:#b5beb6!important}
+.dt-page-studio-page .dt-studio-nav>a{background:#202626!important;border-color:var(--ws-line)!important;color:#d9dfd8!important}
+.dt-page-studio-page .dt-studio-card-select,.dt-page-studio-page .dt-studio-section-nav,.dt-page-studio-page .dt-studio-form{background:#1a2021!important;border-color:var(--ws-line)!important;color:#e6eae3!important;box-shadow:0 18px 48px -42px #000!important}
+.dt-page-studio-page .dt-studio-form>div:first-child{border-color:var(--ws-line)!important}
+.dt-page-studio-page .dt-studio-form h2,.dt-page-studio-page .dt-studio-form h3{color:#eee9de!important}
+.dt-page-studio-page .dt-studio-form label{color:#b8c1b9!important}
+.dt-page-studio-page .dt-studio-form input,.dt-page-studio-page .dt-studio-form textarea,.dt-page-studio-page .dt-studio-form select,.dt-page-studio-page .dt-studio-card-select select{background:#121718!important;border-color:#ffffff22!important;color:#edf0e9!important}
+.dt-page-studio-page .dt-studio-form button{border-radius:999px!important}
+.dt-page-studio-page .dt-studio-form .bg-slate-50,.dt-page-studio-page .dt-studio-form .bg-blue-50{background:#222827!important}
+.dt-page-studio-page .text-slate-900,.dt-page-studio-page .text-slate-800,.dt-page-studio-page .text-slate-700{color:#e4e9e2!important}
+.dt-page-studio-page .text-slate-500,.dt-page-studio-page .text-slate-400{color:#9ba69e!important}
+
+/* Account settings */
+.dt-account-settings-page>header{background:rgba(19,23,24,.94)!important;border-color:var(--ws-line)!important;color:#e8ece5!important}
+.dt-account-settings-page>header h1,.dt-account-settings-page>header p{color:#e8ece5!important}
+.dt-account-settings-page .dt-workspace-panel{background:#1a2021!important;border-color:var(--ws-line)!important;color:#e6eae3!important;box-shadow:0 18px 48px -42px #000!important}
+.dt-account-settings-page .dt-workspace-panel h2{color:#eee9de!important}
+.dt-account-settings-page .dt-workspace-panel label{color:#b8c1b9!important}
+.dt-account-settings-page .dt-workspace-panel input{background:#121718!important;border-color:#ffffff22!important;color:#edf0e9!important}
+.dt-account-settings-page .dt-workspace-panel .bg-blue-50,.dt-account-settings-page .dt-workspace-panel .bg-indigo-50{background:#282b25!important;color:#e0c99e!important}
+.dt-account-settings-page .dt-workspace-panel .bg-blue-50 p{color:#c8c0ad!important}
+.dt-account-settings-page .dt-workspace-panel form>button[type=submit]{background:#c2a77b!important;color:#171a19!important}
+.dt-account-settings-page .text-slate-500,.dt-account-settings-page .text-slate-400{color:#9ba69e!important}
+@media(max-width:767px){
+ .dt-dashboard-shell .dt-dashboard-content{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important}
+ .dt-dashboard-shell .dt-dashboard-command{border-radius:21px!important}
+ .dt-orders-page,.dt-business-page,.dt-page-studio-page{padding-left:14px!important;padding-right:14px!important}
+ .dt-customer-insights .dt-ci-hero{border-radius:22px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-dashboard-shell *,.dt-orders-page *,.dt-customer-insights *,.dt-business-page *,.dt-page-studio-page *,.dt-account-settings-page *{scroll-behavior:auto!important;transition:none!important}
+}
