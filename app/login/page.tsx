@@ -1,6 +1,6 @@
-import SiteHeader from "../components/site-header";
-
 "use client";
+
+import SiteHeader from "../components/site-header";
 
 import { useState } from "react";
 import Link from "next/link";
