@@ -1,5 +1,6 @@
 "use client";
 
+import SiteHeader from "../components/site-header";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -63,7 +64,9 @@ export default function ActivateCardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f7f4] px-4 py-10 text-[#202720] sm:px-6">
+    <>
+      <SiteHeader />
+      <main className="min-h-screen bg-[#f5f7f4] px-4 py-10 text-[#202720] sm:px-6">
       <div className="mx-auto max-w-[960px]">
         <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-[#657263] hover:text-[#273d2b]">← DiTapAja</Link>
         <div className="mt-8 grid overflow-hidden rounded-[30px] border border-[#e5e9e2] bg-white shadow-[0_24px_80px_rgba(28,43,30,.08)] md:grid-cols-[.9fr_1.1fr]">
@@ -119,6 +122,7 @@ export default function ActivateCardPage() {
           </section>
         </div>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
