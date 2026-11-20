@@ -621,3 +621,67 @@
  .dt-home-v4 .concept-product-body{padding:19px 16px!important}
  .dt-home-v4 .concept-product-body h3{font-size:23px!important}
 }
+
+
+/* TYPOGRAPHY + UI RESET — clean Poppins, calm premium dark */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+.dt-home-v4,.dt-home-v4 *{
+ font-family:'Poppins',sans-serif!important;
+ font-style:normal!important;
+}
+.dt-home-v4{background:#0B111D!important;color:#F4F6FA!important}
+.dt-home-v4:before{
+ background:
+  radial-gradient(ellipse at 80% 12%,rgba(76,111,163,.12),transparent 34%),
+  linear-gradient(180deg,#0B111D 0%,#0D1522 55%,#0B111D 100%)!important
+}
+.dt-home-v4 .concept-header{background:#0B111D!important;border-bottom:1px solid #202C3B!important}
+.dt-home-v4 .brand{font-size:20px!important;font-weight:700!important;letter-spacing:-.7px!important}
+.dt-home-v4 .brand-symbol{background:#DCEAF0!important;box-shadow:none!important;border-radius:8px!important}
+.dt-home-v4 .brand-symbol i{background:#162638!important}
+.dt-home-v4 .blue-word{color:#A8C9D1!important}
+.dt-home-v4 .concept-nav nav a,.dt-home-v4 .concept-nav-actions>a{font-size:12px!important;font-weight:500!important;color:#B5C0CE!important}
+.dt-home-v4 .concept-nav .concept-nav-cta{background:#DCEAF0!important;color:#142333!important;border-radius:7px!important;font-size:11px!important;font-weight:600!important}
+.dt-home-v4 .dt-v2-kicker{font-size:10px!important;font-weight:600!important;letter-spacing:.12em!important}
+.dt-home-v4 .dt-v2-hero h1{
+ font-family:'Poppins',sans-serif!important;font-size:clamp(54px,6.6vw,88px)!important;
+ font-weight:700!important;line-height:1.08!important;letter-spacing:-.065em!important;
+ color:#F4F6FA!important;text-shadow:none!important
+}
+.dt-home-v4 .dt-v2-hero h1 em{font-family:'Poppins',sans-serif!important;font-weight:500!important;color:#A8C9D1!important;-webkit-text-stroke:0!important}
+.dt-home-v4 .dt-v2-hero-copy>p{font-size:14px!important;line-height:1.85!important;color:#AEB9C8!important}
+.dt-home-v4 .dt-v2-primary{font-family:'Poppins',sans-serif!important;font-size:12px!important;font-weight:600!important;border-radius:7px!important}
+.dt-home-v4 .dt-v2-secondary{font-size:11px!important;font-weight:500!important;border-radius:7px!important}
+.dt-home-v4 .dt-v2-proof{font-size:10px!important}
+.dt-home-v4 .dt-v2-proof span{border:0!important;background:transparent!important;padding:4px 0!important}
+.dt-home-v4 .dt-v2-section-heading h2,.dt-home-v4 .dt-v2-dashboard-copy h2,
+.dt-home-v4 .dt-v2-how-heading h2,.dt-home-v4 .dt-v2-faq-heading h2{
+ font-family:'Poppins',sans-serif!important;font-size:clamp(38px,4.8vw,62px)!important;
+ font-weight:600!important;line-height:1.12!important;letter-spacing:-.055em!important
+}
+.dt-home-v4 .dt-v2-section-heading h2 em,.dt-home-v4 .dt-v2-dashboard-copy h2 em,
+.dt-home-v4 .dt-v2-how-heading h2 em,.dt-home-v4 .dt-v2-faq-heading h2 em{
+ font-family:'Poppins',sans-serif!important;font-weight:400!important;color:#A8C9D1!important
+}
+.dt-home-v4 .dt-v2-collection,.dt-home-v4 .dt-v2-dashboard,.dt-home-v4 .dt-v2-how,.dt-home-v4 .dt-v2-faq{background:#0D1522!important}
+.dt-home-v4 .dt-v2-final{background:#1B2D40!important}
+.dt-home-v4 .dt-v2-final h2{font-family:'Poppins',sans-serif!important;font-weight:600!important;letter-spacing:-.05em!important}
+.dt-home-v4 .dt-v2-final h2 em{font-weight:400!important;color:#B9D7DA!important}
+.dt-home-v4 .dt-product-card{background:#141F2E!important;border:1px solid #273547!important;border-radius:10px!important;box-shadow:none!important}
+.dt-home-v4 .dt-product-card-head{min-height:48px!important}
+.dt-home-v4 .dt-product-family,.dt-home-v4 .dt-product-availability{font-family:'Poppins',sans-serif!important;font-size:9px!important;font-weight:600!important;letter-spacing:.06em!important}
+.dt-home-v4 .dt-product-object{background:#182638!important;min-height:240px!important}
+.dt-home-v4 .simple-card{border-radius:8px!important;transform:none!important;box-shadow:0 14px 28px rgba(0,0,0,.22)!important}
+.dt-home-v4 .concept-product-body h3{font-family:'Poppins',sans-serif!important;font-size:22px!important;font-weight:600!important;letter-spacing:-.04em!important}
+.dt-home-v4 .concept-product-body>p{font-size:12px!important;line-height:1.75!important}
+.dt-home-v4 .concept-product-includes span{font-family:'Poppins',sans-serif!important;font-size:9px!important}
+.dt-home-v4 .concept-product-buy strong{font-family:'Poppins',sans-serif!important;font-size:19px!important;font-weight:600!important}
+.dt-home-v4 .catalog-order-link{font-family:'Poppins',sans-serif!important;font-size:10px!important;font-weight:600!important}
+.dt-home-v4 .dt-v2-phone{transform:rotate(2deg)!important}
+.dt-home-v4 .dt-v2-floating-card{transform:rotate(-4deg)!important}
+@media(max-width:760px){
+ .dt-home-v4 .dt-v2-hero h1{font-size:clamp(43px,11vw,66px)!important;line-height:1.1!important}
+ .dt-home-v4 .dt-v2-section-heading h2,.dt-home-v4 .dt-v2-dashboard-copy h2,
+ .dt-home-v4 .dt-v2-how-heading h2,.dt-home-v4 .dt-v2-faq-heading h2{font-size:clamp(34px,9vw,48px)!important}
+ .dt-home-v4 .dt-product-object{min-height:210px!important}
+}
