@@ -111,7 +111,38 @@ export default function Home() {
         <div className="dt-v2-final-inner"><div className="dt-v2-kicker">READY WHEN YOU ARE <i /></div><h2>Make every<br /><em>tap count.</em></h2><p>Mulai dari satu kartu. Buat setiap interaksi lebih berarti.</p><a href="#koleksi" className="dt-v2-primary dt-v2-final-button">Pilih kartu sekarang <ArrowUpRight size={17} /></a><span className="dt-v2-final-mark">DiTapAja®</span></div>
       </section>
 
-      <footer className="dt-v2-footer"><a href="/" className="dt-v2-footer-brand"><BrandMark /> DiTapAja<span>.</span></a><span>© 2026 DiTapAja. Lebih mudah terhubung.</span><a href="https://wa.me/6281321778081">Hubungi kami <ArrowUpRight size={14} /></a></footer>
+      <footer className="dt-v2-footer dt-v2-footer-expanded">
+        <div className="dt-footer-main">
+          <div className="dt-footer-about">
+            <a href="#top" className="dt-v2-footer-brand"><BrandMark /> DiTapAja<span>.</span></a>
+            <p>NFC review card untuk membantu bisnis membangun pengalaman pelanggan yang lebih praktis.</p>
+            <a className="dt-footer-contact" href="https://wa.me/6281321778081">Ada yang ingin ditanyakan? <ArrowUpRight size={14}/></a>
+          </div>
+          <div className="dt-footer-column">
+            <span className="dt-footer-label">JELAJAHI</span>
+            <a href="#koleksi">Koleksi kartu</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#cara-kerja">Cara kerja</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div className="dt-footer-column">
+            <span className="dt-footer-label">KOLEKSI</span>
+            <a href="#koleksi">Noir</a>
+            <a href="#koleksi">Blanc</a>
+            <a href="#koleksi">Signature</a>
+          </div>
+          <div className="dt-footer-column dt-footer-help">
+            <span className="dt-footer-label">BUTUH BANTUAN?</span>
+            <p>Diskusikan kebutuhan kartu untuk bisnismu bersama kami.</p>
+            <a href="https://wa.me/6281321778081">Hubungi DiTapAja <ArrowUpRight size={14}/></a>
+          </div>
+        </div>
+        <div className="dt-footer-bottom">
+          <span>© 2026 DiTapAja. All rights reserved.</span>
+          <span>NFC + QR CODE · DASHBOARD GRATIS</span>
+          <a href="#top">Kembali ke atas ↑</a>
+        </div>
+      </footer>
     </main>
   );
 }
