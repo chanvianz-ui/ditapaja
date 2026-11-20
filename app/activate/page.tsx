@@ -66,10 +66,10 @@ export default function ActivateCardPage() {
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-[#f5f7f4] px-4 py-10 text-[#202720] sm:px-6">
+      <main className="dt-activation-page min-h-screen bg-[#0b1420] px-4 py-10 text-[#edf3f5] sm:px-6">
       <div className="mx-auto max-w-[960px]">
         <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-[#657263] hover:text-[#273d2b]">← DiTapAja</Link>
-        <div className="mt-8 grid overflow-hidden rounded-[30px] border border-[#e5e9e2] bg-white shadow-[0_24px_80px_rgba(28,43,30,.08)] md:grid-cols-[.9fr_1.1fr]">
+        <div className="dt-activation-shell mt-8 grid overflow-hidden rounded-[18px] border border-white/10 bg-[#122231] shadow-[0_24px_80px_rgba(0,0,0,.28)] md:grid-cols-[.9fr_1.1fr]">
           <section className="flex flex-col justify-between bg-[#202a22] p-7 text-white sm:p-10">
             <div>
               <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#dbe8d5] text-[#293a2c]"><KeyRound size={23}/></div>
@@ -83,7 +83,7 @@ export default function ActivateCardPage() {
             </div>
           </section>
 
-          <section className="p-6 sm:p-10">
+          <section className="dt-activation-form p-6 sm:p-10">
             <div className="max-w-md">
               <span className="text-[10px] font-bold uppercase tracking-[.18em] text-[#82917d]">Mulai sekarang</span>
               <h2 className="mt-2 text-2xl font-semibold tracking-tight">Aktivasi kartu NFC</h2>
