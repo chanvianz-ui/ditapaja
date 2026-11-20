@@ -12,35 +12,61 @@ const PRODUCTS = {
 export async function POST(request: NextRequest) {
   try {
     const origin = request.headers.get("origin");
-    if (!origin || new URL(origin).origin !== request.nextUrl.origin) {
+    if (!origin) {
+      return NextResponse.json({ error: "Permintaan tidak valid." }, { status: 403 });
+    }
+    try {
+      if (new URL(origin).origin !== request.nextUrl.origin) {
+        return NextResponse.json({ error: "Permintaan tidak valid." }, { status: 403 });
+      }
+    } catch {
       return NextResponse.json({ error: "Permintaan tidak valid." }, { status: 403 });
     }
 
-    const body = await request.json();
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > 16_384) {
+      return NextResponse.json({ error: "Data pesanan terlalu besar." }, { status: 413 });
+    }
+
+    const body: unknown = await request.json();
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return NextResponse.json({ error: "Format data pesanan tidak valid." }, { status: 400 });
+    }
+    const payload = body as Record<string, unknown>;
+
     // Honeypot field: bots often fill every input, real visitors never see it.
-    if (typeof body.website === "string" && body.website.trim()) {
+    if (typeof payload.website === "string" && payload.website.trim()) {
       return NextResponse.json({ success: true });
     }
 
-    const customer = typeof body.customer === "string" ? body.customer.trim() : "";
-    const customerEmail = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-    const business = typeof body.business === "string" ? body.business.trim() : "";
-    const phone = typeof body.phone === "string" ? body.phone.replace(/\D/g, "") : "";
-    const destination = typeof body.destination === "string" ? body.destination.trim() : "";
-    const productName = typeof body.product === "string" ? body.product : "";
-    const quantity = Number(body.quantity);
-    const notes = typeof body.notes === "string" ? body.notes.trim() : "";
+    const customer = typeof payload.customer === "string" ? payload.customer.trim() : "";
+    const customerEmail = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+    const business = typeof payload.business === "string" ? payload.business.trim() : "";
+    const phone = typeof payload.phone === "string" ? payload.phone.replace(/\D/g, "") : "";
+    const destination = typeof payload.destination === "string" ? payload.destination.trim() : "";
+    const productName = typeof payload.product === "string" ? payload.product : "";
+    const quantity = Number(payload.quantity);
+    const notes = typeof payload.notes === "string" ? payload.notes.trim() : "";
 
-    if (!customer || customer.length > 100 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail) || customerEmail.length > 254 || !business || business.length > 120 ||
-        !destination || destination.length > 250 || phone.length < 10 || phone.length > 15 ||
-        !Number.isInteger(quantity) || quantity < 1 || quantity > 1000 ||
-        notes.length > 1000 || !Object.prototype.hasOwnProperty.call(PRODUCTS, productName)) {
+    if (
+      !customer || customer.length > 100 ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail) || customerEmail.length > 254 ||
+      !business || business.length > 120 ||
+      !destination || destination.length > 250 ||
+      phone.length < 10 || phone.length > 15 ||
+      !Number.isInteger(quantity) || quantity < 1 || quantity > 1000 ||
+      notes.length > 1000 ||
+      !Object.prototype.hasOwnProperty.call(PRODUCTS, productName)
+    ) {
       return NextResponse.json({ error: "Periksa kembali data pesanan." }, { status: 400 });
     }
 
     const product = PRODUCTS[productName as keyof typeof PRODUCTS];
     if (quantity < product.minimum) {
-      return NextResponse.json({ error: "Jumlah minimum untuk produk ini adalah " + product.minimum + " kartu." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Jumlah minimum untuk produk ini adalah " + product.minimum + " kartu." },
+        { status: 400 }
+      );
     }
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -76,7 +102,10 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       console.error("Public order insert failed:", error);
-      return NextResponse.json({ error: "Pesanan belum berhasil disimpan. Silakan lanjutkan melalui WhatsApp." }, { status: 500 });
+      return NextResponse.json(
+        { error: "Pesanan belum berhasil disimpan. Silakan lanjutkan melalui WhatsApp." },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ success: true, orderId: data.id });
