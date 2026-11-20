@@ -74,54 +74,34 @@ export default function RegisterPage() {
     <>
       <SiteHeader />
       <main className="dt-auth-page">
-      <div className="dt-auth-shell">
-        <section className="dt-auth-story dt-auth-story-register">
-          <Link href="/" className="dt-auth-brand">DiTap<span>Aja.</span></Link>
-          <div className="dt-auth-story-copy">
-            <span className="dt-auth-eyebrow"><i /> START WITH A SIMPLE TAP</span>
-            <h1>Semua aktivitas kartu NFC, <em>dalam satu tempat.</em></h1>
-            <p>Buat akun gratis dan mulai kelola pengalaman pelanggan dengan cara yang lebih praktis.</p>
+        <section className="dt-auth-form-card">
+          <div className="dt-auth-heading">
+            <span className="dt-auth-kicker">AKUN DITAPAJA</span>
+            <h1>Buat akun</h1>
+            <p>Daftar untuk mulai mengelola kartu dan aktivitas bisnismu.</p>
           </div>
-          <div className="dt-auth-benefits">
-            <div><b>01</b><span><strong>Kelola kartu NFC</strong><small>Atur tujuan review dan status kartu.</small></span></div>
-            <div><b>02</b><span><strong>Pantau aktivitas</strong><small>Lihat tap dan interaksi pelanggan.</small></span></div>
-            <div><b>03</b><span><strong>Kenali performa</strong><small>Gunakan insight untuk langkah berikutnya.</small></span></div>
-          </div>
-          <div className="dt-auth-story-foot">FREE DASHBOARD. NO COMPLICATED SETUP.</div>
-        </section>
-        <section className="dt-auth-form-side">
-          <div className="dt-auth-form-card">
-            <div className="dt-auth-mobile-brand"><Link href="/">DiTap<span>Aja.</span></Link></div>
-            <div className="dt-auth-heading">
-              <span className="dt-auth-kicker">MULAI GRATIS</span>
-              <h2>Buat akun kamu</h2>
-              <p>Hanya butuh beberapa detail untuk memulai.</p>
+          <form onSubmit={handleRegister} className="dt-auth-form">
+            <div className="dt-auth-field">
+              <label htmlFor="register-name">Nama lengkap</label>
+              <input id="register-name" required autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama lengkap" />
             </div>
-            <form onSubmit={handleRegister} className="dt-auth-form">
-              <div className="dt-auth-field">
-                <label htmlFor="register-name">Nama lengkap</label>
-                <input id="register-name" required autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama kamu" />
+            <div className="dt-auth-field">
+              <label htmlFor="register-email">Email</label>
+              <input id="register-email" required type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" />
+            </div>
+            <div className="dt-auth-field">
+              <label htmlFor="register-password">Password <small>MIN. 8 KARAKTER</small></label>
+              <div className="dt-auth-password">
+                <input id="register-password" required minLength={8} type={showPassword ? "text" : "password"} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Buat password" />
+                <button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "LIHAT"}</button>
               </div>
-              <div className="dt-auth-field">
-                <label htmlFor="register-email">Email</label>
-                <input id="register-email" required type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="nama@email.com" />
-              </div>
-              <div className="dt-auth-field">
-                <label htmlFor="register-password">Password <small>MIN. 8 KARAKTER</small></label>
-                <div className="dt-auth-password">
-                  <input id="register-password" required minLength={8} type={showPassword ? "text" : "password"} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Buat password" />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "LIHAT"}</button>
-                </div>
-              </div>
-              {message && <p role="status" className="dt-auth-message dt-auth-success">{message}</p>}
-              <button disabled={loading} className="dt-auth-submit">{loading ? "Memproses..." : "Buat akun gratis"}<span>→</span></button>
-            </form>
-            <p className="dt-auth-switch">Sudah punya akun? <Link href={nextPath ? "/login?next=" + encodeURIComponent(nextPath) : "/login"}>Masuk</Link></p>
-            <p className="dt-auth-terms">Dengan mendaftar, kamu menyetujui ketentuan layanan DiTapAja.</p>
-          </div>
-          <p className="dt-auth-legal">© {new Date().getFullYear()} DiTapAja. Dibuat untuk bisnis yang terus berkembang.</p>
+            </div>
+            {message && <p role="status" className={message.startsWith("Registrasi berhasil") ? "dt-auth-message dt-auth-success" : "dt-auth-message dt-auth-error"}>{message}</p>}
+            <button disabled={loading} className="dt-auth-submit">{loading ? "Memproses..." : "Daftar gratis"}<span>→</span></button>
+          </form>
+          <p className="dt-auth-switch">Sudah punya akun? <Link href={nextPath ? "/login?next=" + encodeURIComponent(nextPath) : "/login"}>Masuk</Link></p>
+          <Link href="/" className="dt-auth-back">← Kembali ke halaman utama</Link>
         </section>
-      </div>
       </main>
     </>
   );
