@@ -2613,3 +2613,106 @@ body:has(.dt-auth-page){background:#0b1420!important}
  .info-page .info-content .info-faq summary{font-size:14px!important}
  .info-page .info-content .info-faq details p{font-size:13px!important;margin-right:22px!important}
 }
+
+
+/* AUTH V2 — modern, focused, interactive form (no extra panels) */
+.dt-auth-page{
+ position:relative!important;isolation:isolate!important;
+ align-items:flex-start!important;
+ padding-top:clamp(54px,9vh,104px)!important;
+ background:
+  radial-gradient(ellipse at 50% 0%,rgba(83,137,165,.17),transparent 42%),
+  radial-gradient(ellipse at 100% 75%,rgba(35,75,99,.12),transparent 38%),
+  #0b1420!important;
+}
+.dt-auth-page:before{
+ content:"";position:absolute;z-index:-1;top:0;left:50%;width:min(620px,88vw);height:1px;
+ transform:translateX(-50%);
+ background:linear-gradient(90deg,transparent,rgba(169,203,210,.42),transparent);
+}
+.dt-auth-page .dt-auth-form-card{
+ max-width:460px!important;
+ animation:dt-auth-enter .65s cubic-bezier(.2,.75,.25,1) both;
+}
+@keyframes dt-auth-enter{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.dt-auth-page .dt-auth-heading{margin-bottom:34px!important}
+.dt-auth-page .dt-auth-kicker{display:inline-flex!important;align-items:center!important;gap:9px!important;margin-bottom:17px!important}
+.dt-auth-page .dt-auth-kicker:before{content:"";width:22px;height:1px;background:#a9cbd2}
+.dt-auth-page .dt-auth-heading h1{font-size:clamp(38px,5vw,50px)!important;letter-spacing:-.065em!important}
+.dt-auth-page .dt-auth-heading p{max-width:380px!important;font-size:15px!important;line-height:1.75!important}
+.dt-auth-page .dt-auth-form{gap:22px!important}
+.dt-auth-page .dt-auth-field{gap:10px!important}
+.dt-auth-page .dt-auth-field label{font-size:13px!important;letter-spacing:.01em!important}
+.dt-auth-page .dt-auth-field-hint{margin-top:-4px!important;color:#8095a3!important;font-size:11px!important;line-height:1.5!important}
+.dt-auth-page .dt-auth-field input{
+ height:56px!important;padding:0 16px!important;
+ background:rgba(18,34,48,.82)!important;
+ border:1px solid rgba(164,192,210,.19)!important;border-radius:11px!important;
+ transition:border-color .2s ease,background .2s ease,box-shadow .2s ease,transform .2s ease!important;
+}
+.dt-auth-page .dt-auth-field input:hover{border-color:rgba(169,203,210,.4)!important;background:#142536!important}
+.dt-auth-page .dt-auth-field input:focus{
+ border-color:#9fcbd3!important;background:#142536!important;
+ box-shadow:0 0 0 4px rgba(145,185,199,.12),0 8px 24px rgba(0,0,0,.12)!important;
+}
+.dt-auth-page .dt-auth-password{
+ min-height:56px!important;background:rgba(18,34,48,.82)!important;
+ border:1px solid rgba(164,192,210,.19)!important;border-radius:11px!important;
+ transition:border-color .2s ease,box-shadow .2s ease,background .2s ease!important;
+}
+.dt-auth-page .dt-auth-password:hover{border-color:rgba(169,203,210,.4)!important}
+.dt-auth-page .dt-auth-password:focus-within{
+ border-color:#9fcbd3!important;background:#142536!important;
+ box-shadow:0 0 0 4px rgba(145,185,199,.12)!important;
+}
+.dt-auth-page .dt-auth-password input{height:54px!important;background:transparent!important}
+.dt-auth-page .dt-auth-password button{
+ height:100%!important;padding:0 15px!important;
+ color:#a9cbd2!important;font-size:9px!important;letter-spacing:.08em!important;
+ transition:color .2s ease!important;
+}
+.dt-auth-page .dt-auth-password button:hover{color:#f1f6f8!important}
+.dt-auth-page .dt-auth-submit{
+ position:relative!important;overflow:hidden!important;gap:12px!important;
+ height:58px!important;margin-top:4px!important;padding:0 20px!important;
+ border-radius:11px!important;font-size:14px!important;
+ transition:transform .2s ease,box-shadow .2s ease,background .2s ease!important;
+ box-shadow:0 8px 24px rgba(160,201,215,.08)!important;
+}
+.dt-auth-page .dt-auth-submit:after{
+ content:"";position:absolute;inset:0;transform:translateX(-110%);
+ background:linear-gradient(105deg,transparent,rgba(255,255,255,.32),transparent);
+ transition:transform .55s ease;
+}
+.dt-auth-page .dt-auth-submit:hover:not(:disabled){transform:translateY(-2px)!important;box-shadow:0 13px 30px rgba(160,201,215,.16)!important;background:#edf6f8!important}
+.dt-auth-page .dt-auth-submit:hover:not(:disabled):after{transform:translateX(110%)}
+.dt-auth-page .dt-auth-submit:active:not(:disabled){transform:translateY(0)!important}
+.dt-auth-page .dt-auth-submit span{font-size:19px!important;transition:transform .2s ease!important}
+.dt-auth-page .dt-auth-submit:hover:not(:disabled) span{transform:translate(3px,-2px)!important}
+.dt-auth-spinner{width:15px;height:15px;border:2px solid rgba(20,38,53,.25);border-top-color:#142635;border-radius:50%;animation:dt-auth-spin .7s linear infinite}
+@keyframes dt-auth-spin{to{transform:rotate(360deg)}}
+.dt-auth-page .dt-auth-switch{margin-top:28px!important;font-size:13px!important}
+.dt-auth-page .dt-auth-switch a{position:relative!important;text-decoration:none!important}
+.dt-auth-page .dt-auth-switch a:after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:#a9cbd2;transform:scaleX(0);transform-origin:left;transition:transform .2s ease}
+.dt-auth-page .dt-auth-switch a:hover:after{transform:scaleX(1)}
+.dt-auth-page .dt-auth-back{margin-top:28px!important;transition:color .2s ease,transform .2s ease!important}
+.dt-auth-page .dt-auth-back:hover{color:#dceaf0!important;transform:translateX(-3px)!important}
+.dt-auth-page .dt-auth-message{animation:dt-auth-enter .25s ease both!important}
+.dt-password-strength{display:grid!important;grid-template-columns:1fr auto!important;align-items:center!important;gap:8px 12px!important;margin-top:-10px!important}
+.dt-password-strength-track{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:5px!important}
+.dt-password-strength-track i{display:block!important;height:4px!important;border-radius:99px!important;background:#263746!important;transition:background .2s ease!important}
+.dt-password-strength-track i.is-filled{background:#9fcbd3!important}
+.dt-password-strength>span{color:#b9d7df!important;font-size:11px!important;font-weight:700!important}
+.dt-password-strength>small{grid-column:1/-1!important;color:#8195a2!important;font-size:10px!important;line-height:1.5!important}
+@media(max-width:760px){
+ .dt-auth-page{padding:48px 22px 54px!important}
+ .dt-auth-page .dt-auth-form-card{max-width:480px!important}
+ .dt-auth-page .dt-auth-heading{margin-bottom:30px!important}
+ .dt-auth-page .dt-auth-heading h1{font-size:40px!important}
+ .dt-auth-page .dt-auth-form{gap:20px!important}
+ .dt-auth-page .dt-auth-field input,.dt-auth-page .dt-auth-password{min-height:54px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-auth-page .dt-auth-form-card,.dt-auth-page .dt-auth-message{animation:none!important}
+ .dt-auth-page *, .dt-auth-page *:before,.dt-auth-page *:after{transition:none!important}
+}
