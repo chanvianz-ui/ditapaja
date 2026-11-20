@@ -1352,3 +1352,105 @@
  .dt-home-v4 .dt-footer-bottom>span:nth-child(2){grid-column:1/-1!important;grid-row:2!important}
  .dt-home-v4 .dt-footer-bottom>a{grid-column:2!important;grid-row:1!important}
 }
+
+
+/* FINAL POLISH — FAQ accordion + balanced brand footer */
+.dt-home-v4 .dt-v2-faq{
+ position:relative!important;display:grid!important;grid-template-columns:minmax(250px,.78fr) minmax(0,1.22fr)!important;
+ gap:clamp(42px,8vw,110px)!important;width:min(1120px,calc(100% - 72px))!important;
+ margin:0 auto!important;padding:112px 0 120px!important;align-items:start!important
+}
+.dt-home-v4 .dt-v2-faq-heading{position:sticky!important;top:112px!important;max-width:360px!important}
+.dt-home-v4 .dt-v2-faq-heading h2{
+ margin:20px 0 17px!important;color:#f0f4f7!important;font-family:"Manrope",sans-serif!important;
+ font-size:clamp(37px,4.4vw,55px)!important;line-height:1.12!important;font-weight:750!important;letter-spacing:-.065em!important
+}
+.dt-home-v4 .dt-v2-faq-heading h2 em{color:#a9cbd2!important;font-style:normal!important;font-weight:550!important}
+.dt-home-v4 .dt-v2-faq-heading>p{margin:0!important;color:#9baaba!important;font-size:11px!important;line-height:1.8!important}
+.dt-home-v4 .dt-v2-faq-heading>p a{display:inline-flex!important;align-items:center!important;gap:4px!important;color:#c4dce0!important;font-weight:600!important}
+.dt-home-v4 .dt-v2-faq-list{display:flex!important;flex-direction:column!important;border-top:1px solid rgba(167,190,210,.18)!important}
+.dt-home-v4 .dt-v2-faq-list details{
+ position:relative!important;margin:0!important;padding:0!important;border:0!important;
+ border-bottom:1px solid rgba(167,190,210,.16)!important;background:transparent!important
+}
+.dt-home-v4 .dt-v2-faq-list summary{
+ display:grid!important;grid-template-columns:34px minmax(0,1fr) 34px!important;align-items:center!important;
+ gap:12px!important;min-height:82px!important;padding:17px 2px!important;list-style:none!important;cursor:pointer!important;
+ color:#e7edf2!important;font-family:"Manrope",sans-serif!important;font-size:14px!important;font-weight:650!important;
+ letter-spacing:-.025em!important;line-height:1.45!important;transition:color .2s ease!important
+}
+.dt-home-v4 .dt-v2-faq-list summary::-webkit-details-marker{display:none!important}
+.dt-home-v4 .dt-v2-faq-list summary:before{
+ content:counter(list-item,decimal-leading-zero)!important;color:#7892a5!important;
+ font-family:"DM Sans",sans-serif!important;font-size:9px!important;font-weight:600!important;letter-spacing:.08em!important
+}
+.dt-home-v4 .dt-v2-faq-list summary svg{
+ justify-self:end!important;width:30px!important;height:30px!important;padding:7px!important;
+ border:1px solid rgba(167,190,210,.16)!important;border-radius:50%!important;color:#a9cbd2!important;
+ transition:transform .22s ease,background .22s ease!important
+}
+.dt-home-v4 .dt-v2-faq-list details[open] summary{color:#bfe0e2!important}
+.dt-home-v4 .dt-v2-faq-list details[open] summary svg{transform:rotate(180deg)!important;background:#1b3040!important}
+.dt-home-v4 .dt-v2-faq-list details>p{
+ max-width:610px!important;margin:0 42px 25px 48px!important;padding:0!important;
+ color:#9eacba!important;font-size:11px!important;line-height:1.9!important;font-weight:400!important
+}
+.dt-home-v4 .dt-v2-footer-expanded{
+ padding:0 max(36px,calc((100% - 1160px)/2))!important;
+ background:#080e17!important;border-top:1px solid rgba(165,187,208,.14)!important
+}
+.dt-home-v4 .dt-footer-main{
+ grid-template-columns:minmax(230px,1.5fr) repeat(2,minmax(105px,.65fr)) minmax(190px,1fr)!important;
+ gap:clamp(24px,4vw,58px)!important;padding:54px 0 46px!important
+}
+.dt-home-v4 .dt-footer-about{max-width:290px!important}
+.dt-home-v4 .dt-footer-about .dt-v2-footer-brand{font-size:20px!important}
+.dt-home-v4 .dt-footer-about>p{
+ max-width:255px!important;margin:15px 0 0!important;color:#8999a9!important;
+ font-size:11px!important;line-height:1.85!important
+}
+.dt-home-v4 .dt-footer-contact{display:none!important}
+.dt-home-v4 .dt-footer-column{gap:12px!important}
+.dt-home-v4 .dt-footer-label{margin-bottom:8px!important;color:#8296a8!important;font-size:8px!important;letter-spacing:.14em!important}
+.dt-home-v4 .dt-footer-column>a{color:#aab8c5!important;font-size:10px!important;line-height:1.5!important}
+.dt-home-v4 .dt-footer-help{
+ padding-left:25px!important;border-left:1px solid rgba(165,187,208,.13)!important
+}
+.dt-home-v4 .dt-footer-help>p{max-width:210px!important;color:#8f9eac!important;font-size:10px!important;line-height:1.8!important}
+.dt-home-v4 .dt-footer-help>a{
+ margin-top:5px!important;padding:10px 13px!important;border:1px solid rgba(174,198,216,.2)!important;
+ border-radius:8px!important;background:#142231!important;color:#dcebed!important;font-size:9px!important
+}
+.dt-home-v4 .dt-footer-bottom{
+ min-height:59px!important;display:flex!important;justify-content:space-between!important;gap:15px!important;
+ border-top:1px solid rgba(165,187,208,.12)!important
+}
+.dt-home-v4 .dt-footer-bottom>span,.dt-home-v4 .dt-footer-bottom>a{font-size:8px!important;color:#77899a!important}
+.dt-home-v4 .dt-footer-bottom>span:nth-child(2){letter-spacing:.1em!important;color:#8298a7!important}
+@media(max-width:850px){
+ .dt-home-v4 .dt-v2-faq{width:calc(100% - 48px)!important;gap:35px!important}
+ .dt-home-v4 .dt-footer-main{grid-template-columns:1.2fr 1fr 1fr!important;gap:28px!important}
+ .dt-home-v4 .dt-footer-help{grid-column:2/-1!important;padding:18px 0 0!important;border-left:0!important;border-top:1px solid rgba(165,187,208,.13)!important}
+}
+@media(max-width:600px){
+ .dt-home-v4 .dt-v2-faq{
+  display:flex!important;flex-direction:column!important;width:calc(100% - 40px)!important;
+  gap:28px!important;padding:76px 0 82px!important
+ }
+ .dt-home-v4 .dt-v2-faq-heading{position:static!important;max-width:100%!important}
+ .dt-home-v4 .dt-v2-faq-heading h2{font-size:39px!important;margin:15px 0 12px!important}
+ .dt-home-v4 .dt-v2-faq-list summary{
+  min-height:72px!important;grid-template-columns:25px minmax(0,1fr) 31px!important;gap:9px!important;
+  font-size:12px!important;padding:15px 0!important
+ }
+ .dt-home-v4 .dt-v2-faq-list summary svg{width:28px!important;height:28px!important}
+ .dt-home-v4 .dt-v2-faq-list details>p{margin:0 35px 21px 34px!important;font-size:10px!important}
+ .dt-home-v4 .dt-v2-footer-expanded{padding:0 21px!important}
+ .dt-home-v4 .dt-footer-main{grid-template-columns:1fr 1fr!important;gap:28px 20px!important;padding:39px 0 30px!important}
+ .dt-home-v4 .dt-footer-about{grid-column:1/-1!important;max-width:100%!important}
+ .dt-home-v4 .dt-footer-about>p{max-width:310px!important}
+ .dt-home-v4 .dt-footer-help{grid-column:1/-1!important;padding:20px 0 0!important;border-top:1px solid rgba(165,187,208,.13)!important}
+ .dt-home-v4 .dt-footer-bottom{display:grid!important;grid-template-columns:1fr auto!important;gap:10px!important;padding:15px 0!important}
+ .dt-home-v4 .dt-footer-bottom>span:nth-child(2){grid-column:1/-1!important;grid-row:2!important}
+ .dt-home-v4 .dt-footer-bottom>a{grid-column:2!important;grid-row:1!important}
+}
