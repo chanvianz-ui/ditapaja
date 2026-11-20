@@ -2203,3 +2203,116 @@ body{background:var(--dt-unified-bg)!important;color:var(--dt-unified-text)}
  .dt-collection-page .catalog-page-note,
  .dt-collection-page .dt-catalog-note{padding:18px!important}
 }
+
+
+/* GLOBAL PUBLIC DARK SYSTEM — keep secondary public routes aligned with home */
+:root{
+ --dt-public-bg:#0b1420;
+ --dt-public-panel:#122231;
+ --dt-public-panel-2:#172b3a;
+ --dt-public-line:rgba(164,192,210,.18);
+ --dt-public-text:#edf3f5;
+ --dt-public-muted:#a4b4bf;
+ --dt-public-accent:#a9cbd2;
+}
+html:has(.info-page),html:has(.product-detail-page),html:has(.dt-auth-page),html:has(.dt-activation-page),html:has(.order-page),html:has(.dt-customer-orders){
+ background:var(--dt-public-bg)!important;
+}
+body:has(.info-page),body:has(.product-detail-page),body:has(.dt-auth-page),body:has(.dt-activation-page),body:has(.order-page),body:has(.dt-customer-orders){
+ background:var(--dt-public-bg)!important;color:var(--dt-public-text)!important;
+}
+.info-page,.product-detail-page,.dt-auth-page,.dt-activation-page,.order-page,.dt-customer-orders{
+ background:var(--dt-public-bg)!important;color:var(--dt-public-text)!important;
+}
+.info-page .info-hero,.info-page .info-content,.info-page .info-footer{
+ background:transparent!important;color:var(--dt-public-text)!important;
+}
+.info-page .info-hero{background:radial-gradient(ellipse at 80% 0%,rgba(70,117,145,.18),transparent 55%),linear-gradient(135deg,#102131,#0c1926)!important;border-color:var(--dt-public-line)!important}
+.info-page .info-hero h1,.info-page .info-contact-strip strong{color:#f0f5f6!important}
+.info-page .info-hero p,.info-page .info-footer,.info-page .info-content p{color:var(--dt-public-muted)!important}
+.info-page .info-contact-strip{
+ background:linear-gradient(135deg,#172d3d,#112332)!important;border:1px solid var(--dt-public-line)!important;
+ border-radius:16px!important;color:var(--dt-public-text)!important;box-shadow:0 18px 50px rgba(0,0,0,.18)!important;
+}
+.info-page .info-contact-strip small{color:#a9c0cb!important}
+.info-page .info-contact-strip a{background:#dceaf0!important;color:#142635!important;border-radius:9px!important}
+.info-page .info-footer{border-color:var(--dt-public-line)!important}
+.info-page .info-footer a:first-child{color:#edf3f5!important}
+.info-page .info-footer a:first-child span{color:#a9cbd2!important}
+
+/* Product details: no leftover cream spec panels or pale text */
+.product-detail-page{background:radial-gradient(ellipse at 80% 0%,rgba(61,105,133,.15),transparent 38%),#0b1420!important;color:#edf3f5!important}
+.product-detail-page .detail-hero,.product-detail-page .detail-features{background:transparent!important}
+.product-detail-page .detail-copy h1,.product-detail-page .detail-copy h2,
+.product-detail-page .detail-spec-section h2,.product-detail-page .detail-features h2,
+.product-detail-page .detail-feature-grid h3{color:#f0f5f6!important}
+.product-detail-page .detail-copy p,.product-detail-page .detail-feature-intro,
+.product-detail-page .detail-feature-grid p,.product-detail-page .detail-fit{color:#aab8c2!important}
+.product-detail-page .detail-spec-section{
+ background:#101e2b!important;border-block:1px solid var(--dt-public-line)!important;color:#edf3f5!important;
+}
+.product-detail-page .detail-spec-grid>div,.product-detail-page .detail-feature-grid article{
+ background:linear-gradient(145deg,#152838,#101e2b)!important;border:1px solid var(--dt-public-line)!important;
+ border-radius:12px!important;color:#edf3f5!important;box-shadow:none!important;
+}
+.product-detail-page .detail-spec-grid span{color:#9eafba!important}
+.product-detail-page .detail-spec-grid b{color:#edf3f5!important}
+.product-detail-page .detail-feature-grid article>span{background:#1b3444!important;color:#a9cbd2!important}
+.product-detail-page .detail-order{
+ background:linear-gradient(125deg,#172d3d,#102332)!important;border:1px solid var(--dt-public-line)!important;
+ border-radius:16px!important;color:#edf3f5!important;
+}
+.product-detail-page .detail-order h2{color:#f1f6f7!important}
+.product-detail-page .detail-order p{color:#aab8c2!important}
+.product-detail-page .detail-copy .button,.product-detail-page .detail-order .button{
+ background:#dceaf0!important;color:#142635!important;border:1px solid #dceaf0!important;
+}
+.product-detail-page .detail-footer{background:#09121c!important;border-color:var(--dt-public-line)!important;color:#9eafba!important}
+.product-detail-page .product-not-found{background:var(--dt-public-bg)!important;color:#edf3f5!important}
+
+/* Activation page */
+.dt-activation-page{min-height:100vh!important;padding:42px 16px!important}
+.dt-activation-page .dt-activation-shell{
+ overflow:hidden!important;border:1px solid var(--dt-public-line)!important;border-radius:18px!important;
+ background:#122231!important;box-shadow:0 24px 70px rgba(0,0,0,.3)!important;
+}
+.dt-activation-page .dt-activation-form{background:#122231!important;color:#edf3f5!important}
+.dt-activation-page .dt-activation-form h2,.dt-activation-page .dt-activation-form label{color:#edf3f5!important}
+.dt-activation-page .dt-activation-form p{color:#aab8c2!important}
+.dt-activation-page input{background:#0b1722!important;border-color:var(--dt-public-line)!important;color:#edf3f5!important}
+.dt-activation-page .dt-activation-muted{background:#172b3a!important;color:#aab8c2!important}
+
+/* Customer account / order history */
+.dt-customer-orders .dt-customer-orders-header a:first-child{color:#edf3f5!important}
+.dt-customer-orders .dt-customer-orders-heading h1{color:#f0f5f6!important}
+.dt-customer-orders .dt-customer-orders-heading p{color:#aab8c2!important}
+.dt-customer-orders .dt-customer-order-card{background:#122231!important;border:1px solid var(--dt-public-line)!important;color:#edf3f5!important}
+.dt-customer-orders .dt-customer-order-card>div{border-color:var(--dt-public-line)!important}
+.dt-customer-orders .dt-customer-order-card h2,.dt-customer-orders .dt-customer-order-card h3{color:#edf3f5!important}
+.dt-customer-orders .dt-customer-order-card .bg-slate-50,
+.dt-customer-orders .dt-customer-order-card .bg-blue-50,
+.dt-customer-orders .dt-customer-order-card .bg-emerald-50,
+.dt-customer-orders .dt-customer-order-card .bg-amber-50{
+ background:#192d3c!important;color:#d5e1e5!important;border-color:var(--dt-public-line)!important;
+}
+.dt-customer-orders .border-slate-100,.dt-customer-orders .border-slate-200{border-color:var(--dt-public-line)!important}
+.dt-customer-orders button,.dt-customer-orders a.inline-flex{border-color:var(--dt-public-line)!important}
+.dt-customer-orders .bg-blue-600{background:#dceaf0!important;color:#142635!important}
+
+/* Login/register forms use the same deep surfaces and readable controls */
+.dt-auth-page{background:radial-gradient(ellipse at 12% 20%,rgba(49,102,132,.16),transparent 42%),#0b1420!important;color:#edf3f5!important}
+.dt-auth-form-card{background:#122231!important;border:1px solid var(--dt-public-line)!important;color:#edf3f5!important;box-shadow:0 22px 65px rgba(0,0,0,.25)!important}
+.dt-auth-heading h2,.dt-auth-heading p,.dt-auth-field label,.dt-auth-switch,.dt-auth-back{color:#edf3f5!important}
+.dt-auth-heading p,.dt-auth-switch,.dt-auth-back{color:#aab8c2!important}
+.dt-auth-field input{background:#0b1722!important;border:1px solid var(--dt-public-line)!important;color:#edf3f5!important}
+.dt-auth-field input::placeholder{color:#718493!important}
+.dt-auth-password{background:#0b1722!important;border-color:var(--dt-public-line)!important}
+.dt-auth-password button{color:#a9cbd2!important}
+.dt-auth-submit{background:#dceaf0!important;color:#142635!important}
+.dt-auth-legal{color:#8fa1ad!important}
+@media(max-width:700px){
+ .dt-activation-page{padding:24px 14px!important}
+ .product-detail-page .detail-spec-section{padding-block:54px!important}
+ .product-detail-page .detail-order{margin-inline:14px!important;padding:30px 20px!important}
+ .info-page .info-contact-strip{padding:22px!important}
+}
