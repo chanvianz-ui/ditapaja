@@ -17,6 +17,8 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const passwordScore = [password.length >= 8, /[A-Z]/.test(password), /[0-9]/.test(password), /[^A-Za-z0-9]/.test(password)].filter(Boolean).length;
+  const passwordStrength = password.length === 0 ? "" : passwordScore <= 1 ? "Lemah" : passwordScore <= 2 ? "Cukup" : passwordScore === 3 ? "Kuat" : "Sangat kuat";
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
@@ -93,9 +95,10 @@ export default function RegisterPage() {
               <label htmlFor="register-password">Password <small>MIN. 8 KARAKTER</small></label>
               <div className="dt-auth-password">
                 <input id="register-password" required minLength={8} type={showPassword ? "text" : "password"} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Buat password" />
-                <button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "LIHAT"}</button>
+                <button type="button" aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"} onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "TAMPILKAN"}</button>
               </div>
             </div>
+            {password.length > 0 && <div className="dt-password-strength" aria-live="polite"><div className="dt-password-strength-track">{[1,2,3,4].map((step) => <i key={step} className={passwordScore >= step ? "is-filled" : ""} />)}</div><span>{passwordStrength}</span><small>Gunakan kombinasi huruf besar, angka, dan simbol agar lebih aman.</small></div>}
             {message && <p role="status" className={message.startsWith("Registrasi berhasil") ? "dt-auth-message dt-auth-success" : "dt-auth-message dt-auth-error"}>{message}</p>}
             <button disabled={loading} className="dt-auth-submit">{loading ? "Memproses..." : "Daftar gratis"}<span>→</span></button>
           </form>
