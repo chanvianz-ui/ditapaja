@@ -3343,3 +3343,31 @@ body:has(.dt-auth-page){background:#09121d!important}
 @media(prefers-reduced-motion:reduce){
  .dt-dashboard-shell *,.dt-orders-page *,.dt-customer-insights *,.dt-business-page *,.dt-page-studio-page *,.dt-account-settings-page *{scroll-behavior:auto!important;transition:none!important}
 }
+
+
+/* Dashboard V2 — new information architecture and tactile rail */
+.dt-dashboard-v2{--ws-bg:#101214;--ws-surface:#191d1f;--ws-line:rgba(225,232,222,.1);background:#101214!important}
+.dt-dashboard-v2>.flex{gap:0}
+.dt-dashboard-v2 .dt-rail-v2{position:sticky;z-index:40;background:#15191a;border-right:1px solid rgba(225,232,222,.09);box-shadow:12px 0 42px -38px #000}
+.dt-dashboard-v2 .dt-rail-brand{display:grid;place-items:center;width:46px;height:46px;border-radius:15px;background:#c2a77b;color:#171a19;font-size:19px;font-weight:950;letter-spacing:-.1em;box-shadow:0 8px 28px #c2a77b24}
+.dt-dashboard-v2 .dt-rail-divider{width:32px;height:1px;background:#ffffff18;margin:22px 0}
+.dt-dashboard-v2 .dt-rail-nav{display:flex;flex:1;flex-direction:column;align-items:center;gap:10px;width:100%}
+.dt-dashboard-v2 .dt-rail-nav a,.dt-dashboard-v2 .dt-rail-bottom>a,.dt-dashboard-v2 .dt-rail-bottom>button{position:relative;display:grid;place-items:center;width:48px;height:48px;border:1px solid transparent;border-radius:15px;color:#89938d;transition:all .2s}
+.dt-dashboard-v2 .dt-rail-nav a span,.dt-dashboard-v2 .dt-rail-bottom>a span,.dt-dashboard-v2 .dt-rail-bottom>button span{position:absolute;left:58px;z-index:80;padding:7px 10px;border:1px solid #343b37;border-radius:9px;background:#222826;color:#eee9de;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transform:translateX(-4px);transition:all .16s}
+.dt-dashboard-v2 .dt-rail-nav a:hover span,.dt-dashboard-v2 .dt-rail-bottom>a:hover span,.dt-dashboard-v2 .dt-rail-bottom>button:hover span{opacity:1;transform:translateX(0)}
+.dt-dashboard-v2 .dt-rail-nav a:hover,.dt-dashboard-v2 .dt-rail-bottom>a:hover,.dt-dashboard-v2 .dt-rail-bottom>button:hover{background:#242a27;color:#e9d6b2}
+.dt-dashboard-v2 .dt-rail-nav a.is-active{background:#302c24;border-color:#76684f;color:#e4c99b;box-shadow:inset 0 0 0 1px #c2a77b12}
+.dt-dashboard-v2 .dt-rail-bottom{display:flex;flex-direction:column;align-items:center;gap:9px}
+.dt-dashboard-v2 .dt-rail-avatar{display:grid;place-items:center;width:38px;height:38px;margin-top:8px;border:1px solid #c2a77b66;border-radius:50%;background:#292a24;color:#e4c99b;font-size:13px;font-weight:800}
+.dt-dashboard-v2 .dt-topbar-v2{min-height:84px;background:rgba(16,18,20,.94)!important;border-color:#ffffff12!important}
+.dt-dashboard-v2 .dt-topbar-kicker{font-size:9px;font-weight:800;letter-spacing:.2em;color:#b99e70}
+.dt-dashboard-v2 .dt-dashboard-content-v2{max-width:1600px}
+.dt-dashboard-v2 .dt-dashboard-command{min-height:340px;border-radius:8px!important;border:1px solid #6d604a55!important;background:linear-gradient(115deg,#242a27 0%,#171d1d 57%,#29251e 100%)!important;box-shadow:0 35px 90px -60px #000!important}
+.dt-dashboard-v2 .dt-dashboard-command-panel{border-radius:8px!important;background:#111616!important}
+.dt-dashboard-v2 .dt-dashboard-command h2{font-size:clamp(2.25rem,4vw,4.2rem)!important;line-height:1.03!important;max-width:760px}
+.dt-dashboard-v2 .dt-dashboard-primary-action,.dt-dashboard-v2 .dt-dashboard-secondary-action{min-height:48px;padding:0 22px!important;border-radius:5px!important;font-size:12px!important;letter-spacing:.015em}
+.dt-dashboard-v2 .dt-dashboard-content-v2>section:not(.dt-dashboard-command){border-radius:8px}
+.dt-dashboard-v2 .dt-analytics-kpi{border-radius:7px!important;padding:22px!important}
+.dt-dashboard-v2 .dt-card-control-center,.dt-dashboard-v2 .dt-analytics-overview,.dt-dashboard-v2 .dt-analytics-insights{border-radius:8px!important}
+.dt-dashboard-v2 .dt-card-control-hero{border-radius:0!important}
+@media(max-width:1023px){.dt-dashboard-v2 .dt-topbar-v2{min-height:72px}.dt-dashboard-v2 .dt-dashboard-content-v2{padding-bottom:105px!important}}
