@@ -2051,3 +2051,87 @@ body{background:var(--dt-unified-bg)!important;color:var(--dt-unified-text)}
 
 /* Product detail now uses the shared global header */
 .product-detail-page .detail-header{display:none!important}
+
+
+/* FIX: apply the homepage collection-card system outside the homepage too.
+   The collection route renders .dt-edition-* directly, so homepage-scoped
+   selectors must not be relied on for its layout. */
+.dt-collection-page .dt-collection-grid{
+ display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ align-items:stretch!important;gap:18px!important;
+}
+.dt-collection-page .dt-edition-card{
+ display:flex!important;flex-direction:column!important;min-width:0!important;overflow:hidden!important;
+ border:1px solid rgba(164,192,210,.17)!important;border-radius:16px!important;
+ background:linear-gradient(150deg,#142333 0%,#101c29 100%)!important;
+ color:#edf3f5!important;box-shadow:0 20px 48px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.035)!important;
+ transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease!important;
+}
+.dt-collection-page .dt-edition-card:hover{
+ transform:translateY(-5px)!important;border-color:rgba(169,203,210,.42)!important;
+ box-shadow:0 28px 58px rgba(0,0,0,.32)!important;
+}
+.dt-collection-page .dt-edition-visual{
+ position:relative!important;isolation:isolate!important;display:flex!important;align-items:center!important;justify-content:center!important;
+ min-height:255px!important;overflow:hidden!important;padding:28px 22px!important;
+}
+.dt-collection-page .dt-edition-noir .dt-edition-visual{background:linear-gradient(145deg,#263746,#172330)!important}
+.dt-collection-page .dt-edition-blanc .dt-edition-visual{background:linear-gradient(145deg,#dce5e5,#aebfc4)!important}
+.dt-collection-page .dt-edition-signature .dt-edition-visual{background:linear-gradient(145deg,#354052,#252b3b)!important}
+.dt-collection-page .dt-edition-visual-glow{position:absolute;z-index:0;width:65%;height:52%;border-radius:50%;background:rgba(161,213,224,.2);filter:blur(34px);pointer-events:none}
+.dt-collection-page .dt-showcase-card{
+ position:relative!important;z-index:1!important;width:min(100%,330px)!important;aspect-ratio:1.58!important;
+ display:flex!important;flex-direction:column!important;justify-content:space-between!important;
+ padding:18px 20px!important;border-radius:13px!important;overflow:hidden!important;
+ transform:rotate(-3deg)!important;box-shadow:0 22px 32px rgba(0,0,0,.35)!important;
+ border:1px solid rgba(255,255,255,.2)!important;
+}
+.dt-collection-page .dt-showcase-card:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.14),transparent 48%,rgba(0,0,0,.12))}
+.dt-collection-page .dt-showcase-noir{background:linear-gradient(135deg,#3b4652,#151d27 76%)!important;color:#f5f5f1!important}
+.dt-collection-page .dt-showcase-blanc{background:linear-gradient(135deg,#f0f0e9,#cbd1cc 85%)!important;color:#27333b!important}
+.dt-collection-page .dt-showcase-signature{background:linear-gradient(135deg,#667187,#252e43 80%)!important;color:#f7f5fb!important}
+.dt-collection-page .dt-showcase-card-top,.dt-collection-page .dt-showcase-card-bottom{
+ position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;
+ font-size:7px;font-weight:700;letter-spacing:.12em;
+}
+.dt-collection-page .dt-showcase-card-main{position:relative;z-index:1;display:flex;flex-direction:column;gap:7px}
+.dt-collection-page .dt-showcase-card-main strong{font:800 clamp(27px,3vw,38px)/1 Manrope,sans-serif!important;letter-spacing:-.075em}
+.dt-collection-page .dt-showcase-card-main i{width:32px;height:2px;background:#9ecbd0;border-radius:3px}
+.dt-collection-page .dt-edition-status{position:absolute;right:14px;bottom:13px;z-index:2;padding:6px 9px;border-radius:30px;background:rgba(12,26,35,.84);color:#c3e0dc;font-size:7px;font-weight:800;letter-spacing:.08em}
+.dt-collection-page .dt-edition-status.is-preorder{background:rgba(34,29,46,.88);color:#ddc9ee}
+.dt-collection-page .dt-edition-content{
+ display:flex!important;flex:1!important;flex-direction:column!important;padding:21px 20px 18px!important;
+ background:transparent!important;
+}
+.dt-collection-page .dt-edition-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dt-collection-page .dt-edition-kicker{color:#91a6b5!important;font-size:8px!important;font-weight:800!important;letter-spacing:.14em!important}
+.dt-collection-page .dt-edition-heading h3{margin:5px 0 0!important;color:#f2f6f7!important;font:800 29px/1.1 Manrope,sans-serif!important;letter-spacing:-.06em!important}
+.dt-collection-page .dt-edition-more{display:grid;place-items:center;flex:none;width:34px;height:34px;border:1px solid rgba(164,192,210,.17);border-radius:50%;background:#1a2d3c;color:#c5d9dc}
+.dt-collection-page .dt-edition-description{min-height:42px;margin:10px 0 15px!important;color:#aab7c4!important;font-size:11px!important;line-height:1.75!important}
+.dt-collection-page .dt-edition-benefits{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 17px!important}
+.dt-collection-page .dt-edition-benefits span{display:inline-flex;align-items:center;gap:6px;padding:7px 8px;border:1px solid rgba(180,203,220,.12);border-radius:7px;background:#192938;color:#c2ced8;font-size:8px;font-weight:650}
+.dt-collection-page .dt-edition-benefits svg{color:#a9cbd2}
+.dt-collection-page .dt-edition-purchase{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-top:auto;padding-top:16px;border-top:1px solid rgba(164,192,210,.15)}
+.dt-collection-page .dt-edition-price{display:flex;flex-direction:column;gap:2px}
+.dt-collection-page .dt-edition-price strong{color:#f2f6f7;font:800 21px/1.2 Manrope,sans-serif;letter-spacing:-.05em}
+.dt-collection-page .dt-edition-price span{color:#91a4b2;font-size:8px}
+.dt-collection-page .dt-edition-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 12px;border-radius:8px;background:#dceaf0;color:#132535;font-size:9px;font-weight:850;white-space:nowrap;transition:transform .2s,background .2s}
+.dt-collection-page .dt-edition-cta:hover{transform:translateY(-2px);background:#fff}
+.dt-collection-page .dt-edition-footnote{margin-top:11px;color:#91aaa8;font-size:8px}
+.dt-collection-page .dt-catalog-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 30px}
+.dt-collection-page .dt-catalog-benefits>div{display:flex;align-items:center;gap:12px;min-width:0;padding:16px;border:1px solid var(--dt-unified-line);border-radius:10px;background:#122231}
+.dt-collection-page .dt-catalog-benefits svg{flex:none;color:#a9cbd2}
+.dt-collection-page .dt-catalog-note{display:grid;gap:9px;margin-top:24px;padding:21px;border:1px solid var(--dt-unified-line);border-radius:12px;background:#122231}
+.dt-collection-page .dt-catalog-note>div{display:flex;align-items:center;gap:10px;color:#eef4f5}
+.dt-collection-page .dt-catalog-note svg{color:#a9cbd2}
+.dt-collection-page .dt-catalog-note p{margin:0;color:#9eafb9;font-size:12px;line-height:1.8}
+@media(max-width:900px){.dt-collection-page .dt-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:640px){
+ .dt-collection-page .dt-collection-grid{grid-template-columns:minmax(0,1fr)!important;gap:15px!important}
+ .dt-collection-page .dt-edition-visual{min-height:230px!important}
+ .dt-collection-page .dt-edition-content{padding:20px 18px 17px!important}
+ .dt-collection-page .dt-edition-description{min-height:0!important}
+ .dt-collection-page .dt-catalog-benefits{grid-template-columns:1fr!important;gap:8px!important}
+ .dt-collection-page .dt-catalog-benefits>div{padding:13px!important}
+ .dt-collection-page .dt-edition-price strong{font-size:20px!important}
+}
