@@ -1,0 +1,224 @@
+/* DiTapAja Total Dashboard Rebuild — visual layer only */
+:root{
+ --dt-bg:#101311;--dt-surface:#171c18;--dt-surface-2:#1e251f;--dt-panel:#f1f0e9;
+ --dt-panel-2:#e8e8df;--dt-ink:#202820;--dt-ink-soft:#687168;--dt-light:#f1f0e9;
+ --dt-muted:#a1aa9f;--dt-line:rgba(226,231,219,.12);--dt-dark-line:#d8dbd1;
+ --dt-accent:#c2a878;--dt-accent-soft:#e8ddc5;--dt-green:#82977b;
+ --dt-radius:8px;--dt-shadow:0 24px 70px -45px rgba(0,0,0,.28);
+}
+html:has(.dt-dashboard-shell),html:has(.dt-control){background:var(--dt-bg)}
+body:has(.dt-dashboard-shell),body:has(.dt-control){background:var(--dt-bg);color:var(--dt-light)}
+.dt-dashboard-shell{min-height:100vh!important;background:var(--dt-bg)!important;color:var(--dt-light)!important}
+.dt-dashboard-shell>div.flex{min-height:100vh!important;gap:0!important}
+.dt-dashboard-shell .dt-rail-v2{
+ display:flex!important;position:sticky!important;top:0!important;z-index:45!important;
+ width:252px!important;min-width:252px!important;height:100vh!important;min-height:100vh!important;
+ align-items:stretch!important;padding:26px 17px 20px!important;gap:0!important;
+ background:#171d18!important;border-right:1px solid var(--dt-line)!important;
+ box-shadow:12px 0 42px -38px rgba(0,0,0,.7)!important
+}
+.dt-rail-brand{display:flex!important;align-items:center!important;justify-content:flex-start!important;
+ width:100%!important;height:54px!important;padding:0 14px!important;margin:0 0 22px!important;
+ border:1px solid rgba(226,231,219,.12)!important;border-radius:7px!important;
+ background:linear-gradient(115deg,#c2a878,#e2d1ad)!important;color:#1b211b!important;
+ font:800 24px/1 Manrope,sans-serif!important;letter-spacing:-2px!important}
+.dt-rail-divider{height:1px!important;width:100%!important;margin:0 0 18px!important;background:var(--dt-line)!important}
+.dt-rail-nav{display:flex!important;flex:1!important;flex-direction:column!important;gap:5px!important;width:100%!important}
+.dt-rail-nav a,.dt-rail-bottom a,.dt-rail-bottom button{
+ display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:13px!important;
+ width:100%!important;min-height:46px!important;padding:0 13px!important;border:1px solid transparent!important;
+ border-radius:6px!important;color:#aab4a9!important;text-decoration:none!important;
+ font:600 12px/1.2 "DM Sans",sans-serif!important;transition:background .2s ease,color .2s ease,border-color .2s ease!important
+}
+.dt-rail-nav a span,.dt-rail-bottom a span,.dt-rail-bottom button span{display:inline!important}
+.dt-rail-nav a:hover,.dt-rail-bottom a:hover,.dt-rail-bottom button:hover{background:#ffffff0c!important;color:#fff!important}
+.dt-rail-nav a.is-active{background:#c2a878!important;color:#20251e!important;border-color:#d9c49a!important;box-shadow:0 8px 22px -16px #c2a878!important}
+.dt-rail-nav a.is-active:before{content:"";width:4px;height:20px;margin-left:-14px;border-radius:0 4px 4px 0;background:#30392d}
+.dt-rail-bottom{display:flex!important;flex-direction:column!important;gap:5px!important;width:100%!important;margin-top:auto!important;padding-top:18px!important;border-top:1px solid var(--dt-line)!important}
+.dt-rail-avatar{display:flex!important;align-items:center!important;justify-content:center!important;width:38px!important;height:38px!important;margin:12px 0 0 10px!important;border:1px solid #c2a878!important;border-radius:50%!important;background:#303b31!important;color:#e6d4ad!important;font-weight:800!important}
+.dt-dashboard-shell>div.flex>div{min-width:0!important;flex:1!important;background:#111512!important}
+.dt-dashboard-topbar{position:sticky!important;top:0!important;z-index:35!important;min-height:82px!important;padding:14px clamp(20px,4vw,58px)!important;
+ background:rgba(17,21,18,.88)!important;border:0!important;border-bottom:1px solid var(--dt-line)!important;backdrop-filter:blur(20px)!important}
+.dt-dashboard-topbar p{color:#8f9a8f!important;font:500 10px "IBM Plex Mono",monospace!important;letter-spacing:.1em!important;text-transform:uppercase!important}
+.dt-dashboard-topbar h1{color:#f1f0e9!important;font:650 25px/1.1 Manrope,sans-serif!important;letter-spacing:-.055em!important}
+.dt-dashboard-topbar button{border:1px solid var(--dt-line)!important;border-radius:6px!important;background:#202720!important;color:#d8dfd4!important}
+.dt-topbar-avatar{background:#c2a878!important;color:#1b211b!important;box-shadow:none!important}
+.dt-dashboard-topbar .text-sm{color:#f1f0e9!important}.dt-dashboard-topbar .text-xs.text-slate-400{color:#8e998e!important}
+.dt-mobile-bottom-nav{background:rgba(23,29,24,.96)!important;border-top:1px solid var(--dt-line)!important;backdrop-filter:blur(18px)!important}
+.dt-mobile-bottom-nav a{color:#aab4a9!important}.dt-mobile-bottom-nav a.is-active{color:#e0c89b!important}
+.dt-dashboard-content{width:min(100%,1680px)!important;padding:42px clamp(20px,4vw,62px) 76px!important;gap:27px!important;color:var(--dt-light)!important}
+.dt-dashboard-command{
+ min-height:320px!important;padding:clamp(28px,4.3vw,58px)!important;
+ border:1px solid rgba(221,207,174,.2)!important;border-radius:9px!important;
+ background:radial-gradient(ellipse at 83% 16%,rgba(194,168,120,.16),transparent 34%),linear-gradient(120deg,#29352b 0%,#1b241d 58%,#303b2e 100%)!important;
+ box-shadow:0 35px 80px -55px #000!important
+}
+.dt-dashboard-command:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.2;
+ background:linear-gradient(110deg,transparent 0 58%,rgba(255,255,255,.12) 58.1%,transparent 58.35%),radial-gradient(circle at 85% 55%,transparent 0 110px,rgba(194,168,120,.3) 111px 112px,transparent 113px 150px,rgba(194,168,120,.18) 151px 152px,transparent 153px)}
+.dt-dashboard-command h2{font:600 clamp(34px,4.5vw,58px)/1.02 Manrope,sans-serif!important;letter-spacing:-.065em!important;color:#f2f0e8!important}
+.dt-dashboard-command p{color:#c0c9bd!important}.dt-dashboard-command .dt-dashboard-eyebrow{color:#e1c99d!important;font:600 9px "IBM Plex Mono",monospace!important;letter-spacing:.15em!important}
+.dt-dashboard-command .dt-dashboard-live{border:1px solid #a9b49b44!important;border-radius:3px!important;color:#cbd6c5!important;background:#ffffff08!important}
+.dt-dashboard-command .dt-dashboard-live span{background:#a5b89a!important;box-shadow:0 0 0 4px #a5b89a22!important}
+.dt-dashboard-command .dt-dashboard-primary-action{min-height:46px!important;padding:0 18px!important;border-radius:5px!important;background:#c2a878!important;color:#20251e!important;font-weight:750!important;box-shadow:none!important}
+.dt-dashboard-command .dt-dashboard-secondary-action{min-height:46px!important;border:1px solid #ffffff36!important;border-radius:5px!important;color:#f1f0e9!important;background:#ffffff08!important}
+.dt-dashboard-content article,.dt-dashboard-content .dt-workspace-panel,.dt-dashboard-content .dt-nfc-card-row{
+ border:1px solid #d8dbd1!important;border-radius:8px!important;background:#f1f0e9!important;color:#202820!important;
+ box-shadow:0 18px 45px -38px rgba(0,0,0,.38)!important
+}
+.dt-dashboard-content article h2,.dt-dashboard-content article h3,.dt-dashboard-content .dt-workspace-panel h2,.dt-dashboard-content .dt-workspace-panel h3{color:#202820!important}
+.dt-dashboard-content article p,.dt-dashboard-content article small,.dt-dashboard-content .dt-workspace-panel p{color:#687168!important}
+.dt-dashboard-content [class*=text-slate-900],.dt-dashboard-content [class*=text-gray-900]{color:#202820!important}
+.dt-dashboard-content [class*=text-slate-500],.dt-dashboard-content [class*=text-slate-400]{color:#727b71!important}
+.dt-dashboard-content [class*=border-slate-200],.dt-dashboard-content [class*=border-gray-200]{border-color:#d8dbd1!important}
+.dt-dashboard-content button{border-radius:5px!important}
+.dt-dashboard-content input,.dt-dashboard-content select,.dt-dashboard-content textarea{
+ border:1px solid #d5d9cf!important;border-radius:5px!important;background:#fbfaf5!important;color:#202820!important;box-shadow:none!important
+}
+.dt-dashboard-content input:focus,.dt-dashboard-content select:focus,.dt-dashboard-content textarea:focus{border-color:#9a865f!important;box-shadow:0 0 0 3px #c2a87826!important}
+.dt-dashboard-content .bg-white{background:#f1f0e9!important}
+.dt-dashboard-content .bg-slate-50,.dt-dashboard-content .bg-gray-50{background:#e9e9e0!important}
+.dt-dashboard-content .bg-blue-50,.dt-dashboard-content .bg-indigo-50{background:#e9e5d9!important}
+.dt-dashboard-content .text-blue-600,.dt-dashboard-content .text-indigo-600{color:#77623d!important}
+.dt-dashboard-content .bg-blue-600,.dt-dashboard-content .bg-indigo-600{background:#334333!important}
+.dt-dashboard-content .text-white{color:#fff!important}
+.dt-dashboard-content .dt-nfc-card-row{padding:22px!important}
+.dt-dashboard-content .dt-nfc-card-actions{border-color:#d8dbd1!important}
+.dt-dashboard-content .dt-nfc-card-row button{min-height:40px!important;font-size:11px!important}
+.dt-dashboard-content .dt-dashboard-eyebrow{letter-spacing:.14em!important}
+.dt-workspace-page,.dt-orders-page,.dt-customer-insights,.dt-account-settings-page,.dt-page-studio-page,.dt-customer-orders{
+ min-height:100vh!important;background:#111512!important;color:#f1f0e9!important
+}
+.dt-workspace-page main,.dt-orders-page main,.dt-customer-insights main,.dt-account-settings-page main,.dt-page-studio-page main{background:#111512!important}
+.dt-workspace-page h1,.dt-orders-page h1,.dt-customer-insights h1,.dt-account-settings-page h1,.dt-page-studio-page h1{color:#f1f0e9!important;letter-spacing:-.06em!important}
+.dt-workspace-page h2,.dt-orders-page h2,.dt-customer-insights h2,.dt-account-settings-page h2,.dt-page-studio-page h2{letter-spacing:-.045em!important}
+.dt-workspace-page .dt-workspace-panel,.dt-orders-page .dt-workspace-panel,.dt-orders-page .dt-order-card,.dt-orders-page .dt-orders-stat,.dt-orders-page .dt-order-flow,.dt-orders-page .dt-orders-create,.dt-customer-insights .dt-ci-panel,.dt-account-settings-page .dt-workspace-panel,.dt-page-studio-page .dt-studio-card-select,.dt-page-studio-page .dt-studio-form{
+ border:1px solid #d8dbd1!important;border-radius:8px!important;background:#f1f0e9!important;color:#202820!important;box-shadow:var(--dt-shadow)!important
+}
+.dt-workspace-page .dt-workspace-panel h2,.dt-workspace-page .dt-workspace-panel h3,.dt-orders-page .dt-workspace-panel h2,.dt-orders-page .dt-workspace-panel h3,.dt-orders-page .dt-order-card h3,.dt-customer-insights .dt-ci-panel h2,.dt-page-studio-page .dt-studio-form h2{color:#202820!important}
+.dt-orders-page .dt-orders-hero,.dt-customer-insights .dt-ci-hero,.dt-page-studio-page .dt-studio-masthead{
+ border:1px solid #4b5848!important;border-radius:9px!important;background:radial-gradient(ellipse at 90% 0%,#c2a87820,transparent 40%),linear-gradient(120deg,#29372b,#1a231c)!important
+}
+.dt-orders-page .dt-orders-hero h1,.dt-orders-page .dt-orders-hero p,.dt-customer-insights .dt-ci-hero h1,.dt-customer-insights .dt-ci-hero p,.dt-page-studio-page .dt-studio-masthead h1,.dt-page-studio-page .dt-studio-masthead p{color:#f1f0e9!important}
+.dt-workspace-page input,.dt-workspace-page select,.dt-workspace-page textarea,.dt-orders-page input,.dt-orders-page select,.dt-orders-page textarea,.dt-customer-insights input,.dt-customer-insights select,.dt-account-settings-page input,.dt-account-settings-page select,.dt-account-settings-page textarea,.dt-page-studio-page input,.dt-page-studio-page select,.dt-page-studio-page textarea{
+ border:1px solid #d5d9cf!important;border-radius:5px!important;background:#fbfaf5!important;color:#202820!important;box-shadow:none!important
+}
+.dt-workspace-page button,.dt-orders-page button,.dt-customer-insights button,.dt-account-settings-page button,.dt-page-studio-page button{border-radius:5px!important}
+.dt-customer-orders{background:#111512!important;color:#f1f0e9!important}
+.dt-customer-orders .dt-customer-order-card,.dt-customer-orders section{border:1px solid #d8dbd1!important;border-radius:8px!important;background:#f1f0e9!important;color:#202820!important}
+.dt-customer-orders h1,.dt-customer-orders h2{color:#f1f0e9!important}
+.dt-customer-orders .dt-customer-order-card h2,.dt-customer-orders .dt-customer-order-card h3{color:#202820!important}
+
+/* Superadmin is a real operations console, not a recolored customer page */
+.dt-control{display:flex!important;min-height:100vh!important;background:#111512!important;color:#f1f0e9!important}
+.dt-control-rail{position:sticky!important;top:0!important;display:flex!important;flex:0 0 252px!important;width:252px!important;height:100vh!important;flex-direction:column!important;padding:25px 17px!important;background:#171d18!important;border-right:1px solid var(--dt-line)!important}
+.dt-control-brand{display:flex!important;align-items:center!important;gap:12px!important;padding:7px 9px 25px!important;color:#f1f0e9!important;text-decoration:none!important}
+.dt-control-symbol{display:grid!important;place-items:center!important;width:40px!important;height:40px!important;border-radius:6px!important;background:#c2a878!important;color:#20251e!important;font:800 23px Manrope,sans-serif!important}
+.dt-control-brand b{display:block!important;font:750 16px Manrope,sans-serif!important;letter-spacing:-.04em!important}
+.dt-control-brand small{display:block!important;margin-top:4px!important;color:#a0aa9f!important;font:600 8px "IBM Plex Mono",monospace!important;letter-spacing:.15em!important}
+.dt-control-nav-label{margin:12px 10px 10px!important;color:#8c998d!important;font:600 9px "IBM Plex Mono",monospace!important;letter-spacing:.17em!important}
+.dt-control-rail nav{display:flex!important;flex-direction:column!important;gap:5px!important}
+.dt-control-rail nav button,.dt-control-rail-bottom>button{display:flex!important;align-items:center!important;gap:12px!important;min-height:45px!important;padding:0 13px!important;border:1px solid transparent!important;border-radius:5px!important;background:transparent!important;color:#aeb8ad!important;text-align:left!important;font-size:12px!important;font-weight:650!important}
+.dt-control-rail nav button.active{background:#c2a878!important;color:#20251e!important}
+.dt-control-rail nav button i{width:5px!important;height:5px!important;margin-left:auto!important;border-radius:50%!important;background:#20251e!important}
+.dt-control-rail-bottom{margin-top:auto!important;padding-top:18px!important;border-top:1px solid var(--dt-line)!important}
+.dt-control-access{display:flex!important;align-items:center!important;gap:10px!important;margin-bottom:14px!important;padding:12px!important;border:1px solid var(--dt-line)!important;border-radius:6px!important;color:#d8dfd4!important}
+.dt-control-access b{display:block!important;font-size:11px!important}.dt-control-access small{display:block!important;margin-top:3px!important;color:#89958a!important;font-size:9px!important}
+.dt-control-main{min-width:0!important;flex:1!important;background:#111512!important}
+.dt-control-top{position:sticky!important;top:0!important;z-index:30!important;display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:78px!important;padding:13px clamp(20px,4vw,55px)!important;background:#111512ed!important;border:0!important;border-bottom:1px solid var(--dt-line)!important;backdrop-filter:blur(18px)!important}
+.dt-control-top>div:first-child>span,.dt-control-kicker,.dt-control-metrics-heading>span,.panel-heading>div>span,.dt-control-shortcuts>div>span{color:#c2a878!important;font:600 9px "IBM Plex Mono",monospace!important;letter-spacing:.16em!important}
+.dt-control-top>div:first-child>b{display:block!important;margin-top:6px!important;color:#dfe4db!important;font-size:12px!important}
+.dt-control-top>div:first-child>b i{color:#687469!important}
+.dt-control-top-actions{display:flex!important;align-items:center!important;gap:10px!important}
+.dt-control-live{color:#b9c6b6!important;font-size:10px!important}
+.dt-control-live i{background:#9bb08f!important;box-shadow:0 0 0 4px #9bb08f20!important}
+.dt-control-top-actions>button:not(.dt-control-menu-trigger){display:flex!important;align-items:center!important;gap:8px!important;min-height:39px!important;padding:0 13px!important;border:1px solid var(--dt-line)!important;border-radius:5px!important;background:#202720!important;color:#e1e5dc!important;font-size:11px!important}
+.dt-control-content{width:min(100%,1600px)!important;margin:auto!important;padding:36px clamp(20px,4vw,58px) 64px!important}
+.dt-control-intro{position:relative!important;display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr)!important;align-items:center!important;min-height:310px!important;overflow:hidden!important;padding:clamp(28px,4vw,55px)!important;border:1px solid #485646!important;border-radius:9px!important;background:radial-gradient(ellipse at 78% 35%,#c2a87825,transparent 38%),linear-gradient(120deg,#2a382b,#1a231c 72%,#333d2e)!important}
+.dt-control-intro h1{margin:20px 0!important;color:#f1f0e9!important;font:650 clamp(48px,6vw,78px)/.86 Manrope,sans-serif!important;letter-spacing:-.085em!important}
+.dt-control-intro h1 em{color:#d3bd91!important;font-style:normal!important}
+.dt-control-intro-copy{max-width:510px!important;color:#c2cbc0!important;font-size:13px!important;line-height:1.8!important}
+.dt-control-hero-tags{display:flex!important;flex-wrap:wrap!important;gap:7px!important;margin-top:25px!important}
+.dt-control-hero-tags span{padding:7px 9px!important;border:1px solid #ffffff26!important;border-radius:3px!important;color:#d6ddcf!important;font:600 8px "IBM Plex Mono",monospace!important;letter-spacing:.08em!important}
+.dt-control-hero-art{position:relative!important;min-height:245px!important;max-width:390px!important;width:100%!important;justify-self:center!important}
+.dt-control-orbit{border-color:#c2a87844!important}.dt-control-orbit-core{background:linear-gradient(145deg,#e0d0ac,#9f895f)!important;box-shadow:0 20px 55px #0007!important;color:#263027!important}
+.dt-control-date{position:absolute!important;right:20px!important;bottom:18px!important;display:flex!important;flex-direction:column!important;gap:4px!important;color:#d5dece!important}
+.dt-control-date span{color:#c2a878!important;font:600 8px "IBM Plex Mono",monospace!important;letter-spacing:.14em!important}
+.dt-control-date b{font:700 11px Manrope,sans-serif!important}.dt-control-date small{color:#a8b3a5!important;font-size:9px!important}
+.dt-control-metrics{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;margin-top:20px!important}
+.dt-control-metrics-heading{grid-column:1/-1!important;display:flex!important;align-items:baseline!important;gap:13px!important;flex-wrap:wrap!important;margin:16px 0 3px!important}
+.dt-control-metrics-heading b{color:#f1f0e9!important;font:650 18px Manrope,sans-serif!important}.dt-control-metrics-heading small{color:#879287!important;font-size:10px!important}
+.dt-control-metrics article,.dt-control-workgrid article,.dt-control-lower article{border:1px solid #d8dbd1!important;border-radius:8px!important;background:#f1f0e9!important;color:#202820!important;box-shadow:0 20px 48px -40px #000!important}
+.dt-control-metrics article{position:relative!important;min-height:148px!important;padding:19px!important}
+.dt-control-metrics article .metric-top{color:#657064!important;font-size:10px!important}
+.dt-control-metrics article .metric-top svg{color:#8b7958!important}
+.dt-control-metrics article strong{display:block!important;margin:20px 0 5px!important;color:#202820!important;font:700 clamp(28px,3vw,38px) Manrope,sans-serif!important;letter-spacing:-.06em!important}
+.dt-control-metrics article small{color:#737d71!important;font-size:10px!important}.dt-control-metrics article .metric-index{color:#c7cbbf!important}
+.dt-control-workgrid,.dt-control-lower{display:grid!important;grid-template-columns:1.1fr .9fr!important;gap:13px!important;margin-top:14px!important}
+.dt-control-workgrid article,.dt-control-lower article{min-width:0!important;padding:23px!important}
+.dt-control-workgrid .panel-heading,.dt-control-lower .panel-heading{display:flex!important;justify-content:space-between!important;align-items:flex-start!important;color:#867552!important}
+.dt-control-workgrid .panel-heading h2,.dt-control-lower .panel-heading h2{margin-top:7px!important;color:#202820!important;font:650 20px Manrope,sans-serif!important;letter-spacing:-.05em!important}
+.dt-control-revenue .revenue-primary{margin-top:30px!important}.dt-control-revenue .revenue-primary small,.dt-control-revenue .revenue-secondary small{color:#748071!important;font-size:10px!important}
+.dt-control-revenue .revenue-primary strong{display:block!important;margin:8px 0!important;color:#263128!important;font:700 clamp(30px,4vw,46px) Manrope,sans-serif!important;letter-spacing:-.06em!important}
+.dt-control-revenue .revenue-primary span{color:#647462!important;font-size:10px!important}
+.dt-control-revenue .revenue-secondary{display:flex!important;gap:50px!important;margin-top:25px!important;padding-top:17px!important;border-top:1px solid #d8dbd1!important}
+.dt-control-revenue .revenue-secondary b{display:block!important;margin-top:6px!important;color:#263128!important;font-size:16px!important}
+.dt-control-revenue>button{display:flex!important;align-items:center!important;gap:8px!important;margin-top:22px!important;color:#6b5838!important;font-size:11px!important;font-weight:750!important}
+.dt-control-engagement .engagement-total strong{display:block!important;margin-top:22px!important;color:#263128!important;font:700 38px Manrope,sans-serif!important}
+.dt-control-engagement .engagement-total small,.dt-control-engagement p{color:#718071!important;font-size:10px!important}
+.dt-control-engagement .engagement-gauge{width:130px!important;height:130px!important;margin:18px auto!important;border-radius:50%!important;background:conic-gradient(#8b7958 calc(var(--engagement-progress)*1%),#dce0d5 0)!important}
+.dt-control-engagement .engagement-gauge>div{background:#f1f0e9!important;color:#263128!important}
+.dt-control-engagement .engagement-gauge b{font:700 22px Manrope,sans-serif!important}.dt-control-engagement .engagement-gauge small{color:#7d887b!important}
+.dt-control-engagement .engagement-track{height:5px!important;background:#dce0d5!important}.dt-control-engagement .engagement-track i{background:#8b7958!important}
+.dt-control-engagement .engagement-foot{display:flex!important;justify-content:space-between!important;margin-top:10px!important;color:#647064!important;font-size:10px!important}
+.dt-control-engagement .engagement-foot b{color:#263128!important}
+.dt-control-lower{grid-template-columns:1fr 1fr!important}
+.dt-control-status .status-list{margin-top:18px!important}.dt-control-status .status-list>div{display:flex!important;justify-content:space-between!important;padding:12px 0!important;border-bottom:1px solid #d8dbd1!important;color:#667165!important;font-size:11px!important}
+.dt-control-status .status-list b{color:#283329!important}.dt-control-status .status-list .status-warn{color:#9b7041!important}
+.dt-control-products .product-line{display:flex!important;justify-content:space-between!important;gap:12px!important;padding:14px 0!important;border-bottom:1px solid #d8dbd1!important}
+.dt-control-products .product-line b{color:#283329!important;font-size:11px!important}.dt-control-products .product-line small{display:block!important;margin-top:4px!important;color:#758072!important;font-size:9px!important}.dt-control-products .product-line strong{color:#283329!important;font-size:11px!important}
+.dt-control-shortcuts{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;margin-top:22px!important}
+.dt-control-shortcuts>div{grid-column:1/-1!important}.dt-control-shortcuts h2{margin-top:6px!important;color:#f1f0e9!important;font:650 20px Manrope,sans-serif!important}
+.dt-control-shortcuts>button{display:flex!important;align-items:center!important;gap:10px!important;min-height:66px!important;padding:14px!important;border:1px solid var(--dt-line)!important;border-radius:6px!important;background:#1a211b!important;color:#e3e7de!important;text-align:left!important;font-size:11px!important}
+.dt-control-shortcuts>button svg:first-child{color:#c2a878!important}.dt-control-shortcuts>button svg:last-child{margin-left:auto!important;color:#899488!important}
+.dt-control-footer{margin-top:28px!important;color:#7f8a7e!important;font:10px "IBM Plex Mono",monospace!important}
+.dt-control-error{margin:16px 0!important;padding:12px 14px!important;border:1px solid #9b5148!important;border-radius:5px!important;background:#3a211e!important;color:#ffd3cc!important}
+.dt-control-mobile-menu{position:fixed!important;inset:0 0 0 auto!important;z-index:90!important;width:min(340px,88vw)!important;padding:25px!important;background:#171d18!important;border-left:1px solid var(--dt-line)!important;box-shadow:-25px 0 80px #0009!important}
+.dt-control-mobile-menu button{display:flex!important;align-items:center!important;gap:12px!important;width:100%!important;padding:14px!important;border-bottom:1px solid var(--dt-line)!important;color:#e5e8df!important}
+.dt-control-menu-trigger{display:none!important}
+@media(max-width:1100px){
+ .dt-dashboard-shell .dt-rail-v2{width:220px!important;min-width:220px!important}
+ .dt-control-rail{flex-basis:220px!important;width:220px!important}
+ .dt-control-intro{grid-template-columns:1fr!important}.dt-control-hero-art{position:absolute!important;right:10px!important;top:25px!important;width:34%!important;opacity:.5!important}
+ .dt-control-intro-copyblock{position:relative!important;z-index:2!important}
+}
+@media(max-width:820px){
+ .dt-dashboard-shell .dt-rail-v2{display:none!important}
+ .dt-dashboard-content{padding:25px 17px 105px!important}
+ .dt-dashboard-command{min-height:0!important;padding:28px 22px!important}
+ .dt-dashboard-command h2{font-size:36px!important}
+ .dt-control{display:block!important}.dt-control-rail{display:none!important}
+ .dt-control-menu-trigger{display:flex!important;align-items:center!important;justify-content:center!important;width:40px!important;height:40px!important;border:1px solid var(--dt-line)!important;border-radius:5px!important;background:#202720!important;color:#eee!important}
+ .dt-control-content{padding:22px 16px 50px!important}
+ .dt-control-intro{min-height:0!important;padding:27px 22px!important}
+ .dt-control-intro h1{font-size:54px!important}
+ .dt-control-hero-art{right:-40px!important;top:45px!important;width:48%!important;opacity:.22!important}
+ .dt-control-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .dt-control-workgrid,.dt-control-lower{grid-template-columns:1fr!important}
+ .dt-control-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:520px){
+ .dt-dashboard-topbar{min-height:68px!important;padding:10px 15px!important}
+ .dt-dashboard-topbar h1{font-size:21px!important}
+ .dt-dashboard-content{gap:18px!important;padding:20px 13px 100px!important}
+ .dt-dashboard-command{padding:24px 18px!important}
+ .dt-dashboard-command h2{font-size:31px!important}
+ .dt-control-top{padding:10px 14px!important}.dt-control-live{display:none!important}
+ .dt-control-top-actions>button:not(.dt-control-menu-trigger){padding:0 9px!important}
+ .dt-control-top-actions>button span{font-size:10px!important}
+ .dt-control-intro h1{font-size:45px!important}
+ .dt-control-metrics article{min-height:132px!important;padding:14px!important}
+ .dt-control-metrics article strong{font-size:29px!important}
+ .dt-control-workgrid article,.dt-control-lower article{padding:18px!important}
+ .dt-control-shortcuts{gap:8px!important}.dt-control-shortcuts>button{min-height:58px!important;padding:10px!important;font-size:10px!important}
+}
+@media(prefers-reduced-motion:reduce){.dt-dashboard-shell *,.dt-control *{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
