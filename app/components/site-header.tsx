@@ -12,14 +12,11 @@ function Brand() {
 }
 
 const links = [
-  ["01", "Beranda", "/"],
-  ["02", "Koleksi", "/koleksi"],
-  ["03", "Fitur", "/fitur"],
-  ["04", "Cara kerja", "/cara-kerja"],
-  ["05", "Panduan", "/panduan"],
-  ["06", "Tentang", "/tentang"],
-  ["07", "FAQ", "/faq"],
-  ["08", "Kontak", "/kontak"]
+  ["01", "Beranda", "/#top"],
+  ["02", "Koleksi kartu", "/#koleksi"],
+  ["03", "Dashboard", "/#dashboard"],
+  ["04", "Cara kerja", "/#cara-kerja"],
+  ["05", "FAQ", "/faq"]
 ];
 
 export default function SiteHeader() {
@@ -61,31 +58,22 @@ export default function SiteHeader() {
       <section className="dt-menu-panel" role="dialog" aria-modal="true" aria-label="Menu utama DiTapAja">
         <div className="dt-menu-top">
           <Brand />
-          <span className="dt-menu-coordinate">NAVIGATION INDEX <i/> 2026</span>
-          <button className="dt-menu-close" type="button" onClick={() => setOpen(false)} aria-label="Tutup menu"><span>TUTUP</span><X size={19}/></button>
+          <button className="dt-menu-close" type="button" onClick={() => setOpen(false)} aria-label="Tutup menu"><span>TUTUP</span><X size={18}/></button>
         </div>
-        <div className="dt-menu-layout">
-          <div className="dt-menu-intro">
-            <div className="dt-menu-eyebrow"><i/> THE DITAPAJA INDEX</div>
-            <h2>Make every<br/><em>tap</em> count.</h2>
-            <p>Temukan cara yang lebih sederhana untuk menghubungkan pelanggan dengan bisnismu.</p>
-            <div className="dt-menu-orbit" aria-hidden="true"><span/><i/><b>NFC<br/>+ QR</b></div>
-            <div className="dt-menu-intro-foot"><span>DESIGNED FOR BETTER CONNECTIONS</span><span>01 — 08</span></div>
-          </div>
-          <div className="dt-menu-directory">
-            <div className="dt-menu-directory-head"><span>JELAJAHI</span><span>SELECT A DESTINATION</span></div>
-            <nav aria-label="Menu halaman">
-              {links.map(([number, label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>
-                <span className="dt-menu-link-number">{number}</span><strong>{label}</strong><ArrowUpRight size={18}/>
-              </a>)}
-            </nav>
-            <div className="dt-menu-actions">
-              <a href="/activate" onClick={() => setOpen(false)}>Aktivasi kartu <ArrowUpRight size={15}/></a>
-              <a href="/login" onClick={() => setOpen(false)}>Masuk ke dashboard <ArrowUpRight size={15}/></a>
-            </div>
+        <div className="dt-menu-content">
+          <div className="dt-menu-label"><span>MENU UTAMA</span><span>DITAPAJA / 2026</span></div>
+          <nav className="dt-menu-links" aria-label="Menu halaman">
+            {links.map(([number, label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>
+              <span>{number}</span><strong>{label}</strong><ArrowUpRight size={18}/>
+            </a>)}
+          </nav>
+          <div className="dt-menu-bottom">
+            <a href="/activate" onClick={() => setOpen(false)}>Aktivasi kartu <ArrowUpRight size={14}/></a>
+            <a href="/login" onClick={() => setOpen(false)}>Masuk dashboard <ArrowUpRight size={14}/></a>
+            <a className="dt-menu-contact" href="https://wa.me/6281321778081">Hubungi kami <ArrowUpRight size={14}/></a>
           </div>
         </div>
-        <div className="dt-menu-bottom"><span>© 2026 DITAPAJA</span><span>ONE CARD. MORE CONNECTIONS.</span><a href="https://wa.me/6281321778081">LET'S TALK <ArrowUpRight size={13}/></a></div>
+        <div className="dt-menu-foot"><span>© 2026 DITAPAJA</span><span>ONE CARD. MORE CONNECTIONS.</span></div>
       </section>
     </div>, document.body)}
   </>;
