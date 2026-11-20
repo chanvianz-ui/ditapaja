@@ -1,46 +1,117 @@
-import { ArrowRight, ArrowUpRight, Check, ChevronDown, Link2, Smartphone, ShieldCheck, Sparkles } from "lucide-react";
+"use client";
+
+import { ArrowRight, ArrowUpRight, BarChart3, Check, ChevronDown, Link2, Nfc, QrCode, ShieldCheck, Smartphone, Sparkles } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 import ScrollMotion from "./components/scroll-motion";
 
-const products=[
-{name:"DiTapAja Noir",description:"Karakter tegas untuk bisnis yang ingin tampil standout.",tone:"noir",price:"Rp50.000",order:"READY TO ORDER",action:"Beli Noir",mode:"buy"},
-{name:"DiTapAja Blanc",description:"Minimal, bersih, dan mudah menyatu dengan identitas brand.",tone:"blanc",price:"Rp50.000",order:"READY TO ORDER",action:"Beli Blanc",mode:"buy"},
-{name:"DiTapAja Signature",description:"Kartu dengan identitas visual bisnismu sendiri.",tone:"signature",price:"Rp60.000",order:"PRE-ORDER · MIN. 10 KARTU",action:"Pre-order",mode:"preorder"}];
-const questions=[
-["Apakah ada biaya dashboard bulanan?","Tidak ada. Akses dashboard sudah termasuk dalam pembelian kartu DiTapAja."],
-["Bagaimana pelanggan menggunakan kartu?","Pelanggan cukup mendekatkan smartphone yang mendukung NFC atau memindai QR Code pada kartu."],
-["Apakah link tujuan bisa diganti?","Bisa. Kamu dapat mengubah tujuan kartu melalui dashboard tanpa perlu mengganti kartu."],
-["Data apa yang tersedia di dashboard?","Kamu dapat memantau jumlah tap, estimasi pengunjung unik, dan klik menuju Google Review. Angka ini bukan jumlah ulasan yang dipublikasikan."]];
-function Brand(){return <a href="/" className="brand"><span className="brand-symbol"><i/><i/><i/></span><span>DiTap<span className="blue-word">Aja</span></span></a>}
-export default function Home(){return <main className="concept-home dt-home-mobile-first dt-editorial-home" id="top">
-<ScrollMotion/>
-<SiteHeader/>
-<section className="concept-hero dt-home-hero">
- <div className="dt-home-hero-inner">
-  <div className="concept-eyebrow"><span/> NFC REVIEW CARD <i/> BUILT FOR BETTER REVIEWS</div>
-  <h1>Make every<br/><em>customer tap count.</em></h1>
-  <p className="concept-lead">Permudah pelanggan memberi ulasan Google. Satu kartu NFC + QR, dengan dashboard gratis untuk memantau aktivitasnya.</p>
-  <div className="concept-hero-actions"><a className="concept-button" href="#koleksi">Temukan kartu <ArrowUpRight size={17}/></a><a className="concept-quiet-link" href="#experience">Lihat cara kerja <ArrowRight size={15}/></a></div>
-  <div className="dt-hero-proof"><span><Check size={14}/> NFC + QR</span><span><Check size={14}/> Dashboard gratis</span><span><Check size={14}/> Tanpa biaya bulanan</span></div>
- </div>
- <a className="dt-hero-scroll" href="#koleksi">SCROLL TO EXPLORE <span>↓</span></a>
-</section>
-<section className="concept-collection dt-home-collection" id="koleksi">
- <div className="concept-section-top dt-home-section-heading"><div><div className="concept-eyebrow dark-eyebrow">THE COLLECTION</div><h2>Designed to<br/><em>make an impact.</em></h2></div><p>Kartu review yang praktis digunakan, mudah dikelola, dan siap menjadi bagian dari pengalaman bisnismu.</p></div>
- <ProductCarousel products={products}/>
- <div className="concept-collection-foot"><span>ONE CARD. MORE CONNECTIONS.</span><p>Semua kartu dilengkapi NFC, QR Code, dan akses dashboard tanpa biaya bulanan.</p></div>
-</section>
-<section className="concept-experience dt-home-how" id="experience">
- <div className="concept-experience-head"><div className="concept-eyebrow">SIMPLE BY DESIGN</div><h2>From tap<br/><em>to review.</em></h2><p>Pengalaman yang sederhana, tanpa aplikasi tambahan.</p></div>
- <div className="concept-flow"><article><span className="concept-step-no">01</span><div className="concept-step-icon"><Smartphone size={22}/></div><h3>Tap atau scan</h3><p>Pelanggan mendekatkan ponsel ke kartu atau memindai QR Code.</p></article><div className="concept-flow-line"/><article><span className="concept-step-no">02</span><div className="concept-step-icon"><Link2 size={22}/></div><h3>Halaman terbuka</h3><p>Link tujuan bisnismu terbuka langsung di browser.</p></article><div className="concept-flow-line"/><article><span className="concept-step-no">03</span><div className="concept-step-icon"><Check size={22}/></div><h3>Berikan ulasan</h3><p>Pelanggan diarahkan ke Google Review untuk berbagi pengalaman.</p></article></div>
- <div className="concept-experience-note"><ShieldCheck size={17}/> Tidak perlu install aplikasi. Gunakan NFC yang kompatibel atau kamera untuk scan QR.</div>
-</section>
-<section className="concept-dashboard dt-home-dashboard" id="dashboard">
- <div className="concept-dashboard-copy"><div className="concept-eyebrow dark-eyebrow">YOUR BUSINESS, IN CONTROL</div><h2>See what<br/><em>every tap means.</em></h2><p>Pantau interaksi pelanggan dan kelola tautan kartu dari satu dashboard yang sudah termasuk dalam pembelian.</p><ul><li><Check size={15}/> Pantau jumlah tap</li><li><Check size={15}/> Lihat estimasi pengunjung unik</li><li><Check size={15}/> Pantau klik ke Google Review</li><li><Check size={15}/> Ubah tautan kapan saja</li></ul><a href="/login" className="concept-dashboard-link">Masuk ke dashboard <ArrowUpRight size={16}/></a></div>
- <div className="concept-dashboard-visual"><div className="concept-dashboard-frame"><div className="concept-dash-top"><Brand/><span><i/> DASHBOARD PREVIEW</span></div><div className="concept-dash-welcome"><small>OVERVIEW</small><h3>Ringkasan bisnismu</h3><p>Aktivitas kartu dalam satu tampilan</p></div><div className="concept-dash-metrics"><div><span>Total tap</span><b>— — —</b><small>Aktivitas kartu</small></div><div><span>Review clicks</span><b>— — —</b><small>Menuju Google Review</small></div></div><div className="concept-dash-chart"><div><span>RINGKASAN AKTIVITAS</span><small>Ilustrasi tampilan</small></div><div className="concept-chart-bars">{[30,48,38,67,52,82,59,92,70,100,76,88].map((h,i)=><i key={i} style={{height:h+"%"}}/>)}</div></div></div><div className="concept-dash-sticker"><Sparkles size={16}/><span>Included with<br/><b>every card.</b></span></div></div>
-</section>
-<section className="concept-faq dt-home-faq" id="faq"><div><div className="concept-eyebrow dark-eyebrow">GOOD TO KNOW</div><h2>Before you<br/><em>make the move.</em></h2><p>Belum menemukan jawaban? <a href="https://wa.me/6281321778081">Tanya langsung <ArrowUpRight size={13}/></a></p></div><div className="concept-faq-list">{questions.map(([q,a])=><details key={q}><summary>{q}<ChevronDown size={17}/></summary><p>{a}</p></details>)}</div></section>
-<section className="concept-final dt-home-final"><div className="concept-final-orbit"/><div className="concept-eyebrow">READY WHEN YOU ARE</div><h2>Make the next<br/><em>review effortless.</em></h2><p>Mulai dari satu kartu. Buat setiap interaksi lebih berarti.</p><a href="#koleksi" className="concept-final-button">Pilih kartu sekarang <ArrowUpRight size={17}/></a><span className="concept-final-mark">DiTapAja®</span></section>
-<footer className="concept-footer"><Brand/><span>© 2026 DiTapAja. Lebih mudah terhubung.</span><a href="https://wa.me/6281321778081">Hubungi kami <ArrowUpRight size={14}/></a></footer>
-</main>}
+const products = [
+  { name: "DiTapAja Noir", description: "Karakter tegas untuk bisnis yang ingin tampil standout.", tone: "noir", price: "Rp50.000", order: "READY TO ORDER", action: "Beli Noir", mode: "buy" },
+  { name: "DiTapAja Blanc", description: "Minimal, bersih, dan mudah menyatu dengan identitas brand.", tone: "blanc", price: "Rp50.000", order: "READY TO ORDER", action: "Beli Blanc", mode: "buy" },
+  { name: "DiTapAja Signature", description: "Kartu dengan identitas visual bisnismu sendiri.", tone: "signature", price: "Rp60.000", order: "PRE-ORDER · MIN. 10 KARTU", action: "Pre-order", mode: "preorder" }
+];
+
+const questions = [
+  ["Apakah ada biaya dashboard bulanan?", "Tidak ada. Akses dashboard sudah termasuk dalam pembelian kartu DiTapAja."],
+  ["Bagaimana pelanggan menggunakan kartu?", "Pelanggan cukup mendekatkan smartphone yang mendukung NFC atau memindai QR Code pada kartu."],
+  ["Apakah link tujuan bisa diganti?", "Bisa. Kamu dapat mengubah tujuan kartu melalui dashboard tanpa perlu mengganti kartu."],
+  ["Data apa yang tersedia di dashboard?", "Kamu dapat memantau jumlah tap, estimasi pengunjung unik, dan klik menuju Google Review. Angka ini bukan jumlah ulasan yang dipublikasikan."]
+];
+
+function BrandMark() {
+  return <span className="dt-v2-brand-mark" aria-hidden="true"><i /><i /><i /></span>;
+}
+
+export default function Home() {
+  return (
+    <main className="concept-home dt-editorial-home dt-home-v2" id="top">
+      <ScrollMotion />
+      <SiteHeader />
+
+      <section className="dt-v2-hero">
+        <div className="dt-v2-hero-copy">
+          <div className="dt-v2-kicker"><span /> NFC REVIEW CARD <i /> MADE FOR BETTER CONNECTIONS</div>
+          <h1>Good reviews<br /><em>start with a tap.</em></h1>
+          <p>Sederhanakan cara pelanggan menemukan halaman Google Review bisnismu. Satu kartu NFC + QR, lengkap dengan dashboard gratis.</p>
+          <div className="dt-v2-actions">
+            <a className="dt-v2-primary" href="#koleksi">Temukan kartu <ArrowUpRight size={17} /></a>
+            <a className="dt-v2-secondary" href="#cara-kerja">Lihat cara kerja <ArrowRight size={15} /></a>
+          </div>
+          <div className="dt-v2-proof"><span><Check size={14} /> NFC + QR Code</span><span><Check size={14} /> Dashboard gratis</span><span><Check size={14} /> Tanpa biaya bulanan</span></div>
+        </div>
+        <div className="dt-v2-hero-art" aria-label="Ilustrasi NFC card dan dashboard DiTapAja">
+          <div className="dt-v2-art-orbit dt-v2-orbit-one" />
+          <div className="dt-v2-art-orbit dt-v2-orbit-two" />
+          <div className="dt-v2-glass-note"><span className="dt-v2-live-dot" /><span><b>One simple tap</b><small>One easier review journey</small></span></div>
+          <div className="dt-v2-phone">
+            <div className="dt-v2-phone-top"><span>9:41</span><span>•••</span></div>
+            <div className="dt-v2-google"><b>G</b> Google</div>
+            <div className="dt-v2-avatar">B</div>
+            <strong>Your business</strong>
+            <small>We'd love to hear from you</small>
+            <div className="dt-v2-stars">★★★★★</div>
+            <div className="dt-v2-phone-rule" />
+            <span className="dt-v2-phone-label">SHARE YOUR EXPERIENCE</span>
+            <div className="dt-v2-review-button">Write a review <ArrowUpRight size={12} /></div>
+          </div>
+          <div className="dt-v2-floating-card">
+            <div className="dt-v2-card-top"><BrandMark /><span>NFC / QR</span></div>
+            <div className="dt-v2-card-word">DiTapAja<span>.</span></div>
+            <div className="dt-v2-card-bottom"><span>CONTACTLESS REVIEW</span><Nfc size={21} /></div>
+          </div>
+          <div className="dt-v2-glass-stat"><span className="dt-v2-stat-icon"><BarChart3 size={17} /></span><span><small>YOUR DASHBOARD</small><b>Every tap, in view.</b></span><ArrowUpRight size={15} /></div>
+        </div>
+        <div className="dt-v2-hero-index"><span>01</span><i /> A SMALL TAP. A BETTER CONNECTION.</div>
+      </section>
+
+      <section className="dt-v2-collection" id="koleksi">
+        <div className="dt-v2-section-heading">
+          <div><div className="dt-v2-kicker dt-v2-kicker-dark">THE COLLECTION <i /></div><h2>A card that fits<br />your <em>business.</em></h2></div>
+          <p>Dirancang untuk pengalaman yang praktis, tampilan yang berkarakter, dan pengelolaan yang sederhana.</p>
+        </div>
+        <ProductCarousel products={products} />
+        <div className="dt-v2-collection-foot"><span>01 — 03</span><p>Setiap kartu dilengkapi NFC, QR Code, dan akses dashboard tanpa biaya bulanan.</p></div>
+      </section>
+
+      <section className="dt-v2-dashboard" id="dashboard">
+        <div className="dt-v2-dashboard-copy">
+          <div className="dt-v2-kicker dt-v2-kicker-dark">MORE THAN A CARD <i /></div>
+          <h2>Simple outside.<br /><em>Insightful inside.</em></h2>
+          <p>Semua aktivitas kartu bisa dipantau dari satu tempat. Tidak perlu aplikasi tambahan atau biaya dashboard bulanan.</p>
+          <ul><li><Check size={15} /> Pantau jumlah tap kartu</li><li><Check size={15} /> Lihat estimasi pengunjung unik</li><li><Check size={15} /> Pantau klik menuju Google Review</li><li><Check size={15} /> Ubah tautan tujuan kapan saja</li></ul>
+          <a href="/login" className="dt-v2-text-link">Masuk ke dashboard <ArrowUpRight size={16} /></a>
+        </div>
+        <div className="dt-v2-dashboard-stage">
+          <div className="dt-v2-dashboard-glass">
+            <div className="dt-v2-dash-head"><span className="dt-v2-dash-brand"><BrandMark /> DiTapAja</span><span className="dt-v2-dash-pill"><i /> LIVE PREVIEW</span></div>
+            <div className="dt-v2-dash-intro"><small>OVERVIEW / YOUR BUSINESS</small><h3>Ringkasan aktivitas</h3><p>Semua interaksi kartu dalam satu tampilan.</p></div>
+            <div className="dt-v2-metrics"><div><small>TOTAL TAP</small><b>— — —</b><span>Aktivitas kartu</span></div><div><small>REVIEW CLICKS</small><b>— — —</b><span>Menuju Google Review</span></div></div>
+            <div className="dt-v2-chart"><div><b>Aktivitas kartu</b><small>Ilustrasi tampilan dashboard</small></div><div className="dt-v2-bars">{[28,42,34,58,48,72,54,84,66,94,73,88].map((height, i) => <i key={i} style={{ height: height + "%" }} />)}</div><div className="dt-v2-chart-labels"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div></div>
+          </div>
+          <div className="dt-v2-dashboard-stamp"><Sparkles size={16} /><span>Included with<br /><b>every card.</b></span></div>
+        </div>
+      </section>
+
+      <section className="dt-v2-how" id="cara-kerja">
+        <div className="dt-v2-how-heading"><div className="dt-v2-kicker dt-v2-kicker-dark">THREE SIMPLE STEPS <i /></div><h2>From tap<br />to <em>review.</em></h2><p>Semudah itu. Tanpa aplikasi tambahan.</p></div>
+        <div className="dt-v2-steps">
+          <article><span className="dt-v2-step-number">01</span><div className="dt-v2-step-icon"><Smartphone size={21} /></div><h3>Tap or scan</h3><p>Pelanggan mendekatkan ponsel ke kartu atau memindai QR Code.</p></article>
+          <article><span className="dt-v2-step-number">02</span><div className="dt-v2-step-icon"><Link2 size={21} /></div><h3>Page opens</h3><p>Link tujuan bisnismu terbuka langsung di browser.</p></article>
+          <article><span className="dt-v2-step-number">03</span><div className="dt-v2-step-icon"><Check size={21} /></div><h3>Share the experience</h3><p>Pelanggan diarahkan ke halaman Google Review untuk memberi ulasan.</p></article>
+        </div>
+        <div className="dt-v2-how-note"><ShieldCheck size={17} /> NFC yang kompatibel atau kamera untuk scan QR. Tidak perlu install aplikasi.</div>
+      </section>
+
+      <section className="dt-v2-faq" id="faq">
+        <div className="dt-v2-faq-heading"><div className="dt-v2-kicker dt-v2-kicker-dark">GOOD TO KNOW <i /></div><h2>A few things<br />you might <em>wonder.</em></h2><p>Masih ada pertanyaan? <a href="https://wa.me/6281321778081">Hubungi kami <ArrowUpRight size={13} /></a></p></div>
+        <div className="dt-v2-faq-list">{questions.map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown size={17} /></summary><p>{answer}</p></details>)}</div>
+      </section>
+
+      <section className="dt-v2-final">
+        <div className="dt-v2-final-inner"><div className="dt-v2-kicker">READY WHEN YOU ARE <i /></div><h2>Make every<br /><em>tap count.</em></h2><p>Mulai dari satu kartu. Buat setiap interaksi lebih berarti.</p><a href="#koleksi" className="dt-v2-primary dt-v2-final-button">Pilih kartu sekarang <ArrowUpRight size={17} /></a><span className="dt-v2-final-mark">DiTapAja®</span></div>
+      </section>
+
+      <footer className="dt-v2-footer"><a href="/" className="dt-v2-footer-brand"><BrandMark /> DiTapAja<span>.</span></a><span>© 2026 DiTapAja. Lebih mudah terhubung.</span><a href="https://wa.me/6281321778081">Hubungi kami <ArrowUpRight size={14} /></a></footer>
+    </main>
+  );
+}
