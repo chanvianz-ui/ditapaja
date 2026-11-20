@@ -2135,3 +2135,71 @@ body{background:var(--dt-unified-bg)!important;color:var(--dt-unified-text)}
  .dt-collection-page .dt-catalog-benefits>div{padding:13px!important}
  .dt-collection-page .dt-edition-price strong{font-size:20px!important}
 }
+
+
+/* COLLECTION DARK CLEANUP — remove legacy light surfaces on /koleksi */
+.dt-collection-page .catalog-page-benefits,
+.dt-collection-page .dt-catalog-benefits{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.dt-collection-page .catalog-page-benefits>div,
+.dt-collection-page .dt-catalog-benefits>div{
+  min-height:82px!important;
+  padding:16px!important;
+  border:1px solid rgba(164,192,210,.16)!important;
+  border-radius:12px!important;
+  background:linear-gradient(145deg,#142536 0%,#101e2b 100%)!important;
+  color:#edf3f5!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.025)!important;
+}
+.dt-collection-page .catalog-page-benefits>div b,
+.dt-collection-page .dt-catalog-benefits>div b{color:#edf3f5!important}
+.dt-collection-page .catalog-page-benefits>div small,
+.dt-collection-page .dt-catalog-benefits>div small{color:#9aabb8!important}
+.dt-collection-page .catalog-page-benefits svg,
+.dt-collection-page .dt-catalog-benefits svg{color:#a9cbd2!important}
+.dt-collection-page .catalog-page-note,
+.dt-collection-page .dt-catalog-note{
+  display:grid!important;
+  gap:12px!important;
+  margin-top:26px!important;
+  padding:22px!important;
+  border:1px solid rgba(164,192,210,.16)!important;
+  border-radius:14px!important;
+  background:linear-gradient(145deg,#142536 0%,#101e2b 100%)!important;
+  color:#edf3f5!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.025),0 18px 42px rgba(0,0,0,.14)!important;
+}
+.dt-collection-page .catalog-page-note>div,
+.dt-collection-page .dt-catalog-note>div{color:#edf3f5!important}
+.dt-collection-page .catalog-page-note b,
+.dt-collection-page .dt-catalog-note b{color:#edf3f5!important}
+.dt-collection-page .catalog-page-note p,
+.dt-collection-page .dt-catalog-note p{margin:0!important;color:#aab8c2!important}
+.dt-collection-page .catalog-page-note svg,
+.dt-collection-page .dt-catalog-note svg{color:#a9cbd2!important}
+.dt-collection-page .dt-edition-cta{
+  background:#dceaf0!important;
+  color:#142635!important;
+  border:1px solid rgba(220,234,240,.8)!important;
+  opacity:1!important;
+  text-shadow:none!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.14)!important;
+}
+.dt-collection-page .dt-edition-cta svg{color:#42616d!important;opacity:1!important}
+.dt-collection-page .dt-edition-cta:hover{background:#f1f7f8!important;color:#102332!important}
+@media(max-width:640px){
+ .dt-collection-page .catalog-page-benefits,
+ .dt-collection-page .dt-catalog-benefits{grid-template-columns:1fr!important;gap:8px!important}
+ .dt-collection-page .catalog-page-benefits>div,
+ .dt-collection-page .dt-catalog-benefits>div{min-height:68px!important;padding:13px 15px!important}
+ .dt-collection-page .catalog-page-note,
+ .dt-collection-page .dt-catalog-note{padding:18px!important}
+}
