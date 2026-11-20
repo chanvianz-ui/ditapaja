@@ -30,8 +30,6 @@ import {
   Building2,
   Package,
   Printer,
-  PanelLeftClose,
-  PanelLeftOpen,
   Home,
   ShoppingBag,
   Menu,
@@ -73,7 +71,6 @@ export default function DashboardPage() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [cards, setCards] = useState<NfcCard[]>([]);
   const [email, setEmail] = useState("");
