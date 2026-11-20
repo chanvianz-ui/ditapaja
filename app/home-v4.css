@@ -2048,3 +2048,6 @@ body{background:var(--dt-unified-bg)!important;color:var(--dt-unified-text)}
  .info-footer{gap:15px!important;padding:22px 18px!important}
  .order-page .order-layout{padding:30px 18px!important}
 }
+
+/* Product detail now uses the shared global header */
+.product-detail-page .detail-header{display:none!important}
