@@ -11,8 +11,8 @@
   --dt-dim:#a4aea2;
   --dt-display:Inter,ui-sans-serif,system-ui,sans-serif;
 }
-html,body{background:#0b100d!important}
-body{color:#f1f3ed}
+html:has(.dt-dashboard-shell),html:has(.dt-workspace-editorial),html:has(.dt-orders-page),html:has(.dt-card-create-page),html:has(.dt-page-studio-page),html:has(.dt-customer-insights),html:has(.dt-business-page),html:has(.dt-account-settings-page),html:has(.dt-auth-page){background:#0b100d!important}
+body:has(.dt-dashboard-shell),body:has(.dt-workspace-editorial),body:has(.dt-orders-page),body:has(.dt-card-create-page),body:has(.dt-page-studio-page),body:has(.dt-customer-insights),body:has(.dt-business-page),body:has(.dt-account-settings-page),body:has(.dt-auth-page){background:#0b100d!important;color:#f1f3ed}
 .dt-dashboard-shell,.dt-workspace-editorial,.dt-orders-page,.dt-card-create-page,
 .dt-page-studio-page,.dt-customer-insights,.dt-business-page,.dt-account-settings-page,
 .dt-auth-page{background:#0b100d!important;color:#edf1e9!important}
