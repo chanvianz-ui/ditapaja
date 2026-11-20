@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { ArrowLeft, ArrowUpRight, Check, MessageCircle, Minus, Plus, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import SiteHeader from "./site-header";
 
 const products = {
   noir: { name: "DiTapAja Noir", price: 50000, minimum: 1, type: "Pesanan reguler · minimum 1 kartu" },
@@ -100,7 +101,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
   }
 
   return (
-    <main className="order-page dt-order-checkout">
+    <main className="order-page dt-order-checkout"><SiteHeader />
       <header className="order-header">
         <Link href="/" className="order-brand"><span className="order-brand-mark">D</span>DiTap<span>Aja</span></Link>
         <Link href="/koleksi" className="order-back"><ArrowLeft size={15}/> Kembali ke koleksi</Link>
