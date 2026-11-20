@@ -489,3 +489,107 @@
 .dt-editorial-home .concept-footer .brand{color:#0B2340!important}
 .dt-editorial-home .concept-footer .brand-symbol{background:#0B2340!important}
 .dt-editorial-home .concept-footer .brand-symbol i{background:#fff!important}
+
+
+/* Depth pass — make the whites feel luminous and the navy feel dimensional.
+   Textures are deliberately low-contrast so content remains crisp. */
+.dt-editorial-home{
+ background:
+  radial-gradient(ellipse at 8% 6%,rgba(58,134,255,.055),transparent 28%),
+  radial-gradient(ellipse at 92% 48%,rgba(11,35,64,.025),transparent 32%),
+  #F7F9FC!important;
+}
+.dt-editorial-home .concept-header{
+ background:
+  radial-gradient(ellipse at 15% 0%,rgba(58,134,255,.055),transparent 48%),
+  linear-gradient(180deg,#fff 0%,#FBFCFE 100%)!important;
+}
+.dt-editorial-home .concept-hero{
+ background:
+  radial-gradient(ellipse at 78% 18%,rgba(58,134,255,.18),transparent 30%),
+  radial-gradient(ellipse at 12% 88%,rgba(11,35,64,.065),transparent 34%),
+  radial-gradient(ellipse at 54% 110%,rgba(58,134,255,.07),transparent 42%),
+  linear-gradient(135deg,#fff 0%,#F8FAFD 48%,#EEF4FC 100%)!important;
+}
+.dt-editorial-home .concept-hero:before{
+ opacity:.22!important;
+ background-image:
+  radial-gradient(rgba(11,35,64,.22) .65px,transparent .65px),
+  linear-gradient(120deg,transparent 0%,rgba(58,134,255,.07) 50%,transparent 100%)!important;
+ background-size:17px 17px,100% 100%!important;
+ mask-image:linear-gradient(90deg,transparent 0%,black 25%,black 90%,transparent 100%)!important;
+}
+.dt-editorial-home .concept-hero:after{
+ border-color:rgba(58,134,255,.24)!important;
+ background:radial-gradient(circle,rgba(58,134,255,.045),transparent 68%)!important;
+ box-shadow:0 0 0 34px rgba(58,134,255,.045),0 0 0 76px rgba(11,35,64,.025),0 0 75px rgba(58,134,255,.08)!important;
+}
+.dt-editorial-home .concept-collection{
+ background:
+  radial-gradient(ellipse at 100% 5%,rgba(58,134,255,.045),transparent 28%),
+  linear-gradient(180deg,#fff 0%,#FCFDFE 100%)!important;
+}
+.dt-editorial-home .concept-collection .concept-product{
+ background:linear-gradient(155deg,#fff 0%,#fff 68%,#F8FAFD 100%)!important;
+}
+.dt-editorial-home .concept-experience{
+ background:
+  radial-gradient(ellipse at 0% 0%,rgba(58,134,255,.09),transparent 34%),
+  radial-gradient(ellipse at 100% 100%,rgba(11,35,64,.045),transparent 38%),
+  linear-gradient(135deg,#F3F7FC 0%,#EEF3F9 55%,#F8FAFD 100%)!important;
+ position:relative!important;overflow:hidden!important;
+}
+.dt-editorial-home .concept-experience:before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;
+ background-image:radial-gradient(rgba(11,35,64,.22) .65px,transparent .65px);
+ background-size:18px 18px;
+ mask-image:linear-gradient(135deg,black,transparent 65%);
+}
+.dt-editorial-home .concept-experience>*{position:relative;z-index:1}
+.dt-editorial-home .concept-flow article{
+ background:linear-gradient(145deg,#fff 0%,#fff 72%,#F7FAFE 100%)!important;
+}
+.dt-editorial-home .concept-dashboard{
+ background:
+  radial-gradient(ellipse at 90% 20%,rgba(58,134,255,.055),transparent 34%),
+  linear-gradient(180deg,#fff 0%,#FAFCFF 100%)!important;
+}
+.dt-editorial-home .concept-dashboard-frame{
+ background:
+  radial-gradient(ellipse at 90% 0%,rgba(58,134,255,.075),transparent 38%),
+  linear-gradient(145deg,#fff 0%,#F8FAFD 100%)!important;
+}
+.dt-editorial-home .concept-faq{
+ background:
+  radial-gradient(ellipse at 5% 0%,rgba(58,134,255,.07),transparent 35%),
+  linear-gradient(135deg,#F6F8FC 0%,#EEF3F9 100%)!important;
+}
+.dt-editorial-home .concept-final{
+ background:
+  radial-gradient(ellipse at 82% 8%,rgba(58,134,255,.38),transparent 36%),
+  radial-gradient(ellipse at 12% 100%,rgba(58,134,255,.16),transparent 40%),
+  linear-gradient(125deg,#081A30 0%,#0B2340 48%,#123D70 100%)!important;
+ position:relative!important;overflow:hidden!important;
+}
+.dt-editorial-home .concept-final:before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;
+ background-image:
+  linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px);
+ background-size:48px 48px;
+ mask-image:linear-gradient(115deg,transparent 0%,black 75%);
+}
+.dt-editorial-home .concept-final>*{position:relative;z-index:1}
+.dt-editorial-home .concept-footer{
+ background:
+  radial-gradient(ellipse at 10% 0%,rgba(58,134,255,.06),transparent 42%),
+  linear-gradient(180deg,#fff 0%,#F6F8FB 100%)!important;
+}
+@media(max-width:640px){
+ .dt-editorial-home .concept-hero{
+  background:
+   radial-gradient(ellipse at 95% 18%,rgba(58,134,255,.16),transparent 34%),
+   radial-gradient(ellipse at 0% 90%,rgba(11,35,64,.05),transparent 38%),
+   linear-gradient(145deg,#fff 0%,#F5F8FC 100%)!important;
+ }
+}
