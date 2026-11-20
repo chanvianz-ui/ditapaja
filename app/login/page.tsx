@@ -97,7 +97,7 @@ export default function LoginPage() {
               <label htmlFor="login-password">Password</label>
               <div className="dt-auth-password">
                 <input id="login-password" required type={showPassword ? "text" : "password"} autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Masukkan password" />
-                <button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "TAMPILKAN"}</button>
+                <button type="button" aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"} aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "TAMPILKAN"}</button>
               </div>
             </div>
             {message && <p role="alert" aria-live="polite" className="dt-auth-message dt-auth-error">{message}</p>}
