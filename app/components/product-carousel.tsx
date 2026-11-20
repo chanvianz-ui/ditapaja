@@ -6,9 +6,9 @@ type Product={name:string;label:string;description:string;tone:string;price:stri
 
 function CardMock({tone}:{tone:string}){
  return <div className={`simple-card ${tone}`} aria-label={`Preview kartu ${tone}`}>
-  <div className="simple-card-top"><b>DITAPAJA / NFC</b><Nfc size={22}/></div>
+  <div className="simple-card-top"><b>DiTapAja</b><Nfc size={19}/></div>
   <div className="simple-card-center"><span>YOUR BUSINESS</span><strong>MAKE EVERY<br/>TAP COUNT.</strong></div>
-  <div className="simple-card-bottom"><span>CONTACTLESS REVIEW</span><span> NFC · QR</span></div>
+  <div className="simple-card-bottom"><span>CONTACTLESS REVIEW</span><span>NFC · QR</span></div>
  </div>
 }
 
@@ -17,12 +17,11 @@ export default function ProductCarousel({products}:{products:Product[]}){
   {products.map((p,i)=>(
    <article className={`concept-product dt-product-card ${i===0?"is-featured":"is-compact"}`} key={p.tone}>
     <div className="dt-product-card-head">
-     <span className="dt-product-family">DITAPAJA / COLLECTION</span>
-     <span className="dt-product-availability">{p.mode==="preorder"?"MADE TO ORDER":"AVAILABLE"}</span>
+     <span className="dt-product-family">DITAPAJA COLLECTION</span>
+     <span className={`dt-product-availability ${p.mode==="preorder"?"is-preorder":""}`}>{p.mode==="preorder"?"PRE-ORDER":"READY TO ORDER"}</span>
     </div>
     <Link href={`/products/${p.tone}`} className={`concept-product-art dt-product-object ${p.tone}`} aria-label={`Lihat detail ${p.name}`}>
      <CardMock tone={p.tone}/>
-     <span className="dt-product-object-caption">NFC REVIEW CARD</span>
     </Link>
     <div className="concept-product-body">
      <div className="dt-product-title-row"><h3><Link href={`/products/${p.tone}`}>{p.name}</Link></h3></div>
