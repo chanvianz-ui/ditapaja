@@ -14,6 +14,7 @@ export default function LoginPage() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -41,6 +42,12 @@ export default function LoginPage() {
         }
         const { error: sessionError } = await supabase.auth.setSession(result.session);
         if (sessionError) throw sessionError;
+      }
+
+      if (rememberMe) {
+        localStorage.setItem("ditapaja_login_expires_at", String(Date.now() + 7 * 24 * 60 * 60 * 1000));
+      } else {
+        localStorage.removeItem("ditapaja_login_expires_at");
       }
 
       const { data: userData } = await supabase.auth.getUser();
@@ -100,6 +107,11 @@ export default function LoginPage() {
                 <button type="button" aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"} aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>{showPassword ? "SEMBUNYIKAN" : "TAMPILKAN"}</button>
               </div>
             </div>
+            <label className="dt-login-remember" htmlFor="login-remember">
+              <input id="login-remember" type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
+              <span className="dt-login-remember-box" aria-hidden="true" />
+              <span>Ingat saya selama 7 hari</span>
+            </label>
             {message && <p role="alert" aria-live="polite" className="dt-auth-message dt-auth-error">{message}</p>}
             <button disabled={loading} className="dt-auth-submit">{loading ? <><i className="dt-auth-spinner" />Memeriksa akun...</> : <>Masuk ke dashboard<span>↗</span></>}</button>
           </form>
