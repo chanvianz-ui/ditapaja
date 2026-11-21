@@ -1064,7 +1064,6 @@ export default function DashboardPage() {
           )}
           <footer className="dt-footer">DiTapAja <span>·</span> NFC Review Workspace <small>Tanpa biaya langganan bulanan</small></footer>
       </div>
-    </main>
 
       {/* BULK QR PRINT SHEET */}
       {showBulkQrSheet && (
@@ -1273,6 +1272,7 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+    </main>
     </main>
   );
 }
