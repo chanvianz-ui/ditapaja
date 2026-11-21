@@ -85,16 +85,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="dt-app-menu-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setMenuOpen(false); }}>
           <section id="dt-workspace-navigation" className="dt-app-menu-panel" role="dialog" aria-modal="true" aria-label="Navigasi workspace">
             <div className="dt-menu-orbit dt-menu-orbit-a"/><div className="dt-menu-orbit dt-menu-orbit-b"/>
-            <div className="dt-app-menu-heading">
-              <div>
-                <Link href="/" className="dt-drawer-brand" onClick={() => setMenuOpen(false)}>
-                  <span className="dt-app-brand-symbol"><i/><i/><i/></span><span>DiTap<span>Aja</span></span>
-                </Link>
-                <span className="dt-menu-kicker"><Sparkles size={12}/> YOUR DIGITAL WORKSPACE</span>
-                <h2>Everything<br/><em>in motion.</em></h2>
-              </div>
-              <button type="button" onClick={() => setMenuOpen(false)} aria-label="Tutup menu"><X size={20}/></button>
-            </div>
+            <button className="dt-menu-close" type="button" onClick={() => setMenuOpen(false)} aria-label="Tutup menu"><X size={18}/></button>
 
             <nav className="dt-app-menu-links" aria-label="Halaman workspace">
               {groups.map(group => {
