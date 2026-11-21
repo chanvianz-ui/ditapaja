@@ -191,3 +191,18 @@
  .studio-form-footer>div button{flex:1}
 }
 @media(prefers-reduced-motion:reduce){.ditapaja-studio-page *{scroll-behavior:auto!important;transition:none!important}}
+
+/* Template thumbnails preview the actual composition, not only a palette */
+.studio-template-art{position:relative;overflow:hidden;isolation:isolate;gap:4px;transition:transform .2s ease,border-radius .2s ease}
+.studio-template-card:hover .studio-template-art{transform:translateY(-2px)}
+.studio-template-art i{position:relative;z-index:1}
+.studio-template-art.theme-ocean{border-radius:8px;background:linear-gradient(145deg,#eaf0fa,#fff)!important}
+.studio-template-art.theme-ocean:after{content:"";position:absolute;inset:0 0 auto;height:5px;background:#3975e8}
+.studio-template-art.theme-midnight{border-radius:5px;background:radial-gradient(circle at 85% 5%,#314f78,#111a29 65%)!important}
+.studio-template-art.theme-midnight i{background:#91a6c7}
+.studio-template-art.theme-rose{border-radius:2px;background:#fffaf4!important;box-shadow:3px 3px 0 #d8c6b6}
+.studio-template-art.theme-rose i{background:#b59b8b}
+.studio-template-art.theme-forest{border-radius:14px 14px 5px 5px;background:#e9eee7!important}
+.studio-template-art.theme-forest:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:#56775e}
+.studio-template-art.theme-forest i{background:#8da18b}
+.studio-template-card small{font-size:9px}
