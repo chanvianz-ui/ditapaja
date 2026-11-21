@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Eye, Loader2, Save, Smartphone, Monitor, ImagePlus } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { renderNfcPageDocument } from "@/lib/nfc-page-template";
 import "./page-studio.css";
 
 type Card = { id: string; card_name: string | null; public_code: string; active: boolean; location_id?: string | null };
@@ -201,40 +202,24 @@ export default function LandingPageEditor() {
     { id: "links" as const, number: "04", title: "Tautan", detail: "Kontak & publikasi" },
   ];
   const activeSection = sections.find(section => section.id === editorSection)!;
-  const previewDocument = useMemo(() => {
-    const palettes = {
-      ocean: { page: "#f5f8ff", card: "#ffffff", ink: "#14233f", muted: "#62718a", border: "#dce6f8" },
-      midnight: { page: "#ffffff", card: "#f8fafc", ink: "#172033", muted: "#667085", border: "#e4e9f1" },
-      rose: { page: "#fbf7f0", card: "#fffdf9", ink: "#342b24", muted: "#82766b", border: "#e9dfd2" },
-      forest: { page: "#f1f3f6", card: "#ffffff", ink: "#202735", muted: "#697386", border: "#e0e4eb" }
-    };
-    const palette = palettes[settings.theme] || palettes.ocean;
-    const font = settings.font_family === "DM Sans" ? '"DM Sans", sans-serif'
-      : settings.font_family === "Georgia" ? 'Georgia, serif'
-      : settings.font_family === "Arial" ? 'Arial, sans-serif' : 'Manrope, sans-serif';
-    const safe = escapePreviewHtml;
-    const logo = settings.logo_url
-      ? '<div class="brand-logo" style="justify-content:' + settings.logo_position + '"><img class="logo" style="width:' + settings.logo_size + 'px;height:' + settings.logo_size + 'px;object-fit:contain" src="' + safe(settings.logo_url) + '" alt="Logo bisnis"></div>'
-      : '<div class="mark">✦</div>';
-    const links = [
-      settings.whatsapp_url ? '<div class="secondary">WhatsApp</div>' : '',
-      settings.instagram_url ? '<div class="secondary">Instagram</div>' : '',
-      settings.website_url ? '<div class="secondary">Website</div>' : ''
-    ].join("");
-    const cta = settings.button_style === "outline"
-      ? 'background:transparent;color:' + settings.accent_color + ';border:1.5px solid ' + settings.accent_color
-      : 'background:' + settings.accent_color + ';color:#fff;border:1.5px solid ' + settings.accent_color;
-    const radius = settings.theme === "rose" ? "28px" : settings.theme === "forest" ? "15px" : settings.theme === "midnight" ? "18px" : "23px";
-    return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>' +
-      '@import url(https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap);*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:' + font + ';-webkit-font-smoothing:antialiased}body{min-height:100vh;padding:22px 16px;background:' + palette.page + ';color:' + palette.ink + ';display:flex;align-items:center;justify-content:center}.page{position:relative;width:100%;max-width:430px;padding:34px 25px 22px;border:1px solid ' + palette.border + ';border-radius:' + radius + ';background:' + palette.card + ';box-shadow:0 24px 60px rgba(25,39,62,.09);text-align:center;overflow:hidden}.page:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:' + settings.accent_color + '}.brand-logo{display:flex;margin:0 0 22px}.logo{display:block;border-radius:17px}.mark{width:64px;height:64px;display:grid;place-items:center;margin:0 auto 22px;background:' + settings.accent_color + '20;color:' + settings.accent_color + ';font-size:27px}.eyebrow{margin:0 0 10px;color:' + palette.muted + ';font-size:9px;font-weight:800;letter-spacing:2px}.business{margin:0;color:' + palette.ink + ';font-size:clamp(22px,6vw,28px);line-height:1.18;font-weight:800;letter-spacing:-.8px;overflow-wrap:anywhere}.branch{display:inline-block;margin-top:12px;padding:7px 11px;border:1px solid ' + palette.border + ';border-radius:99px;color:' + palette.muted + ';font-size:10px}.address{margin:9px 0 0;color:' + palette.muted + ';font-size:11px;line-height:1.5}.rule{height:1px;margin:24px 0;background:' + palette.border + '}.stars{margin:0 0 10px;color:' + settings.accent_color + ';font-size:19px;letter-spacing:4px}h1{margin:0 0 10px;color:' + palette.ink + ';font-size:clamp(23px,6vw,29px);line-height:1.2;letter-spacing:-.7px}.description{margin:0;color:' + palette.muted + ';font-size:13px;line-height:1.75}.cta{display:block;width:100%;margin:23px 0 0;padding:16px 12px;border-radius:13px;font:700 13px ' + font + ';' + cta + '}.secondary{margin-top:10px;padding:13px 12px;border:1px solid ' + palette.border + ';border-radius:12px;color:' + palette.ink + ';font-size:12px;font-weight:700}.footer{margin-top:23px;padding-top:16px;border-top:1px solid ' + palette.border + ';color:' + palette.muted + ';font-size:9px;letter-spacing:.2px}@media(max-width:360px){body{padding:12px}.page{padding:28px 19px 19px}}' +
-      '</style></head><body><main class="page">' + logo +
-      '<p class="eyebrow">PENGALAMAN KAMU BERARTI</p><p class="business">' + safe(businessName || "Bisnis Kami") + '</p>' +
-      (branchName ? '<div class="branch">' + safe(branchName) + '</div>' : '') +
-      (branchAddress ? '<p class="address">' + safe(branchAddress) + '</p>' : '') +
-      '<div class="rule"></div><div class="stars">★★★★★</div><h1>' + safe(settings.headline || "Bagikan pengalaman kamu") + '</h1><p class="description">' + safe(settings.description || "") + '</p>' +
-      '<div class="cta">★ &nbsp; Berikan Ulasan di Google</div>' + links +
-      '<div class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</div></main></body></html>';
-  }, [settings.theme, settings.font_family, settings.logo_url, settings.logo_size, settings.logo_position, settings.accent_color, settings.button_style, settings.headline, settings.description, settings.whatsapp_url, settings.instagram_url, settings.website_url, businessName, branchName, branchAddress]);
+  const previewDocument = useMemo(() => renderNfcPageDocument({
+    theme: settings.theme,
+    font_family: settings.font_family,
+    accent_color: settings.accent_color,
+    button_style: settings.button_style,
+    logo_url: settings.logo_url,
+    logo_size: settings.logo_size,
+    logo_position: settings.logo_position,
+    business_name: businessName || "Bisnis Kami",
+    branch_name: branchName,
+    branch_address: branchAddress,
+    headline: settings.headline,
+    description: settings.description,
+    whatsapp_url: settings.whatsapp_url,
+    instagram_url: settings.instagram_url,
+    website_url: settings.website_url,
+    preview: true,
+  }), [settings, businessName, branchName, branchAddress]);
 
 
   if (loading) return <div className="flex min-h-screen items-center justify-center bg-[#f7f9fc]"><Loader2 className="animate-spin text-blue-600" /></div>;
