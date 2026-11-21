@@ -72,7 +72,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   function isActive(item: typeof items[number]) {
     const itemPath = item.href.split("?")[0];
     if (itemPath === "/dashboard") {
-      return pathname === itemPath && (item.view === "cards" ? cardsView : item.view === "overview" && !cardsView);
+      const isCardsView = item.href.includes("view=cards");
+      return pathname === itemPath && (isCardsView ? cardsView : !cardsView);
     }
     return pathname === itemPath || pathname.startsWith(itemPath + "/");
   }
