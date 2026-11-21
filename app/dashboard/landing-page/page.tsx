@@ -204,12 +204,13 @@ export default function LandingPageEditor() {
   ];
   const activeSection = sections.find(section => section.id === editorSection)!;
   const previewDocument = useMemo(() => {
-    const palette = {
+    const palettes = {
       ocean: { page: "#f5f8ff", card: "#ffffff", ink: "#14233f", muted: "#62718a", border: "#dce6f8" },
       midnight: { page: "#ffffff", card: "#f8fafc", ink: "#172033", muted: "#667085", border: "#e4e9f1" },
       rose: { page: "#fbf7f0", card: "#fffdf9", ink: "#342b24", muted: "#82766b", border: "#e9dfd2" },
       forest: { page: "#f1f3f6", card: "#ffffff", ink: "#202735", muted: "#697386", border: "#e0e4eb" }
-    }[settings.theme];
+    };
+    const palette = palettes[settings.theme] || palettes.ocean;
     const font = settings.font_family === "DM Sans" ? '"DM Sans", sans-serif'
       : settings.font_family === "Georgia" ? 'Georgia, serif'
       : settings.font_family === "Arial" ? 'Arial, sans-serif' : 'Manrope, sans-serif';
@@ -235,7 +236,7 @@ export default function LandingPageEditor() {
       '<div class="rule"></div><div class="stars">★★★★★</div><h1>' + safe(settings.headline || "Bagikan pengalaman kamu") + '</h1><p class="description">' + safe(settings.description || "") + '</p>' +
       '<div class="cta">★ &nbsp; Berikan Ulasan di Google</div>' + links +
       '<div class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</div></main></body></html>';
-  }, [settings.theme, settings.font_family, settings.logo_url, settings.logo_size, settings.accent_color, settings.button_style, settings.headline, settings.description, settings.whatsapp_url, settings.instagram_url, settings.website_url, businessName, branchName, branchAddress]);
+  }, [settings.theme, settings.font_family, settings.logo_url, settings.logo_size, settings.logo_position, settings.accent_color, settings.button_style, settings.headline, settings.description, settings.whatsapp_url, settings.instagram_url, settings.website_url, businessName, branchName, branchAddress]);
 
 
   return <main className="ditapaja-studio-page">
