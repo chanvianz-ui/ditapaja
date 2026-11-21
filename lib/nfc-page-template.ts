@@ -77,29 +77,29 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .theme-ocean .message{margin-top:25px;padding-top:22px;border-top:1px solid var(--line)}
     .theme-ocean .actions{margin-top:22px}
     /* Midnight: asymmetric editorial alignment, always anchored to one left edge */
-    .theme-midnight{--page:#090e17;--surface:#111a29;--ink:#f4f6fb;--muted:#9aa9bf;--line:#2a384c;--soft:#1a293d;max-width:450px;padding:27px 28px 23px;border:1px solid #2a3a50;border-radius:19px;box-shadow:0 30px 80px #0008;text-align:left}
+    .theme-midnight{--page:#090e17;--surface:#111a29;--ink:#f4f6fb;--muted:#9aa9bf;--line:#2a384c;--soft:#1a293d;max-width:450px;padding:27px 28px 23px;border:1px solid #2a3a50;border-radius:19px;box-shadow:0 30px 80px #0008;text-align:center}
     .theme-midnight:before{content:"";position:absolute;right:-95px;top:-115px;width:240px;height:240px;border-radius:50%;background:var(--accent);opacity:.16;filter:blur(55px);pointer-events:none}
-    .theme-midnight .midnight-top{position:relative;display:flex;align-items:center;gap:9px;margin-bottom:34px;color:#a9b7ca;font-size:8px;font-weight:800;letter-spacing:2px}
+    .theme-midnight .midnight-top{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:34px;color:#a9b7ca;font-size:8px;font-weight:800;letter-spacing:2px}
     .edition-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-    .theme-midnight .brand-block{gap:15px}
+    .theme-midnight .brand-block{gap:15px;justify-items:center;text-align:center}\n    .theme-midnight .brand-mark-row{justify-content:center}\n    .theme-midnight .brand-copy{text-align:center}\n    .theme-midnight .branch{margin-left:auto;margin-right:auto}
     .theme-midnight .brand-mark-fallback{margin:0;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 20%,#172338)}
     .theme-midnight .business{font-size:clamp(30px,7vw,40px);letter-spacing:-1.5px}
     .theme-midnight .message{margin-top:33px;padding-top:23px;border-top:1px solid var(--line)}
     .theme-midnight .actions{margin-top:22px}
-    .theme-midnight .review-button{border-radius:9px}
+    .theme-midnight .review-button{position:relative;border-radius:9px;padding-left:42px;padding-right:42px}\n    .theme-midnight .review-button .google-g{position:absolute;left:14px}\n    .theme-midnight .review-button>b{position:absolute;right:14px;margin:0}
     .theme-midnight .social-link{background:#172335;border-radius:8px}
     /* Rose: editorial masthead and narrow text column */
-    .theme-rose{--page:#f2e9df;--surface:#fffaf4;--ink:#392b2b;--muted:#89766e;--line:#eadbd0;--soft:#f7eee6;max-width:450px;padding:0 27px 22px;border:1px solid #eadbd0;border-radius:4px;box-shadow:10px 12px 0 #d8c6b6;text-align:left}
-    .theme-rose .rose-masthead{display:flex;justify-content:space-between;gap:12px;margin:0 -27px 26px;padding:17px 27px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:900;letter-spacing:1.5px}
-    .theme-rose .brand-block{gap:13px}
+    .theme-rose{--page:#f2e9df;--surface:#fffaf4;--ink:#392b2b;--muted:#89766e;--line:#eadbd0;--soft:#f7eee6;max-width:450px;padding:0 27px 22px;border:1px solid #eadbd0;border-radius:4px;box-shadow:10px 12px 0 #d8c6b6;text-align:center}
+    .theme-rose .rose-masthead{display:flex;justify-content:center;gap:18px;margin:0 -27px 26px;padding:17px 27px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:900;letter-spacing:1.5px}
+    .theme-rose .brand-block{gap:13px;justify-items:center;text-align:center}\n    .theme-rose .brand-mark-row{justify-content:center}\n    .theme-rose .brand-copy{text-align:center}\n    .theme-rose .branch{margin-left:auto;margin-right:auto}
     .theme-rose .business{font-family:Georgia,serif;font-size:clamp(31px,7vw,41px);font-weight:500;letter-spacing:-1.2px;line-height:1.05}
     .theme-rose .eyebrow{font-size:8px;letter-spacing:2px}
     .theme-rose .message{margin-top:27px;padding-top:22px;border-top:1px solid var(--line)}
     .theme-rose .message h1{font-family:Georgia,serif;font-size:clamp(27px,6vw,34px);font-weight:500;letter-spacing:-.7px}
     .theme-rose .actions{margin-top:22px}
-    .theme-rose .review-button{border-radius:3px;text-transform:uppercase;letter-spacing:.45px;font-size:10px}
+    .theme-rose .review-button{position:relative;padding-left:42px;padding-right:42px;border-radius:3px;text-transform:uppercase;letter-spacing:.45px;font-size:10px}
     .theme-rose .social-links{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .theme-rose .social-link{border-radius:3px}
+    .theme-rose .review-button .google-g{position:absolute;left:13px}\n    .theme-rose .review-button>b{position:absolute;right:13px;margin:0}\n    .theme-rose .social-link{border-radius:3px}
     /* Forest: quiet natural layout with a contained message panel */
     .theme-forest{--page:#e9eee7;--surface:#f9fbf6;--ink:#203729;--muted:#718273;--line:#dce5d9;--soft:#edf3eb;max-width:440px;padding:27px 25px 22px;border:1px solid #dbe5d8;border-radius:29px 29px 12px 12px;box-shadow:0 22px 60px #1c3a2717;text-align:center}
     .theme-forest .forest-heading{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:1.7px}
