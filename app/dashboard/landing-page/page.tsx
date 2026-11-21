@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Eye, Loader2, Save, Smartphone, Monitor, ImagePlus, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import "./page-studio.css";
 
 type Card = { id: string; card_name: string | null; public_code: string; active: boolean; location_id?: string | null };
 type Settings = {
@@ -197,7 +198,7 @@ export default function LandingPageEditor() {
   ];
   const activeSection = sections.find(section => section.id === editorSection)!;
 
-  return <main className="dt-page-studio-page min-h-screen px-4 py-5 text-slate-900 sm:px-7 sm:py-8">
+  return <main className="ditapaja-studio-page dt-page-studio-page min-h-screen px-4 py-5 text-slate-900 sm:px-7 sm:py-8">
     <div className="mx-auto max-w-[1440px]">
       <div className="dt-studio-nav mb-7 flex items-center justify-between gap-3">
         <button onClick={() => router.push("/dashboard")} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 shadow-sm"><ArrowLeft size={16}/> Dashboard</button>
