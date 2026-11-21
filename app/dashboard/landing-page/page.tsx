@@ -244,7 +244,7 @@ export default function LandingPageEditor() {
       {notice && <div role="status" className="studio-feedback is-success">{notice}</div>}
 
       {cards.length === 0 ? <div className="studio-empty"><span>✦</span><h2>Belum ada kartu NFC</h2><p>Buat kartu terlebih dahulu dari dashboard untuk mulai mengatur halaman.</p><button type="button" onClick={() => router.push("/dashboard?view=cards")}>Buka Kartu NFC</button></div> : <>
-        <div className="studio-workspace">
+        <div className={"studio-workspace "+(previewMode==="desktop"?"preview-desktop":"preview-mobile")}>
           <section className="studio-editor">
             <div className="studio-section-heading"><div><span>01 — 04</span><h2>Pengaturan halaman</h2></div><small>Perubahan terlihat langsung di preview</small></div>
             <nav className="studio-tabs" aria-label="Bagian pengaturan">
