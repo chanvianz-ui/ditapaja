@@ -83,7 +83,72 @@ export default function CustomerInsightsPage() {
       }
     }
     load();
-    return (
+    return () => { cancelled = true; };
+  }, [router]);
+
+  const insights = useMemo(() => {
+    const visitorVisits = new Map<string, number>();
+    const cardTotals = new Map<string, number>();
+    const hours = Array.from({ length: 24 }, () => 0);
+    const weekdays = Array.from({ length: 7 }, () => 0);
+    for (const event of events) {
+      if (event.visitor_hash) visitorVisits.set(event.visitor_hash, (visitorVisits.get(event.visitor_hash) || 0) + 1);
+      cardTotals.set(event.card_id, (cardTotals.get(event.card_id) || 0) + 1);
+      const date = new Date(event.created_at);
+      hours[date.getHours()] += 1;
+      weekdays[date.getDay()] += 1;
+    }
+    const uniqueVisitors = visitorVisits.size;
+    const returningVisitors = [...visitorVisits.values()].filter(visits => visits > 1).length;
+    const peakHour = hours.indexOf(Math.max(0, ...hours));
+    const peakWeekday = weekdays.indexOf(Math.max(0, ...weekdays));
+    const weekdayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+    const topCards = cards.map(card => ({ ...card, taps: cardTotals.get(card.id) || 0 })).sort((a, b) => b.taps - a.taps);
+    const today = new Date();
+    const daily = Array.from({ length: period }, (_, index) => {
+      const date = new Date(today);
+      date.setHours(0, 0, 0, 0);
+      date.setDate(date.getDate() - (period - 1 - index));
+      return {
+        key: localDateKey(date),
+        label: period === 7 ? date.toLocaleDateString("id-ID", { weekday: "short" }) : date.toLocaleDateString("id-ID", { day: "numeric", month: "short" }),
+        taps: 0,
+      };
+    });
+    const byDay = new Map(daily.map(day => [day.key, day]));
+    for (const event of events) {
+      const date = new Date(event.created_at);
+      const day = byDay.get(localDateKey(date));
+      if (day) day.taps += 1;
+    }
+    return {
+      uniqueVisitors,
+      returningVisitors,
+      returningRate: uniqueVisitors ? returningVisitors / uniqueVisitors * 100 : 0,
+      peakHour,
+      peakWeekday,
+      peakWeekdayName: weekdayNames[peakWeekday],
+      hours,
+      weekdays,
+      topCards,
+      daily,
+      dailyMax: Math.max(1, ...daily.map(day => day.taps)),
+    };
+  }, [events, cards, period]);
+
+  const totalTaps = useMemo(() => {
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    start.setDate(start.getDate() - (period - 1));
+    return events.filter(event => new Date(event.created_at) >= start).length;
+  }, [events, period]);
+
+  const maxHour = Math.max(1, ...insights.hours);
+  const maxWeekday = Math.max(1, ...insights.weekdays);
+  const hasAnyActivity = events.length > 0;
+  const hasPeriodActivity = totalTaps > 0;
+
+  return (
     <main className="ditapaja-insights-page">
       <div className="ditapaja-insights-wrap">
         <header className="ditapaja-insights-heading">
