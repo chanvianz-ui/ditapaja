@@ -23,7 +23,7 @@ const defaults = (cardId: string): Settings => ({
 const themes = [
   { id: "ocean", label: "Atelier", bg: "#171719", ink: "#f0eee8" },
   { id: "midnight", label: "Obsidian", bg: "#111316", ink: "#f0eee8" },
-  { id: "rose", label: "Playform", bg: "#e9e5dc", ink: "#111214" },
+  { id: "rose", label: "Playform", bg: "#171a1c", ink: "#f0eee8" },
   { id: "forest", label: "Solace", bg: "#171d19", ink: "#f0eee8" }
 ] as const;
 
