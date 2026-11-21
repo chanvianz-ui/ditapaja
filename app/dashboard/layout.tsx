@@ -80,7 +80,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <button type="button" onClick={() => setMenuOpen(false)} aria-label="Tutup menu"><X size={20}/></button>
           </div>
           <nav className="dt-app-menu-links">
-            {items.map((item, index) => { const Icon = item.icon; return <Link key={item.href} href={item.href} className={active(item.href) ? "is-active" : ""} onClick={() => setMenuOpen(false)}>
+            {items.map((item, index) => { const Icon = item.icon; return <Link key={item.href} href={item.href} className={active(item.href) ? "is-active" : ""} onClick={event => { setMenuOpen(false); if (item.href.includes("?")) { event.preventDefault(); window.location.assign(item.href); } }}>
               <span className="dt-app-menu-index">0{index + 1}</span><Icon size={18}/><b>{item.label}</b><ArrowUpRight size={17}/>
             </Link>; })}
           </nav>
