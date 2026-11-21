@@ -1167,3 +1167,78 @@
   @keyframes dt-hero-arrive{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
   @keyframes dt-surface-arrive{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
 }
+
+
+/* Customer Insights — hard scoped palette + responsive layout correction */
+.dt-app-content main.dt-customer-insights{
+  --ci-bg:#080d18;--ci-panel:#111b2b;--ci-panel-2:#17243a;--ci-line:rgba(164,184,214,.16);
+  width:100%!important;max-width:none!important;min-height:calc(100svh - 72px)!important;
+  margin:0!important;padding:30px 0 36px!important;overflow-x:clip!important;
+  color:#f1f5fb!important;background:transparent!important;
+}
+.dt-app-content main.dt-customer-insights .dt-ci-container{
+  width:100%!important;max-width:1440px!important;margin-inline:auto!important;
+  padding:0 clamp(14px,3.2vw,42px) 34px!important;
+}
+.dt-app-content main.dt-customer-insights .dt-ci-hero{
+  isolation:isolate!important;overflow:hidden!important;border:1px solid rgba(111,155,255,.22)!important;
+  border-radius:24px!important;
+  background:radial-gradient(ellipse at 88% 0%,rgba(71,125,255,.27),transparent 43%),linear-gradient(125deg,#172943 0%,#101c30 58%,#0b1526 100%)!important;
+  color:#f1f5fb!important;box-shadow:0 25px 65px -42px rgba(41,92,190,.5)!important;
+}
+.dt-app-content main.dt-customer-insights .dt-ci-hero *{color:inherit}
+.dt-app-content main.dt-customer-insights .dt-ci-hero [class*="text-sky"]{color:#9edcff!important}
+.dt-app-content main.dt-customer-insights .dt-ci-hero [class*="text-slate-300"]{color:#c0cce0!important}
+.dt-app-content main.dt-customer-insights .dt-ci-surface{
+  min-width:0!important;color:#eaf1fc!important;border:1px solid var(--ci-line)!important;
+  border-radius:17px!important;
+  background:linear-gradient(145deg,rgba(24,39,62,.98),rgba(12,20,35,.99))!important;
+  box-shadow:0 18px 48px -38px rgba(0,0,0,.88),inset 0 1px rgba(255,255,255,.035)!important;
+}
+.dt-app-content main.dt-customer-insights .dt-ci-kpi{position:relative!important;overflow:hidden!important}
+.dt-app-content main.dt-customer-insights .dt-ci-kpi:hover{border-color:rgba(103,160,255,.42)!important}
+.dt-app-content main.dt-customer-insights .dt-ci-kpi [class*="text-sky"],
+.dt-app-content main.dt-customer-insights .dt-ci-kpi [class*="text-blue"],
+.dt-app-content main.dt-customer-insights .dt-ci-kpi [class*="text-indigo"],
+.dt-app-content main.dt-customer-insights .dt-ci-kpi [class*="text-cyan"]{color:#91caff!important}
+.dt-app-content main.dt-customer-insights [class*="bg-emerald"],
+.dt-app-content main.dt-customer-insights [class*="bg-green"],
+.dt-app-content main.dt-customer-insights [class*="bg-teal"],
+.dt-app-content main.dt-customer-insights [class*="text-emerald"],
+.dt-app-content main.dt-customer-insights [class*="text-green"],
+.dt-app-content main.dt-customer-insights [class*="text-teal"]{background-color:transparent!important;color:#9edcff!important}
+.dt-app-content main.dt-customer-insights [class*="bg-amber"],
+.dt-app-content main.dt-customer-insights [class*="text-amber"]{background-color:rgba(71,125,255,.12)!important;color:#b9d5ff!important}
+.dt-app-content main.dt-customer-insights [class*="bg-[#eef"],
+.dt-app-content main.dt-customer-insights [class*="bg-[#f1"],
+.dt-app-content main.dt-customer-insights [class*="bg-[#172b"],
+.dt-app-content main.dt-customer-insights [class*="bg-white"],
+.dt-app-content main.dt-customer-insights [class*="bg-slate-50"]{background-color:#111b2b!important;color:#eaf1fc!important}
+.dt-app-content main.dt-customer-insights [class*="border-slate-"]{border-color:var(--ci-line)!important}
+.dt-app-content main.dt-customer-insights h1,
+.dt-app-content main.dt-customer-insights h2,
+.dt-app-content main.dt-customer-insights h3,
+.dt-app-content main.dt-customer-insights .text-white{color:#f3f7ff!important}
+.dt-app-content main.dt-customer-insights [class*="text-slate-400"],
+.dt-app-content main.dt-customer-insights [class*="text-slate-500"]{color:#91a2bd!important}
+.dt-app-content main.dt-customer-insights [class*="text-slate-300"]{color:#c0cce0!important}
+.dt-app-content main.dt-customer-insights .dt-ci-daily-chart{min-width:0!important;width:100%!important;overflow:hidden!important}
+.dt-app-content main.dt-customer-insights button[aria-pressed="true"]{background:linear-gradient(110deg,#72e5f5,#7899ff)!important;color:#08111f!important}
+.dt-app-content main.dt-customer-insights button:focus-visible{outline:2px solid #8de9ff!important;outline-offset:3px!important}
+@media(max-width:760px){
+ .dt-app-content main.dt-customer-insights{padding:22px 0 118px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-container{padding:0 13px 26px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-hero{border-radius:17px!important;padding:21px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-hero>div>div:last-child{max-width:none!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-surface{border-radius:15px!important;padding:16px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-kpi{padding:14px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-daily-chart{height:190px!important;gap:2px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-daily-chart>div{min-width:0!important}
+}
+@media(max-width:380px){
+ .dt-app-content main.dt-customer-insights .dt-ci-container{padding-inline:10px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-hero h2{font-size:29px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-kpi{padding:11px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-kpi p:nth-of-type(1){font-size:22px!important}
+ .dt-app-content main.dt-customer-insights .dt-ci-daily-chart{gap:1px!important}
+}
