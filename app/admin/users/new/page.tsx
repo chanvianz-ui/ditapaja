@@ -94,7 +94,7 @@ export default function AddNewUserPage() {
   const credentialValue = accountType === "username" ? username.trim().toLowerCase() : email.trim().toLowerCase();
 
   return (
-    <main className="min-h-screen bg-[#f4f5f2] text-[#20251f]">
+    <main className="dt-admin-shell min-h-screen bg-[#090a0c] text-[#efede7]">
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-[264px] flex-col bg-[#202720] px-5 py-6 text-white lg:flex">
         <div className="flex items-center gap-3 px-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#d8e5d2] text-[#26372a]"><LayoutDashboard size={20}/></div>

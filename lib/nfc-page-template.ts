@@ -1,138 +1,254 @@
 export type NfcTemplate = "ocean" | "midnight" | "rose" | "forest";
+
 export type NfcPageVisual = {
-  theme?: NfcTemplate; font_family?: string; accent_color?: string; button_style?: "solid" | "outline";
-  logo_url?: string | null; logo_size?: number; logo_position?: "left" | "center" | "right";
-  business_name?: string; branch_name?: string; branch_address?: string;
-  headline?: string; description?: string;
-  whatsapp_url?: string; instagram_url?: string; website_url?: string;
+  theme?: NfcTemplate;
+  font_family?: string;
+  accent_color?: string;
+  button_style?: "solid" | "outline";
+  logo_url?: string | null;
+  logo_size?: number;
+  logo_position?: "left" | "center" | "right";
+  business_name?: string;
+  branch_name?: string;
+  branch_address?: string;
+  headline?: string;
+  description?: string;
+  whatsapp_url?: string;
+  instagram_url?: string;
+  website_url?: string;
   preview?: boolean;
 };
 
-const esc = (v: unknown) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c] || c));
+const esc = (value: unknown) =>
+  String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[character] || character));
+
+const validTheme = (value: string | undefined): value is NfcTemplate =>
+  value === "ocean" || value === "midnight" || value === "rose" || value === "forest";
 
 export function renderNfcPageDocument(input: NfcPageVisual) {
-  const theme = (["ocean", "midnight", "rose", "forest"].includes(input.theme || "") ? input.theme : "ocean") as NfcTemplate;
-  const accent = /^#[0-9a-fA-F]{6}$/.test(input.accent_color || "") ? input.accent_color! : "#356fe5";
-  const font = input.font_family === "Georgia" ? 'Georgia,serif' : input.font_family === "Arial" ? 'Arial,sans-serif' : input.font_family === "DM Sans" ? '"DM Sans",sans-serif' : 'Manrope,sans-serif';
+  const theme: NfcTemplate = validTheme(input.theme) ? input.theme : "ocean";
+  const accent = /^#[0-9a-fA-F]{6}$/.test(input.accent_color || "")
+    ? input.accent_color!
+    : "#bd8057";
+  const font = input.font_family === "Georgia"
+    ? "Georgia,serif"
+    : input.font_family === "Arial"
+      ? "Arial,sans-serif"
+      : input.font_family === "DM Sans"
+        ? '"DM Sans",sans-serif'
+        : '"Manrope",sans-serif';
   const logoSize = Math.min(128, Math.max(40, Number(input.logo_size) || 72));
-  const logoAlign = ["left", "center", "right"].includes(input.logo_position || "") ? input.logo_position : "center";
+  const logoAlign = ["left", "center", "right"].includes(input.logo_position || "")
+    ? input.logo_position!
+    : "center";
+  const logoJustify = logoAlign === "left" ? "flex-start" : logoAlign === "right" ? "flex-end" : "center";
   const name = esc(input.business_name || "Bisnis Kami");
   const branch = esc(input.branch_name || "");
   const address = esc(input.branch_address || "");
   const headline = esc(input.headline || "Bagikan pengalaman kamu");
   const description = esc(input.description || "Terima kasih sudah berkunjung. Pengalaman kamu sangat berarti bagi kami.");
+
   const logo = input.logo_url
-    ? '<div class="brand-mark"><img src="' + esc(input.logo_url) + '" alt="Logo ' + name + '" style="width:' + logoSize + 'px;height:' + logoSize + 'px"></div>'
-    : '<div class="brand-mark brand-mark-fallback" aria-hidden="true">✳</div>';
-  const links = ([["WhatsApp", input.whatsapp_url], ["Instagram", input.instagram_url], ["Website", input.website_url]] as [string, string | undefined][])
-    .filter((x): x is [string, string] => !!x[1] && /^https:\/\//i.test(x[1]))
-    .map(([label, url]) => '<a class="social-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"><span>' + label + '</span><b aria-hidden="true">↗</b></a>').join("");
-  const branchMarkup = branch ? '<span class="branch">' + branch + '</span>' : "";
-  const addressMarkup = address ? '<p class="address">' + address + '</p>' : "";
-  const brandMarkup = '<div class="brand-block"><div class="brand-mark-row">' + logo + '</div><div class="brand-copy"><p class="eyebrow">PENGALAMAN KAMU BERARTI</p><h2 class="business">' + name + '</h2>' + branchMarkup + addressMarkup + '</div></div>';
-  const messageMarkup = '<section class="message"><p class="message-kicker">CERITAKAN PENGALAMANMU</p><h1>' + headline + '</h1><p class="description">' + description + '</p></section>';
-  const actionMarkup = '<div class="actions"><button class="review-button ' + (input.button_style === "outline" ? "outline" : "solid") + '" id="reviewButton" type="button"><span class="google-g">G</span><span>Berikan Ulasan di Google</span><b aria-hidden="true">↗</b></button>' + (links ? '<nav class="social-links" aria-label="Tautan bisnis">' + links + '</nav>' : '') + '</div>';
+    ? '<img class="brand-image" src="' + esc(input.logo_url) + '" alt="Logo ' + name + '" style="width:' + logoSize + 'px;height:' + logoSize + 'px">'
+    : '<span class="brand-symbol" aria-hidden="true">✳</span>';
+
+  const brand = '<div class="brand" style="--logo-align:' + logoAlign + ';--logo-justify:' + logoJustify + '">' + logo +
+    '<div class="brand-copy"><p class="eyebrow">PENGALAMAN KAMU BERARTI</p><h2 class="business">' + name + '</h2>' +
+    (branch ? '<span class="branch">' + branch + '</span>' : "") +
+    (address ? '<p class="address">' + address + '</p>' : "") +
+    '</div></div>';
+
+  const message = '<section class="message"><p class="message-kicker">CERITAKAN PENGALAMANMU</p><h1>' +
+    headline + '</h1><p class="description">' + description + '</p></section>';
+
+  const socialLinks = ([
+    ["WhatsApp", input.whatsapp_url],
+    ["Instagram", input.instagram_url],
+    ["Website", input.website_url],
+  ] as [string, string | undefined][])
+    .filter((item): item is [string, string] => typeof item[1] === "string" && /^https:\/\//i.test(item[1]))
+    .map(([label, url]) => '<a class="social-link" href="' + esc(url) +
+      '" target="_blank" rel="noopener noreferrer"><span>' + label +
+      '</span><b aria-hidden="true">↗</b></a>').join("");
+
+  const actions = '<div class="actions"><button class="review-button ' +
+    (input.button_style === "outline" ? "outline" : "solid") +
+    '" id="reviewButton" type="button"' + (input.preview ? " disabled" : "") + '><span class="google-g" aria-hidden="true">G</span>' +
+    '<span>Berikan Ulasan di Google</span><b aria-hidden="true">↗</b></button>' +
+    (socialLinks ? '<nav class="social-links" aria-label="Tautan bisnis">' + socialLinks + '</nav>' : "") +
+    '</div>';
+
   const layouts: Record<NfcTemplate, string> = {
-    ocean: brandMarkup + messageMarkup + actionMarkup,
-    midnight: '<div class="midnight-top"><span class="edition">YOUR EXPERIENCE MATTERS</span><span class="edition-dot"></span></div>' + brandMarkup + messageMarkup + actionMarkup,
-    rose: '<div class="rose-masthead"><span>CATATAN PENGALAMAN</span><span>NO. 01</span></div>' + brandMarkup + messageMarkup + actionMarkup,
-    forest: '<div class="forest-heading"><span class="forest-leaf">✳</span><span>THANK YOU FOR VISITING</span></div>' + brandMarkup + '<div class="forest-message">' + messageMarkup + '</div>' + actionMarkup
+    // Atelier — editorial hierarchy, restrained framing and generous typography.
+    ocean:
+      '<div class="atelier-index"><span>ATELIER / EXPERIENCE</span><span>01 — REVIEW</span></div>' +
+      '<div class="atelier-hero">' + brand + '</div>' +
+      '<div class="atelier-copy">' + message + '</div>' +
+      '<div class="atelier-actions">' + actions + '</div>',
+
+    // Obsidian — centered, architectural and layered.
+    midnight:
+      '<div class="obsidian-orbit" aria-hidden="true"></div>' +
+      '<div class="obsidian-top"><span class="signal"></span><span>THE EXPERIENCE / YOUR VOICE</span></div>' +
+      '<div class="obsidian-brand">' + brand + '</div>' +
+      '<div class="obsidian-rule"><span>02</span><i></i><span>YOUR REVIEW MATTERS</span></div>' +
+      '<div class="obsidian-message">' + message + '</div>' +
+      '<div class="obsidian-actions">' + actions + '</div>',
+
+    // Playform — bold blocks, typographic poster and asymmetric composition.
+    rose:
+      '<div class="playform-top"><span>PLAYFORM®</span><span>MAKE IT COUNT&nbsp; ↗</span></div>' +
+      '<div class="playform-title"><span class="poster-word">GOOD</span><span class="poster-word poster-outline">VIBES.</span></div>' +
+      '<div class="playform-brand">' + brand + '</div>' +
+      '<div class="playform-bottom"><div class="playform-copy">' + message + '</div>' +
+      '<div class="playform-actions">' + actions + '</div></div>',
+
+    // Solace — organic forms, soft geometry and an intimate content panel.
+    forest:
+      '<div class="solace-shape solace-shape-a" aria-hidden="true"></div>' +
+      '<div class="solace-shape solace-shape-b" aria-hidden="true"></div>' +
+      '<div class="solace-kicker"><span>✳</span><span>A MOMENT TO SHARE</span></div>' +
+      '<div class="solace-brand">' + brand + '</div>' +
+      '<div class="solace-panel">' + message + '</div>' +
+      '<div class="solace-actions">' + actions + '</div>',
   };
+
   const css = `
-    :root{--accent:${accent};--font:${font}}
+    :root{color-scheme:dark;--accent:${accent};--font:${font};--bg:#090a0c;--surface:#121417;--surface-2:#191c20;--ink:#f0eee8;--muted:#999b9c;--line:rgba(238,236,230,.13);--soft:#202328}
     *{box-sizing:border-box}
-    html{min-height:100%;background:#edf1f7}
-    body{min-height:100vh;margin:0;padding:clamp(20px,5vw,56px) clamp(14px,4vw,38px);display:flex;align-items:flex-start;justify-content:center;background:#edf1f7;color:#172943;font-family:var(--font);-webkit-font-smoothing:antialiased}.experience{margin:auto 0}
-    body.page-ocean{background:radial-gradient(ellipse at 15% 12%,#dce9fb 0,transparent 38%),linear-gradient(145deg,#edf2fa,#e7edf5)}
-    body.page-midnight{background:radial-gradient(ellipse at 82% 12%,#1b3150 0,transparent 36%),radial-gradient(ellipse at 12% 90%,#15243a 0,transparent 42%),#080e18}
-    body.page-rose{background:radial-gradient(ellipse at 12% 15%,#f5dfd1 0,transparent 35%),linear-gradient(145deg,#f3e9df,#e9ddd2)}
-    body.page-forest{background:radial-gradient(ellipse at 85% 12%,#d9e5d6 0,transparent 38%),linear-gradient(145deg,#edf1e9,#e1e9df)}
-    .experience{position:relative;width:100%;max-width:430px;min-width:0;overflow:hidden;background:var(--surface);color:var(--ink);isolation:isolate}
-    .experience:after{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:linear-gradient(145deg,#ffffff0b,transparent 42%)}
-    .brand-block{display:grid;grid-template-columns:1fr;gap:18px;min-width:0}
-    .brand-mark-row{display:flex;justify-content:${logoAlign};align-items:center;min-width:0}
-    .brand-mark{width:auto;max-width:100%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-    .brand-mark img{display:block;max-width:100%;object-fit:contain}
-    .brand-mark-fallback{width:54px;height:54px;border-radius:17px;background:color-mix(in srgb,var(--accent) 13%,transparent);color:var(--accent);font-size:25px}
-    .brand-copy{min-width:0}
-    .eyebrow,.message-kicker{margin:0 0 10px;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:1.8px;line-height:1.5}
-    .business{margin:0;font-size:clamp(25px,7vw,36px);font-weight:800;line-height:1.12;letter-spacing:-1.1px;overflow-wrap:anywhere}
-    .branch{display:inline-flex;max-width:100%;margin-top:12px;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
-    .address{margin:9px 0 0;color:var(--muted);font-size:11px;line-height:1.65;overflow-wrap:anywhere}
+    html{min-height:100%;background:var(--bg)}
+    body{min-height:100vh;margin:0;padding:clamp(16px,4vw,52px);display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,rgba(189,128,87,.12),transparent 48%),#090a0c;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+    .experience{position:relative;isolation:isolate;width:100%;max-width:470px;min-width:0;overflow:hidden;background:var(--surface);color:var(--ink);font-family:var(--font)}
+    .experience:after{position:absolute;inset:0;z-index:-1;content:"";pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.035),transparent 38%)}
+    .brand{display:flex;flex-direction:column;align-items:var(--logo-justify);gap:16px;min-width:0}
+    .brand-image,.brand-symbol{display:grid;flex:0 0 auto;max-width:100%;object-fit:contain}
+    .brand-symbol{width:58px;height:58px;place-items:center;border:1px solid color-mix(in srgb,var(--accent) 48%,transparent);border-radius:17px;background:color-mix(in srgb,var(--accent) 14%,var(--surface));color:var(--accent);font-size:26px}
+    .brand-copy{width:100%;min-width:0;text-align:var(--logo-align)}
+    .eyebrow,.message-kicker{margin:0 0 10px;color:var(--accent);font-size:8px;font-weight:850;letter-spacing:2px;line-height:1.5}
+    .business{margin:0;color:var(--ink);font-size:clamp(25px,7vw,39px);font-weight:800;line-height:1.05;letter-spacing:-1.5px;overflow-wrap:anywhere;text-wrap:balance}
+    .branch{display:inline-flex;max-width:100%;margin-top:12px;padding:7px 10px;border:1px solid var(--line);border-radius:99px;background:var(--soft);color:var(--muted);font-size:9px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+    .address{margin:9px 0 0;color:var(--muted);font-size:10px;line-height:1.6;overflow-wrap:anywhere}
     .message{min-width:0}
-    .message h1{margin:0 0 10px;font-size:clamp(23px,6vw,31px);font-weight:800;line-height:1.16;letter-spacing:-.8px;overflow-wrap:anywhere}
-    .description{margin:0;color:var(--muted);font-size:13px;line-height:1.8;overflow-wrap:anywhere}
-    .actions{display:grid;gap:11px;min-width:0}
-    .review-button{position:relative;width:100%;min-width:0;min-height:56px;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 15px;border:1px solid var(--accent);border-radius:13px;background:var(--accent);color:#fff;font:750 12px var(--font);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+    .message h1{margin:0 0 11px;color:var(--ink);font-size:clamp(24px,6vw,34px);font-weight:800;line-height:1.08;letter-spacing:-1.2px;overflow-wrap:anywhere;text-wrap:balance}
+    .description{max-width:390px;margin:0;color:var(--muted);font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+    .actions{display:grid;gap:10px;min-width:0}
+    .review-button{position:relative;width:100%;min-width:0;min-height:55px;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 43px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#100d0a;font:800 11px var(--font);cursor:pointer;transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}
     .review-button>span:nth-child(2){min-width:0;overflow-wrap:anywhere}
-    .review-button> b{margin-left:auto;font-size:15px}
+    .review-button> b{position:absolute;right:15px;font-size:15px}
     .review-button.outline{background:transparent;color:var(--accent)}
-    .google-g{display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:#fff;color:#4285f4;font-size:13px;font-weight:900}
-    .social-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;min-width:0}
-    .social-link{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px;color:var(--ink);text-decoration:none;font-size:11px;font-weight:700;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease}
-    .social-link span{min-width:0;overflow-wrap:anywhere}.social-link b{color:var(--muted)}
-    .status{min-height:16px;margin:10px 0 0;color:var(--muted);font-size:10px;line-height:1.5;text-align:center}
-    .footer{margin-top:23px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:9px;letter-spacing:.35px;text-align:center}
-    .footer strong{color:var(--ink)}
-    .preview-note{width:100%;margin:0 0 16px;padding:8px 10px;border-radius:8px;background:var(--soft);color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.3px;text-align:center}
-    /* Ocean: centered service card with clear vertical rhythm */
-    .theme-ocean{--page:#eaf0fa;--surface:#fff;--ink:#172943;--muted:#718096;--line:#e2e9f2;--soft:#f3f6fb;max-width:430px;padding:32px 28px 22px;border:1px solid #dfe7f3;border-radius:24px;box-shadow:0 24px 65px #1d35551a;text-align:center}
-    .theme-ocean:before{content:"";position:absolute;inset:0 0 auto;height:6px;background:linear-gradient(90deg,var(--accent),#8bbcff)}
-    .theme-ocean{box-shadow:0 28px 80px #203b5c20,0 3px 10px #203b5c0b}
-    .theme-ocean .brand-mark-fallback{box-shadow:0 8px 20px color-mix(in srgb,var(--accent) 18%,transparent)}
-    .theme-ocean .business{letter-spacing:-1.35px}.theme-ocean .review-button{box-shadow:0 8px 18px color-mix(in srgb,var(--accent) 20%,transparent)}.theme-ocean .social-link{background:linear-gradient(145deg,#fff,#f7f9fd)}
-    .theme-ocean .brand-mark-row{justify-content:center}
-    .theme-ocean .message{margin-top:25px;padding-top:22px;border-top:1px solid var(--line)}
-    .theme-ocean .actions{margin-top:22px}
-    /* Midnight: asymmetric editorial alignment, always anchored to one left edge */
-    .theme-midnight{--page:#090e17;--surface:#111a29;--ink:#f4f6fb;--muted:#9aa9bf;--line:#2a384c;--soft:#1a293d;max-width:450px;padding:27px 28px 23px;border:1px solid #2a3a50;border-radius:19px;box-shadow:0 30px 80px #0008;text-align:center}
-    .theme-midnight:before{content:"";position:absolute;right:-95px;top:-115px;width:240px;height:240px;border-radius:50%;background:var(--accent);opacity:.2;filter:blur(55px);pointer-events:none}
-    .theme-midnight{box-shadow:0 35px 100px #0009,0 0 0 1px #ffffff08}
-    .theme-midnight .midnight-top{padding-bottom:13px;border-bottom:1px solid #ffffff16}
-    .theme-midnight .business{max-width:100%;text-wrap:balance}
-    .theme-midnight .message h1{max-width:340px;margin-left:auto;margin-right:auto;text-wrap:balance}
-    .theme-midnight .description{max-width:330px;margin-left:auto;margin-right:auto}
-    .theme-midnight .midnight-top{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:34px;color:#a9b7ca;font-size:8px;font-weight:800;letter-spacing:2px}
-    .edition-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-    .theme-midnight .brand-block{gap:15px;justify-items:center;text-align:center}\n    .theme-midnight .brand-mark-row{justify-content:center}\n    .theme-midnight .brand-copy{text-align:center}\n    .theme-midnight .branch{margin-left:auto;margin-right:auto}
-    .theme-midnight .brand-mark-fallback{margin:0;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);background:color-mix(in srgb,var(--accent) 20%,#172338)}
-    .theme-midnight .business{font-size:clamp(30px,7vw,40px);letter-spacing:-1.5px}
-    .theme-midnight .message{margin-top:33px;padding-top:23px;border-top:1px solid var(--line)}
-    .theme-midnight .actions{margin-top:22px}
-    .theme-midnight .review-button{position:relative;border-radius:9px;padding-left:42px;padding-right:42px}\n    .theme-midnight .review-button .google-g{position:absolute;left:14px}\n    .theme-midnight .review-button>b{position:absolute;right:14px;margin:0}
-    .theme-midnight .social-link{background:linear-gradient(145deg,#1b2a40,#142033);border-radius:8px}.theme-midnight .brand-mark-fallback{box-shadow:0 0 30px color-mix(in srgb,var(--accent) 16%,transparent)}.theme-midnight .message-kicker{color:color-mix(in srgb,var(--accent) 68%,#d8e3f4)}
-    /* Rose: editorial masthead and narrow text column */
-    .theme-rose{--page:#f2e9df;--surface:#fffaf4;--ink:#392b2b;--muted:#89766e;--line:#eadbd0;--soft:#f7eee6;max-width:450px;padding:0 27px 22px;border:1px solid #eadbd0;border-radius:4px;box-shadow:10px 12px 0 #d8c6b6;text-align:center}
-    .theme-rose .rose-masthead{display:flex;justify-content:center;gap:18px;margin:0 -27px 26px;padding:17px 27px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:900;letter-spacing:1.5px;background:linear-gradient(90deg,#f8eee6,#fffaf4 50%,#f8eee6)}
-    .theme-rose .brand-block{gap:13px;justify-items:center;text-align:center}\n    .theme-rose .brand-mark-row{justify-content:center}\n    .theme-rose .brand-copy{text-align:center}\n    .theme-rose .branch{margin-left:auto;margin-right:auto}
-    .theme-rose .business{font-family:Georgia,serif;font-size:clamp(31px,7vw,41px);font-weight:500;letter-spacing:-1.2px;line-height:1.05}
-    .theme-rose .eyebrow{font-size:8px;letter-spacing:2px}
-    .theme-rose .message{margin-top:27px;padding-top:22px;border-top:1px solid var(--line)}
-    .theme-rose{box-shadow:10px 12px 0 #d8c6b6,0 28px 70px #5a40301c}
-    .theme-rose .business,.theme-rose .message h1{text-wrap:balance}
-    .theme-rose .description{max-width:330px;margin-left:auto;margin-right:auto}
-    .theme-rose .message-kicker{letter-spacing:2.2px}
-    .theme-rose .message h1{font-family:Georgia,serif;font-size:clamp(27px,6vw,34px);font-weight:500;letter-spacing:-.7px}
-    .theme-rose .actions{margin-top:22px}
-    .theme-rose .review-button{position:relative;padding-left:42px;padding-right:42px;border-radius:3px;text-transform:uppercase;letter-spacing:.45px;font-size:10px}
-    .theme-rose .social-links{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .theme-rose .review-button .google-g{position:absolute;left:13px}\n    .theme-rose .review-button>b{position:absolute;right:13px;margin:0}\n    .theme-rose .social-link{border-radius:3px;background:linear-gradient(145deg,#fffdf9,#f8eee6)}.theme-rose .message{position:relative}.theme-rose .message:before{content:"";display:block;width:34px;height:2px;margin:0 auto 18px;background:var(--accent);opacity:.65}
-    /* Forest: quiet natural layout with a contained message panel */
-    .theme-forest{--page:#e9eee7;--surface:#f9fbf6;--ink:#203729;--muted:#718273;--line:#dce5d9;--soft:#edf3eb;max-width:440px;padding:27px 25px 22px;border:1px solid #dbe5d8;border-radius:29px 29px 12px 12px;box-shadow:0 22px 60px #1c3a2717;text-align:center}
-    .theme-forest .forest-heading{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;padding-bottom:15px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:850;letter-spacing:1.7px}
-    .forest-leaf{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:var(--soft);color:var(--accent);font-size:14px}
-    .theme-forest .brand-mark-row{justify-content:center}
-    .theme-forest .brand-mark-fallback{width:62px;height:62px;border-radius:50%}
-    .theme-forest .business{font-family:Georgia,serif;font-size:clamp(28px,6vw,37px);font-weight:500;letter-spacing:-.8px}
-    .theme-forest .forest-message{margin-top:25px;padding:20px 17px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
-    .theme-forest .message-kicker{margin-bottom:8px}
-    .theme-forest .message h1{font-size:clamp(21px,5vw,26px)}
-    .theme-forest .actions{margin-top:18px}
+    .google-g{position:absolute;left:14px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#fff;color:#4285f4;font:900 13px Arial,sans-serif}
+    .social-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;min-width:0}
+    .social-link{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.025);color:var(--ink);text-decoration:none;font-size:10px;font-weight:750;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+    .social-link span{min-width:0;overflow-wrap:anywhere}.social-link b{color:var(--accent)}
+    .status{min-height:16px;margin:12px 0 0;color:var(--muted);font-size:10px;line-height:1.5;text-align:center}
+    .footer{margin-top:22px;padding-top:13px;border-top:1px solid var(--line);color:#777b7d;font-size:8px;letter-spacing:.4px;text-align:center}
+    .footer strong{color:#c4c0b8}
+    .preview-note{position:relative;z-index:2;width:100%;margin:0 0 14px;padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:var(--soft);color:var(--muted);font-size:8px;font-weight:750;letter-spacing:.5px;text-align:center}
+    .review-button:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 10px 28px color-mix(in srgb,var(--accent) 23%,transparent)}
+    .social-link:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:rgba(255,255,255,.055)}
+    .review-button:focus-visible,.social-link:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 65%,white);outline-offset:3px}
+    .review-button:disabled{cursor:wait;opacity:.65;transform:none}
+    /* ATELIER / editorial */
+    .theme-ocean{max-width:450px;padding:26px 27px 22px;border:1px solid #34302c;border-radius:3px;background:linear-gradient(160deg,#171719,#101113 62%,#141313);box-shadow:0 35px 100px #0009}
+    .atelier-index{display:flex;justify-content:space-between;gap:12px;margin-bottom:38px;padding-bottom:13px;border-bottom:1px solid var(--line);color:#888782;font:800 8px Arial,sans-serif;letter-spacing:1.8px}
+    .atelier-hero{padding:0 0 30px}
+    .theme-ocean .brand{align-items:flex-start;gap:18px}
+    .theme-ocean .brand-copy{text-align:left}
+    .theme-ocean .brand-symbol{border-radius:2px}
+    .theme-ocean .business{font-family:Georgia,serif;font-weight:500;font-size:clamp(32px,8vw,45px);letter-spacing:-1.4px}
+    .theme-ocean .atelier-copy{padding:25px 0 26px;border-top:1px solid var(--line)}
+    .theme-ocean .message h1{max-width:360px;font-family:Georgia,serif;font-size:clamp(29px,7vw,39px);font-weight:500;letter-spacing:-.8px;line-height:1.08}
+    .theme-ocean .atelier-actions{padding-top:21px;border-top:1px solid var(--line)}
+    .theme-ocean .review-button{border-radius:2px;text-transform:uppercase;letter-spacing:.55px}
+    .theme-ocean .social-link{border-radius:2px}
+    /* OBSIDIAN / architectural dark premium */
+    .theme-midnight{max-width:450px;padding:27px 25px 22px;border:1px solid #34373b;border-radius:18px;background:radial-gradient(ellipse at 50% 0%,#282522 0,transparent 42%),#111316;box-shadow:0 35px 110px #000b}
+    .obsidian-orbit{position:absolute;z-index:-1;top:-160px;right:-130px;width:310px;height:310px;border:1px solid rgba(189,128,87,.25);border-radius:50%;box-shadow:0 0 0 24px rgba(189,128,87,.035),0 0 0 50px rgba(189,128,87,.025)}
+    .obsidian-top{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:32px;color:#aaa49c;font:800 8px Arial,sans-serif;letter-spacing:2px}
+    .signal{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+    .obsidian-brand .brand{align-items:center;text-align:center}
+    .obsidian-brand .brand-copy{text-align:center}
+    .obsidian-brand .brand-symbol{width:68px;height:68px;border-radius:50%}
+    .obsidian-brand .business{font-size:clamp(30px,7vw,40px);letter-spacing:-1.8px}
+    .obsidian-brand .branch{margin-inline:auto}
+    .obsidian-rule{display:flex;align-items:center;gap:12px;margin:28px 0 24px;color:#85827d;font:800 8px Arial,sans-serif;letter-spacing:1.5px}
+    .obsidian-rule i{height:1px;flex:1;background:var(--line)}
+    .obsidian-rule span:first-child{color:var(--accent)}
+    .obsidian-message{text-align:center}
+    .obsidian-message .message h1{max-width:350px;margin-inline:auto;font-size:clamp(27px,6vw,35px)}
+    .obsidian-message .description{margin-inline:auto}
+    .obsidian-actions{margin-top:24px}
+    .theme-midnight .review-button{border-radius:99px}
+    .theme-midnight .social-link{border-radius:99px}
+    /* PLAYFORM / graphic brutalism */
+    .theme-rose{max-width:470px;padding:22px;background:#111416;color:#efede7;border:1px solid #45413b;border-radius:0;box-shadow:10px 10px 0 rgba(189,128,87,.42)}
+    .playform-top{display:flex;justify-content:space-between;gap:10px;padding-bottom:14px;border-bottom:2px solid #ded8ce;color:#efede7;font:900 8px Arial,sans-serif;letter-spacing:1.5px}
+    .playform-title{display:grid;margin:20px 0 23px;color:#efede7;font:950 clamp(64px,17vw,100px)/.76 Arial,sans-serif;letter-spacing:-.09em}
+    .poster-word{display:block}.poster-outline{-webkit-text-stroke:2px #bd8057;color:transparent}
+    .playform-brand{padding:16px;border:1px solid #4a4037;background:#191c20}
+    .theme-rose .brand{flex-direction:row;align-items:center;gap:14px}
+    .theme-rose .brand-image,.theme-rose .brand-symbol{width:54px!important;height:54px!important;max-width:54px;flex:0 0 54px;border:1px solid #76553e;border-radius:0;background:#2b2118;color:#d29a72}
+    .theme-rose .brand-copy{text-align:left}
+    .theme-rose .eyebrow{color:#bd9476}
+    .theme-rose .business{color:#efede7;font:900 clamp(20px,5vw,29px)/.98 Arial,sans-serif;letter-spacing:-1.4px}
+    .theme-rose .branch{border:1px solid #414542;border-radius:0;background:transparent;color:#b4ada2}
+    .theme-rose .address{color:#929599}
+    .playform-bottom{display:grid;grid-template-columns:1fr;gap:20px;margin-top:22px}
+    .theme-rose .message-kicker{color:#bd9476}
+    .theme-rose .message h1{color:#efede7;font:900 clamp(26px,7vw,37px)/.98 Arial,sans-serif;letter-spacing:-1.7px}
+    .theme-rose .description{color:#aaa49b}
+    .theme-rose .review-button{border:1px solid #bd8057;border-radius:0;background:#bd8057;color:#150f0b;box-shadow:4px 4px 0 var(--accent);text-transform:uppercase;letter-spacing:.3px}
+    .theme-rose .review-button.outline{background:transparent;color:#d29a72}
+    .theme-rose .social-link{border:1px solid #414542;border-radius:0;background:transparent;color:#efede7}
+    .theme-rose .social-link b{color:#d29a72}
+    .theme-rose .footer{border-color:#414542;color:#929599}
+    .theme-rose .footer strong{color:#efede7}
+    /* SOLACE / organic spatial */
+    .theme-forest{max-width:450px;padding:27px 24px 22px;border:1px solid #343b34;border-radius:34px 34px 12px 12px;background:linear-gradient(155deg,#171d19,#101512 70%);box-shadow:0 35px 100px #0009}
+    .solace-shape{position:absolute;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(1px)}
+    .solace-shape-a{top:-110px;right:-110px;width:280px;height:280px;border:1px solid rgba(189,128,87,.32);box-shadow:inset 0 0 55px rgba(189,128,87,.08),0 0 0 22px rgba(189,128,87,.025)}
+    .solace-shape-b{bottom:120px;left:-170px;width:260px;height:260px;background:radial-gradient(circle,rgba(91,118,91,.16),transparent 70%)}
+    .solace-kicker{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:28px;color:#a0a99c;font:800 8px Arial,sans-serif;letter-spacing:1.8px}
+    .solace-kicker span:first-child{display:grid;place-items:center;width:24px;height:24px;border:1px solid #4a5a48;border-radius:50%;color:#c1a07e}
+    .solace-brand .brand{align-items:center;text-align:center}
+    .solace-brand .brand-copy{text-align:center}
+    .solace-brand .brand-symbol{width:64px;height:64px;border-radius:50%;background:#253126;border-color:#56664f;color:#d2ad85}
+    .solace-brand .business{font-family:Georgia,serif;font-weight:500;font-size:clamp(30px,7vw,39px);letter-spacing:-.8px}
+    .solace-brand .branch{margin-inline:auto}
+    .solace-panel{position:relative;margin-top:28px;padding:22px 18px;border:1px solid #3a443a;border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:inset 0 1px rgba(255,255,255,.06)}
+    .solace-panel .message{text-align:center}
+    .solace-panel .message h1{font-family:Georgia,serif;font-weight:500;font-size:clamp(25px,6vw,33px);letter-spacing:-.5px}
+    .solace-panel .description{margin-inline:auto}
+    .solace-actions{margin-top:17px}
     .theme-forest .review-button{border-radius:99px}
-    .theme-forest .social-link{border-radius:99px;background:linear-gradient(145deg,#f1f6ee,#e8f0e5);border-color:transparent}.theme-forest .forest-message{box-shadow:inset 0 1px #ffffffb5}.theme-forest .review-button{box-shadow:0 8px 18px color-mix(in srgb,var(--accent) 16%,transparent)}
-    @media(max-width:420px){body{padding:12px}.experience{max-width:100%;margin:auto 0}.theme-ocean{padding:28px 20px 20px}.theme-midnight{padding:23px 20px 20px}.theme-rose{padding-left:20px;padding-right:20px}.theme-rose .rose-masthead{margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}.theme-forest{padding:23px 19px 19px}.social-links{grid-template-columns:1fr}}
-     .review-button:focus-visible,.social-link:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 48%,white);outline-offset:4px}.review-button:active{transform:translateY(1px)}.social-link:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 42%,var(--line));box-shadow:0 8px 20px #17294312}.review-button:hover{filter:brightness(1.04);box-shadow:0 9px 24px color-mix(in srgb,var(--accent) 24%,transparent);transform:translateY(-1px)}.theme-midnight .review-button:hover{box-shadow:0 0 28px color-mix(in srgb,var(--accent) 30%,transparent)}.theme-rose .review-button:hover{box-shadow:4px 5px 0 #d8c6b6}.theme-forest .review-button:hover{box-shadow:0 8px 22px #31583a22}@media(prefers-reduced-motion:reduce){.review-button,.social-link{transition:none}.review-button:hover,.social-link:hover{transform:none}}
+    .theme-forest .social-link{border-radius:99px;background:rgba(255,255,255,.035)}
+    @media(max-width:430px){
+      body{padding:12px}
+      .experience{max-width:100%}
+      .theme-ocean{padding:22px 19px 18px}
+      .atelier-index{margin-bottom:28px}
+      .theme-midnight{padding:23px 19px 18px}
+      .theme-rose{padding:17px}
+      .playform-title{font-size:clamp(59px,17vw,78px)}
+      .theme-forest{padding:23px 18px 18px}
+      .social-links{grid-template-columns:1fr}
+    }
+    @media(prefers-reduced-motion:reduce){.review-button,.social-link{transition:none}.review-button:hover,.social-link:hover{transform:none}}
   `;
-  const content = (input.preview ? '<p class="preview-note">PREVIEW PEMILIK KARTU · Aktivitas tidak dicatat</p>' : '') + layouts[theme];
-  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="' + (theme === "midnight" ? "#090e17" : "#f2f5f8") + '"><title>Review ' + name + ' | DiTapAja</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>' + css + '</style></head><body class="page-' + theme + '"><main class="experience theme-' + theme + '">' + content + '<p class="status" id="status" role="status" aria-live="polite"></p><footer class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</footer></main></body></html>';
+
+  const content = (input.preview
+    ? '<p class="preview-note">PREVIEW PEMILIK KARTU · AKTIVITAS TIDAK DICATAT</p>'
+    : "") + layouts[theme];
+
+  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<meta name="theme-color" content="#090a0c"><title>Review ' + name + ' | DiTapAja</title>' +
+    '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
+    '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">' +
+    '<style>' + css + '</style></head><body class="page-' + theme + '">' +
+    '<main class="experience theme-' + theme + '">' + content +
+    '<p class="status" id="status" role="status" aria-live="polite"></p>' +
+    '<footer class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</footer>' +
+    '</main></body></html>';
 }
