@@ -127,9 +127,9 @@ export default function CustomerInsightsPage() {
           <>
             <section className="ditapaja-insights-metrics">
               {[
-                {label:"Total interaksi",value:totalTaps.toLocaleString("id-ID"),note:\`Tap dalam \${period} hari\`,icon:MousePointerClick,tag:"01"},
+                {label:"Total interaksi",value:totalTaps.toLocaleString("id-ID"),note:`Tap dalam ${period} hari`,icon:MousePointerClick,tag:"01"},
                 {label:"Pengunjung unik",value:insights.uniqueVisitors.toLocaleString("id-ID"),note:"Visitor ID anonim · 90 hari",icon:Users,tag:"02"},
-                {label:"Pengunjung kembali",value:insights.returningVisitors.toLocaleString("id-ID"),note:\`\${insights.returningRate.toFixed(1)}% dari pengunjung\`,icon:UserRoundCheck,tag:"03"},
+                {label:"Pengunjung kembali",value:insights.returningVisitors.toLocaleString("id-ID"),note:`${insights.returningRate.toFixed(1)}% dari pengunjung`,icon:UserRoundCheck,tag:"03"},
                 {label:"Waktu paling ramai",value:hasAnyActivity?formatHour(insights.peakHour):"—",note:hasAnyActivity?"Jam dengan tap terbanyak":"Belum ada data",icon:Clock3,tag:"04"}
               ].map(item => <article className="ditapaja-insights-metric" key={item.label}>
                 <div className="ditapaja-insights-metric-top"><span>{item.label}</span><i><item.icon size={17}/></i></div>
@@ -141,8 +141,8 @@ export default function CustomerInsightsPage() {
               <article className="ditapaja-insights-panel ditapaja-insights-timeline">
                 <div className="ditapaja-insights-panel-head"><div><span className="ditapaja-insights-kicker">ENGAGEMENT TIMELINE</span><h3>Ritme kunjungan</h3><p>Jumlah tap per hari selama {period} hari terakhir.</p></div><b className="ditapaja-insights-total">{totalTaps.toLocaleString("id-ID")} <small>TOTAL TAP</small></b></div>
                 {hasPeriodActivity ? <div className="ditapaja-insights-chart" data-period={period}>
-                  {insights.daily.map((day,index) => <div className="ditapaja-insights-chart-col" key={day.key} title={\`\${day.label}: \${day.taps} tap\`}>
-                    <div className="ditapaja-insights-chart-track"><i className={day.taps ? "has-value" : ""} style={{height:day.taps ? \`\${Math.max(3,day.taps/insights.dailyMax*100)}%\` : "3px"}}/></div>
+                  {insights.daily.map((day,index) => <div className="ditapaja-insights-chart-col" key={day.key} title={`${day.label}: ${day.taps} tap`}>
+                    <div className="ditapaja-insights-chart-track"><i className={day.taps ? "has-value" : ""} style={{height:day.taps ? `${Math.max(3,day.taps/insights.dailyMax*100)}%` : "3px"}}/></div>
                     {(period===7||(period===30&&index%5===0)||(period===90&&index%15===0)||index===insights.daily.length-1) && <span>{day.label}</span>}
                   </div>)}
                 </div> : <div className="ditapaja-insights-empty"><TrendingUp size={24}/><b>Belum ada aktivitas pelanggan</b><span>Grafik akan terisi setelah kartu NFC atau QR mulai digunakan.</span></div>}
@@ -152,7 +152,7 @@ export default function CustomerInsightsPage() {
               <article className="ditapaja-insights-panel ditapaja-insights-return">
                 <div className="ditapaja-insights-panel-head"><div><span className="ditapaja-insights-kicker">VISITOR LOYALTY</span><h3>Kunjungan berulang</h3><p>Visitor ID yang melakukan tap lebih dari sekali.</p></div></div>
                 <div className="ditapaja-insights-return-body">
-                  <div className="ditapaja-insights-ring" style={{"--ring-value":\`\${insights.returningRate}%\`} as React.CSSProperties}><div><strong>{insights.returningRate.toFixed(0)}<small>%</small></strong><span>RETURN RATE</span></div></div>
+                  <div className="ditapaja-insights-ring" style={{"--ring-value":`${insights.returningRate}%`} as React.CSSProperties}><div><strong>{insights.returningRate.toFixed(0)}<small>%</small></strong><span>RETURN RATE</span></div></div>
                   <div className="ditapaja-insights-return-copy"><strong>{insights.returningVisitors.toLocaleString("id-ID")}</strong><span>pengunjung terdeteksi kembali</span><small>Dari {insights.uniqueVisitors.toLocaleString("id-ID")} visitor ID terukur.</small></div>
                 </div>
                 <div className="ditapaja-insights-note">Indikator kunjungan ulang, bukan identifikasi orang.</div>
@@ -162,13 +162,13 @@ export default function CustomerInsightsPage() {
             <section className="ditapaja-insights-grid ditapaja-insights-grid-secondary">
               <article className="ditapaja-insights-panel">
                 <div className="ditapaja-insights-panel-head"><div><span className="ditapaja-insights-kicker">VISIT TIMING</span><h3>Jam kunjungan</h3><p>Distribusi tap berdasarkan jam lokal perangkat.</p></div><Clock3 size={19}/></div>
-                <div className="ditapaja-insights-hour-chart">{insights.hours.map((count,hour) => <div key={hour} title={\`\${formatHour(hour)} · \${count} tap\`}><i className={count ? "has-value" : ""} style={{height:count ? \`\${count/maxHour*100}%\` : "3px"}}/></div>)}</div>
+                <div className="ditapaja-insights-hour-chart">{insights.hours.map((count,hour) => <div key={hour} title={`${formatHour(hour)} · ${count} tap`}><i className={count ? "has-value" : ""} style={{height:count ? `${count/maxHour*100}%` : "3px"}}/></div>)}</div>
                 <div className="ditapaja-insights-axis"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>23:00</span></div>
                 <div className="ditapaja-insights-highlight"><span>JAM TERPADAT</span><strong>{hasAnyActivity?formatHour(insights.peakHour):"Belum tersedia"}</strong></div>
               </article>
               <article className="ditapaja-insights-panel">
                 <div className="ditapaja-insights-panel-head"><div><span className="ditapaja-insights-kicker">WEEKLY RHYTHM</span><h3>Hari paling aktif</h3><p>Perbandingan aktivitas dari Senin sampai Minggu.</p></div><CalendarDays size={19}/></div>
-                <div className="ditapaja-insights-weekdays">{[1,2,3,4,5,6,0].map(day => <div key={day}><span>{["Min","Sen","Sel","Rab","Kam","Jum","Sab"][day]}</span><div><i style={{width:\`\${insights.weekdays[day]/maxWeekday*100}%\`}}/></div><b>{insights.weekdays[day]}</b></div>)}</div>
+                <div className="ditapaja-insights-weekdays">{[1,2,3,4,5,6,0].map(day => <div key={day}><span>{["Min","Sen","Sel","Rab","Kam","Jum","Sab"][day]}</span><div><i style={{width:`${insights.weekdays[day]/maxWeekday*100}%`}}/></div><b>{insights.weekdays[day]}</b></div>)}</div>
                 <div className="ditapaja-insights-highlight"><span>HARI TERPADAT</span><strong>{hasAnyActivity?insights.peakWeekdayName:"Belum tersedia"}</strong></div>
               </article>
             </section>
