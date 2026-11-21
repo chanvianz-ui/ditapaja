@@ -675,3 +675,53 @@
 @media(prefers-reduced-motion:reduce){
  .dt-menu-orbit,.dt-menu-group,.dt-app-menu-links a,.dt-menu-link-icon{animation:none!important;transition:none!important}
 }
+
+
+/* Compact floating workspace menu — no search, no full-screen drawer */
+.dt-app-menu-backdrop{
+ position:fixed!important;inset:0!important;z-index:100!important;
+ display:flex!important;justify-content:flex-end!important;align-items:flex-start!important;
+ padding:84px clamp(14px,3vw,34px) 18px!important;
+ background:rgba(3,8,18,.42)!important;backdrop-filter:blur(7px)!important;
+}
+.dt-app-menu-panel{
+ width:min(440px,calc(100vw - 28px))!important;height:auto!important;
+ max-height:calc(100dvh - 106px)!important;overflow-y:auto!important;
+ padding:22px!important;gap:0!important;border:1px solid rgba(153,184,240,.2)!important;
+ border-radius:22px!important;
+ background:radial-gradient(ellipse at 90% 0%,rgba(83,132,255,.2),transparent 38%),linear-gradient(150deg,#142139 0%,#0b1424 75%)!important;
+ box-shadow:0 24px 80px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.06)!important;
+ animation:dt-menu-pop .24s cubic-bezier(.2,.8,.2,1)!important;
+}
+.dt-app-menu-heading{padding:0 0 17px!important;border-bottom:1px solid rgba(166,190,229,.13)!important}
+.dt-menu-kicker{margin-top:18px!important;font-size:8px!important}
+.dt-app-menu-heading h2{margin-top:8px!important;font-size:clamp(34px,5vw,43px)!important;line-height:.98!important}
+.dt-app-menu-heading>button{width:36px!important;height:36px!important;border-radius:11px!important}
+.dt-app-menu-links{
+ display:flex!important;flex-direction:column!important;gap:15px!important;
+ margin:17px 0!important;
+}
+.dt-menu-group-title{margin-bottom:8px!important}
+.dt-menu-group-items{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+.dt-app-menu-links a{min-height:62px!important;padding:9px!important;gap:9px!important;border-radius:13px!important}
+.dt-menu-link-icon{width:36px!important;height:36px!important;flex-basis:36px!important;border-radius:10px!important}
+.dt-menu-link-copy b{font-size:10px!important}
+.dt-menu-link-arrow{width:14px!important;height:14px!important}
+.dt-app-menu-bottom{padding-top:13px!important}
+.dt-app-menu-account{padding:9px 10px!important;border-radius:12px!important}
+.dt-app-menu-account .dt-app-profile-avatar{width:34px!important;height:34px!important;flex-basis:34px!important;border-radius:10px!important}
+.dt-app-menu-bottom>button{width:40px!important;height:40px!important;flex-basis:40px!important;border-radius:11px!important}
+.dt-app-menu-panel:after{content:"";position:absolute;top:0;left:22%;width:56%;height:1px;background:linear-gradient(90deg,transparent,rgba(160,197,255,.55),transparent);pointer-events:none}
+.dt-app-menu-links a:focus-visible,.dt-app-menu-panel button:focus-visible{outline:2px solid #8de9ff!important;outline-offset:3px!important}
+@keyframes dt-menu-pop{from{opacity:0;transform:translateY(-9px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:620px){
+ .dt-app-menu-backdrop{padding:72px 10px 12px!important}
+ .dt-app-menu-panel{width:min(430px,calc(100vw - 20px))!important;max-height:calc(100dvh - 84px)!important;padding:18px!important;border-radius:19px!important}
+ .dt-app-menu-heading h2{font-size:38px!important}
+ .dt-app-menu-links{gap:13px!important;margin:14px 0!important}
+ .dt-menu-group-items{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}
+ .dt-app-menu-links a{min-height:58px!important;padding:8px!important}
+ .dt-menu-link-icon{width:33px!important;height:33px!important;flex-basis:33px!important}
+}
+@media(max-width:360px){.dt-menu-group-items{grid-template-columns:1fr!important}}
+@media(prefers-reduced-motion:reduce){.dt-app-menu-panel,.dt-app-menu-links a,.dt-menu-link-icon{animation:none!important;transition:none!important}}
