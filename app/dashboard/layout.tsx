@@ -28,6 +28,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   useEffect(() => {
     let alive = true;
     (async () => {
+      const expiry = Number(localStorage.getItem("ditapaja_login_expires_at") || 0);
+      if (expiry && Date.now() > expiry) {
+        localStorage.removeItem("ditapaja_login_expires_at");
+        await supabase.auth.signOut();
+        if (alive) router.replace("/login");
+        return;
+      }
       const { data } = await supabase.auth.getUser();
       if (!alive || !data.user) return;
       setEmail(data.user.email || "");
