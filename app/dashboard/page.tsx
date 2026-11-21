@@ -968,8 +968,8 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+      <div className="flex min-h-screen items-center justify-center bg-[#090a0c]">
+        <Loader2 className="h-8 w-8 animate-spin text-[#bd8057]" />
       </div>
     );
   }
