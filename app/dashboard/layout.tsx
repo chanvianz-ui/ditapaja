@@ -3,17 +3,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowUpRight, Building2, CreditCard, Eye, LayoutDashboard, LogOut, Menu, Settings, ShoppingBag, Users, X, ChevronRight, Command } from "lucide-react";
+import { Building2, CreditCard, Eye, LayoutDashboard, LogOut, Menu, Settings, ShoppingBag, Users, X, ArrowUpRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const items = [
-  { href: "/dashboard", label: "Overview", icon: LayoutDashboard, group: "Workspace", description: "Ringkasan performa dan aktivitas" },
-  { href: "/dashboard?view=cards", label: "Kartu NFC", icon: CreditCard, group: "Workspace", description: "Kelola kartu dan status aktif" },
-  { href: "/dashboard/customers", label: "Customer Insights", icon: Users, group: "Insights", description: "Kenali aktivitas pelanggan" },
-  { href: "/dashboard/orders", label: "Pesanan", icon: ShoppingBag, group: "Insights", description: "Pantau transaksi masuk" },
-  { href: "/dashboard/business", label: "Bisnis", icon: Building2, group: "Workspace", description: "Informasi dan profil bisnis" },
-  { href: "/dashboard/landing-page", label: "Page Studio", icon: Eye, group: "Workspace", description: "Atur tampilan halaman publik" },
-  { href: "/dashboard/settings", label: "Pengaturan", icon: Settings, group: "Account", description: "Preferensi dan keamanan akun" },
+  { href: "/dashboard", label: "Overview", icon: LayoutDashboard, group: "Workspace" },
+  { href: "/dashboard?view=cards", label: "Kartu NFC", icon: CreditCard, group: "Workspace" },
+  { href: "/dashboard/customers", label: "Customer Insights", icon: Users, group: "Insights" },
+  { href: "/dashboard/orders", label: "Pesanan", icon: ShoppingBag, group: "Insights" },
+  { href: "/dashboard/business", label: "Bisnis", icon: Building2, group: "Workspace" },
+  { href: "/dashboard/landing-page", label: "Page Studio", icon: Eye, group: "Workspace" },
+  { href: "/dashboard/settings", label: "Pengaturan", icon: Settings, group: "Account" },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -91,25 +91,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <section id="dt-workspace-navigation" className="dt-app-menu-panel" role="dialog" aria-modal="true" aria-label="Navigasi workspace">
             <div className="dt-app-menu-heading">
               <div>
-                <span className="dt-menu-kicker"><Command size={12}/> DITAPAJA WORKSPACE</span>
-                <h2>Menu utama</h2>
-                <p>Semua area kerja, tersusun dalam satu tempat.</p>
+                <Link href="/" className="dt-drawer-brand" onClick={() => setMenuOpen(false)}>
+                  <span className="dt-app-brand-symbol"><i/><i/><i/></span>
+                  <span>DiTap<span>Aja</span></span>
+                </Link>
+                <span className="dt-menu-kicker">WORKSPACE NAVIGATION</span>
+                <h2>Jelajahi<br/><em>workspace.</em></h2>
               </div>
               <button type="button" onClick={() => setMenuOpen(false)} aria-label="Tutup menu"><X size={20}/></button>
             </div>
 
             <nav className="dt-app-menu-links" aria-label="Halaman workspace">
               {["Workspace", "Insights", "Account"].map(group => <div className="dt-menu-group" key={group}>
-                <div className="dt-menu-group-title">{group}<span>{items.filter(item => item.group === group).length.toString().padStart(2, "0")}</span></div>
+                <div className="dt-menu-group-title"><span>{group}</span><i/></div>
                 <div className="dt-menu-group-items">
               {items.map((item, index) => { if (item.group !== group) return null;
                 const Icon = item.icon;
                 return (
                   <Link key={item.href} href={item.href} className={active(item.href) ? "is-active" : ""} aria-current={active(item.href) ? "page" : undefined} onClick={event => { setMenuOpen(false); navigate(item, event); }}>
-                    <span className="dt-app-menu-index">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="dt-menu-link-icon"><Icon size={18}/></span>
-                    <span className="dt-menu-link-copy"><b>{item.label}</b><small>{item.description}</small></span>
-                    <ChevronRight size={16}/>
+                    <span className="dt-menu-link-icon"><Icon size={21}/></span>
+                    <span className="dt-menu-link-copy"><b>{item.label}</b></span>
+                    <ArrowUpRight size={16}/>
                   </Link>
                 );
               })}
@@ -120,7 +122,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="dt-app-menu-bottom">
               <div className="dt-app-menu-account">
                 <span className="dt-app-profile-avatar">{displayName.slice(0, 1).toUpperCase()}</span>
-                <span className="dt-app-profile-copy"><small>SEDANG MASUK SEBAGAI</small><b>{displayName}</b><small>{email || "Akun DiTapAja"}</small></span>
+                <span className="dt-app-profile-copy"><b>{displayName}</b><small>{email || "Akun DiTapAja"}</small></span>
               </div>
               <button type="button" onClick={logout}><LogOut size={16}/><span>Keluar</span></button>
             </div>
