@@ -44,7 +44,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         return;
       }
       const { data } = await supabase.auth.getUser();
-      if (!alive || !data.user) return;
+      if (!alive) return;
+      if (!data.user) {
+        router.replace("/login");
+        return;
+      }
       setEmail(data.user.email || "");
       const { data: profile } = await supabase.from("profiles")
         .select("full_name").eq("id", data.user.id).maybeSingle();
