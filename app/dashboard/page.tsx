@@ -1000,653 +1000,71 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className="dt-dashboard-shell dt-dashboard-v2 min-h-screen text-slate-900">
-      <div className="flex min-h-screen">
-        <aside className="dt-rail-v2 sticky top-0 hidden h-screen w-[86px] shrink-0 flex-col items-center py-5 lg:flex">
-          <a href="/" aria-label="DiTapAja home" className="dt-rail-brand">D.</a>
-          <div className="dt-rail-divider"/>
-          <nav aria-label="Navigasi utama" className="dt-rail-nav">
-            <a href="/dashboard" aria-current="page" title="Ringkasan" className="is-active"><LayoutDashboard size={19}/><span>Ringkasan</span></a>
-            <a href="#cards" title="Kartu NFC"><CreditCard size={19}/><span>Kartu NFC</span></a>
-            <a href="#analytics" title="Analytics"><BarChart3 size={19}/><span>Analytics</span></a>
-            <a href="/dashboard/customers" title="Customer Insights"><Users size={19}/><span>Insights</span></a>
-            <a href="/dashboard/orders" title="Pesanan"><Package size={19}/><span>Pesanan</span></a>
-            <a href="/dashboard/business" title="Profil bisnis"><Building2 size={19}/><span>Bisnis</span></a>
-            <a href="/dashboard/landing-page" title="Page Studio"><Eye size={19}/><span>Studio</span></a>
-          </nav>
-          <div className="dt-rail-bottom">
-            <a href="/dashboard/settings" title="Pengaturan akun"><Settings size={19}/><span>Pengaturan</span></a>
-            <button onClick={handleLogout} title="Keluar dari akun"><LogOut size={19}/><span>Keluar</span></button>
-            <div className="dt-rail-avatar" title={displayName}>{displayName.charAt(0).toUpperCase()}</div>
-          </div>
-        </aside>
+    <main className="dt-reset-dashboard">
+      <aside className="dt-reset-sidebar">
+        <a href="/" className="dt-reset-brand"><span className="dt-reset-brand-mark">D</span><span>DiTapAja<small>WORKSPACE</small></span></a>
+        <div className="dt-reset-nav-label">MENU UTAMA</div>
+        <nav className="dt-reset-nav">
+          <a className="is-current" href="/dashboard"><LayoutDashboard size={18}/> Ringkasan</a>
+          <a href="#cards"><CreditCard size={18}/> Kartu NFC</a>
+          <a href="#analytics"><BarChart3 size={18}/> Analytics</a>
+          <a href="/dashboard/customers"><Users size={18}/> Customer Insights</a>
+          <a href="/dashboard/orders"><ShoppingBag size={18}/> Pesanan</a>
+          <a href="/dashboard/business"><Building2 size={18}/> Bisnis</a>
+          <a href="/dashboard/landing-page"><Eye size={18}/> Page Studio</a>
+        </nav>
+        <div className="dt-reset-sidebar-bottom">
+          <a href="/dashboard/settings"><Settings size={18}/> Pengaturan</a>
+          <button onClick={handleLogout}><LogOut size={18}/> Keluar</button>
+          <div className="dt-reset-account"><span>{displayName.charAt(0).toUpperCase()}</span><div><b>{displayName}</b><small>{email}</small></div></div>
+        </div>
+      </aside>
 
-        <section className="min-w-0 flex-1">
-          <header className="workspace-header dt-dashboard-topbar dt-topbar-v2 sticky top-0 z-30 flex items-center justify-between border-b px-4 py-3.5 sm:px-6 lg:px-9">
-            <div className="flex min-w-0 items-center gap-3">
-              
-              <div className="min-w-0">
-              <p className="text-xs text-slate-400">
-                Workspace / Overview
-              </p>
-              <h1 className="mt-1 text-xl font-extrabold tracking-tight text-slate-900">Dashboard</h1>
-              </div>
+      <div className="dt-reset-main">
+        <header className="dt-reset-topbar">
+          <div><span className="dt-reset-breadcrumb">WORKSPACE <i>/</i> OVERVIEW</span><h1>Dashboard</h1></div>
+          <div className="dt-reset-top-actions"><span className="dt-reset-status"><i/> Workspace aktif</span><button onClick={() => router.push("/dashboard/settings")} aria-label="Pengaturan"><Settings size={18}/></button><span className="dt-reset-avatar">{displayName.charAt(0).toUpperCase()}</span></div>
+        </header>
+
+        <div className="dt-reset-content">
+          <section className="dt-reset-welcome">
+            <div className="dt-reset-welcome-copy">
+              <span className="dt-reset-overline">RUANG KERJA BISNIS</span>
+              <h2>Halo, {workspaceName}.</h2>
+              <p>Pantau performa kartu NFC, pahami interaksi pelanggan, dan kelola semua aktivitas dari satu tempat.</p>
+              <div className="dt-reset-welcome-actions"><button className="dt-reset-button-primary" onClick={() => router.push("/dashboard/cards/new")}><Plus size={17}/> Buat kartu baru</button><button className="dt-reset-button-secondary" onClick={() => router.push("/dashboard/landing-page")}><Eye size={17}/> Atur landing page</button></div>
             </div>
+            <div className="dt-reset-welcome-art" aria-hidden="true"><div className="dt-reset-orbit dt-reset-orbit-a"/><div className="dt-reset-orbit dt-reset-orbit-b"/><div className="dt-reset-orbit-core"><Nfc size={34}/><b>TAP</b></div><span>ONE TAP. MORE REVIEWS.</span></div>
+          </section>
 
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => router.push("/dashboard/settings")}
-                aria-label="Account Settings"
-                title="Account Settings"
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
-              >
-                <Settings size={18} />
-              </button>
-              <div className="hidden text-right sm:block">
-                <p className="text-sm font-semibold">{displayName}</p>
-                <p className="text-xs text-slate-400">{email}</p>
-              </div>
+          {(cardError || cardMessage || analyticsError || nfcError || nfcMessage) && <div className={cardError || analyticsError || nfcError ? "dt-reset-alert is-error" : "dt-reset-alert"}>{cardError || analyticsError || nfcError || cardMessage || nfcMessage}</div>}
 
-              <div className="dt-topbar-avatar flex h-10 w-10 items-center justify-center rounded-full font-bold ring-2 ring-white">
-                {displayName.charAt(0).toUpperCase()}
+          <section className="dt-reset-metrics" aria-label="Ringkasan analytics">
+            {analyticsItems.map((item, index) => { const Icon = item.icon; return <article className="dt-reset-metric" key={item.label}><div className="dt-reset-metric-top"><span>{item.label}</span><Icon size={18}/></div><strong>{item.value}</strong><small>{item.description}</small><span className="dt-reset-metric-index">0{index + 1}</span></article>; })}
+          </section>
+
+          <section className="dt-reset-section" id="analytics">
+            <div className="dt-reset-section-heading"><div><span className="dt-reset-overline">PERFORMA</span><h2>Aktivitas pelanggan</h2><p>Pergerakan tap NFC dan klik ulasan berdasarkan periode.</p></div><div className="dt-reset-chart-controls"><select aria-label="Filter kartu" value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)}><option value="all">Semua kartu</option>{cards.filter(c => !c.archived_at).map(c => <option key={c.id} value={c.id}>{c.card_name || "Untitled Card"}</option>)}</select><select aria-label="Filter lokasi" value={selectedLocationId} onChange={e => setSelectedLocationId(e.target.value)}><option value="all">Semua lokasi</option><option value="unassigned">Tanpa lokasi</option>{businessLocations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}</select><div className="dt-reset-period">{([7,30,90] as const).map(period => <button key={period} className={chartPeriod===period?"is-active":""} onClick={()=>setChartPeriod(period)}>{period}H</button>)}</div></div></div>
+            <div className="dt-reset-analytics-grid">
+              <div className="dt-reset-chart-card"><div className="dt-reset-chart-legend"><span><i className="is-taps"/> Tap NFC</span><span><i className="is-clicks"/> Klik review</span><button onClick={exportAnalyticsCsv}><Download size={15}/> Export CSV</button></div>
+                {hasPeriodActivity ? <div className="dt-reset-chart">{chartData.map(day => <div className="dt-reset-chart-day" key={day.key}><div className="dt-reset-bars"><i className="is-taps" style={{height: Math.max(day.taps ? 4 : 0, day.taps/chartMax*100)+"%"}}/><i className="is-clicks" style={{height: Math.max(day.clicks ? 4 : 0, day.clicks/chartMax*100)+"%"}}/></div><span>{day.label}</span></div>)}</div> : <div className="dt-reset-empty-chart"><BarChart3 size={26}/><b>Belum ada aktivitas pada periode ini</b><span>Data akan muncul setelah kartu NFC mulai digunakan pelanggan.</span></div>}
+                <div className="dt-reset-chart-foot"><span>{chartPeriod} hari terakhir</span><b>{periodTapTotal.toLocaleString("id-ID")} tap <i>·</i> {periodClickTotal.toLocaleString("id-ID")} klik review</b></div>
               </div>
+              <div className="dt-reset-insight-card"><span className="dt-reset-overline">INSIGHT SINGKAT</span><h3>Yang perlu kamu tahu</h3><div className="dt-reset-insight-row"><span>Perubahan tap</span><b>{analyticsInsights.tapChange===null?"—":(analyticsInsights.tapChange>0?"+":"")+analyticsInsights.tapChange.toFixed(1)+"%"}</b></div><div className="dt-reset-insight-row"><span>Perubahan klik review</span><b>{analyticsInsights.clickChange===null?"—":(analyticsInsights.clickChange>0?"+":"")+analyticsInsights.clickChange.toFixed(1)+"%"}</b></div><div className="dt-reset-insight-row"><span>Hari paling aktif</span><b>{analyticsInsights.bestDay?.label || "Belum ada"}</b></div><div className="dt-reset-insight-feature"><small>KARTU TERATAS</small><strong>{analyticsInsights.topCard?.name || "Belum ada data"}</strong><span>{analyticsInsights.topCard ? analyticsInsights.topCard.taps.toLocaleString("id-ID")+" total tap" : "Aktivitas kartu akan dirangkum di sini."}</span></div></div>
             </div>
-          </header>
+          </section>
 
-          <nav aria-label="Navigasi mobile" className="dt-mobile-bottom-nav lg:hidden">
-            <a href="/dashboard" className="is-active"><Home/><span>Home</span></a>
-            <a href="#cards"><CreditCard/><span>Kartu</span></a>
-            <a href="/dashboard/customers"><BarChart3/><span>Insights</span></a>
-            <a href="/dashboard/orders"><ShoppingBag/><span>Pesanan</span></a>
-            <a href="/dashboard/settings"><Menu/><span>Lainnya</span></a>
-          </nav>
+          <section className="dt-reset-section" id="cards">
+            <div className="dt-reset-section-heading dt-reset-cards-heading"><div><span className="dt-reset-overline">INVENTARIS NFC</span><h2>Kelola kartu</h2><p>Atur status, tautan tujuan, QR Code, dan penulisan NFC.</p></div><button className="dt-reset-button-primary" onClick={()=>router.push("/dashboard/cards/new")}><Plus size={17}/> Tambah kartu</button></div>
+            <div className="dt-reset-card-summary"><div><small>Total kartu</small><b>{cards.filter(c=>!c.archived_at).length}</b></div><div><small>Aktif</small><b>{cards.filter(c=>c.active&&!c.archived_at).length}</b></div><div><small>Nonaktif</small><b>{cards.filter(c=>!c.active&&!c.archived_at).length}</b></div><div><small>Diarsipkan</small><b>{cards.filter(c=>c.archived_at).length}</b></div></div>
+            <div className="dt-reset-card-toolbar"><input value={cardSearch} onChange={e=>setCardSearch(e.target.value)} placeholder="Cari nama kartu, kode, atau URL..." aria-label="Cari kartu"/><select value={cardStatusFilter} onChange={e=>setCardStatusFilter(e.target.value as "all"|"active"|"inactive")} aria-label="Filter status"><option value="all">Semua status</option><option value="active">Aktif</option><option value="inactive">Nonaktif</option></select><button className={showArchivedCards?"is-active":""} onClick={()=>setShowArchivedCards(v=>!v)}><Archive size={15}/>{showArchivedCards?"Lihat kartu aktif":"Lihat arsip"}</button></div>
+            {selectedCardIds.length>0 && !showArchivedCards && <div className="dt-reset-bulkbar"><b>{selectedCardIds.length} kartu dipilih</b><button onClick={()=>handleBulkCardAction("activate")} disabled={bulkActionBusy}>Aktifkan</button><button onClick={()=>handleBulkCardAction("deactivate")} disabled={bulkActionBusy}>Nonaktifkan</button><button onClick={()=>setShowBulkQrSheet(true)}>Cetak QR</button><button onClick={()=>handleBulkCardAction("archive")} disabled={bulkActionBusy}>Arsipkan</button><button onClick={()=>setSelectedCardIds([])}>Batal pilih</button></div>}
+            {loading ? <div className="dt-reset-empty-state">Memuat data kartu…</div> : visibleCards.length===0 ? <div className="dt-reset-empty-state"><CreditCard size={28}/><b>{showArchivedCards?"Belum ada kartu di arsip":"Belum ada kartu yang cocok"}</b><span>{showArchivedCards?"Kartu yang diarsipkan akan muncul di sini.":"Buat kartu NFC pertamamu untuk mulai mengumpulkan review."}</span>{!showArchivedCards&&<button className="dt-reset-button-primary" onClick={()=>router.push("/dashboard/cards/new")}><Plus size={16}/> Buat kartu pertama</button>}</div> : <div className="dt-reset-card-list">{visibleCards.map(card=>{const stats=cardEventStats.get(card.id);const archived=Boolean(card.archived_at);return <article className="dt-reset-card-row" key={card.id}><label className="dt-reset-card-check"><input type="checkbox" checked={selectedCardIds.includes(card.id)} onChange={e=>setSelectedCardIds(current=>e.target.checked?[...current,card.id]:current.filter(id=>id!==card.id))} disabled={archived}/></label><div className="dt-reset-card-symbol"><CreditCard size={21}/></div><div className="dt-reset-card-info"><div className="dt-reset-card-title"><h3>{card.card_name||"Untitled Card"}</h3><span className={archived?"is-archived":card.active?"is-active":"is-inactive"}>{archived?"Diarsipkan":card.active?"Aktif":"Nonaktif"}</span></div><p>Kode: {card.public_code}</p><small>{card.destination_url}</small><div className="dt-reset-card-stats"><span>{(stats?.taps||0).toLocaleString("id-ID")} tap</span><span>{(stats?.clicks||0).toLocaleString("id-ID")} klik review</span><span>CTR {stats?.taps?((stats.clicks/stats.taps)*100).toFixed(1):"0.0"}%</span></div></div><div className="dt-reset-card-actions">{archived?<button onClick={()=>handleRestoreCard(card)} disabled={updatingCardId===card.id}><RefreshCw size={15}/> Pulihkan</button>:<><button onClick={()=>setQrCard(card)}><QrCode size={15}/> QR Code</button><button onClick={()=>copyPublicCardLink(card)}><Copy size={15}/>{copiedCardId===card.id?"Tersalin":"Salin link"}</button><button onClick={()=>handleWriteNfc(card)} disabled={writingCardId===card.id||!card.active}>{writingCardId===card.id?<Loader2 size={15} className="animate-spin"/>:<Nfc size={15}/>}Tulis NFC</button><button onClick={()=>handleDuplicateCard(card)} disabled={duplicatingCardId===card.id}><Copy size={15}/>Duplikat</button><button onClick={()=>openEditCard(card)}><Pencil size={15}/>Edit</button><button onClick={()=>handleToggleCard(card)} disabled={updatingCardId===card.id}><Power size={15}/>{card.active?"Nonaktifkan":"Aktifkan"}</button><button className="is-danger" onClick={()=>{setDeleteTarget(card);setCardError("");}}><Archive size={15}/>Arsipkan</button></>}</div></article>;})}</div>}
+            <div className="dt-reset-card-footer"><span>Menampilkan {visibleCards.length} dari {cards.length} kartu</span><span>Data tersimpan otomatis di akunmu</span></div>
+          </section>
 
-          <div className="dt-dashboard-content dt-dashboard-content-v2 mx-auto max-w-[1600px] space-y-8 px-4 py-6 sm:space-y-9 sm:px-6 sm:py-8 2xl:px-12 2xl:py-11">
-            <section className="dt-dashboard-command relative isolate overflow-hidden rounded-[30px] p-5 sm:p-7 lg:p-9">
-              <div className="dt-dashboard-orbit dt-dashboard-orbit-one" aria-hidden="true" />
-              <div className="dt-dashboard-orbit dt-dashboard-orbit-two" aria-hidden="true" />
-              <div className="relative z-10 grid gap-7 xl:grid-cols-[minmax(0,1.45fr)_minmax(280px,.75fr)] xl:items-center">
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="dt-dashboard-eyebrow"><LayoutDashboard size={12} /> YOUR BUSINESS, IN FOCUS</span>
-                    <span className="dt-dashboard-live"><span /> WORKSPACE AKTIF</span>
-                  </div>
-                  <p className="mt-6 text-sm font-medium text-blue-100/75">WORKSPACE OVERVIEW</p>
-                  <h2 className="mt-1 max-w-3xl break-words text-3xl font-black tracking-[-.045em] text-white sm:text-4xl lg:text-[46px]">
-                    {workspaceName} <span aria-hidden="true">👋</span>
-                  </h2>
-                  <p className="mt-3 max-w-xl text-sm leading-7 text-blue-100/75 sm:text-base">
-                    Kelola kartu, pahami interaksi pelanggan, dan lihat perkembangan reputasi bisnismu dari satu ruang kerja.
-                  </p>
-                  <div className="mt-7 flex flex-wrap gap-3">
-                    <button onClick={() => router.push("/dashboard/cards/new")} className="dt-dashboard-primary-action">
-                      <Plus size={17} /> Buat kartu baru
-                    </button>
-                    <button onClick={() => router.push("/dashboard/landing-page")} className="dt-dashboard-secondary-action">
-                      <Eye size={16} /> Atur landing page
-                    </button>
-                  </div>
-                </div>
-                <div className="dt-dashboard-command-panel">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-100/55">YOUR NFC INVENTORY</p>
-                      <p className="mt-1 text-sm font-semibold text-white">Ringkasan kartu</p>
-                    </div>
-                    <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-bold text-blue-100">CARD STATUS</span>
-                  </div>
-                  <div className="mt-5 grid grid-cols-2 gap-3">
-                    <div className="dt-dashboard-device-stat">
-                      <CreditCard size={17} />
-                      <strong>{cards.filter((card) => !card.archived_at).length}</strong>
-                      <span>Total kartu</span>
-                    </div>
-                    <div className="dt-dashboard-device-stat">
-                      <CheckCircle2 size={17} />
-                      <strong>{cards.filter((card) => card.active && !card.archived_at).length}</strong>
-                      <span>Kartu aktif</span>
-                    </div>
-                  </div>
-                  <div className="mt-4 border-t border-white/10 pt-4">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-blue-100/65">Kartu yang siap digunakan</span>
-                      <strong className="text-white">{cards.filter((card) => card.active && !card.archived_at).length} / {cards.filter((card) => !card.archived_at).length} aktif</strong>
-                    </div>
-                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
-                      <div className="h-full rounded-full bg-gradient-to-r from-cyan-300 to-blue-400 transition-all" style={{ width: (cards.filter((card) => !card.archived_at).length ? cards.filter((card) => card.active && !card.archived_at).length / cards.filter((card) => !card.archived_at).length * 100 : 0) + "%" }} />
-                    </div>
-                    <p className="mt-3 text-[11px] leading-5 text-blue-100/55">Aktifkan kartu saat siap ditempatkan agar pelanggan bisa langsung memberikan review.</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {cards.length === 0 && (
-              <section className="rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-5 shadow-sm sm:p-6">
-                <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">MULAI DI SINI</p>
-                <h3 className="insight-metric-value mt-2 text-lg font-bold text-slate-900">Siapkan kartu pertamamu</h3>
-                <p className="mt-1 max-w-xl text-sm leading-6 text-slate-500">Ikuti tiga langkah singkat untuk mulai menerima tap dan memantau aktivitas pelanggan.</p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">01 · Tambahkan</b><p className="insight-metric-label mt-1 text-xs text-slate-500">Buat kartu dan masukkan link Google Review.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">02 · Pasang</b><p className="mt-1 text-xs text-slate-500">Tulis NFC atau gunakan QR Code pada kartu.</p></div><div className="rounded-xl border border-blue-100 bg-white p-3"><b className="text-xs text-blue-600">03 · Pantau</b><p className="mt-1 text-xs text-slate-500">Lihat tap dan klik review di analytics.</p></div></div>
-                <a href="/panduan" className="mt-4 inline-flex text-xs font-bold text-blue-700 hover:text-blue-800">Buka panduan lengkap →</a>
-              </section>
-            )}
-
-            {cards.length > 0 && !eventRows.some((event) => event.event_type === "tap") && (
-              <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-                <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">SETUP CHECKLIST</p>
-                    <h3 className="mt-1 text-lg font-bold text-slate-900">Satu langkah lagi menuju pelanggan pertamamu</h3>
-                    <p className="mt-1 text-sm text-slate-500">Pastikan kartu aktif dan coba lakukan tap pertama untuk mulai melihat data.</p>
-                  </div>
-                  <a href="#my-nfc-cards" className="inline-flex shrink-0 items-center justify-center rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-semibold text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700">Kelola kartu</a>
-                </div>
-                <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-xl bg-emerald-50 p-3">
-                    <p className="text-xs font-semibold text-emerald-700">✓ 01 · Buat kartu</p>
-                    <p className="mt-1 text-xs text-emerald-700/80">Kartu pertamamu sudah tersimpan.</p>
-                  </div>
-                  <div className={`rounded-xl p-3 ${cards.some((card) => card.active) ? "bg-emerald-50" : "bg-amber-50"}`}>
-                    <p className={`text-xs font-semibold ${cards.some((card) => card.active) ? "text-emerald-700" : "text-amber-800"}`}>{cards.some((card) => card.active) ? "✓" : "02"} · Aktifkan kartu</p>
-                    <p className={`mt-1 text-xs ${cards.some((card) => card.active) ? "text-emerald-700/80" : "text-amber-800/80"}`}>{cards.some((card) => card.active) ? "Minimal satu kartu sudah aktif." : "Aktifkan kartu saat siap digunakan."}</p>
-                  </div>
-                  <div className="rounded-xl bg-blue-50 p-3">
-                    <p className="text-xs font-semibold text-blue-700">03 · Tap pertama</p>
-                    <p className="mt-1 text-xs text-blue-700/80">Tempelkan ponsel ke NFC atau pindai QR untuk mulai mencatat aktivitas.</p>
-                  </div>
-                </div>
-              </section>
-            )}
-
-            {/* ANALYTICS COMMAND SUMMARY */}
-            <section id="analytics" className="dt-analytics-overview">
-              <div className="dt-analytics-heading">
-                <div>
-                  <p className="dt-analytics-kicker">PERFORMANCE INTELLIGENCE</p>
-                  <h3>Performa interaksi</h3>
-                  <p>Lihat bagaimana pelanggan menemukan kartu dan melanjutkan ke halaman ulasan.</p>
-                </div>
-                <div className="dt-analytics-period-chip"><BarChart3 size={14} /> Ringkasan aktivitas</div>
-              </div>
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
-                {analyticsItems.map((item, index) => (
-                  <div key={item.label} className={`dt-analytics-kpi dt-analytics-kpi-${index} group min-w-0`}>
-                    <div className="flex min-w-0 items-center justify-between gap-2">
-                      <p className="truncate text-xs font-semibold text-slate-500 sm:text-sm">{item.label}</p>
-                      <span className="dt-analytics-kpi-icon"><item.icon size={18} /></span>
-                    </div>
-                    <p className="mt-5 break-words text-2xl font-black tracking-tight text-slate-900 tabular-nums sm:text-3xl">{item.value}</p>
-                    <p className="mt-2 text-[10px] leading-4 text-slate-400 sm:text-xs">{item.description}</p>
-                    <div className="dt-analytics-kpi-accent" />
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* ANALYTICS PERFORMANCE */}
-            <section className="scroll-mt-24 space-y-5">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <div className="max-w-xl">
-                  <p className="text-[10px] font-bold uppercase tracking-[.2em] text-blue-600">CUSTOMER ACTIVITY</p>
-                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Aktivitas pelanggan</h2>
-                  <p className="mt-2 text-sm leading-6 text-slate-500">Pantau interaksi dari kartu NFC dan QR, lalu lihat bagaimana pelanggan melanjutkan ke halaman ulasan.</p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="mr-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">Periode</span>
-                  <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-sm" role="group" aria-label="Pilih periode analytics">
-                    {([7, 30, 90] as const).map((period) => (
-                      <button key={period} type="button" onClick={() => setChartPeriod(period)} aria-pressed={chartPeriod === period} className={`rounded-lg px-3.5 py-2 text-xs font-semibold transition ${chartPeriod === period ? "bg-slate-950 text-white shadow-sm" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}>
-                        {period} hari
-                      </button>
-                    ))}
-                  </div>
-                  <button type="button" onClick={exportAnalyticsCsv} disabled={periodEventRows.length === 0} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40">
-                    <FileSpreadsheet size={15}/> Export CSV
-                  </button>
-                </div>
-              </div>
-
-              <div className="overflow-hidden rounded-[28px] border border-slate-200/80 bg-white shadow-[0_18px_55px_-38px_rgba(15,23,42,.32)]">
-                <div className="grid gap-4 border-b border-slate-100 bg-slate-50/70 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500"/>
-                      <p className="text-xs font-semibold text-slate-700">Ruang lingkup data</p>
-                    </div>
-                    <div className="mt-3 flex max-w-full gap-2 overflow-x-auto pb-1" role="group" aria-label="Pilih kartu untuk melihat analytics">
-                      <button type="button" onClick={() => setSelectedCardId("all")} aria-pressed={selectedCardId === "all"} className={`shrink-0 rounded-full border px-3.5 py-2 text-xs font-semibold transition ${selectedCardId === "all" ? "border-slate-950 bg-slate-950 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-slate-400"}`}>
-                        Semua kartu
-                      </button>
-                      {cards.map((card) => (
-                        <button key={card.id} type="button" onClick={() => setSelectedCardId(card.id)} aria-pressed={selectedCardId === card.id} className={`max-w-[180px] shrink-0 truncate rounded-full border px-3.5 py-2 text-xs font-semibold transition ${selectedCardId === card.id ? "border-slate-950 bg-slate-950 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-slate-400"}`}>
-                          {card.card_name || "Untitled Card"}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  {businessLocations.length > 0 && (
-                    <div className="min-w-0 lg:w-52">
-                      <label htmlFor="location-filter" className="mb-2 block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Lokasi bisnis</label>
-                      <select id="location-filter" value={selectedLocationId} onChange={(event) => setSelectedLocationId(event.target.value)} className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs font-semibold text-slate-700 outline-none transition focus:border-slate-400 focus:ring-2 focus:ring-slate-100">
-                        <option value="all">Semua lokasi</option>
-                        {businessLocations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
-                        <option value="unassigned">Tanpa lokasi</option>
-                      </select>
-                    </div>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-2 divide-x divide-y divide-slate-100 sm:grid-cols-4 sm:divide-y-0">
-                  <div className="p-4 sm:px-5 sm:py-5"><p className="text-[11px] font-medium text-slate-400">Total tap</p><p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums">{periodTapTotal.toLocaleString("id-ID")}</p><p className="mt-1 text-[10px] text-slate-400">Dalam {chartPeriod} hari</p></div>
-                  <div className="p-4 sm:px-5 sm:py-5"><p className="text-[11px] font-medium text-slate-400">Klik ulasan</p><p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums">{periodClickTotal.toLocaleString("id-ID")}</p><p className="mt-1 text-[10px] text-slate-400">Dalam {chartPeriod} hari</p></div>
-                  <div className="p-4 sm:px-5 sm:py-5"><p className="text-[11px] font-medium text-slate-400">Pengunjung unik</p><p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums">{new Set(periodEventRows.filter((event) => event.event_type === "tap" && event.visitor_hash).map((event) => event.visitor_hash)).size.toLocaleString("id-ID")}</p><p className="mt-1 text-[10px] text-slate-400">Berdasarkan visitor ID</p></div>
-                  <div className="p-4 sm:px-5 sm:py-5"><p className="text-[11px] font-medium text-slate-400">Click-through rate</p><p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums">{periodTapTotal > 0 ? (periodClickTotal / periodTapTotal * 100).toFixed(1) : "0.0"}%</p><p className="mt-1 text-[10px] text-slate-400">Tap yang berlanjut ke ulasan</p></div>
-                </div>
-
-                <div className="border-t border-slate-100 p-4 sm:p-6 lg:p-7">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div><h3 className="text-sm font-semibold text-slate-900">Tren aktivitas</h3><p className="mt-1 text-xs text-slate-400">Pergerakan tap dan klik ulasan per hari</p></div>
-                    <div className="flex flex-wrap items-center gap-4 text-[11px] font-medium text-slate-500"><span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-sm bg-slate-900"/>Tap NFC / QR</span><span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-sm bg-blue-400"/>Klik ulasan</span></div>
-                  </div>
-                  <div className="relative mt-5">
-                    {hasPeriodActivity ? (
-                      <div className="relative">
-                        <div className="pointer-events-none absolute inset-0 flex flex-col justify-between pb-7" aria-hidden="true">{[0,1,2,3].map((line)=><div key={line} className="border-t border-dashed border-slate-100"/>)}</div>
-                        <div className="relative flex h-52 items-end gap-[3px] sm:h-64 sm:gap-1">
-                          {chartData.map((day,index)=>(
-                            <div key={day.key} title={`${new Date(day.key+"T00:00:00").toLocaleDateString("id-ID",{dateStyle:"full"})}: ${day.taps} tap, ${day.clicks} klik ulasan`} className="flex h-full min-w-0 flex-1 flex-col justify-end">
-                              <div className="flex min-h-0 flex-1 items-end justify-center gap-[2px] sm:gap-1">
-                                <div className="w-1/2 max-w-5 rounded-t-[3px] bg-slate-900 transition-[height] duration-300" style={{height:`${day.taps>0?Math.max(2,day.taps/chartMax*100):0}%`}}/>
-                                <div className="w-1/2 max-w-5 rounded-t-[3px] bg-blue-400 transition-[height] duration-300" style={{height:`${day.clicks>0?Math.max(2,day.clicks/chartMax*100):0}%`}}/>
-                              </div>
-                              {(chartPeriod===7||(chartPeriod===30&&index%5===0)||(chartPeriod===90&&index%15===0)||index===chartData.length-1)?<span className="mt-3 h-4 truncate text-center text-[9px] text-slate-400 sm:text-[10px]">{day.label}</span>:<span className="mt-3 h-4"/>}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex min-h-52 flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/60 px-5 py-8 text-center">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm"><BarChart3 size={19}/></div>
-                        <p className="mt-3 text-sm font-semibold text-slate-800">Belum ada aktivitas di periode ini</p>
-                        <p className="mt-1 max-w-sm text-xs leading-5 text-slate-500">Aktivitas akan muncul setelah pelanggan mengetuk kartu NFC atau memindai QR Code.</p>
-                        <button type="button" onClick={()=>document.getElementById("cards")?.scrollIntoView({behavior:"smooth",block:"start"})} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">Lihat kartu NFC</button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* LOCAL ANALYTICS INSIGHTS - DERIVED FROM ALREADY LOADED EVENTS */}
-            <section className="dt-analytics-insights rounded-3xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_35px_-28px_rgba(15,23,42,0.28)] sm:p-6 lg:p-7">
-              <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">INSIGHT PERFORMA</p>
-                  <h3 className="mt-1 font-bold text-slate-900">Apa yang terjadi?</h3>
-                  <p className="mt-1 text-xs text-slate-500">Perbandingan dengan {chartPeriod} hari sebelumnya, berdasarkan data yang sudah dimuat.</p>
-                </div>
-                <span className="text-[10px] text-slate-400">Periode: {chartPeriod} hari terakhir</span>
-              </div>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <div className="insight-metric-card rounded-xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-4">
-                  <p className="insight-metric-label text-xs text-slate-500">Perubahan tap</p>
-                  <p className="insight-metric-value mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.tapChange === null ? "—" : `${analyticsInsights.tapChange > 0 ? "+" : ""}${analyticsInsights.tapChange.toFixed(1)}%`}</p>
-                  <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.current.taps.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.taps.toLocaleString("id-ID")} sebelumnya</p>
-                </div>
-                <div className="insight-metric-card rounded-xl bg-slate-50 p-4">
-                  <p className="insight-metric-label text-xs text-slate-500">Perubahan review click</p>
-                  <p className="insight-metric-value mt-2 text-xl font-bold tabular-nums text-slate-900">{analyticsInsights.clickChange === null ? "—" : `${analyticsInsights.clickChange > 0 ? "+" : ""}${analyticsInsights.clickChange.toFixed(1)}%`}</p>
-                  <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.current.clicks.toLocaleString("id-ID")} sekarang · {analyticsInsights.previous.clicks.toLocaleString("id-ID")} sebelumnya</p>
-                </div>
-                <div className="insight-metric-card rounded-xl bg-slate-50 p-4">
-                  <p className="insight-metric-label text-xs text-slate-500">Hari paling aktif</p>
-                  <p className="insight-metric-value mt-2 text-lg font-bold text-slate-900">{analyticsInsights.bestDay ? analyticsInsights.bestDay.label : "Belum ada data"}</p>
-                  <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.bestDay ? `${analyticsInsights.bestDay.taps} tap tercatat` : "Belum ada tap pada periode ini"}</p>
-                </div>
-                <div className="insight-metric-card rounded-xl bg-slate-50 p-4">
-                  <p className="insight-metric-label text-xs text-slate-500">Kartu teratas</p>
-                  <p className="insight-metric-value mt-2 truncate text-lg font-bold text-slate-900">{analyticsInsights.topCard?.name || "Belum ada data"}</p>
-                  <p className="insight-metric-detail mt-1 text-[10px] text-slate-400">{analyticsInsights.topCard ? `${analyticsInsights.topCard.taps} tap tercatat` : "Tidak ada tap pada filter ini"}</p>
-                </div>
-              </div>
-              <p className="mt-4 text-[10px] leading-5 text-slate-400">Persentase perubahan tidak ditampilkan jika periode pembanding belum memiliki aktivitas. Insight ini merupakan ringkasan aktivitas, bukan jumlah ulasan Google yang dipublikasikan.</p>
-            </section>
-
-            {businessLocations.length > 0 && (
-              <section className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm">
-                <div className="border-b border-slate-100 px-6 py-5">
-                  <p className="text-[10px] font-bold uppercase tracking-[.16em] text-blue-600">BUSINESS ANALYTICS</p>
-                  <h3 className="mt-1 font-bold text-slate-900">Perbandingan Per Cabang</h3>
-                  <p className="mt-1 text-sm text-slate-500">Ringkasan aktivitas kartu pada setiap lokasi, tanpa terpengaruh filter lokasi di atas.</p>
-                </div>
-                {locationPerformance.length === 0 ? (
-                  <p className="px-6 py-6 text-sm text-slate-400">Belum ada lokasi bisnis yang dapat dibandingkan.</p>
-                ) : (
-                  <div className="space-y-3 bg-slate-50/60 p-3 sm:p-4">
-                    {locationPerformance.map((location) => {
-                      const maxTaps = Math.max(1, ...locationPerformance.map((item) => item.taps));
-                      return (
-                        <button key={location.id} type="button" onClick={() => { setSelectedLocationId(location.id); setSelectedCardId("all"); }} className="block w-full px-6 py-4 text-left transition hover:bg-slate-50">
-                          <div className="flex items-center justify-between gap-4">
-                            <div className="min-w-0">
-                              <p className="truncate text-sm font-semibold text-slate-800">{location.name}</p>
-                              <p className="mt-1 text-xs text-slate-400">{location.cardCount} kartu · {location.clicks.toLocaleString("id-ID")} review clicks · CTR {location.ctr.toFixed(1)}%</p>
-                            </div>
-                            <p className="shrink-0 text-lg font-bold tabular-nums text-slate-900">{location.taps.toLocaleString("id-ID")} <span className="text-[10px] font-medium text-slate-400">TAPS</span></p>
-                          </div>
-                          <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
-                            <div className="h-full rounded-full bg-blue-600 transition-all" style={{ width: `${(location.taps / maxTaps) * 100}%` }} />
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-                <p className="border-t border-slate-100 px-6 py-3 text-[10px] leading-5 text-slate-400">Ketuk salah satu cabang untuk menerapkan filter statistik. Data hanya menghitung aktivitas yang tercatat pada kartu di cabang tersebut.</p>
-              </section>
-            )}
-
-            {cards.length > 1 && (
-              <section id="my-nfc-cards" className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
-                <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Perbandingan Kartu</h3><p className="mt-1 text-sm text-slate-500">Urutan kartu berdasarkan total tap yang tercatat.</p></div>
-                <div className="overflow-x-auto"><table className="w-full min-w-[640px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-400"><tr><th className="px-5 py-3 font-semibold">Kartu</th><th className="px-4 py-3 font-semibold">Taps</th><th className="px-4 py-3 font-semibold">Visitors</th><th className="px-4 py-3 font-semibold">Clicks</th><th className="px-4 py-3 font-semibold">CTR</th><th className="px-5 py-3 font-semibold">Status</th></tr></thead><tbody className="divide-y divide-slate-100">{cardPerformance.map((item) => <tr key={item.card.id}><td className="px-5 py-3 font-semibold text-slate-700">{item.card.card_name || "Untitled Card"}</td><td className="px-4 py-3 tabular-nums">{item.taps.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.visitors.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.clicks.toLocaleString("id-ID")}</td><td className="px-4 py-3 tabular-nums">{item.ctr.toFixed(1)}%</td><td className="px-5 py-3"><span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.card.active ? "bg-green-50 text-green-700" : "bg-slate-100 text-slate-500"}`}>{item.card.active ? "Active" : "Inactive"}</span></td></tr>)}</tbody></table></div>
-              </section>
-            )}
-
-            {cards.length > 0 && (
-              <section className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
-                <div className="border-b border-slate-100 px-6 py-5"><h3 className="font-bold">Riwayat Perubahan</h3><p className="mt-1 text-sm text-slate-500">Perubahan nama, link tujuan, dan status kartu.</p></div>
-                {changeLogUnavailable ? <p className="px-6 py-5 text-xs leading-5 text-slate-400">Riwayat belum diaktifkan. Jalankan migration Supabase yang disertakan pada repository untuk mengaktifkannya.</p> : changeLogs.length === 0 ? <p className="px-6 py-5 text-xs text-slate-400">Belum ada perubahan kartu yang tercatat.</p> : <div className="divide-y divide-slate-100">{changeLogs.map((log) => { const card = cards.find((item) => item.id === log.card_id); const label = log.change_type === "destination_url" ? "Link tujuan diperbarui" : log.change_type === "active" ? "Status kartu diubah" : "Nama kartu diperbarui"; return <div key={log.id} className="flex items-center justify-between gap-3 px-6 py-3"><div className="min-w-0"><p className="text-xs font-semibold text-slate-700">{label}</p><p className="mt-1 truncate text-[11px] text-slate-400">{card?.card_name || "Kartu"}</p></div><time className="shrink-0 text-[10px] text-slate-400">{new Date(log.created_at).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}</time></div>; })}</div>}
-              </section>
-            )}
-
-            {analyticsError && (
-              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
-                {analyticsError}
-              </div>
-            )}
-
-            {cardMessage && (
-              <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700">
-                {cardMessage}
-              </div>
-            )}
-
-            {cardError && !editingCard && (
-              <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-                {cardError}
-              </div>
-            )}
-
-            {writingCardId && (
-              <div role="status" aria-live="polite" className="rounded-2xl border border-blue-200 bg-blue-50 p-4 sm:p-5">
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-blue-600"><Nfc size={21} className="animate-pulse" /></div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-bold text-blue-900">Siap menerima kartu NFC</p>
-                    <p className="mt-1 text-xs leading-5 text-blue-800">Tempelkan kartu ke bagian belakang HP dan tahan beberapa detik. Jangan jauhkan kartu sampai proses selesai.</p>
-                    <p className="mt-2 text-[11px] font-semibold text-blue-700">Menulis: {cards.find((card) => card.id === writingCardId)?.card_name || "Kartu NFC"}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-            {nfcMessage && (
-              <div role="status" aria-live="polite" className="rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700">
-                <CheckCircle2 className="mr-2 inline" size={17} />{nfcMessage}
-              </div>
-            )}
-            {nfcError && (
-              <div role="alert" className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
-                <p className="font-semibold">Penulisan NFC belum berhasil</p>
-                <p className="mt-1 leading-5">{nfcError}</p>
-              </div>
-            )}
-
-            {/* NFC CARDS */}
-            <div
-              id="cards"
-              className="dt-card-control-center overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_24px_70px_-34px_rgba(30,64,175,0.35)]"
-            >
-              <div className="dt-card-control-hero relative flex flex-col items-start gap-5 overflow-hidden border-b border-white/10 bg-[#17243b] p-5 text-white sm:flex-row sm:items-start sm:justify-between sm:p-7">
-                <div className="relative z-10 w-full sm:max-w-2xl">
-                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.2em] text-blue-100"><Nfc size={13}/> Card Control Center</div>
-                  <h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl">My NFC Cards</h3>
-                  <p className="mt-2 max-w-xl text-sm leading-6 text-blue-100/75">
-                    Semua kartu, performa, dan pengaturan dalam satu tempat. Atur pengalaman review pelanggan dengan lebih mudah.
-                  </p>
-                  <button type="button" onClick={() => setShowBulkQrSheet(true)} disabled={!cards.some((card) => card.active)} className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-xs font-bold text-white shadow-lg shadow-slate-950/10 backdrop-blur transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-40"><QrCode size={15}/> Cetak Semua QR</button>
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
-                    <button type="button" onClick={() => { setShowArchivedCards(false); setCardStatusFilter("all"); }} className={`rounded-full px-4 py-2 text-xs font-bold transition ${!showArchivedCards ? "bg-white text-slate-900 shadow-lg" : "border border-white/20 bg-white/5 text-blue-100 hover:bg-white/10"}`}>Active Cards ({cards.filter((card) => !card.archived_at).length})</button>
-                    <button type="button" onClick={() => { setShowArchivedCards(true); setCardStatusFilter("all"); }} className={`rounded-full px-4 py-2 text-xs font-bold transition ${showArchivedCards ? "bg-white text-slate-900 shadow-lg" : "border border-white/20 bg-white/5 text-blue-100 hover:bg-white/10"}`}>Archived ({cards.filter((card) => Boolean(card.archived_at)).length})</button>
-                  </div>
-                  <div className="relative mt-3 w-full sm:max-w-xs">
-                    <input
-                      type="search"
-                      value={cardSearch}
-                      onChange={(event) => setCardSearch(event.target.value)}
-                      placeholder="Cari nama, kode, atau link kartu..."
-                      aria-label="Cari kartu NFC"
-                      className="w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3.5 text-sm text-white outline-none transition placeholder:text-blue-100/50 focus:border-blue-300/60 focus:bg-white/15 focus:ring-4 focus:ring-blue-300/10"
-                    />
-                  </div>
-                  <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filter status kartu">
-                    {([
-                      { value: "all", label: "Semua", count: cards.filter((card) => Boolean(card.archived_at) === showArchivedCards).length },
-                      { value: "active", label: "Aktif", count: cards.filter((card) => Boolean(card.archived_at) === showArchivedCards && card.active).length },
-                      { value: "inactive", label: "Nonaktif", count: cards.filter((card) => Boolean(card.archived_at) === showArchivedCards && !card.active).length },
-                    ] as const).map((filter) => (
-                      <button
-                        key={filter.value}
-                        type="button"
-                        onClick={() => setCardStatusFilter(filter.value)}
-                        aria-pressed={cardStatusFilter === filter.value}
-                        className={`inline-flex items-center gap-1.5 rounded-xl border px-3.5 py-2.5 text-xs font-bold transition ${cardStatusFilter === filter.value ? "border-white bg-white text-slate-900 shadow-md" : "border-white/15 bg-white/5 text-blue-100 hover:bg-white/10"}`}
-                      >
-                        {filter.label}
-                        <span className={`rounded-md px-1.5 py-0.5 text-[10px] ${cardStatusFilter === filter.value ? "bg-blue-50 text-blue-700" : "bg-white/10 text-blue-100"}`}>{filter.count}</span>
-                      </button>
-                    ))}
-                  </div>
-                  {!showArchivedCards && (
-                    <div className="mt-4 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
-                      <div className="flex flex-wrap items-center justify-between gap-3">
-                        <label className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
-                          <input type="checkbox" checked={visibleCards.length > 0 && visibleCards.every((card) => selectedCardIds.includes(card.id))} onChange={(event) => setSelectedCardIds((current) => event.target.checked ? Array.from(new Set([...current, ...visibleCards.filter((card) => !card.archived_at).map((card) => card.id)])) : current.filter((id) => !visibleCards.some((card) => card.id === id)))} className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"/>
-                          Pilih semua yang terlihat
-                        </label>
-                        <span className="text-xs text-slate-500">{visibleCards.filter((card) => selectedCardIds.includes(card.id) && !card.archived_at).length} dipilih</span>
-                      </div>
-                      {visibleCards.some((card) => selectedCardIds.includes(card.id) && !card.archived_at) && (
-                        <div className="mt-3 flex flex-wrap items-center gap-2">
-                          <button type="button" onClick={() => handleBulkCardAction("activate")} disabled={bulkActionBusy} className="rounded-lg border border-emerald-200 bg-white px-3 py-2 text-xs font-semibold text-emerald-700 hover:bg-emerald-50 disabled:opacity-50">Aktifkan</button>
-                          <button type="button" onClick={() => handleBulkCardAction("deactivate")} disabled={bulkActionBusy} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 disabled:opacity-50">Nonaktifkan</button>
-                          <div className="flex min-w-0 flex-1 items-center gap-2">
-                            <select aria-label="Pindahkan ke lokasi" value={bulkLocationId} onChange={(event) => setBulkLocationId(event.target.value)} disabled={bulkActionBusy} className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-600">
-                              <option value="__choose__">Pilih lokasi tujuan...</option>
-                              <option value="">Tanpa lokasi / bisnis utama</option>
-                              {businessLocations.map((location) => <option key={location.id} value={location.id}>{location.name}</option>)}
-                            </select>
-                            <button type="button" onClick={() => handleBulkCardAction("move")} disabled={bulkActionBusy || bulkLocationId === "__choose__"} className="rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-40">Pindah</button>
-                          </div>
-                          <button type="button" onClick={() => handleBulkCardAction("archive")} disabled={bulkActionBusy} className="rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 disabled:opacity-50">Arsipkan</button>
-                          <button type="button" onClick={() => setSelectedCardIds([])} disabled={bulkActionBusy} className="rounded-lg px-2 py-2 text-xs font-semibold text-slate-500 hover:bg-white disabled:opacity-50">Batal pilih</button>
-                        </div>
-                      )}
-                      {bulkActionBusy && <p className="mt-2 text-[11px] text-blue-600">Memproses perubahan kartu...</p>}
-                    </div>
-                  )}
-                </div>
-
-                <div className="relative z-10 flex w-full flex-wrap items-center justify-start gap-2 sm:w-auto sm:justify-end sm:pt-1">
-                  <span className="rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-bold text-white backdrop-blur">
-                    {cards.filter((card) => !card.archived_at).length} Cards
-                  </span>
-                  <span className="rounded-full border border-emerald-300/20 bg-emerald-400/15 px-3 py-2 text-xs font-bold text-emerald-100 backdrop-blur">
-                    {cards.filter((card) => !card.archived_at && card.active).length} Aktif
-                  </span>
-                  {cards.some((card) => !card.archived_at && !card.active) && (
-                    <span className="rounded-full border border-white/15 bg-white/10 px-3 py-2 text-xs font-bold text-blue-100 backdrop-blur">
-                      {cards.filter((card) => !card.archived_at && !card.active).length} Nonaktif
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {cards.length === 0 ? (
-                <div className="px-6 py-16 text-center">
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
-                    <CreditCard size={26} />
-                  </div>
-                  <h4 className="mt-5 font-semibold">
-                    Belum ada kartu NFC
-                  </h4>
-                  <p className="mx-auto mt-2 max-w-sm text-sm text-slate-500">
-                    Tambahkan kartu NFC pertama kamu untuk mulai
-                    mengumpulkan data tap.
-                  </p>
-                  <button
-                    onClick={() => router.push("/dashboard/cards/new")}
-                    className="mt-5 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700"
-                  >
-                    Tambahkan Kartu
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-4 bg-slate-50/80 p-4 sm:p-6">
-                  {visibleCards.length === 0 ? (
-                    <div className="rounded-2xl border border-dashed border-slate-200 bg-white px-5 py-10 text-center">
-                      <p className="text-sm font-semibold text-slate-700">Tidak ada kartu yang cocok</p>
-                      <p className="mt-1 text-xs text-slate-500">Coba status lain atau ubah kata kunci pencarian.</p>
-                      <button type="button" onClick={() => { setCardSearch(""); setCardStatusFilter("all"); }} className="mt-3 text-xs font-semibold text-blue-700 hover:text-blue-800">Reset filter</button>
-                    </div>
-                  ) : visibleCards.map((card) => (
-                    <div
-                      key={card.id}
-                      className="dt-nfc-card-row group relative flex flex-col justify-between gap-5 overflow-hidden rounded-[24px] border border-slate-200/80 bg-white p-4 shadow-[0_8px_28px_-20px_rgba(15,23,42,0.22)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_22px_48px_-28px_rgba(37,99,235,0.42)] sm:flex-row sm:items-center sm:p-5"
-                    >
-                      <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
-                          {!card.archived_at && !showArchivedCards && <input type="checkbox" aria-label={`Pilih kartu ${card.card_name || "Untitled Card"}`} checked={selectedCardIds.includes(card.id)} onChange={(event) => setSelectedCardIds((current) => event.target.checked ? [...current, card.id] : current.filter((id) => id !== card.id))} className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"/>}
-                          <p className="font-semibold">
-                            {card.card_name || "Untitled Card"}
-                          </p>
-                          <span
-                            className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${
-                              card.active
-                                ? "bg-green-50 text-green-700"
-                                : "bg-slate-100 text-slate-500"
-                            }`}
-                          >
-                            {card.active ? "Active" : "Inactive"}
-                          </span>
-                        </div>
-                        <p className="mt-1 text-xs text-slate-400">
-                          Code: {card.public_code}
-                        </p>
-                        <div className="mt-2 flex flex-wrap items-center gap-2">
-                          {card.location_id ? (
-                            <span className="rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-semibold text-blue-700">{businessLocations.find((location) => location.id === card.location_id)?.name || "Cabang bisnis"}</span>
-                          ) : (
-                            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold text-slate-500">Belum ditautkan ke cabang</span>
-                          )}
-                          {(() => {
-                            const latestTap = latestTapByCard.get(card.id);
-                            const health = !card.active ? "Nonaktif" : !latestTap ? "Belum pernah digunakan" : "Pernah digunakan · " + new Date(latestTap).toLocaleDateString("id-ID");
-                            return <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${!card.active ? "bg-slate-100 text-slate-500" : !latestTap ? "bg-amber-50 text-amber-700" : "bg-emerald-50 text-emerald-700"}`}>{health}</span>;
-                          })()}
-                        </div>
-                        <p className="mt-1 max-w-md truncate text-sm text-slate-500">
-                          {card.destination_url}
-                        </p>
-                        {!card.active && <div className="card-readiness-warning mt-3 rounded-xl border border-amber-100 bg-amber-50/70 p-3"><p className="text-xs font-semibold text-amber-900">Kartu belum siap digunakan</p><p className="mt-1 text-xs leading-5 text-amber-800">1. Uji link Google Review · 2. Aktifkan kartu · 3. Tulis NFC atau gunakan QR Code.</p><p className="mt-1 text-[11px] text-amber-700">Setelah aktif, halaman kartu dapat diakses oleh pelanggan.</p></div>}
-                      </div>
-
-                      <div className="dt-nfc-card-actions grid w-full grid-cols-2 gap-2 border-t border-slate-100 pt-4 sm:w-[280px] sm:shrink-0 sm:grid-cols-2 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0">
-                        {card.archived_at ? (
-                          <button onClick={() => handleRestoreCard(card)} disabled={updatingCardId === card.id} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 px-3 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50 disabled:opacity-50">
-                            {updatingCardId === card.id ? <Loader2 size={16} className="animate-spin"/> : <CheckCircle2 size={16}/>} Restore
-                          </button>
-                        ) : (
-                        <>
-                        <button onClick={() => copyPublicCardLink(card)} disabled={!card.active} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40" title="Salin link publik kartu">
-                          {copiedCardId === card.id ? <CheckCircle2 size={16} /> : <Copy size={16} />}
-                          {copiedCardId === card.id ? "Tersalin" : "Salin Link"}
-                        </button>
-                        <button onClick={() => setQrCard(card)} disabled={!card.active} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-slate-200 disabled:hover:bg-white disabled:hover:text-slate-600" title={card.active ? "Tampilkan QR Code kartu" : "Aktifkan kartu untuk menggunakan QR Code"}><QrCode size={16}/> QR Code</button>
-                        <button onClick={() => window.open(card.destination_url, "_blank", "noopener,noreferrer")} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700" title="Uji tujuan Google Review"><ExternalLink size={16}/> Uji Link</button>
-                        <button onClick={() => window.open("/c/" + card.public_code + "?preview=1", "_blank", "noopener,noreferrer")} disabled={!card.active} className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-40" title="Preview halaman publik kartu"><Eye size={16}/> Preview</button>
-                        <button
-                          onClick={() => handleWriteNfc(card)}
-                          disabled={writingCardId !== null || !card.active}
-                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50"
-                          title="Tulis URL DiTapAja ke kartu NFC"
-                        >
-                          {writingCardId === card.id ? (
-                            <Loader2 size={16} className="animate-spin" />
-                          ) : (
-                            <Nfc size={16} />
-                          )}
-                          {writingCardId === card.id ? "Tempelkan Kartu..." : "Tulis NFC"}
-                        </button>
-
-                        <button
-                          onClick={() => handleDuplicateCard(card)}
-                          disabled={duplicatingCardId === card.id || updatingCardId === card.id}
-                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:opacity-50"
-                        >
-                          {duplicatingCardId === card.id ? <Loader2 size={16} className="animate-spin"/> : <Copy size={16}/>}
-                          {duplicatingCardId === card.id ? "Duplicating..." : "Duplicate"}
-                        </button>
-                        <button
-                          onClick={() => openEditCard(card)}
-                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
-                        >
-                          <Pencil size={16} />
-                          Edit
-                        </button>
-
-                        <button
-                          onClick={() => handleToggleCard(card)}
-                          disabled={updatingCardId === card.id}
-                          className={`inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition disabled:opacity-50 ${
-                            card.active
-                              ? "border border-red-100 text-red-600 hover:bg-red-50"
-                              : "border border-green-100 text-green-700 hover:bg-green-50"
-                          }`}
-                        >
-                          {updatingCardId === card.id ? (
-                            <Loader2 size={16} className="animate-spin" />
-                          ) : (
-                            <Power size={16} />
-                          )}
-                          {card.active ? "Deactivate" : "Activate Card"}
-                        </button>
-
-                        <button
-                          onClick={() => {
-                            setDeleteTarget(card);
-                            setCardError("");
-                          }}
-                          disabled={updatingCardId === card.id || deletingCard}
-                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-100 px-3 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-50"
-                        >
-                          <Archive size={16} />
-                          Archive
-                        </button>
-                        </>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <p className="text-center text-xs text-slate-400">
-              DiTapAja · Free Dashboard · No Monthly Subscription
-            </p>
-          </div>
-        </section>
+          <footer className="dt-reset-footer">DiTapAja <i>·</i> NFC Review Workspace <span>Tanpa biaya langganan bulanan</span></footer>
+        </div>
       </div>
 
       {/* BULK QR PRINT SHEET */}
