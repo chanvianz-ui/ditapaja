@@ -75,7 +75,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
 
   const actions = '<div class="actions"><button class="review-button ' +
     (input.button_style === "outline" ? "outline" : "solid") +
-    '" id="reviewButton" type="button"><span class="google-g" aria-hidden="true">G</span>' +
+    '" id="reviewButton" type="button"' + (input.preview ? " disabled" : "") + '><span class="google-g" aria-hidden="true">G</span>' +
     '<span>Berikan Ulasan di Google</span><b aria-hidden="true">↗</b></button>' +
     (socialLinks ? '<nav class="social-links" aria-label="Tautan bisnis">' + socialLinks + '</nav>' : "") +
     '</div>';
