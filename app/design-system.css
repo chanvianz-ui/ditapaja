@@ -1247,3 +1247,32 @@ code{overflow-wrap:anywhere}
 .dt-card-create-page .border-blue-200,.dt-card-create-page .border-blue-300{border-color:#76553e!important}
 @media(max-width:900px){.dt-collection-page .dt-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:640px){.dt-collection-page .dt-collection-grid{grid-template-columns:1fr!important}.dt-collection-page .dt-edition-visual{min-height:225px}.dt-collection-page .dt-edition-description{min-height:0}}
+
+.product-detail-page .detail-art{
+  position:relative;display:grid;place-items:center;min-height:470px;overflow:hidden;
+  border:1px solid #3c3934;border-radius:9px;
+  background:radial-gradient(ellipse at 50% 48%,rgba(189,128,87,.16),transparent 58%),linear-gradient(145deg,#191b1c,#0d0f11)!important;
+}
+.product-detail-page .detail-art:before,.product-detail-page .detail-art:after{
+  position:absolute;content:"";width:340px;height:340px;border:1px solid rgba(189,128,87,.18);border-radius:50%;pointer-events:none;
+}
+.product-detail-page .detail-art:after{width:255px;height:255px;border-color:rgba(238,236,230,.08)}
+.product-detail-page .detail-card{
+  position:relative;z-index:1;width:min(80%,360px);aspect-ratio:1.58;
+  display:flex;flex-direction:column;justify-content:space-between;padding:22px;
+  border:1px solid #5b554d;border-radius:11px;background:linear-gradient(145deg,#282a2b,#111416)!important;
+  color:#f0eee8!important;box-shadow:0 30px 65px #0009,0 0 28px rgba(189,128,87,.12)!important;
+}
+.product-detail-page .detail-card.noir{background:linear-gradient(145deg,#2b2b29,#090a0c)!important;border-color:#6b5848!important}
+.product-detail-page .detail-card.blanc{background:linear-gradient(145deg,#f0eee8,#cfc9bd)!important;color:#171716!important;border-color:#f0eee8!important}
+.product-detail-page .detail-card.signature{background:linear-gradient(145deg,#5a4637,#171514 70%)!important;border-color:#9b785b!important;color:#f0eee8!important}
+.product-detail-page .detail-card-brand{color:inherit!important;font:850 17px Manrope,sans-serif!important;letter-spacing:-.8px}
+.product-detail-page .detail-card-brand span{color:#bd8057!important}
+.product-detail-page .detail-card-center>span{color:#c59673!important}
+.product-detail-page .detail-card-center>b{color:inherit!important;font-size:15px!important}
+.product-detail-page .detail-stars{color:#d4b18b!important}
+.product-detail-page .detail-card-bottom{color:inherit!important}
+.product-detail-page .detail-art-caption{color:#929599!important}
+.product-detail-page .detail-card.blanc .detail-card-center>span{color:#765b45!important}
+.product-detail-page .detail-card.blanc .detail-card-brand span{color:#936644!important}
+@media(max-width:760px){.product-detail-page .detail-art{min-height:330px}.product-detail-page .detail-card{width:min(86%,330px);padding:17px}}
