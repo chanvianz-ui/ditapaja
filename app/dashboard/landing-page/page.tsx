@@ -2,28 +2,28 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Eye, Loader2, Save, Smartphone, Monitor, ImagePlus, Trash2 } from "lucide-react";
+import { ArrowLeft, Eye, Loader2, Save, Smartphone, Monitor, ImagePlus } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import "./page-studio.css";
 
 type Card = { id: string; card_name: string | null; public_code: string; active: boolean; location_id?: string | null };
 type Settings = {
   id?: string; card_id: string; is_published: boolean; headline: string; description: string;
-  theme: "ocean" | "midnight" | "rose" | "forest"; accent_color: string;
+  theme: "ocean" | "midnight" | "rose" | "forest"; font_family: "Manrope" | "DM Sans" | "Arial" | "Georgia"; accent_color: string;
   button_style: "solid" | "outline"; logo_url: string | null; logo_size: number; logo_position: "left" | "center" | "right"; whatsapp_url: string; instagram_url: string; website_url: string;
 };
 const defaults = (cardId: string): Settings => ({
   card_id: cardId, is_published: false, headline: "Bagikan pengalaman kamu",
   description: "Terima kasih sudah berkunjung. Kami menghargai ulasan dan dukungan kamu.",
-  theme: "ocean", accent_color: "#2563eb", button_style: "solid",
+  theme: "ocean", font_family: "Manrope", accent_color: "#2563eb", button_style: "solid",
   logo_url: null, logo_size: 72, logo_position: "center",
   whatsapp_url: "", instagram_url: "", website_url: ""
 });
 const themes = [
-  { id: "ocean", label: "Ocean", bg: "#f3f7ff", ink: "#172554" },
-  { id: "midnight", label: "Midnight", bg: "#111827", ink: "#f8fafc" },
-  { id: "rose", label: "Rose", bg: "#fff1f2", ink: "#881337" },
-  { id: "forest", label: "Forest", bg: "#f0fdf4", ink: "#14532d" }
+  { id: "ocean", label: "Bold Modern", bg: "#f5f8ff", ink: "#14233f" },
+  { id: "midnight", label: "Modern Clean", bg: "#ffffff", ink: "#172033" },
+  { id: "rose", label: "Elegant", bg: "#fbf7f0", ink: "#342b24" },
+  { id: "forest", label: "Minimal", bg: "#f1f3f6", ink: "#202735" }
 ] as const;
 
 function validOptionalUrl(value: string) {
@@ -79,7 +79,7 @@ export default function LandingPageEditor() {
       setSettingsLoading(true);
       setError(""); setNotice("");
       const { data, error: readError } = await supabase.from("nfc_card_pages")
-        .select("id,card_id,is_published,headline,description,theme,accent_color,button_style,logo_url,logo_size,logo_position,whatsapp_url,instagram_url,website_url")
+        .select("id,card_id,is_published,headline,description,theme,font_family,accent_color,button_style,logo_url,logo_size,logo_position,whatsapp_url,instagram_url,website_url")
         .eq("card_id", selectedCardId).eq("user_id", userId).maybeSingle();
       if (!alive) return;
       if (readError) {
@@ -174,7 +174,7 @@ export default function LandingPageEditor() {
     const payload = {
       user_id: userId, card_id: selectedCardId, is_published: settings.is_published,
       headline: settings.headline.trim(), description: settings.description.trim(),
-      theme: settings.theme, accent_color: settings.accent_color,
+      theme: settings.theme, font_family: settings.font_family, accent_color: settings.accent_color,
       button_style: settings.button_style,
       logo_url: settings.logo_url, logo_size: settings.logo_size, logo_position: settings.logo_position,
       whatsapp_url: settings.whatsapp_url.trim() || null,
@@ -198,7 +198,7 @@ export default function LandingPageEditor() {
   ];
   const activeSection = sections.find(section => section.id === editorSection)!;
 
-  return <main className="ditapaja-studio-page dt-page-studio-page min-h-screen px-4 py-5 text-slate-900 sm:px-7 sm:py-8">
+  return <main className="ditapaja-studio-page min-h-screen px-4 py-5 text-slate-900 sm:px-7 sm:py-8">
     <div className="mx-auto max-w-[1440px]">
       <div className="dt-studio-nav mb-7 flex items-center justify-between gap-3">
         <button onClick={() => router.push("/dashboard")} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 shadow-sm"><ArrowLeft size={16}/> Dashboard</button>
@@ -206,9 +206,9 @@ export default function LandingPageEditor() {
       </div>
 
       <header className="dt-studio-masthead mb-7 grid gap-6 rounded-[28px] p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-end">
-        <div><p className="mb-3 text-[10px] font-extrabold tracking-[.22em] text-blue-300">CUSTOMER EXPERIENCE BUILDER</p>
+        <div><p className="mb-3 text-[10px] font-extrabold tracking-[.22em] text-blue-300">TEMPLATE PERSONALIZATION</p>
           <h1 className="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">Buat halaman NFC yang terasa seperti brand kamu.</h1>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">Atur identitas, pesan, warna, dan cara pelanggan menghubungi bisnis. Perubahan bisa dilihat langsung di panel preview.</p>
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">Pilih template yang paling sesuai, lalu sesuaikan warna, font, logo, dan pesan. Tata letaknya tetap rapi secara otomatis.</p>
         </div>
         <div className="grid grid-cols-2 gap-2 lg:w-[260px]">
           <div className="rounded-2xl border border-white/10 bg-white/10 p-4"><span className="block text-[10px] font-bold uppercase tracking-wider text-slate-300">Kartu dipilih</span><strong className="mt-2 block truncate text-sm text-white">{selectedCard?.card_name || "Belum dipilih"}</strong></div>
@@ -263,8 +263,8 @@ export default function LandingPageEditor() {
                   <div className="rounded-2xl border border-slate-200 p-5"><p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">CONTOH PESAN</p><p className="mt-2 text-lg font-extrabold text-slate-800">{settings.headline || "Judul halaman kamu"}</p><p className="mt-2 text-sm leading-6 text-slate-500">{settings.description || "Deskripsi akan tampil di area ini."}</p></div>
                 </div>}
 
-                {editorSection === "design" && <div className="space-y-7">
-                  <div><h3 className="text-sm font-bold text-slate-800">Pilih suasana warna</h3><p className="mt-1 text-xs text-slate-500">Mulai dari preset, lalu sesuaikan warna aksennya.</p><div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">{themes.map(item=><button key={item.id} type="button" onClick={()=>update("theme",item.id)} className={`dt-studio-theme rounded-2xl border p-3 text-left ${settings.theme===item.id?"is-active":""}`}><span className="mb-3 block h-14 rounded-xl border border-black/5" style={{background:item.bg}}><span className="ml-3 mt-3 block h-7 w-16 rounded-lg" style={{background:settings.accent_color}}/></span><strong className="text-xs">{item.label}</strong><span className="mt-1 block text-[10px] opacity-60">{settings.theme===item.id?"Sedang dipilih":"Pilih tema"}</span></button>)}</div></div>
+                {editorSection === "design" && <div className="space-y-7">\n                  <div><h3 className="text-sm font-bold text-slate-800">Tipografi</h3><p className="mt-1 text-xs text-slate-500">Pilih karakter huruf yang paling sesuai dengan brand kamu.</p><select value={settings.font_family} onChange={e=>update("font_family",e.target.value as Settings["font_family"])} className="dt-studio-input mt-3 w-full sm:max-w-sm"><option value="Manrope">Manrope — modern & tegas</option><option value="DM Sans">DM Sans — bersih & ramah</option><option value="Arial">Arial — sederhana</option><option value="Georgia">Georgia — editorial & elegan</option></select></div>
+                  <div><h3 className="text-sm font-bold text-slate-800">Pilih template halaman</h3><p className="mt-1 text-xs text-slate-500">Pilih karakter desain. Kamu tetap bisa mengubah warna dan font setelahnya.</p><div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">{themes.map(item=><button key={item.id} type="button" onClick={()=>update("theme",item.id)} className={`dt-studio-theme rounded-2xl border p-3 text-left ${settings.theme===item.id?"is-active":""}`}><span className="mb-3 block h-14 rounded-xl border border-black/5" style={{background:item.bg}}><span className="ml-3 mt-3 block h-7 w-16 rounded-lg" style={{background:settings.accent_color}}/></span><strong className="text-xs">{item.label}</strong><span className="mt-1 block text-[10px] opacity-60">{settings.theme===item.id?"Sedang dipilih":"Pilih tema"}</span></button>)}</div></div>
                   <div className="grid gap-5 sm:grid-cols-2"><label className="block text-sm font-bold text-slate-700">Warna aksen<span className="mt-2 flex items-center gap-3 rounded-xl border border-slate-200 p-3"><input type="color" value={settings.accent_color} onChange={e=>update("accent_color",e.target.value)} className="h-10 w-12 cursor-pointer rounded-lg border-0 bg-transparent p-0"/><span className="text-sm font-semibold text-slate-600">{settings.accent_color.toUpperCase()}</span></span></label><label className="block text-sm font-bold text-slate-700">Gaya tombol<select value={settings.button_style} onChange={e=>update("button_style",e.target.value as Settings["button_style"])} className="dt-studio-input mt-2 w-full"><option value="solid">Solid — terisi</option><option value="outline">Outline — garis tepi</option></select></label></div>
                   <div className="rounded-2xl border border-slate-200 p-5"><p className="text-xs font-bold text-slate-700">Preview warna aksen</p><div className="mt-4 flex flex-wrap items-center gap-3"><span className="rounded-xl px-5 py-3 text-xs font-bold text-white" style={{background:settings.accent_color}}>Tombol solid</span><span className="rounded-xl border-2 px-5 py-3 text-xs font-bold" style={{borderColor:settings.accent_color,color:settings.accent_color}}>Tombol outline</span></div></div>
                 </div>}
@@ -293,7 +293,7 @@ export default function LandingPageEditor() {
           <aside className="dt-studio-preview-col xl:sticky xl:top-5">
             <div className="mb-3 flex items-center justify-between gap-2"><div><p className="text-[10px] font-extrabold uppercase tracking-[.16em] text-slate-400">LIVE CANVAS</p><h2 className="mt-1 text-lg font-extrabold text-slate-900">Tampilan pelanggan</h2></div><div className="inline-flex rounded-xl border border-slate-200 bg-white p-1"><button type="button" onClick={()=>setPreviewMode("mobile")} aria-pressed={previewMode==="mobile"} className={`rounded-lg px-3 py-2 text-xs font-bold ${previewMode==="mobile"?"bg-slate-900 text-white":"text-slate-500"}`}><Smartphone size={14}/></button><button type="button" onClick={()=>setPreviewMode("desktop")} aria-pressed={previewMode==="desktop"} className={`rounded-lg px-3 py-2 text-xs font-bold ${previewMode==="desktop"?"bg-slate-900 text-white":"text-slate-500"}`}><Monitor size={14}/></button></div></div>
             <div className={previewMode==="mobile"?"dt-studio-preview-frame is-mobile":"dt-studio-preview-frame is-desktop"}>
-              <div className="dt-studio-preview-screen" style={{background:theme.bg,color:theme.ink}}>
+              <div className="dt-studio-preview-screen" style={{background:theme.bg,color:theme.ink,fontFamily:settings.font_family === "DM Sans" ? '"DM Sans",sans-serif' : settings.font_family === "Manrope" ? "Manrope,sans-serif" : settings.font_family === "Georgia" ? "Georgia,serif" : "Arial,sans-serif"}}>
                 <div className="mx-auto mb-7 h-1.5 w-14 rounded-full bg-slate-400/40"/>
                 <div className="mb-6 flex" style={{justifyContent:settings.logo_position}}>{settings.logo_url?<img src={settings.logo_url} alt="Logo bisnis" className="rounded-2xl bg-white object-contain p-2 shadow-sm" style={{width:settings.logo_size,height:settings.logo_size}}/>:<div className="grid h-16 w-16 place-items-center rounded-2xl text-2xl" style={{background:settings.accent_color+"20",color:settings.accent_color}}>✦</div>}</div>
                 <p className="text-center text-[10px] font-extrabold">{businessName||"Bisnis Kami"}</p>{branchName&&<p className="mt-2 text-center text-[10px] opacity-70">{branchName}</p>}{branchAddress&&<p className="mt-1 text-center text-[10px] opacity-60">{branchAddress}</p>}
