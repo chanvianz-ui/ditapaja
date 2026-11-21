@@ -42,7 +42,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     :root{--accent:${accent};--font:${font}}
     *{box-sizing:border-box}
     html{min-height:100%;background:#edf1f7}
-    body{min-height:100vh;margin:0;padding:clamp(20px,5vw,56px) clamp(14px,4vw,38px);display:flex;align-items:center;justify-content:center;background:#edf1f7;color:#172943;font-family:var(--font);-webkit-font-smoothing:antialiased}
+    body{min-height:100vh;margin:0;padding:clamp(20px,5vw,56px) clamp(14px,4vw,38px);display:flex;align-items:flex-start;justify-content:center;background:#edf1f7;color:#172943;font-family:var(--font);-webkit-font-smoothing:antialiased}.experience{margin:auto 0}
     body.page-ocean{background:radial-gradient(ellipse at 15% 12%,#dce9fb 0,transparent 38%),linear-gradient(145deg,#edf2fa,#e7edf5)}
     body.page-midnight{background:radial-gradient(ellipse at 82% 12%,#1b3150 0,transparent 36%),radial-gradient(ellipse at 12% 90%,#15243a 0,transparent 42%),#080e18}
     body.page-rose{background:radial-gradient(ellipse at 12% 15%,#f5dfd1 0,transparent 35%),linear-gradient(145deg,#f3e9df,#e9ddd2)}
@@ -63,13 +63,13 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .message h1{margin:0 0 10px;font-size:clamp(23px,6vw,31px);font-weight:800;line-height:1.16;letter-spacing:-.8px;overflow-wrap:anywhere}
     .description{margin:0;color:var(--muted);font-size:13px;line-height:1.8;overflow-wrap:anywhere}
     .actions{display:grid;gap:11px;min-width:0}
-    .review-button{width:100%;min-width:0;min-height:54px;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 15px;border:1px solid var(--accent);border-radius:13px;background:var(--accent);color:#fff;font:750 12px var(--font);cursor:pointer}
+    .review-button{position:relative;width:100%;min-width:0;min-height:56px;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 15px;border:1px solid var(--accent);border-radius:13px;background:var(--accent);color:#fff;font:750 12px var(--font);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
     .review-button>span:nth-child(2){min-width:0;overflow-wrap:anywhere}
     .review-button> b{margin-left:auto;font-size:15px}
     .review-button.outline{background:transparent;color:var(--accent)}
     .google-g{display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:#fff;color:#4285f4;font-size:13px;font-weight:900}
-    .social-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;min-width:0}
-    .social-link{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px;color:var(--ink);text-decoration:none;font-size:11px;font-weight:700}
+    .social-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;min-width:0}
+    .social-link{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px;color:var(--ink);text-decoration:none;font-size:11px;font-weight:700;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease}
     .social-link span{min-width:0;overflow-wrap:anywhere}.social-link b{color:var(--muted)}
     .status{min-height:16px;margin:10px 0 0;color:var(--muted);font-size:10px;line-height:1.5;text-align:center}
     .footer{margin-top:23px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:9px;letter-spacing:.35px;text-align:center}
@@ -80,6 +80,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .theme-ocean:before{content:"";position:absolute;inset:0 0 auto;height:6px;background:linear-gradient(90deg,var(--accent),#8bbcff)}
     .theme-ocean{box-shadow:0 28px 80px #203b5c20,0 3px 10px #203b5c0b}
     .theme-ocean .brand-mark-fallback{box-shadow:0 8px 20px color-mix(in srgb,var(--accent) 18%,transparent)}
+    .theme-ocean .business{letter-spacing:-1.35px}.theme-ocean .review-button{box-shadow:0 8px 18px color-mix(in srgb,var(--accent) 20%,transparent)}.theme-ocean .social-link{background:linear-gradient(145deg,#fff,#f7f9fd)}
     .theme-ocean .brand-mark-row{justify-content:center}
     .theme-ocean .message{margin-top:25px;padding-top:22px;border-top:1px solid var(--line)}
     .theme-ocean .actions{margin-top:22px}
@@ -99,7 +100,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .theme-midnight .message{margin-top:33px;padding-top:23px;border-top:1px solid var(--line)}
     .theme-midnight .actions{margin-top:22px}
     .theme-midnight .review-button{position:relative;border-radius:9px;padding-left:42px;padding-right:42px}\n    .theme-midnight .review-button .google-g{position:absolute;left:14px}\n    .theme-midnight .review-button>b{position:absolute;right:14px;margin:0}
-    .theme-midnight .social-link{background:#172335;border-radius:8px}
+    .theme-midnight .social-link{background:linear-gradient(145deg,#1b2a40,#142033);border-radius:8px}.theme-midnight .brand-mark-fallback{box-shadow:0 0 30px color-mix(in srgb,var(--accent) 16%,transparent)}.theme-midnight .message-kicker{color:color-mix(in srgb,var(--accent) 68%,#d8e3f4)}
     /* Rose: editorial masthead and narrow text column */
     .theme-rose{--page:#f2e9df;--surface:#fffaf4;--ink:#392b2b;--muted:#89766e;--line:#eadbd0;--soft:#f7eee6;max-width:450px;padding:0 27px 22px;border:1px solid #eadbd0;border-radius:4px;box-shadow:10px 12px 0 #d8c6b6;text-align:center}
     .theme-rose .rose-masthead{display:flex;justify-content:center;gap:18px;margin:0 -27px 26px;padding:17px 27px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:900;letter-spacing:1.5px;background:linear-gradient(90deg,#f8eee6,#fffaf4 50%,#f8eee6)}
@@ -115,7 +116,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .theme-rose .actions{margin-top:22px}
     .theme-rose .review-button{position:relative;padding-left:42px;padding-right:42px;border-radius:3px;text-transform:uppercase;letter-spacing:.45px;font-size:10px}
     .theme-rose .social-links{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .theme-rose .review-button .google-g{position:absolute;left:13px}\n    .theme-rose .review-button>b{position:absolute;right:13px;margin:0}\n    .theme-rose .social-link{border-radius:3px}
+    .theme-rose .review-button .google-g{position:absolute;left:13px}\n    .theme-rose .review-button>b{position:absolute;right:13px;margin:0}\n    .theme-rose .social-link{border-radius:3px;background:linear-gradient(145deg,#fffdf9,#f8eee6)}.theme-rose .message{position:relative}.theme-rose .message:before{content:"";display:block;width:34px;height:2px;margin:0 auto 18px;background:var(--accent);opacity:.65}
     /* Forest: quiet natural layout with a contained message panel */
     .theme-forest{--page:#e9eee7;--surface:#f9fbf6;--ink:#203729;--muted:#718273;--line:#dce5d9;--soft:#edf3eb;max-width:440px;padding:27px 25px 22px;border:1px solid #dbe5d8;border-radius:29px 29px 12px 12px;box-shadow:0 22px 60px #1c3a2717;text-align:center}
     .theme-forest .forest-heading{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;padding-bottom:15px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:850;letter-spacing:1.7px}
@@ -128,9 +129,9 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .theme-forest .message h1{font-size:clamp(21px,5vw,26px)}
     .theme-forest .actions{margin-top:18px}
     .theme-forest .review-button{border-radius:99px}
-    .theme-forest .social-link{border-radius:99px;background:var(--soft);border-color:transparent}
-    @media(max-width:420px){body{padding:12px}.experience{max-width:100%}.theme-ocean{padding:28px 20px 20px}.theme-midnight{padding:23px 20px 20px}.theme-rose{padding-left:20px;padding-right:20px}.theme-rose .rose-masthead{margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}.theme-forest{padding:23px 19px 19px}.social-links{grid-template-columns:1fr}}
-    @media(prefers-reduced-motion:reduce){.review-button{transition:none}}
+    .theme-forest .social-link{border-radius:99px;background:linear-gradient(145deg,#f1f6ee,#e8f0e5);border-color:transparent}.theme-forest .forest-message{box-shadow:inset 0 1px #ffffffb5}.theme-forest .review-button{box-shadow:0 8px 18px color-mix(in srgb,var(--accent) 16%,transparent)}
+    @media(max-width:420px){body{padding:12px}.experience{max-width:100%;margin:auto 0}.theme-ocean{padding:28px 20px 20px}.theme-midnight{padding:23px 20px 20px}.theme-rose{padding-left:20px;padding-right:20px}.theme-rose .rose-masthead{margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px}.theme-forest{padding:23px 19px 19px}.social-links{grid-template-columns:1fr}}
+     .review-button:focus-visible,.social-link:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 48%,white);outline-offset:4px}.review-button:active{transform:translateY(1px)}.social-link:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 42%,var(--line));box-shadow:0 8px 20px #17294312}.review-button:hover{filter:brightness(1.04);box-shadow:0 9px 24px color-mix(in srgb,var(--accent) 24%,transparent);transform:translateY(-1px)}.theme-midnight .review-button:hover{box-shadow:0 0 28px color-mix(in srgb,var(--accent) 30%,transparent)}.theme-rose .review-button:hover{box-shadow:4px 5px 0 #d8c6b6}.theme-forest .review-button:hover{box-shadow:0 8px 22px #31583a22}@media(prefers-reduced-motion:reduce){.review-button,.social-link{transition:none}.review-button:hover,.social-link:hover{transform:none}}
   `;
   const content = (input.preview ? '<p class="preview-note">PREVIEW PEMILIK KARTU · Aktivitas tidak dicatat</p>' : '') + layouts[theme];
   return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="' + (theme === "midnight" ? "#090e17" : "#f2f5f8") + '"><title>Review ' + name + ' | DiTapAja</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>' + css + '</style></head><body class="page-' + theme + '"><main class="experience theme-' + theme + '">' + content + '<p class="status" id="status" role="status" aria-live="polite"></p><footer class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</footer></main></body></html>';
