@@ -79,7 +79,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   function navigate(item: typeof items[number]) {
-    if (item.view) setCardsView(item.view === "cards");
+    if (item.href === "/dashboard?view=cards") setCardsView(true);
+    else if (item.href === "/dashboard") setCardsView(false);
     setMenuOpen(false);
     router.push(item.href);
   }
