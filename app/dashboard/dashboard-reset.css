@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
-
 .dt-reset-app{--r-bg:#0d1111;--r-panel:#151b1a;--r-panel2:#1b2220;--r-line:rgba(228,232,220,.09);--r-text:#e9ece3;--r-muted:#8d9990;--r-gold:#c6aa7b;min-height:100vh;background:var(--r-bg);color:var(--r-text);font-family:"DM Sans",sans-serif}
 .dt-reset-app *{box-sizing:border-box}
 .dt-reset-sidebar{position:fixed;inset:0 auto 0 0;z-index:60;width:248px;padding:26px 17px 18px;background:#111615;border-right:1px solid var(--r-line);display:flex;flex-direction:column}
@@ -40,18 +39,18 @@
 .dt-reset-menu{display:none}
 .dt-reset-mobile-nav{display:none}
 .dt-reset-scrim{display:none}
-.dt-reset-app .dt-dashboard-shell,.dt-reset-app .dt-orders-page,.dt-reset-app .dt-customer-insights,.dt-reset-app .dt-business-page,.dt-reset-app .dt-page-studio-page,.dt-reset-app .dt-account-settings-page{min-height:0!important;background:transparent!important;color:var(--r-text)!important}
+.dt-reset-app .dt-dashboard-shell,.dt-reset-app .dt-orders-page,.dt-reset-app .dt-customer-insights,.dt-reset-app .dt-business-page,.dt-reset-app .dt-account-settings-page{min-height:0!important;background:transparent!important;color:var(--r-text)!important}
 .dt-reset-app .dt-dashboard-shell{margin:0!important}
 .dt-reset-app .dt-dashboard-shell>.flex>aside.dt-rail-v2,.dt-reset-app .dt-dashboard-topbar,.dt-reset-app .dt-mobile-bottom-nav{display:none!important}
 .dt-reset-app .dt-dashboard-shell>.flex{min-height:0!important}
 .dt-reset-app .dt-dashboard-shell>.flex>section{width:100%}
 .dt-reset-app .dt-dashboard-content{padding:0!important;max-width:none!important}
-.dt-reset-app .dt-orders-page,.dt-reset-app .dt-business-page,.dt-reset-app .dt-page-studio-page,.dt-reset-app .dt-account-settings-page,.dt-reset-app .dt-customer-insights{padding:0!important}
-.dt-reset-app .dt-dashboard-command,.dt-reset-app .dt-ci-hero,.dt-reset-app .dt-business-hero,.dt-reset-app .dt-studio-masthead{border-radius:13px!important}
+.dt-reset-app .dt-orders-page,.dt-reset-app .dt-business-page,.dt-reset-app .dt-account-settings-page,.dt-reset-app .dt-customer-insights{padding:0!important}
+.dt-reset-app .dt-dashboard-command,.dt-reset-app .dt-ci-hero,.dt-reset-app .dt-business-hero{border-radius:13px!important}
 .dt-reset-app .dt-dashboard-command{min-height:300px!important}
 .dt-reset-app .dt-dashboard-command h2{font-family:Manrope,sans-serif!important}
-.dt-reset-app .dt-dashboard-command-panel,.dt-reset-app .dt-analytics-kpi,.dt-reset-app .dt-card-control-center,.dt-reset-app .dt-analytics-overview,.dt-reset-app .dt-analytics-insights,.dt-reset-app .dt-workspace-panel,.dt-reset-app .dt-ci-panel,.dt-reset-app .dt-studio-card-select,.dt-reset-app .dt-studio-section-nav,.dt-reset-app .dt-studio-form{background:var(--r-panel)!important;border:1px solid var(--r-line)!important;border-radius:12px!important;color:var(--r-text)!important}
-.dt-reset-app .dt-dashboard-content h2,.dt-reset-app .dt-dashboard-content h3,.dt-reset-app .dt-orders-page h1,.dt-reset-app .dt-orders-page h2,.dt-reset-app .dt-customer-insights h1,.dt-reset-app .dt-customer-insights h2,.dt-reset-app .dt-business-page h1,.dt-reset-app .dt-business-page h2,.dt-reset-app .dt-page-studio-page h1,.dt-reset-app .dt-page-studio-page h2,.dt-reset-app .dt-account-settings-page h1,.dt-reset-app .dt-account-settings-page h2{color:#edf0e8!important}
+.dt-reset-app .dt-dashboard-command-panel,.dt-reset-app .dt-analytics-kpi,.dt-reset-app .dt-card-control-center,.dt-reset-app .dt-analytics-overview,.dt-reset-app .dt-analytics-insights,.dt-reset-app .dt-workspace-panel,.dt-reset-app .dt-ci-panel{background:var(--r-panel)!important;border:1px solid var(--r-line)!important;border-radius:12px!important;color:var(--r-text)!important}
+.dt-reset-app .dt-dashboard-content h2,.dt-reset-app .dt-dashboard-content h3,.dt-reset-app .dt-orders-page h1,.dt-reset-app .dt-orders-page h2,.dt-reset-app .dt-customer-insights h1,.dt-reset-app .dt-customer-insights h2,.dt-reset-app .dt-business-page h1,.dt-reset-app .dt-business-page h2,.dt-reset-app .dt-account-settings-page h1,.dt-reset-app .dt-account-settings-page h2{color:#edf0e8!important}
 .dt-reset-app .text-slate-950,.dt-reset-app .text-slate-900,.dt-reset-app .text-slate-800,.dt-reset-app .text-slate-700{color:#e2e7df!important}
 .dt-reset-app .text-slate-600,.dt-reset-app .text-slate-500,.dt-reset-app .text-slate-400{color:#9aa59c!important}
 .dt-reset-app input,.dt-reset-app select,.dt-reset-app textarea{background:#101615!important;border-color:#ffffff20!important;color:#e8ece4!important}
@@ -60,16 +59,16 @@
 .dt-reset-app .border-slate-100,.dt-reset-app .border-slate-200,.dt-reset-app .border-slate-300{border-color:var(--r-line)!important}
 .dt-reset-app .shadow-xl,.dt-reset-app .shadow-2xl{box-shadow:0 24px 70px -48px #000!important}
 @media(max-width:900px){
- .dt-reset-sidebar{transform:translateX(-105%);transition:transform .25s ease}
- .dt-reset-app:has(.dt-reset-scrim:not([hidden])) .dt-reset-sidebar{transform:translateX(0)}
- .dt-reset-scrim{display:block;position:fixed;inset:0;z-index:55;border:0;background:#0009}
- .dt-reset-main{margin-left:0}
- .dt-reset-topbar{height:70px;padding:0 18px}
- .dt-reset-menu{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--r-line);border-radius:9px;background:#171d1b;color:#dfe5dc}
- .dt-reset-content{padding:22px 16px 104px}
- .dt-reset-mobile-nav{position:fixed;inset:auto 0 0;z-index:50;display:flex;justify-content:space-around;gap:2px;padding:9px 5px calc(9px + env(safe-area-inset-bottom));background:rgba(17,22,21,.96);border-top:1px solid var(--r-line);backdrop-filter:blur(18px)}
- .dt-reset-mobile-nav a{display:grid;justify-items:center;gap:4px;min-width:0;padding:5px 8px;color:#78847c;font-size:8px;font-weight:700}
- .dt-reset-mobile-nav a.active{color:#dfc596}
- .dt-reset-live{display:none}
+.dt-reset-sidebar{transform:translateX(-105%);transition:transform .25s ease}
+.dt-reset-app:has(.dt-reset-scrim:not([hidden])) .dt-reset-sidebar{transform:translateX(0)}
+.dt-reset-scrim{display:block;position:fixed;inset:0;z-index:55;border:0;background:#0009}
+.dt-reset-main{margin-left:0}
+.dt-reset-topbar{height:70px;padding:0 18px}
+.dt-reset-menu{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--r-line);border-radius:9px;background:#171d1b;color:#dfe5dc}
+.dt-reset-content{padding:22px 16px 104px}
+.dt-reset-mobile-nav{position:fixed;inset:auto 0 0;z-index:50;display:flex;justify-content:space-around;gap:2px;padding:9px 5px calc(9px + env(safe-area-inset-bottom));background:rgba(17,22,21,.96);border-top:1px solid var(--r-line);backdrop-filter:blur(18px)}
+.dt-reset-mobile-nav a{display:grid;justify-items:center;gap:4px;min-width:0;padding:5px 8px;color:#78847c;font-size:8px;font-weight:700}
+.dt-reset-mobile-nav a.active{color:#dfc596}
+.dt-reset-live{display:none}
 }
 @media(min-width:901px){.dt-reset-scrim{display:none!important}}
