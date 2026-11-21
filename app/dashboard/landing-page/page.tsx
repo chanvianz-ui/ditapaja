@@ -16,15 +16,15 @@ type Settings = {
 const defaults = (cardId: string): Settings => ({
   card_id: cardId, is_published: false, headline: "Bagikan pengalaman kamu",
   description: "Terima kasih sudah berkunjung. Kami menghargai ulasan dan dukungan kamu.",
-  theme: "ocean", font_family: "Manrope", accent_color: "#2563eb", button_style: "solid",
+  theme: "ocean", font_family: "Manrope", accent_color: "#bd8057", button_style: "solid",
   logo_url: null, logo_size: 72, logo_position: "center",
   whatsapp_url: "", instagram_url: "", website_url: ""
 });
 const themes = [
-  { id: "ocean", label: "Ocean Studio", bg: "#eaf0fa", ink: "#15243b" },
-  { id: "midnight", label: "Midnight Luxe", bg: "#111a29", ink: "#f4f6fb" },
-  { id: "rose", label: "Rose Editorial", bg: "#fffaf4", ink: "#392b2b" },
-  { id: "forest", label: "Forest Organic", bg: "#e9eee7", ink: "#1e3427" }
+  { id: "ocean", label: "Atelier", bg: "#171719", ink: "#f0eee8" },
+  { id: "midnight", label: "Obsidian", bg: "#111316", ink: "#f0eee8" },
+  { id: "rose", label: "Playform", bg: "#e9e5dc", ink: "#111214" },
+  { id: "forest", label: "Solace", bg: "#171d19", ink: "#f0eee8" }
 ] as const;
 
 function escapePreviewHtml(value: string) {
