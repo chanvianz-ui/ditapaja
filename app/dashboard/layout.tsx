@@ -117,7 +117,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <span className="dt-app-profile-avatar">{displayName.slice(0, 1).toUpperCase()}</span>
                 <span className="dt-app-profile-copy"><b>{displayName}</b><small>{email || "Akun DiTapAja"}</small></span>
               </div>
-              <button type="button" onClick={logout} aria-label="Keluar"><LogOut size={17}/><span>Keluar</span></button>
+              <button type="button" onClick={logout} aria-label="Sign out"><LogOut size={17}/><span>Sign out</span></button>
             </div>
           </section>
         </div>
