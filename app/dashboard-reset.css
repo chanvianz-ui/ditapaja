@@ -13,7 +13,7 @@
 .dt-nav-caption,.dt-eyebrow{color:#75869a;font-size:9px;font-weight:800;letter-spacing:.18em}
 .dt-nav-caption{padding:0 11px 11px}
 .dt-nav{display:grid;gap:5px}
-.dt-nav a,.dt-nav button,.dt-sidebar-bottom>a,.dt-sidebar-bottom>button{position:relative;min-height:43px;width:100%;display:flex;align-items:center;gap:11px;padding:0 12px;border:1px solid transparent;border-radius:9px;background:transparent;color:#96a4b3;text-decoration:none;text-align:left;font:600 11px inherit;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+.dt-nav a,.dt-nav button,.dt-sidebar-bottom>a,.dt-sidebar-bottom>button{position:relative;min-height:43px;width:100%;display:flex;align-items:center;gap:11px;padding:0 12px;border:1px solid transparent;border-radius:9px;background:transparent;color:#96a4b3;text-decoration:none;text-align:left;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
 .dt-nav a:hover,.dt-nav button:hover,.dt-sidebar-bottom>a:hover,.dt-sidebar-bottom>button:hover{background:#151d27;color:#edf4fb}
 .dt-nav a.is-active,.dt-nav button.is-active{border-color:rgba(185,210,239,.17);background:#1a2634;color:#e8f2ff}
 .dt-nav a svg,.dt-nav button svg,.dt-sidebar-bottom svg{flex:none;color:#8298b1}
