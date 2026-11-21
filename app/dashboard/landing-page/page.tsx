@@ -194,8 +194,6 @@ export default function LandingPageEditor() {
     setSaving(false);
   }
 
-  if (loading) return <div className="flex min-h-screen items-center justify-center bg-[#f7f9fc]"><Loader2 className="animate-spin text-blue-600" /></div>;
-
   const sections = [
     { id: "identity" as const, number: "01", title: "Identitas", detail: "Logo & kartu" },
     { id: "content" as const, number: "02", title: "Konten", detail: "Pesan pelanggan" },
@@ -238,6 +236,8 @@ export default function LandingPageEditor() {
       '<div class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</div></main></body></html>';
   }, [settings.theme, settings.font_family, settings.logo_url, settings.logo_size, settings.logo_position, settings.accent_color, settings.button_style, settings.headline, settings.description, settings.whatsapp_url, settings.instagram_url, settings.website_url, businessName, branchName, branchAddress]);
 
+
+  if (loading) return <div className="flex min-h-screen items-center justify-center bg-[#f7f9fc]"><Loader2 className="animate-spin text-blue-600" /></div>;
 
   return <main className="ditapaja-studio-page">
     <div className="studio-shell">
