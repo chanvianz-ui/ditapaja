@@ -68,7 +68,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     ["Instagram", input.instagram_url],
     ["Website", input.website_url],
   ] as [string, string | undefined][])
-    .filter((item): item is [string, string] => Boolean(item[1]) && /^https:\/\//i.test(item[1]))
+    .filter((item): item is [string, string] => typeof item[1] === "string" && /^https:\/\//i.test(item[1]))
     .map(([label, url]) => '<a class="social-link" href="' + esc(url) +
       '" target="_blank" rel="noopener noreferrer"><span>' + label +
       '</span><b aria-hidden="true">↗</b></a>').join("");
