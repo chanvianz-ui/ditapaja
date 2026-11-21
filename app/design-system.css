@@ -1128,3 +1128,86 @@ code{overflow-wrap:anywhere}
  .guide-step-icon{width:35px;height:35px}.guide-step-check{display:none}
  .product-detail-page .detail-hero{padding-top:28px!important}
 }
+
+/* Checkout flow — preserve guest ordering while giving the form a focused dark workspace */
+.dt-order-checkout{
+  min-height:100vh;background:#090a0c!important;color:#efede7!important;
+  background-image:radial-gradient(ellipse at 12% 12%,rgba(189,128,87,.1),transparent 34rem)!important;
+}
+.dt-order-checkout .order-header{
+  border-color:#343735!important;background:rgba(9,10,12,.92)!important;color:#efede7!important;
+}
+.dt-order-checkout .order-brand,.dt-order-checkout .order-back{color:#e8e4dc!important}
+.dt-order-checkout .order-brand-mark{border:1px solid #76553e!important;border-radius:8px!important;background:#251d17!important;color:#d29a72!important}
+.dt-order-checkout .order-brand>span:last-child{color:#d29a72!important}
+.dt-order-checkout .order-layout{max-width:1360px!important;gap:24px!important}
+.dt-order-checkout .order-intro{
+  position:sticky!important;top:104px!important;align-self:start!important;
+  border:1px solid #49382c!important;border-radius:3px!important;
+  background:radial-gradient(ellipse at 80% 0%,rgba(189,128,87,.17),transparent 38%),linear-gradient(130deg,#181918,#211b17)!important;
+  color:#efede7!important;box-shadow:0 25px 70px -50px #000!important;
+}
+.dt-order-checkout .order-kicker{color:#c59673!important}
+.dt-order-checkout .order-intro h1{color:#f0eee8!important;font-size:clamp(38px,4.6vw,62px)!important;letter-spacing:-.075em!important}
+.dt-order-checkout .order-intro h1 em{color:#d29a72!important}
+.dt-order-checkout .order-intro>p{color:#aaa49b!important}
+.dt-order-checkout .order-assurance{border:1px solid #4a4035!important;border-radius:8px!important;background:#171513!important}
+.dt-order-checkout .order-assurance>span{background:#2b2118!important;color:#d29a72!important}
+.dt-order-checkout .order-assurance b{color:#e9e3d9!important}
+.dt-order-checkout .order-assurance small{color:#aaa49b!important}
+.dt-order-checkout .order-mini-note{color:#c3b8a9!important}
+.dt-order-checkout .order-mini-note svg{color:#d29a72!important}
+.dt-order-checkout .order-form{
+  border:1px solid #383c39!important;border-radius:9px!important;background:#111416!important;
+  color:#e9e5dd!important;box-shadow:0 28px 80px -60px #000!important;
+}
+.dt-order-checkout .order-form-heading{border-color:#343735!important}
+.dt-order-checkout .order-form-heading span{color:#bd9476!important}
+.dt-order-checkout .order-form-heading h2{color:#efede7!important}
+.dt-order-checkout .order-form-heading small{color:#929599!important}
+.dt-order-checkout .order-field{color:#d6d1c8!important}
+.dt-order-checkout .order-field input,.dt-order-checkout .order-field select,.dt-order-checkout .order-field textarea{
+  min-height:46px!important;border:1px solid #414542!important;border-radius:7px!important;
+  background:#0b0d0f!important;color:#eeeae3!important;
+}
+.dt-order-checkout .order-field input::placeholder,.dt-order-checkout .order-field textarea::placeholder{color:#747a76!important}
+.dt-order-checkout .order-field input:focus,.dt-order-checkout .order-field select:focus,.dt-order-checkout .order-field textarea:focus{
+  border-color:#bd8057!important;box-shadow:0 0 0 3px #bd80571b!important;
+}
+.dt-order-checkout .order-field-hint{color:#858b85!important}
+.dt-order-checkout .order-product-summary{border:1px solid #3c3f3b!important;border-radius:8px!important;background:#171a1b!important}
+.dt-order-checkout .order-product-summary span{color:#bd9476!important}
+.dt-order-checkout .order-product-summary b{color:#eeeae3!important}
+.dt-order-checkout .order-product-summary small{color:#999b95!important}
+.dt-order-checkout .order-quantity-row{border-color:#343735!important}
+.dt-order-checkout .order-quantity-row b{color:#e9e5dd!important}
+.dt-order-checkout .order-quantity-row small{color:#929599!important}
+.dt-order-checkout .order-quantity{border:1px solid #414542!important;border-radius:7px!important;background:#0b0d0f!important}
+.dt-order-checkout .order-quantity button{color:#d29a72!important}
+.dt-order-checkout .order-quantity button:disabled{color:#555b57!important}
+.dt-order-checkout .order-quantity output{color:#eeeae3!important}
+.dt-order-checkout .order-total{border:1px solid #4b3b30!important;border-radius:8px!important;background:#211b16!important}
+.dt-order-checkout .order-total span{color:#c3a48b!important}
+.dt-order-checkout .order-total b{color:#f0e5d9!important}
+.dt-order-checkout .order-total small{color:#a99c8e!important}
+.dt-order-checkout .order-submit{
+  min-height:52px!important;border:1px solid #bd8057!important;border-radius:7px!important;
+  background:#bd8057!important;color:#150f0b!important;font-weight:850!important;box-shadow:none!important;
+}
+.dt-order-checkout .order-submit:hover{background:#d09268!important}
+.dt-order-checkout .order-submit:disabled{opacity:.55}
+.dt-order-checkout .order-privacy-note{color:#929599!important}
+.dt-order-checkout .order-footer{border-color:#343735!important;color:#858984!important}
+.dt-order-checkout .dt-order-account-overlay{background:rgba(0,0,0,.8)!important}
+.dt-order-checkout .dt-order-account-overlay section{
+  border:1px solid #41413c!important;border-radius:9px!important;background:#141719!important;color:#efede7!important;
+}
+.dt-order-checkout .dt-order-account-overlay .bg-emerald-50{border:1px solid #426b54!important;background:#18251d!important;color:#acd0b3!important}
+.dt-order-checkout .dt-order-account-overlay .text-blue-600{color:#d29a72!important}
+.dt-order-checkout .dt-order-account-overlay .text-slate-900,.dt-order-checkout .dt-order-account-overlay .text-slate-800{color:#efede7!important}
+.dt-order-checkout .dt-order-account-overlay .text-slate-500,.dt-order-checkout .dt-order-account-overlay .text-slate-400{color:#a0a29c!important}
+.dt-order-checkout .dt-order-account-overlay .border-slate-200{border-color:#414542!important}
+.dt-order-checkout .dt-order-account-overlay .bg-blue-600{background:#bd8057!important;color:#150f0b!important}
+.dt-order-checkout .dt-order-account-overlay .hover\\:bg-slate-50:hover{background:#222624!important}
+@media(max-width:900px){.dt-order-checkout .order-intro{position:relative!important;top:auto!important}}
+@media(max-width:640px){.dt-order-checkout .order-layout{padding:24px 14px 42px!important}.dt-order-checkout .order-intro,.dt-order-checkout .order-form{border-radius:8px!important}.dt-order-checkout .order-intro h1{font-size:38px!important}}
