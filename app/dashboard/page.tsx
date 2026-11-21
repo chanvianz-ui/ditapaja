@@ -72,6 +72,10 @@ export default function DashboardPage() {
   const router = useRouter();
   const [activeView, setActiveView] = useState<"overview" | "cards">("overview");
 
+  useEffect(() => {
+    if (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("view") === "cards") setActiveView("cards");
+  }, []);
+
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [cards, setCards] = useState<NfcCard[]>([]);
@@ -1003,35 +1007,7 @@ export default function DashboardPage() {
 
   return (
     <main className="dt-reset-dashboard">
-      <aside className="dt-sidebar">
-        <a href="/" className="dt-brand"><span className="dt-brand-mark">D</span><span>DiTapAja<small>WORKSPACE</small></span></a>
-        <div className="dt-nav-caption">WORKSPACE</div>
-        <nav className="dt-nav" aria-label="Navigasi workspace">
-          <button type="button" className={activeView === "overview" ? "is-active" : ""} onClick={() => setActiveView("overview")}><LayoutDashboard size={17}/>Overview</button>
-          <button type="button" className={activeView === "cards" ? "is-active" : ""} onClick={() => setActiveView("cards")}><CreditCard size={17}/>Kartu NFC<span className="dt-nav-count">{cards.filter(card => !card.archived_at).length}</span></button>
-          <a href="/dashboard/customers"><Users size={17}/>Customer Insights</a>
-          <a href="/dashboard/orders"><ShoppingBag size={17}/>Pesanan</a>
-          <a href="/dashboard/business"><Building2 size={17}/>Bisnis</a>
-          <a href="/dashboard/landing-page"><Eye size={17}/>Page Studio</a>
-        </nav>
-        <div className="dt-sidebar-bottom">
-          <a href="/dashboard/settings"><Settings size={17}/>Pengaturan</a>
-          <button type="button" onClick={handleLogout}><LogOut size={17}/>Keluar</button>
-          <div className="dt-user-chip"><span>{displayName.charAt(0).toUpperCase()}</span><div><b>{displayName}</b><small>{email}</small></div></div>
-        </div>
-      </aside>
-
-      <div className="dt-main">
-        <header className="dt-topbar">
-          <div className="dt-topbar-context"><span className="dt-live-indicator"/>WORKSPACE <span className="dt-breadcrumb-sep">/</span> {activeView === "overview" ? "OVERVIEW" : "CARD MANAGEMENT"}</div>
-          <div className="dt-topbar-actions"><span>{workspaceName}</span><button type="button" onClick={() => router.push("/dashboard/settings")} aria-label="Pengaturan"><Settings size={17}/></button><span className="dt-avatar">{displayName.charAt(0).toUpperCase()}</span></div>
-        </header>
-        <nav className="dt-mobile-nav" aria-label="Navigasi workspace">
-          <button type="button" className={activeView === "overview" ? "is-active" : ""} onClick={() => setActiveView("overview")}><LayoutDashboard size={15}/>Overview</button>
-          <button type="button" className={activeView === "cards" ? "is-active" : ""} onClick={() => setActiveView("cards")}><CreditCard size={15}/>Kartu NFC</button>
-        </nav>
-
-        <div className="dt-page">
+      <div className="dt-page">
           {(cardError || cardMessage || analyticsError || nfcError || nfcMessage) && <div className={cardError || analyticsError || nfcError ? "dt-alert is-error" : "dt-alert"}>{cardError || analyticsError || nfcError || cardMessage || nfcMessage}</div>}
 
           {activeView === "overview" ? (
@@ -1063,7 +1039,7 @@ export default function DashboardPage() {
               </section>
 
               <section className="dt-recent-section">
-                <div className="dt-section-heading"><div><span className="dt-eyebrow">YOUR INVENTORY</span><h2>Kartu NFC</h2><p>Akses cepat ke kartu yang terakhir kamu kelola.</p></div><button className="dt-text-button" type="button" onClick={() => setActiveView("cards")}>Kelola semua kartu <ExternalLink size={14}/></button></div>
+                <div className="dt-section-heading"><div><span className="dt-eyebrow">YOUR INVENTORY</span><h2>Kartu NFC</h2><p>Akses cepat ke kartu yang terakhir kamu kelola.</p></div><button className="dt-text-button" type="button" onClick={() => { setActiveView("cards"); window.history.replaceState(null, "", "/dashboard?view=cards"); }}>Kelola semua kartu <ExternalLink size={14}/></button></div>
                 <div className="dt-recent-list">
                   {cards.filter(card => !card.archived_at).slice(0,4).length ? cards.filter(card => !card.archived_at).slice(0,4).map(card => <article className="dt-recent-card" key={card.id}><span className="dt-card-icon"><CreditCard size={18}/></span><div className="dt-recent-info"><b>{card.card_name || "Untitled Card"}</b><small>{card.public_code}</small></div><span className={card.active?"dt-status is-on":"dt-status"}>{card.active?"Aktif":"Nonaktif"}</span><span className="dt-recent-taps">{(cardEventStats.get(card.id)?.taps || 0).toLocaleString("id-ID")} <small>taps</small></span></article>) : <div className="dt-no-cards"><CreditCard size={22}/><b>Belum ada kartu NFC</b><span>Buat kartu pertama untuk mulai mengumpulkan ulasan.</span></div>}
                 </div>
@@ -1087,8 +1063,8 @@ export default function DashboardPage() {
             </>
           )}
           <footer className="dt-footer">DiTapAja <span>·</span> NFC Review Workspace <small>Tanpa biaya langganan bulanan</small></footer>
-        </div>
       </div>
+    </main>
 
       {/* BULK QR PRINT SHEET */}
       {showBulkQrSheet && (
