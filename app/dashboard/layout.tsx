@@ -47,7 +47,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   function active(href: string) {
     const path = href.split("?")[0];
-    return path === "/dashboard" ? pathname === path : pathname === path || pathname.startsWith(path + "/");
+    if (path === "/dashboard") {
+      const cardsView = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("view") === "cards";
+      return pathname === path && (href.includes("view=cards") ? cardsView : !cardsView);
+    }
+    return pathname === path || pathname.startsWith(path + "/");
+  }
+  function navigate(item: typeof items[number], event: React.MouseEvent<HTMLAnchorElement>) {
+    if (item.href.includes("?")) {
+      event.preventDefault();
+      window.location.assign(item.href);
+    }
   }
   async function logout() {
     await supabase.auth.signOut();
@@ -80,7 +90,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <button type="button" onClick={() => setMenuOpen(false)} aria-label="Tutup menu"><X size={20}/></button>
           </div>
           <nav className="dt-app-menu-links">
-            {items.map((item, index) => { const Icon = item.icon; return <Link key={item.href} href={item.href} className={active(item.href) ? "is-active" : ""} onClick={event => { setMenuOpen(false); if (item.href.includes("?")) { event.preventDefault(); window.location.assign(item.href); } }}>
+            {items.map((item, index) => { const Icon = item.icon; return <Link key={item.href} href={item.href} className={active(item.href) ? "is-active" : ""} onClick={event => { setMenuOpen(false); navigate(item, event); }}>
               <span className="dt-app-menu-index">0{index + 1}</span><Icon size={18}/><b>{item.label}</b><ArrowUpRight size={17}/>
             </Link>; })}
           </nav>
@@ -89,6 +99,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </div>}
 
       <div className="dt-app-content">{children}</div>
+
+      <nav className="dt-floating-nav" aria-label="Navigasi utama">
+        {items.map((item) => {
+          const Icon = item.icon;
+          return <Link key={item.href} href={item.href} aria-current={active(item.href) ? "page" : undefined}
+            className={active(item.href) ? "is-active" : ""}
+            onClick={(event) => navigate(item, event)}>
+            <Icon size={17} strokeWidth={1.9}/>
+            <span>{item.label}</span>
+          </Link>;
+        })}
+      </nav>
     </div>
   );
 }
