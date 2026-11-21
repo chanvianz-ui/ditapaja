@@ -357,3 +357,35 @@
  .dt-auth-form-side{background:transparent!important}
  .dt-auth-form-card{border:0!important;background:transparent!important}
 }
+
+/* Shared public navigation and drawers */
+.dt-public-header{
+  position:sticky!important;top:0!important;z-index:50!important;
+  border-bottom:1px solid rgba(238,236,230,.1)!important;
+  background:rgba(9,10,12,.9)!important;color:#efede7!important;
+  backdrop-filter:blur(20px)!important;
+}
+.dt-public-header .concept-nav{color:#efede7!important}
+.dt-public-header .brand{color:#efede7!important}
+.dt-public-header .brand-symbol{border:1px solid #76553e!important;border-radius:9px!important;background:#251d17!important;box-shadow:none!important}
+.dt-public-header .brand-symbol i{background:#d7a27c!important}
+.dt-public-header .blue-word{color:#d29a72!important}
+.dt-public-header .concept-nav nav a,.dt-public-header .concept-nav-actions>a{color:#b9b8b2!important}
+.dt-public-header .concept-nav nav a:hover,.dt-public-header .concept-nav-actions>a:hover{color:#f0e7dc!important}
+.dt-public-header .concept-nav .concept-nav-cta{border:1px solid #76553e!important;border-radius:7px!important;background:#bd8057!important;color:#160f0a!important;box-shadow:none!important}
+.dt-public-header .concept-mobile-actions a,.dt-public-header .concept-mobile-actions button{border:1px solid #3b3e3d!important;border-radius:8px!important;background:#171a1c!important;color:#eeeae3!important}
+.dt-menu-overlay{background:rgba(0,0,0,.76)!important;backdrop-filter:blur(8px)!important}
+.dt-menu-panel{border-left:1px solid #41413c!important;background:radial-gradient(ellipse at 80% 0%,rgba(189,128,87,.12),transparent 36%),#111416!important;color:#efede7!important}
+.dt-menu-panel .brand{color:#efede7!important}
+.dt-menu-panel .brand-symbol{background:#251d17!important;border:1px solid #76553e!important}
+.dt-menu-panel .blue-word{color:#d29a72!important}
+.dt-menu-panel .dt-menu-label{color:#bd9476!important}
+.dt-menu-panel .dt-menu-links a{border-color:#343735!important;color:#e9e5dd!important}
+.dt-menu-panel .dt-menu-links a:hover{background:#211b16!important;border-color:#76553e!important}
+.dt-menu-panel .dt-menu-action-card{border:1px solid #3a3d3a!important;border-radius:8px!important;background:#171a1c!important;color:#eeeae3!important}
+.dt-menu-panel .dt-menu-action-icon{background:#251d17!important;color:#d29a72!important}
+.dt-menu-panel .dt-menu-action-copy small{color:#bd9476!important}
+.dt-menu-panel .dt-menu-action-copy strong{color:#efede7!important}
+.dt-menu-panel .dt-menu-action-copy em{color:#999b95!important}
+.dt-menu-panel .dt-menu-close{border-color:#3b3e3d!important;background:#191d1f!important;color:#c8c2b8!important}
+.dt-menu-foot{border-color:#343735!important;color:#858984!important}
