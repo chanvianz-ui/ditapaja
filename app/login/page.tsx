@@ -5,7 +5,7 @@ import SiteHeader from "../components/site-header";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../lib/supabase";
+import { setAuthStorageMode, supabase } from "../../lib/supabase";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,6 +24,10 @@ export default function LoginPage() {
     setMessage("");
 
     try {
+      // Clear any previous session before switching between persistent and tab-only storage.
+      await supabase.auth.signOut({ scope: "local" });
+      setAuthStorageMode(rememberMe);
+
       if (identifier.includes("@")) {
         const { error } = await supabase.auth.signInWithPassword({
           email: identifier.trim(),
