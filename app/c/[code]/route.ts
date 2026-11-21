@@ -131,7 +131,8 @@ export async function GET(
       rose: { background: "#fbf7f0", card: "#fffdf9", text: "#342b24", muted: "#82766b", border: "#e9dfd2" },
       forest: { background: "#f1f3f6", card: "#ffffff", text: "#202735", muted: "#697386", border: "#e0e4eb" },
     };
-    const palette = themePalette[customPage?.theme || "ocean"] || themePalette.ocean;\n    const fontFamily = customPage?.font_family === "DM Sans" ? '"DM Sans", sans-serif' : customPage?.font_family === "Arial" ? 'Arial, sans-serif' : customPage?.font_family === "Georgia" ? 'Georgia, serif' : 'Manrope, sans-serif';
+    const palette = themePalette[customPage?.theme || "ocean"] || themePalette.ocean;
+    const fontFamily = customPage?.font_family === "DM Sans" ? '"DM Sans", sans-serif' : customPage?.font_family === "Arial" ? 'Arial, sans-serif' : customPage?.font_family === "Georgia" ? 'Georgia, serif' : 'Manrope, sans-serif';
     const logoUrl = typeof customPage?.logo_url === "string" && customPage.logo_url.startsWith(supabaseUrl + "/storage/v1/object/public/ditapaja-brand-assets/") ? customPage.logo_url : "";
     const logoSize = Number.isInteger(customPage?.logo_size) ? Math.min(128, Math.max(40, customPage!.logo_size)) : 72;
     const logoPosition = ["left", "center", "right"].includes(customPage?.logo_position || "") ? customPage!.logo_position : "center";
