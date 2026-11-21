@@ -197,7 +197,10 @@ export async function GET(
       font-size: 11px; font-weight: 650;
     }
     .address { margin: 10px 0 0; color: #8995a7; font-size: 12px; line-height: 1.55; }
-    .rule { width: 38px; height: 3px; margin: 25px auto 21px; border-radius: 9px; background: #dbe6fb; }\n    .rating { display:flex; justify-content:center; gap:5px; margin:0 0 12px; color:#f4b740; font-size:19px; letter-spacing:1px; }\n    .rating-caption { margin:0 0 8px; color:#8995a7; font-size:10px; font-weight:650; letter-spacing:.2px; }\n    .review-hint { margin:12px 0 0; color:#8b96a7; font-size:10px; line-height:1.6; }
+    .rule { width: 38px; height: 3px; margin: 25px auto 21px; border-radius: 9px; background: #dbe6fb; }
+    .rating { display:flex; justify-content:center; gap:5px; margin:0 0 12px; color:#f4b740; font-size:19px; letter-spacing:1px; }
+    .rating-caption { margin:0 0 8px; color:#8995a7; font-size:10px; font-weight:650; letter-spacing:.2px; }
+    .review-hint { margin:12px 0 0; color:#8b96a7; font-size:10px; line-height:1.6; }
     h1 { margin: 0 0 10px; font-size: 21px; letter-spacing: -.55px; line-height: 1.3; }
     .description { margin: 0; color: #68768b; font-size: 13.5px; line-height: 1.8; }
     .button {
