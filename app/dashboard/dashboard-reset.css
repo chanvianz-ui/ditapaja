@@ -237,3 +237,70 @@
 .dt-customer-orders input,.dt-customer-orders textarea,.dt-customer-orders select{border-color:#414542!important;background:#0b0d0f!important;color:#eeeae3!important}
 .dt-customer-orders .bg-blue-600{background:#bd8057!important;color:#160f0a!important}
 .dt-customer-orders .text-blue-600{color:#d29a72!important}
+
+/* Superadmin operations — dark graphite with restrained copper signals */
+.dt-control,.dt-admin-shell{
+  --dt-lime:#bd8057;--dt-white:#efede7;--dt-line:rgba(238,236,230,.11);
+  background:#090a0c!important;color:#efede7!important;
+}
+.dt-control-rail,.dt-admin-shell aside{
+  border-color:var(--dt-line)!important;background:#0d0f11!important;color:#efede7!important;
+}
+.dt-control-brand,.dt-control-rail nav button,.dt-control-rail-bottom button{color:#c7c2b9!important}
+.dt-control-symbol,.dt-admin-shell aside [class*="bg-"]{
+  border:1px solid #79563f!important;border-radius:8px!important;background:#251d17!important;color:#d7a27c!important;
+}
+.dt-control-nav-label,.dt-control-top>div:first-child span{color:#bd9476!important}
+.dt-control-rail nav button{border-radius:7px!important;font-family:Manrope,Arial,sans-serif!important}
+.dt-control-rail nav button.active{border:1px solid #76553e!important;background:#2a211b!important;color:#f0e7dc!important;box-shadow:inset 2px 0 #bd8057!important}
+.dt-control-rail nav button.active i{background:#bd8057!important}
+.dt-control-main,.dt-admin-shell section{background:#090a0c!important;color:#efede7!important}
+.dt-control-top,.dt-admin-shell header{
+  border-color:var(--dt-line)!important;background:rgba(12,13,15,.92)!important;color:#efede7!important;
+  backdrop-filter:blur(18px)!important;
+}
+.dt-control-content,.dt-admin-shell .max-w-\\[1480px\\]{color:#efede7!important}
+.dt-control-intro,.dt-admin-shell [class*="bg-white"]{
+  border-color:#3d342d!important;border-radius:8px!important;
+  background:linear-gradient(130deg,#171819,#211b17)!important;color:#efede7!important;
+}
+.dt-control-intro{border:1px solid #4b3b30!important;box-shadow:0 25px 65px -50px #000!important}
+.dt-control-kicker,.dt-control-intro-copyblock>p{color:#c49a7b!important}
+.dt-control-intro h1{color:#f1eee7!important}
+.dt-control-intro h1 em{color:#d19a72!important}
+.dt-control-orbit{border-color:#bd805740!important}
+.dt-control-orbit-core{border-radius:8px!important;background:#bd8057!important;color:#130e0a!important}
+.dt-control-live{border-color:#bd805755!important;border-radius:7px!important;color:#d3a17c!important}
+.dt-control-top-actions button{border:1px solid #3b3e3d!important;border-radius:7px!important;background:#171a1c!important;color:#e5e0d7!important}
+.dt-control-metrics article,.dt-control-revenue,.dt-control-engagement,.dt-control-status,.dt-control-products,
+.dt-control-workgrid article,.dt-control-lower article{
+  border:1px solid #363a38!important;border-radius:8px!important;background:#111416!important;color:#e9e5dd!important;box-shadow:none!important;
+}
+.dt-control-metrics article strong,.dt-control-content h2,.dt-control-content h3{color:#efede7!important}
+.dt-control-metrics article small,.dt-control-content article p,.dt-control-content article small{color:#969a96!important}
+.dt-control-shortcuts button{border:1px solid #383d3a!important;border-radius:7px!important;background:#151819!important;color:#e3ded5!important}
+.dt-control-shortcuts button:hover{border-color:#8a6348!important;background:#211b16!important}
+.dt-control-footer{border-color:var(--dt-line)!important;color:#888d88!important}
+.dt-control-mobile-menu{border:1px solid #3b3e3d!important;background:#101315!important;color:#efede7!important}
+.dt-control-mobile-menu button{color:#e7e3db!important}
+.dt-control-mobile-menu button:hover{background:#211b16!important}
+.dt-admin-shell aside{border-right:1px solid var(--dt-line)!important;background:#0d0f11!important}
+.dt-admin-shell aside a,.dt-admin-shell aside button{color:#c5c1b8!important}
+.dt-admin-shell aside a:hover,.dt-admin-shell aside button:hover{background:#211b16!important;color:#f0e5da!important}
+.dt-admin-shell aside [class*="bg-"]{background:#251d17!important;color:#d7a27c!important}
+.dt-admin-shell [class*="bg-[#f"],.dt-admin-shell [class*="bg-[#e"],.dt-admin-shell [class*="bg-[#d"]{background:#111416!important}
+.dt-admin-shell [class*="text-[#202"],.dt-admin-shell [class*="text-[#394"],.dt-admin-shell [class*="text-[#536"],.dt-admin-shell [class*="text-[#647"]{color:#ddd8cf!important}
+.dt-admin-shell [class*="border-[#e"],.dt-admin-shell [class*="border-[#d"]{border-color:#363a38!important}
+.dt-admin-shell input,.dt-admin-shell select,.dt-admin-shell textarea{
+  border:1px solid #414542!important;border-radius:7px!important;background:#0b0d0f!important;color:#eeeae3!important;
+}
+.dt-admin-shell input:focus,.dt-admin-shell select:focus,.dt-admin-shell textarea:focus{border-color:#bd8057!important;box-shadow:0 0 0 3px #bd80571b!important}
+.dt-admin-shell button{border-radius:7px!important}
+.dt-admin-shell button[class*="bg-[#293"],.dt-admin-shell button[class*="bg-[#354"]{
+  border:1px solid #bd8057!important;background:#bd8057!important;color:#150f0b!important;
+}
+.dt-admin-shell .bg-rose-50,.dt-admin-shell .bg-red-50{background:#29181c!important}
+.dt-admin-shell .text-rose-600,.dt-admin-shell .text-red-600{color:#e2a7ae!important}
+.dt-admin-shell .bg-emerald-50,.dt-admin-shell .bg-green-50{background:#18251d!important}
+.dt-admin-shell .text-emerald-700,.dt-admin-shell .text-green-700{color:#acd0b3!important}
+.dt-admin-shell .rounded-2xl,.dt-admin-shell .rounded-xl,.dt-admin-shell .rounded-3xl{border-radius:9px!important}
