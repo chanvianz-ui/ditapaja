@@ -786,7 +786,7 @@
    radial-gradient(ellipse at 0% 65%,rgba(51,158,185,.07),transparent 34%),
    linear-gradient(180deg,#111e32 0%,#0b1423 48%,#080f1c 100%)!important;
  box-shadow:-24px 0 80px rgba(0,0,0,.42),inset 1px 0 rgba(255,255,255,.045)!important;
- transform:translate3d(0,0,0)!important;transform-origin:right center!important;
+ transform:translate3d(0,0,0);transform-origin:right center!important;
  animation:dt-side-drawer-in .34s cubic-bezier(.22,.78,.2,1)!important;
 }
 .dt-app-menu-panel:before{
@@ -900,7 +900,7 @@
 .dt-app-menu-bottom>button span{display:inline!important;color:inherit!important;font-size:10px!important;font-weight:700!important}
 .dt-app-menu-bottom>button:hover{transform:translateY(-2px)!important;border-color:rgba(230,140,164,.4)!important;background:rgba(161,74,99,.16)!important}
 .dt-app-menu-panel button:focus-visible,.dt-app-menu-panel a:focus-visible{outline:2px solid #8de9ff!important;outline-offset:3px!important}
-@keyframes dt-side-drawer-in{from{opacity:.7;transform:translate3d(100%,0,0)!important}to{opacity:1;transform:translate3d(0,0,0)!important}}
+@keyframes dt-side-drawer-in{from{opacity:.7;transform:translate3d(100%,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 @keyframes dt-side-group-in{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
 @media(max-width:620px){
  .dt-app-menu-panel{width:min(390px,90vw)!important;padding:20px 17px calc(14px + env(safe-area-inset-bottom))!important;border-radius:18px 0 0 18px!important}
