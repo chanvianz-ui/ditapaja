@@ -66,7 +66,7 @@
 .studio-primary-button input[type=file]{display:none}
 .studio-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .studio-field-grid>label,.studio-label{display:grid;gap:8px;color:#d9e3f1;font-size:11px;font-weight:750}
-.studio-field{width:100%;min-width:0;min-height:45px;padding:10px 12px;border:1px solid #334861;border-radius:9px;background:#0c1727;color:#edf3fc;font:500 12px Manrope,"DM Sans",sans-serif;outline:none}
+.studio-field{width:100%;min-width:0;min-height:45px;padding:10px 12px;border:1px solid #334861;border-radius:9px;background:#0c1727;color:#edf3fc;font:500 12px Manrope,"DM Sans",sans-serif;outline:none}.studio-file-input{display:none}.studio-color-field .studio-color-input{width:35px;height:31px;padding:0;border:0;background:transparent;appearance:none}
 .studio-field:focus{border-color:#6d9df5;box-shadow:0 0 0 3px #4d82e822}
 .studio-label p{margin:0;color:#91a3bd;font-size:10px;font-weight:450;line-height:1.6}
 .studio-label small{color:#8193ac;font-size:9px;text-align:right}
