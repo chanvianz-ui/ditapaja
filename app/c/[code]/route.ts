@@ -105,7 +105,7 @@ export async function GET(
         : Promise.resolve({ data: null, error: null }),
       supabase
         .from("nfc_card_pages")
-        .select("is_published,headline,description,theme,accent_color,button_style,logo_url,logo_size,logo_position,whatsapp_url,instagram_url,website_url")
+        .select("is_published,headline,description,theme,font_family,accent_color,button_style,logo_url,logo_size,logo_position,whatsapp_url,instagram_url,website_url")
         .eq("card_id", card.id)
         .eq("user_id", card.user_id)
         .maybeSingle(),
@@ -126,12 +126,12 @@ export async function GET(
     const pageDescription = escapeHtml(customPage?.description?.trim() || "Senang bisa menyambut kamu. Bagikan pengalaman dan ulasan melalui Google Maps agar lebih banyak orang mengenal kami.");
     const accentColor = /^#[0-9a-fA-F]{6}$/.test(customPage?.accent_color || "") ? customPage!.accent_color : "#2563eb";
     const themePalette: Record<string, { background: string; card: string; text: string; muted: string; border: string }> = {
-      ocean: { background: "#f3f7ff", card: "#ffffff", text: "#172554", muted: "#64748b", border: "#dbeafe" },
-      midnight: { background: "#0f172a", card: "#172033", text: "#f8fafc", muted: "#cbd5e1", border: "#334155" },
-      rose: { background: "#fff1f2", card: "#ffffff", text: "#881337", muted: "#9f526a", border: "#ffe4e6" },
-      forest: { background: "#f0fdf4", card: "#ffffff", text: "#14532d", muted: "#52765c", border: "#dcfce7" },
+      ocean: { background: "#f5f8ff", card: "#ffffff", text: "#14233f", muted: "#62718a", border: "#dce6f8" },
+      midnight: { background: "#ffffff", card: "#f8fafc", text: "#172033", muted: "#667085", border: "#e4e9f1" },
+      rose: { background: "#fbf7f0", card: "#fffdf9", text: "#342b24", muted: "#82766b", border: "#e9dfd2" },
+      forest: { background: "#f1f3f6", card: "#ffffff", text: "#202735", muted: "#697386", border: "#e0e4eb" },
     };
-    const palette = themePalette[customPage?.theme || "ocean"] || themePalette.ocean;
+    const palette = themePalette[customPage?.theme || "ocean"] || themePalette.ocean;\n    const fontFamily = customPage?.font_family === "DM Sans" ? '"DM Sans", sans-serif' : customPage?.font_family === "Arial" ? 'Arial, sans-serif' : customPage?.font_family === "Georgia" ? 'Georgia, serif' : 'Manrope, sans-serif';
     const logoUrl = typeof customPage?.logo_url === "string" && customPage.logo_url.startsWith(supabaseUrl + "/storage/v1/object/public/ditapaja-brand-assets/") ? customPage.logo_url : "";
     const logoSize = Number.isInteger(customPage?.logo_size) ? Math.min(128, Math.max(40, customPage!.logo_size)) : 72;
     const logoPosition = ["left", "center", "right"].includes(customPage?.logo_position || "") ? customPage!.logo_position : "center";
@@ -324,7 +324,7 @@ export async function GET(
     @media (prefers-reduced-motion: reduce) { .button { transition: none; } }
   </style>
   ${customPage ? `<style>
-    body { background: ${palette.background}; color: ${palette.text}; }
+    body { background: ${palette.background}; color: ${palette.text}; font-family: ${fontFamily}; }
     .card { background: ${palette.card}; border-color: ${palette.border}; }
     .card:before { background: ${accentColor}; }
     .icon { background: ${accentColor}20; color: ${accentColor}; }
