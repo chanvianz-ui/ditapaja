@@ -251,7 +251,7 @@ export default function LandingPageEditor() {
 
       <section className="studio-intro">
         <div><p className="studio-kicker">YOUR BRAND, YOUR PAGE</p><h1>Halaman yang terasa seperti brand kamu.</h1><p>Sesuaikan template, lalu lihat hasilnya langsung di preview.</p></div>
-        <div className="studio-card-picker"><label htmlFor="studio-card">KARTU NFC</label><select id="studio-card" value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)}>{cards.map(card => <option key={card.id} value={card.id}>{card.card_name || "Untitled Card"}{card.active ? "" : " — Nonaktif"}</option>)}</select></div>
+        <div className="studio-card-picker"><label htmlFor="studio-card">KARTU NFC</label><select id="studio-card" value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)} className="studio-field">{cards.map(card => <option key={card.id} value={card.id}>{card.card_name || "Untitled Card"}{card.active ? "" : " — Nonaktif"}</option>)}</select></div>
       </section>
 
       {error && <div role="alert" className="studio-feedback is-error">{error}</div>}
@@ -270,7 +270,7 @@ export default function LandingPageEditor() {
                 {editorSection === "identity" && <div className="space-y-6">
                   <div className="studio-upload-card">
                     <div className="studio-logo-preview">{settings.logo_url ? <img src={settings.logo_url} alt="Logo bisnis"/> : <ImagePlus size={28}/>}</div>
-                    <div className="studio-upload-copy"><h3>Logo bisnis</h3><p>PNG, JPG, atau WebP. Maksimal 2 MB.</p><div className="studio-inline-actions"><label className="studio-primary-button">{logoUploading ? <Loader2 size={14} className="animate-spin"/> : <ImagePlus size={14}/>} {logoUploading ? "Mengunggah..." : "Pilih logo"}<input type="file" accept="image/png,image/jpeg,image/webp" disabled={logoUploading} onChange={e=>{const file=e.target.files?.[0];void uploadLogo(file);e.currentTarget.value="";}}/></label>{settings.logo_url && <button type="button" className="studio-quiet-button" onClick={()=>update("logo_url",null)}>Hapus</button>}</div></div>
+                    <div className="studio-upload-copy"><h3>Logo bisnis</h3><p>PNG, JPG, atau WebP. Maksimal 2 MB.</p><div className="studio-inline-actions"><label className="studio-primary-button">{logoUploading ? <Loader2 size={14} className="animate-spin"/> : <ImagePlus size={14}/>} {logoUploading ? "Mengunggah..." : "Pilih logo"}<input type="file" className="studio-file-input" accept="image/png,image/jpeg,image/webp" disabled={logoUploading} onChange={e=>{const file=e.target.files?.[0];void uploadLogo(file);e.currentTarget.value="";}}/></label>{settings.logo_url && <button type="button" className="studio-quiet-button" onClick={()=>update("logo_url",null)}>Hapus</button>}</div></div>
                   </div>
                   <div className="studio-field-grid">
                     <label>Ukuran logo<select value={settings.logo_size} onChange={e=>update("logo_size",Number(e.target.value))} className="studio-field"><option value={48}>Kecil</option><option value={64}>Sedang</option><option value={80}>Besar</option><option value={96}>Ekstra besar</option><option value={112}>Maksimal</option></select></label>
@@ -287,7 +287,7 @@ export default function LandingPageEditor() {
                   <div className="studio-setting-group"><h3>Tipografi</h3><p>Pilih karakter huruf yang paling sesuai dengan brand kamu.</p><select value={settings.font_family} onChange={e=>update("font_family",e.target.value as Settings["font_family"])} className="studio-field"><option value="Manrope">Manrope — modern & tegas</option><option value="DM Sans">DM Sans — bersih & ramah</option><option value="Arial">Arial — sederhana</option><option value="Georgia">Georgia — editorial & elegan</option></select></div>
                   <div className="studio-setting-group"><h3>Template halaman</h3><p>Struktur halaman sudah disiapkan. Kamu hanya perlu memilih karakter visualnya.</p><div className="studio-template-grid">{themes.map(item=><button key={item.id} type="button" onClick={()=>update("theme",item.id)} className={"studio-template-card "+(settings.theme===item.id?"is-active":"")}><span className="studio-template-art" style={{background:item.bg}}><i style={{background:settings.accent_color}}/><i/><i/></span><b>{item.label}</b><small>{settings.theme===item.id?"Sedang dipilih":"Pilih template"}</small></button>)}</div></div>
                   <div className="studio-field-grid">
-                    <label>Warna aksen<span className="studio-color-field"><input type="color" value={settings.accent_color} onChange={e=>update("accent_color",e.target.value)}/><b>{settings.accent_color.toUpperCase()}</b></span></label>
+                    <label>Warna aksen<span className="studio-color-field"><input type="color" className="studio-color-input" value={settings.accent_color} onChange={e=>update("accent_color",e.target.value)}/><b>{settings.accent_color.toUpperCase()}</b></span></label>
                     <label>Gaya tombol<select value={settings.button_style} onChange={e=>update("button_style",e.target.value as Settings["button_style"])} className="studio-field"><option value="solid">Solid — terisi</option><option value="outline">Outline — garis tepi</option></select></label>
                   </div>
                 </div>}
