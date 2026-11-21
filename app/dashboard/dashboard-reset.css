@@ -131,3 +131,109 @@
  .dt-bulk-qr-panel .print\:hidden{display:none!important}.dt-bulk-qr-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
  .dt-bulk-qr-card{break-inside:avoid!important;page-break-inside:avoid!important}
 }
+
+/* Secondary workspace routes — shared dark product surface */
+.dt-workspace-page,.dt-business-page,.dt-account-settings-page,.dt-card-create-page{
+  background:transparent!important;color:#efede7!important;
+}
+.dt-workspace-page .text-slate-900,.dt-workspace-page .text-slate-800,
+.dt-workspace-page .text-slate-700,.dt-workspace-page .text-slate-600{color:#d9d5cd!important}
+.dt-workspace-page .text-slate-500,.dt-workspace-page .text-slate-400{color:#969a96!important}
+.dt-workspace-page .border-slate-200,.dt-workspace-page .border-slate-100{border-color:#343937!important}
+.dt-workspace-page .bg-white,.dt-workspace-page .bg-slate-50{background:#111416!important}
+.dt-workspace-page input,.dt-workspace-page select,.dt-workspace-page textarea{
+  border-color:#414542!important;border-radius:7px!important;background:#0c0e10!important;color:#eeeae3!important;
+}
+.dt-workspace-page input:focus,.dt-workspace-page select:focus,.dt-workspace-page textarea:focus{
+  border-color:#bd8057!important;box-shadow:0 0 0 3px #bd80571b!important;
+}
+.dt-workspace-page button{transition:background .16s ease,border-color .16s ease,transform .16s ease}
+.dt-workspace-page .bg-blue-600,.dt-workspace-page .bg-blue-700{background:#bd8057!important;color:#140f0b!important}
+.dt-workspace-page .text-blue-600,.dt-workspace-page .text-blue-700{color:#d29a72!important}
+.dt-workspace-page .border-blue-200,.dt-workspace-page .border-blue-300{border-color:#77563e!important}
+.dt-workspace-page .hover\\:bg-blue-50:hover{background:#211b16!important}
+.dt-workspace-page .hover\\:text-blue-700:hover{color:#e2b18d!important}
+.dt-business-page{padding-top:30px!important;padding-bottom:52px!important}
+.dt-business-page .dt-business-hero{
+  border:1px solid #45372d!important;border-radius:3px!important;
+  background:radial-gradient(ellipse at 84% 0%,rgba(189,128,87,.17),transparent 35%),linear-gradient(120deg,#171819,#211b17)!important;
+  box-shadow:0 25px 65px -50px #000!important;color:#f0ece5!important;
+}
+.dt-business-page .dt-business-hero h1{color:#f2eee7!important;font-size:clamp(34px,4vw,50px)!important;letter-spacing:-.06em!important}
+.dt-business-page .dt-business-hero p,.dt-business-page .dt-business-hero small{color:#aaa49b!important}
+.dt-business-page .dt-business-profile-panel,.dt-business-page .dt-business-locations-panel,
+.dt-business-page .dt-business-location-card{
+  border:1px solid #363a38!important;border-radius:9px!important;background:#111416!important;
+  color:#e9e5dd!important;box-shadow:none!important;
+}
+.dt-business-page .dt-business-profile-panel h2,.dt-business-page .dt-business-locations-panel h2,
+.dt-business-page .dt-business-location-card h3{color:#efede7!important}
+.dt-business-page .dt-business-add-location{border:1px solid #805d43!important;background:#bd8057!important;color:#160f0a!important}
+.dt-business-page .dt-business-profile-form label,.dt-business-page .dt-business-location-card label{color:#d2cec6!important}
+.dt-business-page .dt-business-profile-form input,.dt-business-page .dt-business-profile-form textarea,
+.dt-business-page .dt-business-location-card input,.dt-business-page .dt-business-location-card textarea{
+  border:1px solid #414542!important;background:#0b0d0f!important;color:#eeeae3!important;
+}
+.dt-account-settings-page>header{border-color:#343735!important;background:rgba(10,11,13,.92)!important}
+.dt-account-settings-page>header a{color:#f0eee8!important}
+.dt-account-settings-page>header a span{color:#d29a72!important}
+.dt-account-settings-page>header button{border-color:#3b403d!important;background:#171a1c!important;color:#c7c2b8!important}
+.dt-account-settings-page>div>div:first-child{color:#a09d95!important}
+.dt-account-settings-page>div>div:nth-child(2){
+  border:1px solid #544032!important;border-radius:3px!important;
+  background:radial-gradient(ellipse at 80% 0%,rgba(189,128,87,.18),transparent 35%),linear-gradient(120deg,#181817,#211a16)!important;
+  box-shadow:0 25px 70px -50px #000!important;
+}
+.dt-account-settings-page>div>div:nth-child(2) h1{color:#f2eee7!important}
+.dt-account-settings-page>div>div:nth-child(2) p{color:#b4aaa0!important}
+.dt-account-settings-page .dt-workspace-panel{
+  border:1px solid #363a38!important;border-radius:9px!important;background:#111416!important;
+  color:#e8e4dc!important;box-shadow:none!important;
+}
+.dt-account-settings-page .dt-workspace-panel h2{color:#eeeae3!important;font-family:Manrope,Arial,sans-serif!important;font-weight:800!important}
+.dt-account-settings-page .dt-workspace-panel .border-b{border-color:#343937!important}
+.dt-account-settings-page .dt-workspace-panel .bg-blue-50,
+.dt-account-settings-page .dt-workspace-panel .bg-indigo-50{border:1px solid #4b3c30!important;background:#211b16!important;color:#d7b18e!important}
+.dt-account-settings-page .dt-workspace-panel .bg-blue-50 p{color:#bca28f!important}
+.dt-account-settings-page .dt-workspace-panel input{border-color:#414542!important;border-radius:7px!important;background:#0b0d0f!important;color:#eeeae3!important}
+.dt-account-settings-page .dt-workspace-panel input:focus{border-color:#bd8057!important;background:#0b0d0f!important;box-shadow:0 0 0 3px #bd80571b!important}
+.dt-account-settings-page .dt-workspace-panel form>button[type=submit]{border:1px solid #bd8057!important;border-radius:7px!important;background:#bd8057!important;color:#160f0a!important;box-shadow:none!important}
+.dt-account-settings-page .dt-workspace-panel form>button[type=submit]:hover{background:#d09268!important}
+.dt-account-settings-page .dt-workspace-panel .border-red-200{border-color:#71444a!important;background:#29181c!important;color:#edb7bd!important}
+.dt-account-settings-page .dt-workspace-panel .border-emerald-200{border-color:#426b54!important;background:#18251d!important;color:#b5d8bd!important}
+.dt-account-settings-page footer{color:#777d79!important}
+.dt-card-create-page{padding-top:30px!important;padding-bottom:50px!important}
+.dt-card-create-page .dt-card-create-intro{
+  border:1px solid #49382c!important;border-radius:3px!important;
+  background:radial-gradient(ellipse at 80% 0%,rgba(189,128,87,.18),transparent 40%),linear-gradient(130deg,#171819,#211b17)!important;
+  color:#eeeae3!important;box-shadow:0 25px 70px -50px #000!important;
+}
+.dt-card-create-page .dt-card-create-intro h1,.dt-card-create-page .dt-card-create-intro h2{color:#f0ece5!important}
+.dt-card-create-page .dt-card-create-intro p,.dt-card-create-page .dt-card-create-intro span{color:#aaa49b!important}
+.dt-card-create-page .dt-card-create-form{
+  border:1px solid #363a38!important;border-radius:9px!important;background:#111416!important;color:#e9e5dd!important;box-shadow:none!important;
+}
+.dt-card-create-page .dt-card-create-form h2,.dt-card-create-page .dt-card-create-form h3{color:#eeeae3!important}
+.dt-card-create-page .dt-card-create-form label{color:#d2cec6!important}
+.dt-card-create-page .dt-card-create-form input,.dt-card-create-page .dt-card-create-form textarea,.dt-card-create-page .dt-card-create-form select{
+  border:1px solid #414542!important;border-radius:7px!important;background:#0b0d0f!important;color:#eeeae3!important;
+}
+.dt-card-create-page .dt-card-create-form input:focus,.dt-card-create-page .dt-card-create-form textarea:focus,.dt-card-create-page .dt-card-create-form select:focus{
+  border-color:#bd8057!important;box-shadow:0 0 0 3px #bd80571b!important;
+}
+.dt-card-create-page .dt-card-create-note{border-color:#4b3c30!important;background:#211b16!important;color:#d7b18e!important}
+.dt-card-create-page .dt-card-create-steps{color:#a09b92!important}
+.dt-customer-orders{min-height:100vh;background:#090a0c!important;color:#efede7!important}
+.dt-customer-orders .dt-customer-orders-heading,.dt-customer-orders .dt-customer-order-card,
+.dt-customer-orders .dt-order-payment-panel,.dt-customer-orders .dt-order-progress{
+  border:1px solid #363a38!important;border-radius:9px!important;background:#111416!important;color:#e9e5dd!important;box-shadow:none!important;
+}
+.dt-customer-orders .dt-customer-orders-heading h1,.dt-customer-orders .dt-customer-order-card h2,
+.dt-customer-orders .dt-customer-order-card h3{color:#efede7!important}
+.dt-customer-orders .text-slate-900,.dt-customer-orders .text-slate-800,.dt-customer-orders .text-slate-700{color:#ddd8cf!important}
+.dt-customer-orders .text-slate-600,.dt-customer-orders .text-slate-500,.dt-customer-orders .text-slate-400{color:#969a96!important}
+.dt-customer-orders .border-slate-200,.dt-customer-orders .border-slate-100{border-color:#363a38!important}
+.dt-customer-orders .bg-white,.dt-customer-orders .bg-slate-50{background:#171a1c!important}
+.dt-customer-orders input,.dt-customer-orders textarea,.dt-customer-orders select{border-color:#414542!important;background:#0b0d0f!important;color:#eeeae3!important}
+.dt-customer-orders .bg-blue-600{background:#bd8057!important;color:#160f0a!important}
+.dt-customer-orders .text-blue-600{color:#d29a72!important}
