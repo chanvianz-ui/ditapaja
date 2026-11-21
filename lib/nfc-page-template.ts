@@ -41,9 +41,14 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
   const css = `
     :root{--accent:${accent};--font:${font}}
     *{box-sizing:border-box}
-    html{min-height:100%;background:var(--page)}
-    body{min-height:100vh;margin:0;padding:clamp(14px,4vw,38px);display:flex;align-items:center;justify-content:center;background:var(--page);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
-    .experience{position:relative;width:100%;max-width:430px;min-width:0;overflow:hidden;background:var(--surface);color:var(--ink)}
+    html{min-height:100%;background:#edf1f7}
+    body{min-height:100vh;margin:0;padding:clamp(20px,5vw,56px) clamp(14px,4vw,38px);display:flex;align-items:center;justify-content:center;background:#edf1f7;color:#172943;font-family:var(--font);-webkit-font-smoothing:antialiased}
+    body.page-ocean{background:radial-gradient(ellipse at 15% 12%,#dce9fb 0,transparent 38%),linear-gradient(145deg,#edf2fa,#e7edf5)}
+    body.page-midnight{background:radial-gradient(ellipse at 82% 12%,#1b3150 0,transparent 36%),radial-gradient(ellipse at 12% 90%,#15243a 0,transparent 42%),#080e18}
+    body.page-rose{background:radial-gradient(ellipse at 12% 15%,#f5dfd1 0,transparent 35%),linear-gradient(145deg,#f3e9df,#e9ddd2)}
+    body.page-forest{background:radial-gradient(ellipse at 85% 12%,#d9e5d6 0,transparent 38%),linear-gradient(145deg,#edf1e9,#e1e9df)}
+    .experience{position:relative;width:100%;max-width:430px;min-width:0;overflow:hidden;background:var(--surface);color:var(--ink);isolation:isolate}
+    .experience:after{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:linear-gradient(145deg,#ffffff0b,transparent 42%)}
     .brand-block{display:grid;grid-template-columns:1fr;gap:18px;min-width:0}
     .brand-mark-row{display:flex;justify-content:${logoAlign};align-items:center;min-width:0}
     .brand-mark{width:auto;max-width:100%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
@@ -73,12 +78,19 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     /* Ocean: centered service card with clear vertical rhythm */
     .theme-ocean{--page:#eaf0fa;--surface:#fff;--ink:#172943;--muted:#718096;--line:#e2e9f2;--soft:#f3f6fb;max-width:430px;padding:32px 28px 22px;border:1px solid #dfe7f3;border-radius:24px;box-shadow:0 24px 65px #1d35551a;text-align:center}
     .theme-ocean:before{content:"";position:absolute;inset:0 0 auto;height:6px;background:linear-gradient(90deg,var(--accent),#8bbcff)}
+    .theme-ocean{box-shadow:0 28px 80px #203b5c20,0 3px 10px #203b5c0b}
+    .theme-ocean .brand-mark-fallback{box-shadow:0 8px 20px color-mix(in srgb,var(--accent) 18%,transparent)}
     .theme-ocean .brand-mark-row{justify-content:center}
     .theme-ocean .message{margin-top:25px;padding-top:22px;border-top:1px solid var(--line)}
     .theme-ocean .actions{margin-top:22px}
     /* Midnight: asymmetric editorial alignment, always anchored to one left edge */
     .theme-midnight{--page:#090e17;--surface:#111a29;--ink:#f4f6fb;--muted:#9aa9bf;--line:#2a384c;--soft:#1a293d;max-width:450px;padding:27px 28px 23px;border:1px solid #2a3a50;border-radius:19px;box-shadow:0 30px 80px #0008;text-align:center}
-    .theme-midnight:before{content:"";position:absolute;right:-95px;top:-115px;width:240px;height:240px;border-radius:50%;background:var(--accent);opacity:.16;filter:blur(55px);pointer-events:none}
+    .theme-midnight:before{content:"";position:absolute;right:-95px;top:-115px;width:240px;height:240px;border-radius:50%;background:var(--accent);opacity:.2;filter:blur(55px);pointer-events:none}
+    .theme-midnight{box-shadow:0 35px 100px #0009,0 0 0 1px #ffffff08}
+    .theme-midnight .midnight-top{padding-bottom:13px;border-bottom:1px solid #ffffff16}
+    .theme-midnight .business{max-width:100%;text-wrap:balance}
+    .theme-midnight .message h1{max-width:340px;margin-left:auto;margin-right:auto;text-wrap:balance}
+    .theme-midnight .description{max-width:330px;margin-left:auto;margin-right:auto}
     .theme-midnight .midnight-top{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:34px;color:#a9b7ca;font-size:8px;font-weight:800;letter-spacing:2px}
     .edition-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
     .theme-midnight .brand-block{gap:15px;justify-items:center;text-align:center}\n    .theme-midnight .brand-mark-row{justify-content:center}\n    .theme-midnight .brand-copy{text-align:center}\n    .theme-midnight .branch{margin-left:auto;margin-right:auto}
@@ -90,11 +102,15 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .theme-midnight .social-link{background:#172335;border-radius:8px}
     /* Rose: editorial masthead and narrow text column */
     .theme-rose{--page:#f2e9df;--surface:#fffaf4;--ink:#392b2b;--muted:#89766e;--line:#eadbd0;--soft:#f7eee6;max-width:450px;padding:0 27px 22px;border:1px solid #eadbd0;border-radius:4px;box-shadow:10px 12px 0 #d8c6b6;text-align:center}
-    .theme-rose .rose-masthead{display:flex;justify-content:center;gap:18px;margin:0 -27px 26px;padding:17px 27px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:900;letter-spacing:1.5px}
+    .theme-rose .rose-masthead{display:flex;justify-content:center;gap:18px;margin:0 -27px 26px;padding:17px 27px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:900;letter-spacing:1.5px;background:linear-gradient(90deg,#f8eee6,#fffaf4 50%,#f8eee6)}
     .theme-rose .brand-block{gap:13px;justify-items:center;text-align:center}\n    .theme-rose .brand-mark-row{justify-content:center}\n    .theme-rose .brand-copy{text-align:center}\n    .theme-rose .branch{margin-left:auto;margin-right:auto}
     .theme-rose .business{font-family:Georgia,serif;font-size:clamp(31px,7vw,41px);font-weight:500;letter-spacing:-1.2px;line-height:1.05}
     .theme-rose .eyebrow{font-size:8px;letter-spacing:2px}
     .theme-rose .message{margin-top:27px;padding-top:22px;border-top:1px solid var(--line)}
+    .theme-rose{box-shadow:10px 12px 0 #d8c6b6,0 28px 70px #5a40301c}
+    .theme-rose .business,.theme-rose .message h1{text-wrap:balance}
+    .theme-rose .description{max-width:330px;margin-left:auto;margin-right:auto}
+    .theme-rose .message-kicker{letter-spacing:2.2px}
     .theme-rose .message h1{font-family:Georgia,serif;font-size:clamp(27px,6vw,34px);font-weight:500;letter-spacing:-.7px}
     .theme-rose .actions{margin-top:22px}
     .theme-rose .review-button{position:relative;padding-left:42px;padding-right:42px;border-radius:3px;text-transform:uppercase;letter-spacing:.45px;font-size:10px}
@@ -102,7 +118,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .theme-rose .review-button .google-g{position:absolute;left:13px}\n    .theme-rose .review-button>b{position:absolute;right:13px;margin:0}\n    .theme-rose .social-link{border-radius:3px}
     /* Forest: quiet natural layout with a contained message panel */
     .theme-forest{--page:#e9eee7;--surface:#f9fbf6;--ink:#203729;--muted:#718273;--line:#dce5d9;--soft:#edf3eb;max-width:440px;padding:27px 25px 22px;border:1px solid #dbe5d8;border-radius:29px 29px 12px 12px;box-shadow:0 22px 60px #1c3a2717;text-align:center}
-    .theme-forest .forest-heading{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:1.7px}
+    .theme-forest .forest-heading{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px;padding-bottom:15px;border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;font-weight:850;letter-spacing:1.7px}
     .forest-leaf{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:var(--soft);color:var(--accent);font-size:14px}
     .theme-forest .brand-mark-row{justify-content:center}
     .theme-forest .brand-mark-fallback{width:62px;height:62px;border-radius:50%}
@@ -117,5 +133,5 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     @media(prefers-reduced-motion:reduce){.review-button{transition:none}}
   `;
   const content = (input.preview ? '<p class="preview-note">PREVIEW PEMILIK KARTU · Aktivitas tidak dicatat</p>' : '') + layouts[theme];
-  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="' + (theme === "midnight" ? "#090e17" : "#f2f5f8") + '"><title>Review ' + name + ' | DiTapAja</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>' + css + '</style></head><body><main class="experience theme-' + theme + '">' + content + '<p class="status" id="status" role="status" aria-live="polite"></p><footer class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</footer></main></body></html>';
+  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="' + (theme === "midnight" ? "#090e17" : "#f2f5f8") + '"><title>Review ' + name + ' | DiTapAja</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>' + css + '</style></head><body class="page-' + theme + '"><main class="experience theme-' + theme + '">' + content + '<p class="status" id="status" role="status" aria-live="polite"></p><footer class="footer">Powered by <strong>DiTapAja</strong> · Tap. Review. Grow.</footer></main></body></html>';
 }
