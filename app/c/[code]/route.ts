@@ -327,6 +327,16 @@ export async function GET(
   ${customPage ? `<style>
     body { background: ${palette.background}; color: ${palette.text}; font-family: ${fontFamily}; }
     .business, h1 { font-family: ${fontFamily}; }
+    .card:after { height: ${customPage?.theme === "midnight" || customPage?.theme === "forest" ? "0" : "4px"}; background: ${accentColor}; }
+    .rating { color: ${accentColor}; }
+    .branch { border-color: ${palette.border}; background: ${palette.background}; color: ${palette.muted}; }
+    .footer { background: ${palette.background}; border-color: ${palette.border}; color: ${palette.muted}; }
+    .footer strong { color: ${palette.text}; }
+    .button.secondary { border-color: ${palette.border}; color: ${palette.text}; }
+    .card[data-template="ocean"] { border-radius: 24px; box-shadow: 0 28px 72px rgba(20,35,63,.10); }
+    .card[data-template="midnight"] { border-radius: 18px; box-shadow: 0 14px 44px rgba(23,32,51,.055); }
+    .card[data-template="rose"] { border-radius: 30px; box-shadow: 0 30px 76px rgba(52,43,36,.09); }
+    .card[data-template="forest"] { border-radius: 16px; box-shadow: 0 12px 34px rgba(32,39,53,.06); }
     .card { background: ${palette.card}; border-color: ${palette.border}; }
     .card:before { background: ${accentColor}; }
     .icon { background: ${accentColor}20; color: ${accentColor}; }
@@ -340,7 +350,7 @@ export async function GET(
   </style>` : ""}
 </head>
 <body>
-  <main class="card">
+  <main class="card" data-template="${customPage?.theme || "ocean"}">
     ${logoUrl ? `<div class="brand-logo-wrap"><img class="brand-logo" src="${escapeHtml(logoUrl)}" alt="Logo ${businessName}"></div>` : `<div class="icon" aria-hidden="true">★</div>`}
     <p class="eyebrow">PENGALAMAN KAMU BERARTI</p>
     <span class="business-label">Kamu berkunjung ke</span>
