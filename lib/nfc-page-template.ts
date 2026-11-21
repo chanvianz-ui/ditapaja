@@ -43,6 +43,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
   const logoAlign = ["left", "center", "right"].includes(input.logo_position || "")
     ? input.logo_position!
     : "center";
+  const logoJustify = logoAlign === "left" ? "flex-start" : logoAlign === "right" ? "flex-end" : "center";
   const name = esc(input.business_name || "Bisnis Kami");
   const branch = esc(input.branch_name || "");
   const address = esc(input.branch_address || "");
@@ -53,7 +54,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     ? '<img class="brand-image" src="' + esc(input.logo_url) + '" alt="Logo ' + name + '" style="width:' + logoSize + 'px;height:' + logoSize + 'px">'
     : '<span class="brand-symbol" aria-hidden="true">✳</span>';
 
-  const brand = '<div class="brand" style="--logo-align:' + logoAlign + '">' + logo +
+  const brand = '<div class="brand" style="--logo-align:' + logoAlign + ';--logo-justify:' + logoJustify + '">' + logo +
     '<div class="brand-copy"><p class="eyebrow">PENGALAMAN KAMU BERARTI</p><h2 class="business">' + name + '</h2>' +
     (branch ? '<span class="branch">' + branch + '</span>' : "") +
     (address ? '<p class="address">' + address + '</p>' : "") +
@@ -121,7 +122,7 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     body{min-height:100vh;margin:0;padding:clamp(16px,4vw,52px);display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,rgba(189,128,87,.12),transparent 48%),#090a0c;color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
     .experience{position:relative;isolation:isolate;width:100%;max-width:470px;min-width:0;overflow:hidden;background:var(--surface);color:var(--ink);font-family:var(--font)}
     .experience:after{position:absolute;inset:0;z-index:-1;content:"";pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.035),transparent 38%)}
-    .brand{display:flex;flex-direction:column;align-items:var(--logo-align);gap:16px;min-width:0}
+    .brand{display:flex;flex-direction:column;align-items:var(--logo-justify);gap:16px;min-width:0}
     .brand-image,.brand-symbol{display:grid;flex:0 0 auto;max-width:100%;object-fit:contain}
     .brand-symbol{width:58px;height:58px;place-items:center;border:1px solid color-mix(in srgb,var(--accent) 48%,transparent);border-radius:17px;background:color-mix(in srgb,var(--accent) 14%,var(--surface));color:var(--accent);font-size:26px}
     .brand-copy{width:100%;min-width:0;text-align:var(--logo-align)}
