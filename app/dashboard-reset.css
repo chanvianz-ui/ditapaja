@@ -374,3 +374,56 @@
 @media(prefers-reduced-motion:reduce) {
   .dt-floating-nav a { transition:none !important; }
 }
+
+
+/* Navigation drawer — rebuilt as a structured workspace panel */
+.dt-app-menu-backdrop{
+  align-items:stretch!important;justify-content:flex-end!important;padding:0!important;
+  background:rgba(2,7,17,.72)!important;backdrop-filter:blur(8px)!important;
+}
+.dt-app-menu-panel{
+  width:min(470px,calc(100vw - 34px))!important;height:100dvh!important;max-height:100dvh!important;
+  margin:0!important;padding:30px 26px 22px!important;overflow:auto!important;
+  border:0!important;border-left:1px solid rgba(154,183,229,.18)!important;border-radius:0!important;
+  background:linear-gradient(160deg,#121f35 0%,#0c1526 55%,#09111f 100%)!important;
+  box-shadow:-28px 0 90px rgba(0,0,0,.45)!important;
+  animation:dt-drawer-enter .24s cubic-bezier(.2,.75,.25,1)!important;
+}
+.dt-app-menu-heading{padding:5px 0 25px!important;border-bottom:1px solid rgba(164,184,214,.14)!important}
+.dt-menu-kicker{display:flex;align-items:center;gap:8px;color:#91a9d2!important;font-size:9px!important;font-weight:800!important;letter-spacing:.16em!important}
+.dt-app-menu-heading h2{margin:20px 0 7px!important;font:750 34px/1.05 Inter,Arial,sans-serif!important;letter-spacing:-.055em!important}
+.dt-app-menu-heading h2 span{color:#78a0ff!important}
+.dt-app-menu-heading p{color:#8e9fba!important;font-size:12px!important}
+.dt-app-menu-heading>button{width:40px!important;height:40px!important;border-radius:12px!important;background:#192842!important}
+.dt-app-menu-links{display:flex!important;flex-direction:column!important;gap:22px!important;margin:23px 0 28px!important}
+.dt-menu-group-title{display:flex;align-items:center;justify-content:space-between;margin:0 2px 9px;color:#8095b8;font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.dt-menu-group-title span{color:#617798;font-size:9px;font-variant-numeric:tabular-nums}
+.dt-menu-group-items{display:grid;gap:6px}
+.dt-app-menu-links a{min-height:66px!important;grid-template-columns:27px 40px minmax(0,1fr) 18px!important;gap:11px!important;padding:8px 12px!important;border:1px solid rgba(164,197,255,.08)!important;border-radius:13px!important;background:rgba(255,255,255,.025)!important}
+.dt-app-menu-links a:hover{transform:translateX(-2px);border-color:rgba(116,157,255,.28)!important;background:rgba(71,125,255,.08)!important}
+.dt-app-menu-links a.is-active{border-color:rgba(102,148,255,.35)!important;background:linear-gradient(100deg,rgba(71,125,255,.19),rgba(71,125,255,.055))!important;box-shadow:inset 3px 0 #6f98ff!important}
+.dt-app-menu-index{color:#657b9e!important;font-size:9px!important}
+.dt-menu-link-icon{width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(164,197,255,.12);border-radius:11px;background:#172640;color:#a9c4f5}
+.dt-app-menu-links a.is-active .dt-menu-link-icon{border-color:rgba(112,154,255,.25);background:rgba(71,125,255,.18);color:#c8dcff}
+.dt-menu-link-copy{display:block;min-width:0}
+.dt-menu-link-copy b,.dt-menu-link-copy small{display:block}
+.dt-menu-link-copy b{color:#e8f0ff;font-size:12px;font-weight:700}
+.dt-menu-link-copy small{margin-top:4px;color:#8092b1;font-size:9px;line-height:1.35}
+.dt-app-menu-links a>svg:last-child{color:#637b9f}
+.dt-app-menu-bottom{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-top:auto!important;padding:17px 0 0!important;border-top:1px solid rgba(164,184,214,.14)!important}
+.dt-app-menu-account{flex:1;min-width:0;padding:11px;border:1px solid rgba(164,197,255,.1);border-radius:13px;background:rgba(255,255,255,.035)}
+.dt-app-menu-account .dt-app-profile-avatar{width:39px!important;height:39px!important;border-radius:12px!important}
+.dt-app-menu-account .dt-app-profile-copy small:first-child{margin:0 0 4px;color:#7489aa;font-size:7px;letter-spacing:.12em}
+.dt-app-menu-account .dt-app-profile-copy b{font-size:11px}
+.dt-app-menu-account .dt-app-profile-copy small:last-child{max-width:175px;font-size:8px}
+.dt-app-menu-bottom>button{width:42px;min-width:42px;height:42px;justify-content:center;padding:0!important;border-color:rgba(223,143,161,.2)!important;background:rgba(164,78,100,.08)!important;color:#d9a6b4!important}
+.dt-app-menu-bottom>button span{display:none}
+@keyframes dt-drawer-enter{from{opacity:.7;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:640px){
+ .dt-app-menu-backdrop{align-items:stretch!important;justify-content:flex-end!important;padding:0!important}
+ .dt-app-menu-panel{width:min(100%,470px)!important;height:100dvh!important;max-height:100dvh!important;padding:24px 18px calc(18px + env(safe-area-inset-bottom))!important;border-radius:0!important}
+ .dt-app-menu-heading h2{font-size:31px!important}
+ .dt-app-menu-links{gap:18px!important;margin:19px 0 22px!important}
+ .dt-app-menu-links a{min-height:62px!important}
+ .dt-app-menu-bottom{align-items:center!important;flex-direction:row!important}
+}
