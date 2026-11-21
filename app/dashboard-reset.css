@@ -921,3 +921,78 @@
 @media(prefers-reduced-motion:reduce){
  .dt-app-menu-panel,.dt-menu-group,.dt-app-menu-links a,.dt-menu-link-icon{animation:none!important;transition:none!important}
 }
+
+
+/* === DiTapAja workspace redesign: dark editorial surfaces === */
+.dt-account-settings-page,.dt-workspace-page{
+  background:transparent!important;color:#e8eef8!important;
+}
+.dt-account-settings-page{min-height:100vh!important;background:radial-gradient(ellipse at 78% 0%,rgba(72,112,190,.16),transparent 38%),linear-gradient(180deg,#0a101c 0%,#0b1220 55%,#080e18 100%)!important}
+.dt-account-settings-page>header{
+  position:relative!important;top:auto!important;z-index:2!important;
+  border:0!important;border-bottom:1px solid rgba(166,190,228,.12)!important;
+  background:rgba(9,15,26,.78)!important;backdrop-filter:blur(22px)!important;
+}
+.dt-account-settings-page>header>div{max-width:1180px!important;min-height:76px!important}
+.dt-account-settings-page header a{color:#f3f6fc!important}
+.dt-account-settings-page header p{color:#8193b1!important}
+.dt-account-settings-page header button{
+  border:1px solid rgba(164,188,228,.18)!important;border-radius:13px!important;
+  background:rgba(255,255,255,.045)!important;color:#a9bbd7!important;
+}
+.dt-account-settings-page header button:hover{border-color:rgba(133,171,239,.4)!important;background:rgba(91,135,218,.13)!important;color:#fff!important}
+.dt-account-settings-page>div{max-width:1180px!important;padding-top:44px!important}
+.dt-account-settings-page>div>div:first-child{color:#7185a5!important}
+.dt-account-settings-page>div>div:first-child button:hover{color:#b7d0ff!important}
+.dt-account-settings-page h1{color:#f3f6fc!important;font-size:clamp(30px,5vw,48px)!important;line-height:1.04!important;letter-spacing:-.055em!important}
+.dt-account-settings-page h2{color:#edf3fc!important;letter-spacing:-.025em!important}
+.dt-account-settings-page p{color:#91a1bb}
+.dt-account-settings-page .dt-workspace-panel{
+  position:relative!important;overflow:hidden!important;
+  border:1px solid rgba(156,183,226,.14)!important;border-radius:22px!important;
+  background:linear-gradient(145deg,rgba(24,36,57,.94),rgba(14,23,38,.96))!important;
+  box-shadow:0 22px 60px -42px rgba(0,0,0,.85),inset 0 1px rgba(255,255,255,.045)!important;
+}
+.dt-account-settings-page .dt-workspace-panel:before{
+  content:"";position:absolute;inset:0 0 auto;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(151,185,245,.35),transparent);pointer-events:none;
+}
+.dt-account-settings-page .dt-workspace-panel .border-b{border-color:rgba(156,183,226,.13)!important}
+.dt-account-settings-page .dt-workspace-panel .bg-indigo-50,
+.dt-account-settings-page .dt-workspace-panel .bg-blue-50,
+.dt-account-settings-page .dt-workspace-panel .bg-emerald-50{
+  background:rgba(91,133,207,.13)!important;color:#b8d0ff!important;
+}
+.dt-account-settings-page .dt-workspace-panel .text-slate-700,
+.dt-account-settings-page .dt-workspace-panel .text-slate-800,
+.dt-account-settings-page .dt-workspace-panel .text-slate-900{color:#e5edf9!important}
+.dt-account-settings-page .dt-workspace-panel .text-slate-500,
+.dt-account-settings-page .dt-workspace-panel .text-slate-400{color:#91a2bd!important}
+.dt-account-settings-page .dt-workspace-panel .border-slate-100,
+.dt-account-settings-page .dt-workspace-panel .border-slate-200{border-color:rgba(156,183,226,.14)!important}
+.dt-account-settings-page .dt-workspace-panel input{
+  border-color:rgba(156,183,226,.17)!important;background:rgba(5,11,20,.42)!important;color:#edf4ff!important;
+}
+.dt-account-settings-page .dt-workspace-panel input::placeholder{color:#667b9b!important}
+.dt-account-settings-page .dt-workspace-panel input:focus{border-color:#6d9df4!important;background:rgba(7,15,28,.8)!important;box-shadow:0 0 0 4px rgba(83,132,218,.13)!important}
+.dt-account-settings-page .dt-workspace-panel button[type=submit]{
+  border:1px solid rgba(140,178,247,.28)!important;border-radius:14px!important;
+  background:linear-gradient(115deg,#4778d5,#315cae)!important;
+  box-shadow:0 12px 28px -15px rgba(68,119,213,.85)!important;
+}
+.dt-account-settings-page .dt-workspace-panel button[type=submit]:hover{filter:brightness(1.12)!important;transform:translateY(-1px)}
+.dt-account-settings-page footer{border-color:rgba(156,183,226,.12)!important;color:#657894!important}
+.dt-workspace-page .dt-workspace-panel{
+  border-color:rgba(156,183,226,.14)!important;
+  box-shadow:0 18px 48px -38px rgba(0,0,0,.8)!important;
+}
+@media(max-width:640px){
+  .dt-account-settings-page>div{padding-top:28px!important}
+  .dt-account-settings-page .dt-workspace-panel{border-radius:18px!important}
+}
+@media(prefers-reduced-motion:no-preference){
+  .dt-account-settings-page .dt-workspace-panel{animation:dt-panel-arrive .42s both}
+  .dt-account-settings-page .dt-workspace-panel:nth-of-type(2){animation-delay:.06s}
+  .dt-account-settings-page .dt-workspace-panel:nth-of-type(3){animation-delay:.12s}
+  @keyframes dt-panel-arrive{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+}
