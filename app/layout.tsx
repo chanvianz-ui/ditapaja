@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./redesign.css";
-import "./design-system.css";
 import "./black-signal.css";
 import "./live-workspace.css";
 import "./refined-workspace.css";
@@ -15,7 +14,7 @@ import "./home-v3.css";
 import "./home-v4.css";
 import "./dashboard-rebuild.css";
 import "./neutral-dashboard-fix.css";
-import "./dashboard-reset.css";
+import "./design-system.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
