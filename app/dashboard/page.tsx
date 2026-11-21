@@ -1026,6 +1026,10 @@ export default function DashboardPage() {
           <div className="dt-topbar-context"><span className="dt-live-indicator"/>WORKSPACE <span className="dt-breadcrumb-sep">/</span> {activeView === "overview" ? "OVERVIEW" : "CARD MANAGEMENT"}</div>
           <div className="dt-topbar-actions"><span>{workspaceName}</span><button type="button" onClick={() => router.push("/dashboard/settings")} aria-label="Pengaturan"><Settings size={17}/></button><span className="dt-avatar">{displayName.charAt(0).toUpperCase()}</span></div>
         </header>
+        <nav className="dt-mobile-nav" aria-label="Navigasi workspace">
+          <button type="button" className={activeView === "overview" ? "is-active" : ""} onClick={() => setActiveView("overview")}><LayoutDashboard size={15}/>Overview</button>
+          <button type="button" className={activeView === "cards" ? "is-active" : ""} onClick={() => setActiveView("cards")}><CreditCard size={15}/>Kartu NFC</button>
+        </nav>
 
         <div className="dt-page">
           {(cardError || cardMessage || analyticsError || nfcError || nfcMessage) && <div className={cardError || analyticsError || nfcError ? "dt-alert is-error" : "dt-alert"}>{cardError || analyticsError || nfcError || cardMessage || nfcMessage}</div>}
