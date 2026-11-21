@@ -21,10 +21,10 @@ const defaults = (cardId: string): Settings => ({
   whatsapp_url: "", instagram_url: "", website_url: ""
 });
 const themes = [
-  { id: "ocean", label: "Bold Modern", bg: "#f5f8ff", ink: "#14233f" },
-  { id: "midnight", label: "Modern Clean", bg: "#ffffff", ink: "#172033" },
-  { id: "rose", label: "Elegant", bg: "#fbf7f0", ink: "#342b24" },
-  { id: "forest", label: "Minimal", bg: "#f1f3f6", ink: "#202735" }
+  { id: "ocean", label: "Ocean Studio", bg: "#eaf0fa", ink: "#15243b" },
+  { id: "midnight", label: "Midnight Luxe", bg: "#111a29", ink: "#f4f6fb" },
+  { id: "rose", label: "Rose Editorial", bg: "#fffaf4", ink: "#392b2b" },
+  { id: "forest", label: "Forest Organic", bg: "#e9eee7", ink: "#1e3427" }
 ] as const;
 
 function escapePreviewHtml(value: string) {
@@ -236,7 +236,7 @@ export default function LandingPageEditor() {
       </header>
 
       <section className="studio-intro">
-        <div><p className="studio-kicker">YOUR BRAND, YOUR PAGE</p><h1>Halaman yang terasa seperti brand kamu.</h1><p>Sesuaikan template, lalu lihat hasilnya langsung di preview.</p></div>
+        <div><p className="studio-kicker">YOUR BRAND, YOUR PAGE</p><h1>Halaman yang terasa seperti brand kamu.</h1><p>Pilih komposisi visual yang berbeda, atur identitas brand, lalu lihat hasilnya langsung di preview.</p></div>
         <div className="studio-card-picker"><label htmlFor="studio-card">KARTU NFC</label><select id="studio-card" value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)} className="studio-field">{cards.map(card => <option key={card.id} value={card.id}>{card.card_name || "Untitled Card"}{card.active ? "" : " — Nonaktif"}</option>)}</select></div>
       </section>
 
@@ -271,7 +271,7 @@ export default function LandingPageEditor() {
                 </div>}
                 {editorSection === "design" && <div className="space-y-7">
                   <div className="studio-setting-group"><h3>Tipografi</h3><p>Pilih karakter huruf yang paling sesuai dengan brand kamu.</p><select value={settings.font_family} onChange={e=>update("font_family",e.target.value as Settings["font_family"])} className="studio-field"><option value="Manrope">Manrope — modern & tegas</option><option value="DM Sans">DM Sans — bersih & ramah</option><option value="Arial">Arial — sederhana</option><option value="Georgia">Georgia — editorial & elegan</option></select></div>
-                  <div className="studio-setting-group"><h3>Template halaman</h3><p>Struktur halaman sudah disiapkan. Kamu hanya perlu memilih karakter visualnya.</p><div className="studio-template-grid">{themes.map(item=><button key={item.id} type="button" onClick={()=>update("theme",item.id)} className={"studio-template-card "+(settings.theme===item.id?"is-active":"")}><span className="studio-template-art" style={{background:item.bg}}><i style={{background:settings.accent_color}}/><i/><i/></span><b>{item.label}</b><small>{settings.theme===item.id?"Sedang dipilih":"Pilih template"}</small></button>)}</div></div>
+                  <div className="studio-setting-group"><h3>Template halaman</h3><p>Struktur halaman sudah disiapkan. Kamu hanya perlu memilih karakter visualnya.</p><div className="studio-template-grid">{themes.map(item=><button key={item.id} type="button" onClick={()=>update("theme",item.id)} className={"studio-template-card "+(settings.theme===item.id?"is-active":"")}><span className={"studio-template-art theme-"+item.id} style={{background:item.bg}}><i style={{background:settings.accent_color}}/><i/><i/></span><b>{item.label}</b><small>{settings.theme===item.id?"Sedang dipilih":"Pilih template"}</small></button>)}</div></div>
                   <div className="studio-field-grid">
                     <label>Warna aksen<span className="studio-color-field"><input type="color" className="studio-color-input" value={settings.accent_color} onChange={e=>update("accent_color",e.target.value)}/><b>{settings.accent_color.toUpperCase()}</b></span></label>
                     <label>Gaya tombol<select value={settings.button_style} onChange={e=>update("button_style",e.target.value as Settings["button_style"])} className="studio-field"><option value="solid">Solid — terisi</option><option value="outline">Outline — garis tepi</option></select></label>
