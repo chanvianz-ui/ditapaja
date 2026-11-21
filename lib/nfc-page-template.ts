@@ -183,28 +183,28 @@ export function renderNfcPageDocument(input: NfcPageVisual) {
     .theme-midnight .review-button{border-radius:99px}
     .theme-midnight .social-link{border-radius:99px}
     /* PLAYFORM / graphic brutalism */
-    .theme-rose{max-width:470px;padding:22px;background:#e9e5dc;color:#111214;border:0;border-radius:0;box-shadow:14px 14px 0 rgba(189,128,87,.5)}
-    .playform-top{display:flex;justify-content:space-between;gap:10px;padding-bottom:14px;border-bottom:2px solid #111214;color:#111214;font:900 8px Arial,sans-serif;letter-spacing:1.5px}
-    .playform-title{display:grid;margin:20px 0 23px;color:#111214;font:950 clamp(64px,17vw,100px)/.76 Arial,sans-serif;letter-spacing:-.09em}
-    .poster-word{display:block}.poster-outline{-webkit-text-stroke:2px #111214;color:transparent}
-    .playform-brand{padding:16px;border:2px solid #111214;background:#f5f1e8}
+    .theme-rose{max-width:470px;padding:22px;background:#111416;color:#efede7;border:1px solid #45413b;border-radius:0;box-shadow:10px 10px 0 rgba(189,128,87,.42)}
+    .playform-top{display:flex;justify-content:space-between;gap:10px;padding-bottom:14px;border-bottom:2px solid #ded8ce;color:#efede7;font:900 8px Arial,sans-serif;letter-spacing:1.5px}
+    .playform-title{display:grid;margin:20px 0 23px;color:#efede7;font:950 clamp(64px,17vw,100px)/.76 Arial,sans-serif;letter-spacing:-.09em}
+    .poster-word{display:block}.poster-outline{-webkit-text-stroke:2px #bd8057;color:transparent}
+    .playform-brand{padding:16px;border:1px solid #4a4037;background:#191c20}
     .theme-rose .brand{flex-direction:row;align-items:center;gap:14px}
-    .theme-rose .brand-image,.theme-rose .brand-symbol{width:54px!important;height:54px!important;max-width:54px;flex:0 0 54px;border:2px solid #111214;border-radius:0;background:#d7c9b8;color:#111214}
+    .theme-rose .brand-image,.theme-rose .brand-symbol{width:54px!important;height:54px!important;max-width:54px;flex:0 0 54px;border:1px solid #76553e;border-radius:0;background:#2b2118;color:#d29a72}
     .theme-rose .brand-copy{text-align:left}
-    .theme-rose .eyebrow{color:#6c5140}
-    .theme-rose .business{color:#111214;font:900 clamp(20px,5vw,29px)/.98 Arial,sans-serif;letter-spacing:-1.4px}
-    .theme-rose .branch{border:1px solid #111214;border-radius:0;background:transparent;color:#38332e}
-    .theme-rose .address{color:#625d56}
+    .theme-rose .eyebrow{color:#bd9476}
+    .theme-rose .business{color:#efede7;font:900 clamp(20px,5vw,29px)/.98 Arial,sans-serif;letter-spacing:-1.4px}
+    .theme-rose .branch{border:1px solid #414542;border-radius:0;background:transparent;color:#b4ada2}
+    .theme-rose .address{color:#929599}
     .playform-bottom{display:grid;grid-template-columns:1fr;gap:20px;margin-top:22px}
-    .theme-rose .message-kicker{color:#6c5140}
-    .theme-rose .message h1{color:#111214;font:900 clamp(26px,7vw,37px)/.98 Arial,sans-serif;letter-spacing:-1.7px}
-    .theme-rose .description{color:#514d47}
-    .theme-rose .review-button{border:2px solid #111214;border-radius:0;background:#111214;color:#f5f1e8;box-shadow:4px 4px 0 var(--accent);text-transform:uppercase;letter-spacing:.3px}
-    .theme-rose .review-button.outline{background:transparent;color:#111214}
-    .theme-rose .social-link{border:2px solid #111214;border-radius:0;background:transparent;color:#111214}
-    .theme-rose .social-link b{color:#111214}
-    .theme-rose .footer{border-color:#aaa49a;color:#5e5a54}
-    .theme-rose .footer strong{color:#111214}
+    .theme-rose .message-kicker{color:#bd9476}
+    .theme-rose .message h1{color:#efede7;font:900 clamp(26px,7vw,37px)/.98 Arial,sans-serif;letter-spacing:-1.7px}
+    .theme-rose .description{color:#aaa49b}
+    .theme-rose .review-button{border:1px solid #bd8057;border-radius:0;background:#bd8057;color:#150f0b;box-shadow:4px 4px 0 var(--accent);text-transform:uppercase;letter-spacing:.3px}
+    .theme-rose .review-button.outline{background:transparent;color:#d29a72}
+    .theme-rose .social-link{border:1px solid #414542;border-radius:0;background:transparent;color:#efede7}
+    .theme-rose .social-link b{color:#d29a72}
+    .theme-rose .footer{border-color:#414542;color:#929599}
+    .theme-rose .footer strong{color:#efede7}
     /* SOLACE / organic spatial */
     .theme-forest{max-width:450px;padding:27px 24px 22px;border:1px solid #343b34;border-radius:34px 34px 12px 12px;background:linear-gradient(155deg,#171d19,#101512 70%);box-shadow:0 35px 100px #0009}
     .solace-shape{position:absolute;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(1px)}
