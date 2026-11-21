@@ -263,7 +263,7 @@ export default function LandingPageEditor() {
           <section className="studio-editor">
             <div className="studio-section-heading"><div><span>01 — 04</span><h2>Pengaturan halaman</h2></div><small>Perubahan terlihat langsung di preview</small></div>
             <nav className="studio-tabs" aria-label="Bagian pengaturan">
-              {sections.map(section => <button key={section.id} type="button" onClick={() => setEditorSection(section.id)} aria-current={editorSection === section.id ? "step" : undefined} className={editorSection === section.id ? "is-active" : ""}><span>{section.number}</span><b>{section.title}</b></button>)}
+              {sections.map((section,index) => <button key={section.id} type="button" onClick={() => setEditorSection(section.id)} aria-current={editorSection === section.id ? "step" : undefined} aria-label={section.title + (editorSection === section.id ? ", sedang dibuka" : "")} className={editorSection === section.id ? "is-active" : ""}><span>{section.number}</span><b>{section.title}</b><i className={sections.findIndex(item=>item.id===editorSection)>index?"is-complete":""}/></button>)}
             </nav>
             <form onSubmit={save} className="studio-form">
               <div className="studio-form-heading"><div><span>EDIT SECTION {activeSection.number}</span><h2>{activeSection.title}</h2><p>{activeSection.detail}</p></div><span className="studio-step-count">{sections.findIndex(s=>s.id===editorSection)+1} / 4</span></div>
@@ -310,7 +310,10 @@ export default function LandingPageEditor() {
           <aside className="studio-canvas-panel">
             <div className="studio-canvas-heading"><div><span>LIVE PREVIEW</span><h2>Tampilan pelanggan</h2><p>Preview terisolasi dari style dashboard.</p></div><div className="studio-view-switch"><button type="button" onClick={()=>setPreviewMode("mobile")} aria-pressed={previewMode==="mobile"}><Smartphone size={15}/></button><button type="button" onClick={()=>setPreviewMode("desktop")} aria-pressed={previewMode==="desktop"}><Monitor size={15}/></button></div></div>
             <div className={"studio-canvas-stage "+(previewMode==="mobile"?"is-mobile":"is-desktop")}>
-              <iframe key={selectedCardId+"-"+previewMode} title="Preview halaman NFC" srcDoc={previewDocument} sandbox="" loading="eager" className="studio-preview-iframe"/>
+              <div className="studio-device-frame">
+                <div className="studio-device-camera" aria-hidden="true"/>
+                <iframe key={selectedCardId+"-"+previewMode} title="Preview halaman NFC" srcDoc={previewDocument} sandbox="" loading="eager" className="studio-preview-iframe"/>
+              </div>
             </div>
             <div className="studio-canvas-meta"><span><i/>{settings.is_published?"Halaman diterbitkan":"Mode draft"}</span><button type="button" onClick={()=>void openPreview()} disabled={!selectedCard}>Buka preview asli <Eye size={14}/></button></div>
           </aside>
