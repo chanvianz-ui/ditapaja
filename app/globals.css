@@ -6534,3 +6534,12 @@ body:has(main>aside.fixed.lg\:block) main>section>div .text-\[\#155eef\]{color:#
  .info-page .info-faq summary{font-size:15px!important}
  .info-page .info-faq p{font-size:13px!important;margin-right:24px!important}
 }
+
+
+/* Login: remember session for seven days */
+.dt-login-remember{display:flex;align-items:center;gap:10px;width:max-content;max-width:100%;margin:2px 0 4px;color:#66758d;font-size:11px;font-weight:600;cursor:pointer;user-select:none}
+.dt-login-remember input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.dt-login-remember-box{width:17px;height:17px;flex:0 0 17px;display:grid;place-items:center;border:1px solid #cbd5e4;border-radius:5px;background:#fff;transition:background .18s,border-color .18s,box-shadow .18s}
+.dt-login-remember input:checked+.dt-login-remember-box{border-color:#3478f6;background:#3478f6;box-shadow:0 3px 8px #3478f52b}
+.dt-login-remember input:checked+.dt-login-remember-box:after{content:"";width:7px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px)}
+.dt-login-remember input:focus-visible+.dt-login-remember-box{outline:3px solid #3478f62b;outline-offset:2px}
