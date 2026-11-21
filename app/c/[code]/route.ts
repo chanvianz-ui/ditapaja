@@ -325,7 +325,7 @@ export async function GET(
     @media (prefers-reduced-motion: reduce) { .button { transition: none; } }
   </style>
   ${customPage ? `<style>
-    body, .business, h1 { background: ${palette.background}; color: ${palette.text}; font-family: ${fontFamily}; }
+    body { background: ${palette.background}; color: ${palette.text}; font-family: ${fontFamily}; }\n    .business, h1 { font-family: ${fontFamily}; }
     .card { background: ${palette.card}; border-color: ${palette.border}; }
     .card:before { background: ${accentColor}; }
     .icon { background: ${accentColor}20; color: ${accentColor}; }
