@@ -609,3 +609,69 @@
  .dt-menu-group-items{grid-template-columns:1fr 1fr!important}
  .dt-app-menu-links a{min-height:63px!important}
 }
+
+
+/* Interactive command drawer — animated, searchable, no numeric labels */
+.dt-app-menu-panel{position:relative!important;isolation:isolate!important;width:min(680px,100vw)!important;padding:clamp(24px,4vw,42px)!important;background:radial-gradient(ellipse at 82% 12%,rgba(83,132,255,.23),transparent 34%),radial-gradient(ellipse at 8% 72%,rgba(56,164,205,.09),transparent 34%),linear-gradient(145deg,#101d32 0%,#0a1424 62%,#080f1d 100%)!important}
+.dt-menu-orbit{position:absolute;z-index:-1;pointer-events:none;border:1px solid rgba(140,177,245,.09);border-radius:50%;animation:dt-orbit-float 12s ease-in-out infinite}
+.dt-menu-orbit-a{width:390px;height:390px;right:-180px;top:90px;box-shadow:0 0 0 24px rgba(140,177,245,.018),0 0 0 55px rgba(140,177,245,.012)}
+.dt-menu-orbit-b{width:220px;height:220px;right:-80px;top:175px;border-color:rgba(98,196,226,.12);animation-delay:-5s}
+.dt-menu-kicker{display:flex!important;align-items:center!important;gap:8px!important;margin-top:29px!important;color:#9bb7e8!important;font-size:9px!important;letter-spacing:.2em!important}
+.dt-menu-kicker svg{color:#8de9ff;filter:drop-shadow(0 0 8px rgba(141,233,255,.55))}
+.dt-app-menu-heading h2{font-size:clamp(46px,7vw,68px)!important;line-height:.91!important;letter-spacing:-.085em!important}
+.dt-app-menu-heading h2 em{background:linear-gradient(100deg,#9fc1ff,#7ce4ef 78%);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+.dt-menu-search{height:54px;display:flex;align-items:center;gap:12px;margin:22px 0 8px;padding:0 15px;border:1px solid rgba(153,184,240,.2);border-radius:14px;background:rgba(6,14,27,.68);color:#8fa9d4;box-shadow:0 10px 30px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.035);transition:border-color .2s,box-shadow .2s,background .2s}
+.dt-menu-search:focus-within{border-color:rgba(123,169,255,.68);background:rgba(12,26,48,.94);box-shadow:0 0 0 4px rgba(89,137,235,.12),0 12px 34px rgba(0,0,0,.2)}
+.dt-menu-search input{min-width:0;flex:1;border:0!important;outline:0!important;background:transparent!important;color:#eef5ff!important;font:500 12px Inter,Arial,sans-serif!important;box-shadow:none!important}
+.dt-menu-search input::placeholder{color:#7186a8!important}
+.dt-menu-search kbd{min-width:25px;height:25px;display:grid;place-items:center;border:1px solid rgba(156,181,225,.18);border-radius:7px;background:rgba(255,255,255,.045);color:#91a7c9;font:600 11px Inter,Arial,sans-serif}
+.dt-menu-search button{width:27px;height:27px;display:grid;place-items:center;border:0;border-radius:7px;background:rgba(255,255,255,.07);color:#c5d7f5;cursor:pointer}
+.dt-app-menu-links{display:flex!important;flex-direction:column!important;gap:19px!important;margin:19px 0 22px!important}
+.dt-menu-group{animation:dt-group-enter .3s both}
+.dt-menu-group-title{width:100%;display:flex!important;align-items:center!important;gap:11px!important;margin:0 2px 10px!important;padding:0 2px!important;border:0!important;background:transparent!important;color:#9bb0d0!important;text-align:left!important;cursor:pointer!important}
+.dt-menu-group-title>span:first-child{color:#9bb0d0!important;font-size:9px!important;font-weight:800!important;letter-spacing:.2em!important}
+.dt-menu-group-title i{height:1px!important;flex:1!important;background:linear-gradient(90deg,rgba(148,174,218,.22),transparent)!important}
+.dt-group-chevron{width:24px;height:24px;display:grid;place-items:center;border:1px solid rgba(151,180,230,.13);border-radius:7px;background:rgba(255,255,255,.035);color:#8198bd;transition:transform .2s,background .2s}
+.dt-menu-group.is-collapsed .dt-group-chevron{transform:rotate(-90deg)}
+.dt-menu-group-title:hover .dt-group-chevron{background:rgba(90,137,225,.16);color:#c7dcff}
+.dt-menu-group-items{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+.dt-app-menu-links a{position:relative!important;isolation:isolate!important;min-height:76px!important;overflow:hidden!important;gap:12px!important;padding:12px!important;border:1px solid rgba(153,184,240,.12)!important;border-radius:16px!important;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.018))!important;box-shadow:inset 0 1px rgba(255,255,255,.045),0 8px 20px rgba(0,0,0,.08)!important;transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .22s,background .22s,box-shadow .22s!important}
+.dt-app-menu-links a:hover{transform:translateY(-4px) scale(1.012)!important;border-color:rgba(128,170,255,.5)!important;background:linear-gradient(135deg,rgba(75,124,224,.2),rgba(255,255,255,.035))!important;box-shadow:0 14px 28px rgba(0,0,0,.22),0 0 25px rgba(75,124,224,.1)!important}
+.dt-app-menu-links a:active{transform:scale(.975)!important}
+.dt-menu-link-icon{width:44px!important;height:44px!important;flex:0 0 44px!important;border:1px solid rgba(153,190,255,.17)!important;border-radius:14px!important;background:linear-gradient(145deg,rgba(110,155,239,.19),rgba(71,103,167,.07))!important;color:#c1d7ff!important;transition:transform .25s,background .25s,color .25s!important}
+.dt-app-menu-links a:hover .dt-menu-link-icon{transform:rotate(-7deg) scale(1.08)!important;background:linear-gradient(145deg,rgba(125,173,255,.32),rgba(71,103,167,.13))!important;color:#fff!important}
+.dt-menu-link-copy b{font-size:12px!important;letter-spacing:-.025em!important}
+.dt-menu-link-arrow{transition:transform .22s,color .22s!important}
+.dt-app-menu-links a:hover .dt-menu-link-arrow{transform:translate(3px,-3px)!important;color:#c8eaff!important}
+.dt-menu-link-glow{position:absolute;z-index:-1;right:-38px;bottom:-55px;width:105px;height:105px;border-radius:50%;background:rgba(87,144,255,.11);filter:blur(18px);opacity:0;transition:opacity .25s}
+.dt-app-menu-links a:hover .dt-menu-link-glow,.dt-app-menu-links a.is-active .dt-menu-link-glow{opacity:1}
+.dt-app-menu-links a.is-active{border-color:rgba(129,171,255,.6)!important;background:linear-gradient(125deg,rgba(80,129,229,.26),rgba(42,70,120,.1))!important;box-shadow:inset 3px 0 #8eb2ff,0 10px 28px rgba(0,0,0,.16),0 0 24px rgba(76,128,230,.1)!important}
+.dt-app-menu-links a.is-active .dt-menu-link-icon{border-color:rgba(156,190,255,.36)!important;background:linear-gradient(145deg,rgba(128,170,255,.32),rgba(71,103,167,.13))!important;color:#eff6ff!important}
+.dt-menu-empty{min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;border:1px dashed rgba(153,184,240,.2);border-radius:16px;color:#8199be}
+.dt-menu-empty b{color:#dce9ff;font-size:12px}
+.dt-menu-empty span{color:#8194b3;font-size:10px}
+.dt-app-menu-bottom{padding-top:16px!important}
+.dt-app-menu-account{border-color:rgba(153,184,240,.16)!important;background:linear-gradient(110deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important;transition:border-color .2s,background .2s}
+.dt-app-menu-account:hover{border-color:rgba(129,171,255,.35)!important;background:rgba(79,124,218,.08)!important}
+.dt-app-menu-bottom>button{transition:transform .2s,background .2s,border-color .2s!important}
+.dt-app-menu-bottom>button:hover{transform:translateY(-2px);border-color:rgba(230,140,164,.4)!important;background:rgba(161,74,99,.16)!important}
+.dt-app-menu-panel>button:focus-visible,.dt-app-menu-panel a:focus-visible,.dt-menu-search button:focus-visible,.dt-menu-group-title:focus-visible{outline:2px solid #8de9ff!important;outline-offset:3px!important}
+@keyframes dt-orbit-float{0%,100%{transform:translate3d(0,0,0) rotate(0)}50%{transform:translate3d(-13px,12px,0) rotate(7deg)}}
+@keyframes dt-group-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:620px){
+ .dt-app-menu-panel{padding:22px 18px calc(18px + env(safe-area-inset-bottom))!important}
+ .dt-app-menu-heading h2{font-size:clamp(43px,12vw,58px)!important}
+ .dt-menu-search{height:50px;margin-top:18px}
+ .dt-menu-group-items{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ .dt-app-menu-links a{min-height:66px!important;gap:9px!important;padding:9px!important}
+ .dt-menu-link-icon{width:37px!important;height:37px!important;flex-basis:37px!important;border-radius:11px!important}
+ .dt-menu-link-copy b{font-size:10px!important}
+ .dt-app-menu-bottom{gap:8px!important}
+}
+@media(max-width:370px){
+ .dt-menu-group-items{grid-template-columns:1fr!important}
+ .dt-app-menu-links a{min-height:61px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-menu-orbit,.dt-menu-group,.dt-app-menu-links a,.dt-menu-link-icon{animation:none!important;transition:none!important}
+}
