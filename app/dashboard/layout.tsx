@@ -21,6 +21,10 @@ const items = [
 
 const groups = ["Workspace", "Insights", "Account"] as const;
 
+function itemPathIsDashboard(href: string) {
+  return href === "/dashboard" || href === "/dashboard?view=cards";
+}
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -83,9 +87,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   function navigate(item: typeof items[number]) {
+    setMenuOpen(false);
+    if (itemPathIsDashboard(item.href) && pathname === "/dashboard") {
+      window.location.assign(item.href);
+      return;
+    }
     if (item.href === "/dashboard?view=cards") setCardsView(true);
     else if (item.href === "/dashboard") setCardsView(false);
-    setMenuOpen(false);
     router.push(item.href);
   }
 
