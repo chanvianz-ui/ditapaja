@@ -754,3 +754,11 @@
  .dt-app-menu-links a{min-height:55px!important;padding:8px!important}
  .dt-menu-link-icon{width:32px!important;height:32px!important;flex-basis:32px!important}
 }
+
+
+/* Side-entry drawer motion and visible sign-out action */
+.dt-app-menu-panel{transform-origin:top right!important;animation:dt-menu-slide-in .28s cubic-bezier(.2,.82,.2,1)!important}
+@keyframes dt-menu-slide-in{from{opacity:0;transform:translate3d(34px,0,0) scale(.985)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+.dt-app-menu-bottom>button{width:auto!important;min-width:94px!important;padding:0 12px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important}
+.dt-app-menu-bottom>button span{display:inline!important;font-size:10px!important;font-weight:700!important;letter-spacing:.01em!important}
+@media(prefers-reduced-motion:reduce){.dt-app-menu-panel{animation:none!important}}
