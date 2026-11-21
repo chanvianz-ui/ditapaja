@@ -1211,3 +1211,39 @@ code{overflow-wrap:anywhere}
 .dt-order-checkout .dt-order-account-overlay .hover\\:bg-slate-50:hover{background:#222624!important}
 @media(max-width:900px){.dt-order-checkout .order-intro{position:relative!important;top:auto!important}}
 @media(max-width:640px){.dt-order-checkout .order-layout{padding:24px 14px 42px!important}.dt-order-checkout .order-intro,.dt-order-checkout .order-form{border-radius:8px!important}.dt-order-checkout .order-intro h1{font-size:38px!important}}
+
+/* Collection cards — tactile product presentation */
+.dt-collection-page .dt-collection-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:13px!important}
+.dt-collection-page .dt-edition-card{
+  overflow:hidden;border:1px solid #393b38!important;border-radius:9px!important;
+  background:#111416!important;color:#efede7!important;box-shadow:0 24px 60px -48px #000!important;
+}
+.dt-collection-page .dt-edition-visual{
+  position:relative;display:grid;place-items:center;min-height:255px;overflow:hidden;
+  border-bottom:1px solid #343735;background:radial-gradient(ellipse at 50% 55%,rgba(189,128,87,.16),transparent 58%),linear-gradient(145deg,#1b1d1d,#101214)!important;
+}
+.dt-collection-page .dt-edition-visual-glow{position:absolute;width:220px;height:220px;border:1px solid rgba(189,128,87,.22);border-radius:50%;box-shadow:0 0 0 22px rgba(189,128,87,.035),0 0 0 48px rgba(189,128,87,.02)}
+.dt-collection-page .dt-showcase-card{position:relative;z-index:1;box-shadow:0 25px 50px #0008,0 0 30px rgba(189,128,87,.1)!important;transform:rotate(-6deg)}
+.dt-collection-page .dt-edition-status{position:absolute;z-index:2;right:13px;top:13px;padding:7px 9px;border:1px solid #76553e;border-radius:99px;background:#211b16;color:#d6b18f;font-size:7px;font-weight:900;letter-spacing:1.2px}
+.dt-collection-page .dt-edition-status.is-preorder{border-color:#6c6044;background:#252117;color:#d9c69a}
+.dt-collection-page .dt-edition-content{padding:19px}
+.dt-collection-page .dt-edition-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dt-collection-page .dt-edition-kicker{color:#bd9476;font-size:7px;font-weight:900;letter-spacing:1.5px}
+.dt-collection-page .dt-edition-heading h3{margin:7px 0 0;color:#f0eee8;font-size:25px;font-weight:850;letter-spacing:-1.2px}
+.dt-collection-page .dt-edition-more{display:grid;place-items:center;width:36px;height:36px;border:1px solid #3d403d;border-radius:7px;background:#191c1d;color:#d29a72}
+.dt-collection-page .dt-edition-description{min-height:46px;margin:12px 0;color:#a6a69f;font-size:10px;line-height:1.75}
+.dt-collection-page .dt-edition-benefits{display:flex;flex-wrap:wrap;gap:8px}
+.dt-collection-page .dt-edition-benefits span{display:inline-flex;align-items:center;gap:5px;padding:6px 8px;border:1px solid #363a38;border-radius:99px;background:#171a1b;color:#b8b8b0;font-size:8px}
+.dt-collection-page .dt-edition-benefits svg{color:#bd9476}
+.dt-collection-page .dt-edition-purchase{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:18px;padding-top:15px;border-top:1px solid #343735}
+.dt-collection-page .dt-edition-price{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+.dt-collection-page .dt-edition-price strong{color:#f0eee8;font-size:19px;font-weight:850;letter-spacing:-.7px}
+.dt-collection-page .dt-edition-price span{color:#929599;font-size:8px}
+.dt-collection-page .dt-edition-cta{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 11px;border:1px solid #bd8057;border-radius:6px;background:#bd8057;color:#150f0b;font-size:9px;font-weight:900}
+.dt-collection-page .dt-edition-cta:hover{background:#d09268}
+.dt-collection-page .dt-edition-footnote{margin-top:11px;color:#777d79;font-size:8px}
+.dt-card-create-page .bg-blue-600,.dt-card-create-page .bg-blue-700{background:#bd8057!important;color:#150f0b!important}
+.dt-card-create-page .text-blue-600,.dt-card-create-page .text-blue-700{color:#d29a72!important}
+.dt-card-create-page .border-blue-200,.dt-card-create-page .border-blue-300{border-color:#76553e!important}
+@media(max-width:900px){.dt-collection-page .dt-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:640px){.dt-collection-page .dt-collection-grid{grid-template-columns:1fr!important}.dt-collection-page .dt-edition-visual{min-height:225px}.dt-collection-page .dt-edition-description{min-height:0}}
