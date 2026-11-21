@@ -3,14 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Building2, CreditCard, Eye, LayoutDashboard, LogOut, Menu, Settings, ShoppingBag, Users, X, ArrowUpRight, ChevronDown, Sparkles } from "lucide-react";
+import { Building2, CreditCard, Eye, LayoutDashboard, LogOut, Menu, Settings, Users, X, ArrowUpRight, ChevronDown, Sparkles } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const items = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard, group: "Workspace" },
   { href: "/dashboard?view=cards", label: "Kartu NFC", icon: CreditCard, group: "Workspace" },
   { href: "/dashboard/customers", label: "Customer Insights", icon: Users, group: "Insights" },
-  { href: "/dashboard/orders", label: "Pesanan", icon: ShoppingBag, group: "Insights" },
   { href: "/dashboard/business", label: "Bisnis", icon: Building2, group: "Workspace" },
   { href: "/dashboard/landing-page", label: "Page Studio", icon: Eye, group: "Workspace" },
   { href: "/dashboard/settings", label: "Pengaturan", icon: Settings, group: "Account" },
