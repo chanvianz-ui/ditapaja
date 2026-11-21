@@ -768,8 +768,8 @@ code{overflow-wrap:anywhere}
 .dt-workspace-page .bg-blue-600,.dt-workspace-page .bg-blue-700{background:#bd8057!important;color:#140f0b!important}
 .dt-workspace-page .text-blue-600,.dt-workspace-page .text-blue-700{color:#d29a72!important}
 .dt-workspace-page .border-blue-200,.dt-workspace-page .border-blue-300{border-color:#77563e!important}
-.dt-workspace-page .hover\\:bg-blue-50:hover{background:#211b16!important}
-.dt-workspace-page .hover\\:text-blue-700:hover{color:#e2b18d!important}
+.dt-workspace-page [class*="hover:bg-blue-50"]:hover{background:#211b16!important}
+.dt-workspace-page [class*="hover:text-blue-700"]:hover{color:#e2b18d!important}
 .dt-business-page{padding-top:30px!important;padding-bottom:52px!important}
 .dt-business-page .dt-business-hero{
   border:1px solid #45372d!important;border-radius:3px!important;
@@ -876,7 +876,7 @@ code{overflow-wrap:anywhere}
   border-color:var(--dt-line)!important;background:rgba(12,13,15,.92)!important;color:#efede7!important;
   backdrop-filter:blur(18px)!important;
 }
-.dt-control-content,.dt-admin-shell .max-w-\\[1480px\\]{color:#efede7!important}
+.dt-control-content,.dt-admin-shell [class*="max-w-"]{color:#efede7!important}
 .dt-control-intro,.dt-admin-shell [class*="bg-white"]{
   border-color:#3d342d!important;border-radius:8px!important;
   background:linear-gradient(130deg,#171819,#211b17)!important;color:#efede7!important;
@@ -1208,7 +1208,7 @@ code{overflow-wrap:anywhere}
 .dt-order-checkout .dt-order-account-overlay .text-slate-500,.dt-order-checkout .dt-order-account-overlay .text-slate-400{color:#a0a29c!important}
 .dt-order-checkout .dt-order-account-overlay .border-slate-200{border-color:#414542!important}
 .dt-order-checkout .dt-order-account-overlay .bg-blue-600{background:#bd8057!important;color:#150f0b!important}
-.dt-order-checkout .dt-order-account-overlay .hover\\:bg-slate-50:hover{background:#222624!important}
+.dt-order-checkout .dt-order-account-overlay [class*="hover:bg-slate-50"]:hover{background:#222624!important}
 @media(max-width:900px){.dt-order-checkout .order-intro{position:relative!important;top:auto!important}}
 @media(max-width:640px){.dt-order-checkout .order-layout{padding:24px 14px 42px!important}.dt-order-checkout .order-intro,.dt-order-checkout .order-form{border-radius:8px!important}.dt-order-checkout .order-intro h1{font-size:38px!important}}
 
