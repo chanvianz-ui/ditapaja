@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Building2, CreditCard, Eye, LayoutDashboard, LogOut, Menu, Settings, ShoppingBag, Users, X, ArrowUpRight, Search, ChevronDown, Sparkles } from "lucide-react";
+import { Building2, CreditCard, Eye, LayoutDashboard, LogOut, Menu, Settings, ShoppingBag, Users, X, ArrowUpRight, ChevronDown, Sparkles } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const items = [
@@ -21,13 +21,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [query, setQuery] = useState("");
   const [collapsed, setCollapsed] = useState<string[]>([]);
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("Akun");
-  const searchRef = useRef<HTMLInputElement>(null);
-
-  const filteredItems = useMemo(() => items.filter(item => item.label.toLowerCase().includes(query.trim().toLowerCase()) || item.group.toLowerCase().includes(query.trim().toLowerCase())), [query]);
 
   useEffect(() => {
     let alive = true;
@@ -42,20 +38,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return () => { alive = false; };
   }, []);
 
-  useEffect(() => { setMenuOpen(false); setQuery(""); }, [pathname]);
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
-      if (event.key === "/" && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement)) {
-        event.preventDefault();
-        searchRef.current?.focus();
-      }
     };
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
-    const focusTimer = window.setTimeout(() => searchRef.current?.focus(), 180);
-    return () => { document.body.style.overflow = ""; window.removeEventListener("keydown", onKey); window.clearTimeout(focusTimer); };
+    return () => { window.removeEventListener("keydown", onKey); };
   }, [menuOpen]);
 
   function active(href: string) {
@@ -106,18 +96,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <button type="button" onClick={() => setMenuOpen(false)} aria-label="Tutup menu"><X size={20}/></button>
             </div>
 
-            <div className="dt-menu-search">
-              <Search size={18}/>
-              <input ref={searchRef} value={query} onChange={event => setQuery(event.target.value)} placeholder="Cari halaman..." aria-label="Cari halaman"/>
-              <kbd>/</kbd>
-              {query && <button type="button" onClick={() => setQuery("")} aria-label="Hapus pencarian"><X size={15}/></button>}
-            </div>
-
             <nav className="dt-app-menu-links" aria-label="Halaman workspace">
               {groups.map(group => {
-                const groupItems = filteredItems.filter(item => item.group === group);
-                if (!groupItems.length) return null;
-                const isCollapsed = collapsed.includes(group) && !query;
+                const groupItems = items.filter(item => item.group === group);
+                const isCollapsed = collapsed.includes(group);
                 return <div className={"dt-menu-group" + (isCollapsed ? " is-collapsed" : "")} key={group}>
                   <button className="dt-menu-group-title" type="button" onClick={() => setCollapsed(current => current.includes(group) ? current.filter(value => value !== group) : [...current, group])} aria-expanded={!isCollapsed}>
                     <span>{group}</span><i/><span className="dt-group-chevron"><ChevronDown size={15}/></span>
@@ -136,7 +118,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   </div>}
                 </div>;
               })}
-              {filteredItems.length === 0 && <div className="dt-menu-empty"><Search size={22}/><b>Halaman tidak ditemukan</b><span>Coba kata kunci lain.</span></div>}
+
             </nav>
 
             <div className="dt-app-menu-bottom">
