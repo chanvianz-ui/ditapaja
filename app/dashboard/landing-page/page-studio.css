@@ -1,0 +1,79 @@
+/* DiTapAja Page Studio — isolated navy / graphite design system */
+.ditapaja-studio-page{
+ --st-bg:#080d18;--st-panel:#101a2a;--st-panel2:#152238;--st-line:rgba(166,190,226,.14);
+ --st-text:#f1f5fc;--st-muted:#94a4bd;--st-soft:#bdc9dc;--st-blue:#7da5ff;--st-cyan:#8ddcf2;
+ width:100%;min-height:calc(100svh - 72px);padding:30px 0 48px!important;color:var(--st-text)!important;background:transparent!important;
+}
+.ditapaja-studio-page *{box-sizing:border-box}
+.ditapaja-studio-page>div{width:min(1480px,100%);padding-inline:clamp(14px,3vw,40px)}
+.ditapaja-studio-page .dt-studio-nav{margin-bottom:24px!important}
+.ditapaja-studio-page .dt-studio-nav button{background:#111c2d!important;border:1px solid var(--st-line)!important;color:var(--st-soft)!important;box-shadow:none!important;border-radius:13px!important}
+.ditapaja-studio-page .dt-studio-nav>div{background:rgba(125,165,255,.09)!important;border:1px solid rgba(125,165,255,.22)!important;color:#a9c1ff!important}
+.ditapaja-studio-page .dt-studio-masthead{position:relative;isolation:isolate;overflow:hidden;display:grid;gap:28px;margin-bottom:26px!important;padding:clamp(24px,4vw,44px)!important;border:1px solid rgba(142,174,226,.18)!important;border-radius:28px!important;background:radial-gradient(ellipse at 86% 8%,rgba(64,119,219,.24),transparent 36%),radial-gradient(ellipse at 68% 100%,rgba(64,190,220,.10),transparent 35%),linear-gradient(125deg,#111d31 0%,#0d1728 55%,#101d32 100%)!important;box-shadow:0 24px 80px -55px #000}
+.ditapaja-studio-page .dt-studio-masthead:after{content:"";position:absolute;z-index:-1;width:310px;height:310px;right:8%;top:-190px;border:1px solid rgba(139,185,255,.18);border-radius:50%;box-shadow:0 0 0 32px rgba(139,185,255,.025),0 0 0 70px rgba(139,185,255,.02)}
+.ditapaja-studio-page .dt-studio-masthead p:first-child{color:#91b6ff!important;letter-spacing:.22em!important}
+.ditapaja-studio-page .dt-studio-masthead h1{max-width:800px!important;font-size:clamp(2rem,4vw,3.5rem)!important;line-height:1.06!important;letter-spacing:-.055em!important;color:#f2f6ff!important}
+.ditapaja-studio-page .dt-studio-masthead p:not(:first-child){color:#a9b8cf!important;max-width:650px}
+.ditapaja-studio-page .dt-studio-masthead .grid>div{background:rgba(255,255,255,.045)!important;border:1px solid rgba(172,197,235,.14)!important;border-radius:16px!important}
+.ditapaja-studio-page .dt-studio-masthead .grid span{color:#91a4c1!important}
+.ditapaja-studio-page .dt-studio-masthead .grid strong{color:#f1f5fc!important}
+.ditapaja-studio-page [role=alert]{border:1px solid rgba(255,115,132,.22)!important;background:rgba(122,35,54,.16)!important;color:#ffb9c3!important;border-radius:14px!important}
+.ditapaja-studio-page [role=status]{border:1px solid rgba(104,201,183,.22)!important;background:rgba(26,116,108,.13)!important;color:#a5e4d8!important;border-radius:14px!important}
+.ditapaja-studio-page .dt-studio-card-select,.ditapaja-studio-page .dt-studio-section-nav,.ditapaja-studio-page .dt-studio-form{background:var(--st-panel)!important;border:1px solid var(--st-line)!important;border-radius:20px!important;color:var(--st-text)!important;box-shadow:0 18px 55px -45px #000!important}
+.ditapaja-studio-page .dt-studio-card-select{padding:18px 22px!important}
+.ditapaja-studio-page .dt-studio-card-select p:first-child{color:#8fa8ce!important;letter-spacing:.17em}
+.ditapaja-studio-page .dt-studio-card-select p:last-child{color:#e8effb!important}
+.ditapaja-studio-page .dt-studio-card-select select,.ditapaja-studio-page .dt-studio-input{width:100%;min-height:46px;border:1px solid rgba(157,184,225,.2)!important;border-radius:12px!important;background:#0b1423!important;color:#eaf1ff!important;padding:11px 13px!important;outline:none;box-shadow:none!important}
+.ditapaja-studio-page .dt-studio-input:focus,.ditapaja-studio-page .dt-studio-card-select select:focus{border-color:#7da5ff!important;box-shadow:0 0 0 3px rgba(125,165,255,.13)!important}
+.ditapaja-studio-page .dt-studio-section-nav{gap:8px!important;padding:9px!important}
+.ditapaja-studio-page .dt-studio-step{min-height:104px;border:1px solid transparent!important;border-radius:14px!important;background:transparent!important;color:#9babc4!important}
+.ditapaja-studio-page .dt-studio-step:hover{background:rgba(125,165,255,.07)!important}
+.ditapaja-studio-page .dt-studio-step.is-active{background:linear-gradient(135deg,rgba(89,135,225,.18),rgba(65,177,208,.08))!important;border-color:rgba(125,165,255,.32)!important;color:#eaf1ff!important;box-shadow:inset 0 1px rgba(255,255,255,.05)}
+.ditapaja-studio-page .dt-studio-form{overflow:hidden}
+.ditapaja-studio-page .dt-studio-form>div:first-child{border-color:var(--st-line)!important;background:rgba(255,255,255,.018)!important}
+.ditapaja-studio-page .dt-studio-form>div:first-child p:first-child{color:#91b6ff!important}
+.ditapaja-studio-page .dt-studio-form h2,.ditapaja-studio-page .dt-studio-form h3,.ditapaja-studio-page .dt-studio-form strong{color:#edf3ff!important}
+.ditapaja-studio-page .dt-studio-form p,.ditapaja-studio-page .dt-studio-form label{color:#aab9d0!important}
+.ditapaja-studio-page .dt-studio-form .text-slate-900,.ditapaja-studio-page .dt-studio-form .text-slate-800,.ditapaja-studio-page .dt-studio-form .text-slate-700{color:#e5edf9!important}
+.ditapaja-studio-page .dt-studio-form .text-slate-600,.ditapaja-studio-page .dt-studio-form .text-slate-500,.ditapaja-studio-page .dt-studio-form .text-slate-400{color:#9aabc4!important}
+.ditapaja-studio-page .dt-studio-form .bg-white,.ditapaja-studio-page .dt-studio-form .bg-slate-50,.ditapaja-studio-page .dt-studio-form .bg-slate-100{background:#142137!important}
+.ditapaja-studio-page .dt-studio-form .border-slate-100,.ditapaja-studio-page .dt-studio-form .border-slate-200,.ditapaja-studio-page .dt-studio-form .border-slate-300{border-color:var(--st-line)!important}
+.ditapaja-studio-page .dt-studio-form-body{padding:clamp(18px,3vw,32px)!important}
+.ditapaja-studio-page .dt-studio-form-body .rounded-2xl{border-color:var(--st-line)!important}
+.ditapaja-studio-page .dt-studio-form-body .bg-blue-50{background:rgba(84,129,218,.12)!important}
+.ditapaja-studio-page .dt-studio-form-body .text-blue-900,.ditapaja-studio-page .dt-studio-form-body .text-blue-800{color:#b7ceff!important}
+.ditapaja-studio-page .dt-studio-theme{border-color:var(--st-line)!important;background:#0c1626!important;color:#dbe6f8!important}
+.ditapaja-studio-page .dt-studio-theme.is-active{border-color:#7da5ff!important;background:rgba(95,139,225,.15)!important;box-shadow:0 0 0 2px rgba(125,165,255,.12)}
+.ditapaja-studio-page .dt-studio-form-footer{border-color:var(--st-line)!important;background:#0d1727!important}
+.ditapaja-studio-page .dt-studio-form-footer button{border-radius:12px!important}
+.ditapaja-studio-page .dt-studio-form-footer button[type=button]:not(:disabled):last-child{background:linear-gradient(110deg,#4779db,#398fb7)!important;color:white!important}
+.ditapaja-studio-page .dt-studio-form-footer button:disabled{opacity:.35}
+.ditapaja-studio-page .dt-studio-preview-col{min-width:0}
+.ditapaja-studio-page .dt-studio-preview-col h2{color:#eef4ff!important}
+.ditapaja-studio-page .dt-studio-preview-col>div:first-child p{color:#8fa8ce!important}
+.ditapaja-studio-page .dt-studio-preview-col>div:first-child>div{background:#111d30!important;border:1px solid var(--st-line)!important}
+.ditapaja-studio-page .dt-studio-preview-col>div:first-child button{color:#9fb1ce!important}
+.ditapaja-studio-page .dt-studio-preview-col>div:first-child button[aria-pressed=true]{background:#416fc7!important;color:white!important}
+.ditapaja-studio-page .dt-studio-preview-frame{display:flex;justify-content:center;align-items:flex-start;min-height:530px;padding:22px;border:1px solid rgba(155,183,228,.17);border-radius:24px;background:radial-gradient(ellipse at 50% 0%,rgba(89,132,215,.14),transparent 55%),#0d1728;overflow:hidden}
+.ditapaja-studio-page .dt-studio-preview-frame.is-mobile .dt-studio-preview-screen{width:min(100%,340px);min-height:590px;border:8px solid #25344c;border-radius:34px;box-shadow:0 25px 60px -28px #000;padding:28px 22px}
+.ditapaja-studio-page .dt-studio-preview-frame.is-desktop .dt-studio-preview-screen{width:100%;min-height:470px;border:1px solid #344761;border-radius:18px;padding:32px}
+.ditapaja-studio-page .dt-studio-preview-screen{box-shadow:0 16px 45px -25px #000}
+.ditapaja-studio-page .dt-studio-preview-col>div:nth-last-child(1){border:1px solid var(--st-line)!important;background:#111d30!important;border-radius:15px!important}
+.ditapaja-studio-page .dt-studio-preview-col>div:nth-last-child(1) p:first-child{color:#eaf1ff!important}
+.ditapaja-studio-page .dt-studio-preview-col>div:nth-last-child(1) p:last-child{color:#9aabc4!important}
+.ditapaja-studio-page .dt-studio-preview-col>button{border-color:var(--st-line)!important;background:#111d30!important;color:#dce8fb!important;border-radius:13px!important}
+.ditapaja-studio-page .dt-studio-preview-col>button:hover{border-color:#7da5ff!important;color:#bcd0ff!important}
+.ditapaja-studio-page .text-slate-950,.ditapaja-studio-page .text-slate-900,.ditapaja-studio-page .text-slate-800,.ditapaja-studio-page .text-slate-700{color:#e5edf9!important}
+.ditapaja-studio-page .text-slate-600,.ditapaja-studio-page .text-slate-500,.ditapaja-studio-page .text-slate-400{color:#9aabc4!important}
+.ditapaja-studio-page .bg-white,.ditapaja-studio-page .bg-slate-50,.ditapaja-studio-page .bg-slate-100{background:#142137!important}
+.ditapaja-studio-page .border-slate-100,.ditapaja-studio-page .border-slate-200,.ditapaja-studio-page .border-slate-300{border-color:var(--st-line)!important}
+@media(min-width:1280px){.ditapaja-studio-page .dt-studio-preview-col{position:sticky;top:22px}}
+@media(max-width:1279px){.ditapaja-studio-page .dt-studio-preview-col{position:static}}
+@media(max-width:640px){
+ .ditapaja-studio-page{padding-top:18px!important}
+ .ditapaja-studio-page .dt-studio-masthead{border-radius:21px!important}
+ .ditapaja-studio-page .dt-studio-preview-frame{min-height:0;padding:14px}
+ .ditapaja-studio-page .dt-studio-preview-frame.is-mobile .dt-studio-preview-screen{min-height:550px}
+ .ditapaja-studio-page .dt-studio-step{min-height:88px}
+}
+@media(prefers-reduced-motion:reduce){.ditapaja-studio-page *{scroll-behavior:auto!important;transition:none!important}}
