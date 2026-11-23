@@ -474,3 +474,59 @@ input:focus,select:focus,textarea:focus { border-color:var(--dt-cyan);box-shadow
 @media(min-width:761px){
  .concept-mobile-actions{display:none}
 }
+
+
+/* DiTapAja unified visual language — calm contrast, soft geometry, expressive type */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+:root{
+ --dt-bg:#0b1523;
+ --dt-bg-soft:#101e30;
+ --dt-surface:#17283d;
+ --dt-surface-raised:#1d334c;
+ --dt-border:rgba(169,190,215,.14);
+ --dt-text:#e8eef7;
+ --dt-muted:#a3b2c4;
+ --dt-blue:#548fe0;
+ --dt-blue-strong:#3d78cb;
+ --dt-cyan:#69cbd4;
+ --dt-cyan-soft:rgba(105,203,212,.12);
+ --dt-radius:16px;
+ --dt-shadow:0 18px 48px rgba(0,0,0,.22);
+}
+html,body{background-color:var(--dt-bg);color:var(--dt-text)}
+body{font-family:"Nunito Sans",sans-serif;font-weight:400;letter-spacing:-.012em;line-height:1.6;background:radial-gradient(ellipse at 80% -15%,rgba(84,143,224,.12),transparent 42rem),var(--dt-bg)}
+h1,h2,h3,h4,h5,h6,.brand,.dt-v2-card-word,.dt-edition-heading h3{font-family:"Poppins",sans-serif;font-weight:700;letter-spacing:-.045em}
+h1{font-weight:800}h2{font-weight:700}h3,h4{font-weight:650}
+p,small,.dt-v2-hero-copy>p,.dt-edition-description{font-family:"Nunito Sans",sans-serif;font-weight:400;letter-spacing:0}
+strong,b{font-weight:800}
+button,input,select,textarea{font-family:"Nunito Sans",sans-serif}
+::selection{background:rgba(105,203,212,.55);color:#071321}
+.concept-header,.dt-public-header{background:rgba(11,21,35,.9);border-color:var(--dt-border)}
+.concept-nav nav a,.concept-nav-actions a{font-family:"Nunito Sans",sans-serif;font-weight:650}
+.concept-nav-actions .concept-nav-cta,.dt-v2-primary,.dt-auth-submit,.button,.button-primary{background:linear-gradient(115deg,#548fe0,#69cbd4);border-color:rgba(160,222,230,.25);box-shadow:0 8px 22px rgba(67,129,204,.15);border-radius:12px}
+.dt-menu-panel,.dt-menu-links a,.dt-menu-action-card{border-color:var(--dt-border);background-color:var(--dt-surface)}
+.dt-menu-links a,.dt-menu-action-card{border-radius:14px}
+.dt-auth-form-card,.dt-card-manager,.dt-managed-card,.dt-card-counts>div,.dt-edition-card,.dt-v2-steps article,.dt-catalog-benefits>div,.dt-catalog-note{
+ box-shadow:0 12px 32px rgba(0,0,0,.16);border-color:var(--dt-border)
+}
+.dt-card-counts>div,.dt-managed-card,.dt-edition-card,.dt-v2-steps article,.dt-catalog-benefits>div{
+ background:linear-gradient(145deg,rgba(24,43,64,.96),rgba(17,32,49,.98))
+}
+.dt-card-manager,.dt-auth-form-card,.dt-catalog-note{background:linear-gradient(145deg,rgba(19,36,56,.96),rgba(14,27,43,.98))}
+.dt-card-counts>div::after,.dt-v2-steps article::after{opacity:.55}
+.dt-card-counts small,.dt-managed-info>small,.dt-list-foot span{color:#a3b2c4}
+.dt-managed-title>span{background:rgba(105,203,212,.08);border-color:rgba(105,203,212,.18);color:#9bdde1}
+.dt-card-toolbar input,.dt-card-toolbar select,.dt-auth-field input,.dt-auth-password input{background:#0d1a2a;border-color:rgba(169,190,215,.17);border-radius:11px}
+.dt-managed-actions button,.dt-bulkbar button{border:1px solid rgba(169,190,215,.16);border-radius:10px;background:rgba(9,20,33,.55)}
+.dt-edition-visual{background:radial-gradient(ellipse at 50% 42%,rgba(105,203,212,.12),transparent 58%),linear-gradient(145deg,#192e46,#102035)}
+.dt-edition-cta{background:linear-gradient(115deg,#548fe0,#69cbd4);border-color:rgba(160,222,230,.25);border-radius:11px}
+.dt-v2-how{background:radial-gradient(ellipse at 8% 15%,rgba(84,143,224,.1),transparent 34%),#101e30}
+.dt-v2-how::before{opacity:.55}
+.dt-v2-how-heading h2{font-weight:750}
+.dt-v2-footer{background:#081321}
+.dt-footer-column>a,.dt-footer-about>p,.dt-footer-help>p{font-family:"Nunito Sans",sans-serif}
+.dt-v2-hero{background:radial-gradient(ellipse at 78% 15%,rgba(105,203,212,.1),transparent 34rem),linear-gradient(135deg,#0d1c30,#172d47 60%,#10243a)!important}
+.dt-v2-floating-card,.dt-v2-glass-note,.dt-v2-glass-stat{backdrop-filter:blur(16px);border-radius:17px}
+.dt-v2-review-button{background:linear-gradient(110deg,#548fe0,#69cbd4)!important}
+.dt-page,.info-page{font-family:"Nunito Sans",sans-serif}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
