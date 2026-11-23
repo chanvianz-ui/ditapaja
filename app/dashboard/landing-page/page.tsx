@@ -16,7 +16,7 @@ type Settings = {
 const defaults = (cardId: string): Settings => ({
   card_id: cardId, is_published: false, headline: "Bagikan pengalaman kamu",
   description: "Terima kasih sudah berkunjung. Kami menghargai ulasan dan dukungan kamu.",
-  theme: "ocean", font_family: "Manrope", accent_color: "#bd8057", button_style: "solid",
+  theme: "ocean", font_family: "Manrope", accent_color: "#2878e8", button_style: "solid",
   logo_url: null, logo_size: 72, logo_position: "center",
   whatsapp_url: "", instagram_url: "", website_url: ""
 });
