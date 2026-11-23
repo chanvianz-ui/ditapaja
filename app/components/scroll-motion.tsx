@@ -4,6 +4,8 @@ import { useEffect } from "react";
 export default function ScrollMotion() {
   useEffect(() => {
     const selectors = [
+      ".dt-v2-hero-copy", ".dt-v2-hero-art", ".dt-v2-section-heading", ".dt-edition-card", ".dt-v2-dashboard-copy", ".dt-v2-dashboard-stage", ".dt-v2-how-heading", ".dt-v2-steps article",
+      ".dt-page-heading", ".dt-kpi", ".dt-overview-grid > *", ".dt-insights > *", ".dt-card-manager > *",
       ".concept-section-top",
       ".concept-product",
       ".concept-experience-head",
