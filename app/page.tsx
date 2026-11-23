@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowRight, ArrowUpRight, BarChart3, Check, Layers3, Link2, Nfc, ShieldCheck, Smartphone, Sparkles, Zap } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, BarChart3, Check, Layers3, Link2, ShieldCheck, Smartphone, Sparkles, Zap } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 import ScrollMotion from "./components/scroll-motion";
@@ -32,15 +32,19 @@ export default function Home() {
           </div>
           <div className="nx-hero-simple-note"><span>01</span> Tap atau scan. Tanpa aplikasi. <i/> <span>02</span> Dashboard gratis. Tanpa biaya bulanan.</div>
         </div>
-        <div className="nx-hero-simple-visual" aria-label="Kartu NFC DiTapAja">
-          <div className="nx-hero-simple-glow"/>
-          <div className="nx-hero-card nx-hero-card-v2 nx-hero-card-simple">
-            <div className="nx-card-head"><BrandMark/><span>CONTACTLESS REVIEW</span></div>
-            <div className="nx-card-title">DiTapAja<span>.</span></div>
-            <div className="nx-card-wave"><i/><i/><i/><i/><i/><i/><i/></div>
-            <div className="nx-card-bottom"><span>ONE TAP. MORE CONNECTIONS.</span><Nfc size={22}/></div>
+        <div className="nx-hero-simple-visual nx-hero-benefits" aria-label="Cara kerja DiTapAja">
+          <div className="nx-benefit-panel">
+            <div className="nx-benefit-panel-head"><span>THE DI TAPAJA SYSTEM</span><i><Zap size={15}/></i></div>
+            <div className="nx-benefit-flow">
+              <div className="nx-benefit-node"><span className="nx-benefit-icon"><Smartphone size={21}/></span><div><small>01 / CUSTOMER</small><b>Tap or scan</b><p>Pelanggan cukup mendekatkan ponsel atau scan QR.</p></div><span className="nx-benefit-status">EASY</span></div>
+              <div className="nx-benefit-connector"><i/></div>
+              <div className="nx-benefit-node"><span className="nx-benefit-icon"><Link2 size={21}/></span><div><small>02 / DESTINATION</small><b>Your review link</b><p>Halaman tujuan terbuka langsung di browser.</p></div><span className="nx-benefit-status">DIRECT</span></div>
+              <div className="nx-benefit-connector"><i/></div>
+              <div className="nx-benefit-node"><span className="nx-benefit-icon"><BarChart3 size={21}/></span><div><small>03 / BUSINESS</small><b>Track activity</b><p>Pantau interaksi kartu lewat dashboard.</p></div><span className="nx-benefit-status">YOURS</span></div>
+            </div>
+            <div className="nx-benefit-panel-foot"><span><i/> NFC + QR CODE</span><b>ONE SIMPLE WORKFLOW</b></div>
           </div>
-          <span className="nx-hero-simple-caption">ONE CARD. MORE CONNECTIONS.</span>
+          <p className="nx-benefit-caption">Dibuat agar pelanggan tidak perlu berpikir dua kali.</p>
         </div>
       </section>
 
