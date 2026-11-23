@@ -1,46 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "./redesign.css";
-import "./black-signal.css";
-import "./live-workspace.css";
-import "./refined-workspace.css";
-import "./premium-interface.css";
-import "./premium-secondary.css";
-import "./premium-public.css";
-import "./total-overhaul.css";
-import "./home-refresh.css";
-import "./home-v2.css";
-import "./home-v3.css";
-import "./home-v4.css";
-import "./dashboard-rebuild.css";
-import "./neutral-dashboard-fix.css";
-import "./design-system.css";
-import "./mobile-first-system.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
-  title: {
-    default: "DiTapAja — Satu Tap, Lebih Banyak Review",
-    template: "%s | DiTapAja",
-  },
-  description:
-    "Bantu pelanggan menemukan halaman review bisnismu dengan NFC Review Card dari DiTapAja.",
+  title: { default: "DiTapAja — Satu Tap, Lebih Banyak Review", template: "%s | DiTapAja" },
+  description: "Bantu pelanggan menemukan halaman review bisnismu dengan NFC Review Card dari DiTapAja.",
   openGraph: {
-    type: "website",
-    siteName: "DiTapAja",
-    locale: "id_ID",
+    type: "website", siteName: "DiTapAja", locale: "id_ID",
     title: "DiTapAja — Satu Tap, Lebih Banyak Review",
-    description:
-      "NFC Review Card dengan QR Code dan dashboard monitoring tanpa biaya bulanan.",
+    description: "NFC Review Card dengan QR Code dan dashboard monitoring tanpa biaya bulanan.",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html lang="id">
-      <body>{children}</body>
-    </html>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="id"><body>{children}</body></html>;
 }
