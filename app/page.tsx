@@ -21,34 +21,32 @@ export default function Home() {
       <ScrollMotion />
       <SiteHeader />
 
-      <section className="nx-hero">
-        <div className="nx-hero-grid" aria-hidden="true" />
-        <div className="nx-hero-copy">
-          <div className="nx-eyebrow"><span className="nx-pulse" /> SMART REVIEW ECOSYSTEM <span>01 / 04</span></div>
-          <h1>Make every<br/><em>connection</em><br/>count<span className="nx-dot">.</span></h1>
-          <p className="nx-lead">Satu sentuhan kecil untuk pengalaman review yang lebih mudah. NFC card, QR Code, dan dashboard dalam satu ekosistem.</p>
+      <section className="nx-hero nx-hero-v2">
+        <div className="nx-hero-grid" aria-hidden="true"/>
+        <div className="nx-hero-v2-top"><span><i className="nx-pulse"/> NFC MADE SIMPLE</span><span>DITAPAJA® — 2026</span></div>
+        <div className="nx-hero-v2-copy">
+          <div className="nx-hero-v2-index">01 <i/> DIGITAL TOUCHPOINT FOR BUSINESS</div>
+          <h1>Good reviews<br/>start with a<br/><em>single tap.</em></h1>
+          <p className="nx-lead">Bikin pelanggan lebih mudah terhubung dengan bisnismu. Satu kartu untuk NFC, QR Code, dan dashboard review dalam satu ekosistem.</p>
           <div className="nx-hero-actions">
-            <a href="#koleksi" className="nx-button-primary">Temukan kartu <ArrowUpRight size={18}/></a>
-            <a href="#cara-kerja" className="nx-button-quiet">Lihat cara kerja <ArrowDown size={16}/></a>
+            <a href="#koleksi" className="nx-button-primary">Explore the cards <ArrowUpRight size={18}/></a>
+            <a href="#cara-kerja" className="nx-button-quiet">Cara kerjanya <ArrowDown size={16}/></a>
           </div>
-          <div className="nx-hero-foot"><span><Check size={14}/> Dashboard gratis</span><span><Check size={14}/> Tanpa biaya bulanan</span><span><Check size={14}/> NFC + QR</span></div>
+          <div className="nx-hero-v2-proof"><div><b>01</b><span>Tap or scan.<br/>No app needed.</span></div><div><b>02</b><span>Free dashboard.<br/>No monthly fee.</span></div></div>
         </div>
-
-        <div className="nx-stage" aria-label="Ilustrasi ekosistem DiTapAja">
-          <div className="nx-stage-halo nx-halo-a"/><div className="nx-stage-halo nx-halo-b"/>
-          <div className="nx-stage-orbit nx-orbit-a"/><div className="nx-stage-orbit nx-orbit-b"/>
-          <div className="nx-stage-label nx-label-top"><span>DITAPAJA / NFC 01</span><i/></div>
-          <div className="nx-hero-card">
-            <div className="nx-card-head"><BrandMark/><span>CONTACTLESS REVIEW</span></div>
-            <div className="nx-card-title">DiTap<span>Aja.</span></div>
-            <div className="nx-card-wave"><i/><i/><i/><i/><i/><i/><i/></div>
-            <div className="nx-card-bottom"><span>ONE TAP. MORE CONNECTIONS.</span><Nfc size={22}/></div>
+        <div className="nx-hero-v2-visual" aria-label="Visual kartu NFC DiTapAja dan pengalaman tap">
+          <div className="nx-portal"><div className="nx-portal-inner"/><span className="nx-portal-coordinate">06°12' S / 106°49' E</span><span className="nx-portal-index">TAP ZONE / 001</span></div>
+          <div className="nx-phone">
+            <div className="nx-phone-island"/>
+            <div className="nx-phone-screen"><span className="nx-phone-status">DITAPAJA CONNECT</span><div className="nx-phone-avatar"><BrandMark/></div><b>Review<br/>experience<span>.</span></b><small>You're one tap away</small><div className="nx-phone-stars">★★★★★</div><div className="nx-phone-link">Continue to review <ArrowUpRight size={12}/></div></div>
           </div>
-          <div className="nx-floating-chip nx-chip-one"><span className="nx-chip-icon"><QrCode size={18}/></span><span><b>QR ready</b><small>Scan from any camera</small></span></div>
-          <div className="nx-floating-chip nx-chip-two"><span className="nx-chip-icon"><BarChart3 size={18}/></span><span><b>Live insights</b><small>Your activity, in view</small></span><span className="nx-chip-signal">↗</span></div>
-          <div className="nx-stage-caption">TAP INTO A BETTER REVIEW EXPERIENCE <span>↗</span></div>
+          <div className="nx-hero-card nx-hero-card-v2">
+            <div className="nx-card-head"><BrandMark/><span>CONTACTLESS REVIEW</span></div><div className="nx-card-title">DiTap<span>Aja.</span></div><div className="nx-card-wave"><i/><i/><i/><i/><i/><i/><i/></div><div className="nx-card-bottom"><span>ONE TAP. MORE CONNECTIONS.</span><Nfc size={22}/></div>
+          </div>
+          <div className="nx-hero-v2-tag"><span><QrCode size={17}/></span><div><b>Tap. Scan. Connect.</b><small>One card, more possibilities.</small></div></div>
+          <div className="nx-hero-v2-vertical">MAKE EVERY INTERACTION COUNT — DITAPAJA</div>
         </div>
-        <a className="nx-scroll-cue" href="#koleksi"><span>SCROLL TO EXPLORE</span><ArrowDown size={14}/></a>
+        <a className="nx-scroll-cue" href="#koleksi"><span>DISCOVER THE EXPERIENCE</span><ArrowDown size={14}/></a>
       </section>
 
       <section className="nx-proof-strip" aria-label="Keunggulan DiTapAja">
