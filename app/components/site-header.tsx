@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { ArrowUpRight, ShoppingBag, X, Nfc, LayoutDashboard } from "lucide-react";
+import { ArrowUpRight, X, Nfc, LayoutDashboard } from "lucide-react";
 
 function Brand() {
   return <a href="/" className="brand" aria-label="DiTapAja beranda">
@@ -12,9 +12,7 @@ function Brand() {
 }
 
 const links = [
-  ["Beranda", "/"],
-  ["Koleksi kartu", "/koleksi"],
-  ["Dashboard", "/dashboard"],
+  ["Koleksi", "/koleksi"],
   ["Cara kerja", "/cara-kerja"],
   ["FAQ", "/faq"]
 ];
@@ -40,12 +38,10 @@ export default function SiteHeader() {
         <Brand />
         <nav aria-label="Navigasi utama">{links.slice(1, 5).map(([label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
         <div className="concept-nav-actions">
-          <a href="/activate">Aktivasi kartu</a>
           <a href="/login">Masuk</a>
           <a className="concept-nav-cta" href="/koleksi">Pilih kartu <ArrowUpRight size={15}/></a>
         </div>
         <div className="concept-mobile-actions">
-          <a href="/koleksi" aria-label="Lihat koleksi"><ShoppingBag size={18}/></a>
           <button className={open ? "is-active" : ""} type="button" onClick={() => setOpen(true)} aria-label="Buka menu" aria-expanded={open} aria-haspopup="dialog">
             <span className="dt-menu-glyph"><i/><i/></span>
             <small>MENU</small>
