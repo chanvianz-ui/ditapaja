@@ -15,6 +15,7 @@ import "./home-v4.css";
 import "./dashboard-rebuild.css";
 import "./neutral-dashboard-fix.css";
 import "./design-system.css";
+import "./mobile-first-system.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
