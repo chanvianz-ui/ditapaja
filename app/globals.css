@@ -703,3 +703,26 @@ button,input,select,textarea{font-family:"Nunito Sans",sans-serif}
  .nx-hero-card-simple{padding:17px}
  .nx-hero-simple-note{font-size:8px}
 }
+
+
+/* Hero: replace decorative product mockup with useful product workflow */
+.nx-hero-benefits{display:flex!important;flex-direction:column;justify-content:center;align-items:stretch!important;min-height:0!important;perspective:none!important}
+.nx-benefit-panel{position:relative;z-index:1;width:100%;max-width:510px;margin-inline:auto;padding:clamp(22px,3vw,34px);border:0!important;border-radius:24px;background:linear-gradient(145deg,rgba(16,43,73,.96),rgba(8,25,45,.98));box-shadow:0 28px 70px rgba(0,0,0,.24),inset 0 1px rgba(104,195,255,.09)}
+.nx-benefit-panel-head,.nx-benefit-panel-foot{display:flex;align-items:center;justify-content:space-between}
+.nx-benefit-panel-head>span{color:#8daac7;font-size:9px;font-weight:850;letter-spacing:.17em}
+.nx-benefit-panel-head>i{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:rgba(69,215,232,.1);color:#54dce9}
+.nx-benefit-flow{margin:24px 0}
+.nx-benefit-node{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:15px}
+.nx-benefit-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:rgba(54,139,231,.13);color:#58d8e8}
+.nx-benefit-node small{display:block;margin-bottom:5px;color:#78a1c7;font-size:8px;font-weight:800;letter-spacing:.14em}
+.nx-benefit-node b{display:block;color:#f5f9ff;font:650 16px "Poppins",sans-serif;letter-spacing:-.03em}
+.nx-benefit-node p{margin:4px 0 0;color:#9eb3c9;font-size:10px;line-height:1.6}
+.nx-benefit-status{padding:6px 8px;border-radius:6px;background:rgba(72,211,225,.08);color:#6edbe8;font-size:8px;font-weight:850;letter-spacing:.08em}
+.nx-benefit-connector{height:26px;margin-left:22px;border-left:1px solid rgba(89,177,224,.25);position:relative}
+.nx-benefit-connector i{position:absolute;left:-3px;top:10px;width:5px;height:5px;border-radius:50%;background:#52dce8;box-shadow:0 0 12px #52dce8}
+.nx-benefit-panel-foot{padding-top:17px;border-top:1px solid rgba(145,190,226,.1)}
+.nx-benefit-panel-foot span{display:flex;align-items:center;gap:7px;color:#9db4ca;font-size:8px;font-weight:800;letter-spacing:.1em}
+.nx-benefit-panel-foot span i{width:6px;height:6px;border-radius:50%;background:#52dce8}
+.nx-benefit-panel-foot b{color:#7894b2;font-size:8px;letter-spacing:.12em}
+.nx-benefit-caption{margin:18px 0 0;text-align:center;color:#8fa9c2;font-size:10px}
+@media(max-width:760px){.nx-hero-benefits{margin-top:22px}.nx-benefit-panel{padding:22px 18px}.nx-benefit-node{grid-template-columns:42px 1fr auto;gap:11px}.nx-benefit-icon{width:40px;height:40px}.nx-benefit-node b{font-size:14px}.nx-benefit-node p{font-size:9px}.nx-benefit-status{font-size:7px;padding:5px 6px}.nx-benefit-panel-foot b{font-size:7px}}
