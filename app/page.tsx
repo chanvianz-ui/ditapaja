@@ -1,9 +1,8 @@
 "use client";
 
-import { ArrowDown, ArrowRight, ArrowUpRight, BarChart3, Check, Layers3, Link2, ShieldCheck, Smartphone, Sparkles, Zap } from "lucide-react";
+import { ArrowDownRight, ArrowRight, ArrowUpRight, BarChart3, Check, Link2, Nfc, QrCode, ShieldCheck, Smartphone } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
-import ScrollMotion from "./components/scroll-motion";
 
 const products = [
   { name: "Noir", label: "Noir", description: "Karakter tegas untuk bisnis yang ingin tampil standout.", tone: "noir", price: "Rp50.000", order: "READY TO ORDER", action: "Beli Noir", mode: "buy" },
@@ -12,101 +11,61 @@ const products = [
 ];
 
 function BrandMark() {
-  return <span className="dt-v2-brand-mark" aria-hidden="true"><i /><i /><i /></span>;
+  return <span className="dt-v2-brand-mark" aria-hidden="true"><i/><i/><i/></span>;
 }
 
 export default function Home() {
-  return (
-    <main className="dt-next-home" id="top">
-      <ScrollMotion />
-      <SiteHeader />
-
-      <section className="nx-hero nx-hero-v2 nx-hero-simple">
-        <div className="nx-hero-simple-copy">
-          <span className="nx-hero-simple-kicker"><i/> NFC REVIEW CARD FOR BUSINESS</span>
-          <h1>Good reviews<br/>start with a <em>tap.</em></h1>
-          <p className="nx-lead">Bikin pelanggan lebih mudah terhubung dengan bisnismu. Satu kartu untuk NFC, QR Code, dan dashboard review gratis.</p>
-          <div className="nx-hero-actions">
-            <a href="#koleksi" className="nx-button-primary">Pilih kartu <ArrowUpRight size={18}/></a>
-            <a href="#cara-kerja" className="nx-button-quiet">Cara kerja <ArrowDown size={16}/></a>
-          </div>
-          <div className="nx-hero-simple-note"><span>01</span> Tap atau scan. Tanpa aplikasi. <i/> <span>02</span> Dashboard gratis. Tanpa biaya bulanan.</div>
+  return <main className="dt-next-home dt-editorial-home" id="top">
+    <SiteHeader/>
+    <section className="ed-hero">
+      <div className="ed-hero-top"><span>DITAPAJA / NFC REVIEW SYSTEM</span><span>MADE FOR EVERYDAY BUSINESS</span></div>
+      <div className="ed-hero-grid">
+        <div className="ed-hero-copy">
+          <p className="ed-overline"><i/> SMALL CARD. DIRECT CONNECTION.</p>
+          <h1>Make it easy<br/>to <em>be heard.</em></h1>
+          <p className="ed-hero-lead">Bantu pelanggan meninggalkan ulasan tanpa langkah yang berbelit. Cukup satu tap atau scan, lalu mereka sampai ke halaman bisnismu.</p>
+          <div className="ed-hero-actions"><a href="#koleksi" className="ed-button">Temukan kartu <ArrowUpRight size={17}/></a><a href="#cara-kerja" className="ed-text-link">Lihat cara kerja <ArrowDownRight size={16}/></a></div>
+          <div className="ed-hero-foot"><span>01 — NFC + QR</span><span>02 — TANPA APLIKASI</span><span>03 — DASHBOARD GRATIS</span></div>
         </div>
-        <div className="nx-hero-simple-visual nx-hero-benefits" aria-label="Cara kerja DiTapAja">
-          <div className="nx-benefit-panel">
-            <div className="nx-benefit-panel-head"><span>THE DI TAPAJA SYSTEM</span><i><Zap size={15}/></i></div>
-            <div className="nx-benefit-flow">
-              <div className="nx-benefit-node"><span className="nx-benefit-icon"><Smartphone size={21}/></span><div><small>01 / CUSTOMER</small><b>Tap or scan</b><p>Pelanggan cukup mendekatkan ponsel atau scan QR.</p></div><span className="nx-benefit-status">EASY</span></div>
-              <div className="nx-benefit-connector"><i/></div>
-              <div className="nx-benefit-node"><span className="nx-benefit-icon"><Link2 size={21}/></span><div><small>02 / DESTINATION</small><b>Your review link</b><p>Halaman tujuan terbuka langsung di browser.</p></div><span className="nx-benefit-status">DIRECT</span></div>
-              <div className="nx-benefit-connector"><i/></div>
-              <div className="nx-benefit-node"><span className="nx-benefit-icon"><BarChart3 size={21}/></span><div><small>03 / BUSINESS</small><b>Track activity</b><p>Pantau interaksi kartu lewat dashboard.</p></div><span className="nx-benefit-status">YOURS</span></div>
-            </div>
-            <div className="nx-benefit-panel-foot"><span><i/> NFC + QR CODE</span><b>ONE SIMPLE WORKFLOW</b></div>
-          </div>
-          <p className="nx-benefit-caption">Dibuat agar pelanggan tidak perlu berpikir dua kali.</p>
+        <div className="ed-hero-art" aria-label="Ilustrasi kartu NFC DiTapAja">
+          <div className="ed-art-index">OBJECT / 001</div>
+          <div className="ed-art-halo"/>
+          <div className="ed-card-object"><div className="ed-card-top"><BrandMark/><span>REVIEW CARD / NFC</span></div><div className="ed-card-word">Make<br/>it <i>count.</i></div><div className="ed-card-bottom"><span>DITAPAJA</span><span>01 / 03</span></div></div>
+          <div className="ed-art-caption"><span>01</span><div><b>One simple gesture.</b><small>Connected to your business.</small></div></div>
+          <div className="ed-art-side-note">TAP · SCAN · CONNECT</div>
         </div>
-      </section>
+      </div>
+      <div className="ed-hero-bottom"><span>BUILT FOR REAL-WORLD INTERACTIONS</span><span>JAKARTA, INDONESIA <i>↗</i></span></div>
+    </section>
 
-      <section className="nx-proof-strip" aria-label="Keunggulan DiTapAja">
-        <span>BUILT FOR REAL-WORLD BUSINESS</span><b>NFC <i>×</i> QR CODE</b><b>FREE DASHBOARD</b><b>NO MONTHLY FEE</b><span className="nx-proof-spark">✳</span>
-      </section>
+    <section className="ed-intro-band">
+      <p>THE IDEA IS SIMPLE</p>
+      <h2>Less friction between<br/><em>you and your customers.</em></h2>
+      <span>Teknologi yang bekerja di belakang layar. Pengalaman yang terasa sederhana di depan.</span>
+    </section>
 
-      <section className="nx-collection" id="koleksi">
-        <div className="nx-section-head">
-          <div><div className="nx-eyebrow nx-eyebrow-muted">02 / THE COLLECTION</div><h2>Choose your<br/><em>signature.</em></h2></div>
-          <div className="nx-section-aside"><p>Desain yang punya karakter. Teknologi yang bekerja sederhana. Pilih kartu yang paling cocok dengan bisnismu.</p><a href="/koleksi">Lihat semua koleksi <ArrowUpRight size={16}/></a></div>
-        </div>
-        <ProductCarousel products={products}/>
-        <div className="nx-collection-note"><Sparkles size={17}/><span>Setiap pembelian sudah termasuk akses dashboard. <b>Tidak ada biaya langganan.</b></span></div>
-      </section>
+    <section className="nx-collection ed-collection" id="koleksi">
+      <div className="ed-section-heading"><div><span className="ed-overline">01 / THE COLLECTION</span><h2>Choose the one<br/>that feels <em>right.</em></h2></div><p>Tiga karakter, satu tujuan: membuat pelanggan lebih mudah terhubung dengan bisnismu.</p></div>
+      <ProductCarousel products={products}/>
+      <div className="ed-collection-note"><span>INCLUDED WITH EVERY CARD</span><p><Nfc size={17}/> NFC <i>+</i> <QrCode size={17}/> QR Code <i>+</i> Dashboard gratis. Tanpa biaya bulanan.</p></div>
+    </section>
 
-      <section className="nx-system" id="dashboard">
-        <div className="nx-system-copy">
-          <div className="nx-eyebrow">03 / THE CONTROL CENTER</div>
-          <h2>Not just a card.<br/><em>Your business,</em><br/>in control.</h2>
-          <p>Kelola seluruh kartu dari satu workspace. Pantau interaksi, ubah link tujuan, dan pahami bagaimana pelanggan terhubung dengan bisnismu.</p>
-          <div className="nx-feature-list">
-            <div><span><BarChart3 size={17}/></span><p><b>Activity overview</b><small>Pantau tap dan klik review</small></p><Check size={15}/></div>
-            <div><span><Layers3 size={17}/></span><p><b>Card management</b><small>Kelola status dan link tujuan</small></p><Check size={15}/></div>
-            <div><span><ShieldCheck size={17}/></span><p><b>One free workspace</b><small>Dashboard tanpa biaya bulanan</small></p><Check size={15}/></div>
-          </div>
-          <a className="nx-text-link" href="/login">Masuk ke dashboard <ArrowUpRight size={17}/></a>
-        </div>
-        <div className="nx-dashboard-art">
-          <div className="nx-dash-orbit"/>
-          <div className="nx-dash-window">
-            <div className="nx-dash-top"><span className="nx-dash-logo"><BrandMark/> DiTapAja</span><span className="nx-dash-live"><i/> WORKSPACE PREVIEW</span></div>
-            <div className="nx-dash-greeting"><small>MONDAY / YOUR BUSINESS</small><b>Good morning<span>.</span></b><p>Here&apos;s what&apos;s happening with your cards.</p></div>
-            <div className="nx-dash-stats"><div><small>TOTAL TAPS</small><b>128</b><span>↗ 12.8% this week</span></div><div><small>REVIEW CLICKS</small><b>84</b><span>↗ 8.4% this week</span></div></div>
-            <div className="nx-dash-chart"><div><b>Engagement activity</b><small>Last 7 days</small></div><div className="nx-chart-bars">{[35,52,42,69,56,86,66,92,72,100,78,90].map((v,i)=><i key={i} style={{height:v+"%"}}/>)}</div><div className="nx-chart-days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div></div>
-          </div>
-          <div className="nx-dash-float"><span><Zap size={17}/></span><div><b>Everything connected.</b><small>One simple workspace</small></div></div>
-        </div>
-      </section>
+    <section className="ed-flow" id="cara-kerja">
+      <div className="ed-flow-head"><span className="ed-overline">02 / HOW IT WORKS</span><h2>Three steps.<br/><em>No extra steps.</em></h2><p>Dirancang untuk situasi nyata: di meja kasir, di counter, atau setelah pelanggan menikmati layananmu.</p></div>
+      <div className="ed-flow-list">
+        <article><span className="ed-flow-number">01</span><div className="ed-flow-icon"><Smartphone size={21}/></div><div><h3>They tap or scan.</h3><p>Pelanggan mendekatkan ponsel ke kartu NFC atau memindai QR Code.</p></div><span className="ed-flow-tag">CUSTOMER</span></article>
+        <article><span className="ed-flow-number">02</span><div className="ed-flow-icon"><Link2 size={21}/></div><div><h3>Your page opens.</h3><p>Halaman tujuan terbuka langsung di browser. Tidak perlu mengunduh aplikasi.</p></div><span className="ed-flow-tag">CONNECTION</span></article>
+        <article><span className="ed-flow-number">03</span><div className="ed-flow-icon"><Check size={21}/></div><div><h3>They leave a review.</h3><p>Pelanggan diarahkan ke halaman review yang sudah kamu tentukan.</p></div><span className="ed-flow-tag">FEEDBACK</span></article>
+      </div>
+    </section>
 
-      <section className="nx-how" id="cara-kerja">
-        <div className="nx-how-heading"><div className="nx-eyebrow nx-eyebrow-muted">04 / HOW IT WORKS</div><h2>Three steps.<br/><em>One better journey.</em></h2><p>Praktis untuk pelanggan. Mudah untuk bisnismu.</p></div>
-        <div className="nx-how-grid">
-          <article><span className="nx-step-index">01</span><div className="nx-step-icon"><Smartphone size={23}/></div><h3>Tap or scan</h3><p>Pelanggan menempelkan ponsel ke kartu atau memindai QR Code.</p><span className="nx-step-line"/></article>
-          <article><span className="nx-step-index">02</span><div className="nx-step-icon"><Link2 size={23}/></div><h3>Page opens</h3><p>Link tujuan bisnismu terbuka langsung di browser, tanpa aplikasi.</p><span className="nx-step-line"/></article>
-          <article><span className="nx-step-index">03</span><div className="nx-step-icon"><Check size={23}/></div><h3>Share your story</h3><p>Pelanggan diarahkan ke halaman Google Review untuk memberi ulasan.</p><span className="nx-step-line"/></article>
-        </div>
-      </section>
+    <section className="ed-workspace">
+      <div className="ed-workspace-copy"><span className="ed-overline">03 / YOUR WORKSPACE</span><h2>A card is just<br/>the <em>beginning.</em></h2><p>Setelah kartu aktif, kamu bisa mengatur link tujuan, mengelola beberapa kartu, dan melihat aktivitas yang tercatat dari satu dashboard.</p><a className="ed-text-link" href="/login">Masuk ke dashboard <ArrowUpRight size={17}/></a></div>
+      <div className="ed-workspace-panel"><div className="ed-panel-top"><span>DITAPAJA / WORKSPACE</span><span className="ed-panel-live"><i/> YOUR CONTROL</span></div><div className="ed-panel-title">Everything<br/>in its <em>place.</em></div><div className="ed-panel-items"><div><BarChart3/><span><b>Activity</b><small>Tap & review clicks</small></span><ArrowRight/></div><div><Nfc/><span><b>Your cards</b><small>Status & destination links</small></span><ArrowRight/></div><div><ShieldCheck/><span><b>Your access</b><small>No monthly subscription</small></span><ArrowRight/></div></div><div className="ed-panel-foot">A QUIETER WAY TO STAY CONNECTED</div></div>
+    </section>
 
-      <section className="nx-final-cta">
-        <div className="nx-cta-glow"/>
-        <div className="nx-eyebrow">READY WHEN YOU ARE</div>
-        <h2>Make the next<br/><em>tap matter.</em></h2>
-        <p>Mulai bangun pengalaman review yang lebih praktis untuk bisnismu.</p>
-        <a href="/koleksi" className="nx-button-primary">Jelajahi koleksi <ArrowRight size={17}/></a>
-        <span className="nx-cta-mark">DiTapAja<span>.</span></span>
-      </section>
+    <section className="ed-last-call"><div><span className="ed-overline">READY WHEN YOU ARE</span><h2>Make the next<br/><em>tap matter.</em></h2></div><div><p>Mulai dari satu kartu. Kembangkan pengalaman review bisnismu dengan cara yang lebih praktis.</p><a className="ed-button" href="/koleksi">Lihat koleksi <ArrowUpRight size={17}/></a></div><span className="ed-last-mark">D.</span></section>
 
-      <footer className="nx-footer">
-        <div className="nx-footer-top"><div><a href="/" className="nx-footer-brand"><BrandMark/> DiTap<span>Aja.</span></a><p>NFC review card untuk koneksi yang lebih mudah antara bisnis dan pelanggan.</p></div><div><small>EXPLORE</small><a href="/koleksi">Koleksi kartu</a><a href="/cara-kerja">Cara kerja</a><a href="/faq">FAQ</a></div><div><small>WORKSPACE</small><a href="/login">Dashboard</a><a href="/activate">Aktivasi kartu</a><a href="/kontak">Hubungi kami</a></div><div className="nx-footer-contact"><small>LET&apos;S CONNECT</small><b>Punya pertanyaan?</b><a href="https://wa.me/6281321778081">Diskusikan dengan kami <ArrowUpRight size={15}/></a></div></div>
-        <div className="nx-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>NFC + QR CODE · DASHBOARD GRATIS</span><a href="#top">Back to top ↑</a></div>
-      </footer>
-    </main>
-  );
+    <footer className="nx-footer ed-footer"><div className="nx-footer-top"><div><a href="/" className="nx-footer-brand"><BrandMark/> DiTap<span>Aja.</span></a><p>NFC review card untuk koneksi yang lebih mudah antara bisnis dan pelanggan.</p></div><div><small>EXPLORE</small><a href="/koleksi">Koleksi kartu</a><a href="/cara-kerja">Cara kerja</a><a href="/faq">FAQ</a></div><div><small>WORKSPACE</small><a href="/login">Dashboard</a><a href="/activate">Aktivasi kartu</a><a href="/kontak">Hubungi kami</a></div><div className="nx-footer-contact"><small>LET’S CONNECT</small><b>Punya pertanyaan?</b><a href="https://wa.me/6281321778081">Diskusikan dengan kami <ArrowUpRight size={15}/></a></div></div><div className="nx-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>NFC + QR CODE · DASHBOARD GRATIS</span><a href="#top">Back to top ↑</a></div></footer>
+  </main>;
 }
