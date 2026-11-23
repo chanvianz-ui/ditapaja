@@ -866,3 +866,56 @@ button,input,select,textarea{font-family:"Nunito Sans",sans-serif}
   .dt-next-home .nx-collection .dt-collection-grid>*,
   .dt-next-home .nx-collection .product-grid>* { flex-basis:86vw; }
 }
+
+
+/* FIX: never trap vertical page scrolling inside mobile cards */
+@media (max-width: 760px) {
+  .dt-next-home .nx-hero-simple,
+  .dt-next-home .nx-benefit-panel,
+  .dt-next-home .nx-benefit-flow,
+  .dt-next-home .nx-benefit-node,
+  .dt-next-home .dt-collection-grid,
+  .dt-next-home .dt-edition-card,
+  .dt-next-home .dt-edition-visual,
+  .dt-next-home .dt-edition-content,
+  .dt-next-home .nx-how-grid,
+  .dt-next-home .nx-how-grid article {
+    touch-action: pan-y pinch-zoom;
+    overscroll-behavior-x: none;
+  }
+
+  /* Product cards are stacked vertically: no nested horizontal scroller */
+  .dt-next-home .nx-collection .dt-collection-grid,
+  .dt-next-home .nx-collection .product-grid {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    overflow:visible !important;
+    width:100%;
+    gap:15px !important;
+    padding:0 20px !important;
+    scroll-snap-type:none !important;
+  }
+  .dt-next-home .nx-collection .dt-collection-grid>*,
+  .dt-next-home .nx-collection .product-grid>* {
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    flex:none !important;
+    scroll-snap-align:none !important;
+  }
+
+  /* How-it-works cards also follow the document's vertical scroll */
+  .dt-next-home .nx-how-grid {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    overflow:visible !important;
+    gap:10px !important;
+    padding:22px 20px 10px !important;
+    scroll-snap-type:none !important;
+  }
+  .dt-next-home .nx-how-grid article {
+    width:100%;
+    min-height:0 !important;
+    padding:18px;
+  }
+}
