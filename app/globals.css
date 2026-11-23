@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Nunito+Sans:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 :root {
   color-scheme: dark;
@@ -922,7 +922,6 @@ button,input,select,textarea{font-family:"Nunito Sans",sans-serif}
 
 
 /* DiTapAja visual system refresh — editorial, tactile, restrained */
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap");
 :root{--dt-bg:#080f1d;--dt-bg-soft:#0c1728;--dt-surface:#111f33;--dt-surface-raised:#182b43;--dt-border:rgba(166,195,226,.13);--dt-text:#f1f5fb;--dt-muted:#9aaabd;--dt-blue:#477ee8;--dt-blue-strong:#3268cf;--dt-cyan:#66d9e6;--dt-cyan-soft:rgba(102,217,230,.1);--dt-radius:18px;--dt-shadow:0 28px 90px rgba(0,0,0,.36)}
 html{background:#080f1d}
 body{font-family:"DM Sans",sans-serif;background:radial-gradient(ellipse at 80% -18%,rgba(57,105,190,.17),transparent 48rem),#080f1d;color:var(--dt-text)}
