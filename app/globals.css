@@ -1012,3 +1012,41 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
 /* Responsive art direction */
 @media(max-width:900px){.ed-hero-grid{grid-template-columns:1fr;gap:0;padding:56px 0 35px}.ed-hero-art{min-height:390px}.ed-hero-copy{max-width:720px}.ed-hero-foot{margin-top:36px}.ed-intro-band{grid-template-columns:1fr 1fr}.ed-intro-band>p{grid-column:1/-1}.ed-flow{grid-template-columns:1fr;gap:42px}.ed-workspace{grid-template-columns:1fr;gap:42px}}
 @media(max-width:600px){.concept-nav{min-height:68px}.ed-hero{padding-inline:20px}.ed-hero-top,.ed-hero-bottom{font-size:7px;letter-spacing:.1em}.ed-hero-top span:last-child{display:none}.ed-hero-grid{padding-top:45px;min-height:0}.ed-hero h1{font-size:clamp(54px,16vw,78px)}.ed-hero-lead{font-size:13px}.ed-hero-foot{gap:10px 14px;font-size:7px}.ed-hero-art{min-height:320px;margin-top:18px}.ed-card-object{width:82%;padding:19px 20px;border-radius:15px}.ed-card-word{font-size:36px;margin:20px 0}.ed-art-caption{right:0;bottom:5%;padding:11px 13px}.ed-art-side-note{left:0;bottom:18%}.ed-art-index{top:5px}.ed-intro-band{grid-template-columns:1fr;padding:52px 22px;gap:14px}.ed-intro-band>p{grid-column:auto;margin:0}.ed-intro-band h2{font-size:34px}.ed-intro-band>span{max-width:100%}.ed-collection{padding:70px 20px!important}.ed-section-heading{display:block;margin-bottom:28px}.ed-section-heading h2,.ed-flow-head h2,.ed-workspace-copy h2{font-size:46px}.ed-section-heading>p{margin-top:18px}.ed-collection-note{align-items:flex-start;flex-direction:column}.ed-collection-note p{flex-wrap:wrap;line-height:1.8}.ed-flow{padding:72px 20px}.ed-flow-list article{grid-template-columns:25px 38px 1fr;gap:10px;padding:20px 0}.ed-flow-tag{display:none}.ed-flow-icon{width:36px;height:36px}.ed-flow-list h3{font-size:14px}.ed-flow-list p{font-size:10px}.ed-workspace{padding:72px 20px}.ed-workspace-panel{padding:22px 19px;border-radius:18px}.ed-panel-title{font-size:42px}.ed-last-call{grid-template-columns:1fr;gap:16px;padding:66px 22px}.ed-last-call h2{font-size:56px}.ed-last-mark{font-size:220px;right:-4%;top:-35px}.ed-footer .nx-footer-top{gap:30px}.ed-footer .nx-footer-bottom{gap:12px;flex-wrap:wrap}}
+
+/* Internal workspace refinement — account, card creation and commerce */
+.dt-account-settings-page{background:radial-gradient(ellipse at 85% 0%,rgba(57,127,240,.14),transparent 34rem),#071426!important;color:#edf6ff!important}
+.dt-account-settings-page header{border-color:rgba(137,190,226,.14)!important;background:rgba(7,20,38,.88)!important}
+.dt-account-settings-page header>div>div a{color:#edf6ff!important}
+.dt-account-settings-page header p,.dt-account-settings-page .text-slate-400,.dt-account-settings-page .text-slate-500{color:#91a9c4!important}
+.dt-account-settings-page .dt-workspace-panel,.dt-account-settings-page .rounded-3xl.border,.dt-account-settings-page .rounded-2xl.border{border-color:rgba(137,190,226,.16)!important;border-radius:18px!important;background:linear-gradient(145deg,#102944,#0b1c31)!important;color:#edf6ff!important;box-shadow:0 24px 65px -48px #000!important}
+.dt-account-settings-page .bg-white,.dt-account-settings-page .bg-white\/85,.dt-account-settings-page .bg-slate-50\/80{background:#0a1b30!important}
+.dt-account-settings-page .border-slate-100,.dt-account-settings-page .border-slate-200{border-color:rgba(137,190,226,.16)!important}
+.dt-account-settings-page .text-slate-900,.dt-account-settings-page .text-slate-800,.dt-account-settings-page .text-slate-700{color:#eaf4ff!important}
+.dt-account-settings-page input{border-color:rgba(137,190,226,.2)!important;background:#08182b!important;color:#edf6ff!important}
+.dt-account-settings-page input:focus{border-color:#58dce8!important;box-shadow:0 0 0 3px rgba(88,220,232,.12)!important}
+.dt-account-settings-page .bg-blue-50{background:rgba(57,127,240,.12)!important}
+.dt-account-settings-page .text-blue-800,.dt-account-settings-page .text-blue-700{color:#a7d5ff!important}
+.dt-card-create-page{background:radial-gradient(ellipse at 78% 0%,rgba(57,127,240,.15),transparent 32rem),#071426!important}
+.dt-card-create-page .dt-card-create-intro{border-radius:22px!important;background:radial-gradient(ellipse at 80% 0%,rgba(88,220,232,.14),transparent 55%),linear-gradient(145deg,#102944,#0b1c31)!important}
+.dt-card-create-page .dt-card-create-form{border-radius:22px!important;background:linear-gradient(155deg,#102944,#0b1c31)!important}
+.dt-card-create-page .dt-card-create-form label,.dt-card-create-page .dt-card-create-form .text-slate-700{color:#e7f2ff!important}
+.dt-card-create-page .dt-card-create-form input,.dt-card-create-page .dt-card-create-form select{border-color:rgba(137,190,226,.2)!important;background:#08182b!important;color:#edf6ff!important}
+.dt-card-create-page .dt-card-create-form input:focus,.dt-card-create-page .dt-card-create-form select:focus{border-color:#58dce8!important;box-shadow:0 0 0 3px rgba(88,220,232,.12)!important}
+.dt-admin-shell{background:radial-gradient(ellipse at 85% -10%,rgba(57,127,240,.13),transparent 36rem),#071426!important;color:#edf6ff!important}
+.dt-admin-shell aside{border-right:1px solid rgba(137,190,226,.14);background:linear-gradient(180deg,#0b1d33,#071426)!important}
+.dt-admin-shell section>header{border-color:rgba(137,190,226,.14)!important;background:rgba(7,20,38,.9)!important}
+.dt-admin-shell section>header h1,.dt-admin-shell h2,.dt-admin-shell h3{color:#edf6ff!important}
+.dt-admin-shell section>div{color:#edf6ff}
+.dt-admin-shell article{border-color:rgba(137,190,226,.16)!important;border-radius:16px!important;background:linear-gradient(145deg,#102944,#0b1c31)!important;color:#edf6ff!important}
+.dt-admin-shell article p,.dt-admin-shell article small,.dt-admin-shell .text-\[11px\],.dt-admin-shell .text-\[10px\]{color:#91a9c4}
+.dt-admin-shell input,.dt-admin-shell select{border-color:rgba(137,190,226,.2)!important;background:#08182b!important;color:#edf6ff!important}
+.dt-admin-shell button.bg-white,.dt-admin-shell a.bg-white{background:#102944!important;color:#edf6ff!important}
+.dt-admin-shell .divide-\[\#edf0eb\]>:not([hidden])~:not([hidden]){border-color:rgba(137,190,226,.13)!important}
+.dt-admin-shell .hover\:bg-\[\#15181b\]:hover{background:rgba(57,127,240,.08)!important}
+@media(max-width:640px){
+ .dt-account-settings-page .mx-auto.max-w-6xl{padding-top:20px}
+ .dt-account-settings-page .rounded-3xl{border-radius:15px!important}
+ .dt-card-create-page .dt-card-create-layout{gap:12px}
+ .dt-card-create-page .dt-card-create-intro,.dt-card-create-page .dt-card-create-form{border-radius:16px!important}
+ .dt-admin-shell section>header>div{padding-inline:14px!important}
+}
