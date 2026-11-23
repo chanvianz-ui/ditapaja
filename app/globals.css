@@ -1050,3 +1050,33 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-card-create-page .dt-card-create-intro,.dt-card-create-page .dt-card-create-form{border-radius:16px!important}
  .dt-admin-shell section>header>div{padding-inline:14px!important}
 }
+
+
+/* Admin control center: replace legacy warm palette with the shared navy/cyan system */
+.dt-admin-shell{--admin-line:rgba(137,190,226,.15);--admin-text:#edf6ff;--admin-muted:#91a9c4;min-height:100vh;background:radial-gradient(ellipse at 82% -12%,rgba(57,127,240,.16),transparent 38rem),#071426!important;color:var(--admin-text)!important}
+.dt-admin-shell aside{border-right:1px solid var(--admin-line)!important;background:linear-gradient(180deg,#0b1d33,#08182b 62%,#071426)!important}
+.dt-admin-shell aside>div:first-child>div:first-child{border:1px solid rgba(88,227,236,.18);border-radius:12px;background:linear-gradient(145deg,rgba(57,127,240,.2),rgba(88,227,236,.07));color:#a8f5fa!important}
+.dt-admin-shell aside button:hover{background:rgba(57,127,240,.1)!important;color:#effcff!important}
+.dt-admin-shell aside .bg-\\[\\#2a211b\\]{border:1px solid rgba(88,227,236,.2)!important;background:linear-gradient(100deg,rgba(57,127,240,.2),rgba(88,227,236,.07))!important;color:#eafcff!important;box-shadow:inset 2px 0 #58e3ec}
+.dt-admin-shell aside .bg-\\[\\#2a211b\\] span{background:#58e3ec!important}
+.dt-admin-shell aside .text-\\[\\#d2a17d\\],.dt-admin-shell aside .text-\\[\\#d8d3ca\\],.dt-admin-shell .text-\\[\\#d2a17d\\],.dt-admin-shell .text-\\[\\#d8d3ca\\],.dt-admin-shell .text-\\[\\#e0b28f\\]{color:#78e5ed!important}
+.dt-admin-shell aside .text-\\[\\#dedbd4\\],.dt-admin-shell aside .text-\\[\\#a0a3a2\\],.dt-admin-shell .text-\\[\\#dedbd4\\],.dt-admin-shell .text-\\[\\#a0a3a2\\]{color:var(--admin-muted)!important}
+.dt-admin-shell section>header{border-color:var(--admin-line)!important;background:rgba(7,20,38,.9)!important;box-shadow:0 12px 36px rgba(0,0,0,.12)}
+.dt-admin-shell h1,.dt-admin-shell h2,.dt-admin-shell h3,.dt-admin-shell h4{color:var(--admin-text)!important}
+.dt-admin-shell article,.dt-admin-shell section>div>article,.dt-admin-shell section>div>section>article{border-color:var(--admin-line)!important;border-radius:17px!important;background:linear-gradient(145deg,rgba(16,41,68,.98),rgba(9,26,46,.99))!important;color:var(--admin-text)!important;box-shadow:0 20px 54px -42px rgba(0,0,0,.9)}
+.dt-admin-shell article .bg-\\[\\#15181b\\],.dt-admin-shell article .bg-\\[\\#211d27\\],.dt-admin-shell article .bg-\\[\\#1b1d1d\\]{border:1px solid var(--admin-line)!important;background:#0a1b30!important;color:#8beaf0!important}
+.dt-admin-shell .bg-white{background:#0d2038!important}
+.dt-admin-shell [class*="border-[#34383a]"]{border-color:var(--admin-line)!important}
+.dt-admin-shell [class*="bg-[#15181b]"],.dt-admin-shell [class*="bg-[#101214]"]{background:#091a2e!important}
+.dt-admin-shell [class*="bg-[#1b1d1d]"]{background:#102944!important}
+.dt-admin-shell [class*="bg-[#3a2a20]"]{border:1px solid rgba(88,227,236,.22)!important;background:linear-gradient(110deg,#2878e8,#36b9d0)!important;color:#041727!important}
+.dt-admin-shell input,.dt-admin-shell select,.dt-admin-shell textarea{border-color:rgba(137,190,226,.2)!important;background:#08182b!important;color:#edf6ff!important;outline:none}
+.dt-admin-shell input::placeholder,.dt-admin-shell textarea::placeholder{color:#718ba8!important}
+.dt-admin-shell input:focus,.dt-admin-shell select:focus,.dt-admin-shell textarea:focus{border-color:#58e3ec!important;box-shadow:0 0 0 3px rgba(88,227,236,.11)!important}
+.dt-admin-shell table{color:var(--admin-text)!important}.dt-admin-shell thead{background:#091a2e!important}.dt-admin-shell tbody{background:transparent!important}
+.dt-admin-shell tbody tr{border-color:var(--admin-line)!important}.dt-admin-shell tbody tr:hover{background:rgba(57,127,240,.055)!important}
+.dt-admin-shell th{color:#8ca8c5!important}.dt-admin-shell td{color:#d8e7f6!important}
+.dt-admin-shell button:focus-visible,.dt-admin-shell a:focus-visible{outline:2px solid #58e3ec!important;outline-offset:3px}
+.dt-admin-shell .bg-\\[\\#2b1b1d\\]{background:rgba(127,29,29,.2)!important}.dt-admin-shell .border-\\[\\#63383e\\]{border-color:rgba(248,113,113,.25)!important}.dt-admin-shell .text-\\[\\#e5a4a4\\]{color:#fda4af!important}
+@media(max-width:640px){.dt-admin-shell section>header>div{padding:12px 14px!important}.dt-admin-shell section>div.mx-auto{padding:22px 14px 30px!important}.dt-admin-shell article{border-radius:14px!important}}
+@media(prefers-reduced-motion:reduce){.dt-admin-shell *{animation:none!important;transition:none!important}}
