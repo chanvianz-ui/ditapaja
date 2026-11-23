@@ -222,7 +222,7 @@ export default function LandingPageEditor() {
   }), [settings, businessName, branchName, branchAddress]);
 
 
-  if (loading) return <div className="flex min-h-screen items-center justify-center bg-[#f7f9fc]"><Loader2 className="animate-spin text-blue-600" /></div>;
+  if (loading) return <div className="flex min-h-screen items-center justify-center bg-[#090a0c] text-[#bd8057]"><Loader2 className="animate-spin" /></div>;
 
   return <main className="ditapaja-studio-page">
     <div className="studio-shell">
