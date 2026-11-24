@@ -105,7 +105,8 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 
       <div className="dt-edition-selector">
         <div className="dt-selector-heading">
-          <span><Layers3 size={14}/> PILIH VARIAN</span>
+          <span><Layers3 size={14}/> PILIH KARTU</span>
+          <small>Temukan tampilan yang paling pas untuk bisnismu</small>
         </div>
         <div className="dt-selector-options">
           {products.map((p, i) => (
