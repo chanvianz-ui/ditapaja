@@ -79,10 +79,6 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
             <span className="dt-editorial-kicker">THE NFC OBJECT / 2026</span>
             <h3>{product.label}<em>.</em></h3>
           </div>
-          <div className="dt-editorial-description">
-            <span>MADE FOR YOUR BUSINESS</span>
-            <p>{product.description}</p>
-          </div>
           <div className="dt-stage-price">
             <span>PEMBAYARAN SEKALI</span>
             <strong>{product.price}</strong><small>/ kartu</small>
