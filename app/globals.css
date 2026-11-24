@@ -2863,3 +2863,59 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
   .dt-home-rebuild .ed-collection .dt-feature-card-wrap { animation: none !important; }
   .dt-home-rebuild .ed-collection .dt-feature-card { transition: none !important; }
 }
+
+/* Simplified product display: fixed front-facing card, no flip or tilt */
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap {
+  width: min(76%, 510px) !important;
+  aspect-ratio: 1.58;
+  perspective: none !important;
+  transform: none !important;
+  animation: none !important;
+  filter: drop-shadow(0 30px 34px rgba(0,0,0,.42)) !important;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card {
+  position: relative !important;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden;
+  border-radius: 18px !important;
+  transform: none !important;
+  transform-style: flat !important;
+  transition: box-shadow .35s ease, filter .35s ease !important;
+  cursor: default !important;
+  will-change: auto !important;
+  box-shadow: 0 2px 3px rgba(0,0,0,.18), 0 18px 40px rgba(0,0,0,.18);
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap:hover .dt-feature-card {
+  transform: none !important;
+  filter: brightness(1.035) !important;
+  box-shadow: 0 3px 8px rgba(0,0,0,.2), 0 26px 52px rgba(0,0,0,.25);
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-front {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  transform: none !important;
+  backface-visibility: visible !important;
+  border-radius: inherit !important;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-back { display: none !important; }
+.dt-home-rebuild .ed-collection .dt-feature-card-shine {
+  opacity: .16 !important;
+  animation: none !important;
+  transform: translateX(-55%) rotate(12deg) !important;
+  transition: transform .9s ease, opacity .5s ease !important;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap:hover .dt-feature-card-shine {
+  opacity: .3 !important;
+  transform: translateX(55%) rotate(12deg) !important;
+}
+.dt-home-rebuild .ed-collection .dt-stage-art { perspective: none !important; }
+@media (max-width: 700px) {
+  .dt-home-rebuild .ed-collection .dt-feature-card-wrap { width: 82% !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dt-home-rebuild .ed-collection .dt-feature-card,
+  .dt-home-rebuild .ed-collection .dt-feature-card-shine { transition: none !important; }
+}
