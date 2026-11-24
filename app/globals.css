@@ -2765,3 +2765,29 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .ed-collection .dt-stage-collection-details{grid-template-columns:1fr;gap:8px}
  .dt-home-rebuild .ed-collection .dt-stage-collection-details.is-open{max-height:150px}
 }
+
+
+/* Collection conversion polish — keep the preview focused on the physical card */
+.dt-home-rebuild .ed-collection .dt-stage-copy{justify-content:center}
+.dt-home-rebuild .ed-collection .dt-stage-title{margin-top:0;padding-top:0}
+.dt-home-rebuild .ed-collection .dt-stage-overline{display:none!important}
+.dt-home-rebuild .ed-collection .dt-stage-edition{border-color:rgba(190,220,202,.2);background:rgba(190,220,202,.045)}
+.dt-home-rebuild .ed-collection .dt-stage-title h3{margin-top:15px}
+.dt-home-rebuild .ed-collection .dt-stage-description{max-width:340px;margin-top:15px;font-size:12px;line-height:1.8}
+.dt-home-rebuild .ed-collection .dt-stage-price{margin-top:24px;padding-top:18px}
+.dt-home-rebuild .ed-collection .dt-stage-primary{min-height:54px;padding-inline:20px;font-size:10px;letter-spacing:.01em;box-shadow:0 12px 30px rgba(0,0,0,.16)}
+.dt-home-rebuild .ed-collection .dt-stage-primary:hover{transform:translateY(-2px);background:#edf5ef}
+.dt-home-rebuild .ed-collection .dt-stage-detail{font-size:9px}
+.dt-home-rebuild .ed-collection .dt-selector-heading{justify-content:space-between;gap:18px}
+.dt-home-rebuild .ed-collection .dt-selector-heading small{color:#829b91;font-size:9px;font-weight:500;letter-spacing:0}
+.dt-home-rebuild .ed-collection .dt-selector-option{transition:background .22s,border-color .22s,transform .22s,box-shadow .22s}
+.dt-home-rebuild .ed-collection .dt-selector-option:hover{transform:translateY(-2px);border-color:rgba(190,225,203,.4);background:rgba(190,225,203,.055)}
+.dt-home-rebuild .ed-collection .dt-selector-name small{letter-spacing:.12em}
+.dt-home-rebuild .ed-collection .dt-selector-name b{letter-spacing:-.045em}
+.dt-home-rebuild .ed-collection .dt-art-control-dock{box-shadow:0 12px 35px rgba(0,0,0,.2)}
+@media(max-width:700px){
+ .dt-home-rebuild .ed-collection .dt-selector-heading{align-items:flex-start;flex-direction:column;gap:7px}
+ .dt-home-rebuild .ed-collection .dt-stage-copy{justify-content:flex-start}
+ .dt-home-rebuild .ed-collection .dt-stage-title{padding-top:0}
+ .dt-home-rebuild .ed-collection .dt-stage-description{font-size:11px}
+}
