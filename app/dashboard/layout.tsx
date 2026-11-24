@@ -8,6 +8,7 @@ import {
   Menu, Settings, X
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import "../styles/design-tokens.css";
 import styles from "./dashboard-shell.module.css";
 
 const items = [
