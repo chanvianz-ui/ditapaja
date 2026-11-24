@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowDown, ArrowUpRight, Check, Nfc, QrCode, BarChart3, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Nfc, BarChart3, ShieldCheck } from "lucide-react";
 import SiteHeader from "../components/site-header";
 import ProductCarousel from "../components/product-carousel";
 
@@ -35,7 +35,6 @@ export default function KoleksiPage() {
     <section className="nx-catalog-products" id="catalog-products">
       <div className="nx-section-head"><div><div className="nx-eyebrow nx-eyebrow-muted">01 / PICK YOUR STYLE</div><h2>Designed to<br/><em>be remembered.</em></h2></div><div className="nx-section-aside"><p>Setiap edisi dirancang dengan karakter yang berbeda. Pilih satu yang paling mewakili bisnismu.</p></div></div>
       <ProductCarousel products={products}/>
-      <div className="nx-catalog-note"><QrCode size={18}/><p><b>Everything you need, included.</b><span>Semua kartu dilengkapi NFC, QR Code, dan akses dashboard gratis. Noir dan Blanc dapat dipesan mulai satu kartu. Signature tersedia pre-order minimum 10 kartu.</span></p></div>
     </section>
     <footer className="nx-footer"><div className="nx-footer-top"><div><a href="/" className="nx-footer-brand"><span className="dt-v2-brand-mark"><i/><i/><i/></span> DiTap<span>Aja.</span></a><p>NFC review card untuk koneksi yang lebih mudah antara bisnis dan pelanggan.</p></div><div><small>EXPLORE</small><a href="/">Beranda</a><a href="/cara-kerja">Cara kerja</a><a href="/faq">FAQ</a></div><div><small>WORKSPACE</small><a href="/login">Dashboard</a><a href="/activate">Aktivasi kartu</a><a href="/kontak">Hubungi kami</a></div><div className="nx-footer-contact"><small>LET&apos;S CONNECT</small><b>Punya pertanyaan?</b><a href="https://wa.me/6281321778081">Diskusikan dengan kami <ArrowUpRight size={15}/></a></div></div><div className="nx-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>NFC + QR CODE · DASHBOARD GRATIS</span><a href="#">Back to top ↑</a></div></footer>
   </main>;
