@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  ArrowDownRight, ArrowUpRight, ChevronRight, Layers3,
+  ArrowUpRight, ChevronRight, Layers3,
   Nfc, QrCode
 } from "lucide-react";
 
@@ -44,10 +44,9 @@ function FeatureCard({ product, flipped, onFlip }: {
 export default function ProductCarousel({ products }: { products: Product[] }) {
   const [selected, setSelected] = useState(products[0]?.tone ?? "");
   const [flipped, setFlipped] = useState(false);
-  const [details, setDetails] = useState(false);
   const product = products.find(p => p.tone === selected) ?? products[0];
   if (!product) return null;
-  const choose = (tone: string) => { setSelected(tone); setFlipped(false); setDetails(false); };
+  const choose = (tone: string) => { setSelected(tone); setFlipped(false); };
 
   return (
     <div className="dt-collection-experience">
@@ -68,15 +67,9 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
             <Link href={"/pesan?product=" + product.tone} className="dt-stage-primary">
               {product.mode === "preorder" ? "Request pre-order" : "Pilih edisi ini"}<ArrowUpRight size={18}/>
             </Link>
-            <button type="button" className="dt-stage-detail" onClick={() => setDetails(!details)} aria-expanded={details}>
-              {details ? "Tutup detail" : "Detail koleksi"}<ArrowDownRight size={15}/>
-            </button>
-          </div>
-          <div className={"dt-stage-included dt-stage-collection-details " + (details ? "is-open" : "")} aria-hidden={!details} inert={!details}>
-            <p className="dt-stage-detail-description">{product.description}</p>
-            <span><Nfc size={14}/> Kartu NFC siap pakai</span>
-            <span><QrCode size={14}/> QR Code cadangan</span>
-            <span>Dashboard gratis</span>
+            <Link href={"/products/" + product.tone} className="dt-stage-detail">
+              Detail produk<ArrowUpRight size={15}/>
+            </Link>
           </div>
         </div>
 
@@ -87,9 +80,9 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           <div className="dt-art-crosshair dt-art-crosshair-a"/><div className="dt-art-crosshair dt-art-crosshair-b"/>
           <FeatureCard product={product} flipped={flipped} onFlip={() => setFlipped(!flipped)}/>
           <div className="dt-art-control-dock">
-            <span><i/> {flipped ? "REVERSE SIDE" : "FRONT SIDE"}</span>
+            <span><i/> {flipped ? "QR EXPERIENCE" : "NFC EXPERIENCE"}</span>
             <button type="button" onClick={() => setFlipped(!flipped)} aria-pressed={flipped}>
-              {flipped ? "Kembali ke depan" : "Lihat sisi belakang"}<span>↗</span>
+              {flipped ? "Kembali ke NFC face" : "Preview QR side"}<span>↗</span>
             </button>
           </div>
         </div>
