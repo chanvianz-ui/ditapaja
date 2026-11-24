@@ -1437,3 +1437,118 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .ed-footer .nx-footer-top>div:first-child{grid-column:1/-1}
 }
 @media(prefers-reduced-motion:reduce){.dt-home-rebuild *{animation:none!important;transition:none!important}}
+
+/* Interactive NFC -> Google review hero demo */
+.dt-home-rebuild .ed-hero-grid{grid-template-columns:minmax(330px,.78fr) minmax(520px,1.22fr);gap:clamp(28px,4vw,62px)}
+.dt-home-rebuild .ed-hero-copy{max-width:570px}
+.dt-home-rebuild .ed-hero h1{font-size:clamp(62px,7vw,100px)}
+.dt-home-rebuild .home-hero-visual.home-tap-demo{min-height:570px;padding:22px 23px 17px;border-color:rgba(131,217,223,.25);background:radial-gradient(ellipse at 50% 48%,#183d55 0%,#10273d 48%,#0a1a2b 100%);box-shadow:0 32px 90px rgba(0,0,0,.34)}
+.dt-home-rebuild .home-demo-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:17px;border-bottom:1px solid var(--home-line)}
+.dt-home-rebuild .home-demo-heading>div{display:grid;gap:7px}
+.dt-home-rebuild .home-demo-heading b{color:#eaf3f8;font:750 18px Manrope;letter-spacing:-.04em}
+.dt-home-rebuild .home-demo-live{display:flex;align-items:center;gap:7px;color:#91d8ca;font-size:7px;font-weight:900;letter-spacing:.13em}
+.dt-home-rebuild .home-demo-live i,.dt-home-rebuild .home-demo-tap-hint svg{color:var(--home-mint)}
+.dt-home-rebuild .home-demo-live i{width:6px;height:6px;border-radius:50%;background:#73d6b9;box-shadow:0 0 0 4px rgba(115,214,185,.1)}
+.dt-home-rebuild .home-demo-stage{display:grid;grid-template-columns:minmax(0,1fr) 40px minmax(0,.9fr);align-items:center;gap:13px;min-height:430px;padding:20px 0 10px}
+.dt-home-rebuild .home-demo-card-wrap,.dt-home-rebuild .home-demo-phone-wrap{display:flex;align-items:center;flex-direction:column;gap:14px;min-width:0}
+.dt-home-rebuild .home-demo-step{align-self:flex-start;color:#7f9bb2;font-size:7px;font-weight:900;letter-spacing:.16em}
+.dt-home-rebuild .home-demo-card{position:relative;width:100%;aspect-ratio:1.58;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;padding:17px;border:1px solid rgba(255,255,255,.22);border-radius:13px;background:linear-gradient(135deg,#dce5e8 0%,#a8bec7 48%,#6b8796 100%);color:#102638;text-align:left;box-shadow:0 20px 35px rgba(0,0,0,.34);cursor:pointer;transform:rotate(-5deg);transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.dt-home-rebuild .home-demo-card:before{position:absolute;inset:0;background:linear-gradient(115deg,transparent 28%,rgba(255,255,255,.28) 49%,transparent 66%);content:"";transform:translateX(-130%);transition:transform .75s ease}
+.dt-home-rebuild .home-demo-card:hover{transform:rotate(-2deg) translateY(-5px);box-shadow:0 26px 45px rgba(0,0,0,.4)}
+.dt-home-rebuild .home-demo-card-top,.dt-home-rebuild .home-demo-card-bottom{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dt-home-rebuild .home-demo-card-top{font-size:8px;font-weight:950;letter-spacing:.13em}
+.dt-home-rebuild .home-demo-card-top .dt-v2-brand-mark{width:24px;height:24px;border-color:rgba(16,38,56,.3);background:#17394b}
+.dt-home-rebuild .home-demo-card-top .dt-v2-brand-mark i{background:#a9dfe0}
+.dt-home-rebuild .home-demo-card-title{position:relative;z-index:1;color:#102638;font:900 clamp(20px,2.6vw,36px)/.83 Manrope,sans-serif;letter-spacing:-.09em}
+.dt-home-rebuild .home-demo-card-title em{color:#276178;font-family:Georgia,serif;font-weight:400}
+.dt-home-rebuild .home-demo-card-bottom{font-size:6px;font-weight:900;letter-spacing:.12em}
+.dt-home-rebuild .home-demo-tap-hint{display:flex;align-items:center;gap:7px;color:#9db4c7;font-size:7px;font-weight:850;letter-spacing:.12em}
+.dt-home-rebuild .home-demo-transfer{position:relative;display:flex;align-items:center;flex-direction:column;gap:8px;color:var(--home-mint)}
+.dt-home-rebuild .home-demo-transfer>span{position:absolute;width:34px;height:34px;border:1px solid rgba(131,217,223,.4);border-radius:50%;animation:homeNfcPulse 2s ease-out infinite}
+.dt-home-rebuild .home-demo-transfer svg{width:32px;height:32px;padding:7px;border:1px solid rgba(131,217,223,.3);border-radius:50%;background:#16364c}
+.dt-home-rebuild .home-demo-transfer small{font-size:6px;font-weight:900;letter-spacing:.12em}
+.dt-home-rebuild .home-demo-phone{position:relative;width:min(100%,218px);aspect-ratio: .51;min-height:355px;overflow:hidden;padding:12px 10px 15px;border:3px solid #728b9a;border-radius:29px;background:#060d17;box-shadow:0 23px 48px rgba(0,0,0,.42),inset 0 0 0 1px #263d50;transition:border-color .4s}
+.dt-home-rebuild .home-phone-island{position:absolute;z-index:4;top:8px;left:50%;width:66px;height:15px;border-radius:12px;background:#02060b;transform:translateX(-50%)}
+.dt-home-rebuild .home-phone-status{height:24px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;color:#eaf2f7;font-size:7px;font-weight:800}
+.dt-home-rebuild .home-phone-homebar{position:absolute;bottom:6px;left:50%;width:62px;height:3px;border-radius:3px;background:#d7e1e7;transform:translateX(-50%)}
+.dt-home-rebuild .home-phone-idle{height:calc(100% - 24px);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px;text-align:center;color:#f0f6fa}
+.dt-home-rebuild .home-phone-nfc{display:grid;place-items:center;width:64px;height:64px;margin:0 0 20px;border:1px solid rgba(131,217,223,.35);border-radius:50%;background:rgba(131,217,223,.09);color:var(--home-mint);box-shadow:0 0 0 10px rgba(131,217,223,.035)}
+.dt-home-rebuild .home-phone-idle>b{font:800 21px/1.05 Manrope;letter-spacing:-.06em}
+.dt-home-rebuild .home-phone-idle>p{max-width:145px;color:#93a9ba;font-size:8px;line-height:1.65}
+.dt-home-rebuild .home-phone-idle>span{display:flex;align-items:center;gap:6px;margin-top:12px;color:#91a9bc;font-size:6px;font-weight:900;letter-spacing:.12em}
+.dt-home-rebuild .home-phone-idle>span i{width:5px;height:5px;border-radius:50%;background:#d8ad67}
+.dt-home-rebuild .home-google-screen{height:calc(100% - 24px);padding:13px 9px 8px;border-radius:3px;background:#fff;color:#202124;animation:homeScreenIn .5s cubic-bezier(.2,.8,.2,1) both}
+.dt-home-rebuild .home-google-top{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 13px;font:500 14px Arial,sans-serif}
+.dt-home-rebuild .home-google-g{font-size:18px;font-weight:700;letter-spacing:-.08em;background:linear-gradient(90deg,#4285f4 0 25%,#ea4335 25% 48%,#fbbc05 48% 70%,#34a853 70%);color:transparent;background-clip:text}
+.dt-home-rebuild .home-google-business{display:flex;align-items:center;gap:8px;padding:8px 0}
+.dt-home-rebuild .home-google-avatar{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:#e5edf5;color:#315b80;font-weight:800}
+.dt-home-rebuild .home-google-business>div:last-child{display:grid;gap:3px}
+.dt-home-rebuild .home-google-business b{font:700 9px Arial}.dt-home-rebuild .home-google-business small{color:#70757a;font:7px Arial}
+.dt-home-rebuild .home-google-rating{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:3px 8px;padding:10px 0}
+.dt-home-rebuild .home-google-rating b{font:700 23px Arial}
+.dt-home-rebuild .home-google-rating span{color:#fbbc04;font-size:12px;letter-spacing:-1px}
+.dt-home-rebuild .home-google-rating small{grid-column:1/-1;color:#70757a;font:7px Arial}
+.dt-home-rebuild .home-google-divider{height:1px;margin:5px 0 13px;background:#e8eaed}
+.dt-home-rebuild .home-google-screen>strong{font:700 11px Arial}
+.dt-home-rebuild .home-google-screen>p{color:#5f6368;font:8px/1.5 Arial}
+.dt-home-rebuild .home-google-stars{margin:17px 0;color:#4285f4;font-size:20px;letter-spacing:0}
+.dt-home-rebuild .home-google-write{display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 5px;border:1px solid #dadce0;border-radius:20px;color:#1a73e8;font:700 8px Arial}
+.dt-home-rebuild .home-google-note{display:block;margin-top:12px;color:#80868b;text-align:center;font:6px Arial}
+.dt-home-rebuild .home-demo-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;border-top:1px solid var(--home-line)}
+.dt-home-rebuild .home-demo-footer>div{display:flex;align-items:center;gap:8px;color:#94aabe;font-size:7px;font-weight:750}
+.dt-home-rebuild .home-demo-footer>div span{display:grid;place-items:center;width:18px;height:18px;border:1px solid #426076;border-radius:50%;font-size:7px}
+.dt-home-rebuild .home-demo-footer>div span.done{border-color:var(--home-mint);background:var(--home-mint);color:#092033}
+.dt-home-rebuild .home-demo-footer>div i{width:17px;height:1px;background:#526d82}
+.dt-home-rebuild .home-demo-footer button{display:flex;align-items:center;gap:7px;padding:10px 13px;border:1px solid rgba(131,217,223,.4);border-radius:5px;background:rgba(131,217,223,.1);color:#b9ecea;font-size:8px;font-weight:850;cursor:pointer;transition:background .2s}
+.dt-home-rebuild .home-demo-footer button:hover{background:rgba(131,217,223,.2)}
+.dt-home-rebuild .home-tap-demo.is-tapped .home-demo-card{transform:translate(38px,8px) rotate(5deg) scale(.94);box-shadow:0 0 0 7px rgba(131,217,223,.12),0 22px 42px rgba(0,0,0,.4)}
+.dt-home-rebuild .home-tap-demo.is-tapped .home-demo-card:before{transform:translateX(130%)}
+.dt-home-rebuild .home-tap-demo.is-tapped .home-demo-phone{border-color:var(--home-mint);box-shadow:0 0 0 5px rgba(131,217,223,.08),0 23px 48px rgba(0,0,0,.42)}
+.dt-home-rebuild .home-tap-demo.is-tapped .home-demo-transfer>span{animation-duration:.7s}
+@keyframes homeNfcPulse{0%{transform:scale(.7);opacity:.8}100%{transform:scale(1.8);opacity:0}}
+@keyframes homeScreenIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1050px){.dt-home-rebuild .ed-hero-grid{grid-template-columns:1fr}.dt-home-rebuild .home-hero-visual.home-tap-demo{width:min(100%,760px);margin:0 auto}}
+@media(max-width:650px){
+ .dt-home-rebuild .home-hero-visual.home-tap-demo{min-height:0;padding:15px 13px}
+ .dt-home-rebuild .home-demo-heading b{font-size:15px}
+ .dt-home-rebuild .home-demo-stage{grid-template-columns:minmax(0,1fr) 22px minmax(0,.9fr);gap:6px;min-height:335px;padding:18px 0 13px}
+ .dt-home-rebuild .home-demo-card{padding:10px;border-radius:8px}
+ .dt-home-rebuild .home-demo-card-top{font-size:6px}.dt-home-rebuild .home-demo-card-top .dt-v2-brand-mark{width:18px;height:18px}
+ .dt-home-rebuild .home-demo-card-top svg{width:16px}
+ .dt-home-rebuild .home-demo-card-title{font-size:clamp(16px,5vw,23px)}
+ .dt-home-rebuild .home-demo-card-bottom{font-size:5px}
+ .dt-home-rebuild .home-demo-phone{width:100%;min-height:285px;border-width:2px;border-radius:21px;padding:9px 7px 12px}
+ .dt-home-rebuild .home-phone-island{top:6px;width:52px;height:12px}
+ .dt-home-rebuild .home-phone-status{height:20px;font-size:6px}
+ .dt-home-rebuild .home-phone-idle{height:calc(100% - 20px);padding:6px}
+ .dt-home-rebuild .home-phone-nfc{width:45px;height:45px;margin-bottom:13px}
+ .dt-home-rebuild .home-phone-nfc svg{width:21px}
+ .dt-home-rebuild .home-phone-idle>b{font-size:16px}
+ .dt-home-rebuild .home-phone-idle>p{font-size:6px}
+ .dt-home-rebuild .home-phone-idle>span{font-size:5px}
+ .dt-home-rebuild .home-google-screen{height:calc(100% - 20px);padding:8px 6px}
+ .dt-home-rebuild .home-google-top{font-size:11px;padding-bottom:8px}
+ .dt-home-rebuild .home-google-g{font-size:15px}
+ .dt-home-rebuild .home-google-business{gap:5px;padding:5px 0}
+ .dt-home-rebuild .home-google-avatar{width:22px;height:22px}
+ .dt-home-rebuild .home-google-business b{font-size:7px}
+ .dt-home-rebuild .home-google-business small{font-size:6px}
+ .dt-home-rebuild .home-google-rating{padding:6px 0}
+ .dt-home-rebuild .home-google-rating b{font-size:18px}
+ .dt-home-rebuild .home-google-rating span{font-size:9px}
+ .dt-home-rebuild .home-google-screen>strong{font-size:8px}
+ .dt-home-rebuild .home-google-screen>p{font-size:6px}
+ .dt-home-rebuild .home-google-stars{margin:10px 0;font-size:14px}
+ .dt-home-rebuild .home-google-write{padding:7px 3px;font-size:6px}
+ .dt-home-rebuild .home-google-note{font-size:5px}
+ .dt-home-rebuild .home-demo-step{font-size:5px}
+ .dt-home-rebuild .home-demo-tap-hint{font-size:5px;gap:4px;letter-spacing:.06em}
+ .dt-home-rebuild .home-demo-tap-hint svg{width:12px}
+ .dt-home-rebuild .home-demo-transfer svg{width:24px;height:24px;padding:5px}
+ .dt-home-rebuild .home-demo-transfer>span{width:25px;height:25px}
+ .dt-home-rebuild .home-demo-footer{align-items:flex-start;flex-direction:column}
+ .dt-home-rebuild .home-demo-footer>div{font-size:6px}
+ .dt-home-rebuild .home-demo-footer button{align-self:flex-end}
+ .dt-home-rebuild .home-tap-demo.is-tapped .home-demo-card{transform:translate(10px,4px) rotate(3deg) scale(.95)}
+}
+@media(prefers-reduced-motion:reduce){.dt-home-rebuild .home-demo-transfer>span{animation:none!important}}
