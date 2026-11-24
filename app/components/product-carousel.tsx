@@ -34,7 +34,7 @@ function FeatureCard({ product, index, total, flipped, onFlip }: {
         <span className={"dt-feature-card-face dt-feature-card-front dt-feature-" + product.tone}>
           <span className="dt-feature-card-top"><b>DITAPAJA®</b><Nfc size={21}/></span>
           <span className="dt-feature-card-center"><small>REVIEW MADE SIMPLE</small><strong>{product.label.toUpperCase()}</strong><i/></span>
-          <span className="dt-feature-card-bottom"><span>ONE TAP. MORE REVIEWS.</span><span>{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span></span>
+          <span className="dt-feature-card-bottom"><span>ONE TAP. MORE REVIEWS.</span><span>{DITAPAJA}</span></span>
           <i className="dt-feature-card-shine"/>
           <i className="dt-feature-card-grain"/>
         </span>
@@ -60,7 +60,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
   return (
     <div className="dt-collection-experience">
       <div className="dt-collection-toolbar">
-        <span><i/> OBJECT SERIES <b>001—003</b></span>
+        <span><i/> THE COLLECTION</span>
         <span>DESIGNED TO BE TAPPED <Nfc size={14}/></span>
       </div>
 
@@ -68,7 +68,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
         <div className="dt-stage-copy">
           <div className="dt-stage-overline"><span>THE OBJECTS / 0{index + 1}</span><i/><span>DITAPAJA COLLECTION</span></div>
           <div className="dt-stage-title">
-            <span className="dt-stage-edition">EDITION 0{index + 1} <i/> {product.mode === "preorder" ? "LIMITED RELEASE" : "CORE SERIES"}</span>
+            <span className="dt-stage-edition">{product.mode === "preorder" ? "LIMITED RELEASE" : "CORE SERIES"}</span>
             <h3>{product.label}<em>.</em></h3>
           </div>
           <p className="dt-stage-description">{product.description}</p>
@@ -78,7 +78,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
             <span><Check size={15}/> FREE DASHBOARD</span>
           </div>
           <div className="dt-stage-price">
-            <span>ONE-TIME PURCHASE <i/> NO MONTHLY FEE</span>
+            <span>PEMBAYARAN SEKALI</span>
             <strong>{product.price}</strong><small>/ kartu</small>
           </div>
           <div className="dt-stage-actions">
@@ -92,7 +92,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           <div className={"dt-stage-included " + (details ? "is-open" : "")} aria-hidden={!details} inert={!details}>
             <span><Check size={14}/> Kartu NFC siap pakai</span>
             <span><Check size={14}/> QR Code cadangan</span>
-            <span><Check size={14}/> Dashboard tanpa biaya bulanan</span>
+            <span><Check size={14}/> Dashboard gratis</span>
           </div>
           <div className="dt-stage-trust"><ShieldCheck size={15}/> SIMPLE SETUP <i/> READY TO USE <i/> BUILT FOR BUSINESS</div>
         </div>
@@ -114,8 +114,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 
       <div className="dt-edition-selector">
         <div className="dt-selector-heading">
-          <span><Layers3 size={14}/> CHOOSE YOUR EDITION</span>
-          <span>{String(index + 1).padStart(2, "0")} <i/> {String(products.length).padStart(2, "0")}</span>
+          <span><Layers3 size={14}/> PILIH VARIAN</span>
         </div>
         <div className="dt-selector-options">
           {products.map((p, i) => (
@@ -131,7 +130,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
         </div>
       </div>
 
-      <div className="dt-collection-signoff"><Sparkles size={15}/><span>THOUGHTFULLY DESIGNED. READY TO BE YOURS.</span><i/><span>NO MONTHLY FEE</span></div>
+      <div className="dt-collection-signoff"><Sparkles size={15}/><span>THOUGHTFULLY DESIGNED. READY TO BE YOURS.</span></div>
     </div>
   );
 }
