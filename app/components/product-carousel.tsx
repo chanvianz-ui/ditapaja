@@ -5,13 +5,13 @@ import { ArrowDownRight, ArrowUpRight, Check, ChevronRight, FlipHorizontal2, Nfc
 
 type Product={name:string;label:string;description:string;tone:string;price:string;order:string;action:string;mode:string};
 
-function FeatureCard({product,flipped,onFlip}:{product:Product;flipped:boolean;onFlip:()=>void}){
+function FeatureCard({product,index,total,flipped,onFlip}:{product:Product;index:number;total:number;flipped:boolean;onFlip:()=>void}){
  return <div className={"dt-feature-card-wrap "+(flipped?"is-flipped":"")}>
-  <button type="button" className="dt-feature-card" onClick={onFlip} aria-label="Balik tampilan kartu">
+  <button type="button" className="dt-feature-card" onClick={onFlip} aria-label={flipped?"Lihat sisi depan kartu":"Lihat sisi belakang kartu"} aria-pressed={flipped}>
    <span className={"dt-feature-card-face dt-feature-card-front dt-feature-"+product.tone}>
     <span className="dt-feature-card-top"><b>DITAPAJA®</b><Nfc size={20}/></span>
     <span className="dt-feature-card-center"><small>REVIEW MADE SIMPLE</small><strong>{product.label.toUpperCase()}</strong><i/></span>
-    <span className="dt-feature-card-bottom"><span>ONE TAP. MORE REVIEWS.</span><span>01 / 03</span></span>
+    <span className="dt-feature-card-bottom"><span>ONE TAP. MORE REVIEWS.</span><span>{String(index+1).padStart(2,"0")} / {String(total).padStart(2,"0")}</span></span>
     <i className="dt-feature-card-shine"/>
    </span>
    <span className="dt-feature-card-face dt-feature-card-back">
@@ -31,7 +31,7 @@ export default function ProductCarousel({products}:{products:Product[]}){
  if(!product)return null;
  const index=products.findIndex(p=>p.tone===product.tone);
  return <div className="dt-collection-experience">
-  <div className="dt-collection-stage">
+  <div className="dt-collection-stage" key={product.tone}>
    <div className="dt-stage-copy">
     <div className="dt-stage-overline"><span>THE OBJECTS / 0{index+1}</span><i/> <span>DITAPAJA COLLECTION</span></div>
     <div className="dt-stage-title"><span className="dt-stage-edition">EDITION 0{index+1}</span><h3>{product.label}<em>.</em></h3></div>
@@ -40,9 +40,9 @@ export default function ProductCarousel({products}:{products:Product[]}){
     <div className="dt-stage-price"><span>INVEST IN BETTER CONNECTION</span><strong>{product.price}</strong><small>/ kartu</small></div>
     <div className="dt-stage-actions">
      <Link href={"/pesan?product="+product.tone} className="dt-stage-primary">{product.mode==="preorder"?"Request pre-order":"Pilih edisi ini"}<ArrowUpRight size={17}/></Link>
-     <button type="button" className="dt-stage-detail" onClick={()=>setDetails(!details)}>{details?"Tutup detail":"What's included"}<ArrowDownRight size={15}/></button>
+     <button type="button" className="dt-stage-detail" onClick={()=>setDetails(!details)} aria-expanded={details}>{details?"Tutup detail":"What's included"}<ArrowDownRight size={15}/></button>
     </div>
-    <div className={"dt-stage-included "+(details?"is-open":"")} aria-hidden={!details}>
+    <div className={"dt-stage-included "+(details?"is-open":"")} aria-hidden={!details} inert={!details}>
      <span><Check size={14}/> Kartu NFC siap pakai</span><span><Check size={14}/> QR Code cadangan</span><span><Check size={14}/> Dashboard tanpa biaya bulanan</span>
     </div>
    </div>
@@ -50,8 +50,8 @@ export default function ProductCarousel({products}:{products:Product[]}){
     <div className="dt-art-orbit dt-art-orbit-a"/><div className="dt-art-orbit dt-art-orbit-b"/>
     <span className="dt-art-index">0{index+1}<i/>03</span>
     <span className="dt-art-edition">{product.mode==="preorder"?"MADE TO ORDER":"THE CORE EDITION"}</span>
-    <FeatureCard product={product} flipped={flipped} onFlip={()=>setFlipped(!flipped)}/>
-    <button type="button" className="dt-flip-hint" onClick={()=>setFlipped(!flipped)}><FlipHorizontal2 size={14}/> {flipped?"Lihat sisi depan":"Balik kartu"}</button>
+    <FeatureCard product={product} index={index} total={products.length} flipped={flipped} onFlip={()=>setFlipped(!flipped)}/>
+    <button type="button" className="dt-flip-hint" onClick={()=>setFlipped(!flipped)} aria-pressed={flipped}><FlipHorizontal2 size={14}/> {flipped?"Lihat sisi depan":"Balik kartu"}</button>
     <span className="dt-art-caption">A SMALL OBJECT. A BETTER EXPERIENCE.</span>
    </div>
   </div>
