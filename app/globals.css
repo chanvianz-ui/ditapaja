@@ -1552,3 +1552,45 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .home-tap-demo.is-tapped .home-demo-card{transform:translate(10px,4px) rotate(3deg) scale(.95)}
 }
 @media(prefers-reduced-motion:reduce){.dt-home-rebuild .home-demo-transfer>span{animation:none!important}}
+
+
+/* Hero tap-to-review demo: simplified, customer-first interaction */
+.dt-home-rebuild .home-demo-live{display:none}
+.dt-home-rebuild .home-demo-disclaimer{color:#aab9c5;font:700 8px/1.4 Arial,sans-serif;letter-spacing:.08em}
+.dt-home-rebuild .home-demo-heading b{font-size:clamp(15px,1.6vw,20px);font-weight:650;letter-spacing:-.025em}
+.dt-home-rebuild .home-demo-step{display:none}
+.dt-home-rebuild .home-demo-stage{min-height:420px}
+.dt-home-rebuild .home-demo-transfer>span{display:none}
+.dt-home-rebuild .home-demo-transfer svg{border:0;border-radius:0;background:transparent;padding:0;color:#a9bdca}
+.dt-home-rebuild .home-demo-transfer small{color:#9fb1bf}
+.dt-home-rebuild .home-demo-tap-hint{font-size:8px;letter-spacing:.06em}
+.dt-home-rebuild .home-phone-idle{gap:15px}
+.dt-home-rebuild .home-phone-idle>svg{color:#a9bdca}
+.dt-home-rebuild .home-phone-idle>b{font-size:20px}
+.dt-home-rebuild .home-phone-idle>p{font-size:9px}
+.dt-home-rebuild .home-google-screen{overflow-y:auto;padding:12px 9px 14px}
+.dt-home-rebuild .home-google-prompt{padding:13px 0 5px;border-bottom:1px solid #e8eaed}
+.dt-home-rebuild .home-google-prompt>strong{font:700 11px Arial,sans-serif}
+.dt-home-rebuild .home-google-prompt>p{margin:6px 0;color:#5f6368;font:8px/1.5 Arial,sans-serif}
+.dt-home-rebuild .home-google-rating-picker{display:flex;justify-content:space-between;gap:2px;margin:11px 0 2px}
+.dt-home-rebuild .home-google-rating-picker button{flex:1;min-width:0;padding:2px 0;border:0;background:transparent;color:#c7cbd0;font-size:25px;line-height:1.2;cursor:pointer}
+.dt-home-rebuild .home-google-rating-picker button.selected{color:#fbbc04}
+.dt-home-rebuild .home-google-rating-picker button:focus-visible{outline:2px solid #1a73e8;outline-offset:1px;border-radius:4px}
+.dt-home-rebuild .home-google-rating-label{display:block;min-height:17px;color:#5f6368;text-align:center;font:7px Arial,sans-serif}
+.dt-home-rebuild .home-google-review-input{display:block;width:100%;min-height:72px;margin:8px 0;padding:9px;border:1px solid #dadce0;border-radius:7px;background:#fff;color:#202124;font:8px/1.5 Arial,sans-serif;resize:vertical}
+.dt-home-rebuild .home-google-review-input:focus{outline:2px solid #1a73e8;outline-offset:1px}
+.dt-home-rebuild .home-google-submit{width:100%;padding:9px 6px;border:0;border-radius:18px;background:#1a73e8;color:#fff;font:700 8px Arial,sans-serif;cursor:pointer}
+.dt-home-rebuild .home-google-submit:disabled{background:#e8eaed;color:#9aa0a6;cursor:not-allowed}
+.dt-home-rebuild .home-google-submitted{padding:9px 7px;border-radius:7px;background:#f1f3f4;color:#3c4043;font:7px/1.45 Arial,sans-serif;text-align:center}
+.dt-home-rebuild .home-google-note{margin:8px 0 2px;font-size:6px}
+.dt-home-rebuild .home-demo-footer>span{color:#aab9c5;font-size:8px}
+.dt-home-rebuild .home-demo-footer>button{border-radius:4px}
+.dt-home-rebuild .home-tap-demo.is-tapped .home-demo-card{transform:translate(22px,5px) rotate(2deg) scale(.97);box-shadow:0 18px 36px rgba(0,0,0,.35)}
+.dt-home-rebuild .home-tap-demo.is-tapped .home-demo-phone{border-color:#728b9a;box-shadow:0 23px 48px rgba(0,0,0,.42)}
+@media(max-width:650px){
+ .dt-home-rebuild .home-demo-stage{min-height:350px}
+ .dt-home-rebuild .home-demo-phone{min-height:355px}
+ .dt-home-rebuild .home-google-rating-picker button{font-size:22px}
+ .dt-home-rebuild .home-google-review-input{min-height:65px}
+ .dt-home-rebuild .home-demo-footer{align-items:flex-start}
+}
