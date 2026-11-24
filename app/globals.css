@@ -3778,3 +3778,94 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
   .dt-home-rebuild .dt-how-section *:before,
   .dt-home-rebuild .dt-how-section *:after {animation:none!important;scroll-behavior:auto!important;transition:none!important}
 }
+
+
+/* Behind the Card — editorial dashboard showcase */
+.dt-home-rebuild .dt-behind{
+  position:relative;isolation:isolate;overflow:hidden;
+  grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr);
+  gap:clamp(42px,7vw,112px);
+  padding:clamp(88px,10vw,148px) clamp(24px,9vw,140px);
+  background:linear-gradient(112deg,#10263b 0%,#122d43 54%,#0d2034 100%);
+}
+.dt-home-rebuild .dt-behind:before{
+  content:"";position:absolute;z-index:-1;inset:0;
+  background:radial-gradient(ellipse at 76% 46%,rgba(100,178,190,.13),transparent 42%),
+    linear-gradient(90deg,transparent 0 68%,rgba(255,255,255,.018) 68% 68.15%,transparent 68.15%);
+  pointer-events:none;
+}
+.dt-home-rebuild .dt-behind-copy{position:relative;z-index:2;max-width:470px}
+.dt-home-rebuild .dt-behind-kicker{margin:42px 0 0;color:#83d9df;font-size:8px;font-weight:900;letter-spacing:.22em}
+.dt-home-rebuild .dt-behind-copy h2{margin:17px 0 24px;font-size:clamp(58px,6.5vw,88px);line-height:.88;letter-spacing:-.09em}
+.dt-home-rebuild .dt-behind-copy h2 em{color:#83d9df;font-style:normal}
+.dt-home-rebuild .dt-behind-intro{max-width:390px;margin:0;color:#b3c3d1;font-size:12px;line-height:1.95}
+.dt-home-rebuild .dt-behind-copy>.ed-button{margin-top:27px}
+.dt-home-rebuild .dt-behind-capabilities{display:grid;gap:0;margin-top:46px;border-top:1px solid rgba(173,205,229,.17)}
+.dt-home-rebuild .dt-behind-capabilities>div{display:grid;grid-template-columns:28px 1fr;column-gap:12px;padding:14px 0;border-bottom:1px solid rgba(173,205,229,.17)}
+.dt-home-rebuild .dt-behind-capabilities>div>span{grid-row:span 2;color:#83d9df;font-size:8px;font-weight:900;letter-spacing:.1em}
+.dt-home-rebuild .dt-behind-capabilities b{color:#e8f0f5;font-size:10px;font-weight:800}
+.dt-home-rebuild .dt-behind-capabilities small{margin-top:4px;color:#829bae;font-size:9px;line-height:1.6}
+.dt-home-rebuild .dt-behind-visual{position:relative;min-width:0;padding:30px 0 38px}
+.dt-home-rebuild .dt-behind-orbit{position:absolute;pointer-events:none;border:1px solid rgba(131,217,223,.12);border-radius:50%;aspect-ratio:1}
+.dt-home-rebuild .dt-behind-orbit-one{width:84%;right:-10%;top:0}
+.dt-home-rebuild .dt-behind-orbit-two{width:62%;right:1%;top:12%;border-style:dashed;opacity:.6}
+.dt-home-rebuild .dt-behind-panel{position:relative;z-index:1;overflow:hidden;padding:clamp(17px,2.3vw,28px);border:1px solid rgba(180,211,229,.23);border-radius:12px;background:linear-gradient(145deg,rgba(13,32,51,.97),rgba(7,21,36,.98));box-shadow:0 38px 90px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.045);transform:perspective(1200px) rotateY(-5deg) rotateX(1deg)}
+.dt-home-rebuild .dt-behind-panel-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:18px;border-bottom:1px solid rgba(173,205,229,.13)}
+.dt-home-rebuild .dt-behind-brand{display:flex;align-items:center;gap:9px;color:#e4edf3;font-size:8px;font-weight:900;letter-spacing:.15em}
+.dt-home-rebuild .dt-behind-brand .dt-v2-brand-mark{width:26px;height:26px}
+.dt-home-rebuild .dt-behind-brand i{color:#83d9df;font-style:normal}
+.dt-home-rebuild .dt-behind-preview-tag{padding:6px 8px;border:1px solid rgba(131,217,223,.22);border-radius:3px;color:#83d9df;font-size:6px;font-weight:900;letter-spacing:.12em}
+.dt-home-rebuild .dt-behind-panel-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:25px 0 18px}
+.dt-home-rebuild .dt-behind-panel-heading>div{display:grid;gap:7px}
+.dt-home-rebuild .dt-behind-panel-heading small,.dt-home-rebuild .dt-behind-metrics>div>span,.dt-home-rebuild .dt-behind-activity-head small{color:#7894aa;font-size:7px;font-weight:900;letter-spacing:.16em}
+.dt-home-rebuild .dt-behind-panel-heading b{color:#f0f5f8;font:750 clamp(22px,3vw,31px) Manrope;letter-spacing:-.06em}
+.dt-home-rebuild .dt-behind-panel-heading b span{color:#83d9df}
+.dt-home-rebuild .dt-behind-period{padding:8px 10px;border:1px solid rgba(173,205,229,.15);border-radius:4px;color:#9bb0c1;font-size:7px;white-space:nowrap}
+.dt-home-rebuild .dt-behind-metrics{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.dt-home-rebuild .dt-behind-metrics>div{position:relative;display:grid;gap:7px;padding:15px;border:1px solid rgba(173,205,229,.14);border-radius:6px;background:rgba(255,255,255,.025)}
+.dt-home-rebuild .dt-behind-metrics>div>b{color:#f2f6f8;font:800 clamp(23px,3vw,32px) Manrope;letter-spacing:-.065em}
+.dt-home-rebuild .dt-behind-metrics>div>small{color:#8299ad;font-size:7px}
+.dt-home-rebuild .dt-behind-metric-mark{position:absolute;right:13px;top:12px;color:#83d9df;font-size:12px;font-style:normal}
+.dt-home-rebuild .dt-behind-activity{margin-top:12px;padding:16px;border:1px solid rgba(173,205,229,.14);border-radius:6px;background:rgba(255,255,255,.018)}
+.dt-home-rebuild .dt-behind-activity-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dt-home-rebuild .dt-behind-activity-head>div{display:grid;gap:6px}
+.dt-home-rebuild .dt-behind-activity-head b{color:#dce8ef;font-size:10px}
+.dt-home-rebuild .dt-behind-activity-head>span{color:#718ba0;font-size:6px;font-weight:800;letter-spacing:.1em}
+.dt-home-rebuild .dt-behind-chart{height:105px;display:flex;align-items:end;gap:clamp(4px,1vw,9px);margin-top:16px;padding:0 2px;border-bottom:1px solid rgba(173,205,229,.16);background:repeating-linear-gradient(to bottom,transparent 0,transparent 25px,rgba(173,205,229,.07) 26px)}
+.dt-home-rebuild .dt-behind-chart i{flex:1;min-width:3px;border-radius:3px 3px 0 0;background:linear-gradient(0deg,rgba(62,128,160,.55),#83d9df);opacity:.85}
+.dt-home-rebuild .dt-behind-chart-labels{display:flex;justify-content:space-between;margin-top:8px;color:#71899d;font-size:6px;letter-spacing:.08em}
+.dt-home-rebuild .dt-behind-card-line{display:flex;align-items:center;gap:11px;margin-top:12px;padding:12px;border:1px solid rgba(173,205,229,.14);border-radius:6px;background:rgba(255,255,255,.025)}
+.dt-home-rebuild .dt-behind-card-icon{display:grid;place-items:center;width:32px;height:32px;border:1px solid rgba(131,217,223,.25);border-radius:5px;color:#83d9df;background:rgba(131,217,223,.08)}
+.dt-home-rebuild .dt-behind-card-line>div:nth-child(2){display:grid;gap:4px;min-width:0}
+.dt-home-rebuild .dt-behind-card-line b{color:#dce8ef;font-size:8px}
+.dt-home-rebuild .dt-behind-card-line small{color:#718ba0;font-size:7px}
+.dt-home-rebuild .dt-behind-card-line>span{margin-left:auto;color:#83d9df;font-size:6px;font-weight:900;letter-spacing:.12em}
+.dt-home-rebuild .dt-behind-float-note{position:absolute;z-index:2;right:-17px;bottom:19px;display:grid;gap:7px;padding:13px 16px;border:1px solid rgba(173,205,229,.22);border-radius:6px;background:rgba(13,35,53,.94);box-shadow:0 15px 35px rgba(0,0,0,.2);backdrop-filter:blur(12px)}
+.dt-home-rebuild .dt-behind-float-note>span{display:flex;align-items:center;gap:7px;color:#83d9df;font-size:6px;font-weight:900;letter-spacing:.15em}
+.dt-home-rebuild .dt-behind-float-note>span i{width:5px;height:5px;border-radius:50%;background:#83d9df;box-shadow:0 0 10px rgba(131,217,223,.7)}
+.dt-home-rebuild .dt-behind-float-note>b{color:#e4edf3;font-size:9px}
+.dt-home-rebuild .dt-behind-caption{position:absolute;left:0;bottom:0;margin:0;color:#8ba4b8;font-size:7px;font-weight:900;letter-spacing:.17em}
+@media(max-width:1050px){
+ .dt-home-rebuild .dt-behind{grid-template-columns:1fr;gap:42px}
+ .dt-home-rebuild .dt-behind-copy{max-width:720px}
+ .dt-home-rebuild .dt-behind-visual{width:min(100%,760px);margin:0 auto}
+}
+@media(max-width:650px){
+ .dt-home-rebuild .dt-behind{padding:76px 19px 84px;gap:25px}
+ .dt-home-rebuild .dt-behind-kicker{margin-top:32px}
+ .dt-home-rebuild .dt-behind-copy h2{font-size:clamp(56px,14vw,76px)}
+ .dt-home-rebuild .dt-behind-intro{font-size:11px}
+ .dt-home-rebuild .dt-behind-capabilities{margin-top:34px}
+ .dt-home-rebuild .dt-behind-visual{padding:16px 0 43px}
+ .dt-home-rebuild .dt-behind-panel{padding:14px;border-radius:9px;transform:none}
+ .dt-home-rebuild .dt-behind-panel-top{padding-bottom:13px}
+ .dt-home-rebuild .dt-behind-panel-heading{margin:19px 0 13px}
+ .dt-home-rebuild .dt-behind-metrics>div{padding:11px}
+ .dt-home-rebuild .dt-behind-activity{padding:12px}
+ .dt-home-rebuild .dt-behind-chart{height:82px}
+ .dt-home-rebuild .dt-behind-float-note{right:-3px;bottom:16px;padding:10px 12px}
+ .dt-home-rebuild .dt-behind-caption{font-size:6px}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-home-rebuild .dt-behind-panel{transform:none}
+}
