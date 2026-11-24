@@ -4210,3 +4210,84 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
 @media(prefers-reduced-motion:reduce){
   .dt-header-modern *, .dt-menu-redesign *{transition:none!important}
 }
+
+/* SIGNATURE HEADER — crafted geometry, calm hierarchy */
+.dt-site-header.dt-header-signature{
+  background:rgba(8,23,36,.94);
+  border-bottom:1px solid rgba(164,195,205,.13);
+  box-shadow:0 8px 28px rgba(0,0,0,.08);
+}
+.dt-header-signature .dt-header-shell{
+  width:min(1480px,100%);min-height:84px;padding-inline:clamp(22px,5vw,76px);
+  grid-template-columns:minmax(190px,1fr) auto minmax(210px,1fr);
+  gap:clamp(18px,3vw,44px);
+}
+.dt-header-signature .dt-brand{gap:12px}
+.dt-header-signature .dt-brand-symbol{
+  position:relative;width:42px;height:42px;gap:3px;
+  border:1px solid rgba(143,220,211,.42);border-radius:13px 13px 13px 5px;
+  background:linear-gradient(145deg,#b2e6dc 0%,#7fcac6 100%);
+  box-shadow:0 5px 14px rgba(100,197,190,.12),inset 0 1px rgba(255,255,255,.65);
+}
+.dt-header-signature .dt-brand-symbol i{z-index:1;background:#102b35;opacity:.9}
+.dt-header-signature .dt-brand-symbol i:nth-child(1){height:10px}
+.dt-header-signature .dt-brand-symbol i:nth-child(2){height:19px}
+.dt-header-signature .dt-brand-symbol i:nth-child(3){height:13px}
+.dt-header-signature .dt-brand-symbol b{
+  position:absolute;right:5px;top:5px;width:4px;height:4px;border-radius:50%;background:#fff;opacity:.9;
+}
+.dt-header-signature .dt-brand-word{gap:5px;font-size:18px;letter-spacing:-.075em}
+.dt-header-signature .dt-brand-word small{color:#8da5ae;font-size:6px;letter-spacing:.145em;font-weight:800}
+.dt-header-signature .dt-header-nav{
+  min-height:46px;gap:3px;padding:4px;border:1px solid rgba(167,196,205,.15);
+  border-radius:13px;background:rgba(255,255,255,.035);box-shadow:inset 0 1px rgba(255,255,255,.035);
+}
+.dt-header-signature .dt-header-nav a{
+  height:36px;gap:7px;padding:0 13px;border-radius:9px;color:#b5c5ca;font-size:10px;font-weight:750;
+}
+.dt-header-signature .dt-header-nav a:after{display:none}
+.dt-header-signature .dt-header-nav a:hover{background:rgba(155,217,212,.11);color:#dff8f0}
+.dt-header-signature .dt-header-nav .dt-header-nav-number{color:#76959b;font-size:7px}
+.dt-header-signature .dt-header-actions{gap:20px}
+.dt-header-signature .dt-header-login{color:#b6c7cb;font-size:10px;font-weight:750}
+.dt-header-signature .dt-header-cta{
+  min-height:48px;gap:13px;padding:4px 5px 4px 15px;border:1px solid rgba(155,217,212,.34);
+  border-radius:11px;background:rgba(155,217,212,.08);color:#f0f8f4;
+}
+.dt-header-signature .dt-header-cta:hover{
+  border-color:rgba(155,217,212,.68);background:rgba(155,217,212,.13);transform:translateY(-1px);
+}
+.dt-header-signature .dt-header-cta-copy{display:grid;gap:3px;text-align:left}
+.dt-header-signature .dt-header-cta-copy small{color:#8ba9aa;font-size:6px;font-weight:900;letter-spacing:.13em}
+.dt-header-signature .dt-header-cta-copy strong{color:#e9f4f0;font:750 10px/1.2 "Manrope",sans-serif}
+.dt-header-signature .dt-header-cta-icon{
+  width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#9bd9d4;color:#0a2630;
+  transition:transform .2s ease,background .2s ease;
+}
+.dt-header-signature .dt-header-cta:hover .dt-header-cta-icon{transform:translate(2px,-2px);background:#b9e9df}
+.dt-header-signature .dt-header-mobile{gap:15px}
+.dt-header-signature .dt-header-mobile-cta{
+  min-height:38px;padding:0 12px;border:1px solid rgba(155,217,212,.28);border-radius:9px;color:#b4e5dc;font-size:10px;
+}
+.dt-header-signature .dt-header-mobile>button{
+  width:42px;height:42px;border-radius:11px;border-color:rgba(159,190,208,.22);background:rgba(255,255,255,.045);
+}
+.dt-header-signature .dt-header-mobile>button:hover{border-color:rgba(155,217,212,.5);background:rgba(155,217,212,.08)}
+@media(max-width:1100px){
+  .dt-header-signature .dt-header-shell{gap:18px;padding-inline:25px}
+  .dt-header-signature .dt-header-nav a{padding-inline:10px}
+  .dt-header-signature .dt-header-actions{gap:13px}
+}
+@media(max-width:900px){.dt-header-signature .dt-header-shell{min-height:74px;padding-inline:24px}}
+@media(max-width:430px){
+  .dt-header-signature .dt-header-shell{min-height:68px;padding-inline:17px}
+  .dt-header-signature .dt-brand-symbol{width:37px;height:37px}
+  .dt-header-signature .dt-brand-word{font-size:15px}
+  .dt-header-signature .dt-brand-word small{font-size:5px;letter-spacing:.12em}
+  .dt-header-signature .dt-header-mobile{gap:9px}
+  .dt-header-signature .dt-header-mobile-cta{min-height:36px;padding-inline:10px;font-size:9px}
+  .dt-header-signature .dt-header-mobile>button{width:39px;height:39px}
+}
+.dt-menu-intro>span{display:inline-flex;align-items:center;gap:7px}
+.dt-menu-intro>span svg{color:#9bd9d4}
+@media(prefers-reduced-motion:reduce){.dt-header-signature *, .dt-menu-redesign *{transition:none!important}}
