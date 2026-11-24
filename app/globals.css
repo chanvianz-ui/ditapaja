@@ -3869,3 +3869,118 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
 @media(prefers-reduced-motion:reduce){
  .dt-home-rebuild .dt-behind-panel{transform:none}
 }
+
+
+/* Compact Behind the Card */
+.dt-home-rebuild .dt-behind{
+  grid-template-columns:minmax(270px,.8fr) minmax(0,1.2fr);
+  gap:clamp(34px,6vw,88px);
+  padding:clamp(76px,8vw,112px) clamp(24px,9vw,140px);
+}
+.dt-home-rebuild .dt-behind-copy h2{margin:20px 0 18px;font-size:clamp(54px,6vw,78px)}
+.dt-home-rebuild .dt-behind-intro{max-width:360px;font-size:11px;line-height:1.8}
+.dt-home-rebuild .dt-behind-quick-points{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:24px;color:#b9cbd7;font-size:8px}
+.dt-home-rebuild .dt-behind-quick-points span{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.dt-home-rebuild .dt-behind-quick-points svg{color:#83d9df}
+.dt-home-rebuild .dt-behind-copy>.ed-button{margin-top:24px}
+.dt-home-rebuild .dt-behind-visual{padding:12px 0}
+.dt-home-rebuild .dt-behind-orbit,.dt-home-rebuild .dt-behind-float-note,.dt-home-rebuild .dt-behind-caption{display:none}
+.dt-home-rebuild .dt-behind-panel{padding:clamp(16px,2vw,23px);transform:none}
+.dt-home-rebuild .dt-behind-panel-top{padding-bottom:14px}
+.dt-home-rebuild .dt-behind-panel-heading{margin:18px 0 13px}
+.dt-home-rebuild .dt-behind-metrics>div{padding:12px}
+.dt-home-rebuild .dt-behind-metrics>div>b{font-size:clamp(22px,2.5vw,29px)}
+.dt-home-rebuild .dt-behind-mini-activity{margin-top:11px;padding:13px 14px;border:1px solid rgba(173,205,229,.14);border-radius:6px;background:rgba(255,255,255,.018)}
+.dt-home-rebuild .dt-behind-mini-activity>span{color:#7894aa;font-size:7px;font-weight:900;letter-spacing:.14em}
+.dt-home-rebuild .dt-behind-mini-activity>div{height:65px;display:flex;align-items:end;gap:8px;margin-top:10px;border-bottom:1px solid rgba(173,205,229,.16)}
+.dt-home-rebuild .dt-behind-mini-activity i{flex:1;min-width:3px;border-radius:2px 2px 0 0;background:linear-gradient(0deg,rgba(62,128,160,.55),#83d9df)}
+.dt-home-rebuild .dt-behind-card-line{margin-top:10px;padding:9px 11px}
+.dt-home-rebuild .dt-behind-card-line>svg{color:#83d9df}
+.dt-home-rebuild .dt-behind-card-line b{flex:1}
+.dt-home-rebuild .dt-behind-data-note{margin:7px 0 0;color:#657f94;font-size:6px;text-align:right}
+@media(max-width:1050px){
+ .dt-home-rebuild .dt-behind{grid-template-columns:1fr;gap:28px}
+ .dt-home-rebuild .dt-behind-copy{max-width:720px}
+ .dt-home-rebuild .dt-behind-visual{width:min(100%,760px);margin:0 auto}
+}
+@media(max-width:650px){
+ .dt-home-rebuild .dt-behind{padding:68px 19px 72px;gap:22px}
+ .dt-home-rebuild .dt-behind-copy h2{font-size:clamp(52px,13vw,70px)}
+ .dt-home-rebuild .dt-behind-quick-points{gap:10px 14px}
+ .dt-home-rebuild .dt-behind-panel{padding:13px}
+ .dt-home-rebuild .dt-behind-panel-heading{margin:16px 0 12px}
+ .dt-home-rebuild .dt-behind-metrics>div{padding:10px}
+ .dt-home-rebuild .dt-behind-mini-activity{padding:11px}
+ .dt-home-rebuild .dt-behind-mini-activity>div{height:55px;gap:5px}
+}
+/* Section 05 — confident editorial close */
+.dt-home-rebuild .dt-closing{
+  position:relative;overflow:hidden;
+  padding:clamp(28px,4vw,48px) clamp(24px,9vw,140px) 24px;
+  background:#83d9df;color:#071521;
+}
+.dt-home-rebuild .dt-closing:before{
+  content:"";position:absolute;right:-12%;top:10%;width:min(56vw,720px);aspect-ratio:1;
+  border:1px solid rgba(7,21,33,.14);border-radius:50%;
+  box-shadow:0 0 0 42px rgba(7,21,33,.025),0 0 0 84px rgba(7,21,33,.02),0 0 0 126px rgba(7,21,33,.015);
+  pointer-events:none;
+}
+.dt-home-rebuild .dt-closing-top,.dt-home-rebuild .dt-closing-bottom{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.dt-home-rebuild .dt-closing-top{padding-bottom:18px;border-bottom:1px solid rgba(7,21,33,.2);color:#234657;font-size:8px;font-weight:900;letter-spacing:.16em}
+.dt-home-rebuild .dt-closing-main{position:relative;z-index:1;display:grid;grid-template-columns:1.3fr .55fr;align-items:end;gap:44px;padding:clamp(65px,8vw,112px) 0 clamp(65px,8vw,105px)}
+.dt-home-rebuild .dt-closing-eyebrow{margin:0 0 22px;color:#28576b;font-size:8px;font-weight:900;letter-spacing:.19em}
+.dt-home-rebuild .dt-closing h2{margin:0;color:#071521;font-size:clamp(64px,9.3vw,126px);line-height:.82;letter-spacing:-.105em}
+.dt-home-rebuild .dt-closing h2 em{color:#28576b;font-style:normal}
+.dt-home-rebuild .dt-closing-action{max-width:330px;padding-bottom:5px}
+.dt-home-rebuild .dt-closing-action p{margin:0 0 22px;color:#234657;font-size:11px;line-height:1.9}
+.dt-home-rebuild .dt-closing .ed-button{border-color:#071521;background:#071521;color:#eaf7f7}
+.dt-home-rebuild .dt-closing-bottom{padding-top:14px;border-top:1px solid rgba(7,21,33,.2);color:#28576b;font-size:7px;font-weight:900;letter-spacing:.13em}
+@media(max-width:760px){
+ .dt-home-rebuild .dt-closing-main{grid-template-columns:1fr;gap:34px;padding:62px 0}
+ .dt-home-rebuild .dt-closing-action{max-width:420px}
+ .dt-home-rebuild .dt-closing h2{font-size:clamp(60px,12vw,96px)}
+}
+@media(max-width:520px){
+ .dt-home-rebuild .dt-closing{padding:25px 19px 20px}
+ .dt-home-rebuild .dt-closing-main{gap:28px;padding:56px 0}
+ .dt-home-rebuild .dt-closing h2{font-size:clamp(55px,13vw,76px)}
+ .dt-home-rebuild .dt-closing-bottom{align-items:flex-start;flex-direction:column;gap:8px}
+}
+/* Footer — structured, quieter and easier to scan */
+.dt-home-rebuild .dt-footer{
+  padding:0 clamp(24px,9vw,140px) 22px!important;
+  background:#081421!important;
+}
+.dt-home-rebuild .dt-footer-main{display:grid;grid-template-columns:1.15fr 1fr .65fr;gap:clamp(30px,6vw,90px);padding:68px 0 54px;border-bottom:1px solid rgba(173,205,229,.14)}
+.dt-home-rebuild .dt-footer-brand-col{max-width:310px}
+.dt-home-rebuild .dt-footer .nx-footer-brand{display:inline-flex;align-items:center;gap:9px;color:#edf4f7;font-size:22px;font-weight:850;letter-spacing:-.06em}
+.dt-home-rebuild .dt-footer .nx-footer-brand>span:last-child{margin-left:-9px;color:#83d9df}
+.dt-home-rebuild .dt-footer .nx-footer-brand .dt-v2-brand-mark{width:30px;height:30px}
+.dt-home-rebuild .dt-footer-brand-col>p{max-width:285px;margin:18px 0;color:#8fa4b6;font-size:10px;line-height:1.9}
+.dt-home-rebuild .dt-footer-contact-link{display:inline-flex;align-items:center;gap:8px;color:#83d9df;font-size:9px;font-weight:850}
+.dt-home-rebuild .dt-footer-links{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.dt-home-rebuild .dt-footer-links>div{display:grid;align-content:start;gap:14px}
+.dt-home-rebuild .dt-footer-links small{margin-bottom:4px;color:#6f879b;font-size:7px;font-weight:900;letter-spacing:.17em}
+.dt-home-rebuild .dt-footer-links a{color:#b4c3cf;font-size:9px;transition:color .2s ease}
+.dt-home-rebuild .dt-footer-links a:hover{color:#83d9df}
+.dt-home-rebuild .dt-footer-signoff{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.dt-home-rebuild .dt-footer-signoff>span{color:#dbe7ed;font-size:clamp(17px,2vw,25px);font-weight:850;line-height:.95;letter-spacing:-.06em}
+.dt-home-rebuild .dt-footer-signoff>a{display:grid;place-items:center;width:34px;height:34px;border:1px solid rgba(173,205,229,.22);border-radius:50%;color:#83d9df;font-size:17px;transition:background .2s ease,transform .2s ease}
+.dt-home-rebuild .dt-footer-signoff>a:hover{background:rgba(131,217,223,.1);transform:translateY(-2px)}
+.dt-home-rebuild .dt-footer-bottom{display:flex;justify-content:space-between;gap:16px;padding-top:17px;color:#71879a;font-size:7px;font-weight:750;letter-spacing:.08em}
+@media(max-width:760px){
+ .dt-home-rebuild .dt-footer-main{grid-template-columns:1fr 1fr;gap:38px 24px;padding:52px 0 38px}
+ .dt-home-rebuild .dt-footer-brand-col{grid-column:1/-1;max-width:440px}
+ .dt-home-rebuild .dt-footer-signoff{align-self:start}
+}
+@media(max-width:520px){
+ .dt-home-rebuild .dt-footer{padding:0 19px 18px!important}
+ .dt-home-rebuild .dt-footer-main{grid-template-columns:1fr;gap:32px;padding:44px 0 30px}
+ .dt-home-rebuild .dt-footer-brand-col{grid-column:auto}
+ .dt-home-rebuild .dt-footer-links{gap:20px}
+ .dt-home-rebuild .dt-footer-signoff{padding-top:4px}
+ .dt-home-rebuild .dt-footer-bottom{flex-direction:column;gap:8px;line-height:1.5}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-home-rebuild .dt-footer-signoff>a{transition:none}
+}
