@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowDownRight, ArrowRight, ArrowUpRight, BarChart3, Check, Link2, Nfc, QrCode, ShieldCheck, Smartphone, Star, Store, MousePointer2 } from "lucide-react";
+import { useState } from "react";
+import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 
@@ -35,31 +36,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="home-hero-visual" aria-label="Pratinjau pengalaman review DiTapAja">
-          <div className="home-visual-top"><span>THE REVIEW EXPERIENCE</span><span>01 — 03</span></div>
-          <div className="home-scene">
-            <div className="home-scene-store">
-              <div className="home-store-top"><BrandMark/><span>YOUR BUSINESS</span><span className="home-open-dot">OPEN</span></div>
-              <div className="home-store-window">
-                <div className="home-store-awning"><i/><i/><i/><i/><i/><i/></div>
-                <div className="home-store-sign">GOOD<br/><em>things</em><br/>HAPPEN HERE.</div>
-                <div className="home-store-counter"><span/><span/><span/></div>
-              </div>
-              <div className="home-store-base"><span>MAKE EVERY VISIT COUNT</span><ArrowUpRight size={15}/></div>
-            </div>
-            <div className="home-review-panel">
-              <div className="home-review-head"><span>REVIEW DESTINATION</span><span className="home-live"><i/> LIVE PREVIEW</span></div>
-              <div className="home-review-brand"><span className="home-google-mark">G</span><div><b>Your business</b><small>Review experience</small></div></div>
-              <div className="home-review-stars">★★★★★</div>
-              <strong>How was your experience?</strong>
-              <p>Your feedback helps this business grow.</p>
-              <div className="home-review-action">Write a review <ArrowUpRight size={14}/></div>
-              <div className="home-review-foot"><span>POWERED BY DITAPAJA</span><span>01 / 01</span></div>
-            </div>
-            <div className="home-scene-caption"><span>01</span><b>From a simple visit</b><small>to a meaningful review.</small></div>
-          </div>
-          <div className="home-visual-bottom"><span>ONE TAP. A BETTER WAY TO BE HEARD.</span><span>DITAPAJA®</span></div>
-        </div>
+        <HeroTapDemo/>
       </div>
       <div className="home-hero-marquee"><span>MAKE IT SIMPLE</span><i/> <span>MAKE IT COUNT</span><i/> <span>MAKE IT DITAPAJA</span><i/> <span>MAKE IT SIMPLE</span></div>
     </section>
