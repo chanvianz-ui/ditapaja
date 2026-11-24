@@ -350,3 +350,50 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
   .dt-card-create-page .dt-card-create-layout { grid-template-columns:1fr !important; }
   .dt-card-create-page .dt-card-create-intro { min-height:0 !important; }
 }
+
+
+/* Analytics and Page Studio retain their purpose-specific layouts, but share the same palette and geometry. */
+.dt-reset-dashboard {
+  --dash-bg:#0a111b; --dash-panel:#142333; --dash-panel-2:#192d3d;
+  --dash-line:rgba(174,197,216,.13); --dash-text:#edf2f4; --dash-muted:#9aaab6;
+  --dash-blue:#6d9da4; --dash-cyan:#a5d6ca;
+}
+.ditapaja-insights-page {
+  --ci-bg:#0a111b; --ci-surface:#142333; --ci-surface-raised:#1a2d40;
+  --ci-line:rgba(174,197,216,.13); --ci-text:#edf2f4; --ci-muted:#9aaab6;
+  --ci-soft:#c8d5d8; --ci-blue:#6d9da4; --ci-cyan:#a5d6ca;
+  background:transparent !important;
+}
+.ditapaja-insights-page :where(.ditapaja-insights-hero,.ditapaja-insights-panel,.ditapaja-insights-metric) {
+  border:1px solid var(--ci-line) !important; border-radius:15px !important;
+  background:linear-gradient(145deg,#172a3a,#101d2a) !important;
+  box-shadow:none !important;
+}
+.ditapaja-insights-page :where(h1,h2,h3,strong) { color:#edf2f4; }
+.ditapaja-insights-page :where(.ditapaja-insights-kicker,.ditapaja-insights-overline,.ditapaja-insights-rank) { color:#a5d6ca !important; }
+.ditapaja-studio-page {
+  --studio-bg:#0a111b; --studio-panel:#142333; --studio-raised:#1a2d40;
+  --studio-line:rgba(174,197,216,.13); --studio-text:#edf2f4; --studio-muted:#9aaab6;
+  --studio-accent:#a5d6ca;
+  background:radial-gradient(ellipse at 78% 0%,rgba(139,199,189,.09),transparent 34rem),#0a111b !important;
+}
+.ditapaja-studio-page :where(.studio-canvas-panel,.studio-editor,.studio-form,.studio-template-card,.studio-upload-card) {
+  border-color:var(--studio-line) !important; border-radius:14px !important;
+  background:linear-gradient(145deg,#172a3a,#101d2a) !important;
+  box-shadow:none !important;
+}
+.ditapaja-studio-page :where(input,select,textarea) {
+  border-color:var(--studio-line) !important; border-radius:9px !important;
+  background:#0c1823 !important; color:var(--studio-text) !important;
+}
+.ditapaja-studio-page :where(button,a) { border-radius:9px; }
+.ditapaja-studio-page .studio-primary-button,.ditapaja-studio-page .studio-save-top {
+  border-color:rgba(165,214,202,.28) !important; background:#a5d6ca !important; color:#10201f !important;
+}
+.dt-admin-shell :where(button,a,article) { border-radius:10px; }
+.dt-admin-shell article { border-radius:14px !important; }
+@media(max-width:760px) {
+  .ditapaja-insights-wrap { padding-inline:14px !important; }
+  .ditapaja-insights-grid { grid-template-columns:1fr !important; }
+  .ditapaja-studio-page .studio-workspace { grid-template-columns:1fr !important; }
+}
