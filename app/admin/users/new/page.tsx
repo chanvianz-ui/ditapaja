@@ -74,7 +74,7 @@ export default function AddNewUserPage() {
       `Password sementara: ${password}`,
       "",
       "Silakan login dan ganti password setelah masuk.",
-      "Login: https://ditapaja.ditapaja.workers.dev/login",
+      "Login: https://ditapaja.web.id/login",
     ].join("\n");
     try {
       await navigator.clipboard.writeText(credentials);

@@ -8,76 +8,78 @@ import { verifyAdmin } from "@/lib/admin-auth";
 export async function GET(request: NextRequest) {
   try {
     const auth = await verifyAdmin(request);
-
-    if (!auth.authorized) {
-      return auth.response;
-    }
+    if (!auth.authorized) return auth.response;
 
     const supabase = auth.supabase!;
     const { searchParams } = new URL(request.url);
-
     const requestedPage = Number(searchParams.get("page") || "1");
-
-    const page =
-      Number.isInteger(requestedPage) && requestedPage > 0
-        ? requestedPage
-        : 1;
-
+    const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
     const perPage = 20;
+    const keyword = (searchParams.get("search") || "").trim().toLowerCase().slice(0, 100);
 
-    const { data, error } = await supabase.auth.admin.listUsers({
-      page,
-      perPage,
-    });
+    if (!keyword) {
+      const { data, error } = await supabase.auth.admin.listUsers({ page, perPage });
+      if (error) throw error;
+      const userIds = data.users.map((user) => user.id);
+      const { data: usernameRows, error: usernameError } = userIds.length
+        ? await supabase.from("account_usernames").select("user_id, username").in("user_id", userIds)
+        : { data: [], error: null };
+      if (usernameError) throw usernameError;
+      const usernameById = new Map((usernameRows || []).map((row) => [row.user_id, row.username]));
+      const users = data.users.map((user) => {
+        const username = usernameById.get(user.id) || null;
+        return {
+          id: user.id,
+          email: username ? "" : user.email ?? "",
+          username,
+          accountType: username ? "username" : "email",
+          createdAt: user.created_at,
+          lastSignInAt: user.last_sign_in_at ?? null,
+          emailConfirmedAt: username ? null : user.email_confirmed_at ?? null,
+        };
+      });
+      return NextResponse.json({ success: true, users, pagination: { page, perPage, hasMore: users.length === perPage } });
+    }
 
-    if (error) throw error;
-
-    const userIds = data.users.map((user) => user.id);
-    const { data: usernameRows, error: usernameError } = userIds.length
-      ? await supabase
-          .from("account_usernames")
-          .select("user_id, username")
-          .in("user_id", userIds)
-      : { data: [], error: null };
-
-    if (usernameError) throw usernameError;
-
-    const usernameById = new Map(
-      (usernameRows || []).map((row) => [row.user_id, row.username])
-    );
-
-    const users = data.users.map((user) => {
-      const username = usernameById.get(user.id) || null;
-      return {
-        id: user.id,
-        email: username ? "" : user.email ?? "",
-        username,
-        accountType: username ? "username" : "email",
-        createdAt: user.created_at,
-        lastSignInAt: user.last_sign_in_at,
-        emailConfirmedAt: username ? null : user.email_confirmed_at,
-      };
-    });
-
+    // Search across the complete account directory, not only the currently loaded page.
+    const matches: Array<{ id: string; email: string; username: string | null; accountType: "email" | "username"; createdAt: string; lastSignInAt: string | null; emailConfirmedAt: string | null }> = [];
+    let authPage = 1;
+    const batchSize = 1000;
+    while (true) {
+      const { data, error } = await supabase.auth.admin.listUsers({ page: authPage, perPage: batchSize });
+      if (error) throw error;
+      const batch = data.users;
+      if (!batch.length) break;
+      const ids = batch.map((user) => user.id);
+      const { data: usernameRows, error: usernameError } = await supabase
+        .from("account_usernames").select("user_id, username").in("user_id", ids);
+      if (usernameError) throw usernameError;
+      const usernameById = new Map((usernameRows || []).map((row) => [row.user_id, row.username]));
+      for (const user of batch) {
+        const username = usernameById.get(user.id) || null;
+        const email = username ? "" : user.email ?? "";
+        const searchable = [user.id, email, username || ""].join(" ").toLowerCase();
+        if (!searchable.includes(keyword)) continue;
+        matches.push({
+          id: user.id, email, username,
+          accountType: username ? "username" : "email",
+          createdAt: user.created_at,
+          lastSignInAt: user.last_sign_in_at ?? null,
+          emailConfirmedAt: username ? null : user.email_confirmed_at ?? null,
+        });
+      }
+      if (batch.length < batchSize) break;
+      authPage += 1;
+    }
+    const start = (page - 1) * perPage;
     return NextResponse.json({
       success: true,
-      users,
-      pagination: {
-        page,
-        perPage,
-        hasMore: users.length === perPage,
-      },
+      users: matches.slice(start, start + perPage),
+      pagination: { page, perPage, hasMore: matches.length > start + perPage },
     });
   } catch (error) {
     console.error("Admin users GET error:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Failed to load users.",
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: "Failed to load users." }, { status: 500 });
   }
 }
 

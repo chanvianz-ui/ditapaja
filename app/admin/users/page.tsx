@@ -47,7 +47,8 @@ export default function AdminUsersPage() {
         router.replace("/login");
         return;
       }
-      const response = await fetch("/api/admin/users?page=" + pageNumber, {
+      const params = new URLSearchParams({ page: String(pageNumber), search: search.trim() });
+      const response = await fetch("/api/admin/users?" + params.toString(), {
         method: "GET",
         headers: { Authorization: "Bearer " + sessionData.session.access_token },
         cache: "no-store",
@@ -68,9 +69,12 @@ export default function AdminUsersPage() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [router]);
+  }, [router, search]);
 
-  useEffect(() => { void loadUsers(page); }, [page, loadUsers]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void loadUsers(page); }, search.trim() ? 300 : 0);
+    return () => window.clearTimeout(timer);
+  }, [page, loadUsers, search]);
 
   async function refreshUsers() {
     setRefreshing(true);
@@ -82,12 +86,7 @@ export default function AdminUsersPage() {
     router.replace("/login");
   }
 
-  const filteredUsers = users.filter((user) => {
-    const keyword = search.toLowerCase();
-    return user.email.toLowerCase().includes(keyword) ||
-      (user.username || "").toLowerCase().includes(keyword) ||
-      user.id.toLowerCase().includes(keyword);
-  });
+  const filteredUsers = users;
   const usernameAccounts = users.filter((user) => user.accountType === "username").length;
   const verifiedAccounts = users.filter((user) => user.accountType !== "username" && !!user.emailConfirmedAt).length;
 
@@ -148,7 +147,7 @@ export default function AdminUsersPage() {
           <section className="mt-7 overflow-hidden rounded-2xl border border-[#34383a] bg-white">
             <div className="flex flex-col justify-between gap-4 border-b border-[#34383a] px-5 py-5 sm:flex-row sm:items-center sm:px-6">
               <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#dedbd4]">Directory</p><h3 className="mt-2 text-lg font-semibold tracking-tight">Daftar akun</h3><p className="mt-1 text-xs text-[#a0a3a2]">Pilih akun untuk membuka informasi lengkap.</p></div>
-              <div className="relative w-full sm:max-w-[340px]"><Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#a0a3a2]"/><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Cari username, email, atau ID..." className="h-11 w-full rounded-xl border border-[#34383a] bg-[#15181b] pl-10 pr-4 text-xs text-[#efede7] outline-none transition placeholder:text-[#a0a3a2] focus:border-[#34383a] focus:bg-white focus:ring-4 focus:ring-[#76553e]"/></div>
+              <div className="relative w-full sm:max-w-[340px]"><Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#a0a3a2]"/><input value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} placeholder="Cari username, email, atau ID..." className="h-11 w-full rounded-xl border border-[#34383a] bg-[#15181b] pl-10 pr-4 text-xs text-[#efede7] outline-none transition placeholder:text-[#a0a3a2] focus:border-[#34383a] focus:bg-white focus:ring-4 focus:ring-[#76553e]"/></div>
             </div>
 
             <div className="hidden overflow-x-auto md:block">

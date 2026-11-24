@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard, ClipboardList, Users, KeyRound, LogOut, Menu, X, ShieldCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -15,8 +15,24 @@ const items = [
 
 export default function AdminMenu() {
   const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLElement>(null);
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    panelRef.current?.querySelector("button")?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   async function logout() {
     await supabase.auth.signOut();
@@ -39,7 +55,7 @@ export default function AdminMenu() {
       {open && (
         <div className={styles.overlay}>
           <button type="button" className="absolute inset-0 h-full w-full cursor-default border-0 bg-transparent" aria-label="Close admin menu" onClick={() => setOpen(false)} />
-          <section role="dialog" aria-modal="true" aria-label="Admin navigation" className={styles.panel}>
+          <section ref={panelRef} role="dialog" aria-modal="true" aria-label="Admin navigation" className={styles.panel}>
             <div className={styles.top}>
               <div className={styles.brand}>
                 <span className={styles.brandMark}><ShieldCheck size={19}/></span>
