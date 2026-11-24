@@ -220,9 +220,6 @@ export default function AccountSettingsPage() {
             Account Settings
           </h1>
 
-          <p className="mt-2 text-sm leading-6 text-slate-500">
-            Kelola informasi akun dan keamanan password DiTapAja kamu.
-          </p>
         </div>
 
         <div className="grid items-start gap-5 xl:grid-cols-[minmax(280px,0.85fr)_minmax(0,1.15fr)]">
@@ -235,9 +232,6 @@ export default function AccountSettingsPage() {
 
               <div>
                 <h2 className="font-bold">Account Information</h2>
-                <p className="text-xs text-slate-400">
-                  Informasi akun kamu
-                </p>
               </div>
             </div>
 
@@ -289,9 +283,6 @@ export default function AccountSettingsPage() {
 
               <div>
                 <h2 className="font-bold">Change Password</h2>
-                <p className="text-xs text-slate-400">
-                  Perbarui password akun kamu
-                </p>
               </div>
             </div>
 
