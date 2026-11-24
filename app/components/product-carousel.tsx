@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, type CSSProperties, type PointerEvent } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ChevronRight, Layers3, Nfc, Sparkles } from "lucide-react";
+import { ArrowUpRight, Check, ChevronRight, Layers3, Nfc } from "lucide-react";
 
 type Product = {
   name: string;
@@ -18,57 +18,36 @@ type Product = {
 function FeatureCard({ product }: { product: Product }) {
   const [nfcActive, setNfcActive] = useState(false);
 
-  const handlePointerMove = (event: PointerEvent<HTMLButtonElement>) => {
-    if (event.pointerType !== "mouse") return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width;
-    const y = (event.clientY - rect.top) / rect.height;
-    event.currentTarget.style.setProperty("--tilt-x", ((0.5 - y) * 13).toFixed(2) + "deg");
-    event.currentTarget.style.setProperty("--tilt-y", ((x - 0.5) * 16).toFixed(2) + "deg");
-    event.currentTarget.style.setProperty("--shine-x", (x * 100).toFixed(1) + "%");
-    event.currentTarget.style.setProperty("--shine-y", (y * 100).toFixed(1) + "%");
-  };
-
-  const resetPointer = (event: PointerEvent<HTMLButtonElement>) => {
-    event.currentTarget.style.setProperty("--tilt-x", "0deg");
-    event.currentTarget.style.setProperty("--tilt-y", "0deg");
-    event.currentTarget.style.setProperty("--shine-x", "50%");
-    event.currentTarget.style.setProperty("--shine-y", "50%");
-  };
-
   return (
-    <div className="dt-feature-card-wrap">
+    <div className={"dt-object-display dt-object-" + product.tone}>
       <button
         type="button"
-        className={"dt-feature-card dt-feature-" + product.tone + (nfcActive ? " is-nfc-active" : "")}
+        className={"dt-object-card" + (nfcActive ? " is-active" : "")}
         onClick={() => setNfcActive(value => !value)}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={resetPointer}
         aria-pressed={nfcActive}
         aria-label={(nfcActive ? "Matikan" : "Aktifkan") + " simulasi NFC kartu " + product.label}
-        style={{ "--tilt-x": "0deg", "--tilt-y": "0deg", "--shine-x": "50%", "--shine-y": "50%" } as CSSProperties}
       >
-        <span className="dt-card-edge" aria-hidden="true"/>
-        <span className="dt-feature-card-face dt-feature-card-front">
-          <span className="dt-card-material-line" aria-hidden="true"/>
-          <span className="dt-feature-card-top">
+        <span className="dt-object-card-inner">
+          <span className="dt-object-topline">
             <b>DITAPAJA<span>®</span></b>
-            <span className="dt-card-chip"><Nfc size={19}/><small>CONTACTLESS</small></span>
+            <span className="dt-object-edition">OBJECT / 0{product.tone === "noir" ? "1" : product.tone === "blanc" ? "2" : "3"}</span>
           </span>
-          <span className="dt-feature-card-center">
-            <span className="dt-card-signal" aria-hidden="true"><i/><i/><i/><b/></span>
-            <strong>{product.label.toUpperCase()}</strong>
+          <span className="dt-object-center">
+            <span className="dt-object-nfc"><Nfc size={27}/></span>
+            <strong>{product.label}</strong>
             <small>YOUR BUSINESS. ONE TAP AWAY.</small>
           </span>
-          <span className="dt-feature-card-bottom"><span>SMART NFC REVIEW CARD</span><span>01 / DTA</span></span>
-          <span className="dt-card-live-status"><i/>{nfcActive ? "FIELD ACTIVATED" : "NFC READY"}</span>
-          <i className="dt-feature-card-shine" aria-hidden="true"/>
-          <i className="dt-feature-card-grain" aria-hidden="true"/>
-          <i className="dt-card-scanline" aria-hidden="true"/>
-          <span className="dt-card-tap-hint">{nfcActive ? "TAP AGAIN TO RESET" : "TAP CARD TO TEST NFC"}</span>
-          <span className="dt-card-corner-mark" aria-hidden="true"><Sparkles size={14}/></span>
+          <span className="dt-object-bottom">
+            <span>SMART REVIEW SYSTEM</span>
+            <span className="dt-object-status"><i/>{nfcActive ? "CONNECTED" : "READY TO TAP"}</span>
+          </span>
+          <span className="dt-object-active-label">{nfcActive ? "NFC FIELD ACTIVE" : "TAP TO INTERACT"}</span>
         </span>
       </button>
+      <div className="dt-object-caption">
+        <span><i/> MATERIAL STUDY / {product.label.toUpperCase()}</span>
+        <span>01 — 03</span>
+      </div>
     </div>
   );
 }
@@ -79,15 +58,21 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
   if (!product) return null;
 
   return (
-    <div className="dt-collection-experience">
+    <div className="dt-collection-experience dt-collection-editorial">
       <div className="dt-collection-toolbar">
         <span><i/> THE COLLECTION</span>
+        <small>DESIGNED TO BE REMEMBERED</small>
       </div>
 
       <div className="dt-collection-stage" data-tone={product.tone} key={product.tone}>
         <div className="dt-stage-copy">
           <div className="dt-stage-title">
+            <span className="dt-editorial-kicker">THE NFC OBJECT / 2026</span>
             <h3>{product.label}<em>.</em></h3>
+          </div>
+          <div className="dt-editorial-description">
+            <span>AN OBJECT WITH A PURPOSE</span>
+            <p>{product.description}</p>
           </div>
           <div className="dt-stage-price">
             <span>PEMBAYARAN SEKALI</span>
@@ -113,19 +98,20 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
         </div>
       </div>
 
-      <div className="dt-edition-selector">
+      <div className="dt-edition-selector dt-editorial-selector">
         <div className="dt-selector-heading">
-          <span><Layers3 size={14}/> PILIH KARTU</span>
-          <small>Setiap edisi punya karakter visual berbeda</small>
+          <span><Layers3 size={14}/> SELECT YOUR OBJECT</span>
+          <small>THREE FINISHES. ONE SMART EXPERIENCE.</small>
         </div>
         <div className="dt-selector-options">
-          {products.map((p) => (
+          {products.map((p, index) => (
             <button type="button" key={p.tone}
-              className={"dt-selector-option " + (p.tone === product.tone ? "is-active" : "")}
+              className={"dt-selector-option dt-editorial-option " + (p.tone === product.tone ? "is-active" : "")}
               onClick={() => setSelected(p.tone)} aria-pressed={p.tone === product.tone}>
-              <span className={"dt-selector-swatch swatch-" + p.tone}><i/></span>
-              <span className="dt-selector-name"><small>{p.mode === "preorder" ? "DIBUAT KHUSUS" : "READY TO ORDER"}</small><b>{p.label}</b><em>{p.mode === "preorder" ? "PRE-ORDER" : "AVAILABLE"}</em></span>
-              <strong>{p.price}</strong><ChevronRight size={18}/>
+              <span className={"dt-editorial-swatch swatch-" + p.tone}><i/></span>
+              <span className="dt-selector-name"><small>0{index + 1} / {p.mode === "preorder" ? "MADE TO ORDER" : "IN STOCK"}</small><b>{p.label}</b><em>{p.mode === "preorder" ? "PRE-ORDER" : "AVAILABLE NOW"}</em></span>
+              <strong>{p.price}</strong>
+              <span className="dt-option-check">{p.tone === product.tone ? <Check size={15}/> : <ChevronRight size={17}/>}</span>
             </button>
           ))}
         </div>
