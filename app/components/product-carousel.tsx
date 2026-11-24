@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  ArrowDownRight, ArrowUpRight, Check, ChevronRight, FlipHorizontal2,
-  Layers3, Nfc, QrCode, ShieldCheck, Sparkles, Zap
+  ArrowDownRight, ArrowUpRight, Check, ChevronRight, Layers3,
+  Nfc, QrCode, ShieldCheck, Sparkles
 } from "lucide-react";
 
 type Product = {
@@ -16,7 +16,19 @@ function FeatureCard({ product, index, total, flipped, onFlip }: {
   product: Product; index: number; total: number; flipped: boolean; onFlip: () => void;
 }) {
   return (
-    <div className={"dt-feature-card-wrap " + (flipped ? "is-flipped" : "")}>
+    <div className={"dt-feature-card-wrap " + (flipped ? "is-flipped" : "")}
+      onPointerMove={(event) => {
+        if (event.pointerType === "touch") return;
+        const rect = event.currentTarget.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        event.currentTarget.style.setProperty("--tilt-x", (x * 17).toFixed(2) + "deg");
+        event.currentTarget.style.setProperty("--tilt-y", (y * -13).toFixed(2) + "deg");
+      }}
+      onPointerLeave={(event) => {
+        event.currentTarget.style.setProperty("--tilt-x", "0deg");
+        event.currentTarget.style.setProperty("--tilt-y", "0deg");
+      }}>
       <button type="button" className="dt-feature-card" onClick={onFlip}
         aria-label={flipped ? "Lihat sisi depan kartu" : "Lihat sisi belakang kartu"} aria-pressed={flipped}>
         <span className={"dt-feature-card-face dt-feature-card-front dt-feature-" + product.tone}>
@@ -60,18 +72,15 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
             <h3>{product.label}<em>.</em></h3>
           </div>
           <p className="dt-stage-description">{product.description}</p>
-
           <div className="dt-stage-specs">
             <span><Nfc size={15}/> NFC TECHNOLOGY</span>
             <span><QrCode size={15}/> QR BACKUP</span>
             <span><Check size={15}/> FREE DASHBOARD</span>
           </div>
-
           <div className="dt-stage-price">
             <span>ONE-TIME PURCHASE <i/> NO MONTHLY FEE</span>
             <strong>{product.price}</strong><small>/ kartu</small>
           </div>
-
           <div className="dt-stage-actions">
             <Link href={"/pesan?product=" + product.tone} className="dt-stage-primary">
               {product.mode === "preorder" ? "Request pre-order" : "Pilih edisi ini"}<ArrowUpRight size={18}/>
@@ -92,15 +101,14 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           <div className="dt-art-grid"/>
           <div className="dt-art-glow"/>
           <div className="dt-art-orbit dt-art-orbit-a"/><div className="dt-art-orbit dt-art-orbit-b"/><div className="dt-art-orbit dt-art-orbit-c"/>
-          <span className="dt-art-index">0{index + 1}<i/>0{products.length}</span>
-          <span className="dt-art-edition">{product.mode === "preorder" ? "MADE TO ORDER" : "THE CORE EDITION"}</span>
-          <div className="dt-art-chip dt-art-chip-top"><Zap size={13}/> TAP. REVIEW. DONE.</div>
-          <div className="dt-art-chip dt-art-chip-bottom"><span className="dt-chip-dot"/> NFC READY <b>●</b></div>
+          <div className="dt-art-crosshair dt-art-crosshair-a"/><div className="dt-art-crosshair dt-art-crosshair-b"/>
           <FeatureCard product={product} index={index} total={products.length} flipped={flipped} onFlip={() => setFlipped(!flipped)}/>
-          <button type="button" className="dt-flip-hint" onClick={() => setFlipped(!flipped)} aria-pressed={flipped}>
-            <FlipHorizontal2 size={15}/> {flipped ? "Lihat sisi depan" : "Putar untuk melihat belakang"}
-          </button>
-          <span className="dt-art-caption">A SMALL OBJECT. A BETTER EXPERIENCE.</span>
+          <div className="dt-art-control-dock">
+            <span><i/> {flipped ? "REVERSE SIDE" : "FRONT SIDE"}</span>
+            <button type="button" onClick={() => setFlipped(!flipped)} aria-pressed={flipped}>
+              {flipped ? "Kembali ke depan" : "Lihat sisi belakang"}<span>↗</span>
+            </button>
+          </div>
         </div>
       </div>
 
