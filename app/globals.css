@@ -2742,3 +2742,26 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .ed-collection .dt-selector-swatch{border-radius:11px;flex-basis:48px}
  .dt-home-rebuild .ed-collection .dt-collection-signoff{justify-content:flex-start}
 }
+
+
+/* Collection preview: minimal content and tighter rhythm */
+.dt-home-rebuild .ed-collection .dt-collection-toolbar{justify-content:flex-start;min-height:34px}
+.dt-home-rebuild .ed-collection .dt-collection-toolbar>span:nth-child(2){display:none!important}
+.dt-home-rebuild .ed-collection .dt-collection-stage{margin-bottom:0}
+.dt-home-rebuild .ed-collection .dt-edition-selector{margin-top:8px!important;padding-top:22px;padding-bottom:18px}
+.dt-home-rebuild .ed-collection .dt-stage-overline{margin-bottom:10px}
+.dt-home-rebuild .ed-collection .dt-stage-description{margin-bottom:0}
+.dt-home-rebuild .ed-collection .dt-stage-price{margin-top:28px;padding-top:20px}
+.dt-home-rebuild .ed-collection .dt-stage-actions{margin-top:20px}
+.dt-home-rebuild .ed-collection .dt-stage-collection-details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:0;padding:0;max-height:0;overflow:hidden;opacity:0;transform:translateY(-7px);transition:max-height .35s ease,opacity .25s ease,transform .3s ease,padding .3s ease}
+.dt-home-rebuild .ed-collection .dt-stage-collection-details.is-open{max-height:120px;margin-top:17px;padding:13px 0 2px;opacity:1;transform:translateY(0)}
+.dt-home-rebuild .ed-collection .dt-stage-collection-details span{display:flex;align-items:center;gap:7px;min-width:0;color:#b8cec1;font-size:9px;line-height:1.5}
+.dt-home-rebuild .ed-collection .dt-stage-collection-details svg{flex:0 0 auto;color:#c3dfca}
+.dt-home-rebuild .ed-collection .dt-stage-copy{gap:0}
+@media(max-width:700px){
+ .dt-home-rebuild .ed-collection .dt-edition-selector{margin-top:7px!important;padding-top:17px}
+ .dt-home-rebuild .ed-collection .dt-stage-price{margin-top:22px;padding-top:17px}
+ .dt-home-rebuild .ed-collection .dt-stage-actions{margin-top:16px}
+ .dt-home-rebuild .ed-collection .dt-stage-collection-details{grid-template-columns:1fr;gap:8px}
+ .dt-home-rebuild .ed-collection .dt-stage-collection-details.is-open{max-height:150px}
+}
