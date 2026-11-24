@@ -1022,152 +1022,174 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
 }
 
 
-/* Login — dedicated sign-in workspace, separate from the public marketing shell. */
-.dt-login-page {
-  min-height:calc(100svh - 76px) !important;
-  display:block !important;
-  padding:clamp(28px,5vw,66px) clamp(18px,5vw,72px) !important;
+/* Login — DiTapAja Access Room. Fully isolated from the public homepage. */
+.dt-access-page {
+  --access-ink: #111a18;
+  --access-muted: #68736d;
+  --access-paper: #e9e9df;
+  --access-paper-deep: #dedfd3;
+  --access-line: rgba(17,26,24,.15);
+  --access-accent: #a9c7b6;
+  min-height: 100svh;
+  padding: 0 clamp(18px,5.2vw,84px);
+  overflow: hidden;
+  color: var(--access-ink);
   background:
-    radial-gradient(ellipse at 18% 45%,rgba(78,132,126,.13),transparent 34rem),
-    radial-gradient(ellipse at 88% 8%,rgba(75,119,157,.1),transparent 30rem),
-    #09131e !important;
+    radial-gradient(ellipse at 78% 44%,rgba(169,199,182,.20),transparent 32rem),
+    linear-gradient(135deg,#f0f0e8 0%,#e6e8de 100%);
+  font-family: "DM Sans",sans-serif;
 }
-.dt-login-layout {
-  width:min(1280px,100%); min-height:min(740px,calc(100svh - 170px));
-  margin:0 auto; display:grid; grid-template-columns:minmax(0,1.08fr) minmax(380px,.78fr);
-  align-items:stretch; gap:clamp(26px,5vw,76px);
+.dt-access-shell { width:min(1440px,100%); min-height:100svh; margin:0 auto; display:flex; flex-direction:column; }
+.dt-access-topbar {
+  min-height:82px; display:grid; grid-template-columns:1fr 1fr 1fr; align-items:center;
+  border-bottom:1px solid var(--access-line);
 }
-.dt-login-story {
-  position:relative; isolation:isolate; display:flex; flex-direction:column;
-  min-height:640px; overflow:hidden; padding:clamp(25px,4vw,48px);
-  border:1px solid rgba(165,214,202,.14); border-radius:20px;
+.dt-access-brand { display:inline-flex; align-items:center; gap:11px; width:max-content; color:var(--access-ink); text-decoration:none; font:800 18px Manrope,sans-serif; letter-spacing:-.065em; }
+.dt-access-brand-period { color:#688c78; }
+.dt-access-brand-mark { display:flex; align-items:center; justify-content:center; gap:2px; width:29px; height:29px; border:1px solid rgba(17,26,24,.25); border-radius:50%; }
+.dt-access-brand-mark i { display:block; width:2px; border-radius:3px; background:#50745f; transform:skew(-18deg); }
+.dt-access-brand-mark i:nth-child(1) { height:8px; opacity:.55; }
+.dt-access-brand-mark i:nth-child(2) { height:15px; }
+.dt-access-brand-mark i:nth-child(3) { height:10px; opacity:.7; }
+.dt-access-topbar-meta { display:flex; justify-content:center; align-items:center; gap:12px; color:#778078; font-size:8px; font-weight:800; letter-spacing:.17em; }
+.dt-access-topbar-line { width:32px; height:1px; background:rgba(17,26,24,.25); }
+.dt-access-exit { justify-self:end; color:#56635b; text-decoration:none; font-size:10px; font-weight:650; }
+.dt-access-exit span { margin-left:7px; color:#527a64; }
+.dt-access-main {
+  flex:1; display:grid; grid-template-columns:minmax(0,1.12fr) minmax(360px,.72fr);
+  align-items:center; gap:clamp(54px,10vw,160px); padding:clamp(54px,8vh,104px) clamp(4px,4vw,58px);
+}
+.dt-access-intro { min-width:0; }
+.dt-access-overline { display:flex; align-items:center; gap:18px; color:#647269; font-size:8px; font-weight:850; letter-spacing:.19em; }
+.dt-access-overline-index { color:#92988d; font-weight:650; }
+.dt-access-intro h1 {
+  margin:30px 0 22px; color:var(--access-ink); font:650 clamp(58px,7.7vw,108px)/.91 Manrope,sans-serif;
+  letter-spacing:-.095em;
+}
+.dt-access-intro h1 em { color:#6b8a75; font-style:normal; }
+.dt-access-description { max-width:400px; margin:0; color:#657169; font-size:13px; line-height:1.9; }
+.dt-access-art {
+  position:relative; width:min(100%,540px); height:clamp(190px,24vw,300px); margin-top:clamp(36px,6vh,70px);
+  overflow:hidden; border:1px solid rgba(17,26,24,.14);
   background:
-    radial-gradient(ellipse at 80% 58%,rgba(165,214,202,.13),transparent 22rem),
-    linear-gradient(145deg,#172e3c 0%,#102331 54%,#0c1a27 100%);
+    linear-gradient(rgba(44,70,54,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(44,70,54,.055) 1px,transparent 1px),
+    rgba(255,255,255,.16);
+  background-size:28px 28px;
 }
-.dt-login-story:before {
-  position:absolute; z-index:-1; inset:0; content:""; opacity:.25;
-  background-image:linear-gradient(rgba(205,229,225,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(205,229,225,.08) 1px,transparent 1px);
-  background-size:54px 54px;
-  mask-image:linear-gradient(135deg,transparent 5%,#000 70%,transparent);
+.dt-access-art:before,.dt-access-art:after { position:absolute; content:""; background:rgba(17,26,24,.18); }
+.dt-access-art:before { left:50%; top:0; bottom:0; width:1px; }
+.dt-access-art:after { top:50%; left:0; right:0; height:1px; }
+.dt-access-art-label { position:absolute; z-index:2; color:#78847a; font-size:7px; font-weight:850; letter-spacing:.18em; }
+.dt-access-art-label-top { top:15px; left:17px; }
+.dt-access-art-label-bottom { right:16px; bottom:14px; left:16px; display:flex; justify-content:space-between; }
+.dt-access-art-coordinate { position:absolute; top:15px; right:17px; color:#899187; font:8px "DM Sans",sans-serif; letter-spacing:.12em; }
+.dt-access-signal { position:absolute; left:50%; top:50%; width:clamp(150px,19vw,228px); aspect-ratio:1; transform:translate(-50%,-50%); }
+.dt-access-signal-ring { position:absolute; inset:0; border:1px solid rgba(71,108,82,.32); border-radius:50%; }
+.dt-access-signal-ring.ring-b { inset:17%; border-style:dashed; border-color:rgba(71,108,82,.48); }
+.dt-access-signal-ring.ring-c { inset:34%; border-color:rgba(71,108,82,.7); }
+.dt-access-signal-core {
+  position:absolute; inset:42%; display:flex; align-items:center; justify-content:center; gap:3px;
+  border-radius:50%; background:#557763; box-shadow:0 0 0 9px rgba(85,119,99,.10),0 0 0 22px rgba(85,119,99,.055);
 }
-.dt-login-story-top,.dt-login-story-foot {
-  display:flex; align-items:center; gap:12px; color:#8da5b2;
-  font-size:9px; font-weight:750; letter-spacing:.14em;
+.dt-access-signal-core i { width:2px; border-radius:3px; background:#e9eee6; transform:skew(-18deg); }
+.dt-access-signal-core i:nth-child(1) { height:7px; opacity:.65; }
+.dt-access-signal-core i:nth-child(2) { height:13px; }
+.dt-access-signal-core i:nth-child(3) { height:9px; opacity:.8; }
+.dt-access-signal-cross { position:absolute; width:7px; height:7px; border:1px solid #67836f; border-radius:50%; background:var(--access-paper); }
+.dt-access-signal-cross.cross-x { top:13%; right:22%; }
+.dt-access-signal-cross.cross-y { bottom:20%; left:13%; }
+.dt-access-intro-foot { display:flex; gap:19px; margin-top:21px; color:#8b9388; font-size:7px; font-weight:850; letter-spacing:.17em; }
+.dt-access-intro-foot span+span:before { content:"/"; margin-right:19px; color:#aab0a4; }
+.dt-access-form-wrap {
+  width:100%; max-width:440px; justify-self:end; padding:clamp(30px,4vw,48px);
+  border:1px solid rgba(17,26,24,.13); background:rgba(248,248,241,.66);
+  box-shadow:0 28px 80px rgba(37,48,39,.08);
 }
-.dt-login-story-top { justify-content:space-between; }
-.dt-login-story-status { display:flex; align-items:center; gap:7px; color:#a5d6ca; font-size:8px; }
-.dt-login-story-status i,.dt-login-float-dot {
-  width:6px; height:6px; border-radius:50%; background:#a5d6ca;
-  box-shadow:0 0 0 4px rgba(165,214,202,.1);
+.dt-access-form-heading { padding-bottom:26px; border-bottom:1px solid var(--access-line); }
+.dt-access-form-index { color:#718477; font-size:8px; font-weight:850; letter-spacing:.19em; }
+.dt-access-form-heading h2 { margin:18px 0 8px; color:var(--access-ink); font:650 clamp(29px,3vw,39px)/1.05 Manrope,sans-serif; letter-spacing:-.075em; }
+.dt-access-form-heading p { margin:0; color:#778078; font-size:11px; line-height:1.7; }
+.dt-access-form { display:grid; gap:23px; margin-top:29px; }
+.dt-access-field { display:grid; gap:10px; min-width:0; }
+.dt-access-field label,.dt-access-label-row label { color:#4f5e54; font-size:8px; font-weight:850; letter-spacing:.14em; }
+.dt-access-label-row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.dt-access-label-row>span { color:#9aa095; font-size:7px; font-weight:700; letter-spacing:.12em; }
+.dt-access-field input {
+  width:100%; min-width:0; height:52px; padding:0 15px; outline:none;
+  border:1px solid rgba(17,26,24,.18); border-radius:0;
+  background:rgba(255,255,255,.58); color:#17221b; font:500 12px "DM Sans",sans-serif;
+  transition:border-color .18s ease,background .18s ease,box-shadow .18s ease;
 }
-.dt-login-story-copy { position:relative; z-index:2; margin-top:clamp(44px,7vh,78px); }
-.dt-login-story-copy .dt-auth-kicker { color:#a5d6ca; }
-.dt-login-story-copy h2 {
-  margin:18px 0 18px; color:#f1f5f4; font-size:clamp(48px,6.4vw,78px);
-  font-weight:650; line-height:.98; letter-spacing:-.075em;
+.dt-access-field input::placeholder { color:#a0a69d; }
+.dt-access-field input:focus { border-color:#64836d; background:#fff; box-shadow:0 0 0 3px rgba(100,131,109,.11); }
+.dt-access-password { position:relative; }
+.dt-access-password input { padding-right:68px; }
+.dt-access-password button {
+  position:absolute; top:50%; right:13px; transform:translateY(-50%);
+  border:0; background:none; color:#66806d; font-size:8px; font-weight:850; letter-spacing:.12em; cursor:pointer;
 }
-.dt-login-story-copy h2 em { color:#a5d6ca; font-style:normal; }
-.dt-login-story-copy p { max-width:440px; margin:0; color:#a1b4bd; font-size:13px; line-height:1.85; }
-.dt-login-story-visual { position:relative; flex:1; min-height:240px; display:grid; place-items:center; margin:8px 0 12px; }
-.dt-login-orbit { position:absolute; width:min(62%,340px); aspect-ratio:1; border:1px solid rgba(165,214,202,.13); border-radius:50%; }
-.dt-login-orbit-one { transform:rotateX(64deg) rotate(-22deg); }
-.dt-login-orbit-two { width:min(78%,420px); transform:rotateX(64deg) rotate(36deg); opacity:.65; }
-.dt-login-card-visual {
-  position:relative; z-index:1; width:min(66%,340px); aspect-ratio:1.58;
-  display:flex; flex-direction:column; justify-content:space-between; padding:19px 21px;
-  border:1px solid rgba(226,243,237,.3); border-radius:13px;
-  background:linear-gradient(135deg,#253e46 0%,#12252f 55%,#0d1b25 100%);
-  box-shadow:0 35px 70px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.09);
-  transform:rotate(-9deg);
+.dt-access-remember { display:flex; align-items:center; gap:10px; width:max-content; color:#737e74; font-size:10px; cursor:pointer; }
+.dt-access-remember input { position:absolute; width:1px; height:1px; opacity:0; }
+.dt-access-checkbox { display:grid; place-items:center; width:15px; height:15px; border:1px solid rgba(17,26,24,.3); background:rgba(255,255,255,.55); }
+.dt-access-remember input:checked+.dt-access-checkbox { border-color:#557763; background:#557763; }
+.dt-access-remember input:checked+.dt-access-checkbox:after { width:6px; height:3px; border-bottom:1.5px solid white; border-left:1.5px solid white; content:""; transform:rotate(-45deg) translate(1px,-1px); }
+.dt-access-remember input:focus-visible+.dt-access-checkbox { outline:3px solid rgba(85,119,99,.2); outline-offset:2px; }
+.dt-access-error { margin:0; padding:12px 13px; border-left:2px solid #b75f50; background:rgba(183,95,80,.08); color:#8d4338; font-size:10px; line-height:1.6; }
+.dt-access-submit {
+  display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%; min-height:55px; padding:0 17px;
+  border:1px solid #273e30; border-radius:0; background:#263f30; color:#f0f2e9;
+  font:750 11px "DM Sans",sans-serif; text-align:left; cursor:pointer;
+  transition:background .2s ease,transform .2s ease;
 }
-.dt-login-card-top,.dt-login-card-bottom { display:flex; align-items:center; justify-content:space-between; color:#b4c9c8; font-size:8px; font-weight:800; letter-spacing:.12em; }
-.dt-login-card-top span:last-child { color:#789a99; font-size:7px; }
-.dt-login-card-center { display:flex; align-items:center; justify-content:center; gap:5px; }
-.dt-login-card-center i { display:block; width:5px; border-radius:8px; background:#a5d6ca; transform:skew(-15deg); }
-.dt-login-card-center i:nth-child(1) { height:22px; opacity:.55; }
-.dt-login-card-center i:nth-child(2) { height:38px; }
-.dt-login-card-center i:nth-child(3) { height:28px; opacity:.75; }
-.dt-login-card-bottom { color:#8ba7a5; font-size:7px; }
-.dt-login-card-bottom span { letter-spacing:.2em; }
-.dt-login-float-note {
-  position:absolute; z-index:2; right:3%; bottom:10%; display:flex; align-items:center; gap:11px;
-  padding:12px 14px; border:1px solid rgba(165,214,202,.2); border-radius:10px;
-  background:rgba(8,20,29,.88); box-shadow:0 15px 35px rgba(0,0,0,.25); backdrop-filter:blur(14px);
-}
-.dt-login-float-note>span:nth-child(2) { display:grid; gap:3px; }
-.dt-login-float-note small { color:#78959a; font-size:7px; font-weight:800; letter-spacing:.13em; }
-.dt-login-float-note strong { color:#e4efed; font-size:10px; }
-.dt-login-float-note>b { margin-left:8px; color:#a5d6ca; font-size:15px; }
-.dt-login-story-foot { gap:10px; margin-top:auto; padding-top:18px; border-top:1px solid rgba(211,231,229,.12); font-size:7px; }
-.dt-login-story-foot i { width:3px; height:3px; border-radius:50%; background:#6c8a8b; }
-.dt-login-page .dt-auth-form-card {
-  align-self:center; width:100%; max-width:480px; justify-self:center;
-  padding:clamp(26px,4vw,44px); border:1px solid rgba(160,190,201,.15);
-  border-radius:17px; background:linear-gradient(155deg,#172a39 0%,#101e2b 100%);
-  box-shadow:0 30px 90px rgba(0,0,0,.28);
-}
-.dt-login-page .dt-auth-kicker { color:#a5d6ca; }
-.dt-login-page .dt-auth-heading h1 { margin-top:14px; font-size:clamp(36px,4vw,48px); font-weight:650; letter-spacing:-.07em; }
-.dt-login-page .dt-auth-heading p { max-width:330px; color:#9aadb8; font-size:12px; line-height:1.8; }
-.dt-login-page .dt-auth-form { gap:19px; margin-top:32px; }
-.dt-login-page .dt-auth-field { gap:9px; }
-.dt-login-page .dt-auth-field label { color:#dce6e9; font-size:11px; }
-.dt-login-page .dt-auth-field-hint { color:#7f939f; font-size:10px; }
-.dt-login-page .dt-auth-form input:not([type=checkbox]) {
-  min-height:49px; padding:0 14px; border:1px solid rgba(160,190,201,.18);
-  border-radius:8px; background:#0b1823; color:#edf2f4; font-size:12px;
-}
-.dt-login-page .dt-auth-form input:not([type=checkbox]):focus {
-  border-color:rgba(165,214,202,.7); box-shadow:0 0 0 3px rgba(165,214,202,.08);
-}
-.dt-login-page .dt-auth-form input::placeholder { color:#637985; }
-.dt-login-page .dt-auth-password { gap:7px; }
-.dt-login-page .dt-auth-password button {
-  min-width:94px; border:1px solid rgba(160,190,201,.18); border-radius:8px;
-  background:#1b3040; color:#b8cdc9; font-size:8px; letter-spacing:.04em;
-}
-.dt-login-page .dt-login-remember { color:#91a5b0; font-size:10px; }
-.dt-login-page .dt-login-remember input { accent-color:#a5d6ca; }
-.dt-login-page .dt-auth-submit {
-  display:flex; align-items:center; justify-content:space-between; min-height:50px;
-  padding:0 16px; border:1px solid rgba(165,214,202,.28); border-radius:8px;
-  background:#a5d6ca; color:#10201f; font-size:12px; font-weight:800;
-  transition:background .18s ease,transform .18s ease;
-}
-.dt-login-page .dt-auth-submit:hover:not(:disabled) { transform:translateY(-1px); background:#b8e2d8; }
-.dt-login-page .dt-auth-submit>span { font-size:17px; }
-.dt-login-page .dt-auth-switch { margin-top:24px; color:#91a5b0; font-size:11px; }
-.dt-login-page .dt-auth-switch a { color:#a5d6ca; }
-.dt-login-page .dt-auth-back { display:inline-flex; margin-top:20px; color:#8299a5; font-size:10px; }
-.dt-login-page .dt-auth-back:hover { color:#c0d8d2; }
+.dt-access-submit:hover:not(:disabled) { transform:translateY(-2px); background:#365541; }
+.dt-access-submit:focus-visible { outline:3px solid rgba(85,119,99,.28); outline-offset:3px; }
+.dt-access-submit:disabled { opacity:.65; cursor:wait; }
+.dt-access-submit-arrow { display:grid; place-items:center; width:27px; height:27px; border:1px solid rgba(240,242,233,.3); border-radius:50%; font-size:16px; }
+.dt-access-register { margin-top:24px; color:#7a847a; font-size:10px; }
+.dt-access-register a { margin-left:4px; color:#496d55; font-weight:800; text-decoration:none; }
+.dt-access-register a:hover { text-decoration:underline; text-underline-offset:3px; }
+.dt-access-register a span { margin-left:3px; }
+.dt-access-security { display:flex; align-items:center; gap:9px; margin-top:34px; padding-top:17px; border-top:1px solid var(--access-line); color:#92998f; font-size:7px; font-weight:800; letter-spacing:.14em; }
+.dt-access-security-icon { display:grid; place-items:center; width:22px; height:22px; border:1px solid rgba(17,26,24,.16); border-radius:50%; color:#64806d; font-size:15px; }
+.dt-access-security i { display:inline-block; width:3px; height:3px; margin:0 6px 2px; border-radius:50%; background:#8b9b8c; }
+.dt-access-footer { min-height:55px; display:flex; justify-content:space-between; align-items:center; gap:16px; border-top:1px solid var(--access-line); color:#8a9287; font-size:7px; font-weight:800; letter-spacing:.15em; }
 @media(max-width:900px) {
-  .dt-login-page { padding:24px 18px 40px !important; }
-  .dt-login-layout { grid-template-columns:minmax(0,1fr) minmax(340px,.9fr); gap:22px; }
-  .dt-login-story { min-height:600px; padding:25px; }
-  .dt-login-story-copy h2 { font-size:clamp(42px,6vw,60px); }
-  .dt-login-story-visual { min-height:210px; }
-  .dt-login-card-visual { width:76%; }
+  .dt-access-page { padding-inline:28px; }
+  .dt-access-main { grid-template-columns:minmax(0,1fr) minmax(320px,.88fr); gap:34px; padding-inline:0; }
+  .dt-access-intro h1 { font-size:clamp(54px,8vw,76px); }
+  .dt-access-form-wrap { padding:28px; }
 }
 @media(max-width:700px) {
-  .dt-login-page { padding:18px 14px 34px !important; }
-  .dt-login-layout { display:flex; flex-direction:column; gap:14px; }
-  .dt-login-story { min-height:0; padding:22px; border-radius:14px; }
-  .dt-login-story-copy { margin-top:34px; }
-  .dt-login-story-copy h2 { margin:13px 0 10px; font-size:clamp(39px,11vw,54px); }
-  .dt-login-story-copy p { max-width:430px; font-size:11px; }
-  .dt-login-story-visual { min-height:185px; margin:0; }
-  .dt-login-card-visual { width:min(64%,280px); }
-  .dt-login-float-note { right:0; bottom:4%; transform:scale(.9); transform-origin:right bottom; }
-  .dt-login-story-foot { padding-top:14px; font-size:6px; }
-  .dt-login-page .dt-auth-form-card { max-width:none; padding:25px 21px; border-radius:14px; }
-  .dt-login-page .dt-auth-form { margin-top:25px; }
+  .dt-access-page { padding:0 19px; }
+  .dt-access-topbar { min-height:66px; grid-template-columns:1fr auto; }
+  .dt-access-topbar-meta { display:none; }
+  .dt-access-brand { font-size:17px; }
+  .dt-access-exit { font-size:9px; }
+  .dt-access-main { display:flex; flex-direction:column; align-items:stretch; gap:28px; padding:36px 0 34px; }
+  .dt-access-overline { font-size:7px; letter-spacing:.15em; }
+  .dt-access-intro h1 { margin:21px 0 13px; font-size:clamp(49px,13vw,68px); line-height:.94; }
+  .dt-access-description { max-width:340px; font-size:11px; line-height:1.8; }
+  .dt-access-art { display:none; }
+  .dt-access-intro-foot { gap:10px; margin-top:20px; font-size:6px; letter-spacing:.12em; }
+  .dt-access-intro-foot span+span:before { margin-right:10px; }
+  .dt-access-form-wrap { max-width:none; justify-self:stretch; padding:25px 21px 23px; }
+  .dt-access-form-heading { padding-bottom:21px; }
+  .dt-access-form-heading h2 { margin-top:14px; font-size:31px; }
+  .dt-access-form { gap:20px; margin-top:23px; }
+  .dt-access-field input { height:53px; font-size:13px; }
+  .dt-access-submit { min-height:56px; }
+  .dt-access-security { margin-top:27px; }
+  .dt-access-footer { min-height:48px; font-size:6px; letter-spacing:.1em; }
+  .dt-access-footer span:nth-child(2) { display:none; }
 }
-@media(max-width:390px) {
-  .dt-login-story-status { font-size:7px; }
-  .dt-login-story-foot { gap:6px; letter-spacing:.08em; }
-  .dt-login-float-note { right:-6px; }
+@media(max-width:360px) {
+  .dt-access-page { padding-inline:15px; }
+  .dt-access-intro h1 { font-size:47px; }
+  .dt-access-form-wrap { padding-inline:17px; }
+  .dt-access-intro-foot { gap:7px; font-size:5px; }
+  .dt-access-intro-foot span+span:before { margin-right:7px; }
 }
 @media(prefers-reduced-motion:reduce) {
-  .dt-login-page * { transition:none !important; }
+  .dt-access-page * { scroll-behavior:auto !important; transition:none !important; animation:none !important; }
 }
