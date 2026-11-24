@@ -129,9 +129,9 @@ export default function AdminUsersPage() {
           <div className="mb-8 flex flex-col justify-between gap-5 xl:flex-row xl:items-end">
             <div>
               <button onClick={() => router.push("/admin")} className="mb-5 inline-flex items-center gap-2 text-[11px] font-medium text-[#dedbd4] transition hover:text-[#e0b28f]"><ArrowLeft size={14}/> Kembali ke overview</button>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#34383a] bg-[#15181b] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.15em] text-[#d2a17d]"><Users size={12}/> Account directory</div>
+              
               <h2 className="text-[30px] font-semibold leading-tight tracking-[-.045em] sm:text-[38px]">Kelola pengguna.</h2>
-              <p className="mt-2 max-w-xl text-sm leading-6 text-[#dedbd4]">Lihat akun, pantau aktivitas masuk, dan buka detail setiap pengguna.</p>
+              
             </div>
             <button onClick={() => router.push("/admin/users/new")} className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#3a2a20] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#493326]"><UserPlus size={16}/> Tambah pengguna <ArrowRight size={15}/></button>
           </div>
@@ -139,14 +139,14 @@ export default function AdminUsersPage() {
           {error && <div className="mb-6 flex items-start gap-3 rounded-xl border border-[#63383e] bg-[#2b1b1d] p-4 text-sm text-[#e5a4a4]"><AlertCircle size={18} className="mt-0.5 shrink-0"/><div><p className="font-semibold">Data pengguna belum berhasil dimuat</p><p className="mt-1">{error}</p></div></div>}
 
           <section className="grid gap-3 sm:grid-cols-3">
-            <article className="rounded-2xl border border-[#34383a] bg-white p-5 sm:p-6"><div className="flex items-center justify-between"><p className="text-xs font-medium text-[#dedbd4]">Akun di halaman ini</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#15181b] text-[#d2a17d]"><Users size={17}/></span></div><p className="mt-5 text-[32px] font-semibold leading-none tracking-[-.04em]">{loading ? "—" : users.length}</p><p className="mt-3 text-[11px] text-[#a0a3a2]">Maksimal 20 akun per halaman</p></article>
-            <article className="rounded-2xl border border-[#34383a] bg-white p-5 sm:p-6"><div className="flex items-center justify-between"><p className="text-xs font-medium text-[#dedbd4]">Login username</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#211d27] text-[#dedbd4]"><CircleUserRound size={17}/></span></div><p className="mt-5 text-[32px] font-semibold leading-none tracking-[-.04em]">{loading ? "—" : usernameAccounts}</p><p className="mt-3 text-[11px] text-[#a0a3a2]">Akun tanpa email</p></article>
-            <article className="rounded-2xl border border-[#34383a] bg-white p-5 sm:p-6"><div className="flex items-center justify-between"><p className="text-xs font-medium text-[#dedbd4]">Email terverifikasi</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#15181b] text-[#d2a17d]"><UserCheck size={17}/></span></div><p className="mt-5 text-[32px] font-semibold leading-none tracking-[-.04em]">{loading ? "—" : verifiedAccounts}</p><p className="mt-3 text-[11px] text-[#a0a3a2]">Di halaman yang sedang dibuka</p></article>
+            <article className="rounded-2xl border border-[#34383a] bg-white p-5 sm:p-6"><div className="flex items-center justify-between"><p className="text-xs font-medium text-[#dedbd4]">Akun di halaman ini</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#15181b] text-[#d2a17d]"><Users size={17}/></span></div><p className="mt-5 text-[32px] font-semibold leading-none tracking-[-.04em]">{loading ? "—" : users.length}</p></article>
+            <article className="rounded-2xl border border-[#34383a] bg-white p-5 sm:p-6"><div className="flex items-center justify-between"><p className="text-xs font-medium text-[#dedbd4]">Login username</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#211d27] text-[#dedbd4]"><CircleUserRound size={17}/></span></div><p className="mt-5 text-[32px] font-semibold leading-none tracking-[-.04em]">{loading ? "—" : usernameAccounts}</p></article>
+            <article className="rounded-2xl border border-[#34383a] bg-white p-5 sm:p-6"><div className="flex items-center justify-between"><p className="text-xs font-medium text-[#dedbd4]">Email terverifikasi</p><span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#15181b] text-[#d2a17d]"><UserCheck size={17}/></span></div><p className="mt-5 text-[32px] font-semibold leading-none tracking-[-.04em]">{loading ? "—" : verifiedAccounts}</p></article>
           </section>
 
           <section className="mt-7 overflow-hidden rounded-2xl border border-[#34383a] bg-white">
             <div className="flex flex-col justify-between gap-4 border-b border-[#34383a] px-5 py-5 sm:flex-row sm:items-center sm:px-6">
-              <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#dedbd4]">Directory</p><h3 className="mt-2 text-lg font-semibold tracking-tight">Daftar akun</h3><p className="mt-1 text-xs text-[#a0a3a2]">Pilih akun untuk membuka informasi lengkap.</p></div>
+              <div><h3 className="mt-2 text-lg font-semibold tracking-tight">Daftar akun</h3></div>
               <div className="relative w-full sm:max-w-[340px]"><Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#a0a3a2]"/><input value={search} onChange={(event) => { setSearch(event.target.value); setPage(1); }} placeholder="Cari username, email, atau ID..." className="h-11 w-full rounded-xl border border-[#34383a] bg-[#15181b] pl-10 pr-4 text-xs text-[#efede7] outline-none transition placeholder:text-[#a0a3a2] focus:border-[#34383a] focus:bg-white focus:ring-4 focus:ring-[#76553e]"/></div>
             </div>
 
