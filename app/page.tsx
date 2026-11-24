@@ -55,7 +55,7 @@ function HeroTapDemo() {
     <div className="home-demo-stage">
       <div className="home-demo-card-wrap">
         <span className="home-demo-instruction">GESER KARTU KE ARAH PONSEL</span>
-        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerUp={finishDrag} onPointerCancel={()=>{dragStart.current=null;}} onClick={()=>{if(!tapped) setTapped(true);}} aria-label="Geser kartu NFC ke arah ponsel">
+        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerUp={finishDrag} onPointerCancel={()=>{dragStart.current=null;}} onClick={(event)=>{if(event.detail===0 && !tapped) setTapped(true);}} aria-label="Geser kartu NFC ke arah ponsel">
           <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA</span><Nfc size={22}/></div>
           <div className="home-demo-card-title">YOUR<br/><em>review</em><br/>STARTS HERE.</div>
           <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC · QR</span></div>
