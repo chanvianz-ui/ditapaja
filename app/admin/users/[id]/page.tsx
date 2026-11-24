@@ -1,6 +1,7 @@
 "use client";
 
 import AdminMenu from "@/app/admin/admin-menu";
+import AdminSidebar from "@/app/admin/admin-sidebar";
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
@@ -115,16 +116,7 @@ export default function AdminUserDetailPage() {
 
   return (
     <main className="dt-admin-shell min-h-screen bg-[#090a0c] text-[#d8d3ca]">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-[264px] flex-col bg-[#101214] px-5 py-6 text-white lg:flex">
-        <div className="flex items-center gap-3 px-2"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#15181b] text-[#efede7]"><LayoutDashboard size={20}/></div><div><p className="text-[15px] font-bold tracking-tight">DiTapAja</p><p className="mt-0.5 text-[10px] font-medium uppercase tracking-[.18em] text-[#a0a3a2]">Control center</p></div></div>
-        <div className="mt-12"><p className="px-3 text-[10px] font-bold uppercase tracking-[.2em] text-[#dedbd4]">Workspace</p>
-          <button onClick={() => router.push("/admin")} className="mt-4 flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm text-[#a0a3a2] transition hover:bg-white/5 hover:text-white"><LayoutDashboard size={17}/> Overview</button>
-          <button onClick={() => router.push("/admin/orders")} className="mt-1.5 flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm text-[#a0a3a2] transition hover:bg-white/5 hover:text-white"><CreditCard size={17}/> Order management</button>
-          <div className="mt-1.5 flex items-center gap-3 rounded-xl bg-[#2a211b] px-3.5 py-3 text-sm font-semibold text-[#d8d3ca]"><Users size={17}/> User management <span className="ml-auto h-1.5 w-1.5 rounded-full bg-[#15181b]"/></div>
-          <button onClick={() => router.push("/admin/pins")} className="mt-1.5 flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm text-[#a0a3a2] transition hover:bg-white/5 hover:text-white"><KeyRound size={17}/> Activation PINs</button>
-        </div>
-        <div className="mt-auto"><div className="rounded-2xl border border-white/10 bg-white/[.045] p-4"><div className="flex items-center gap-2 text-[#d8d3ca]"><ShieldCheck size={16}/><span className="text-xs font-semibold">Superadmin access</span></div><p className="mt-2 text-[11px] leading-5 text-[#a0a3a2]">Akses penuh untuk mengelola platform DiTapAja.</p></div><button onClick={handleLogout} className="mt-4 flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-medium text-[#a0a3a2] transition hover:bg-rose-500/10 hover:text-rose-200"><LogOut size={17}/> Sign out</button></div>
-      </aside>
+      <AdminSidebar active="users"/>
 
       <section className="min-h-screen lg:ml-[264px]">
         <header className="sticky top-0 z-20 border-b border-[#34383a] bg-[#15181b]/90 backdrop-blur-xl"><div className="flex items-center justify-between px-4 py-4 sm:px-8 lg:px-10"><div><p className="text-[11px] font-medium text-[#dedbd4]">DiTapAja <span className="mx-1.5 text-[#d8d3ca]">/</span> Workspace</p><h1 className="mt-1 text-base font-semibold tracking-tight sm:text-lg">User detail</h1></div><div className="flex items-center gap-2"><button onClick={handleRefresh} disabled={loading || refreshing} className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#34383a] bg-white px-3.5 text-xs font-semibold text-[#efede7] transition hover:border-[#b9c8b5] disabled:opacity-50"><RefreshCw size={14} className={refreshing ? "animate-spin" : ""}/><span className="hidden sm:inline">Refresh data</span></button><div className="lg:hidden"><AdminMenu/></div></div></div></header>
