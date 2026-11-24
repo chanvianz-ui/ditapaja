@@ -1020,3 +1020,154 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
   .dt-account-settings-page>div.mx-auto { padding-top:20px !important; }
   .dt-account-settings-page>div.mx-auto>div:nth-child(2) { min-height:190px; }
 }
+
+
+/* Login — dedicated sign-in workspace, separate from the public marketing shell. */
+.dt-login-page {
+  min-height:calc(100svh - 76px) !important;
+  display:block !important;
+  padding:clamp(28px,5vw,66px) clamp(18px,5vw,72px) !important;
+  background:
+    radial-gradient(ellipse at 18% 45%,rgba(78,132,126,.13),transparent 34rem),
+    radial-gradient(ellipse at 88% 8%,rgba(75,119,157,.1),transparent 30rem),
+    #09131e !important;
+}
+.dt-login-layout {
+  width:min(1280px,100%); min-height:min(740px,calc(100svh - 170px));
+  margin:0 auto; display:grid; grid-template-columns:minmax(0,1.08fr) minmax(380px,.78fr);
+  align-items:stretch; gap:clamp(26px,5vw,76px);
+}
+.dt-login-story {
+  position:relative; isolation:isolate; display:flex; flex-direction:column;
+  min-height:640px; overflow:hidden; padding:clamp(25px,4vw,48px);
+  border:1px solid rgba(165,214,202,.14); border-radius:20px;
+  background:
+    radial-gradient(ellipse at 80% 58%,rgba(165,214,202,.13),transparent 22rem),
+    linear-gradient(145deg,#172e3c 0%,#102331 54%,#0c1a27 100%);
+}
+.dt-login-story:before {
+  position:absolute; z-index:-1; inset:0; content:""; opacity:.25;
+  background-image:linear-gradient(rgba(205,229,225,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(205,229,225,.08) 1px,transparent 1px);
+  background-size:54px 54px;
+  mask-image:linear-gradient(135deg,transparent 5%,#000 70%,transparent);
+}
+.dt-login-story-top,.dt-login-story-foot {
+  display:flex; align-items:center; gap:12px; color:#8da5b2;
+  font-size:9px; font-weight:750; letter-spacing:.14em;
+}
+.dt-login-story-top { justify-content:space-between; }
+.dt-login-story-status { display:flex; align-items:center; gap:7px; color:#a5d6ca; font-size:8px; }
+.dt-login-story-status i,.dt-login-float-dot {
+  width:6px; height:6px; border-radius:50%; background:#a5d6ca;
+  box-shadow:0 0 0 4px rgba(165,214,202,.1);
+}
+.dt-login-story-copy { position:relative; z-index:2; margin-top:clamp(44px,7vh,78px); }
+.dt-login-story-copy .dt-auth-kicker { color:#a5d6ca; }
+.dt-login-story-copy h2 {
+  margin:18px 0 18px; color:#f1f5f4; font-size:clamp(48px,6.4vw,78px);
+  font-weight:650; line-height:.98; letter-spacing:-.075em;
+}
+.dt-login-story-copy h2 em { color:#a5d6ca; font-style:normal; }
+.dt-login-story-copy p { max-width:440px; margin:0; color:#a1b4bd; font-size:13px; line-height:1.85; }
+.dt-login-story-visual { position:relative; flex:1; min-height:240px; display:grid; place-items:center; margin:8px 0 12px; }
+.dt-login-orbit { position:absolute; width:min(62%,340px); aspect-ratio:1; border:1px solid rgba(165,214,202,.13); border-radius:50%; }
+.dt-login-orbit-one { transform:rotateX(64deg) rotate(-22deg); }
+.dt-login-orbit-two { width:min(78%,420px); transform:rotateX(64deg) rotate(36deg); opacity:.65; }
+.dt-login-card-visual {
+  position:relative; z-index:1; width:min(66%,340px); aspect-ratio:1.58;
+  display:flex; flex-direction:column; justify-content:space-between; padding:19px 21px;
+  border:1px solid rgba(226,243,237,.3); border-radius:13px;
+  background:linear-gradient(135deg,#253e46 0%,#12252f 55%,#0d1b25 100%);
+  box-shadow:0 35px 70px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.09);
+  transform:rotate(-9deg);
+}
+.dt-login-card-top,.dt-login-card-bottom { display:flex; align-items:center; justify-content:space-between; color:#b4c9c8; font-size:8px; font-weight:800; letter-spacing:.12em; }
+.dt-login-card-top span:last-child { color:#789a99; font-size:7px; }
+.dt-login-card-center { display:flex; align-items:center; justify-content:center; gap:5px; }
+.dt-login-card-center i { display:block; width:5px; border-radius:8px; background:#a5d6ca; transform:skew(-15deg); }
+.dt-login-card-center i:nth-child(1) { height:22px; opacity:.55; }
+.dt-login-card-center i:nth-child(2) { height:38px; }
+.dt-login-card-center i:nth-child(3) { height:28px; opacity:.75; }
+.dt-login-card-bottom { color:#8ba7a5; font-size:7px; }
+.dt-login-card-bottom span { letter-spacing:.2em; }
+.dt-login-float-note {
+  position:absolute; z-index:2; right:3%; bottom:10%; display:flex; align-items:center; gap:11px;
+  padding:12px 14px; border:1px solid rgba(165,214,202,.2); border-radius:10px;
+  background:rgba(8,20,29,.88); box-shadow:0 15px 35px rgba(0,0,0,.25); backdrop-filter:blur(14px);
+}
+.dt-login-float-note>span:nth-child(2) { display:grid; gap:3px; }
+.dt-login-float-note small { color:#78959a; font-size:7px; font-weight:800; letter-spacing:.13em; }
+.dt-login-float-note strong { color:#e4efed; font-size:10px; }
+.dt-login-float-note>b { margin-left:8px; color:#a5d6ca; font-size:15px; }
+.dt-login-story-foot { gap:10px; margin-top:auto; padding-top:18px; border-top:1px solid rgba(211,231,229,.12); font-size:7px; }
+.dt-login-story-foot i { width:3px; height:3px; border-radius:50%; background:#6c8a8b; }
+.dt-login-page .dt-auth-form-card {
+  align-self:center; width:100%; max-width:480px; justify-self:center;
+  padding:clamp(26px,4vw,44px); border:1px solid rgba(160,190,201,.15);
+  border-radius:17px; background:linear-gradient(155deg,#172a39 0%,#101e2b 100%);
+  box-shadow:0 30px 90px rgba(0,0,0,.28);
+}
+.dt-login-page .dt-auth-kicker { color:#a5d6ca; }
+.dt-login-page .dt-auth-heading h1 { margin-top:14px; font-size:clamp(36px,4vw,48px); font-weight:650; letter-spacing:-.07em; }
+.dt-login-page .dt-auth-heading p { max-width:330px; color:#9aadb8; font-size:12px; line-height:1.8; }
+.dt-login-page .dt-auth-form { gap:19px; margin-top:32px; }
+.dt-login-page .dt-auth-field { gap:9px; }
+.dt-login-page .dt-auth-field label { color:#dce6e9; font-size:11px; }
+.dt-login-page .dt-auth-field-hint { color:#7f939f; font-size:10px; }
+.dt-login-page .dt-auth-form input:not([type=checkbox]) {
+  min-height:49px; padding:0 14px; border:1px solid rgba(160,190,201,.18);
+  border-radius:8px; background:#0b1823; color:#edf2f4; font-size:12px;
+}
+.dt-login-page .dt-auth-form input:not([type=checkbox]):focus {
+  border-color:rgba(165,214,202,.7); box-shadow:0 0 0 3px rgba(165,214,202,.08);
+}
+.dt-login-page .dt-auth-form input::placeholder { color:#637985; }
+.dt-login-page .dt-auth-password { gap:7px; }
+.dt-login-page .dt-auth-password button {
+  min-width:94px; border:1px solid rgba(160,190,201,.18); border-radius:8px;
+  background:#1b3040; color:#b8cdc9; font-size:8px; letter-spacing:.04em;
+}
+.dt-login-page .dt-login-remember { color:#91a5b0; font-size:10px; }
+.dt-login-page .dt-login-remember input { accent-color:#a5d6ca; }
+.dt-login-page .dt-auth-submit {
+  display:flex; align-items:center; justify-content:space-between; min-height:50px;
+  padding:0 16px; border:1px solid rgba(165,214,202,.28); border-radius:8px;
+  background:#a5d6ca; color:#10201f; font-size:12px; font-weight:800;
+  transition:background .18s ease,transform .18s ease;
+}
+.dt-login-page .dt-auth-submit:hover:not(:disabled) { transform:translateY(-1px); background:#b8e2d8; }
+.dt-login-page .dt-auth-submit>span { font-size:17px; }
+.dt-login-page .dt-auth-switch { margin-top:24px; color:#91a5b0; font-size:11px; }
+.dt-login-page .dt-auth-switch a { color:#a5d6ca; }
+.dt-login-page .dt-auth-back { display:inline-flex; margin-top:20px; color:#8299a5; font-size:10px; }
+.dt-login-page .dt-auth-back:hover { color:#c0d8d2; }
+@media(max-width:900px) {
+  .dt-login-page { padding:24px 18px 40px !important; }
+  .dt-login-layout { grid-template-columns:minmax(0,1fr) minmax(340px,.9fr); gap:22px; }
+  .dt-login-story { min-height:600px; padding:25px; }
+  .dt-login-story-copy h2 { font-size:clamp(42px,6vw,60px); }
+  .dt-login-story-visual { min-height:210px; }
+  .dt-login-card-visual { width:76%; }
+}
+@media(max-width:700px) {
+  .dt-login-page { padding:18px 14px 34px !important; }
+  .dt-login-layout { display:flex; flex-direction:column; gap:14px; }
+  .dt-login-story { min-height:0; padding:22px; border-radius:14px; }
+  .dt-login-story-copy { margin-top:34px; }
+  .dt-login-story-copy h2 { margin:13px 0 10px; font-size:clamp(39px,11vw,54px); }
+  .dt-login-story-copy p { max-width:430px; font-size:11px; }
+  .dt-login-story-visual { min-height:185px; margin:0; }
+  .dt-login-card-visual { width:min(64%,280px); }
+  .dt-login-float-note { right:0; bottom:4%; transform:scale(.9); transform-origin:right bottom; }
+  .dt-login-story-foot { padding-top:14px; font-size:6px; }
+  .dt-login-page .dt-auth-form-card { max-width:none; padding:25px 21px; border-radius:14px; }
+  .dt-login-page .dt-auth-form { margin-top:25px; }
+}
+@media(max-width:390px) {
+  .dt-login-story-status { font-size:7px; }
+  .dt-login-story-foot { gap:6px; letter-spacing:.08em; }
+  .dt-login-float-note { right:-6px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .dt-login-page * { transition:none !important; }
+}
