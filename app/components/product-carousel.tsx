@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  ArrowDownRight, ArrowUpRight, Check, ChevronRight, Layers3,
-  Nfc, QrCode, ShieldCheck, Sparkles
+  ArrowDownRight, ArrowUpRight, ChevronRight, Layers3,
+  Nfc, QrCode
 } from "lucide-react";
 
 type Product = {
@@ -60,8 +60,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
     <div className="dt-collection-experience">
       <div className="dt-collection-toolbar">
         <span><i/> THE COLLECTION</span>
-        <span>DESIGNED TO BE TAPPED <Nfc size={14}/></span>
-      </div>
+       </div>
 
       <div className="dt-collection-stage" key={product.tone}>
         <div className="dt-stage-copy">
@@ -71,12 +70,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
             <h3>{product.label}<em>.</em></h3>
           </div>
           <p className="dt-stage-description">{product.description}</p>
-          <div className="dt-stage-specs">
-            <span><Nfc size={15}/> NFC TECHNOLOGY</span>
-            <span><QrCode size={15}/> QR BACKUP</span>
-            <span><Check size={15}/> FREE DASHBOARD</span>
-          </div>
-          <div className="dt-stage-price">
+           <div className="dt-stage-price">
             <span>PEMBAYARAN SEKALI</span>
             <strong>{product.price}</strong><small>/ kartu</small>
           </div>
@@ -85,15 +79,14 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
               {product.mode === "preorder" ? "Request pre-order" : "Pilih edisi ini"}<ArrowUpRight size={18}/>
             </Link>
             <button type="button" className="dt-stage-detail" onClick={() => setDetails(!details)} aria-expanded={details}>
-              {details ? "Tutup detail" : "What's included"}<ArrowDownRight size={15}/>
+              {details ? "Tutup detail" : "Detail koleksi"}<ArrowDownRight size={15}/>
             </button>
           </div>
-          <div className={"dt-stage-included " + (details ? "is-open" : "")} aria-hidden={!details} inert={!details}>
-            <span><Check size={14}/> Kartu NFC siap pakai</span>
-            <span><Check size={14}/> QR Code cadangan</span>
-            <span><Check size={14}/> Dashboard gratis</span>
+          <div className={"dt-stage-included dt-stage-collection-details " + (details ? "is-open" : "")} aria-hidden={!details} inert={!details}>
+            <span><Nfc size={14}/> Kartu NFC siap pakai</span>
+            <span><QrCode size={14}/> QR Code cadangan</span>
+            <span>Dashboard gratis</span>
           </div>
-          <div className="dt-stage-trust"><ShieldCheck size={15}/> SIMPLE SETUP <i/> READY TO USE <i/> BUILT FOR BUSINESS</div>
         </div>
 
         <div className="dt-stage-art">
@@ -128,7 +121,6 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
         </div>
       </div>
 
-      <div className="dt-collection-signoff"><Sparkles size={15}/><span>THOUGHTFULLY DESIGNED. READY TO BE YOURS.</span></div>
-    </div>
+     </div>
   );
 }
