@@ -308,3 +308,45 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
   .info-faq summary { min-height:68px; padding:15px 16px; font-size:12px; }
   .info-faq details p { padding:0 16px 17px; font-size:11px; }
 }
+
+
+/* Dashboard utilities brought into the same workspace canvas. */
+.dt-card-create-page,.dt-notifications-page {
+  min-height:100vh;
+  color:var(--dt-text) !important;
+  background:
+    radial-gradient(ellipse at 82% -10%,rgba(139,199,189,.09),transparent 34rem),
+    #0a111b !important;
+}
+.dt-card-create-page .dt-card-create-intro {
+  border:1px solid var(--dt-border) !important;
+  border-radius:16px !important;
+  background:linear-gradient(145deg,#172a3a,#101d2a) !important;
+}
+.dt-card-create-page .dt-card-create-intro :where(h1,h2,strong) { color:#edf2f4 !important; }
+.dt-card-create-page .dt-card-create-intro :where(p,small,span) { color:#a1b0bb; }
+.dt-card-create-page .dt-card-create-form,.dt-notifications-page .overflow-hidden {
+  border:1px solid var(--dt-border) !important;
+  border-radius:15px !important;
+  background:linear-gradient(145deg,#172a3a,#101d2a) !important;
+  color:var(--dt-text) !important;
+}
+.dt-card-create-page :where(input,select,textarea) {
+  border-color:var(--dt-border-strong) !important;
+  border-radius:9px !important;
+  background:#0c1823 !important;
+  color:var(--dt-text) !important;
+}
+.dt-notifications-page :where(h1,h2,h3) { color:var(--dt-text) !important; }
+.dt-notifications-page :where(p,small) { color:#9aabb8; }
+.dt-notifications-page .bg-white,.dt-notifications-page .bg-slate-50 {
+  background:#142333 !important; border-color:var(--dt-border) !important; color:var(--dt-text) !important;
+}
+.dt-notifications-page .text-slate-900,.dt-notifications-page .text-slate-800,
+.dt-notifications-page .text-slate-700,.dt-notifications-page .text-slate-600 {
+  color:#dce6eb !important;
+}
+@media(max-width:640px) {
+  .dt-card-create-page .dt-card-create-layout { grid-template-columns:1fr !important; }
+  .dt-card-create-page .dt-card-create-intro { min-height:0 !important; }
+}
