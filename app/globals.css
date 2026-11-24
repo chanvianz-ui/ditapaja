@@ -2365,3 +2365,49 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .ed-collection .dt-art-orbit{animation:none}
  .dt-home-rebuild .ed-collection .dt-feature-card,.dt-home-rebuild .ed-collection .dt-feature-card-shine{transition:none}
 }
+
+
+/* THE COLLECTION — finishing pass: tactile feedback, focus and motion */
+.dt-home-rebuild .ed-collection .dt-collection-stage{isolation:isolate}
+.dt-home-rebuild .ed-collection .dt-stage-title h3{animation:dtEditionReveal .48s cubic-bezier(.2,.75,.25,1) both}
+.dt-home-rebuild .ed-collection .dt-stage-description{animation:dtEditionReveal .56s .04s both}
+.dt-home-rebuild .ed-collection .dt-stage-price,.dt-home-rebuild .ed-collection .dt-stage-actions{animation:dtEditionReveal .62s .08s both}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap{animation:dtCardArrive .75s cubic-bezier(.16,.8,.22,1) both}
+.dt-home-rebuild .ed-collection .dt-feature-card-face{will-change:transform}
+.dt-home-rebuild .ed-collection .dt-feature-card-front:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(125deg,rgba(255,255,255,.13),transparent 28%,transparent 70%,rgba(255,255,255,.06));mix-blend-mode:screen}
+.dt-home-rebuild .ed-collection .dt-selector-option{position:relative;overflow:hidden}
+.dt-home-rebuild .ed-collection .dt-selector-option:before{content:"";position:absolute;inset:auto 12px 0;height:2px;background:#a8c9bf;transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.dt-home-rebuild .ed-collection .dt-selector-option.is-active:before{transform:scaleX(1)}
+.dt-home-rebuild .ed-collection .dt-selector-option:hover{background:rgba(160,196,190,.08)}
+.dt-home-rebuild .ed-collection .dt-selector-option:active{transform:scale(.99)}
+.dt-home-rebuild .ed-collection .dt-stage-primary:focus-visible,
+.dt-home-rebuild .ed-collection .dt-stage-detail:focus-visible,
+.dt-home-rebuild .ed-collection .dt-feature-card:focus-visible,
+.dt-home-rebuild .ed-collection .dt-flip-hint:focus-visible,
+.dt-home-rebuild .ed-collection .dt-selector-option:focus-visible{outline:2px solid #c5e2d7;outline-offset:4px}
+.dt-home-rebuild .ed-collection .dt-stage-detail{padding:10px 0}
+.dt-home-rebuild .ed-collection .dt-stage-detail svg,.dt-home-rebuild .ed-collection .dt-flip-hint svg{transition:transform .25s ease}
+.dt-home-rebuild .ed-collection .dt-stage-detail:hover svg{transform:translate(2px,2px)}
+.dt-home-rebuild .ed-collection .dt-flip-hint:hover svg{transform:rotate(180deg)}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap.is-flipped .dt-feature-card{transform:rotateY(180deg) rotateX(0) rotateZ(0)}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap.is-flipped:hover .dt-feature-card{transform:rotateY(180deg) rotateX(2deg) rotateZ(2deg) translateY(-5px)}
+.dt-home-rebuild .ed-collection .dt-stage-included{transition:max-height .35s ease,opacity .25s ease,margin .35s ease}
+.dt-home-rebuild .ed-collection .dt-edition-selector{position:relative}
+.dt-home-rebuild .ed-collection .dt-edition-selector:before{content:"";position:absolute;top:0;left:24px;right:24px;height:1px;background:linear-gradient(90deg,transparent,rgba(183,218,207,.45),transparent)}
+@keyframes dtEditionReveal{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dtCardArrive{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:650px){
+ .dt-home-rebuild .ed-collection .dt-stage-actions{align-items:flex-start;flex-wrap:wrap;gap:10px}
+ .dt-home-rebuild .ed-collection .dt-stage-primary{flex:1;min-width:0}
+ .dt-home-rebuild .ed-collection .dt-stage-detail{min-height:44px}
+ .dt-home-rebuild .ed-collection .dt-feature-card-wrap{width:82%}
+ .dt-home-rebuild .ed-collection .dt-selector-option{min-height:67px}
+}
+@media(hover:none){
+ .dt-home-rebuild .ed-collection .dt-feature-card-wrap:hover .dt-feature-card{transform:rotateY(0) rotateX(8deg) rotateZ(-7deg)}
+ .dt-home-rebuild .ed-collection .dt-feature-card-wrap.is-flipped:hover .dt-feature-card{transform:rotateY(180deg) rotateX(0) rotateZ(0)}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-home-rebuild .ed-collection .dt-stage-title h3,.dt-home-rebuild .ed-collection .dt-stage-description,.dt-home-rebuild .ed-collection .dt-stage-price,.dt-home-rebuild .ed-collection .dt-stage-actions,.dt-home-rebuild .ed-collection .dt-feature-card-wrap{animation:none!important}
+ .dt-home-rebuild .ed-collection .dt-selector-option,.dt-home-rebuild .ed-collection .dt-selector-option:before{transition:none!important}
+}
