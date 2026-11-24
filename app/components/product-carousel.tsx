@@ -30,7 +30,7 @@ function FeatureCard({ product, flipped, onFlip }: {
         event.currentTarget.style.setProperty("--tilt-y", "0deg");
       }}>
       <button type="button" className="dt-feature-card" onClick={onFlip}
-        aria-label={flipped ? "Lihat sisi depan kartu" : "Lihat sisi belakang kartu"} aria-pressed={flipped}>
+        aria-label={flipped ? "Lihat sisi depan kartu" : "Balik kartu untuk melihat sisi belakang"} aria-pressed={flipped}>
         <span className={"dt-feature-card-face dt-feature-card-front dt-feature-" + product.tone}>
           <span className="dt-feature-card-top"><b>DITAPAJA®</b><Nfc size={21}/></span>
           <span className="dt-feature-card-center"><small>REVIEW MADE SIMPLE</small><strong>{product.label.toUpperCase()}</strong><i/></span>
@@ -64,7 +64,6 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
 
       <div className="dt-collection-stage" key={product.tone}>
         <div className="dt-stage-copy">
-          <div className="dt-stage-overline"><span>DITAPAJA COLLECTION</span></div>
           <div className="dt-stage-title">
             <span className="dt-stage-edition">{product.mode === "preorder" ? "LIMITED RELEASE" : "CORE SERIES"}</span>
             <h3>{product.label}<em>.</em></h3>
@@ -114,7 +113,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
               className={"dt-selector-option " + (p.tone === product.tone ? "is-active" : "")}
               onClick={() => choose(p.tone)} aria-pressed={p.tone === product.tone}>
               <span className={"dt-selector-swatch swatch-" + p.tone}><i/></span>
-              <span className="dt-selector-name"><small>{p.mode === "preorder" ? "LIMITED EDITION" : "DITAPAJA / EDITION"}</small><b>{p.label}</b><em>{p.mode === "preorder" ? "PRE-ORDER" : "AVAILABLE"}</em></span>
+              <span className="dt-selector-name"><small>{p.mode === "preorder" ? "DIBUAT KHUSUS" : "READY TO ORDER"}</small><b>{p.label}</b><em>{p.mode === "preorder" ? "PRE-ORDER" : "AVAILABLE"}</em></span>
               <strong>{p.price}</strong><ChevronRight size={18}/>
             </button>
           ))}
