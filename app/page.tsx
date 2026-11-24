@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
@@ -20,6 +20,14 @@ function HeroTapDemo() {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [clock, setClock] = useState("--:--");
+  useEffect(() => {
+    const updateClock = () => setClock(new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
+    updateClock();
+    const timer = window.setInterval(updateClock, 15000);
+    return () => window.clearInterval(timer);
+  }, []);
   const dragStart = useRef<{ x: number; y: number } | null>(null);
 
   const resetDemo = () => {
@@ -27,21 +35,29 @@ function HeroTapDemo() {
     setRating(0);
     setReview("");
     setSubmitted(false);
+    setDragOffset(0);
     dragStart.current = null;
   };
 
   const startDrag = (event: PointerEvent<HTMLButtonElement>) => {
     if (event.button !== 0 && event.pointerType === "mouse") return;
     dragStart.current = { x: event.clientX, y: event.clientY };
+    setDragOffset(0);
     event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const moveDrag = (event: PointerEvent<HTMLButtonElement>) => {
+    if (dragStart.current === null) return;
+    const dx = event.clientX - dragStart.current.x;
+    setDragOffset(Math.max(0, Math.min(dx, 150)));
   };
 
   const finishDrag = (event: PointerEvent<HTMLButtonElement>) => {
     if (dragStart.current === null) return;
     const dx = event.clientX - dragStart.current.x;
-    const dy = event.clientY - dragStart.current.y;
     dragStart.current = null;
-    if (dx > 48 || (dy > 48 && Math.abs(dy) > Math.abs(dx))) {
+    setDragOffset(0);
+    if (dx > 48) {
       setTapped(true);
       setSubmitted(false);
     }
@@ -55,7 +71,7 @@ function HeroTapDemo() {
     <div className="home-demo-stage">
       <div className="home-demo-card-wrap">
         <span className="home-demo-instruction">GESER KARTU KE ARAH PONSEL</span>
-        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerUp={finishDrag} onPointerCancel={()=>{dragStart.current=null;}} onClick={(event)=>{if(event.detail===0 && !tapped) setTapped(true);}} aria-label="Geser kartu NFC ke arah ponsel">
+        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={finishDrag} onPointerCancel={()=>{dragStart.current=null;setDragOffset(0);}} style={dragOffset ? { transform: `translateX(${dragOffset}px) rotate(2deg) scale(.98)` } : undefined} onClick={(event)=>{if(event.detail===0 && !tapped) setTapped(true);}} aria-label="Geser kartu NFC ke arah ponsel">
           <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA</span><Nfc size={22}/></div>
           <div className="home-demo-card-title">YOUR<br/><em>review</em><br/>STARTS HERE.</div>
           <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC · QR</span></div>
@@ -65,11 +81,14 @@ function HeroTapDemo() {
       <div className="home-demo-transfer" aria-hidden="true"><ArrowUpRight size={23}/><small>NFC</small></div>
       <div className="home-demo-phone-wrap">
         <span className="home-demo-instruction">HALAMAN ULASAN</span>
-        <div className="home-demo-phone"><div className="home-phone-island"/><div className="home-phone-status"><span>9:41</span><span>●●● ▰</span></div>
+        <div className="home-demo-phone"><div className="home-phone-island"/><div className="home-phone-status"><span>{clock}</span><span>●●● ▰</span></div>
           {tapped ? <div className="home-google-screen">
-            <div className="home-google-top"><span className="home-google-g">Google</span><span>⋮</span></div>
-            <div className="home-google-business"><div className="home-google-avatar">G</div><div><b>Google Maps</b><small>Tempat yang dikunjungi</small></div><a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer" aria-label="Buka lokasi di Google Maps"><ArrowUpRight size={15}/></a></div>
-            <div className="home-google-prompt"><strong>Bagikan pengalaman Anda</strong><p>Bantu orang lain dengan membagikan ulasan tentang tempat ini.</p></div>
+            <div className="home-google-top"><span className="home-google-g">Google</span><span className="home-google-maps-label">Maps</span><span>●</span></div>
+            <div className="home-maps-search"><span>⌕</span><b>DiTapAja</b><span>×</span></div>
+            <div className="home-maps-map" aria-label="Pratinjau peta Google Maps"><i className="map-road map-road-one"/><i className="map-road map-road-two"/><i className="map-road map-road-three"/><i className="map-water"/><span className="home-maps-pin">●</span><small>DiTapAja</small></div>
+            <div className="home-google-business"><div className="home-google-avatar">D</div><div><b>DiTapAja</b><small>Tujuan Google Maps</small></div><a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer" aria-label="Buka tujuan DiTapAja di Google Maps"><ArrowUpRight size={15}/></a></div>
+            <a className="home-maps-open" href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Buka DiTapAja di Google Maps <ArrowUpRight size={13}/></a>
+            <div className="home-google-prompt"><strong>Bagikan pengalaman Anda</strong><p>Lanjutkan ke Google Maps untuk melihat detail tujuan dan memberi ulasan.</p></div>
             <div className="home-google-rating-picker" role="group" aria-label="Pilih rating">
               {Array.from({length:5},(_,i)=><button type="button" key={i} onClick={()=>{setRating(i+1);setSubmitted(false);}} aria-label={`${i+1} bintang`} aria-pressed={rating===i+1} className={i<rating?"selected":""}>★</button>)}
             </div>
@@ -79,7 +98,7 @@ function HeroTapDemo() {
               <textarea className="home-google-review-input" value={review} onChange={e=>setReview(e.target.value)} placeholder="Ceritakan pengalaman Anda (opsional)" aria-label="Tulis ulasan contoh"/>
               <button type="button" className="home-google-submit" onClick={()=>setSubmitted(true)}>Posting</button>
             </div>}
-            <small className="home-google-note">Tampilan simulasi · tidak terhubung ke Google</small>
+            <small className="home-google-note">Pratinjau antarmuka · tautan membuka Google Maps asli</small>
           </div> : <div className="home-phone-idle">
             <Nfc size={35}/><b>Siap menerima<br/>kartu NFC</b>
             <p>Geser kartu ke ponsel untuk membuka halaman ulasan.</p>
@@ -94,7 +113,7 @@ function HeroTapDemo() {
     <div className="home-demo-footer">
       <span>{!tapped ? "Geser kartu ke ponsel untuk memulai" : submitted ? "Simulasi selesai" : rating ? `Rating dipilih: ${rating}/5` : "Pilih bintang untuk memberi rating"}</span>
       <div className="home-demo-footer-actions">
-        <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Buka Google Maps asli <ArrowUpRight size={12}/></a>
+        <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Buka tujuan DiTapAja <ArrowUpRight size={12}/></a>
         <button type="button" onClick={resetDemo}><RotateCcw size={13}/> Ulangi</button>
       </div>
     </div>
