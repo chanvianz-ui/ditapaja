@@ -3281,3 +3281,123 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
   color:#14221e !important;
   border-color:rgba(220,238,228,.32) !important;
 }
+
+/* Editorial collection redesign — keep the existing stage, background and stage geometry intact. */
+.dt-home-rebuild .ed-collection .dt-collection-editorial .dt-collection-toolbar {
+  display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:17px;
+}
+.dt-home-rebuild .ed-collection .dt-collection-toolbar>small {
+  color:#8fa4ad;font-size:9px;font-weight:800;letter-spacing:.2em;
+}
+.dt-home-rebuild .ed-collection .dt-editorial-kicker,
+.dt-home-rebuild .ed-collection .dt-editorial-description>span {
+  display:block;color:#8fa9aa;font-size:8px;font-weight:850;letter-spacing:.2em;
+}
+.dt-home-rebuild .ed-collection .dt-stage-title h3 {
+  margin-top:12px;font-size:clamp(44px,6vw,78px);line-height:.88;letter-spacing:-.09em;
+}
+.dt-home-rebuild .ed-collection .dt-editorial-description {
+  max-width:290px;margin-top:25px;padding-left:14px;border-left:1px solid rgba(173,205,195,.48);
+}
+.dt-home-rebuild .ed-collection .dt-editorial-description p {
+  margin:9px 0 0;color:#b5c3c3;font-size:12px;line-height:1.75;
+}
+.dt-home-rebuild .ed-collection .dt-stage-price { margin-top:30px; }
+.dt-home-rebuild .ed-collection .dt-object-display {
+  position:relative;z-index:3;width:min(78%,490px);display:grid;gap:17px;justify-items:center;
+  perspective:none;filter:drop-shadow(0 30px 36px rgba(0,0,0,.34));
+}
+.dt-home-rebuild .ed-collection .dt-object-card {
+  position:relative;display:block;width:100%;aspect-ratio:1.586;padding:0;border:0;border-radius:20px;
+  overflow:hidden;cursor:pointer;text-align:left;background:transparent;transform:none!important;
+  box-shadow:0 22px 50px rgba(0,0,0,.32),0 2px 0 rgba(255,255,255,.22) inset;
+  transition:box-shadow .35s ease,filter .35s ease;
+}
+.dt-home-rebuild .ed-collection .dt-object-card:hover {
+  transform:none!important;filter:brightness(1.06);box-shadow:0 30px 60px rgba(0,0,0,.4),0 2px 0 rgba(255,255,255,.25) inset;
+}
+.dt-home-rebuild .ed-collection .dt-object-card-inner {
+  position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(17px,3vw,30px);
+  color:var(--object-ink);background:var(--object-surface);isolation:isolate;
+}
+.dt-home-rebuild .ed-collection .dt-object-card-inner:before {
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 80% 8%,var(--object-highlight),transparent 38%),linear-gradient(135deg,rgba(255,255,255,.16),transparent 42%),repeating-linear-gradient(135deg,rgba(255,255,255,.018) 0 1px,transparent 1px 5px);
+}
+.dt-home-rebuild .ed-collection .dt-object-card-inner:after {
+  content:"";position:absolute;inset:9px;border:1px solid var(--object-border);border-radius:13px;pointer-events:none;
+}
+.dt-home-rebuild .ed-collection .dt-object-noir { --object-ink:#f5f5f3;--object-surface:linear-gradient(135deg,#08090b 0%,#202329 50%,#090a0c 100%);--object-highlight:rgba(220,227,235,.18);--object-border:rgba(255,255,255,.14); }
+.dt-home-rebuild .ed-collection .dt-object-blanc { --object-ink:#24272a;--object-surface:linear-gradient(135deg,#fffefa 0%,#e6e5df 54%,#c9cbc8 100%);--object-highlight:rgba(255,255,255,.95);--object-border:rgba(46,50,54,.16); }
+.dt-home-rebuild .ed-collection .dt-object-signature { --object-ink:#f6e7d0;--object-surface:linear-gradient(135deg,#24170f 0%,#67492d 52%,#2a1b12 100%);--object-highlight:rgba(255,220,168,.25);--object-border:rgba(255,225,181,.27); }
+.dt-home-rebuild .ed-collection .dt-object-topline,
+.dt-home-rebuild .ed-collection .dt-object-bottom { position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px; }
+.dt-home-rebuild .ed-collection .dt-object-topline b {font-size:10px;font-weight:900;letter-spacing:.23em}
+.dt-home-rebuild .ed-collection .dt-object-topline b span {font-size:7px;vertical-align:top}
+.dt-home-rebuild .ed-collection .dt-object-edition,
+.dt-home-rebuild .ed-collection .dt-object-bottom {font-size:7px;font-weight:850;letter-spacing:.16em;opacity:.76}
+.dt-home-rebuild .ed-collection .dt-object-center {position:relative;z-index:1;display:grid;justify-items:start;gap:8px}
+.dt-home-rebuild .ed-collection .dt-object-nfc {display:grid;place-items:center;width:42px;height:42px;border:1px solid currentColor;border-radius:50%;opacity:.78}
+.dt-home-rebuild .ed-collection .dt-object-center strong {font:850 clamp(35px,5.5vw,68px)/.86 Manrope,sans-serif;letter-spacing:-.09em}
+.dt-home-rebuild .ed-collection .dt-object-center small {font-size:7px;font-weight:850;letter-spacing:.2em;opacity:.7}
+.dt-home-rebuild .ed-collection .dt-object-status {display:flex;align-items:center;gap:7px}
+.dt-home-rebuild .ed-collection .dt-object-status i {width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 9px currentColor}
+.dt-home-rebuild .ed-collection .dt-object-active-label {
+  position:absolute;z-index:2;right:22px;top:50%;transform:translateY(-50%);font-size:7px;font-weight:900;letter-spacing:.18em;opacity:0;transition:opacity .25s;
+}
+.dt-home-rebuild .ed-collection .dt-object-card:hover .dt-object-active-label,
+.dt-home-rebuild .ed-collection .dt-object-card.is-active .dt-object-active-label {opacity:.7}
+.dt-home-rebuild .ed-collection .dt-object-card.is-active .dt-object-nfc {box-shadow:0 0 0 7px rgba(255,255,255,.07),0 0 30px currentColor}
+.dt-home-rebuild .ed-collection .dt-object-card.is-active .dt-object-status i {animation:dtObjectPulse 1s ease-in-out infinite alternate}
+@keyframes dtObjectPulse {to{opacity:.35;box-shadow:0 0 0 6px rgba(255,255,255,.12)}}
+.dt-home-rebuild .ed-collection .dt-object-caption {width:100%;display:flex;justify-content:space-between;color:#8da3a5;font-size:7px;font-weight:850;letter-spacing:.16em}
+.dt-home-rebuild .ed-collection .dt-object-caption span:first-child {display:flex;align-items:center;gap:8px}
+.dt-home-rebuild .ed-collection .dt-object-caption i {width:5px;height:5px;border-radius:50%;background:#a8c9ba}
+.dt-home-rebuild .ed-collection .dt-editorial-selector {margin-top:18px;padding-top:17px;border-top:1px solid rgba(177,205,205,.15)}
+.dt-home-rebuild .ed-collection .dt-editorial-selector .dt-selector-heading {margin-bottom:12px}
+.dt-home-rebuild .ed-collection .dt-editorial-selector .dt-selector-heading>span {font-size:8px;letter-spacing:.17em}
+.dt-home-rebuild .ed-collection .dt-editorial-selector .dt-selector-heading small {font-size:7px;letter-spacing:.12em;color:#849ba1}
+.dt-home-rebuild .ed-collection .dt-editorial-selector .dt-selector-options {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.dt-home-rebuild .ed-collection .dt-editorial-option {
+  position:relative;min-width:0;min-height:106px;display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:10px;
+  padding:13px;border:1px solid rgba(179,205,206,.16);border-radius:13px;background:rgba(7,20,29,.28);text-align:left;
+  transition:border-color .25s,background .25s,transform .25s;
+}
+.dt-home-rebuild .ed-collection .dt-editorial-option:hover {transform:translateY(-3px);border-color:rgba(196,222,211,.38)}
+.dt-home-rebuild .ed-collection .dt-editorial-option.is-active {border-color:rgba(196,222,211,.55);background:rgba(157,190,180,.11);box-shadow:inset 0 0 0 1px rgba(196,222,211,.08)}
+.dt-home-rebuild .ed-collection .dt-editorial-swatch {width:31px;height:42px;border-radius:7px;border:1px solid rgba(255,255,255,.2);box-shadow:0 5px 12px rgba(0,0,0,.2)}
+.dt-home-rebuild .ed-collection .dt-editorial-swatch.swatch-noir {background:linear-gradient(145deg,#08090b,#34383d)}
+.dt-home-rebuild .ed-collection .dt-editorial-swatch.swatch-blanc {background:linear-gradient(145deg,#fffefa,#c9cbc8);border-color:rgba(255,255,255,.7)}
+.dt-home-rebuild .ed-collection .dt-editorial-swatch.swatch-signature {background:linear-gradient(145deg,#d4b17b,#5b3d25)}
+.dt-home-rebuild .ed-collection .dt-editorial-swatch i {display:block;width:60%;height:1px;margin:10px auto;background:rgba(255,255,255,.55)}
+.dt-home-rebuild .ed-collection .dt-editorial-option .dt-selector-name {min-width:0;display:grid;gap:5px}
+.dt-home-rebuild .ed-collection .dt-editorial-option .dt-selector-name small {font-size:6px;letter-spacing:.1em;color:#8fa7a8}
+.dt-home-rebuild .ed-collection .dt-editorial-option .dt-selector-name b {font-size:13px;letter-spacing:-.03em;color:#edf4f1}
+.dt-home-rebuild .ed-collection .dt-editorial-option .dt-selector-name em {font-size:6px;font-style:normal;letter-spacing:.1em;color:#9cb8aa}
+.dt-home-rebuild .ed-collection .dt-editorial-option>strong {font-size:9px;white-space:nowrap;color:#e8efeb}
+.dt-home-rebuild .ed-collection .dt-option-check {display:none}
+@media(max-width:760px) {
+  .dt-home-rebuild .ed-collection .dt-collection-toolbar>small {display:none}
+  .dt-home-rebuild .ed-collection .dt-object-display {width:86%;gap:12px}
+  .dt-home-rebuild .ed-collection .dt-object-card {border-radius:14px}
+  .dt-home-rebuild .ed-collection .dt-object-card-inner {padding:16px}
+  .dt-home-rebuild .ed-collection .dt-object-card-inner:after {inset:6px;border-radius:9px}
+  .dt-home-rebuild .ed-collection .dt-object-center strong {font-size:clamp(29px,9vw,44px)}
+  .dt-home-rebuild .ed-collection .dt-object-nfc {width:30px;height:30px}
+  .dt-home-rebuild .ed-collection .dt-object-nfc svg {width:19px;height:19px}
+  .dt-home-rebuild .ed-collection .dt-object-center small {font-size:5px}
+  .dt-home-rebuild .ed-collection .dt-object-topline b {font-size:8px}
+  .dt-home-rebuild .ed-collection .dt-object-edition,.dt-home-rebuild .ed-collection .dt-object-bottom {font-size:5px}
+  .dt-home-rebuild .ed-collection .dt-object-active-label {display:none}
+  .dt-home-rebuild .ed-collection .dt-editorial-selector .dt-selector-options {grid-template-columns:1fr;gap:7px}
+  .dt-home-rebuild .ed-collection .dt-editorial-option {min-height:74px;grid-template-columns:35px minmax(0,1fr) auto;padding:10px}
+  .dt-home-rebuild .ed-collection .dt-editorial-option>strong {font-size:10px}
+  .dt-home-rebuild .ed-collection .dt-stage-title h3 {font-size:52px}
+  .dt-home-rebuild .ed-collection .dt-editorial-description {margin-top:18px}
+}
+@media(prefers-reduced-motion:reduce) {
+  .dt-home-rebuild .ed-collection .dt-editorial-option,
+  .dt-home-rebuild .ed-collection .dt-object-card,
+  .dt-home-rebuild .ed-collection .dt-object-active-label {transition:none!important}
+  .dt-home-rebuild .ed-collection .dt-object-card.is-active .dt-object-status i {animation:none!important}
+}
