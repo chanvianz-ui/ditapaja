@@ -1,4 +1,7 @@
-import { ArrowDown, ArrowUpRight, Check, ChevronRight, CircleDot, CreditCard, Gauge, Link2, Nfc, QrCode, ScanLine, ShieldCheck, Sparkles } from "lucide-react";
+"use client";
+
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi, MessageCircle } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 
@@ -8,80 +11,336 @@ const products = [
   { name: "Signature", label: "Signature", description: "Kartu dengan identitas visual bisnismu sendiri.", tone: "signature", price: "Rp60.000", order: "PRE-ORDER · MIN. 10 KARTU", action: "Pre-order", mode: "preorder" }
 ];
 
-function BrandGlyph() {
-  return <span className="dta-glyph" aria-hidden="true"><i/><i/><i/></span>;
+function BrandMark() {
+  return <span className="dt-v2-brand-mark" aria-hidden="true"><i/><i/><i/></span>;
 }
 
-function CardArtifact() {
-  return <div className="dta-artifact" aria-label="Visual kartu NFC DiTapAja">
-    <div className="dta-artifact-back"><span>DITAPAJA® / NFC REVIEW SYSTEM</span><span>01—03</span></div>
-    <div className="dta-artifact-card">
-      <div className="dta-artifact-top"><BrandGlyph/><span>DITAPAJA</span><Nfc size={20}/></div>
-      <div className="dta-artifact-title">Make<br/><em>good</em><br/>reviews.</div>
-      <div className="dta-artifact-bottom"><span>ONE TAP CLOSER</span><span>NFC · QR</span></div>
-      <div className="dta-artifact-chip">TAP<br/>HERE <ArrowUpRight size={16}/></div>
+function HeroTapDemo() {
+  const [tapped, setTapped] = useState(false);
+  const [showReview, setShowReview] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [clock, setClock] = useState("--:--");
+  const dragStart = useRef<{ x: number; y: number } | null>(null);
+
+  useEffect(() => {
+    const updateClock = () => setClock(new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
+    updateClock();
+    const timer = window.setInterval(updateClock, 15000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const resetDemo = () => {
+    setTapped(false);
+    setShowReview(false);
+    setRating(0);
+    setReview("");
+    setSubmitted(false);
+    setDragOffset(0);
+    dragStart.current = null;
+  };
+
+  const startDrag = (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.button !== 0 && event.pointerType === "mouse") return;
+    dragStart.current = { x: event.clientX, y: event.clientY };
+    setDragOffset(0);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const moveDrag = (event: PointerEvent<HTMLButtonElement>) => {
+    if (!dragStart.current) return;
+    const dx = event.clientX - dragStart.current.x;
+    setDragOffset(Math.max(0, Math.min(dx, 170)));
+  };
+
+  const finishDrag = (event: PointerEvent<HTMLButtonElement>) => {
+    if (!dragStart.current) return;
+    const dx = event.clientX - dragStart.current.x;
+    dragStart.current = null;
+    setDragOffset(0);
+    if (dx > 48) {
+      setTapped(true);
+      setShowReview(false);
+      setSubmitted(false);
+    }
+  };
+
+  return <div className={`home-hero-visual home-tap-demo ${tapped ? "is-tapped" : ""} ${submitted ? "is-submitted" : ""}`} aria-label="Simulasi pengalaman pelanggan menggunakan kartu NFC">
+    <div className="home-demo-heading">
+      <div><span className="home-section-index"><i/> LIVE INTERACTION</span><b>Coba sendiri pengalaman tap NFC</b></div>
+      <span className="home-demo-disclaimer">DEMO · TANPA DATA TERKIRIM</span>
     </div>
-    <div className="dta-artifact-orbit dta-artifact-orbit-a"/>
-    <div className="dta-artifact-orbit dta-artifact-orbit-b"/>
-    <div className="dta-artifact-note"><span className="dta-live-dot"/><span><small>BUILT FOR REAL BUSINESSES</small><b>One tap. No extra app.</b></span></div>
-    <span className="dta-artifact-index">DTA / OBJECT 001</span>
+    <div className="home-demo-stage">
+      <div className="home-demo-card-wrap">
+        <span className="home-demo-instruction">{tapped ? "KARTU TERBACA" : "GESER KARTU KE KANAN"}</span>
+        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={finishDrag} onPointerCancel={() => { dragStart.current = null; setDragOffset(0); }} style={dragOffset ? { transform: "translateX(" + dragOffset + "px) rotate(2deg) scale(.98)" } : undefined} onClick={(event) => { if (event.detail === 0 && !tapped) setTapped(true); }} aria-label="Geser kartu NFC ke kanan untuk memulai simulasi">
+          <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA</span><Nfc size={22}/></div>
+          <div className="home-demo-card-title">YOUR<br/><em>review</em><br/>STARTS HERE.</div>
+          <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC · QR</span></div>
+          <span className="home-demo-card-glint"/>
+        </button>
+        <span className="home-demo-card-caption">NFC REVIEW CARD · NOIR</span>
+      </div>
+      <div className="home-demo-transfer" aria-hidden="true"><span/><ArrowUpRight size={23}/><small>NFC</small></div>
+      <div className="home-demo-phone-wrap">
+        <span className="home-demo-instruction">{!tapped ? "SMARTPHONE" : showReview ? "CONTOH FORM REVIEW" : "TUJUAN TERBUKA"}</span>
+        <div className="home-demo-phone">
+          <div className="home-phone-island"/>
+          <div className="home-phone-status"><span>{clock}</span><span>●●● ▰</span></div>
+          {!tapped ? <div className="home-phone-idle">
+            <div className="home-phone-nfc"><Nfc size={29}/></div>
+            <b>Ready to tap</b>
+            <p>Dekatkan kartu ke ponsel untuk membuka halaman tujuan.</p>
+            <span><i/> NFC CONNECTION READY</span>
+          </div> : showReview ? <div className="home-demo-review-screen">
+            <div className="home-demo-review-top"><button type="button" onClick={() => setShowReview(false)} aria-label="Kembali ke peta">‹</button><b>Review experience</b><span>•••</span></div>
+            <div className="home-demo-review-brand"><div className="home-demo-review-avatar">D</div><div><b>DiTapAja</b><small>Contoh tampilan halaman ulasan</small></div></div>
+            <div className="home-demo-review-prompt"><strong>Bagaimana pengalamanmu?</strong><p>Pilih rating untuk melihat alur review yang lebih praktis.</p></div>
+            <div className="home-google-rating-picker" role="group" aria-label="Pilih rating">
+              {[1,2,3,4,5].map((value) => <button key={value} type="button" className={rating >= value ? "selected" : ""} onClick={() => setRating(value)} aria-label={value + " bintang"} aria-pressed={rating === value}>★</button>)}
+            </div>
+            <span className="home-google-rating-label">{rating ? ["", "Kurang baik", "Cukup", "Baik", "Sangat baik", "Luar biasa"][rating] : "Ketuk bintang untuk memberi rating"}</span>
+            <label className="home-demo-review-label" htmlFor="home-demo-review">Ceritakan pengalamanmu <span>OPSIONAL</span></label>
+            <textarea id="home-demo-review" className="home-google-review-input" value={review} onChange={(event) => setReview(event.target.value)} placeholder="Tulis ulasan singkat..." maxLength={180}/>
+            {submitted ? <div className="home-google-submitted" role="status"><Check size={15}/> Simulasi selesai. Tidak ada ulasan yang dikirim.</div> : <button type="button" className="home-google-submit" disabled={!rating} onClick={() => setSubmitted(true)}>Kirim simulasi <ArrowUpRight size={12}/></button>}
+            <small className="home-google-note">Pratinjau interaktif · bukan pengiriman review sungguhan</small>
+          </div> : <div className="home-google-screen">
+            <div className="home-maps-appbar"><span className="home-maps-menu">☰</span><div className="home-maps-search"><span>⌕</span><b>DiTapAja</b><span>×</span></div><span className="home-maps-account">D</span></div>
+            <div className="home-maps-map" aria-label="Ilustrasi tampilan peta">
+              <div className="home-maps-map-grid"/><div className="home-maps-map-road road-a"/><div className="home-maps-map-road road-b"/><div className="home-maps-map-road road-c"/><div className="home-maps-map-park"/><div className="home-maps-map-water"/>
+              <span className="home-maps-map-label label-a">Jalan utama</span><span className="home-maps-map-label label-b">Area sekitar</span><span className="home-maps-pin"><i/></span><span className="home-maps-map-fab">＋</span>
+            </div>
+            <div className="home-maps-place-sheet">
+              <div className="home-maps-sheet-handle"/>
+              <div className="home-maps-place-title"><div><small>DESTINATION PREVIEW</small><strong>DiTapAja</strong><span>Tujuan dari tautan Google Maps</span></div><span className="home-maps-place-icon"><MapPin size={18}/></span></div>
+              <div className="home-maps-place-actions">
+                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>➤</span> Rute</a>
+                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>↗</span> Bagikan</a>
+                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>⌑</span> Buka</a>
+              </div>
+              <button className="home-maps-open" type="button" onClick={() => { setShowReview(true); setSubmitted(false); }}>Lihat alur review <ArrowUpRight size={13}/></button>
+              <a className="home-maps-real-link" href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Buka tujuan di Google Maps <ArrowUpRight size={12}/></a>
+              <small className="home-google-note">Ilustrasi peta · detail lokasi dibuka dari Google Maps asli</small>
+            </div>
+          </div>}
+          <div className="home-phone-homebar"/>
+        </div>
+      </div>
+    </div>
+    <div className="home-demo-footer">
+      <span>{!tapped ? "01 — Geser kartu ke kanan untuk mulai" : submitted ? "03 — Simulasi selesai" : showReview ? "02 — Pilih rating dan coba form review" : "01 — Kartu berhasil terbaca"}</span>
+      <div className="home-demo-footer-actions">
+        {tapped && !showReview && <button type="button" onClick={() => setShowReview(true)}>Coba alur review <ArrowUpRight size={12}/></button>}
+        <button type="button" onClick={resetDemo}><RotateCcw size={13}/> Reset demo</button>
+      </div>
+    </div>
   </div>;
 }
+function HowItWorks() {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = [
+    {
+      number: "01",
+      eyebrow: "THE FIRST CONTACT",
+      title: "Tap or scan.",
+      description: "Pelanggan cukup mendekatkan smartphone ke kartu NFC atau memindai QR Code yang tersedia. Tidak perlu aplikasi tambahan.",
+      note: "NFC + QR CODE",
+      visual: "tap",
+      visualTitle: "One simple tap.",
+      visualCopy: "Dekatkan ponsel. Kartu akan terbaca otomatis."
+    },
+    {
+      number: "02",
+      eyebrow: "INSTANT REDIRECT",
+      title: "Your page opens.",
+      description: "Browser langsung membuka tautan tujuan yang sudah kamu atur. Pengalaman tetap cepat, familiar, dan mudah diikuti.",
+      note: "DIRECT TO YOUR LINK",
+      visual: "open",
+      visualTitle: "Straight to the point.",
+      visualCopy: "Tidak ada aplikasi yang harus diunduh."
+    },
+    {
+      number: "03",
+      eyebrow: "THE MOMENT THAT MATTERS",
+      title: "Leave a review.",
+      description: "Pelanggan tiba di halaman review bisnismu dan bisa membagikan pengalaman mereka dengan lebih praktis.",
+      note: "READY FOR FEEDBACK",
+      visual: "review",
+      visualTitle: "Make feedback easier.",
+      visualCopy: "Satu langkah lebih dekat ke ulasan pelanggan."
+    }
+  ];
+  const step = steps[activeStep];
 
-const steps = [
-  { n:"01", icon:Nfc, title:"Tap the card.", copy:"Pelanggan cukup mendekatkan smartphone ke kartu NFC. QR Code juga tersedia sebagai alternatif." },
-  { n:"02", icon:Link2, title:"Your link opens.", copy:"Browser langsung membuka halaman tujuan yang sudah kamu atur. Tanpa aplikasi tambahan." },
-  { n:"03", icon:Sparkles, title:"Make it count.", copy:"Pelanggan tiba di halaman review dan bisa membagikan pengalaman mereka dengan lebih praktis." }
-];
+  return (
+    <section className="dt-how-section" id="cara-kerja">
+      <div className="dt-how-heading">
+        <div>
+          <span className="dt-how-kicker"><i/> 03 / HOW IT WORKS</span>
+          <h2>From a tap<br/>to a <em>review.</em></h2>
+        </div>
+        <p>Teknologi di baliknya sederhana. Pengalaman pelanggan juga harus begitu.</p>
+      </div>
+
+      <div className="dt-how-workspace">
+        <div className="dt-how-steps" role="tablist" aria-label="Tahapan penggunaan DiTapAja">
+          {steps.map((item, index) => (
+            <button
+              key={item.number}
+              type="button"
+              role="tab"
+              id={"dt-how-tab-" + index}
+              aria-selected={activeStep === index}
+              aria-controls="dt-how-panel"
+              className={"dt-how-step" + (activeStep === index ? " is-active" : "")}
+              onClick={() => setActiveStep(index)}
+            >
+              <span className="dt-how-step-number">{item.number}</span>
+              <span className="dt-how-step-label">{item.title}</span>
+              <span className="dt-how-step-indicator">{activeStep === index ? <Check size={15}/> : <ArrowUpRight size={14}/>}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="dt-how-panel" id="dt-how-panel" role="tabpanel" aria-labelledby={"dt-how-tab-" + activeStep}>
+          <div className="dt-how-copy" key={step.number}>
+            <span className="dt-how-eyebrow">{step.eyebrow}</span>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+            <div className="dt-how-note"><span><i/>{step.note}</span><span>STEP {step.number} / 03</span></div>
+          </div>
+
+          <div className={"dt-how-visual dt-how-visual-" + step.visual} aria-label={step.visualTitle}>
+            <div className="dt-how-visual-grid"/>
+            <div className="dt-how-visual-orbit"/>
+            <div className="dt-how-visual-core">
+              {activeStep === 0 ? (
+                <>
+                  <div className="dt-how-mini-card"><span>DITAPAJA®</span><b>YOUR<br/><em>review</em><br/>STARTS HERE.</b><small>NFC · QR</small></div>
+                  <div className="dt-how-mini-phone"><span/><Smartphone size={31}/><i/></div>
+                  <div className="dt-how-signal"><i/><i/><i/></div>
+                </>
+              ) : activeStep === 1 ? (
+                <>
+                  <div className="dt-how-browser"><div className="dt-how-browser-bar"><i/><i/><i/><span>YOUR DESTINATION</span></div><div className="dt-how-browser-content"><span className="dt-how-browser-mark">D.</span><b>Business<br/><em>destination.</em></b><small>OPENED IN YOUR BROWSER</small><div className="dt-how-browser-line"/></div></div>
+                  <div className="dt-how-link-orbit"><Link2 size={22}/></div>
+                </>
+              ) : (
+                <>
+                  <div className="dt-how-review-card"><span>YOUR EXPERIENCE</span><b>How was<br/>your visit?</b><div className="dt-how-stars">★★★★★</div><small>SHARE YOUR FEEDBACK</small><div className="dt-how-review-line"/></div>
+                  <div className="dt-how-review-spark">✳</div>
+                </>
+              )}
+            </div>
+            <div className="dt-how-visual-caption"><span><i/> {step.visualTitle}</span><small>{step.visualCopy}</small></div>
+            <span className="dt-how-visual-index">DTA / {step.number}</span>
+          </div>
+        </div>
+        <div className="dt-how-progress" aria-hidden="true"><span style={{width: ((activeStep + 1) / 3 * 100) + "%"}}/></div>
+      </div>
+      <div className="dt-how-footer"><span>DESIGNED TO FEEL EFFORTLESS.</span><span>NFC FIRST. QR ALWAYS READY.</span></div>
+    </section>
+  );
+}
 
 export default function Home() {
-  return <main className="dta-home" id="top">
+  return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
     <SiteHeader/>
-    <section className="dta-hero">
-      <div className="dta-hero-inner">
-        <div className="dta-hero-copy">
-          <div className="dta-eyebrow"><span className="dta-live-dot"/> NFC REVIEW CARD <i/> FREE DASHBOARD</div>
-          <p className="dta-hero-overline">A SMALL OBJECT.<br/>A BETTER EXPERIENCE.</p>
-          <h1>Bikin review<br/>semudah <em>satu tap.</em></h1>
-          <p className="dta-hero-description">Cara yang lebih praktis untuk mengarahkan pelanggan ke halaman review bisnismu. Cukup tap atau scan — selesai.</p>
-          <div className="dta-hero-actions">
-            <a href="#koleksi" className="dta-primary-action">Temukan kartu <ArrowUpRight size={18}/></a>
-            <a href="#cara-kerja" className="dta-secondary-action">Lihat cara kerja <ArrowDown size={15}/></a>
+
+    <section className="ed-hero">
+      <div className="ed-hero-grid">
+        <div className="ed-hero-copy">
+          <span className="home-kicker"><i/> NFC REVIEW CARD · DASHBOARD GRATIS</span>
+          <h1>Good reviews.<br/><em>Made easier.</em></h1>
+          <p className="ed-hero-lead">Bantu pelanggan menemukan halaman review bisnismu tanpa langkah yang berbelit. Satu tap atau scan, lalu mereka bisa langsung memberi ulasan.</p>
+          <div className="ed-hero-actions">
+            <a href="#koleksi" className="ed-button">Pilih kartu <ArrowUpRight size={17}/></a>
+            <a href="#cara-kerja" className="ed-text-link">Lihat cara kerja <ArrowDownRight size={16}/></a>
           </div>
-          <div className="dta-trust-row"><span><Check size={14}/> NFC + QR</span><span><Check size={14}/> Tanpa aplikasi</span><span><Check size={14}/> Tanpa biaya bulanan</span></div>
+          <div className="home-hero-proof">
+            <span><Nfc size={15}/> NFC + QR Code</span>
+            <span><Check size={15}/> Tanpa aplikasi</span>
+            <span><Check size={15}/> Tanpa biaya bulanan</span>
+          </div>
         </div>
-        <CardArtifact/>
+
+        <HeroTapDemo/>
       </div>
-      <div className="dta-hero-bottom"><span>DESIGNED TO BE SIMPLE</span><span>01 — 04 <ArrowDown size={13}/></span></div>
+      <div className="home-hero-marquee"><span>MAKE IT SIMPLE</span><i/> <span>MAKE IT COUNT</span><i/> <span>MAKE IT DITAPAJA</span><i/> <span>MAKE IT SIMPLE</span></div>
     </section>
 
-    <section className="dta-manifesto">
-      <div className="dta-section-tag"><span>01</span> THE IDEA</div>
-      <div className="dta-manifesto-content"><h2>Less friction.<br/><em>More connection.</em></h2><p>Jangan biarkan pelanggan mencari-cari link review. Letakkan aksesnya tepat di tempat pengalaman baik itu terjadi.</p></div>
-      <div className="dta-manifesto-stamp"><ScanLine size={20}/><span>JUST TAP<br/>OR SCAN</span></div>
+    <section className="ed-intro-band home-intro">
+      <span className="home-section-index">01 / THE IDEA</span>
+      <h2>Turn every visit<br/>into a chance to <em>connect.</em></h2>
+      <p>Pengalaman memberi ulasan seharusnya sesederhana pengalaman menikmati bisnismu.</p>
     </section>
 
-    <section className="dta-collection" id="koleksi">
-      <div className="dta-section-heading"><div><div className="dta-section-tag"><span>02</span> THE OBJECTS</div><h2>Choose your<br/><em>signature.</em></h2></div><p>Satu fungsi. Tiga karakter visual. Temukan kartu yang paling pas untuk identitas bisnismu.</p></div>
+    <section className="nx-collection ed-collection" id="koleksi">
+      <div className="ed-section-heading">
+        <div><span className="home-section-index">02 / THE COLLECTION</span><h2>Find your<br/>business <em>style.</em></h2></div>
+        <p>Pilih tampilan yang paling cocok untuk bisnismu. Setiap kartu sudah dilengkapi NFC, QR Code, dan dashboard gratis.</p>
+      </div>
       <ProductCarousel products={products}/>
-      <div className="dta-collection-foot"><span>ALL CARDS INCLUDE NFC + QR</span><span>STARTS FROM <b>Rp50.000</b></span></div>
     </section>
 
-    <section className="dta-process" id="cara-kerja">
-      <div className="dta-section-heading"><div><div className="dta-section-tag"><span>03</span> THE EXPERIENCE</div><h2>Three steps.<br/><em>That's it.</em></h2></div><p>Teknologi yang bekerja di belakang layar, supaya pelanggan tidak perlu berpikir dua kali.</p></div>
-      <div className="dta-process-list">{steps.map((step) => { const Icon=step.icon; return <article className="dta-process-item" key={step.n}><span className="dta-process-number">{step.n}</span><span className="dta-process-icon"><Icon size={21}/></span><div><h3>{step.title}</h3><p>{step.copy}</p></div><ChevronRight className="dta-process-arrow" size={18}/></article>; })}</div>
-      <div className="dta-process-note"><ShieldCheck size={17}/><span>Kompatibel dengan smartphone ber-NFC. QR Code tetap tersedia untuk perangkat lain.</span></div>
-    </section>
+    <HowItWorks/>
 
-    <section className="dta-dashboard">
-      <div className="dta-dashboard-copy"><div className="dta-section-tag"><span>04</span> BEYOND THE CARD</div><h2>Control it<br/>from <em>one place.</em></h2><p>Kartu fisik adalah awalnya. Kelola tautan tujuan dan pantau aktivitas kartu lewat dashboard yang sudah termasuk.</p><div className="dta-dashboard-points"><span><CreditCard size={16}/> Kelola kartu</span><span><Gauge size={16}/> Pantau aktivitas</span><span><QrCode size={16}/> Akses QR Code</span></div><a href="/login" className="dta-outline-action">Explore dashboard <ArrowUpRight size={17}/></a></div>
-      <div className="dta-dashboard-visual">
-        <div className="dta-dash-window"><div className="dta-dash-top"><span><BrandGlyph/> DITAPAJA <i>STUDIO</i></span><span>WORKSPACE / OVERVIEW</span></div><div className="dta-dash-welcome"><small>YOUR BUSINESS, IN ONE VIEW</small><b>Good evening<span>.</span></b><p>Here’s what’s happening with your cards.</p></div><div className="dta-dash-stats"><div><span>TOTAL TAPS</span><b>1,284</b><small>Card interactions</small></div><div><span>LINK CLICKS</span><b>864</b><small>Destination visits</small></div></div><div className="dta-dash-chart"><div><span>ACTIVITY OVERVIEW</span><small>LAST 30 DAYS</small></div><div className="dta-chart-bars">{[28,42,34,57,46,70,52,84,63,76,58,91,67,80,54,73].map((v,i)=><i key={i} style={{height:v+"%"}}/>)}</div></div><div className="dta-dash-card"><span className="dta-dash-card-icon"><Nfc size={17}/></span><span><b>Noir — Main counter</b><small>ACTIVE CARD</small></span><i><CircleDot size={9}/> ACTIVE</i></div><div className="dta-dash-disclaimer">ILLUSTRATIVE PREVIEW · NOT LIVE ACCOUNT DATA</div></div>
+    <section className="home-dashboard-story dt-behind" id="behind-the-card">
+      <div className="dt-behind-copy">
+        <span className="home-section-index">04 / BEHIND THE CARD</span>
+        <h2>More than<br/><em>a card.</em></h2>
+        <p className="dt-behind-intro">Satu dashboard sederhana untuk mengelola kartu, mengatur tujuan, dan melihat aktivitas pelanggan.</p>
+        <div className="dt-behind-quick-points"><span><Check size={14}/> Kelola kartu</span><span><Check size={14}/> Atur link tujuan</span><span><Check size={14}/> Pantau aktivitas</span></div>
+        <a className="ed-button" href="/login">Buka dashboard <ArrowUpRight size={17}/></a>
+      </div>
+      <div className="dt-behind-visual">
+        <div className="dt-behind-panel">
+          <div className="dt-behind-panel-top"><div className="dt-behind-brand"><BrandMark/><span>DITAPAJA <i>STUDIO</i></span></div><span className="dt-behind-preview-tag">DASHBOARD PREVIEW</span></div>
+          <div className="dt-behind-panel-heading"><div><small>YOUR WORKSPACE</small><b>Overview<span>.</span></b></div><span className="dt-behind-period">LAST 30 DAYS</span></div>
+          <div className="dt-behind-metrics"><div><span>TOTAL TAPS</span><b>1,284</b><small>Card interactions</small></div><div><span>REVIEW CLICKS</span><b>864</b><small>Outbound visits</small></div></div>
+          <div className="dt-behind-mini-activity"><span>ACTIVITY OVERVIEW</span><div>{[32,48,39,66,51,78,60,91,69,82,58,76].map((height,i)=><i key={i} style={{height:height+"%"}}/>)}</div></div>
+          <div className="dt-behind-card-line"><Nfc size={16}/><b>Noir — Main counter</b><span>ACTIVE</span></div>
+          <p className="dt-behind-data-note">Illustrative dashboard data</p>
+        </div>
       </div>
     </section>
 
-    <section className="dta-final-cta"><div className="dta-final-cta-top"><span>YOUR NEXT MOVE</span><span>DITAPAJA®</span></div><h2>Make the<br/><em>next tap count.</em></h2><p>Mulai dari satu kartu NFC. Bawa pengalaman review yang lebih mudah ke bisnismu.</p><a href="/koleksi" className="dta-primary-action">Pilih kartu pertamamu <ArrowUpRight size={18}/></a><div className="dta-final-cta-bottom"><span>NFC CARD / QR CODE / FREE DASHBOARD</span><span>© 2026 DITAPAJA</span></div></section>
+    <section className="home-closing dt-closing">
+      <div className="dt-closing-top"><span>05 / YOUR NEXT MOVE</span><span>DITAPAJA®</span></div>
+      <div className="dt-closing-main">
+        <div><p className="dt-closing-eyebrow">MAKE IT EASY TO BE REMEMBERED.</p><h2>Turn every<br/><em>tap into trust.</em></h2></div>
+        <div className="dt-closing-action"><p>Mulai dengan satu kartu NFC. Beri pelanggan cara yang lebih cepat untuk menemukan dan mengulas bisnismu.</p><a className="ed-button" href="/koleksi">Temukan kartu kamu <ArrowUpRight size={17}/></a></div>
+      </div>
+      <div className="dt-closing-bottom"><span>ONE TAP CLOSER TO A GOOD REVIEW.</span><span>NFC · QR · FREE DASHBOARD</span></div>
+    </section>
 
-    <footer className="dta-footer"><a href="/" className="dta-footer-brand"><BrandGlyph/> DiTapAja<span>®</span></a><p>Make every customer experience count.</p><div className="dta-footer-links"><a href="/koleksi">Koleksi</a><a href="/faq">FAQ</a><a href="/kontak">Kontak</a><a href="/login">Dashboard</a></div><small>© 2026 DiTapAja. All rights reserved.</small></footer>
+    <footer className="dt-footer dt-footer-redesign">
+      <div className="dt-footer-hero">
+        <div className="dt-footer-hero-meta"><span>DITAPAJA / THE NEXT STEP</span><span>NFC CARD · QR CODE · FREE DASHBOARD</span></div>
+        <div className="dt-footer-hero-content">
+          <h2>Make every<br/><em>review count.</em></h2>
+          <div className="dt-footer-hero-action"><p>Mulai dari satu kartu. Buka jalan untuk lebih banyak cerita baik tentang bisnismu.</p><a href="/koleksi">Jelajahi koleksi <ArrowUpRight size={17}/></a></div>
+        </div>
+      </div>
+      <div className="dt-footer-main">
+        <div className="dt-footer-brand-col">
+          <a href="/" className="dt-footer-brand"><BrandMark/><span>DiTap<span>Aja</span></span></a>
+          <p>Alat sederhana untuk membantu pelanggan menemukan halaman review bisnismu. Satu tap, satu pengalaman yang lebih mudah.</p>
+          <span className="dt-footer-built">MADE FOR BETTER CUSTOMER EXPERIENCES.</span>
+        </div>
+        <div className="dt-footer-links">
+          <div><small>JELAJAHI</small><a href="/koleksi">Koleksi kartu</a><a href="/cara-kerja">Cara kerja</a><a href="/faq">Pertanyaan umum</a></div>
+          <div><small>AKUN & BANTUAN</small><a href="/login">Dashboard pengguna</a><a href="/activate">Aktivasi kartu</a><a href="/kontak">Hubungi kami</a></div>
+        </div>
+        <a className="dt-footer-contact" href="https://wa.me/6281321778081" target="_blank" rel="noopener noreferrer">
+          <span className="dt-footer-contact-icon"><MessageCircle size={19}/></span>
+          <span><small>BUTUH BANTUAN?</small><strong>Let’s talk.</strong><em>Chat langsung melalui WhatsApp</em></span>
+          <ArrowUpRight size={18}/>
+        </a>
+      </div>
+      <div className="dt-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><a href="#top">Kembali ke atas ↑</a><span>ONE TAP CLOSER TO A GOOD REVIEW.</span></div>
+    </footer>
   </main>;
 }
