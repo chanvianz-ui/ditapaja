@@ -17,24 +17,17 @@ function FeatureCard({ product, flipped, onFlip }: {
 }) {
   return (
     <div className={"dt-feature-card-wrap " + (flipped ? "is-flipped" : "")}
-      onPointerMove={(event) => {
-        if (event.pointerType === "touch") return;
-        const rect = event.currentTarget.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - 0.5;
-        const y = (event.clientY - rect.top) / rect.height - 0.5;
-        event.currentTarget.style.setProperty("--tilt-x", (x * 17).toFixed(2) + "deg");
-        event.currentTarget.style.setProperty("--tilt-y", (y * -13).toFixed(2) + "deg");
-      }}
-      onPointerLeave={(event) => {
-        event.currentTarget.style.setProperty("--tilt-x", "0deg");
-        event.currentTarget.style.setProperty("--tilt-y", "0deg");
-      }}>
+      >
       <button type="button" className="dt-feature-card" onClick={onFlip}
         aria-label={flipped ? "Lihat sisi depan kartu" : "Balik kartu untuk melihat sisi belakang"} aria-pressed={flipped}>
         <span className={"dt-feature-card-face dt-feature-card-front dt-feature-" + product.tone}>
           <span className="dt-feature-card-top"><b>DITAPAJA®</b><Nfc size={21}/></span>
-          <span className="dt-feature-card-center"><small>REVIEW MADE SIMPLE</small><strong>{product.label.toUpperCase()}</strong><i/></span>
-          <span className="dt-feature-card-bottom"><span>ONE TAP. MORE REVIEWS.</span></span>
+          <span className="dt-feature-card-center">
+            <span className="dt-card-signal" aria-hidden="true"><i/><i/><i/><b/></span>
+            <strong>{product.label.toUpperCase()}</strong>
+            <small>YOUR BUSINESS. ONE TAP AWAY.</small>
+          </span>
+          <span className="dt-feature-card-bottom"><span>SMART NFC REVIEW CARD</span><span>01 / DTA</span></span>
           <i className="dt-feature-card-shine"/>
           <i className="dt-feature-card-grain"/>
         </span>
@@ -65,10 +58,8 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
       <div className="dt-collection-stage" key={product.tone}>
         <div className="dt-stage-copy">
           <div className="dt-stage-title">
-            <span className="dt-stage-edition">{product.mode === "preorder" ? "LIMITED RELEASE" : "CORE SERIES"}</span>
             <h3>{product.label}<em>.</em></h3>
           </div>
-          <p className="dt-stage-description">{product.description}</p>
            <div className="dt-stage-price">
             <span>PEMBAYARAN SEKALI</span>
             <strong>{product.price}</strong><small>/ kartu</small>
@@ -82,6 +73,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
             </button>
           </div>
           <div className={"dt-stage-included dt-stage-collection-details " + (details ? "is-open" : "")} aria-hidden={!details} inert={!details}>
+            <p className="dt-stage-detail-description">{product.description}</p>
             <span><Nfc size={14}/> Kartu NFC siap pakai</span>
             <span><QrCode size={14}/> QR Code cadangan</span>
             <span>Dashboard gratis</span>
