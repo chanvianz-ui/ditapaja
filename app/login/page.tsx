@@ -92,8 +92,31 @@ export default function LoginPage() {
   return (
     <>
       <SiteHeader />
-      <main className="dt-auth-page">
-        <section className="dt-auth-form-card">
+      <main className="dt-auth-page dt-login-page">
+        <div className="dt-login-layout">
+          <aside className="dt-login-story" aria-label="Tentang dashboard DiTapAja">
+            <div className="dt-login-story-top">
+              <span className="dt-login-story-index">DITAPAJA / WORKSPACE</span>
+              <span className="dt-login-story-status"><i /> SYSTEM ONLINE</span>
+            </div>
+            <div className="dt-login-story-copy">
+              <span className="dt-auth-kicker">SATU TAP, LEBIH BANYAK REVIEW</span>
+              <h2>Bisnismu.<br /><em>Dalam kendali.</em></h2>
+              <p>Kelola kartu NFC, pantau interaksi pelanggan, dan lihat bagaimana setiap tap bekerja untuk bisnismu.</p>
+            </div>
+            <div className="dt-login-story-visual" aria-hidden="true">
+              <div className="dt-login-orbit dt-login-orbit-one" />
+              <div className="dt-login-orbit dt-login-orbit-two" />
+              <div className="dt-login-card-visual">
+                <div className="dt-login-card-top"><span>DITAPAJA</span><span>NFC / 01</span></div>
+                <div className="dt-login-card-center"><i /><i /><i /></div>
+                <div className="dt-login-card-bottom"><strong>MAKE EVERY TAP COUNT</strong><span>● ● ●</span></div>
+              </div>
+              <div className="dt-login-float-note"><span className="dt-login-float-dot" /><span><small>LIVE ACTIVITY</small><strong>Tap terpantau</strong></span><b>↗</b></div>
+            </div>
+            <div className="dt-login-story-foot"><span>NFC CARD</span><i /><span>QR ACCESS</span><i /><span>INSIGHT DASHBOARD</span></div>
+          </aside>
+          <section className="dt-auth-form-card">
           <div className="dt-auth-heading">
             <span className="dt-auth-kicker">AKUN DITAPAJA</span>
             <h1>Masuk</h1>
@@ -121,7 +144,8 @@ export default function LoginPage() {
           </form>
           <p className="dt-auth-switch">Belum punya akun? <Link href={nextPath ? "/register?next=" + encodeURIComponent(nextPath) : "/register"}>Daftar gratis</Link></p>
           <Link href="/" className="dt-auth-back">← Kembali ke halaman utama</Link>
-        </section>
+          </section>
+        </div>
       </main>
     </>
   );
