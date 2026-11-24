@@ -2,7 +2,7 @@
 
 import { useState, type CSSProperties, type PointerEvent } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ChevronRight, Layers3, Nfc } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Layers3, Nfc, Radio, Sparkles } from "lucide-react";
 
 type Product = {
   name: string;
@@ -23,8 +23,8 @@ function FeatureCard({ product }: { product: Product }) {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width;
     const y = (event.clientY - rect.top) / rect.height;
-    event.currentTarget.style.setProperty("--tilt-x", ((0.5 - y) * 11).toFixed(2) + "deg");
-    event.currentTarget.style.setProperty("--tilt-y", ((x - 0.5) * 14).toFixed(2) + "deg");
+    event.currentTarget.style.setProperty("--tilt-x", ((0.5 - y) * 13).toFixed(2) + "deg");
+    event.currentTarget.style.setProperty("--tilt-y", ((x - 0.5) * 16).toFixed(2) + "deg");
     event.currentTarget.style.setProperty("--shine-x", (x * 100).toFixed(1) + "%");
     event.currentTarget.style.setProperty("--shine-y", (y * 100).toFixed(1) + "%");
   };
@@ -45,22 +45,28 @@ function FeatureCard({ product }: { product: Product }) {
         onPointerMove={handlePointerMove}
         onPointerLeave={resetPointer}
         aria-pressed={nfcActive}
-        aria-label={"Aktifkan efek NFC kartu " + product.label}
+        aria-label={(nfcActive ? "Matikan" : "Aktifkan") + " simulasi NFC kartu " + product.label}
         style={{ "--tilt-x": "0deg", "--tilt-y": "0deg", "--shine-x": "50%", "--shine-y": "50%" } as CSSProperties}
       >
         <span className="dt-card-edge" aria-hidden="true"/>
         <span className="dt-feature-card-face dt-feature-card-front">
           <span className="dt-card-material-line" aria-hidden="true"/>
-          <span className="dt-feature-card-top"><b>DITAPAJA<span>®</span></b><Nfc size={23}/></span>
+          <span className="dt-feature-card-top">
+            <b>DITAPAJA<span>®</span></b>
+            <span className="dt-card-chip"><Nfc size={19}/><small>CONTACTLESS</small></span>
+          </span>
           <span className="dt-feature-card-center">
             <span className="dt-card-signal" aria-hidden="true"><i/><i/><i/><b/></span>
             <strong>{product.label.toUpperCase()}</strong>
             <small>YOUR BUSINESS. ONE TAP AWAY.</small>
           </span>
           <span className="dt-feature-card-bottom"><span>SMART NFC REVIEW CARD</span><span>01 / DTA</span></span>
+          <span className="dt-card-live-status"><i/>{nfcActive ? "FIELD ACTIVATED" : "NFC READY"}</span>
           <i className="dt-feature-card-shine" aria-hidden="true"/>
           <i className="dt-feature-card-grain" aria-hidden="true"/>
-          <span className="dt-card-tap-hint">{nfcActive ? "NFC FIELD ACTIVE" : "TAP TO INTERACT"}</span>
+          <i className="dt-card-scanline" aria-hidden="true"/>
+          <span className="dt-card-tap-hint">{nfcActive ? "TAP AGAIN TO RESET" : "TAP CARD TO TEST NFC"}</span>
+          <span className="dt-card-corner-mark" aria-hidden="true"><Sparkles size={14}/></span>
         </span>
       </button>
     </div>
