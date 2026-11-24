@@ -138,6 +138,113 @@ function HeroTapDemo() {
     </div>
   </div>;
 }
+function HowItWorks() {
+  const [activeStep, setActiveStep] = useState(0);
+  const steps = [
+    {
+      number: "01",
+      eyebrow: "THE FIRST CONTACT",
+      title: "Tap or scan.",
+      description: "Pelanggan cukup mendekatkan smartphone ke kartu NFC atau memindai QR Code yang tersedia. Tidak perlu aplikasi tambahan.",
+      note: "NFC + QR CODE",
+      visual: "tap",
+      visualTitle: "One simple tap.",
+      visualCopy: "Dekatkan ponsel. Kartu akan terbaca otomatis."
+    },
+    {
+      number: "02",
+      eyebrow: "INSTANT REDIRECT",
+      title: "Your page opens.",
+      description: "Browser langsung membuka tautan tujuan yang sudah kamu atur. Pengalaman tetap cepat, familiar, dan mudah diikuti.",
+      note: "DIRECT TO YOUR LINK",
+      visual: "open",
+      visualTitle: "Straight to the point.",
+      visualCopy: "Tidak ada aplikasi yang harus diunduh."
+    },
+    {
+      number: "03",
+      eyebrow: "THE MOMENT THAT MATTERS",
+      title: "Leave a review.",
+      description: "Pelanggan tiba di halaman review bisnismu dan bisa membagikan pengalaman mereka dengan lebih praktis.",
+      note: "READY FOR FEEDBACK",
+      visual: "review",
+      visualTitle: "Make feedback easier.",
+      visualCopy: "Satu langkah lebih dekat ke ulasan pelanggan."
+    }
+  ];
+  const step = steps[activeStep];
+
+  return (
+    <section className="dt-how-section" id="cara-kerja">
+      <div className="dt-how-heading">
+        <div>
+          <span className="dt-how-kicker"><i/> 03 / HOW IT WORKS</span>
+          <h2>From a tap<br/>to a <em>review.</em></h2>
+        </div>
+        <p>Teknologi di baliknya sederhana. Pengalaman pelanggan juga harus begitu.</p>
+      </div>
+
+      <div className="dt-how-workspace">
+        <div className="dt-how-steps" role="tablist" aria-label="Tahapan penggunaan DiTapAja">
+          {steps.map((item, index) => (
+            <button
+              key={item.number}
+              type="button"
+              role="tab"
+              id={"dt-how-tab-" + index}
+              aria-selected={activeStep === index}
+              aria-controls="dt-how-panel"
+              className={"dt-how-step" + (activeStep === index ? " is-active" : "")}
+              onClick={() => setActiveStep(index)}
+            >
+              <span className="dt-how-step-number">{item.number}</span>
+              <span className="dt-how-step-label">{item.title}</span>
+              <span className="dt-how-step-indicator">{activeStep === index ? <Check size={15}/> : <ArrowUpRight size={14}/>}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="dt-how-panel" id="dt-how-panel" role="tabpanel" aria-labelledby={"dt-how-tab-" + activeStep}>
+          <div className="dt-how-copy" key={step.number}>
+            <span className="dt-how-eyebrow">{step.eyebrow}</span>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+            <div className="dt-how-note"><span><i/>{step.note}</span><span>STEP {step.number} / 03</span></div>
+          </div>
+
+          <div className={"dt-how-visual dt-how-visual-" + step.visual} aria-label={step.visualTitle}>
+            <div className="dt-how-visual-grid"/>
+            <div className="dt-how-visual-orbit"/>
+            <div className="dt-how-visual-core">
+              {activeStep === 0 ? (
+                <>
+                  <div className="dt-how-mini-card"><span>DITAPAJA®</span><b>YOUR<br/><em>review</em><br/>STARTS HERE.</b><small>NFC · QR</small></div>
+                  <div className="dt-how-mini-phone"><span/><Smartphone size={31}/><i/></div>
+                  <div className="dt-how-signal"><i/><i/><i/></div>
+                </>
+              ) : activeStep === 1 ? (
+                <>
+                  <div className="dt-how-browser"><div className="dt-how-browser-bar"><i/><i/><i/><span>YOUR DESTINATION</span></div><div className="dt-how-browser-content"><span className="dt-how-browser-mark">D.</span><b>Business<br/><em>destination.</em></b><small>OPENED IN YOUR BROWSER</small><div className="dt-how-browser-line"/></div></div>
+                  <div className="dt-how-link-orbit"><Link2 size={22}/></div>
+                </>
+              ) : (
+                <>
+                  <div className="dt-how-review-card"><span>YOUR EXPERIENCE</span><b>How was<br/>your visit?</b><div className="dt-how-stars">★★★★★</div><small>SHARE YOUR FEEDBACK</small><div className="dt-how-review-line"/></div>
+                  <div className="dt-how-review-spark">✳</div>
+                </>
+              )}
+            </div>
+            <div className="dt-how-visual-caption"><span><i/> {step.visualTitle}</span><small>{step.visualCopy}</small></div>
+            <span className="dt-how-visual-index">DTA / {step.number}</span>
+          </div>
+        </div>
+        <div className="dt-how-progress" aria-hidden="true"><span style={{width: ((activeStep + 1) / 3 * 100) + "%"}}/></div>
+      </div>
+      <div className="dt-how-footer"><span>DESIGNED TO FEEL EFFORTLESS.</span><span>NFC FIRST. QR ALWAYS READY.</span></div>
+    </section>
+  );
+}
+
 export default function Home() {
   return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
     <SiteHeader/>
@@ -178,16 +285,7 @@ export default function Home() {
       <ProductCarousel products={products}/>
     </section>
 
-    <section className="ed-flow home-flow" id="cara-kerja">
-      <div className="ed-flow-head"><span className="home-section-index">03 / HOW IT WORKS</span><h2>Three steps.<br/><em>That’s all.</em></h2><p>Alur yang ringkas, supaya pelanggan bisa fokus pada hal yang paling penting: berbagi pengalaman mereka.</p></div>
-      <div className="ed-flow-list">
-        <article><span className="ed-flow-number">01</span><div className="ed-flow-icon"><Smartphone size={21}/></div><div><h3>Tap or scan.</h3><p>Pelanggan mendekatkan ponsel ke kartu NFC atau memindai QR Code.</p></div><ArrowUpRight className="home-flow-arrow"/></article>
-        <article><span className="ed-flow-number">02</span><div className="ed-flow-icon"><Link2 size={21}/></div><div><h3>Your page opens.</h3><p>Halaman tujuan terbuka langsung di browser. Tidak perlu mengunduh aplikasi.</p></div><ArrowUpRight className="home-flow-arrow"/></article>
-        <article><span className="ed-flow-number">03</span><div className="ed-flow-icon"><Star size={21}/></div><div><h3>Leave a review.</h3><p>Pelanggan diarahkan ke halaman review yang sudah kamu tentukan.</p></div><ArrowUpRight className="home-flow-arrow"/></article>
-      </div>
-    </section>
-
-    <section className="home-dashboard-story">
+    <HowItWorks/>\n\n    <section className="home-dashboard-story">
       <div className="home-dashboard-copy">
         <span className="home-section-index">04 / BEHIND THE CARD</span>
         <h2>One card.<br/><em>More control.</em></h2>
