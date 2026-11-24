@@ -2692,3 +2692,53 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .ed-collection .dt-stage-art:before,.dt-home-rebuild .ed-collection .dt-stage-art:after,.dt-home-rebuild .ed-collection .dt-art-grid,.dt-home-rebuild .ed-collection .dt-art-glow,.dt-home-rebuild .ed-collection .dt-art-orbit,.dt-home-rebuild .ed-collection .dt-feature-card-shine{animation:none!important}
  .dt-home-rebuild .ed-collection .dt-feature-card{transition:transform .01ms!important}
 }
+
+
+/* COLLECTION refinement — softer silhouettes, cleaner hierarchy */
+.dt-home-rebuild .ed-collection .dt-collection-experience{border-radius:34px;overflow:hidden}
+.dt-home-rebuild .ed-collection .dt-collection-toolbar{padding-inline:clamp(20px,3vw,38px)}
+.dt-home-rebuild .ed-collection .dt-collection-stage{border:1px solid rgba(190,220,202,.12);border-radius:34px;overflow:hidden;background:#0d1d21}
+.dt-home-rebuild .ed-collection .dt-stage-copy{border-radius:0 30px 30px 0}
+.dt-home-rebuild .ed-collection .dt-stage-art{border-radius:30px 0 0 30px;overflow:hidden}
+.dt-home-rebuild .ed-collection .dt-stage-overline{margin-bottom:18px}
+.dt-home-rebuild .ed-collection .dt-stage-edition{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border:1px solid rgba(190,220,202,.2);border-radius:999px;background:rgba(190,220,202,.055);font-size:8px;letter-spacing:.15em}
+.dt-home-rebuild .ed-collection .dt-stage-title h3{margin-top:17px}
+.dt-home-rebuild .ed-collection .dt-stage-specs span{border-radius:999px}
+.dt-home-rebuild .ed-collection .dt-stage-primary{border-radius:999px}
+.dt-home-rebuild .ed-collection .dt-stage-detail{border-radius:999px;padding:0 15px}
+.dt-home-rebuild .ed-collection .dt-stage-included{border-radius:18px}
+.dt-home-rebuild .ed-collection .dt-stage-trust{border-radius:0}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap{width:min(72%,500px)}
+.dt-home-rebuild .ed-collection .dt-feature-card-face{border-radius:28px!important}
+.dt-home-rebuild .ed-collection .dt-feature-card-top b{letter-spacing:.12em}
+.dt-home-rebuild .ed-collection .dt-feature-card-bottom{letter-spacing:.1em}
+.dt-home-rebuild .ed-collection .dt-art-control-dock{left:clamp(22px,4vw,46px);right:clamp(22px,4vw,46px);bottom:28px;border-radius:999px;padding:10px 12px 10px 18px}
+.dt-home-rebuild .ed-collection .dt-art-control-dock button{border-radius:999px}
+.dt-home-rebuild .ed-collection .dt-edition-selector{margin-top:22px;padding:28px clamp(20px,3vw,38px);border:1px solid rgba(190,220,202,.12);border-radius:30px;background:linear-gradient(145deg,#102326,#0b191d)}
+.dt-home-rebuild .ed-collection .dt-selector-heading{display:flex;align-items:center;justify-content:flex-start}
+.dt-home-rebuild .ed-collection .dt-selector-heading>span{font-size:9px;letter-spacing:.16em}
+.dt-home-rebuild .ed-collection .dt-selector-options{gap:14px}
+.dt-home-rebuild .ed-collection .dt-selector-option{min-height:116px;border-radius:22px;padding:18px 20px;background:rgba(4,17,20,.2)}
+.dt-home-rebuild .ed-collection .dt-selector-option:before{left:22px;right:22px;border-radius:999px}
+.dt-home-rebuild .ed-collection .dt-selector-option.is-active{border-color:rgba(190,225,203,.65);background:radial-gradient(ellipse at 0 50%,rgba(172,211,185,.16),transparent 75%),rgba(12,31,31,.88);box-shadow:inset 0 0 0 1px rgba(190,225,203,.08),0 14px 36px rgba(0,0,0,.16)}
+.dt-home-rebuild .ed-collection .dt-selector-swatch{border-radius:13px;flex-basis:58px;aspect-ratio:1.25}
+.dt-home-rebuild .ed-collection .dt-selector-option>svg{width:20px;height:20px}
+.dt-home-rebuild .ed-collection .dt-selector-option.is-active:after{top:11px;right:16px;padding:5px 9px;border-radius:999px;background:rgba(169,207,181,.1)}
+.dt-home-rebuild .ed-collection .dt-collection-signoff{justify-content:center;gap:13px}
+@media(max-width:1000px){
+ .dt-home-rebuild .ed-collection .dt-feature-card-wrap{width:78%}
+ .dt-home-rebuild .ed-collection .dt-selector-option{padding:15px 12px;border-radius:18px}
+}
+@media(max-width:700px){
+ .dt-home-rebuild .ed-collection .dt-collection-experience{border-radius:0}
+ .dt-home-rebuild .ed-collection .dt-collection-stage{border-radius:25px}
+ .dt-home-rebuild .ed-collection .dt-stage-art{border-radius:24px 24px 0 0}
+ .dt-home-rebuild .ed-collection .dt-stage-copy{border-radius:0 0 24px 24px}
+ .dt-home-rebuild .ed-collection .dt-feature-card-face{border-radius:21px!important}
+ .dt-home-rebuild .ed-collection .dt-art-control-dock{left:12px;right:12px;bottom:12px;border-radius:999px}
+ .dt-home-rebuild .ed-collection .dt-edition-selector{margin-top:14px;padding:20px 13px 14px;border-radius:24px}
+ .dt-home-rebuild .ed-collection .dt-selector-options{gap:9px}
+ .dt-home-rebuild .ed-collection .dt-selector-option{border-radius:17px;min-height:78px}
+ .dt-home-rebuild .ed-collection .dt-selector-swatch{border-radius:11px;flex-basis:48px}
+ .dt-home-rebuild .ed-collection .dt-collection-signoff{justify-content:flex-start}
+}
