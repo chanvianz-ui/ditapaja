@@ -36,7 +36,7 @@ export default function SiteHeader() {
     <header className="concept-header dt-public-header">
       <div className="concept-nav">
         <Brand />
-        <nav aria-label="Navigasi utama">{links.slice(1, 5).map(([label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
+        <nav aria-label="Navigasi utama">{links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}</nav>
         <div className="concept-nav-actions">
           <a href="/login">Masuk</a>
           <a className="concept-nav-cta" href="/koleksi">Pilih kartu <ArrowUpRight size={15}/></a>
