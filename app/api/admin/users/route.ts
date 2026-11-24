@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
           accountType: username ? "username" : "email",
           createdAt: user.created_at,
           lastSignInAt: user.last_sign_in_at ?? null,
-          emailConfirmedAt: username ? null : user.email_confirmed_at,
+          emailConfirmedAt: username ? null : user.email_confirmed_at ?? null,
         };
       });
       return NextResponse.json({ success: true, users, pagination: { page, perPage, hasMore: users.length === perPage } });
@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
           id: user.id, email, username,
           accountType: username ? "username" : "email",
           createdAt: user.created_at,
-          lastSignInAt: user.last_sign_in_at,
+          lastSignInAt: user.last_sign_in_at ?? null,
           emailConfirmedAt: username ? null : user.email_confirmed_at,
         });
       }
