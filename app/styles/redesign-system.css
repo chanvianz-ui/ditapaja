@@ -1,0 +1,200 @@
+/* DiTapAja — unified visual system, November 2026 */
+:root {
+  color-scheme: dark;
+  --dt-bg: #0a111b;
+  --dt-bg-soft: #101b28;
+  --dt-surface: #142333;
+  --dt-surface-raised: #1a2d40;
+  --dt-border: rgba(174, 197, 216, .13);
+  --dt-border-strong: rgba(174, 197, 216, .22);
+  --dt-text: #edf2f4;
+  --dt-muted: #9aaab6;
+  --dt-muted-strong: #718493;
+  --dt-blue: #477f91;
+  --dt-blue-strong: #356c7e;
+  --dt-cyan: #8bc7bd;
+  --dt-cyan-soft: rgba(139, 199, 189, .10);
+  --dt-danger: #e58d91;
+  --dt-success: #87c5a7;
+  --dt-radius-sm: 8px;
+  --dt-radius-md: 12px;
+  --dt-radius-lg: 18px;
+  --dt-shadow: 0 24px 70px rgba(0,0,0,.28);
+}
+html { background: var(--dt-bg) !important; scroll-padding-top: 92px; }
+body {
+  color: var(--dt-text) !important;
+  background:
+    radial-gradient(ellipse at 84% -18%, rgba(93,145,151,.12), transparent 38rem),
+    var(--dt-bg) !important;
+  font-family: "DM Sans", sans-serif;
+}
+h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
+::selection { color: #0a151a; background: #a5d6ca; }
+:focus-visible { outline-color: #a5d6ca !important; }
+
+/* One geometry language: restrained corners, thin borders, quieter elevation. */
+:where(.dt-site-header,.dt-auth-form-card,.info-content,.info-contact-strip,
+.nx-catalog-products,.ck-section,.dt-card-create-intro,.dt-card-create-form,
+.dt-admin-shell article,.dt-reset-dashboard .dt-panel,.dt-reset-dashboard .dt-kpi,
+.dt-workspace-page article,.dt-workspace-page section,.dt-customer-orders article,
+.ditapaja-studio-page .studio-panel,.ditapaja-insights-page .ditapaja-insights-panel) {
+  border-radius: var(--dt-radius-lg) !important;
+}
+:where(.dt-auth-form-card,.info-content,.dt-reset-dashboard .dt-panel,
+.dt-reset-dashboard .dt-kpi,.dt-admin-shell article) {
+  border-color: var(--dt-border) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.16) !important;
+}
+:where(.dt-auth-page,.info-page,.nx-catalog-page,.ck-page,.product-detail-page,
+.dt-activation-page,.dt-customer-orders,.dt-workspace-page,.dt-reset-dashboard,
+.dt-admin-shell,.ditapaja-insights-page,.ditapaja-studio-page) {
+  color: var(--dt-text) !important;
+}
+:where(.dt-auth-page,.info-page,.nx-catalog-page,.ck-page,.product-detail-page,
+.dt-activation-page,.dt-customer-orders,.dt-workspace-page,.dt-reset-dashboard,
+.dt-admin-shell,.ditapaja-insights-page,.ditapaja-studio-page) a {
+  -webkit-tap-highlight-color: transparent;
+}
+:where(.dt-auth-page,.info-page,.nx-catalog-page,.ck-page,.product-detail-page) {
+  background-color: var(--dt-bg) !important;
+}
+
+/* Public pages: consistent editorial width and section rhythm. */
+.info-page { min-height: 100vh; background: var(--dt-bg) !important; }
+.info-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(76px, 10vw, 132px) 24px clamp(54px, 7vw, 86px) !important;
+  border-bottom: 1px solid var(--dt-border);
+  background: linear-gradient(125deg, #101e2b 0%, #0b1520 58%, #12252b 100%) !important;
+}
+.info-hero:after {
+  position:absolute; right:-110px; top:-210px; width:440px; aspect-ratio:1;
+  border:1px solid rgba(165,214,202,.14); border-radius:50%;
+  box-shadow:0 0 0 34px rgba(165,214,202,.025),0 0 0 78px rgba(165,214,202,.018);
+  content:""; pointer-events:none;
+}
+.info-wrap,.info-content { width:min(1120px,100%) !important; margin-inline:auto !important; }
+.info-wrap { position:relative; z-index:1; }
+.info-eyebrow,.ck-eyebrow,.nx-eyebrow {
+  color:#a5d6ca !important; letter-spacing:.17em !important;
+}
+.info-hero h1 {
+  max-width:900px; margin:22px 0 18px !important;
+  font-size:clamp(44px,7.2vw,88px) !important;
+  line-height:.98 !important; letter-spacing:-.075em !important;
+}
+.info-hero p { max-width:610px; color:#a8b7c1 !important; font-size:14px !important; line-height:1.85 !important; }
+.info-content { padding:clamp(32px,6vw,76px) 24px !important; }
+.info-content :where(p,li) { color:#aab8c2; line-height:1.9; }
+.info-content h2,.info-content h3 { color:#edf2f4; letter-spacing:-.04em; }
+.info-content :where(article,.info-legal-note,.info-contact-grid>*) {
+  border:1px solid var(--dt-border); border-radius:14px;
+  background:linear-gradient(145deg,rgba(22,39,54,.9),rgba(15,28,40,.92));
+}
+.info-footer { border-top:1px solid var(--dt-border); }
+.ck-page,.nx-catalog-page,.product-detail-page { background:var(--dt-bg) !important; }
+.ck-page :where(.ck-hero,.ck-section) { border-color:var(--dt-border) !important; }
+.ck-hero {
+  background:
+    radial-gradient(ellipse at 78% 20%,rgba(139,199,189,.12),transparent 32rem),
+    linear-gradient(135deg,#111e2b,#0a141e 68%) !important;
+}
+.ck-card,.ck-step,.ck-feature,.ck-compatibility {
+  border:1px solid var(--dt-border) !important;
+  border-radius:14px !important;
+  background:linear-gradient(145deg,#172a3a,#101d2a) !important;
+  box-shadow:none !important;
+}
+.nx-catalog-hero { background:linear-gradient(135deg,#111f2d,#0a141e 70%) !important; }
+.nx-catalog-page :where(article,.nx-product-card) { border-radius:14px !important; }
+.product-detail-page :where(.detail-card,.detail-panel,.detail-spec) {
+  border-radius:14px !important; border-color:var(--dt-border) !important;
+}
+
+/* Auth and activation: focused two-column composition on wide screens. */
+.dt-auth-page,.dt-activation-page {
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(139,199,189,.10),transparent 35rem),
+    var(--dt-bg) !important;
+}
+.dt-auth-form-card {
+  border:1px solid var(--dt-border) !important;
+  border-radius:18px !important;
+  background:linear-gradient(145deg,#172838,#101d2a) !important;
+  box-shadow:var(--dt-shadow) !important;
+}
+.dt-auth-kicker { color:#a5d6ca !important; }
+.dt-auth-submit,.dt-stage-primary,.nx-button-primary {
+  border:1px solid rgba(165,214,202,.3) !important;
+  border-radius:9px !important;
+  background:#a5d6ca !important; color:#10201f !important;
+  box-shadow:none !important;
+}
+.dt-auth-field input,.dt-auth-password input,.dt-auth-form input:not([type=checkbox]),
+.dt-admin-shell input,.dt-admin-shell select,.dt-admin-shell textarea {
+  border-radius:9px !important; border-color:var(--dt-border-strong) !important;
+  background:#0c1823 !important; color:var(--dt-text) !important;
+}
+.dt-auth-field input:focus,.dt-auth-password input:focus,.dt-auth-form input:focus {
+  border-color:#a5d6ca !important; box-shadow:0 0 0 3px rgba(165,214,202,.10) !important;
+}
+
+/* Dashboard and admin share the same neutral dark workspace language. */
+.dt-workspace-page,.dt-reset-dashboard,.ditapaja-insights-page,.ditapaja-studio-page {
+  background:
+    radial-gradient(ellipse at 85% -12%,rgba(139,199,189,.09),transparent 34rem),
+    #0a111b !important;
+  color:var(--dt-text) !important;
+}
+.dt-workspace-page :where(article,.rounded-2xl,.rounded-3xl),
+.dt-customer-orders :where(article,.rounded-2xl,.rounded-3xl) {
+  border-color:var(--dt-border) !important;
+  background:linear-gradient(145deg,#172a3a,#101d2a) !important;
+  color:var(--dt-text) !important;
+  box-shadow:0 16px 44px rgba(0,0,0,.14) !important;
+}
+.dt-workspace-page :where(h1,h2,h3,h4),.dt-customer-orders :where(h1,h2,h3,h4) { color:var(--dt-text) !important; }
+.dt-workspace-page :where(p,small,label),.dt-customer-orders :where(p,small,label) { color:#9aabb8; }
+.dt-workspace-page :where(input,select,textarea),.dt-customer-orders :where(input,select,textarea) {
+  border-color:var(--dt-border-strong) !important; border-radius:9px !important;
+  background:#0c1823 !important; color:var(--dt-text) !important;
+}
+.dt-reset-dashboard .dt-kpi,.dt-reset-dashboard .dt-panel,.dt-reset-dashboard .dt-insights,
+.dt-reset-dashboard .dt-card-manager,.dt-reset-dashboard .dt-managed-card {
+  border:1px solid var(--dt-border) !important; border-radius:15px !important;
+  background:linear-gradient(145deg,#172a3a,#101d2a) !important;
+}
+.dt-admin-shell {
+  background:radial-gradient(ellipse at 85% -10%,rgba(139,199,189,.09),transparent 34rem),#0a111b !important;
+}
+.dt-admin-shell aside { background:#0d1924 !important; border-color:var(--dt-border) !important; }
+.dt-admin-shell section>header { background:rgba(10,17,27,.92) !important; border-color:var(--dt-border) !important; }
+.dt-admin-shell article { border-radius:14px !important; background:linear-gradient(145deg,#172a3a,#101d2a) !important; }
+.dt-admin-shell button,.dt-admin-shell a { border-radius:9px; }
+
+/* Customer order history and smaller utility pages. */
+.dt-customer-orders { min-height:100vh; background:var(--dt-bg) !important; }
+.dt-customer-orders-inner { width:min(1120px,100%) !important; }
+.dt-customer-orders-heading h1 { font-size:clamp(34px,5vw,54px) !important; letter-spacing:-.065em !important; }
+.dt-customer-orders :where(button,a[class]) { border-radius:9px !important; }
+.dt-activation-page { min-height:100vh; padding:clamp(24px,5vw,64px) !important; }
+.dt-activation-shell { border-radius:18px !important; border-color:var(--dt-border) !important; background:#142333 !important; }
+
+/* Shared responsive rhythm and motion restraint. */
+@media(max-width:760px) {
+  .info-hero { padding:68px 20px 48px !important; }
+  .info-content { padding:30px 20px 48px !important; }
+  .info-hero h1 { font-size:clamp(40px,12vw,58px) !important; }
+  .dt-auth-page { padding:24px 16px 40px !important; }
+  .dt-customer-orders { padding:24px 14px !important; }
+  .dt-activation-page { padding:20px 14px !important; }
+  .dt-activation-shell { border-radius:14px !important; }
+  .dt-workspace-page .mx-auto.max-w-6xl { padding-inline:14px !important; }
+}
+@media(prefers-reduced-motion:reduce) {
+  :where(.info-page,.ck-page,.nx-catalog-page,.product-detail-page,.dt-auth-page,.dt-workspace-page,.dt-reset-dashboard,.dt-admin-shell) * {
+    animation-duration:.01ms !important; transition-duration:.01ms !important;
+  }
+}
