@@ -2,7 +2,7 @@
 
 import { useState, type CSSProperties, type PointerEvent } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ChevronRight, Layers3, Nfc, Radio, Sparkles } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Layers3, Nfc, Sparkles } from "lucide-react";
 
 type Product = {
   name: string;
