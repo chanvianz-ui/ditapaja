@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { setAuthStorageMode, supabase } from "../../lib/supabase";
@@ -22,6 +22,8 @@ function getSafeNextPath() {
 
 export default function AuthExperience({ mode }: { mode: AuthMode }) {
   const router = useRouter();
+  const [querySuffix, setQuerySuffix] = useState("");
+  useEffect(() => { setQuerySuffix(window.location.search); }, []);
   const [name, setName] = useState("");
   const [identifier, setIdentifier] = useState("");
   const [email, setEmail] = useState("");
@@ -161,7 +163,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
         </div>
 
         <nav className="dt-auth-hub-switch" aria-label="Pilih akses akun">
-          <Link href={"/login" + (typeof window !== "undefined" ? window.location.search : "")} className={mode === "login" ? "is-active" : ""} aria-current={mode === "login" ? "page" : undefined}>Masuk</Link>
+          <Link href={"/login" + querySuffix} className={mode === "login" ? "is-active" : ""} aria-current={mode === "login" ? "page" : undefined}>Masuk</Link>
           <Link href={"/register" + (typeof window !== "undefined" ? window.location.search : "")} className={mode === "register" ? "is-active" : ""} aria-current={mode === "register" ? "page" : undefined}>Buat akun</Link>
           <span className={mode === "register" ? "is-register" : ""} aria-hidden="true" />
         </nav>
