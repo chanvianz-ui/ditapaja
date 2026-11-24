@@ -161,7 +161,7 @@ export default function NewCardPage() {
   }
 
   return (
-    <main className="dt-card-create-page min-h-screen bg-[#f7f9fc] px-4 py-6 sm:px-6 sm:py-9">
+    <main className="dt-card-create-page dt-workspace-page min-h-screen bg-[#f7f9fc] px-4 py-6 sm:px-6 sm:py-9">
       <div className="mx-auto max-w-2xl">
         <Link
           href="/dashboard"
