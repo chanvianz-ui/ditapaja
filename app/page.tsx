@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
-import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi, MessageCircle } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 
@@ -316,13 +316,31 @@ export default function Home() {
       <div className="dt-closing-bottom"><span>ONE TAP CLOSER TO A GOOD REVIEW.</span><span>NFC · QR · FREE DASHBOARD</span></div>
     </section>
 
-    <footer className="nx-footer ed-footer dt-footer">
-      <div className="dt-footer-main">
-        <div className="dt-footer-brand-col"><a href="/" className="nx-footer-brand"><BrandMark/> DiTap<span>Aja.</span></a><p>Make every customer connection count. Satu tap untuk pengalaman review yang lebih mudah.</p><a className="dt-footer-contact-link" href="https://wa.me/6281321778081">Talk to our team <ArrowUpRight size={15}/></a></div>
-        <div className="dt-footer-links"><div><small>EXPLORE</small><a href="/koleksi">Koleksi kartu</a><a href="/cara-kerja">Cara kerja</a><a href="/faq">FAQ</a></div><div><small>YOUR ACCOUNT</small><a href="/login">Dashboard</a><a href="/activate">Aktivasi kartu</a><a href="/kontak">Hubungi kami</a></div></div>
-        <div className="dt-footer-signoff"><span>GOOD REVIEWS<br/>START HERE.</span><a href="#top" aria-label="Back to top">↑</a></div>
+    <footer className="dt-footer dt-footer-redesign">
+      <div className="dt-footer-hero">
+        <div className="dt-footer-hero-meta"><span>DITAPAJA / THE NEXT STEP</span><span>NFC CARD · QR CODE · FREE DASHBOARD</span></div>
+        <div className="dt-footer-hero-content">
+          <h2>Make every<br/><em>review count.</em></h2>
+          <div className="dt-footer-hero-action"><p>Mulai dari satu kartu. Buka jalan untuk lebih banyak cerita baik tentang bisnismu.</p><a href="/koleksi">Jelajahi koleksi <ArrowUpRight size={17}/></a></div>
+        </div>
       </div>
-      <div className="dt-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>BUILT FOR BETTER CONNECTIONS.</span></div>
+      <div className="dt-footer-main">
+        <div className="dt-footer-brand-col">
+          <a href="/" className="dt-footer-brand"><BrandMark/><span>DiTap<span>Aja</span></span></a>
+          <p>Alat sederhana untuk membantu pelanggan menemukan halaman review bisnismu. Satu tap, satu pengalaman yang lebih mudah.</p>
+          <span className="dt-footer-built">MADE FOR BETTER CUSTOMER EXPERIENCES.</span>
+        </div>
+        <div className="dt-footer-links">
+          <div><small>JELAJAHI</small><a href="/koleksi">Koleksi kartu</a><a href="/cara-kerja">Cara kerja</a><a href="/faq">Pertanyaan umum</a></div>
+          <div><small>AKUN & BANTUAN</small><a href="/login">Dashboard pengguna</a><a href="/activate">Aktivasi kartu</a><a href="/kontak">Hubungi kami</a></div>
+        </div>
+        <a className="dt-footer-contact" href="https://wa.me/6281321778081" target="_blank" rel="noopener noreferrer">
+          <span className="dt-footer-contact-icon"><MessageCircle size={19}/></span>
+          <span><small>BUTUH BANTUAN?</small><strong>Let’s talk.</strong><em>Chat langsung melalui WhatsApp</em></span>
+          <ArrowUpRight size={18}/>
+        </a>
+      </div>
+      <div className="dt-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><a href="#top">Kembali ke atas ↑</a><span>ONE TAP CLOSER TO A GOOD REVIEW.</span></div>
     </footer>
   </main>;
 }
