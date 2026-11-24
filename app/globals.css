@@ -3984,3 +3984,104 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
 @media(prefers-reduced-motion:reduce){
  .dt-home-rebuild .dt-footer-signoff>a{transition:none}
 }
+
+
+/* =========================================================
+   HEADER REDESIGN — brand-led navigation system
+   ========================================================= */
+.dt-site-header{position:sticky;top:0;z-index:60;width:100%;isolation:isolate;border-bottom:1px solid rgba(159,190,208,.12);background:rgba(7,19,32,.88);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.dt-header-shell{width:min(1440px,100%);min-height:82px;margin:auto;padding:0 clamp(20px,5.4vw,82px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:30px}
+.dt-brand{display:inline-flex;align-items:center;gap:11px;width:max-content;color:#f0f6f8;text-decoration:none}
+.dt-brand-symbol{width:39px;height:39px;display:flex;align-items:center;justify-content:center;gap:3px;border:1px solid rgba(131,217,223,.28);border-radius:12px;background:linear-gradient(145deg,rgba(131,217,223,.13),rgba(255,255,255,.025));box-shadow:inset 0 1px rgba(255,255,255,.08)}
+.dt-brand-symbol i{width:3px;border-radius:4px;background:#9bd9d4;transform:skew(-16deg)}
+.dt-brand-symbol i:nth-child(1){height:11px}.dt-brand-symbol i:nth-child(2){height:20px}.dt-brand-symbol i:nth-child(3){height:14px}
+.dt-brand-word{display:grid;gap:1px;font:800 19px/1 "Manrope",sans-serif;letter-spacing:-.065em}
+.dt-brand-word>span{display:inline;color:#9bd9d4}
+.dt-brand-word small{margin-top:5px;color:#748e9e;font:800 6px/1 "Nunito Sans",sans-serif;letter-spacing:.19em}
+.dt-header-nav{display:flex;align-items:center;gap:clamp(22px,3vw,42px);height:100%}
+.dt-header-nav a{position:relative;display:flex;align-items:center;height:82px;color:#a9bac5;text-decoration:none;font-size:11px;font-weight:750;transition:color .2s ease}
+.dt-header-nav a span{position:absolute;right:0;bottom:20px;left:0;height:1px;background:#9bd9d4;transform:scaleX(0);transform-origin:left;transition:transform .22s ease}
+.dt-header-nav a:hover{color:#f2f7f7}.dt-header-nav a:hover span{transform:scaleX(1)}
+.dt-header-actions{display:flex;justify-content:flex-end;align-items:center;gap:24px}
+.dt-header-login{color:#b7c6ce;text-decoration:none;font-size:11px;font-weight:750;transition:color .2s}
+.dt-header-login:hover{color:#fff}
+.dt-header-cta{min-height:43px;display:inline-flex;align-items:center;justify-content:center;gap:15px;padding:0 16px;border:1px solid rgba(155,217,212,.38);border-radius:7px;background:#9bd9d4;color:#0b2028;text-decoration:none;font-size:10px;font-weight:900;transition:background .2s,transform .2s}
+.dt-header-cta:hover{background:#b8e8e1;transform:translateY(-1px)}
+.dt-header-mobile{display:none}
+.dt-header-mobile-cta{display:inline-flex;align-items:center;gap:5px;color:#9bd9d4;text-decoration:none;font-size:10px;font-weight:850}
+.dt-header-mobile>button{width:41px;height:41px;display:grid;place-items:center;border:1px solid rgba(159,190,208,.2);border-radius:8px;background:rgba(255,255,255,.035);color:#e8f1f3}
+.dt-header-menu-icon{display:grid;gap:5px;width:17px}
+.dt-header-menu-icon i{height:1.5px;width:17px;background:currentColor}
+.dt-header-menu-icon i:last-child{width:11px;justify-self:end}
+@media(max-width:900px){.dt-header-shell{grid-template-columns:1fr auto;min-height:72px}.dt-header-nav,.dt-header-actions{display:none}.dt-header-mobile{display:flex;align-items:center;gap:18px}}
+@media(max-width:420px){.dt-header-shell{min-height:66px;padding-inline:16px}.dt-brand-symbol{width:35px;height:35px}.dt-brand-word{font-size:17px}.dt-brand-word small{font-size:5px}.dt-header-mobile{gap:13px}}
+/* Mobile navigation — full-height editorial panel */
+.dt-menu-overlay{z-index:120;display:flex;justify-content:flex-end;overflow-y:auto;padding:0;background:rgba(2,9,16,.78);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+.dt-menu-redesign{width:min(720px,100%);min-height:100dvh;height:auto;margin:0;padding:max(24px,env(safe-area-inset-top)) clamp(22px,5vw,54px) max(22px,env(safe-area-inset-bottom));border:0;border-left:1px solid rgba(155,217,212,.16);border-radius:0;background:radial-gradient(ellipse at 100% 0%,rgba(95,163,166,.14),transparent 34rem),#0b1c2b;box-shadow:-35px 0 100px rgba(0,0,0,.36)}
+.dt-menu-redesign .dt-menu-top{min-height:55px;padding-bottom:20px;border-bottom:1px solid rgba(159,190,208,.14)}
+.dt-menu-redesign .dt-menu-close{min-height:40px;display:flex;align-items:center;gap:10px;padding:0 12px;border:1px solid rgba(159,190,208,.2);border-radius:7px;background:rgba(255,255,255,.035);color:#d8e6e9}
+.dt-menu-redesign .dt-menu-close span{color:#8ea5ad;font-size:8px;font-weight:900;letter-spacing:.14em}
+.dt-menu-redesign .dt-menu-content{padding:clamp(42px,8vh,76px) 0}
+.dt-menu-intro>span{color:#9bd9d4;font-size:8px;font-weight:900;letter-spacing:.2em}
+.dt-menu-intro>p{max-width:470px;margin:15px 0 0;color:#e9f1f2;font:700 clamp(25px,4vw,39px)/1.12 "Manrope",sans-serif;letter-spacing:-.055em}
+.dt-menu-redesign .dt-menu-grid{grid-template-columns:1.05fr .95fr;gap:clamp(20px,4vw,42px);margin-top:42px}
+.dt-menu-redesign .dt-menu-links{gap:0;border-top:1px solid rgba(159,190,208,.15)}
+.dt-menu-redesign .dt-menu-links a{min-height:74px;display:grid;grid-template-columns:34px 1fr 20px;align-items:center;gap:10px;padding:0 5px;border:0;border-bottom:1px solid rgba(159,190,208,.15);border-radius:0;background:transparent;color:#eef5f5;text-decoration:none;transition:padding .2s,color .2s}
+.dt-menu-redesign .dt-menu-links a:hover{padding-left:11px;background:transparent;color:#9bd9d4}
+.dt-menu-link-number{color:#77909a;font-size:8px;font-weight:850;letter-spacing:.1em}
+.dt-menu-redesign .dt-menu-links strong{font:700 19px "Manrope",sans-serif;letter-spacing:-.04em}
+.dt-menu-redesign .dt-menu-links svg{color:#9bd9d4}
+.dt-menu-redesign .dt-menu-quick{gap:10px}
+.dt-menu-redesign .dt-menu-quick-label{margin-bottom:5px;color:#9bd9d4;font-size:8px;letter-spacing:.18em}
+.dt-menu-redesign .dt-menu-action-card{min-height:91px;display:flex;align-items:center;gap:11px;padding:13px;border:1px solid rgba(159,190,208,.15);border-radius:8px;background:rgba(255,255,255,.035);text-decoration:none;transition:border-color .2s,background .2s}
+.dt-menu-redesign .dt-menu-action-card:hover{border-color:rgba(155,217,212,.42);background:rgba(155,217,212,.06)}
+.dt-menu-redesign .dt-menu-action-icon{width:34px;height:34px;display:grid;flex:none;place-items:center;border:1px solid rgba(155,217,212,.2);border-radius:7px;background:rgba(155,217,212,.08);color:#9bd9d4}
+.dt-menu-redesign .dt-menu-action-copy{min-width:0;display:grid;gap:4px}
+.dt-menu-redesign .dt-menu-action-copy small{color:#8fa7ad;font-size:7px;letter-spacing:.12em}
+.dt-menu-redesign .dt-menu-action-copy strong{color:#eff5f4;font-size:11px}
+.dt-menu-redesign .dt-menu-action-copy em{color:#8fa4ad;font-size:9px;line-height:1.45}
+.dt-menu-redesign .dt-menu-action-arrow{flex:none;color:#9bd9d4}
+.dt-menu-redesign .dt-menu-foot{display:flex;flex-wrap:wrap;gap:12px;padding-top:17px;border-top:1px solid rgba(159,190,208,.14);color:#708994;font-size:7px;font-weight:850;letter-spacing:.12em}
+.dt-menu-redesign .dt-menu-foot a{display:inline-flex;align-items:center;gap:6px;color:#9bd9d4;text-decoration:none}
+@media(max-width:620px){.dt-menu-redesign .dt-menu-grid{grid-template-columns:1fr;gap:28px;margin-top:30px}.dt-menu-redesign .dt-menu-content{padding:38px 0}.dt-menu-redesign .dt-menu-links a{min-height:62px}.dt-menu-redesign .dt-menu-links strong{font-size:17px}.dt-menu-redesign .dt-menu-foot{justify-content:space-between}.dt-menu-redesign .dt-menu-foot span:last-child{width:100%}}
+@media(max-width:380px){.dt-menu-redesign{padding-inline:17px}.dt-menu-intro>p{font-size:26px}.dt-menu-redesign .dt-menu-action-card{padding:10px}.dt-menu-redesign .dt-menu-foot{font-size:6px}}
+/* =========================================================
+   FOOTER REDESIGN — editorial closing + clear action paths
+   ========================================================= */
+.dt-home-rebuild .dt-footer-redesign{position:relative;overflow:hidden;padding:0 clamp(20px,7vw,104px) 20px!important;background:#071521!important;color:#edf4f4}
+.dt-home-rebuild .dt-footer-redesign:before{content:"";position:absolute;right:-12%;top:0;width:min(62vw,780px);aspect-ratio:1;border:1px solid rgba(155,217,212,.1);border-radius:50%;box-shadow:0 0 0 55px rgba(155,217,212,.018),0 0 0 110px rgba(155,217,212,.014);pointer-events:none}
+.dt-home-rebuild .dt-footer-hero{position:relative;z-index:1;padding:29px 0 62px;border-bottom:1px solid rgba(159,190,208,.15)}
+.dt-home-rebuild .dt-footer-hero-meta{display:flex;justify-content:space-between;gap:15px;color:#7e98a2;font-size:7px;font-weight:900;letter-spacing:.17em}
+.dt-home-rebuild .dt-footer-hero-content{display:grid;grid-template-columns:1.2fr .65fr;align-items:end;gap:35px;margin-top:clamp(50px,7vw,88px)}
+.dt-home-rebuild .dt-footer-hero h2{margin:0;color:#f0f5f4;font:800 clamp(54px,8vw,105px)/.86 "Manrope",sans-serif;letter-spacing:-.09em}
+.dt-home-rebuild .dt-footer-hero h2 em{color:#9bd9d4;font-style:normal}
+.dt-home-rebuild .dt-footer-hero-action{max-width:330px;padding-bottom:5px}
+.dt-home-rebuild .dt-footer-hero-action p{margin:0 0 22px;color:#a0b3b9;font-size:11px;line-height:1.85}
+.dt-home-rebuild .dt-footer-hero-action>a{min-height:45px;display:inline-flex;align-items:center;gap:22px;padding:0 15px;border:1px solid rgba(155,217,212,.36);border-radius:6px;background:#9bd9d4;color:#0a2027;text-decoration:none;font-size:10px;font-weight:900;transition:background .2s,transform .2s}
+.dt-home-rebuild .dt-footer-hero-action>a:hover{background:#b9e8e2;transform:translateY(-2px)}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-main{position:relative;z-index:1;grid-template-columns:1.05fr 1.15fr .9fr;gap:clamp(25px,5vw,72px);padding:48px 0 44px;border-bottom:1px solid rgba(159,190,208,.15)}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-brand{display:inline-flex;align-items:center;gap:10px;color:#edf5f4;text-decoration:none;font:800 19px "Manrope",sans-serif;letter-spacing:-.06em}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-brand>.dt-v2-brand-mark{width:34px;height:34px;border-color:rgba(155,217,212,.3);background:rgba(155,217,212,.08)}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-brand>span:last-child>span{color:#9bd9d4}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-brand-col>p{max-width:290px;margin:17px 0 21px;color:#8fa5ad;font-size:10px;line-height:1.9}
+.dt-home-rebuild .dt-footer-built{color:#718a94;font-size:6px;font-weight:900;letter-spacing:.13em}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-links{grid-template-columns:1fr 1fr;gap:22px}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-links>div{gap:13px}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-links small{margin-bottom:5px;color:#9bd9d4;font-size:7px;letter-spacing:.17em}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-links a{width:max-content;max-width:100%;color:#afc0c5;font-size:10px;text-decoration:none;transition:color .2s}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-links a:hover{color:#fff}
+.dt-home-rebuild .dt-footer-contact{align-self:start;display:flex;align-items:center;gap:12px;min-width:0;padding:16px;border:1px solid rgba(159,190,208,.17);border-radius:8px;background:rgba(255,255,255,.025);color:#edf4f4;text-decoration:none;transition:border-color .2s,background .2s}
+.dt-home-rebuild .dt-footer-contact:hover{border-color:rgba(155,217,212,.42);background:rgba(155,217,212,.05)}
+.dt-home-rebuild .dt-footer-contact-icon{width:37px;height:37px;display:grid;flex:none;place-items:center;border:1px solid rgba(155,217,212,.24);border-radius:7px;color:#9bd9d4}
+.dt-home-rebuild .dt-footer-contact>span:nth-child(2){display:grid;gap:4px;min-width:0;flex:1}
+.dt-home-rebuild .dt-footer-contact small{color:#88a0a8;font-size:7px;font-weight:900;letter-spacing:.13em}
+.dt-home-rebuild .dt-footer-contact strong{font:750 19px "Manrope",sans-serif;letter-spacing:-.04em}
+.dt-home-rebuild .dt-footer-contact em{color:#8fa5ad;font-size:8px;font-style:normal}
+.dt-home-rebuild .dt-footer-contact>svg{flex:none;color:#9bd9d4}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-bottom{position:relative;z-index:1;display:flex;justify-content:space-between;gap:15px;padding-top:16px;color:#718892;font-size:7px;font-weight:800;letter-spacing:.08em}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-bottom a{color:#9db2b8;text-decoration:none}
+.dt-home-rebuild .dt-footer-redesign .dt-footer-bottom a:hover{color:#9bd9d4}
+@media(max-width:900px){.dt-home-rebuild .dt-footer-hero-content{grid-template-columns:1fr .8fr}.dt-home-rebuild .dt-footer-redesign .dt-footer-main{grid-template-columns:1fr 1fr;gap:35px 28px}.dt-home-rebuild .dt-footer-redesign .dt-footer-brand-col{grid-column:1/-1}.dt-home-rebuild .dt-footer-contact{max-width:340px}}
+@media(max-width:620px){.dt-home-rebuild .dt-footer-redesign{padding:0 19px 18px!important}.dt-home-rebuild .dt-footer-hero{padding:24px 0 43px}.dt-home-rebuild .dt-footer-hero-meta{font-size:6px;letter-spacing:.1em}.dt-home-rebuild .dt-footer-hero-meta span:last-child{max-width:45%;text-align:right}.dt-home-rebuild .dt-footer-hero-content{grid-template-columns:1fr;gap:26px;margin-top:50px}.dt-home-rebuild .dt-footer-hero h2{font-size:clamp(55px,13vw,76px)}.dt-home-rebuild .dt-footer-hero-action{max-width:380px}.dt-home-rebuild .dt-footer-redesign .dt-footer-main{grid-template-columns:1fr;gap:29px;padding:34px 0}.dt-home-rebuild .dt-footer-redesign .dt-footer-brand-col{grid-column:auto}.dt-home-rebuild .dt-footer-redesign .dt-footer-links{gap:17px}.dt-home-rebuild .dt-footer-redesign .dt-footer-links a{font-size:10px}.dt-home-rebuild .dt-footer-contact{max-width:none}.dt-home-rebuild .dt-footer-redesign .dt-footer-bottom{flex-direction:column;gap:9px;line-height:1.5}}
+@media(max-width:360px){.dt-home-rebuild .dt-footer-hero h2{font-size:51px}.dt-home-rebuild .dt-footer-redesign .dt-footer-links{grid-template-columns:1fr 1fr;gap:12px}.dt-home-rebuild .dt-footer-redesign .dt-footer-bottom{font-size:6px}}
+@media(prefers-reduced-motion:reduce){.dt-site-header *, .dt-menu-redesign *, .dt-footer-redesign *{transition:none!important}}
