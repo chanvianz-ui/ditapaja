@@ -83,25 +83,36 @@ function HeroTapDemo() {
         <span className="home-demo-instruction">HALAMAN ULASAN</span>
         <div className="home-demo-phone"><div className="home-phone-island"/><div className="home-phone-status"><span>{clock}</span><span>●●● ▰</span></div>
           {tapped ? <div className="home-google-screen">
-            <div className="home-google-top"><span className="home-google-g">Google</span><span className="home-google-maps-label">Maps</span><span>●</span></div>
-            <div className="home-maps-search"><span>⌕</span><b>DiTapAja</b><span>×</span></div>
-            <div className="home-maps-map" aria-label="Pratinjau peta Google Maps"><i className="map-road map-road-one"/><i className="map-road map-road-two"/><i className="map-road map-road-three"/><i className="map-water"/><span className="home-maps-pin">●</span><small>DiTapAja</small></div>
-            <div className="home-google-business"><div className="home-google-avatar">D</div><div><b>DiTapAja</b><small>Tujuan Google Maps</small></div><a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer" aria-label="Buka tujuan DiTapAja di Google Maps"><ArrowUpRight size={15}/></a></div>
-            <a className="home-maps-open" href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Buka DiTapAja di Google Maps <ArrowUpRight size={13}/></a>
-            <div className="home-google-prompt"><strong>Bagikan pengalaman Anda</strong><p>Lanjutkan ke Google Maps untuk melihat detail tujuan dan memberi ulasan.</p></div>
-            <div className="home-google-rating-picker" role="group" aria-label="Pilih rating">
-              {Array.from({length:5},(_,i)=><button type="button" key={i} onClick={()=>{setRating(i+1);setSubmitted(false);}} aria-label={`${i+1} bintang`} aria-pressed={rating===i+1} className={i<rating?"selected":""}>★</button>)}
+            <div className="home-maps-appbar">
+              <span className="home-maps-menu">☰</span>
+              <div className="home-maps-search"><span>⌕</span><b>DiTapAja</b><span>×</span></div>
+              <span className="home-maps-account">D</span>
             </div>
-            <span className="home-google-rating-label">{rating ? ["","Sangat buruk","Kurang baik","Cukup","Baik","Sangat baik"][rating] : "Pilih jumlah bintang"}</span>
-            {rating > 0 && <div className="home-google-review-compose">
-              <strong>Tulis ulasan</strong>
-              <textarea className="home-google-review-input" value={review} onChange={e=>setReview(e.target.value)} placeholder="Ceritakan pengalaman Anda (opsional)" aria-label="Tulis ulasan contoh"/>
-              <button type="button" className="home-google-submit" onClick={()=>setSubmitted(true)}>Posting</button>
-            </div>}
-            <small className="home-google-note">Pratinjau antarmuka · tautan membuka Google Maps asli</small>
+            <div className="home-maps-map" aria-label="Peta Google Maps">
+              <div className="home-maps-map-grid"/>
+              <div className="home-maps-map-road road-a"/>
+              <div className="home-maps-map-road road-b"/>
+              <div className="home-maps-map-road road-c"/>
+              <div className="home-maps-map-park"/>
+              <div className="home-maps-map-water"/>
+              <span className="home-maps-map-label label-a">Jalan utama</span>
+              <span className="home-maps-map-label label-b">Area sekitar</span>
+              <span className="home-maps-pin"><i/></span>
+            </div>
+            <div className="home-maps-place-sheet">
+              <div className="home-maps-sheet-handle"/>
+              <div className="home-maps-place-title"><div><small>HASIL PENCARIAN</small><strong>DiTapAja</strong><span>Tujuan dari tautan Google Maps</span></div><span className="home-maps-place-icon">⌖</span></div>
+              <div className="home-maps-place-actions">
+                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>➤</span> Rute</a>
+                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>↗</span> Bagikan</a>
+                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>⌑</span> Buka</a>
+              </div>
+              <a className="home-maps-open" href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Lihat DiTapAja di Google Maps <ArrowUpRight size={13}/></a>
+              <small className="home-google-note">Pratinjau visual · detail lokasi dibuka dari Google Maps asli</small>
+            </div>
           </div> : <div className="home-phone-idle">
             <Nfc size={35}/><b>Siap menerima<br/>kartu NFC</b>
-            <p>Geser kartu ke ponsel untuk membuka halaman ulasan.</p>
+            <p>Geser kartu ke kanan untuk membuka tujuan DiTapAja.</p>
           </div>}
           <div className="home-phone-homebar"/>
           {submitted && <div className="home-thanks-overlay" role="dialog" aria-modal="true" aria-label="Terima kasih">
