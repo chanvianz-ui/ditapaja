@@ -950,3 +950,73 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
   .dt-customer-orders .dt-customer-order-card .grid.grid-cols-5 { gap:3px !important; }
   .dt-customer-orders .dt-order-progress p { font-size:8px !important; }
 }
+
+
+/* Account security: quiet, focused settings workspace. */
+.dt-account-settings-page { min-height:100vh; }
+.dt-account-settings-page>header {
+  border-color:var(--dt-border) !important; background:rgba(10,17,27,.88) !important;
+  backdrop-filter:blur(18px);
+}
+.dt-account-settings-page>header>div { max-width:1180px !important; min-height:68px; }
+.dt-account-settings-page>header a { color:#edf2f4 !important; }
+.dt-account-settings-page>header a span { color:#a5d6ca !important; }
+.dt-account-settings-page>header p { color:#91a3b0 !important; }
+.dt-account-settings-page>header button {
+  border-color:var(--dt-border) !important; border-radius:8px !important;
+  background:#142333 !important; color:#b8c6cf !important;
+}
+.dt-account-settings-page>div.mx-auto { max-width:1180px !important; padding-top:30px !important; }
+.dt-account-settings-page>div.mx-auto>div:first-child { color:#8295a3 !important; }
+.dt-account-settings-page>div.mx-auto>div:first-child span:last-child { color:#a5d6ca !important; }
+.dt-account-settings-page>div.mx-auto>div:nth-child(2) {
+  position:relative; overflow:hidden; min-height:220px;
+  display:flex; flex-direction:column; justify-content:center;
+  border:1px solid rgba(165,214,202,.16) !important; border-radius:16px !important;
+  background:
+    radial-gradient(circle at 90% 20%,rgba(165,214,202,.12),transparent 22rem),
+    linear-gradient(120deg,#1a3441,#101d2a 80%) !important;
+  box-shadow:none !important;
+}
+.dt-account-settings-page>div.mx-auto>div:nth-child(2)>div:first-child {
+  border:1px solid rgba(165,214,202,.2); background:rgba(165,214,202,.08) !important;
+  color:#a5d6ca !important; box-shadow:none !important;
+}
+.dt-account-settings-page>div.mx-auto>div:nth-child(2) h1 { font-size:clamp(32px,5vw,48px) !important; letter-spacing:-.07em !important; }
+.dt-account-settings-page .dt-workspace-panel {
+  min-width:0; border:1px solid var(--dt-border) !important; border-radius:15px !important;
+  background:linear-gradient(150deg,#172a3a,#101d2a) !important;
+  box-shadow:0 18px 48px rgba(0,0,0,.12) !important;
+}
+.dt-account-settings-page .dt-workspace-panel :where(h2,p,label) { color:#dce6eb; }
+.dt-account-settings-page .dt-workspace-panel :where(.text-slate-400,.text-slate-500) { color:#91a3b0 !important; }
+.dt-account-settings-page .dt-workspace-panel>div:first-child { border-color:var(--dt-border) !important; }
+.dt-account-settings-page .dt-workspace-panel>div:first-child>div:first-child {
+  border:1px solid rgba(165,214,202,.18); border-radius:10px;
+  background:rgba(165,214,202,.07) !important; color:#a5d6ca !important;
+}
+.dt-account-settings-page .dt-workspace-panel :where(input) {
+  min-height:46px; border-color:var(--dt-border-strong) !important;
+  border-radius:8px !important; background:#0b1823 !important; color:#edf2f4 !important;
+}
+.dt-account-settings-page .dt-workspace-panel :where(input)::placeholder { color:#687d8c; }
+.dt-account-settings-page .dt-workspace-panel :where(input):focus {
+  border-color:rgba(165,214,202,.7) !important; outline:3px solid rgba(165,214,202,.08);
+}
+.dt-account-settings-page .dt-workspace-panel .bg-slate-50\/80 {
+  border-color:var(--dt-border) !important; background:#0b1823 !important; color:#dce6eb !important;
+}
+.dt-account-settings-page .dt-workspace-panel .border-blue-100.bg-blue-50 {
+  border-color:rgba(165,214,202,.18) !important; background:rgba(165,214,202,.055) !important;
+}
+.dt-account-settings-page .dt-workspace-panel .border-blue-100.bg-blue-50 p { color:#b8d8d1 !important; }
+.dt-account-settings-page .dt-workspace-panel button[type=submit] {
+  min-height:46px; border:1px solid rgba(165,214,202,.2) !important;
+  border-radius:8px !important; background:#a5d6ca !important; color:#10201f !important;
+  box-shadow:none !important;
+}
+.dt-account-settings-page footer { color:#738694 !important; }
+@media(max-width:640px) {
+  .dt-account-settings-page>div.mx-auto { padding-top:20px !important; }
+  .dt-account-settings-page>div.mx-auto>div:nth-child(2) { min-height:190px; }
+}
