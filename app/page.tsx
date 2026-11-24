@@ -67,7 +67,7 @@ function HeroTapDemo() {
     }
   };
 
-  return <div className={\`home-hero-visual home-tap-demo \${tapped ? "is-tapped" : ""} \${submitted ? "is-submitted" : ""}\`} aria-label="Simulasi pengalaman pelanggan menggunakan kartu NFC">
+  return <div className={`home-hero-visual home-tap-demo ${tapped ? "is-tapped" : ""} ${submitted ? "is-submitted" : ""}`} aria-label="Simulasi pengalaman pelanggan menggunakan kartu NFC">
     <div className="home-demo-heading">
       <div><span className="home-section-index"><i/> LIVE INTERACTION</span><b>Coba sendiri pengalaman tap NFC</b></div>
       <span className="home-demo-disclaimer">DEMO · TANPA DATA TERKIRIM</span>
