@@ -15,6 +15,45 @@ function BrandMark() {
   return <span className="dt-v2-brand-mark" aria-hidden="true"><i/><i/><i/></span>;
 }
 
+function HeroTapDemo() {
+  const [tapped, setTapped] = useState(false);
+  return <div className={`home-hero-visual home-tap-demo ${tapped ? "is-tapped" : ""}`} aria-label="Demo interaktif pelanggan tap kartu NFC dan membuka halaman Google Review">
+    <div className="home-demo-heading"><div><span className="home-section-index">LIVE PRODUCT DEMO</span><b>One tap. Straight to reviews.</b></div><span className="home-demo-live"><i/> INTERACTIVE</span></div>
+    <div className="home-demo-stage">
+      <div className="home-demo-card-wrap"><span className="home-demo-step">01 / TAP CARD</span>
+        <button type="button" className="home-demo-card" onClick={() => setTapped(true)} aria-label="Simulasikan pelanggan mengetuk kartu NFC">
+          <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA®</span><Nfc size={22}/></div>
+          <div className="home-demo-card-title">YOUR<br/><em>review</em><br/>STARTS HERE.</div>
+          <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC · QR</span></div>
+        </button>
+        <div className="home-demo-tap-hint"><Wifi size={15}/>{tapped ? "CARD DETECTED" : "TAP TO TRY THE DEMO"}</div>
+      </div>
+      <div className="home-demo-transfer"><span/><ArrowUpRight size={17}/><small>NFC</small></div>
+      <div className="home-demo-phone-wrap"><span className="home-demo-step">02 / PHONE SCREEN</span>
+        <div className="home-demo-phone"><div className="home-phone-island"/><div className="home-phone-status"><span>9:41</span><span>●●● ▰</span></div>
+          {tapped ? <div className="home-google-screen">
+            <div className="home-google-top"><span className="home-google-g">Google</span><span>⋮</span></div>
+            <div className="home-google-business"><div className="home-google-avatar">B</div><div><b>Your Business</b><small>Business profile</small></div></div>
+            <div className="home-google-rating"><b>4.8</b><span>★★★★★</span><small>Customer reviews</small></div>
+            <div className="home-google-divider"/>
+            <strong>Share your experience</strong><p>Your review helps others discover this place.</p>
+            <div className="home-google-stars">☆　☆　☆　☆　☆</div>
+            <div className="home-google-write">Write a review <ArrowUpRight size={12}/></div>
+            <small className="home-google-note">Google review destination</small>
+          </div> : <div className="home-phone-idle">
+            <div className="home-phone-nfc"><Nfc size={27}/></div><b>Ready when<br/>you are.</b>
+            <p>Bring your phone close to the DiTapAja card to open the review page.</p><span><i/> WAITING FOR NFC</span>
+          </div>}
+          <div className="home-phone-homebar"/>
+        </div>
+      </div>
+    </div>
+    <div className="home-demo-footer"><div><span className={tapped ? "done" : ""}>01</span> Tap NFC card <i/> <span className={tapped ? "done" : ""}>02</span> Google Review opens</div>
+      <button type="button" onClick={() => setTapped(!tapped)}>{tapped ? <><RotateCcw size={13}/> Replay demo</> : <><Nfc size={14}/> Simulasikan tap</>}</button>
+    </div>
+  </div>;
+}
+
 export default function Home() {
   return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
     <SiteHeader/>
