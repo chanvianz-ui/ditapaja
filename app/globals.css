@@ -2608,3 +2608,87 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .ed-collection .dt-collection-toolbar i,.dt-home-rebuild .ed-collection .dt-art-grid,.dt-home-rebuild .ed-collection .dt-art-glow,.dt-home-rebuild .ed-collection .dt-art-orbit,.dt-home-rebuild .ed-collection .dt-art-chip,.dt-home-rebuild .ed-collection .dt-feature-card-wrap,.dt-home-rebuild .ed-collection .dt-feature-card-shine{animation:none!important}
  .dt-home-rebuild .ed-collection .dt-stage-title h3,.dt-home-rebuild .ed-collection .dt-stage-description,.dt-home-rebuild .ed-collection .dt-stage-price,.dt-home-rebuild .ed-collection .dt-stage-actions{animation:none!important}
 }
+
+
+/* COLLECTION / art direction v2 — no floating labels, tactile product focus */
+.dt-home-rebuild .ed-collection .dt-art-index,
+.dt-home-rebuild .ed-collection .dt-art-edition,
+.dt-home-rebuild .ed-collection .dt-art-chip,
+.dt-home-rebuild .ed-collection .dt-art-caption,
+.dt-home-rebuild .ed-collection .dt-flip-hint{display:none!important}
+.dt-home-rebuild .ed-collection .dt-stage-art{min-height:680px;background:radial-gradient(ellipse at 50% 45%,rgba(143,190,166,.17),transparent 34%),linear-gradient(135deg,#152c30 0%,#0b1a20 48%,#10262a 100%)}
+.dt-home-rebuild .ed-collection .dt-stage-art:before{content:"";position:absolute;inset:8% 10%;border:1px solid rgba(191,220,204,.12);border-radius:48% 52% 44% 56% / 53% 45% 55% 47%;transform:rotate(-24deg);animation:dtContour 19s ease-in-out infinite alternate}
+.dt-home-rebuild .ed-collection .dt-stage-art:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 20%,rgba(196,226,208,.035) 48%,transparent 70%);transform:translateX(-100%);animation:dtStageSweep 9s ease-in-out infinite}
+.dt-home-rebuild .ed-collection .dt-art-grid{opacity:.13;background-size:76px 76px;animation:dtGridDrift 48s linear infinite}
+.dt-home-rebuild .ed-collection .dt-art-glow{width:58%;background:rgba(151,196,166,.11);filter:blur(75px);animation:dtGlowBreathe 8s ease-in-out infinite}
+.dt-home-rebuild .ed-collection .dt-art-orbit{border-color:rgba(198,226,207,.15);border-width:1px;animation:dtOrbit 26s linear infinite}
+.dt-home-rebuild .ed-collection .dt-art-orbit-a{width:74%;transform:scaleY(.43) rotate(-32deg)}
+.dt-home-rebuild .ed-collection .dt-art-orbit-b{width:86%;transform:scaleY(.3) rotate(52deg);border-style:dashed;animation-duration:39s}
+.dt-home-rebuild .ed-collection .dt-art-orbit-c{width:57%;transform:scaleY(.58) rotate(12deg);border-color:rgba(198,226,207,.09);animation-duration:31s}
+.dt-home-rebuild .ed-collection .dt-art-orbit-a:after,.dt-home-rebuild .ed-collection .dt-art-orbit-b:after,.dt-home-rebuild .ed-collection .dt-art-orbit-c:after{width:5px;height:5px;background:#c8e1cf;box-shadow:0 0 15px 3px rgba(188,222,198,.3)}
+.dt-home-rebuild .ed-collection .dt-art-crosshair{position:absolute;width:15px;height:15px;opacity:.55}
+.dt-home-rebuild .ed-collection .dt-art-crosshair:before,.dt-home-rebuild .ed-collection .dt-art-crosshair:after{content:"";position:absolute;background:#a8cbb8}
+.dt-home-rebuild .ed-collection .dt-art-crosshair:before{left:7px;top:0;width:1px;height:15px}
+.dt-home-rebuild .ed-collection .dt-art-crosshair:after{left:0;top:7px;width:15px;height:1px}
+.dt-home-rebuild .ed-collection .dt-art-crosshair-a{top:19%;left:18%}
+.dt-home-rebuild .ed-collection .dt-art-crosshair-b{right:17%;bottom:25%;transform:rotate(45deg)}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap{width:min(76%,510px);animation:none!important;filter:drop-shadow(0 42px 40px rgba(0,0,0,.48));transform:translateZ(0)}
+.dt-home-rebuild .ed-collection .dt-feature-card{transform:rotateX(calc(7deg + var(--tilt-y,0deg))) rotateY(var(--tilt-x,0deg)) rotateZ(-5deg);transition:transform .18s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap.is-flipped .dt-feature-card{transform:rotateX(var(--tilt-y,0deg)) rotateY(calc(180deg + var(--tilt-x,0deg))) rotateZ(1deg)}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap:hover .dt-feature-card{transform:rotateX(calc(7deg + var(--tilt-y,0deg))) rotateY(var(--tilt-x,0deg)) rotateZ(-5deg)}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap.is-flipped:hover .dt-feature-card{transform:rotateX(var(--tilt-y,0deg)) rotateY(calc(180deg + var(--tilt-x,0deg))) rotateZ(1deg)}
+.dt-home-rebuild .ed-collection .dt-feature-card-face{border-radius:15px;padding:clamp(22px,3.3vw,38px);box-shadow:inset 0 1px rgba(255,255,255,.3),inset 0 -28px 50px rgba(0,0,0,.2),0 1px 0 rgba(255,255,255,.1)}
+.dt-home-rebuild .ed-collection .dt-feature-card-shine{animation:dtCardSheen 7s cubic-bezier(.45,0,.55,1) infinite}
+.dt-home-rebuild .ed-collection .dt-feature-card-center strong{font-size:clamp(42px,6vw,84px);letter-spacing:-.105em}
+.dt-home-rebuild .ed-collection .dt-art-control-dock{position:absolute;z-index:5;left:clamp(18px,3vw,34px);right:clamp(18px,3vw,34px);bottom:25px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 16px;border:1px solid rgba(190,220,202,.16);background:rgba(7,20,23,.72);backdrop-filter:blur(18px)}
+.dt-home-rebuild .ed-collection .dt-art-control-dock>span{display:flex;align-items:center;gap:9px;color:#9eb9aa;font-size:8px;font-weight:850;letter-spacing:.16em}
+.dt-home-rebuild .ed-collection .dt-art-control-dock>span i{width:6px;height:6px;border-radius:50%;background:#b7d9c2;box-shadow:0 0 10px rgba(183,217,194,.65)}
+.dt-home-rebuild .ed-collection .dt-art-control-dock button{display:flex;align-items:center;gap:22px;min-height:34px;padding:0 12px;border:1px solid rgba(190,220,202,.22);background:rgba(182,216,194,.08);color:#e1eee4;font-size:9px;font-weight:800;cursor:pointer;transition:background .25s,border-color .25s,transform .25s}
+.dt-home-rebuild .ed-collection .dt-art-control-dock button:hover{transform:translateY(-2px);border-color:rgba(202,232,210,.55);background:rgba(182,216,194,.16)}
+.dt-home-rebuild .ed-collection .dt-art-control-dock button span{font-size:16px;transition:transform .25s}
+.dt-home-rebuild .ed-collection .dt-art-control-dock button:hover span{transform:translate(3px,-3px)}
+.dt-home-rebuild .ed-collection .dt-stage-copy{padding:clamp(38px,5vw,76px);background:linear-gradient(155deg,#172d30 0%,#0e1d22 65%,#0c1a1e 100%)}
+.dt-home-rebuild .ed-collection .dt-stage-title h3{font-size:clamp(70px,8vw,116px);letter-spacing:-.11em}
+.dt-home-rebuild .ed-collection .dt-stage-description{max-width:370px;font-size:13px;line-height:2}
+.dt-home-rebuild .ed-collection .dt-stage-specs{gap:7px;margin-top:30px}
+.dt-home-rebuild .ed-collection .dt-stage-specs span{min-height:38px;padding:0 12px;font-size:8px}
+.dt-home-rebuild .ed-collection .dt-stage-price{margin-top:38px;padding-top:25px}
+.dt-home-rebuild .ed-collection .dt-stage-price strong{font-size:39px}
+.dt-home-rebuild .ed-collection .dt-stage-actions{margin-top:30px}
+.dt-home-rebuild .ed-collection .dt-stage-primary{min-height:58px;padding:0 20px}
+.dt-home-rebuild .ed-collection .dt-edition-selector{padding:29px 32px 22px;background:#0d1d21}
+.dt-home-rebuild .ed-collection .dt-selector-options{gap:12px;padding-top:19px}
+.dt-home-rebuild .ed-collection .dt-selector-option{min-height:106px;padding:17px 16px}
+.dt-home-rebuild .ed-collection .dt-selector-option.is-active{background:linear-gradient(125deg,rgba(172,211,185,.17),rgba(172,211,185,.025) 75%)}
+.dt-home-rebuild .ed-collection .dt-selector-option.is-active:after{content:"SELECTED";position:absolute;top:8px;right:10px;color:#a9cfb5;font-size:6px;font-weight:900;letter-spacing:.14em}
+.dt-home-rebuild .ed-collection .dt-collection-signoff{margin-top:28px}
+.dt-home-rebuild .ed-collection .dt-stage-title h3,.dt-home-rebuild .ed-collection .dt-stage-description,.dt-home-rebuild .ed-collection .dt-stage-price,.dt-home-rebuild .ed-collection .dt-stage-actions{animation:dtContentEnter .8s cubic-bezier(.16,.8,.2,1) both}
+.dt-home-rebuild .ed-collection .dt-feature-card:focus-visible,.dt-home-rebuild .ed-collection .dt-art-control-dock button:focus-visible{outline:2px solid #d2ebda;outline-offset:5px}
+@keyframes dtContour{0%{transform:rotate(-24deg) scale(.94);border-radius:48% 52% 44% 56% / 53% 45% 55% 47%}100%{transform:rotate(-12deg) scale(1.05);border-radius:55% 45% 52% 48% / 45% 57% 43% 55%}}
+@keyframes dtStageSweep{0%,18%{transform:translateX(-100%)}55%,100%{transform:translateX(100%)}}
+@media(max-width:1000px){
+ .dt-home-rebuild .ed-collection .dt-stage-art{min-height:590px}
+ .dt-home-rebuild .ed-collection .dt-stage-copy{padding:36px}
+ .dt-home-rebuild .ed-collection .dt-feature-card-wrap{width:80%}
+}
+@media(max-width:700px){
+ .dt-home-rebuild .ed-collection .dt-stage-art{min-height:430px}
+ .dt-home-rebuild .ed-collection .dt-art-control-dock{left:12px;right:12px;bottom:12px;padding:9px 10px}
+ .dt-home-rebuild .ed-collection .dt-art-control-dock>span{font-size:7px}
+ .dt-home-rebuild .ed-collection .dt-art-control-dock button{gap:10px;min-height:32px;padding:0 9px;font-size:8px}
+ .dt-home-rebuild .ed-collection .dt-feature-card-wrap{width:80%}
+ .dt-home-rebuild .ed-collection .dt-stage-copy{padding:29px 22px}
+ .dt-home-rebuild .ed-collection .dt-stage-title h3{font-size:clamp(68px,17vw,94px)}
+ .dt-home-rebuild .ed-collection .dt-stage-price strong{font-size:32px}
+ .dt-home-rebuild .ed-collection .dt-edition-selector{padding:19px 13px 14px}
+ .dt-home-rebuild .ed-collection .dt-selector-option{min-height:82px;padding:12px 10px}
+}
+@media(max-width:390px){
+ .dt-home-rebuild .ed-collection .dt-stage-art{min-height:370px}
+ .dt-home-rebuild .ed-collection .dt-art-control-dock>span{letter-spacing:.08em}
+ .dt-home-rebuild .ed-collection .dt-feature-card-wrap{width:84%}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-home-rebuild .ed-collection .dt-stage-art:before,.dt-home-rebuild .ed-collection .dt-stage-art:after,.dt-home-rebuild .ed-collection .dt-art-grid,.dt-home-rebuild .ed-collection .dt-art-glow,.dt-home-rebuild .ed-collection .dt-art-orbit,.dt-home-rebuild .ed-collection .dt-feature-card-shine{animation:none!important}
+ .dt-home-rebuild .ed-collection .dt-feature-card{transition:transform .01ms!important}
+}
