@@ -4291,3 +4291,47 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
 .dt-menu-intro>span{display:inline-flex;align-items:center;gap:7px}
 .dt-menu-intro>span svg{color:#9bd9d4}
 @media(prefers-reduced-motion:reduce){.dt-header-signature *, .dt-menu-redesign *{transition:none!important}}
+
+
+/* Collection page refinement — restrained product editorial */
+.nx-catalog-hero{min-height:590px;grid-template-columns:minmax(0,1fr) minmax(360px,.9fr);gap:clamp(30px,6vw,90px);padding-top:clamp(65px,8vw,105px);padding-bottom:clamp(65px,8vw,105px);background:radial-gradient(ellipse at 78% 48%,rgba(125,164,148,.15),transparent 34rem),linear-gradient(120deg,#08141e,#112630 62%,#0a1921)}
+.nx-catalog-hero h1{font-family:Manrope,sans-serif;font-weight:760;letter-spacing:-.085em}
+.nx-catalog-hero h1 em{color:#a9c9b8;background:none}
+.nx-catalog-hero-copy>p{color:#a0b1ad}
+.nx-catalog-hero .nx-button-primary{border-radius:3px;background:#c6d8ce;color:#12241d;box-shadow:none}
+.nx-catalog-orbit-ring{border-color:rgba(176,210,191,.2);box-shadow:0 0 0 34px rgba(176,210,191,.025),0 0 0 68px rgba(176,210,191,.016)}
+.nx-catalog-orbit-card{width:min(82%,370px);aspect-ratio:1.62;justify-content:space-between;padding:25px;border:1px solid rgba(235,243,235,.3);border-radius:12px;background:radial-gradient(ellipse at 80% 10%,rgba(188,207,193,.2),transparent 48%),linear-gradient(135deg,#3b4542,#111a1b 68%,#090f10);box-shadow:0 34px 70px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.17);transform:none;animation:none}
+.nx-catalog-orbit-card>span{display:flex;justify-content:space-between;gap:12px;color:#d9e5dc;font-size:9px}
+.nx-catalog-orbit-card>span small{color:#8da69a;font-size:7px}
+.nx-catalog-orbit-card>b{font:750 clamp(30px,4vw,48px)/.9 Manrope,sans-serif;letter-spacing:-.08em}
+.nx-catalog-orbit-card>b em{color:#b8d2c2;font-style:normal}
+.nx-catalog-orbit-card>small{color:#9bb0a4;font-size:7px}
+.nx-catalog-orbit-tag{border-radius:3px;border-color:rgba(177,210,191,.22);background:#142a2c;color:#c3d9cb}
+.nx-catalog-object-caption{position:absolute;left:3%;right:3%;bottom:8%;display:flex;justify-content:space-between;color:#78948a;font-size:8px;font-weight:800;letter-spacing:.15em}
+.nx-catalog-perks{background:#0a1921;border-color:rgba(174,207,188,.12)}
+.nx-catalog-perks>div{border-radius:3px;background:rgba(23,47,49,.42);border-color:rgba(174,207,188,.13)}
+.nx-catalog-perks>div>span{border-radius:3px;background:rgba(174,207,188,.08);border-color:rgba(174,207,188,.18);color:#b8d2c2}
+.nx-catalog-products{background:radial-gradient(ellipse at 0% 10%,rgba(106,153,130,.1),transparent 34rem),#08151e}
+.nx-catalog-products .nx-section-head h2{font-family:Manrope,sans-serif;letter-spacing:-.075em}
+.nx-catalog-products .nx-section-head h2 em{color:#a9c9b8}
+.nx-catalog-products .nx-section-aside p{color:#9aada5}
+.nx-catalog-carousel-scope .ed-collection{background:transparent!important;padding:0!important}
+.nx-catalog-carousel-scope .dt-collection-toolbar{margin-bottom:14px}
+.nx-catalog-carousel-scope .dt-collection-stage{min-height:470px;grid-template-columns:minmax(250px,.76fr) minmax(0,1.24fr);border:1px solid rgba(188,214,198,.15);background:linear-gradient(110deg,#10242a,#0b1b21);box-shadow:0 28px 70px rgba(0,0,0,.24)}
+.nx-catalog-carousel-scope .dt-stage-copy{padding:clamp(24px,4vw,48px);border-color:rgba(188,214,198,.12)}
+.nx-catalog-carousel-scope .dt-stage-title{margin-top:auto;padding-top:28px}
+.nx-catalog-carousel-scope .dt-stage-title h3{font-family:Manrope,sans-serif;letter-spacing:-.09em}
+.nx-catalog-carousel-scope .dt-stage-art{min-height:470px;background:radial-gradient(ellipse at 50% 50%,rgba(145,188,164,.15),transparent 47%),linear-gradient(145deg,#152e31,#0a171c)}
+.nx-catalog-carousel-scope .dt-neo-display{width:min(86%,520px)}
+.nx-catalog-carousel-scope .dt-neo-card{border-radius:12px}
+.nx-catalog-carousel-scope .dt-stage-primary{border-radius:2px;background:#c6d8ce;color:#12241d}
+.nx-catalog-carousel-scope .dt-stage-detail{color:#b5c8bd}
+.nx-catalog-carousel-scope .dt-neo-option{border-radius:3px}
+.nx-catalog-close{display:flex;align-items:flex-end;justify-content:space-between;gap:35px;padding:clamp(55px,7vw,90px) max(5vw,calc((100vw - 1320px)/2));border-top:1px solid rgba(190,216,205,.1);background:linear-gradient(115deg,#10252b,#0b1a22)}
+.nx-catalog-close>div:last-child{max-width:350px}
+.nx-catalog-close h2{margin:17px 0 0;color:#edf2ed;font:750 clamp(38px,5vw,64px)/.98 Manrope,sans-serif;letter-spacing:-.075em}
+.nx-catalog-close h2 em{color:#a8c8b9;font-style:normal}
+.nx-catalog-close p{color:#9bafa6;font-size:11px;line-height:1.85}
+.nx-catalog-close>div:last-child>a{display:inline-flex;align-items:center;gap:16px;margin-top:12px;padding:13px 16px;background:#c2d7ca;color:#10231d;text-decoration:none;font-size:10px;font-weight:850}
+@media(max-width:900px){.nx-catalog-hero{grid-template-columns:minmax(0,1fr) minmax(300px,.8fr);gap:24px}.nx-catalog-carousel-scope .dt-collection-stage{grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr)}}
+@media(max-width:760px){.nx-catalog-hero{grid-template-columns:1fr;gap:8px;min-height:0;padding:55px 21px 28px}.nx-catalog-hero h1{font-size:clamp(47px,12vw,68px)}.nx-catalog-orbit{min-height:300px}.nx-catalog-orbit-ring{width:250px;height:250px}.nx-catalog-orbit-card{width:min(82%,340px)}.nx-catalog-object-caption{bottom:5%}.nx-catalog-perks{grid-template-columns:1fr;padding:16px 20px;gap:8px}.nx-catalog-products{padding:64px 20px}.nx-catalog-products .nx-section-head{align-items:flex-start;flex-direction:column;gap:12px}.nx-catalog-carousel-scope .dt-collection-stage{grid-template-columns:1fr}.nx-catalog-carousel-scope .dt-stage-copy{min-height:300px;border-right:0;border-bottom:1px solid rgba(188,214,198,.12)}.nx-catalog-carousel-scope .dt-stage-title{margin-top:0;padding-top:25px}.nx-catalog-carousel-scope .dt-stage-art{min-height:320px}.nx-catalog-carousel-scope .dt-neo-display{width:88%}.nx-catalog-carousel-scope .dt-neo-selector .dt-selector-options{grid-template-columns:1fr;gap:7px}.nx-catalog-close{align-items:flex-start;flex-direction:column;padding:52px 21px}}
