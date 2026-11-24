@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, Check, ChevronRight, CircleDot, CreditCard, Gauge, Link2, Nfc, QrCode, ScanLine, ShieldCheck, Smartphone, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Check, ChevronRight, CircleDot, CreditCard, Gauge, Link2, Nfc, QrCode, ScanLine, ShieldCheck, Sparkles } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 
