@@ -2828,3 +2828,38 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .ed-collection .dt-feature-card-center strong{font-size:clamp(30px,10vw,48px)}
  .dt-home-rebuild .ed-collection .dt-stage-collection-details.is-open{max-height:300px}
 }
+
+
+/* Product collection interaction: floating depth instead of tilt */
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap {
+  animation: dtCardFloat 5.8s ease-in-out infinite;
+  perspective: 1200px;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card {
+  transform: translate3d(0,0,0) scale(1) !important;
+  transition: transform .55s cubic-bezier(.2,.8,.2,1), filter .55s;
+  will-change: transform;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap:hover .dt-feature-card {
+  transform: translate3d(0,-12px,22px) scale(1.035) !important;
+  filter: brightness(1.08) saturate(1.08);
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap.is-flipped .dt-feature-card {
+  transform: rotateY(180deg) translateY(-4px) !important;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-wrap.is-flipped:hover .dt-feature-card {
+  transform: rotateY(180deg) translateY(-12px) scale(1.025) !important;
+}
+.dt-home-rebuild .ed-collection .dt-art-control-dock > span {
+  letter-spacing: .13em;
+}
+.dt-home-rebuild .ed-collection .dt-stage-detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dt-home-rebuild .ed-collection .dt-feature-card-wrap { animation: none !important; }
+  .dt-home-rebuild .ed-collection .dt-feature-card { transition: none !important; }
+}
