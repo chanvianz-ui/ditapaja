@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type PointerEvent } from "react";
 import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
@@ -20,7 +20,7 @@ function HeroTapDemo() {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const dragStart = useRef<number | null>(null);
+  const dragStart = useRef<{ x: number; y: number } | null>(null);
 
   const resetDemo = () => {
     setTapped(false);
@@ -30,17 +30,18 @@ function HeroTapDemo() {
     dragStart.current = null;
   };
 
-  const startDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
-    if (event.button !== 0) return;
-    dragStart.current = event.clientX;
+  const startDrag = (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.button !== 0 && event.pointerType === "mouse") return;
+    dragStart.current = { x: event.clientX, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
-  const finishDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+  const finishDrag = (event: PointerEvent<HTMLButtonElement>) => {
     if (dragStart.current === null) return;
-    const distance = event.clientX - dragStart.current;
+    const dx = event.clientX - dragStart.current.x;
+    const dy = event.clientY - dragStart.current.y;
     dragStart.current = null;
-    if (distance > 55) {
+    if (dx > 48 || (dy > 48 && Math.abs(dy) > Math.abs(dx))) {
       setTapped(true);
       setSubmitted(false);
     }
@@ -54,7 +55,7 @@ function HeroTapDemo() {
     <div className="home-demo-stage">
       <div className="home-demo-card-wrap">
         <span className="home-demo-instruction">GESER KARTU KE ARAH PONSEL</span>
-        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerUp={finishDrag} onPointerCancel={()=>{dragStart.current=null;}} onClick={()=>{if(!tapped) setTapped(true);}} aria-label="Geser kartu NFC ke kanan menuju ponsel">
+        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerUp={finishDrag} onPointerCancel={()=>{dragStart.current=null;}} onClick={()=>{if(!tapped) setTapped(true);}} aria-label="Geser kartu NFC ke arah ponsel">
           <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA</span><Nfc size={22}/></div>
           <div className="home-demo-card-title">YOUR<br/><em>review</em><br/>STARTS HERE.</div>
           <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC · QR</span></div>
@@ -67,7 +68,7 @@ function HeroTapDemo() {
         <div className="home-demo-phone"><div className="home-phone-island"/><div className="home-phone-status"><span>9:41</span><span>●●● ▰</span></div>
           {tapped ? <div className="home-google-screen">
             <div className="home-google-top"><span className="home-google-g">Google</span><span>⋮</span></div>
-            <div className="home-google-business"><div className="home-google-avatar">G</div><div><b>Google Maps</b><small>Ulasan tempat</small></div></div>
+            <div className="home-google-business"><div className="home-google-avatar">G</div><div><b>Google Maps</b><small>Tempat yang dikunjungi</small></div><a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer" aria-label="Buka lokasi di Google Maps"><ArrowUpRight size={15}/></a></div>
             <div className="home-google-prompt"><strong>Bagikan pengalaman Anda</strong><p>Bantu orang lain dengan membagikan ulasan tentang tempat ini.</p></div>
             <div className="home-google-rating-picker" role="group" aria-label="Pilih rating">
               {Array.from({length:5},(_,i)=><button type="button" key={i} onClick={()=>{setRating(i+1);setSubmitted(false);}} aria-label={`${i+1} bintang`} aria-pressed={rating===i+1} className={i<rating?"selected":""}>★</button>)}
