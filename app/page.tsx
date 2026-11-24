@@ -176,7 +176,6 @@ export default function Home() {
         <p>Pilih tampilan yang paling cocok untuk bisnismu. Setiap kartu sudah dilengkapi NFC, QR Code, dan dashboard gratis.</p>
       </div>
       <ProductCarousel products={products}/>
-      <div className="ed-collection-note"><span>EVERYTHING INCLUDED</span><p><Nfc size={17}/> NFC <i>+</i> <QrCode size={17}/> QR Code <i>+</i> Dashboard gratis. Tanpa biaya bulanan.</p></div>
     </section>
 
     <section className="ed-flow home-flow" id="cara-kerja">
