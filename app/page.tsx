@@ -290,47 +290,39 @@ export default function Home() {
     <section className="home-dashboard-story dt-behind" id="behind-the-card">
       <div className="dt-behind-copy">
         <span className="home-section-index">04 / BEHIND THE CARD</span>
-        <p className="dt-behind-kicker">THE CONTROL ROOM</p>
-        <h2>Small card.<br/><em>Big picture.</em></h2>
-        <p className="dt-behind-intro">Di balik setiap tap, ada dashboard yang bikin semuanya tetap teratur. Kelola kartu, tentukan tujuan, dan pahami interaksi pelanggan dari satu tempat.</p>
-        <a className="ed-button" href="/login">Explore dashboard <ArrowUpRight size={17}/></a>
-        <div className="dt-behind-capabilities">
-          <div><span>01</span><b>Manage your cards</b><small>Aktifkan, arsipkan, dan atur kartu.</small></div>
-          <div><span>02</span><b>Control every destination</b><small>Ubah tautan tujuan kapan saja.</small></div>
-          <div><span>03</span><b>Understand engagement</b><small>Lihat aktivitas tap dan klik review.</small></div>
-        </div>
+        <h2>More than<br/><em>a card.</em></h2>
+        <p className="dt-behind-intro">Satu dashboard sederhana untuk mengelola kartu, mengatur tujuan, dan melihat aktivitas pelanggan.</p>
+        <div className="dt-behind-quick-points"><span><Check size={14}/> Kelola kartu</span><span><Check size={14}/> Atur link tujuan</span><span><Check size={14}/> Pantau aktivitas</span></div>
+        <a className="ed-button" href="/login">Buka dashboard <ArrowUpRight size={17}/></a>
       </div>
       <div className="dt-behind-visual">
-        <div className="dt-behind-orbit dt-behind-orbit-one"/>
-        <div className="dt-behind-orbit dt-behind-orbit-two"/>
         <div className="dt-behind-panel">
-          <div className="dt-behind-panel-top">
-            <div className="dt-behind-brand"><BrandMark/><span>DITAPAJA <i>STUDIO</i></span></div>
-            <span className="dt-behind-preview-tag">DASHBOARD PREVIEW</span>
-          </div>
-          <div className="dt-behind-panel-heading"><div><small>YOUR WORKSPACE</small><b>Overview<span>.</span></b></div><span className="dt-behind-period">LAST 30 DAYS⌄</span></div>
-          <div className="dt-behind-metrics">
-            <div><span>TOTAL TAPS</span><b>1,284</b><small>Card interactions</small><i className="dt-behind-metric-mark">↗</i></div>
-            <div><span>REVIEW CLICKS</span><b>864</b><small>Outbound visits</small><i className="dt-behind-metric-mark">↗</i></div>
-          </div>
-          <div className="dt-behind-activity">
-            <div className="dt-behind-activity-head"><div><small>ACTIVITY</small><b>Engagement overview</b></div><span>ILLUSTRATIVE DATA</span></div>
-            <div className="dt-behind-chart">{[27,42,35,58,47,72,54,82,63,91,70,78,58,96,73,86,62,80].map((height,i)=><i key={i} style={{height:height+"%"}}/>)}</div>
-            <div className="dt-behind-chart-labels"><span>01 NOV</span><span>08 NOV</span><span>15 NOV</span><span>24 NOV</span></div>
-          </div>
-          <div className="dt-behind-card-line"><div className="dt-behind-card-icon"><Nfc size={17}/></div><div><b>Noir — Main counter</b><small>Last interaction · just now</small></div><span>ACTIVE</span></div>
+          <div className="dt-behind-panel-top"><div className="dt-behind-brand"><BrandMark/><span>DITAPAJA <i>STUDIO</i></span></div><span className="dt-behind-preview-tag">DASHBOARD PREVIEW</span></div>
+          <div className="dt-behind-panel-heading"><div><small>YOUR WORKSPACE</small><b>Overview<span>.</span></b></div><span className="dt-behind-period">LAST 30 DAYS</span></div>
+          <div className="dt-behind-metrics"><div><span>TOTAL TAPS</span><b>1,284</b><small>Card interactions</small></div><div><span>REVIEW CLICKS</span><b>864</b><small>Outbound visits</small></div></div>
+          <div className="dt-behind-mini-activity"><span>ACTIVITY OVERVIEW</span><div>{[32,48,39,66,51,78,60,91,69,82,58,76].map((height,i)=><i key={i} style={{height:height+"%"}}/>)}</div></div>
+          <div className="dt-behind-card-line"><Nfc size={16}/><b>Noir — Main counter</b><span>ACTIVE</span></div>
+          <p className="dt-behind-data-note">Illustrative dashboard data</p>
         </div>
-        <div className="dt-behind-float-note"><span><i/> SYSTEM STATUS</span><b>Everything in one place.</b></div>
-        <p className="dt-behind-caption">THE INTELLIGENCE BEHIND EVERY TAP.</p>
       </div>
     </section>
 
-    <section className="home-closing">
-      <div className="home-closing-top"><span>05 / START SOMETHING SIMPLE</span><BrandMark/></div>
-      <div className="home-closing-main"><h2>Make every<br/><em>tap count.</em></h2><div><p>Mulai dari satu kartu. Berikan pelanggan cara yang lebih praktis untuk terhubung dengan bisnismu.</p><a className="ed-button" href="/koleksi">Jelajahi koleksi <ArrowUpRight size={17}/></a></div></div>
-      <div className="home-closing-bottom"><span>DITAPAJA®</span><span>GOOD REVIEWS, MADE EASIER.</span><span>EST. 2026</span></div>
+    <section className="home-closing dt-closing">
+      <div className="dt-closing-top"><span>05 / YOUR NEXT MOVE</span><span>DITAPAJA®</span></div>
+      <div className="dt-closing-main">
+        <div><p className="dt-closing-eyebrow">MAKE IT EASY TO BE REMEMBERED.</p><h2>Turn every<br/><em>tap into trust.</em></h2></div>
+        <div className="dt-closing-action"><p>Mulai dengan satu kartu NFC. Beri pelanggan cara yang lebih cepat untuk menemukan dan mengulas bisnismu.</p><a className="ed-button" href="/koleksi">Temukan kartu kamu <ArrowUpRight size={17}/></a></div>
+      </div>
+      <div className="dt-closing-bottom"><span>ONE TAP CLOSER TO A GOOD REVIEW.</span><span>NFC · QR · FREE DASHBOARD</span></div>
     </section>
 
-    <footer className="nx-footer ed-footer"><div className="nx-footer-top"><div><a href="/" className="nx-footer-brand"><BrandMark/> DiTap<span>Aja.</span></a><p>NFC review card untuk koneksi yang lebih mudah antara bisnis dan pelanggan.</p></div><div><a href="/koleksi">Koleksi kartu</a><a href="/cara-kerja">Cara kerja</a><a href="/faq">FAQ</a></div><div><a href="/login">Dashboard</a><a href="/activate">Aktivasi kartu</a><a href="/kontak">Hubungi kami</a></div><div className="nx-footer-contact"><b>Punya pertanyaan?</b><a href="https://wa.me/6281321778081">Diskusikan dengan kami <ArrowUpRight size={15}/></a></div></div><div className="nx-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>NFC + QR CODE · DASHBOARD GRATIS</span><a href="#top">Back to top ↑</a></div></footer>
+    <footer className="nx-footer ed-footer dt-footer">
+      <div className="dt-footer-main">
+        <div className="dt-footer-brand-col"><a href="/" className="nx-footer-brand"><BrandMark/> DiTap<span>Aja.</span></a><p>Make every customer connection count. Satu tap untuk pengalaman review yang lebih mudah.</p><a className="dt-footer-contact-link" href="https://wa.me/6281321778081">Talk to our team <ArrowUpRight size={15}/></a></div>
+        <div className="dt-footer-links"><div><small>EXPLORE</small><a href="/koleksi">Koleksi kartu</a><a href="/cara-kerja">Cara kerja</a><a href="/faq">FAQ</a></div><div><small>YOUR ACCOUNT</small><a href="/login">Dashboard</a><a href="/activate">Aktivasi kartu</a><a href="/kontak">Hubungi kami</a></div></div>
+        <div className="dt-footer-signoff"><span>GOOD REVIEWS<br/>START HERE.</span><a href="#top" aria-label="Back to top">↑</a></div>
+      </div>
+      <div className="dt-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><span>BUILT FOR BETTER CONNECTIONS.</span></div>
+    </footer>
   </main>;
 }
