@@ -1594,3 +1594,70 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
  .dt-home-rebuild .home-google-review-input{min-height:65px}
  .dt-home-rebuild .home-demo-footer{align-items:flex-start}
 }
+
+
+/* Spacious swipe interaction and review composer */
+.dt-home-rebuild .home-tap-demo{padding:clamp(20px,3vw,34px);min-height:0}
+.dt-home-rebuild .home-demo-stage{grid-template-columns:minmax(0,1fr) 54px minmax(250px,.86fr);gap:clamp(18px,3vw,42px);min-height:0;padding:34px 4px 28px;align-items:center}
+.dt-home-rebuild .home-demo-card-wrap,.dt-home-rebuild .home-demo-phone-wrap{gap:15px}
+.dt-home-rebuild .home-demo-instruction{align-self:center;color:#a9bdca;font-size:8px;font-weight:750;letter-spacing:.1em;text-align:center}
+.dt-home-rebuild .home-demo-card{max-width:360px;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
+.dt-home-rebuild .home-demo-card:active{cursor:grabbing}
+.dt-home-rebuild .home-demo-card-caption{color:#90a5b5;font-size:8px;letter-spacing:.13em}
+.dt-home-rebuild .home-demo-transfer{gap:7px}
+.dt-home-rebuild .home-demo-transfer svg{width:27px;height:27px}
+.dt-home-rebuild .home-demo-phone{width:min(100%,270px);min-height:490px;aspect-ratio: .51;border-radius:34px;padding:13px 11px 17px}
+.dt-home-rebuild .home-phone-island{width:78px;height:17px}
+.dt-home-rebuild .home-phone-status{height:27px;font-size:8px}
+.dt-home-rebuild .home-google-screen{height:calc(100% - 27px);padding:13px 10px 14px}
+.dt-home-rebuild .home-google-top{padding-bottom:13px}
+.dt-home-rebuild .home-google-business{padding:12px 0}
+.dt-home-rebuild .home-google-avatar{width:34px;height:34px;background:#e8f0fe;color:#1967d2}
+.dt-home-rebuild .home-google-business b{font-size:10px}
+.dt-home-rebuild .home-google-business small{font-size:8px}
+.dt-home-rebuild .home-google-prompt{padding:16px 0 9px}
+.dt-home-rebuild .home-google-prompt>strong{font-size:13px}
+.dt-home-rebuild .home-google-prompt>p{font-size:9px}
+.dt-home-rebuild .home-google-rating-picker{margin:16px 0 4px}
+.dt-home-rebuild .home-google-rating-picker button{font-size:29px}
+.dt-home-rebuild .home-google-rating-label{min-height:20px;font-size:8px}
+.dt-home-rebuild .home-google-review-compose{margin-top:13px;animation:homeScreenIn .22s ease both}
+.dt-home-rebuild .home-google-review-compose>strong{display:block;margin-bottom:7px;font:700 10px Arial;color:#202124}
+.dt-home-rebuild .home-google-review-input{min-height:82px;font-size:9px}
+.dt-home-rebuild .home-google-submit{padding:10px;font-size:9px}
+.dt-home-rebuild .home-google-note{margin-top:12px;font-size:7px}
+.dt-home-rebuild .home-demo-footer{flex-wrap:wrap;gap:15px;padding-top:17px}
+.dt-home-rebuild .home-demo-footer>span{font-size:9px}
+.dt-home-rebuild .home-demo-footer-actions{display:flex;align-items:center;gap:10px}
+.dt-home-rebuild .home-demo-footer-actions>a{display:flex;align-items:center;gap:5px;color:#c4d3dd;font-size:8px;text-decoration:underline;text-underline-offset:3px}
+.dt-home-rebuild .home-demo-footer-actions>button{padding:9px 12px}
+.dt-home-rebuild .home-tap-demo.is-tapped .home-demo-card{transform:translateX(35px) rotate(2deg) scale(.96);box-shadow:0 18px 36px rgba(0,0,0,.35)}
+.dt-home-rebuild .home-thanks-overlay{position:absolute;z-index:8;inset:27px 10px 15px;display:grid;place-items:center;padding:12px;border-radius:22px;background:rgba(20,29,40,.46);backdrop-filter:blur(3px);animation:homeScreenIn .18s ease both}
+.dt-home-rebuild .home-thanks-popup{width:100%;max-width:235px;padding:21px 15px 16px;border-radius:15px;background:#fff;color:#202124;text-align:center;box-shadow:0 12px 35px rgba(0,0,0,.24)}
+.dt-home-rebuild .home-thanks-check{display:grid;place-items:center;width:39px;height:39px;margin:0 auto 13px;border-radius:50%;background:#e8f0fe;color:#1967d2;font:700 22px Arial}
+.dt-home-rebuild .home-thanks-popup>strong{display:block;font:700 13px/1.35 Arial,sans-serif}
+.dt-home-rebuild .home-thanks-popup>p{margin:9px 0 15px;color:#5f6368;font:9px/1.5 Arial,sans-serif}
+.dt-home-rebuild .home-thanks-popup>button{width:100%;padding:10px;border:0;border-radius:20px;background:#1a73e8;color:#fff;font:700 9px Arial;cursor:pointer}
+@media(max-width:1050px){
+ .dt-home-rebuild .home-demo-stage{grid-template-columns:minmax(0,1fr) 42px minmax(250px,.9fr);max-width:700px;margin:0 auto}
+}
+@media(max-width:650px){
+ .dt-home-rebuild .home-tap-demo{padding:17px 14px}
+ .dt-home-rebuild .home-demo-heading{align-items:flex-start}
+ .dt-home-rebuild .home-demo-disclaimer{max-width:90px;text-align:right;font-size:6px}
+ .dt-home-rebuild .home-demo-stage{grid-template-columns:1fr;gap:17px;padding:23px 0 20px}
+ .dt-home-rebuild .home-demo-card-wrap{gap:10px}
+ .dt-home-rebuild .home-demo-card{width:min(82%,300px);transform:rotate(-4deg)}
+ .dt-home-rebuild .home-demo-transfer{transform:rotate(135deg);height:26px}
+ .dt-home-rebuild .home-demo-transfer small{display:none}
+ .dt-home-rebuild .home-demo-phone-wrap{gap:10px}
+ .dt-home-rebuild .home-demo-phone{width:min(78%,275px);min-height:490px}
+ .dt-home-rebuild .home-google-screen{padding:13px 10px 14px}
+ .dt-home-rebuild .home-google-rating-picker button{font-size:28px}
+ .dt-home-rebuild .home-demo-footer{align-items:flex-start;flex-direction:column}
+ .dt-home-rebuild .home-demo-footer-actions{width:100%;justify-content:space-between}
+ .dt-home-rebuild .home-thanks-overlay{inset:27px 9px 14px}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-home-rebuild .home-demo-card,.dt-home-rebuild .home-thanks-overlay{animation:none!important;transition:none!important}
+}
