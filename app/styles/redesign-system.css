@@ -729,3 +729,224 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
 @media(max-width:1023px) {
  .dt-admin-shell > .dt-admin-sidebar { display:none; }
 }
+
+
+/* Workspace detail routes — distinct page compositions, shared design language. */
+.dt-business-page > .mx-auto.max-w-6xl,
+.dt-card-create-page > .mx-auto.max-w-2xl {
+  width:min(1180px,100%);
+}
+.dt-business-page > .mx-auto.max-w-6xl > button:first-child,
+.dt-card-create-page > .mx-auto.max-w-2xl > a:first-child {
+  min-height:40px; padding:10px 13px; border:1px solid var(--dt-border);
+  border-radius:9px; background:#142333; color:#b5c4ce;
+  font-size:11px; letter-spacing:.01em;
+}
+.dt-business-hero {
+  position:relative; isolation:isolate; overflow:hidden;
+  min-height:300px; padding:clamp(28px,5vw,58px) !important;
+  border:1px solid rgba(165,214,202,.17);
+  border-radius:18px !important;
+  background:
+    radial-gradient(circle at 84% 20%,rgba(165,214,202,.14),transparent 22rem),
+    linear-gradient(120deg,#1a3441 0%,#122433 58%,#101c29 100%) !important;
+}
+.dt-business-hero:after {
+  position:absolute; z-index:-1; right:9%; bottom:-180px; width:360px; aspect-ratio:1;
+  border:1px solid rgba(165,214,202,.15); border-radius:50%;
+  box-shadow:0 0 0 30px rgba(165,214,202,.025),0 0 0 70px rgba(165,214,202,.02);
+  content:"";
+}
+.dt-business-page .dt-business-hero h1 {
+  max-width:650px; font-size:clamp(38px,6vw,68px) !important;
+  line-height:.99 !important; letter-spacing:-.075em !important;
+}
+.dt-business-page .dt-business-hero p { max-width:520px; color:#a8b8c2 !important; }
+.dt-business-page .dt-business-hero>div:last-child>div {
+  border:1px solid rgba(211,231,229,.12) !important;
+  border-radius:12px !important; background:rgba(7,17,26,.22) !important;
+}
+.dt-business-page .mb-4.flex.items-center.justify-between {
+  margin:0 0 14px; padding:0 2px;
+}
+.dt-business-page .mb-4.flex.items-center.justify-between h2 {
+  font-size:24px !important; letter-spacing:-.055em;
+}
+.dt-business-page .mb-4.flex.items-center.justify-between>span {
+  border-color:var(--dt-border) !important; background:#142333 !important; color:#a5d6ca !important;
+}
+.dt-business-page .grid.items-start.gap-5 {
+  gap:14px !important; align-items:stretch;
+}
+.dt-business-page .dt-workspace-panel {
+  min-width:0; padding:clamp(18px,2.5vw,28px) !important;
+  border:1px solid var(--dt-border) !important; border-radius:15px !important;
+  background:linear-gradient(150deg,#172a3a,#101d2a) !important;
+  box-shadow:0 18px 48px rgba(0,0,0,.12) !important;
+}
+.dt-business-page .dt-workspace-panel>div:first-child {
+  margin-bottom:22px; border-color:var(--dt-border) !important;
+}
+.dt-business-page .dt-workspace-panel :where(h2,p,span,label) { color:inherit; }
+.dt-business-page .dt-workspace-panel h2 { color:#edf2f4 !important; }
+.dt-business-page .dt-workspace-panel :where(.text-slate-500,.text-slate-400) { color:#91a3b0 !important; }
+.dt-business-page .dt-workspace-panel :where(input,textarea) {
+  display:block; width:100%; margin-top:8px; padding:12px 13px;
+  border:1px solid var(--dt-border-strong) !important; border-radius:8px !important;
+  background:#0b1823 !important; color:#edf2f4 !important; font-size:13px;
+}
+.dt-business-page .dt-workspace-panel :where(input,textarea)::placeholder { color:#687d8c; }
+.dt-business-page .dt-workspace-panel :where(input,textarea):focus {
+  border-color:rgba(165,214,202,.65) !important; outline:3px solid rgba(165,214,202,.08);
+}
+.dt-business-page .dt-business-profile-form>button,
+.dt-business-page .dt-business-add-location>button,
+.dt-business-page .dt-business-location-card button.bg-blue-600 {
+  min-height:44px; border:1px solid rgba(165,214,202,.2) !important;
+  border-radius:8px !important; background:#a5d6ca !important;
+  color:#10201f !important; box-shadow:none !important;
+}
+.dt-business-page .dt-business-add-location {
+  padding:16px !important; border:1px solid var(--dt-border) !important;
+  border-radius:12px !important; background:rgba(7,17,26,.28) !important;
+}
+.dt-business-page .dt-business-add-location>p { color:#edf2f4 !important; }
+.dt-business-page .dt-business-location-card {
+  border-color:var(--dt-border) !important; border-radius:11px !important;
+  background:rgba(7,17,26,.2) !important;
+}
+.dt-business-page .dt-business-location-card>div>div:first-child p:first-child { color:#edf2f4 !important; }
+.dt-business-page .dt-business-location-card button { background:transparent !important; }
+.dt-business-page .dt-business-location-card button:hover { background:rgba(165,214,202,.08) !important; }
+.dt-business-page .dt-workspace-panel .border-blue-100.bg-blue-50 {
+  border-color:rgba(165,214,202,.18) !important; border-radius:10px !important;
+  background:rgba(165,214,202,.055) !important;
+}
+.dt-business-page .dt-workspace-panel .border-blue-100.bg-blue-50 :where(p) { color:#a9c4bf !important; }
+
+/* New NFC card: focused form-first flow with a compact editorial rail. */
+.dt-card-create-page > .mx-auto.max-w-2xl { max-width:1080px !important; }
+.dt-card-create-layout { grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr) !important; gap:14px !important; }
+.dt-card-create-page .dt-card-create-intro {
+  position:relative; overflow:hidden; min-height:640px !important;
+  padding:clamp(22px,3vw,34px) !important;
+  background:
+    radial-gradient(circle at 15% 85%,rgba(165,214,202,.1),transparent 17rem),
+    linear-gradient(155deg,#1a3441,#101d2a 76%) !important;
+}
+.dt-card-create-page .dt-card-create-intro:after {
+  position:absolute; right:-115px; top:40%; width:300px; aspect-ratio:1;
+  border:1px solid rgba(165,214,202,.15); border-radius:50%;
+  box-shadow:0 0 0 28px rgba(165,214,202,.025),0 0 0 62px rgba(165,214,202,.02);
+  content:""; pointer-events:none;
+}
+.dt-card-create-page .dt-card-create-intro>div { position:relative; z-index:1; }
+.dt-card-create-page .dt-card-create-intro>div:first-child {
+  width:48px; height:48px; border:1px solid rgba(165,214,202,.22);
+  border-radius:12px; background:rgba(165,214,202,.08) !important; color:#a5d6ca !important;
+}
+.dt-card-create-page .dt-card-create-intro h1 {
+  max-width:320px; font-size:clamp(34px,4vw,48px) !important;
+  line-height:1.02 !important; letter-spacing:-.07em !important;
+}
+.dt-card-create-page .dt-card-create-intro .text-blue-600 { color:#a5d6ca !important; }
+.dt-card-create-page .dt-card-create-steps { margin-top:30px !important; }
+.dt-card-create-page .dt-card-create-steps>div { border-color:var(--dt-border) !important; }
+.dt-card-create-page .dt-card-create-form {
+  padding:clamp(22px,3vw,38px) !important; gap:25px !important;
+}
+.dt-card-create-page .dt-card-create-form>div>label,
+.dt-card-create-page .dt-card-create-form>div>label:first-child {
+  color:#dce6eb !important; font-size:12px !important; font-weight:700;
+}
+.dt-card-create-page .dt-card-create-form :where(input:not([type=checkbox]),select) {
+  min-height:46px; padding-top:12px; padding-bottom:12px;
+}
+.dt-card-create-page .dt-card-create-form :where(input,select):focus {
+  border-color:rgba(165,214,202,.7) !important; outline:3px solid rgba(165,214,202,.08);
+}
+.dt-card-create-page .dt-card-create-form :where(p.text-xs,.text-slate-400) { color:#91a3b0 !important; }
+.dt-card-create-page .dt-card-create-form button[type=button] {
+  border-color:rgba(165,214,202,.2) !important; background:rgba(165,214,202,.07) !important; color:#b8d8d1 !important;
+}
+.dt-card-create-page .dt-card-create-form .border-emerald-100.bg-emerald-50 {
+  border-color:rgba(135,197,167,.2) !important; background:rgba(135,197,167,.07) !important;
+}
+.dt-card-create-page .dt-card-create-form .border-emerald-100.bg-emerald-50 :where(p,label) { color:#b4d7c7 !important; }
+.dt-card-create-page .dt-card-create-note {
+  border-color:rgba(165,214,202,.18) !important; background:rgba(165,214,202,.055) !important;
+}
+.dt-card-create-page .dt-card-create-note :where(p,.text-blue-900,.text-blue-700) { color:#b8d8d1 !important; }
+.dt-card-create-page .dt-card-create-form button[type=submit] {
+  min-height:48px; border:1px solid rgba(165,214,202,.2) !important;
+  border-radius:9px !important; background:#a5d6ca !important; color:#10201f !important;
+  box-shadow:none !important;
+}
+.dt-card-create-page .dt-card-create-form button:disabled { opacity:.55; }
+
+/* Customer orders: transaction cards read as a timeline, not a long receipt. */
+.dt-customer-orders { padding-top:38px !important; }
+.dt-customer-orders-inner { max-width:1120px !important; }
+.dt-customer-orders-header {
+  min-height:54px; padding-bottom:16px; border-bottom:1px solid var(--dt-border);
+}
+.dt-customer-orders-header>a:first-child { color:#edf2f4 !important; letter-spacing:-.045em; }
+.dt-customer-orders-header>a:first-child span { color:#a5d6ca !important; }
+.dt-customer-orders-header>a:last-child { color:#a5d6ca !important; }
+.dt-customer-orders-heading { margin-top:18px !important; margin-bottom:28px !important; }
+.dt-customer-orders-heading>div>p:first-child { color:#a5d6ca !important; font-size:9px !important; letter-spacing:.18em; }
+.dt-customer-orders-heading>div>p:last-child { color:#9aabb8 !important; }
+.dt-customer-orders-heading>button {
+  min-height:42px; border-color:var(--dt-border) !important; background:#142333 !important;
+  color:#c4d0d7 !important; box-shadow:none !important;
+}
+.dt-customer-orders .dt-customer-order-card {
+  overflow:hidden; border:1px solid var(--dt-border) !important;
+  border-radius:15px !important; background:linear-gradient(150deg,#172a3a,#101d2a) !important;
+}
+.dt-customer-orders .dt-customer-order-card>div:first-child {
+  padding:22px 24px !important; border-color:var(--dt-border) !important;
+  background:rgba(7,17,26,.16);
+}
+.dt-customer-orders .dt-customer-order-card>div:first-child h2 { font-size:20px; letter-spacing:-.04em; }
+.dt-customer-orders .dt-customer-order-card>div:first-child p:first-child { color:#a5d6ca !important; font-size:9px; letter-spacing:.15em; }
+.dt-customer-orders .dt-customer-order-card>div:first-child p:last-child { color:#91a3b0 !important; }
+.dt-customer-orders .dt-order-progress { gap:5px !important; }
+.dt-customer-orders .dt-order-progress>div>div { height:4px !important; background:#263b4a !important; }
+.dt-customer-orders .dt-order-progress>div>div.bg-blue-600 { background:#a5d6ca !important; }
+.dt-customer-orders .dt-order-progress p { font-size:9px !important; }
+.dt-customer-orders .dt-customer-order-card .dt-order-payment-panel {
+  border:1px solid var(--dt-border) !important; border-radius:11px !important;
+  background:rgba(7,17,26,.24) !important;
+}
+.dt-customer-orders .dt-customer-order-card .dt-order-payment-panel :where(.text-slate-800,.text-slate-700) { color:#dce6eb !important; }
+.dt-customer-orders .dt-customer-order-card .dt-order-payment-panel :where(.text-slate-500,.text-slate-600) { color:#91a3b0 !important; }
+.dt-customer-orders .dt-customer-order-card .border-t,
+.dt-customer-orders .dt-customer-order-card .border-b { border-color:var(--dt-border) !important; }
+.dt-customer-orders .dt-customer-order-card .bg-slate-50,
+.dt-customer-orders .dt-customer-order-card .bg-slate-50\/70 {
+  background:rgba(7,17,26,.18) !important;
+}
+.dt-customer-orders .dt-customer-order-card :where(.text-slate-900,.text-slate-800,.text-slate-700) { color:#dce6eb !important; }
+.dt-customer-orders .dt-customer-order-card :where(.text-slate-500,.text-slate-400) { color:#91a3b0 !important; }
+.dt-customer-orders .dt-customer-order-card a[href^="https://wa.me"] {
+  border-color:rgba(165,214,202,.2) !important; background:rgba(165,214,202,.07) !important; color:#b8d8d1 !important;
+}
+@media(max-width:820px) {
+  .dt-card-create-layout { grid-template-columns:1fr !important; }
+  .dt-card-create-page .dt-card-create-intro { min-height:0 !important; }
+  .dt-business-page .grid.items-start.gap-5 { grid-template-columns:1fr !important; }
+}
+@media(max-width:600px) {
+  .dt-business-hero { min-height:0; padding:23px !important; }
+  .dt-business-page .dt-business-hero>div:last-child { grid-template-columns:1fr 1fr; }
+  .dt-business-page .dt-workspace-panel { padding:17px !important; }
+  .dt-card-create-page .dt-card-create-intro { padding:22px !important; }
+  .dt-card-create-page .dt-card-create-form { padding:20px !important; }
+  .dt-customer-orders { padding-top:20px !important; }
+  .dt-customer-orders-header { align-items:flex-start !important; }
+  .dt-customer-orders-heading { align-items:flex-start !important; flex-direction:column; }
+  .dt-customer-orders .dt-customer-order-card>div:first-child { padding:18px !important; }
+  .dt-customer-orders .dt-customer-order-card .grid.grid-cols-5 { gap:3px !important; }
+  .dt-customer-orders .dt-order-progress p { font-size:8px !important; }
+}
