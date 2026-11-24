@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Check, ChevronRight, Layers3, Nfc } from "lucide-react";
+import { ArrowUpRight, Check, ChevronRight, Layers3, Nfc, Radio } from "lucide-react";
 
 type Product = {
   name: string;
@@ -15,38 +15,47 @@ type Product = {
   mode: string;
 };
 
-function FeatureCard({ product }: { product: Product }) {
-  const [nfcActive, setNfcActive] = useState(false);
+function ProductObject({ product }: { product: Product }) {
+  const [active, setActive] = useState(false);
+  const serial = product.tone === "noir" ? "01" : product.tone === "blanc" ? "02" : "03";
 
   return (
-    <div className={"dt-object-display dt-object-" + product.tone}>
+    <div className={"dt-neo-display dt-neo-" + product.tone}>
       <button
         type="button"
-        className={"dt-object-card" + (nfcActive ? " is-active" : "")}
-        onClick={() => setNfcActive(value => !value)}
-        aria-pressed={nfcActive}
-        aria-label={(nfcActive ? "Matikan" : "Aktifkan") + " simulasi NFC kartu " + product.label}
+        className={"dt-neo-card" + (active ? " is-active" : "")}
+        onClick={() => setActive(value => !value)}
+        aria-pressed={active}
+        aria-label={(active ? "Nonaktifkan" : "Aktifkan") + " simulasi NFC " + product.label}
       >
-        <span className="dt-object-card-inner">
-          <span className="dt-object-topline">
-            <b>DITAPAJA<span>®</span></b>
-            <span className="dt-object-edition">OBJECT / 0{product.tone === "noir" ? "1" : product.tone === "blanc" ? "2" : "3"}</span>
-          </span>
-          <span className="dt-object-center">
-            <span className="dt-object-nfc"><Nfc size={27}/></span>
-            <strong>{product.label}</strong>
-            <small>YOUR BUSINESS. ONE TAP AWAY.</small>
-          </span>
-          <span className="dt-object-bottom">
-            <span>SMART REVIEW SYSTEM</span>
-            <span className="dt-object-status"><i/>{nfcActive ? "CONNECTED" : "READY TO TAP"}</span>
-          </span>
-          <span className="dt-object-active-label">{nfcActive ? "NFC FIELD ACTIVE" : "TAP TO INTERACT"}</span>
+        <span className="dt-neo-grain" aria-hidden="true"/>
+        <span className="dt-neo-rail" aria-hidden="true"/>
+        <span className="dt-neo-top">
+          <span className="dt-neo-brand"><i/>DITAPAJA<span>®</span></span>
+          <span className="dt-neo-serial">COLLECTION / {serial}</span>
         </span>
+        <span className="dt-neo-main">
+          <span className="dt-neo-index" aria-hidden="true">{serial}</span>
+          <span className="dt-neo-copy">
+            <small>SMART REVIEW OBJECT</small>
+            <strong>{product.label}</strong>
+            <em>ONE TAP. A BETTER CONNECTION.</em>
+          </span>
+          <span className="dt-neo-emblem" aria-hidden="true">
+            <i/><i/><i/>
+            <Nfc size={27} strokeWidth={1.25}/>
+          </span>
+        </span>
+        <span className="dt-neo-bottom">
+          <span className="dt-neo-material">{product.tone === "noir" ? "OBSIDIAN / MATTE" : product.tone === "blanc" ? "PORCELAIN / SATIN" : "BRONZE / SIGNATURE"}</span>
+          <span className="dt-neo-signal"><i/>{active ? "NFC FIELD ACTIVE" : "READY TO CONNECT"}</span>
+        </span>
+        <span className="dt-neo-scan" aria-hidden="true"/>
+        <span className="dt-neo-press-hint">{active ? "CONNECTION SIMULATED" : "TAP TO TEST NFC"}</span>
       </button>
-      <div className="dt-object-caption">
-        <span><i/> MATERIAL STUDY / {product.label.toUpperCase()}</span>
-        <span>01 — 03</span>
+      <div className="dt-neo-caption">
+        <span><i/> DITAPAJA / PHYSICAL COLLECTION</span>
+        <span>0{serial} — 03</span>
       </div>
     </div>
   );
@@ -54,14 +63,14 @@ function FeatureCard({ product }: { product: Product }) {
 
 export default function ProductCarousel({ products }: { products: Product[] }) {
   const [selected, setSelected] = useState(products[0]?.tone ?? "");
-  const product = products.find(p => p.tone === selected) ?? products[0];
+  const product = products.find(item => item.tone === selected) ?? products[0];
   if (!product) return null;
 
   return (
-    <div className="dt-collection-experience dt-collection-editorial">
+    <div className="dt-collection-experience dt-collection-editorial dt-neo-collection">
       <div className="dt-collection-toolbar">
         <span><i/> THE COLLECTION</span>
-        <small>DESIGNED TO BE REMEMBERED</small>
+        <small>THREE FINISHES / ONE PURPOSE</small>
       </div>
 
       <div className="dt-collection-stage" data-tone={product.tone} key={product.tone}>
@@ -71,7 +80,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
             <h3>{product.label}<em>.</em></h3>
           </div>
           <div className="dt-editorial-description">
-            <span>AN OBJECT WITH A PURPOSE</span>
+            <span>MADE FOR YOUR BUSINESS</span>
             <p>{product.description}</p>
           </div>
           <div className="dt-stage-price">
@@ -93,25 +102,32 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           <div className="dt-art-glow"/>
           <div className="dt-art-orbit dt-art-orbit-a"/><div className="dt-art-orbit dt-art-orbit-b"/><div className="dt-art-orbit dt-art-orbit-c"/>
           <div className="dt-art-crosshair dt-art-crosshair-a"/><div className="dt-art-crosshair dt-art-crosshair-b"/>
-          <FeatureCard product={product}/>
-          <span className="dt-art-edition-index">EDITION / 0{products.findIndex(p => p.tone === product.tone) + 1}</span>
+          <ProductObject product={product}/>
+          <span className="dt-art-edition-index">EDITION / 0{products.findIndex(item => item.tone === product.tone) + 1}</span>
         </div>
       </div>
 
-      <div className="dt-edition-selector dt-editorial-selector">
+      <div className="dt-edition-selector dt-neo-selector">
         <div className="dt-selector-heading">
-          <span><Layers3 size={14}/> SELECT YOUR OBJECT</span>
-          <small>THREE FINISHES. ONE SMART EXPERIENCE.</small>
+          <span><Layers3 size={14}/> CHOOSE YOUR FINISH</span>
+          <small>SELECT AN EDITION TO PREVIEW</small>
         </div>
         <div className="dt-selector-options">
-          {products.map((p, index) => (
-            <button type="button" key={p.tone}
-              className={"dt-selector-option dt-editorial-option " + (p.tone === product.tone ? "is-active" : "")}
-              onClick={() => setSelected(p.tone)} aria-pressed={p.tone === product.tone}>
-              <span className={"dt-editorial-swatch swatch-" + p.tone}><i/></span>
-              <span className="dt-selector-name"><small>0{index + 1} / {p.mode === "preorder" ? "MADE TO ORDER" : "IN STOCK"}</small><b>{p.label}</b><em>{p.mode === "preorder" ? "PRE-ORDER" : "AVAILABLE NOW"}</em></span>
-              <strong>{p.price}</strong>
-              <span className="dt-option-check">{p.tone === product.tone ? <Check size={15}/> : <ChevronRight size={17}/>}</span>
+          {products.map((item, index) => (
+            <button
+              type="button"
+              key={item.tone}
+              className={"dt-neo-option dt-neo-option-" + item.tone + (item.tone === product.tone ? " is-active" : "")}
+              onClick={() => setSelected(item.tone)}
+              aria-pressed={item.tone === product.tone}
+            >
+              <span className="dt-neo-option-preview"><i/><i/></span>
+              <span className="dt-neo-option-copy">
+                <small>0{index + 1} / {item.mode === "preorder" ? "MADE TO ORDER" : "IN STOCK"}</small>
+                <b>{item.label}</b>
+                <em>{item.price}</em>
+              </span>
+              <span className="dt-neo-option-state">{item.tone === product.tone ? <Check size={15}/> : <ChevronRight size={16}/>}</span>
             </button>
           ))}
         </div>
