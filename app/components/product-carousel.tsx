@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowUpRight, ChevronRight, Layers3,
-  Nfc, QrCode
+  Nfc
 } from "lucide-react";
 
 type Product = {
@@ -12,15 +12,11 @@ type Product = {
   price: string; order: string; action: string; mode: string;
 };
 
-function FeatureCard({ product, flipped, onFlip }: {
-  product: Product; flipped: boolean; onFlip: () => void;
-}) {
+function FeatureCard({ product }: { product: Product }) {
   return (
-    <div className={"dt-feature-card-wrap " + (flipped ? "is-flipped" : "")}
-      >
-      <button type="button" className="dt-feature-card" onClick={onFlip}
-        aria-label={flipped ? "Lihat sisi depan kartu" : "Balik kartu untuk melihat sisi belakang"} aria-pressed={flipped}>
-        <span className={"dt-feature-card-face dt-feature-card-front dt-feature-" + product.tone}>
+    <div className="dt-feature-card-wrap">
+      <div className={"dt-feature-card dt-feature-" + product.tone} role="img" aria-label={"Kartu DiTapAja " + product.label}>
+        <span className="dt-feature-card-face dt-feature-card-front">
           <span className="dt-feature-card-top"><b>DITAPAJA®</b><Nfc size={21}/></span>
           <span className="dt-feature-card-center">
             <span className="dt-card-signal" aria-hidden="true"><i/><i/><i/><b/></span>
@@ -31,22 +27,16 @@ function FeatureCard({ product, flipped, onFlip }: {
           <i className="dt-feature-card-shine"/>
           <i className="dt-feature-card-grain"/>
         </span>
-        <span className="dt-feature-card-face dt-feature-card-back">
-          <span className="dt-feature-card-top"><b>DITAPAJA®</b><QrCode size={21}/></span>
-          <span className="dt-feature-qr"><QrCode size={82}/><small>SCAN TO REVIEW</small></span>
-          <span className="dt-feature-card-bottom"><span>NFC ENABLED</span><span>EST. 2026</span></span>
-        </span>
-      </button>
+      </div>
     </div>
   );
 }
 
 export default function ProductCarousel({ products }: { products: Product[] }) {
   const [selected, setSelected] = useState(products[0]?.tone ?? "");
-  const [flipped, setFlipped] = useState(false);
   const product = products.find(p => p.tone === selected) ?? products[0];
   if (!product) return null;
-  const choose = (tone: string) => { setSelected(tone); setFlipped(false); };
+  const choose = (tone: string) => setSelected(tone);
 
   return (
     <div className="dt-collection-experience">
@@ -78,13 +68,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           <div className="dt-art-glow"/>
           <div className="dt-art-orbit dt-art-orbit-a"/><div className="dt-art-orbit dt-art-orbit-b"/><div className="dt-art-orbit dt-art-orbit-c"/>
           <div className="dt-art-crosshair dt-art-crosshair-a"/><div className="dt-art-crosshair dt-art-crosshair-b"/>
-          <FeatureCard product={product} flipped={flipped} onFlip={() => setFlipped(!flipped)}/>
-          <div className="dt-art-control-dock">
-            <span><i/> {flipped ? "QR EXPERIENCE" : "NFC EXPERIENCE"}</span>
-            <button type="button" onClick={() => setFlipped(!flipped)} aria-pressed={flipped}>
-              {flipped ? "Kembali ke NFC face" : "Preview QR side"}<span>↗</span>
-            </button>
-          </div>
+          <FeatureCard product={product}/>
         </div>
       </div>
 
