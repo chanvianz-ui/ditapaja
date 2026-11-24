@@ -285,7 +285,9 @@ export default function Home() {
       <ProductCarousel products={products}/>
     </section>
 
-    <HowItWorks/>\n\n    <section className="home-dashboard-story dt-behind" id="behind-the-card">
+    <HowItWorks/>
+
+    <section className="home-dashboard-story dt-behind" id="behind-the-card">
       <div className="dt-behind-copy">
         <span className="home-section-index">04 / BEHIND THE CARD</span>
         <p className="dt-behind-kicker">THE CONTROL ROOM</p>
