@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ArrowUpRight, X, Nfc, LayoutDashboard, MessageCircle } from "lucide-react";
+import { ArrowUpRight, X, Nfc, LayoutDashboard, MessageCircle, Sparkles } from "lucide-react";
 
 function Brand() {
   return (
     <a href="/" className="dt-brand" aria-label="DiTapAja — Beranda">
-      <span className="dt-brand-symbol" aria-hidden="true"><i /><i /><i /></span>
+      <span className="dt-brand-symbol" aria-hidden="true"><i /><i /><i /><b /></span>
       <span className="dt-brand-word">
         <span className="dt-brand-word-top">DI<span>TAP</span>AJA</span>
-        <small>NFC REVIEW CARD</small>
+        <small>MAKE EVERY TAP COUNT</small>
       </span>
     </a>
   );
@@ -26,12 +26,30 @@ export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = panelRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
@@ -47,7 +65,7 @@ export default function SiteHeader() {
 
   return (
     <>
-      <header className="dt-site-header dt-header-modern">
+      <header className="dt-site-header dt-header-modern dt-header-signature">
         <div className="dt-header-shell">
           <Brand />
           <nav className="dt-header-nav" aria-label="Navigasi utama">
@@ -61,7 +79,8 @@ export default function SiteHeader() {
           <div className="dt-header-actions">
             <a className="dt-header-login" href="/login">Masuk</a>
             <a className="dt-header-cta" href="/koleksi">
-              Temukan kartu <ArrowUpRight size={16} aria-hidden="true" />
+              <span className="dt-header-cta-copy"><small>SIAP MULAI?</small><strong>Temukan kartu</strong></span>
+              <span className="dt-header-cta-icon"><ArrowUpRight size={17} aria-hidden="true" /></span>
             </a>
           </div>
           <div className="dt-header-mobile">
@@ -89,6 +108,7 @@ export default function SiteHeader() {
           }}
         >
           <section
+            ref={panelRef}
             className="dt-menu-panel dt-menu-redesign"
             id="dt-mobile-menu"
             role="dialog"
@@ -103,7 +123,7 @@ export default function SiteHeader() {
             </div>
             <div className="dt-menu-content">
               <div className="dt-menu-intro">
-                <span>DITAPAJA / NAVIGASI</span>
+                <span><Sparkles size={12} aria-hidden="true" /> DITAPAJA / NAVIGASI</span>
                 <p>Semua yang kamu<br /><em>butuhkan, satu tap.</em></p>
               </div>
               <div className="dt-menu-grid">
