@@ -689,3 +689,43 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
  .product-detail-page .detail-card,.product-detail-page .detail-copy .detail-back { transition:none; }
  .product-detail-page .detail-art:hover .detail-card { transform:rotate(-7deg); }
 }
+
+
+/* Shared superadmin navigation shell used by orders, PIN inventory and user pages. */
+.dt-admin-shell > .dt-admin-sidebar {
+ position:fixed; inset:0 auto 0 0; z-index:40; display:flex; flex-direction:column;
+ width:264px; padding:26px 20px 22px; border-right:1px solid rgba(174,197,216,.12);
+ background:linear-gradient(180deg,#101d29 0%,#0b1621 100%) !important;
+}
+.dt-admin-sidebar-brand { display:flex; align-items:center; gap:12px; padding:0 5px; color:#edf2f4 !important; }
+.dt-admin-sidebar-brand>span:last-child { display:grid; gap:4px; }
+.dt-admin-sidebar-brand b { font:800 15px Manrope,sans-serif; letter-spacing:-.035em; }
+.dt-admin-sidebar-brand small { color:#8296a4; font-size:8px; font-weight:850; letter-spacing:.17em; }
+.dt-admin-sidebar-mark { display:grid; place-items:center; width:40px; height:40px; border:1px solid rgba(165,214,202,.2); border-radius:12px; color:#a5d6ca; background:rgba(165,214,202,.08); }
+.dt-admin-sidebar-label { margin:50px 10px 13px; color:#708493; font-size:8px; font-weight:850; letter-spacing:.18em; }
+.dt-admin-sidebar-nav { display:grid; gap:5px; }
+.dt-admin-sidebar-nav a {
+ position:relative; display:flex; align-items:center; gap:12px; min-height:46px; padding:0 13px;
+ border:1px solid transparent; border-radius:10px; color:#91a3af; font-size:11px; font-weight:650;
+ transition:background .18s ease,border-color .18s ease,color .18s ease;
+}
+.dt-admin-sidebar-nav a:hover { color:#edf2f4; background:rgba(255,255,255,.035); }
+.dt-admin-sidebar-nav a.is-active {
+ border-color:rgba(165,214,202,.16); color:#e8f4f0;
+ background:linear-gradient(100deg,rgba(165,214,202,.12),rgba(165,214,202,.035));
+}
+.dt-admin-sidebar-nav a.is-active svg { color:#a5d6ca; }
+.dt-admin-sidebar-nav a i { width:5px; height:5px; margin-left:auto; border-radius:50%; background:#a5d6ca; box-shadow:0 0 12px rgba(165,214,202,.55); }
+.dt-admin-sidebar-bottom { display:grid; gap:12px; margin-top:auto; }
+.dt-admin-access { display:flex; align-items:flex-start; gap:10px; padding:14px 12px; border:1px solid rgba(174,197,216,.12); border-radius:12px; background:rgba(255,255,255,.025); color:#a5d6ca; }
+.dt-admin-access>span { display:grid; gap:5px; }
+.dt-admin-access b { color:#dce6eb; font-size:10px; }
+.dt-admin-access small { color:#8296a4; font-size:9px; line-height:1.55; }
+.dt-admin-sidebar-bottom>button { display:flex; align-items:center; gap:11px; min-height:42px; padding:0 12px; border:1px solid transparent; border-radius:9px; background:transparent; color:#91a3af; text-align:left; font-size:11px; font-weight:650; cursor:pointer; }
+.dt-admin-sidebar-bottom>button:hover { border-color:rgba(229,164,164,.16); color:#e5a4a4; background:rgba(229,164,164,.06); }
+.dt-admin-shell > section { min-width:0; }
+.dt-admin-shell > section > header { min-height:76px; }
+.dt-admin-shell > section > header>div { max-width:1600px; margin-inline:auto; }
+@media(max-width:1023px) {
+ .dt-admin-shell > .dt-admin-sidebar { display:none; }
+}
