@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
-import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 
@@ -17,21 +17,24 @@ function BrandMark() {
 
 function HeroTapDemo() {
   const [tapped, setTapped] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [clock, setClock] = useState("--:--");
+  const dragStart = useRef<{ x: number; y: number } | null>(null);
+
   useEffect(() => {
     const updateClock = () => setClock(new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
     updateClock();
     const timer = window.setInterval(updateClock, 15000);
     return () => window.clearInterval(timer);
   }, []);
-  const dragStart = useRef<{ x: number; y: number } | null>(null);
 
   const resetDemo = () => {
     setTapped(false);
+    setShowReview(false);
     setRating(0);
     setReview("");
     setSubmitted(false);
@@ -47,90 +50,94 @@ function HeroTapDemo() {
   };
 
   const moveDrag = (event: PointerEvent<HTMLButtonElement>) => {
-    if (dragStart.current === null) return;
+    if (!dragStart.current) return;
     const dx = event.clientX - dragStart.current.x;
-    setDragOffset(Math.max(0, Math.min(dx, 150)));
+    setDragOffset(Math.max(0, Math.min(dx, 170)));
   };
 
   const finishDrag = (event: PointerEvent<HTMLButtonElement>) => {
-    if (dragStart.current === null) return;
+    if (!dragStart.current) return;
     const dx = event.clientX - dragStart.current.x;
     dragStart.current = null;
     setDragOffset(0);
     if (dx > 48) {
       setTapped(true);
+      setShowReview(false);
       setSubmitted(false);
     }
   };
 
-  return <div className={`home-hero-visual home-tap-demo ${tapped ? "is-tapped" : ""} ${submitted ? "is-submitted" : ""}`} aria-label="Simulasi menggeser kartu NFC ke ponsel dan memberi rating">
+  return <div className={\`home-hero-visual home-tap-demo \${tapped ? "is-tapped" : ""} \${submitted ? "is-submitted" : ""}\`} aria-label="Simulasi pengalaman pelanggan menggunakan kartu NFC">
     <div className="home-demo-heading">
-      <div><span className="home-section-index">SIMULASI PENGALAMAN PELANGGAN</span><b>Geser kartu. Beri rating.</b></div>
-      <span className="home-demo-disclaimer">DEMO · TIDAK TERKIRIM</span>
+      <div><span className="home-section-index"><i/> LIVE INTERACTION</span><b>Coba sendiri pengalaman tap NFC</b></div>
+      <span className="home-demo-disclaimer">DEMO · TANPA DATA TERKIRIM</span>
     </div>
     <div className="home-demo-stage">
       <div className="home-demo-card-wrap">
-        <span className="home-demo-instruction">GESER KARTU KE ARAH PONSEL</span>
-        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={finishDrag} onPointerCancel={()=>{dragStart.current=null;setDragOffset(0);}} style={dragOffset ? { transform: `translateX(${dragOffset}px) rotate(2deg) scale(.98)` } : undefined} onClick={(event)=>{if(event.detail===0 && !tapped) setTapped(true);}} aria-label="Geser kartu NFC ke arah ponsel">
+        <span className="home-demo-instruction">{tapped ? "KARTU TERBACA" : "GESER KARTU KE KANAN"}</span>
+        <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={finishDrag} onPointerCancel={() => { dragStart.current = null; setDragOffset(0); }} style={dragOffset ? { transform: "translateX(" + dragOffset + "px) rotate(2deg) scale(.98)" } : undefined} onClick={(event) => { if (event.detail === 0 && !tapped) setTapped(true); }} aria-label="Geser kartu NFC ke kanan untuk memulai simulasi">
           <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA</span><Nfc size={22}/></div>
           <div className="home-demo-card-title">YOUR<br/><em>review</em><br/>STARTS HERE.</div>
           <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC · QR</span></div>
+          <span className="home-demo-card-glint"/>
         </button>
-        <span className="home-demo-card-caption">NFC REVIEW CARD</span>
+        <span className="home-demo-card-caption">NFC REVIEW CARD · NOIR</span>
       </div>
-      <div className="home-demo-transfer" aria-hidden="true"><ArrowUpRight size={23}/><small>NFC</small></div>
+      <div className="home-demo-transfer" aria-hidden="true"><span/><ArrowUpRight size={23}/><small>NFC</small></div>
       <div className="home-demo-phone-wrap">
-        <span className="home-demo-instruction">HALAMAN ULASAN</span>
-        <div className="home-demo-phone"><div className="home-phone-island"/><div className="home-phone-status"><span>{clock}</span><span>●●● ▰</span></div>
-          {tapped ? <div className="home-google-screen">
-            <div className="home-maps-appbar">
-              <span className="home-maps-menu">☰</span>
-              <div className="home-maps-search"><span>⌕</span><b>DiTapAja</b><span>×</span></div>
-              <span className="home-maps-account">D</span>
+        <span className="home-demo-instruction">{!tapped ? "SMARTPHONE" : showReview ? "CONTOH FORM REVIEW" : "TUJUAN TERBUKA"}</span>
+        <div className="home-demo-phone">
+          <div className="home-phone-island"/>
+          <div className="home-phone-status"><span>{clock}</span><span>●●● ▰</span></div>
+          {!tapped ? <div className="home-phone-idle">
+            <div className="home-phone-nfc"><Nfc size={29}/></div>
+            <b>Ready to tap</b>
+            <p>Dekatkan kartu ke ponsel untuk membuka halaman tujuan.</p>
+            <span><i/> NFC CONNECTION READY</span>
+          </div> : showReview ? <div className="home-demo-review-screen">
+            <div className="home-demo-review-top"><button type="button" onClick={() => setShowReview(false)} aria-label="Kembali ke peta">‹</button><b>Review experience</b><span>•••</span></div>
+            <div className="home-demo-review-brand"><div className="home-demo-review-avatar">D</div><div><b>DiTapAja</b><small>Contoh tampilan halaman ulasan</small></div></div>
+            <div className="home-demo-review-prompt"><strong>Bagaimana pengalamanmu?</strong><p>Pilih rating untuk melihat alur review yang lebih praktis.</p></div>
+            <div className="home-google-rating-picker" role="group" aria-label="Pilih rating">
+              {[1,2,3,4,5].map((value) => <button key={value} type="button" className={rating >= value ? "selected" : ""} onClick={() => setRating(value)} aria-label={value + " bintang"} aria-pressed={rating === value}>★</button>)}
             </div>
-            <div className="home-maps-map" aria-label="Peta Google Maps">
-              <div className="home-maps-map-grid"/>
-              <div className="home-maps-map-road road-a"/>
-              <div className="home-maps-map-road road-b"/>
-              <div className="home-maps-map-road road-c"/>
-              <div className="home-maps-map-park"/>
-              <div className="home-maps-map-water"/>
-              <span className="home-maps-map-label label-a">Jalan utama</span>
-              <span className="home-maps-map-label label-b">Area sekitar</span>
-              <span className="home-maps-pin"><i/></span>
+            <span className="home-google-rating-label">{rating ? ["", "Kurang baik", "Cukup", "Baik", "Sangat baik", "Luar biasa"][rating] : "Ketuk bintang untuk memberi rating"}</span>
+            <label className="home-demo-review-label" htmlFor="home-demo-review">Ceritakan pengalamanmu <span>OPSIONAL</span></label>
+            <textarea id="home-demo-review" className="home-google-review-input" value={review} onChange={(event) => setReview(event.target.value)} placeholder="Tulis ulasan singkat..." maxLength={180}/>
+            {submitted ? <div className="home-google-submitted" role="status"><Check size={15}/> Simulasi selesai. Tidak ada ulasan yang dikirim.</div> : <button type="button" className="home-google-submit" disabled={!rating} onClick={() => setSubmitted(true)}>Kirim simulasi <ArrowUpRight size={12}/></button>}
+            <small className="home-google-note">Pratinjau interaktif · bukan pengiriman review sungguhan</small>
+          </div> : <div className="home-google-screen">
+            <div className="home-maps-appbar"><span className="home-maps-menu">☰</span><div className="home-maps-search"><span>⌕</span><b>DiTapAja</b><span>×</span></div><span className="home-maps-account">D</span></div>
+            <div className="home-maps-map" aria-label="Ilustrasi tampilan peta">
+              <div className="home-maps-map-grid"/><div className="home-maps-map-road road-a"/><div className="home-maps-map-road road-b"/><div className="home-maps-map-road road-c"/><div className="home-maps-map-park"/><div className="home-maps-map-water"/>
+              <span className="home-maps-map-label label-a">Jalan utama</span><span className="home-maps-map-label label-b">Area sekitar</span><span className="home-maps-pin"><i/></span><span className="home-maps-map-fab">＋</span>
             </div>
             <div className="home-maps-place-sheet">
               <div className="home-maps-sheet-handle"/>
-              <div className="home-maps-place-title"><div><small>HASIL PENCARIAN</small><strong>DiTapAja</strong><span>Tujuan dari tautan Google Maps</span></div><span className="home-maps-place-icon">⌖</span></div>
+              <div className="home-maps-place-title"><div><small>DESTINATION PREVIEW</small><strong>DiTapAja</strong><span>Tujuan dari tautan Google Maps</span></div><span className="home-maps-place-icon"><MapPin size={18}/></span></div>
               <div className="home-maps-place-actions">
                 <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>➤</span> Rute</a>
                 <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>↗</span> Bagikan</a>
                 <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>⌑</span> Buka</a>
               </div>
-              <a className="home-maps-open" href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Lihat DiTapAja di Google Maps <ArrowUpRight size={13}/></a>
-              <small className="home-google-note">Pratinjau visual · detail lokasi dibuka dari Google Maps asli</small>
+              <button className="home-maps-open" type="button" onClick={() => { setShowReview(true); setSubmitted(false); }}>Lihat alur review <ArrowUpRight size={13}/></button>
+              <a className="home-maps-real-link" href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Buka tujuan di Google Maps <ArrowUpRight size={12}/></a>
+              <small className="home-google-note">Ilustrasi peta · detail lokasi dibuka dari Google Maps asli</small>
             </div>
-          </div> : <div className="home-phone-idle">
-            <Nfc size={35}/><b>Siap menerima<br/>kartu NFC</b>
-            <p>Geser kartu ke kanan untuk membuka tujuan DiTapAja.</p>
           </div>}
           <div className="home-phone-homebar"/>
-          {submitted && <div className="home-thanks-overlay" role="dialog" aria-modal="true" aria-label="Terima kasih">
-            <div className="home-thanks-popup"><div className="home-thanks-check">✓</div><strong>Terima kasih telah berkontribusi!</strong><p>Rating dan ulasan ini hanya simulasi. Tidak ada data yang dikirim.</p><button type="button" onClick={resetDemo}>Selesai</button></div>
-          </div>}
         </div>
       </div>
     </div>
     <div className="home-demo-footer">
-      <span>{!tapped ? "Geser kartu ke ponsel untuk memulai" : submitted ? "Simulasi selesai" : rating ? `Rating dipilih: ${rating}/5` : "Pilih bintang untuk memberi rating"}</span>
+      <span>{!tapped ? "01 — Geser kartu ke kanan untuk mulai" : submitted ? "03 — Simulasi selesai" : showReview ? "02 — Pilih rating dan coba form review" : "01 — Kartu berhasil terbaca"}</span>
       <div className="home-demo-footer-actions">
-        <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Buka tujuan DiTapAja <ArrowUpRight size={12}/></a>
-        <button type="button" onClick={resetDemo}><RotateCcw size={13}/> Ulangi</button>
+        {tapped && !showReview && <button type="button" onClick={() => setShowReview(true)}>Coba alur review <ArrowUpRight size={12}/></button>}
+        <button type="button" onClick={resetDemo}><RotateCcw size={13}/> Reset demo</button>
       </div>
     </div>
   </div>;
 }
-
 export default function Home() {
   return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
     <SiteHeader/>
