@@ -17,39 +17,57 @@ function BrandMark() {
 
 function HeroTapDemo() {
   const [tapped, setTapped] = useState(false);
-  return <div className={`home-hero-visual home-tap-demo ${tapped ? "is-tapped" : ""}`} aria-label="Demo interaktif pelanggan tap kartu NFC dan membuka halaman Google Review">
-    <div className="home-demo-heading"><div><span className="home-section-index">LIVE PRODUCT DEMO</span><b>One tap. Straight to reviews.</b></div><span className="home-demo-live"><i/> INTERACTIVE</span></div>
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const resetDemo = () => {
+    setTapped(false);
+    setRating(0);
+    setReview("");
+    setSubmitted(false);
+  };
+
+  return <div className={`home-hero-visual home-tap-demo ${tapped ? "is-tapped" : ""}`} aria-label="Simulasi pelanggan menggunakan kartu NFC dan mengisi rating">
+    <div className="home-demo-heading">
+      <div><span className="home-section-index">SIMULASI PENGALAMAN PELANGGAN</span><b>Tap. Rate. Done.</b></div>
+      <span className="home-demo-disclaimer">DEMO · TIDAK TERKIRIM</span>
+    </div>
     <div className="home-demo-stage">
-      <div className="home-demo-card-wrap"><span className="home-demo-step">01 / TAP CARD</span>
-        <button type="button" className="home-demo-card" onClick={() => setTapped(true)} aria-label="Simulasikan pelanggan mengetuk kartu NFC">
-          <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA®</span><Nfc size={22}/></div>
+      <div className="home-demo-card-wrap">
+        <button type="button" className="home-demo-card" onClick={() => { setTapped(true); setSubmitted(false); }} aria-label="Tap kartu NFC untuk memulai simulasi">
+          <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA</span><Nfc size={22}/></div>
           <div className="home-demo-card-title">YOUR<br/><em>review</em><br/>STARTS HERE.</div>
           <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC · QR</span></div>
         </button>
-        <div className="home-demo-tap-hint"><Wifi size={15}/>{tapped ? "CARD DETECTED" : "TAP TO TRY THE DEMO"}</div>
+        <div className="home-demo-tap-hint">{tapped ? "KARTU TERDETEKSI" : "TEKAN KARTU UNTUK MENCOBA"}</div>
       </div>
-      <div className="home-demo-transfer"><span/><ArrowUpRight size={17}/><small>NFC</small></div>
-      <div className="home-demo-phone-wrap"><span className="home-demo-step">02 / PHONE SCREEN</span>
+      <div className="home-demo-transfer"><ArrowUpRight size={22}/><small>NFC</small></div>
+      <div className="home-demo-phone-wrap">
         <div className="home-demo-phone"><div className="home-phone-island"/><div className="home-phone-status"><span>9:41</span><span>●●● ▰</span></div>
           {tapped ? <div className="home-google-screen">
             <div className="home-google-top"><span className="home-google-g">Google</span><span>⋮</span></div>
-            <div className="home-google-business"><div className="home-google-avatar">B</div><div><b>Your Business</b><small>Business profile</small></div></div>
-            <div className="home-google-rating"><b>4.8</b><span>★★★★★</span><small>Customer reviews</small></div>
-            <div className="home-google-divider"/>
-            <strong>Share your experience</strong><p>Your review helps others discover this place.</p>
-            <div className="home-google-stars">☆　☆　☆　☆　☆</div>
-            <div className="home-google-write">Write a review <ArrowUpRight size={12}/></div>
-            <small className="home-google-note">Google review destination</small>
+            <div className="home-google-business"><div className="home-google-avatar">B</div><div><b>Nama Bisnis</b><small>Profil bisnis · Contoh</small></div></div>
+            <div className="home-google-prompt"><strong>Bagaimana pengalaman Anda?</strong><p>Bagikan pengalaman Anda untuk membantu orang lain.</p></div>
+            <div className="home-google-rating-picker" role="group" aria-label="Pilih rating">
+              {Array.from({length:5},(_,i)=><button type="button" key={i} onClick={()=>{setRating(i+1);setSubmitted(false);}} aria-label={`${i+1} bintang`} aria-pressed={rating===i+1} className={i<rating?"selected":""}>★</button>)}
+            </div>
+            <span className="home-google-rating-label">{rating ? ["","Sangat buruk","Buruk","Cukup","Baik","Sangat baik"][rating] : "Ketuk bintang untuk memberi rating"}</span>
+            <textarea className="home-google-review-input" value={review} onChange={e=>{setReview(e.target.value);setSubmitted(false);}} placeholder="Ceritakan pengalaman Anda (opsional)" aria-label="Tulis ulasan contoh"/>
+            {submitted ? <div className="home-google-submitted" role="status">Ini hanya demo. Rating dan ulasan tidak dikirim ke Google.</div> :
+              <button type="button" className="home-google-submit" disabled={!rating} onClick={()=>setSubmitted(true)}>Kirim ulasan</button>}
+            <small className="home-google-note">Simulasi tampilan · bukan halaman Google asli</small>
           </div> : <div className="home-phone-idle">
-            <div className="home-phone-nfc"><Nfc size={27}/></div><b>Ready when<br/>you are.</b>
-            <p>Bring your phone close to the DiTapAja card to open the review page.</p><span><i/> WAITING FOR NFC</span>
+            <Nfc size={35}/><b>Tap kartu<br/>untuk mulai</b>
+            <p>Halaman ulasan akan terbuka di browser pelanggan.</p>
           </div>}
           <div className="home-phone-homebar"/>
         </div>
       </div>
     </div>
-    <div className="home-demo-footer"><div><span className={tapped ? "done" : ""}>01</span> Tap NFC card <i/> <span className={tapped ? "done" : ""}>02</span> Google Review opens</div>
-      <button type="button" onClick={() => setTapped(!tapped)}>{tapped ? <><RotateCcw size={13}/> Replay demo</> : <><Nfc size={14}/> Simulasikan tap</>}</button>
+    <div className="home-demo-footer">
+      <span>{!tapped ? "Coba tekan kartu NFC" : submitted ? "Simulasi selesai — tidak ada data terkirim" : rating ? `Rating dipilih: ${rating}/5` : "Pilih bintang untuk memberi rating"}</span>
+      <button type="button" onClick={resetDemo}><RotateCcw size={13}/> Ulangi demo</button>
     </div>
   </div>;
 }
