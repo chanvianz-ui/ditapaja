@@ -3157,3 +3157,91 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
   .dt-home-rebuild .ed-collection .dt-feature-card,
   .dt-home-rebuild .ed-collection .dt-feature-card-shine { transition:none !important; }
 }
+
+/* Card-only interaction refinement. The surrounding showcase stage is intentionally untouched. */
+.dt-home-rebuild .ed-collection .dt-feature-card {
+  -webkit-tap-highlight-color:transparent;
+  touch-action:pan-y;
+  transform:perspective(1100px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateZ(0) !important;
+  transition:transform .18s cubic-bezier(.2,.75,.25,1),filter .3s ease !important;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card:active {
+  transform:perspective(1100px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) scale(.985) !important;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-front {
+  isolation:isolate;
+  contain:paint;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card-top { align-items:flex-start !important; }
+.dt-home-rebuild .ed-collection .dt-card-chip {
+  display:flex;align-items:center;gap:7px;opacity:.72;
+}
+.dt-home-rebuild .ed-collection .dt-card-chip small {
+  font-size:6px;font-weight:850;letter-spacing:.17em;
+}
+.dt-home-rebuild .ed-collection .dt-card-live-status {
+  position:absolute;left:clamp(17px,3vw,32px);top:50%;z-index:5;
+  display:flex;align-items:center;gap:7px;
+  font-size:7px;font-weight:850;letter-spacing:.18em;opacity:.68;
+  transform:translateY(-50%);
+}
+.dt-home-rebuild .ed-collection .dt-card-live-status i {
+  width:6px;height:6px;border-radius:50%;background:#9da7a1;
+  box-shadow:0 0 0 3px rgba(157,167,161,.13);
+}
+.dt-home-rebuild .ed-collection .dt-feature-blanc .dt-card-live-status i { background:#5d8b73;box-shadow:0 0 0 3px rgba(93,139,115,.15); }
+.dt-home-rebuild .ed-collection .dt-feature-signature .dt-card-live-status i { background:#d9b477;box-shadow:0 0 0 3px rgba(217,180,119,.16); }
+.dt-home-rebuild .ed-collection .dt-card-corner-mark {
+  position:absolute;right:clamp(17px,3vw,32px);top:50%;z-index:4;
+  display:grid;place-items:center;width:27px;height:27px;border:1px solid currentColor;
+  border-radius:50%;opacity:.32;transform:translateY(-50%);
+}
+.dt-home-rebuild .ed-collection .dt-card-scanline {
+  position:absolute;left:0;right:0;top:-35%;height:23%;z-index:4;
+  pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,.24),rgba(255,255,255,.04),transparent);
+  filter:blur(1px);
+}
+.dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-card-scanline {
+  opacity:1;animation:dtNfcScan 1.7s cubic-bezier(.4,0,.2,1) infinite;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-card-live-status {
+  opacity:1;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-card-live-status i {
+  background:#7ee0ad;box-shadow:0 0 0 4px rgba(126,224,173,.15),0 0 15px rgba(126,224,173,.75);
+  animation:dtStatusBlink 1s ease-in-out infinite alternate;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-card-corner-mark {
+  opacity:.9;box-shadow:0 0 22px currentColor;
+  animation:dtMarkSpin 8s linear infinite;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-feature-card-front {
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 38px rgba(255,255,255,.08),0 18px 42px rgba(0,0,0,.28);
+}
+.dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-feature-card-shine {
+  opacity:1;transform:translateX(65%) rotate(12deg);
+}
+.dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-card-tap-hint {
+  opacity:.78;letter-spacing:.22em;
+}
+.dt-home-rebuild .ed-collection .dt-card-tap-hint {
+  top:auto;bottom:clamp(17px,3vw,32px);right:clamp(17px,3vw,32px);
+  transform:none;font-size:6px;letter-spacing:.16em;
+}
+.dt-home-rebuild .ed-collection .dt-feature-card:hover .dt-card-tap-hint { opacity:.6; }
+.dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active:hover .dt-card-tap-hint { opacity:.9; }
+@keyframes dtNfcScan { 0%{top:-30%;opacity:0}12%{opacity:.8}85%{opacity:.8}100%{top:115%;opacity:0} }
+@keyframes dtStatusBlink { from{opacity:.55}to{opacity:1} }
+@keyframes dtMarkSpin { to{transform:translateY(-50%) rotate(360deg)} }
+@media(max-width:700px) {
+  .dt-home-rebuild .ed-collection .dt-card-live-status { top:auto;bottom:clamp(17px,3vw,26px);left:17px;transform:none;font-size:6px; }
+  .dt-home-rebuild .ed-collection .dt-card-tap-hint { bottom:clamp(17px,3vw,26px);right:17px;max-width:43%;text-align:right;font-size:5px; }
+  .dt-home-rebuild .ed-collection .dt-card-chip small { display:none; }
+  .dt-home-rebuild .ed-collection .dt-card-corner-mark { display:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-card-scanline,
+  .dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-card-live-status i,
+  .dt-home-rebuild .ed-collection .dt-feature-card.is-nfc-active .dt-card-corner-mark { animation:none !important; }
+}
