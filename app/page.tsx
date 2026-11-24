@@ -285,28 +285,41 @@ export default function Home() {
       <ProductCarousel products={products}/>
     </section>
 
-    <HowItWorks/>\n\n    <section className="home-dashboard-story">
-      <div className="home-dashboard-copy">
+    <HowItWorks/>\n\n    <section className="home-dashboard-story dt-behind" id="behind-the-card">
+      <div className="dt-behind-copy">
         <span className="home-section-index">04 / BEHIND THE CARD</span>
-        <h2>One card.<br/><em>More control.</em></h2>
-        <p>Kartu hanyalah awal. Atur link tujuan, kelola kartu, dan pantau aktivitas dari satu dashboard yang bisa kamu akses kapan saja.</p>
-        <a className="ed-button" href="/login">Masuk ke dashboard <ArrowUpRight size={17}/></a>
-        <div className="home-dashboard-points"><span><Check size={15}/> Kelola kartu</span><span><Check size={15}/> Atur tujuan review</span><span><Check size={15}/> Pantau aktivitas</span></div>
-      </div>
-      <div className="home-dashboard-visual">
-        <div className="home-dash-window">
-          <div className="home-dash-bar"><div><i/><i/><i/></div><span>DITAPAJA / OVERVIEW</span><span>•••</span></div>
-          <div className="home-dash-body">
-            <aside className="home-dash-sidebar"><BrandMark/><span className="active"/><span/><span/><span/><span/></aside>
-            <div className="home-dash-content">
-              <div className="home-dash-heading"><div><small>YOUR WORKSPACE</small><b>Overview</b></div><span>THIS MONTH⌄</span></div>
-              <div className="home-dash-stats"><div><small>TOTAL TAPS</small><b>1,284</b><i>↗ Activity</i></div><div><small>REVIEW CLICKS</small><b>864</b><i>↗ Engagement</i></div></div>
-              <div className="home-dash-chart"><div><small>ACTIVITY OVERVIEW</small><span>LAST 7 DAYS</span></div><div className="home-chart-bars">{[34,54,43,76,59,88,68,96,72,84,57,78,48,91].map((height,i)=><i key={i} style={{height:height+"%"}}/>)}</div><div className="home-chart-labels"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div></div>
-              <div className="home-dash-card-row"><span><Nfc size={14}/> Noir — Main counter</span><b>ACTIVE</b></div>
-            </div>
-          </div>
+        <p className="dt-behind-kicker">THE CONTROL ROOM</p>
+        <h2>Small card.<br/><em>Big picture.</em></h2>
+        <p className="dt-behind-intro">Di balik setiap tap, ada dashboard yang bikin semuanya tetap teratur. Kelola kartu, tentukan tujuan, dan pahami interaksi pelanggan dari satu tempat.</p>
+        <a className="ed-button" href="/login">Explore dashboard <ArrowUpRight size={17}/></a>
+        <div className="dt-behind-capabilities">
+          <div><span>01</span><b>Manage your cards</b><small>Aktifkan, arsipkan, dan atur kartu.</small></div>
+          <div><span>02</span><b>Control every destination</b><small>Ubah tautan tujuan kapan saja.</small></div>
+          <div><span>03</span><b>Understand engagement</b><small>Lihat aktivitas tap dan klik review.</small></div>
         </div>
-        <div className="home-dash-caption"><BarChart3 size={16}/> YOUR BUSINESS, AT A GLANCE.</div>
+      </div>
+      <div className="dt-behind-visual">
+        <div className="dt-behind-orbit dt-behind-orbit-one"/>
+        <div className="dt-behind-orbit dt-behind-orbit-two"/>
+        <div className="dt-behind-panel">
+          <div className="dt-behind-panel-top">
+            <div className="dt-behind-brand"><BrandMark/><span>DITAPAJA <i>STUDIO</i></span></div>
+            <span className="dt-behind-preview-tag">DASHBOARD PREVIEW</span>
+          </div>
+          <div className="dt-behind-panel-heading"><div><small>YOUR WORKSPACE</small><b>Overview<span>.</span></b></div><span className="dt-behind-period">LAST 30 DAYS⌄</span></div>
+          <div className="dt-behind-metrics">
+            <div><span>TOTAL TAPS</span><b>1,284</b><small>Card interactions</small><i className="dt-behind-metric-mark">↗</i></div>
+            <div><span>REVIEW CLICKS</span><b>864</b><small>Outbound visits</small><i className="dt-behind-metric-mark">↗</i></div>
+          </div>
+          <div className="dt-behind-activity">
+            <div className="dt-behind-activity-head"><div><small>ACTIVITY</small><b>Engagement overview</b></div><span>ILLUSTRATIVE DATA</span></div>
+            <div className="dt-behind-chart">{[27,42,35,58,47,72,54,82,63,91,70,78,58,96,73,86,62,80].map((height,i)=><i key={i} style={{height:height+"%"}}/>)}</div>
+            <div className="dt-behind-chart-labels"><span>01 NOV</span><span>08 NOV</span><span>15 NOV</span><span>24 NOV</span></div>
+          </div>
+          <div className="dt-behind-card-line"><div className="dt-behind-card-icon"><Nfc size={17}/></div><div><b>Noir — Main counter</b><small>Last interaction · just now</small></div><span>ACTIVE</span></div>
+        </div>
+        <div className="dt-behind-float-note"><span><i/> SYSTEM STATUS</span><b>Everything in one place.</b></div>
+        <p className="dt-behind-caption">THE INTELLIGENCE BEHIND EVERY TAP.</p>
       </div>
     </section>
 
