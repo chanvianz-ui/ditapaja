@@ -984,25 +984,21 @@ export default function DashboardPage() {
       label: "Total Taps",
       value: displayedAnalytics.totalTaps.toLocaleString("id-ID"),
       icon: MousePointerClick,
-      description: "Akumulasi aktivitas sepanjang waktu.",
     },
     {
       label: "Unique Visitors",
       value: displayedAnalytics.uniqueVisitors.toLocaleString("id-ID"),
       icon: Users,
-      description: "Pengunjung unik sepanjang waktu.",
     },
     {
       label: "Review Clicks",
       value: displayedAnalytics.reviewClicks.toLocaleString("id-ID"),
       icon: ExternalLink,
-      description: "Akumulasi klik review sepanjang waktu.",
     },
     {
       label: "CTR",
       value: `${displayedAnalytics.ctr.toFixed(1)}%`,
       icon: BarChart3,
-      description: "Rasio klik review dari seluruh tap.",
     },
   ];
 
@@ -1014,33 +1010,33 @@ export default function DashboardPage() {
           {activeView === "overview" ? (
             <>
               <section className="dt-page-heading">
-                <div><span className="dt-eyebrow">WORKSPACE / 01</span><h1>Overview<span>.</span></h1><p>Semua aktivitas DiTapAja, dirangkum tanpa membuatmu kehilangan fokus.</p></div>
+                <div><h1>Overview</h1></div>
                 <button className="dt-primary" type="button" onClick={() => router.push("/dashboard/cards/new")}><Plus size={16}/>Buat kartu</button>
               </section>
 
               <section className="dt-kpi-grid" aria-label="Metrik utama">
-                {analyticsItems.map((item, index) => { const Icon = item.icon; return <article className="dt-kpi" key={item.label}><div className="dt-kpi-head"><span>{item.label}</span><Icon size={17}/></div><strong>{item.value}</strong><small>{item.description}</small><span className="dt-kpi-index">0{index + 1}</span></article>; })}
+                {analyticsItems.map((item) => { const Icon = item.icon; return <article className="dt-kpi" key={item.label}><div className="dt-kpi-head"><span>{item.label}</span><Icon size={17}/></div><strong>{item.value}</strong></article>; })}
               </section>
 
               <section className="dt-overview-grid" id="analytics">
                 <div className="dt-panel dt-performance">
-                  <div className="dt-panel-heading"><div><span className="dt-eyebrow">PERFORMANCE</span><h2>Aktivitas pelanggan</h2><p>Tap NFC dan klik ulasan dari waktu ke waktu.</p></div><div className="dt-panel-filters"><select aria-label="Filter kartu" value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)}><option value="all">Semua kartu</option>{cards.filter(c => !c.archived_at).map(c => <option key={c.id} value={c.id}>{c.card_name || "Untitled Card"}</option>)}</select><select aria-label="Filter lokasi" value={selectedLocationId} onChange={e => setSelectedLocationId(e.target.value)}><option value="all">Semua lokasi</option><option value="unassigned">Tanpa lokasi</option>{businessLocations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}</select></div></div>
+                  <div className="dt-panel-heading"><div><h2>Aktivitas pelanggan</h2></div><div className="dt-panel-filters"><select aria-label="Filter kartu" value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)}><option value="all">Semua kartu</option>{cards.filter(c => !c.archived_at).map(c => <option key={c.id} value={c.id}>{c.card_name || "Untitled Card"}</option>)}</select><select aria-label="Filter lokasi" value={selectedLocationId} onChange={e => setSelectedLocationId(e.target.value)}><option value="all">Semua lokasi</option><option value="unassigned">Tanpa lokasi</option>{businessLocations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}</select></div></div>
                   <div className="dt-chart-toolbar"><div className="dt-legend"><span><i className="dt-dot-taps"/>Tap NFC</span><span><i className="dt-dot-clicks"/>Klik review</span></div><div className="dt-period">{([7,30,90] as const).map(period => <button type="button" key={period} className={chartPeriod===period?"is-active":""} onClick={()=>setChartPeriod(period)}>{period}H</button>)}</div></div>
                   {hasPeriodActivity ? <div className="dt-chart">{chartData.map(day => <div className="dt-chart-day" key={day.key}><div className="dt-chart-bars"><i className="dt-bar-taps" style={{height: Math.max(day.taps ? 4 : 0, day.taps/chartMax*100)+"%"}}/><i className="dt-bar-clicks" style={{height: Math.max(day.clicks ? 4 : 0, day.clicks/chartMax*100)+"%"}}/></div><span>{day.label}</span></div>)}</div> : <div className="dt-chart-empty"><BarChart3 size={25}/><b>Belum ada aktivitas di periode ini</b><span>Grafik akan terisi otomatis saat pelanggan mulai menggunakan kartu NFC.</span></div>}
                   <div className="dt-chart-foot"><span>{chartPeriod} hari terakhir</span><b>{periodTapTotal.toLocaleString("id-ID")} tap <i>·</i> {periodClickTotal.toLocaleString("id-ID")} klik review</b><button type="button" onClick={exportAnalyticsCsv}><Download size={14}/>Export CSV</button></div>
                 </div>
 
                 <aside className="dt-panel dt-insights">
-                  <span className="dt-eyebrow">QUICK READ</span><h2>Insight</h2><p className="dt-insight-intro">Perbandingan dengan periode sebelumnya.</p>
+                  <h2>Insight</h2>
                   <div className="dt-insight-stat"><span>Perubahan tap</span><b>{analyticsInsights.tapChange===null?"—":(analyticsInsights.tapChange>0?"+":"")+analyticsInsights.tapChange.toFixed(1)+"%"}</b></div>
                   <div className="dt-insight-stat"><span>Klik review</span><b>{analyticsInsights.clickChange===null?"—":(analyticsInsights.clickChange>0?"+":"")+analyticsInsights.clickChange.toFixed(1)+"%"}</b></div>
                   <div className="dt-insight-stat"><span>Hari teraktif</span><b>{analyticsInsights.bestDay?.label || "—"}</b></div>
-                  <div className="dt-top-card"><small>TOP PERFORMING CARD</small><strong>{analyticsInsights.topCard?.name || "Belum ada data"}</strong><span>{analyticsInsights.topCard ? analyticsInsights.topCard.taps.toLocaleString("id-ID")+" total tap" : "Data kartu akan muncul di sini."}</span></div>
+                  <div className="dt-top-card"><small>Kartu teratas</small><strong>{analyticsInsights.topCard?.name || "Belum ada data"}</strong><span>{analyticsInsights.topCard ? analyticsInsights.topCard.taps.toLocaleString("id-ID")+" total tap" : "Data kartu akan muncul di sini."}</span></div>
                 </aside>
               </section>
 
               <section className="dt-recent-section">
-                <div className="dt-section-heading"><div><span className="dt-eyebrow">YOUR INVENTORY</span><h2>Kartu NFC</h2><p>Akses cepat ke kartu yang terakhir kamu kelola.</p></div><button className="dt-text-button" type="button" onClick={() => window.location.assign("/dashboard?view=cards")}>Kelola semua kartu <ExternalLink size={14}/></button></div>
+                <div className="dt-section-heading"><div><h2>Kartu NFC</h2></div><button className="dt-text-button" type="button" onClick={() => window.location.assign("/dashboard?view=cards")}>Kelola semua kartu <ExternalLink size={14}/></button></div>
                 <div className="dt-recent-list">
                   {cards.filter(card => !card.archived_at).slice(0,4).length ? cards.filter(card => !card.archived_at).slice(0,4).map(card => <article className="dt-recent-card" key={card.id}><span className="dt-card-icon"><CreditCard size={18}/></span><div className="dt-recent-info"><b>{card.card_name || "Untitled Card"}</b><small>{card.public_code}</small></div><span className={card.active?"dt-status is-on":"dt-status"}>{card.active?"Aktif":"Nonaktif"}</span><span className="dt-recent-taps">{(cardEventStats.get(card.id)?.taps || 0).toLocaleString("id-ID")} <small>taps</small></span></article>) : <div className="dt-no-cards"><CreditCard size={22}/><b>Belum ada kartu NFC</b><span>Buat kartu pertama untuk mulai mengumpulkan ulasan.</span></div>}
                 </div>
