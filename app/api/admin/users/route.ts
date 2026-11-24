@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
           username,
           accountType: username ? "username" : "email",
           createdAt: user.created_at,
-          lastSignInAt: user.last_sign_in_at,
+          lastSignInAt: user.last_sign_in_at ?? null,
           emailConfirmedAt: username ? null : user.email_confirmed_at,
         };
       });
