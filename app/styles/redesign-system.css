@@ -2237,3 +2237,56 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
 @media(prefers-reduced-motion:reduce) {
   .dt-order-checkout *, .dt-customer-orders-v2 * {scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+
+/* Direct checkout + transfer proof flow */
+.dt-order-payment-flow .dt-order-steps{display:flex;align-items:center;gap:10px;margin-top:34px;color:#a5d6ca;font-size:10px;font-weight:800;letter-spacing:.08em}
+.dt-order-payment-flow .dt-order-steps>span{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.dt-order-payment-flow .dt-order-steps small{color:#93a7b1;font-size:9px;font-weight:600;letter-spacing:0}
+.dt-order-payment-flow .dt-order-steps>i{height:1px;min-width:14px;flex:1;background:rgba(183,204,211,.2)}
+.dt-order-payment-flow .dt-order-steps .is-done{color:#d1eadd}
+.dt-order-payment-flow .dt-order-steps .is-active small{color:#dcebe9}
+.dt-order-payment-flow .dt-payment-step{display:grid;gap:20px}
+.dt-order-payment-flow .dt-order-status{padding:7px 9px;border:1px solid rgba(165,214,202,.2);border-radius:6px;color:#a5d6ca;font-size:8px;font-weight:800;letter-spacing:.1em}
+.dt-order-payment-flow .dt-order-reference{display:flex;align-items:center;gap:12px;padding:13px 15px;border:1px solid var(--order-line);border-radius:9px;background:#0b1925}
+.dt-order-payment-flow .dt-order-reference small{color:#8296a2;font-size:9px}
+.dt-order-payment-flow .dt-order-reference strong{overflow:hidden;flex:1;color:#eaf1f2;font-size:11px;text-overflow:ellipsis}
+.dt-order-payment-flow .dt-order-reference button{display:grid;width:32px;height:32px;place-items:center;border:1px solid var(--order-line);border-radius:7px;color:#a5d6ca}
+.dt-order-payment-flow .dt-payment-intro{margin:0;color:#9aabb8;font-size:11px;line-height:1.8}
+.dt-order-payment-flow .dt-bank-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.dt-order-payment-flow .dt-bank-card{padding:17px;border:1px solid rgba(183,204,211,.15);border-radius:10px;background:linear-gradient(145deg,#172b3d,#101f2d)}
+.dt-order-payment-flow .dt-bank-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dt-order-payment-flow .dt-bank-head b{color:#eaf1f2;font-size:15px;letter-spacing:-.03em}
+.dt-order-payment-flow .dt-bank-head span{color:#8197a2;font-size:7px;font-weight:800;letter-spacing:.1em}
+.dt-order-payment-flow .dt-bank-card>strong{display:block;margin-top:20px;color:#f1f5f5;font-size:clamp(17px,2vw,21px);letter-spacing:.035em}
+.dt-order-payment-flow .dt-bank-card>p{margin-top:4px;color:#9aabb8;font-size:10px}
+.dt-order-payment-flow .dt-bank-card>button{display:inline-flex;align-items:center;gap:7px;margin-top:16px;color:#a5d6ca;font-size:9px;font-weight:750}
+.dt-order-payment-flow .dt-payment-total{display:grid;grid-template-columns:1fr auto;gap:5px 12px;padding:17px;border:1px solid rgba(165,214,202,.22);border-radius:10px;background:rgba(165,214,202,.06)}
+.dt-order-payment-flow .dt-payment-total>span{color:#b9c9ce;font-size:10px}
+.dt-order-payment-flow .dt-payment-total>strong{color:#c2e9dc;font-size:22px;letter-spacing:-.05em}
+.dt-order-payment-flow .dt-payment-total>small{grid-column:1/-1;color:#80959f;font-size:9px;line-height:1.65}
+.dt-order-payment-flow .dt-proof-upload{display:grid;gap:15px;padding-top:22px;border-top:1px solid var(--order-line)}
+.dt-order-payment-flow .dt-proof-upload>div:first-child>span{color:#a5d6ca;font-size:8px;font-weight:800;letter-spacing:.15em}
+.dt-order-payment-flow .dt-proof-upload h3{margin-top:7px;color:#edf2f4;font-size:20px;font-weight:750;letter-spacing:-.05em}
+.dt-order-payment-flow .dt-proof-upload>div:first-child>p{margin-top:6px;color:#8fa2ad;font-size:10px;line-height:1.7}
+.dt-order-payment-flow .dt-proof-file{position:relative;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:4px 11px;padding:17px;border:1px dashed rgba(165,214,202,.35);border-radius:9px;background:rgba(165,214,202,.045);color:#c8ded8;cursor:pointer}
+.dt-order-payment-flow .dt-proof-file>svg{grid-row:span 2;color:#a5d6ca}
+.dt-order-payment-flow .dt-proof-file>span{overflow:hidden;font-size:10px;font-weight:750;text-overflow:ellipsis}
+.dt-order-payment-flow .dt-proof-file>small{color:#8296a2;font-size:8px}
+.dt-order-payment-flow .dt-proof-file input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.dt-order-payment-flow .dt-order-error{padding:11px 13px;border:1px solid rgba(240,139,145,.22);border-radius:8px;background:rgba(240,139,145,.07);color:#ffc2c6;font-size:10px;line-height:1.6}
+.dt-order-payment-flow .dt-order-notice{margin-top:14px;padding:12px 14px;border:1px solid rgba(165,214,202,.2);border-radius:8px;background:rgba(165,214,202,.06);color:#b9e0d4;font-size:10px;line-height:1.7}
+.dt-order-payment-flow .order-privacy-note{display:flex;align-items:center;justify-content:center;gap:6px}
+.dt-order-payment-flow .dt-order-account-overlay>section{display:block}
+.dt-order-payment-flow .dt-order-account-overlay>section>div:first-child{display:grid;width:54px;height:54px;margin:0 auto;place-items:center;border-radius:14px}
+.dt-order-payment-flow .dt-order-account-overlay>section>h2{text-align:center;color:#edf2f4}
+.dt-order-payment-flow .dt-order-account-overlay>section>p:nth-of-type(2){text-align:center}
+.dt-order-payment-flow .dt-order-account-overlay>section>div:nth-of-type(2){display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.dt-order-payment-flow .dt-order-account-overlay>section>button{width:100%;margin-top:10px;padding:10px}
+@media(max-width:560px){
+ .dt-order-payment-flow .dt-order-steps{gap:6px;margin-top:23px}
+ .dt-order-payment-flow .dt-order-steps small{font-size:8px}
+ .dt-order-payment-flow .dt-bank-list{grid-template-columns:1fr}
+ .dt-order-payment-flow .dt-bank-card>strong{font-size:20px}
+ .dt-order-payment-flow .dt-payment-step{gap:15px}
+}
