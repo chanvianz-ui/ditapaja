@@ -132,7 +132,7 @@ export default function DashboardPage() {
   const [changeLogs, setChangeLogs] = useState<any[]>([]);
   const [changeLogUnavailable, setChangeLogUnavailable] = useState(false);
 
-  const chartData = useMemo(() => {
+  const chartData = useMemo<Array<{ key: string; label: string; taps: number; clicks: number }>>(() => {
     return (insightsData?.daily ?? []).map((item: { day: string; taps: number; clicks: number }) => {
       const [year, month, day] = item.day.split("-").map(Number);
       const date = new Date(year, month - 1, day);
