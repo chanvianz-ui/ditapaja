@@ -45,35 +45,23 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main className="dt-recovery">
-      <section className="dt-recovery-card">
-        <Link href="/login" className="dt-recovery-brand"><span>d.</span> ditapaja</Link>
-        <p className="dt-recovery-kicker">SECURE YOUR ACCOUNT</p>
+    <main className="dt-recovery-v2">
+      <section className="dt-recovery-v2-card">
+        <Link href="/login" className="dt-recovery-v2-brand"><span>d.</span> ditapaja</Link>
+        <p className="dt-recovery-v2-kicker">SECURE YOUR ACCOUNT</p>
         <h1>Buat password baru</h1>
-        {!ready && <p className="dt-recovery-copy">{message}</p>}
-        {ready && !done && <form onSubmit={submit}>
-          <label>Password baru<input required minLength={8} type="password" autoComplete="new-password" value={password} onChange={e => setPassword(e.target.value)} /></label>
-          <label>Ulangi password<input required minLength={8} type="password" autoComplete="new-password" value={confirm} onChange={e => setConfirm(e.target.value)} /></label>
-          {message && <p className="dt-recovery-error" role="alert">{message}</p>}
-          <button disabled={loading}>{loading ? "Menyimpan..." : "Simpan password baru"}</button>
-        </form>}
-        {done && <p className="dt-recovery-success" role="status">{message}</p>}
-        <Link href="/forgot-password" className="dt-recovery-back">Minta tautan baru</Link>
+        {!ready && <p className="dt-recovery-v2-copy">{message}</p>}
+        {ready && !done && (
+          <form onSubmit={submit}>
+            <label>Password baru<input required minLength={8} type="password" autoComplete="new-password" value={password} onChange={event => setPassword(event.target.value)} /></label>
+            <label>Ulangi password<input required minLength={8} type="password" autoComplete="new-password" value={confirm} onChange={event => setConfirm(event.target.value)} /></label>
+            {message && <p className="dt-recovery-v2-error" role="alert">{message}</p>}
+            <button disabled={loading}>{loading ? "Menyimpan..." : "Simpan password baru"}</button>
+          </form>
+        )}
+        {done && <p className="dt-recovery-v2-success" role="status">{message}</p>}
+        <Link href="/forgot-password" className="dt-recovery-v2-back">Minta tautan baru</Link>
       </section>
-      <style jsx>{`
-        .dt-recovery{font-family:"Manrope",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:grid;place-items:center;min-height:100svh;padding:24px 16px;background:#071426;color:#edf7fb}
-        .dt-recovery-card{width:min(100%,440px);padding:clamp(26px,5vw,42px);border:1px solid rgba(170,205,222,.15);border-radius:20px;background:#0d2038;box-shadow:0 24px 70px rgba(0,0,0,.25)}
-        .dt-recovery-brand{display:flex;align-items:center;gap:10px;color:#edf7fb;text-decoration:none;font-size:17px;font-weight:800}
-        .dt-recovery-brand span{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#a8f0d5;color:#092238}
-        .dt-recovery-kicker{margin:38px 0 9px;color:#a8f0d5;font-size:9px;font-weight:800;letter-spacing:.17em}
-        h1{margin:0;font-size:30px;letter-spacing:-.06em}.dt-recovery-copy{color:#9bb0c2;font-size:12px;line-height:1.8}
-        form{display:grid;gap:16px;margin-top:26px}label{display:grid;gap:8px;color:#d0dce5;font-size:11px;font-weight:700}
-        input{height:51px;padding:0 14px;border:1px solid rgba(169,207,224,.18);border-radius:9px;background:#071426;color:#edf7fb;font:500 12px Arial,sans-serif}
-        button{height:52px;border:0;border-radius:9px;background:#a8f0d5;color:#092238;font-weight:800;cursor:pointer}button:disabled{opacity:.6}
-        .dt-recovery-error,.dt-recovery-success{padding:12px;border:1px solid rgba(255,133,145,.25);border-radius:8px;color:#ffc0c8;font-size:11px;line-height:1.7}
-        .dt-recovery-success{margin-top:24px;border-color:rgba(168,240,213,.25);color:#a8f0d5;background:rgba(168,240,213,.06)}
-        .dt-recovery-back{display:inline-block;margin-top:26px;color:#64d8ef;font-size:11px;font-weight:700;text-decoration:none}
-      `}</style>
     </main>
   );
 }
