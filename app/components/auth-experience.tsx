@@ -158,7 +158,14 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
     <main className={`dt-auth-simple ${manrope.className}`}>
       <section className="dt-auth-simple-card" aria-label={mode === "login" ? "Masuk ke DiTapAja" : "Daftar DiTapAja"}>
         <Link href="/" className="dt-auth-simple-brand" aria-label="DiTapAja">
-          <span className="dt-auth-simple-mark">d<span>.</span></span>
+          <span className="dt-auth-simple-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" role="presentation" focusable="false">
+              <path className="dt-auth-eye-outline" d="M4.5 20s5.4-9 15.5-9 15.5 9 15.5 9-5.4 9-15.5 9S4.5 20 4.5 20Z" />
+              <circle className="dt-auth-eye-iris" cx="20" cy="20" r="6.2" />
+              <circle className="dt-auth-eye-pupil" cx="20" cy="20" r="2.7" />
+              <circle className="dt-auth-eye-glint" cx="22.2" cy="17.8" r="1.1" />
+            </svg>
+          </span>
           <span>ditapaja</span>
         </Link>
 
