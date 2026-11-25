@@ -55,13 +55,6 @@ type NfcCard = {
   archived_by?: string | null;
 };
 
-type AnalyticsEvent = {
-  card_id: string;
-  event_type: string;
-  visitor_hash: string | null;
-  created_at: string;
-};
-
 type Analytics = {
   totalTaps: number;
   uniqueVisitors: number;
@@ -82,16 +75,10 @@ export default function DashboardPage() {
   const [cards, setCards] = useState<NfcCard[]>([]);
   const [email, setEmail] = useState("");
 
-  const [, setAnalytics] = useState<Analytics>({
-    totalTaps: 0,
-    uniqueVisitors: 0,
-    reviewClicks: 0,
-    ctr: 0,
-  });
-
   const [analyticsError, setAnalyticsError] = useState("");
   const [chartPeriod, setChartPeriod] = useState<7 | 30 | 90>(7);
-  const [eventRows, setEventRows] = useState<AnalyticsEvent[]>([]);
+  const [analyticsUserId, setAnalyticsUserId] = useState<string | null>(null);
+  const [insightsData, setInsightsData] = useState<any>(null);
   const [selectedCardId, setSelectedCardId] = useState("all");
   const [selectedLocationId, setSelectedLocationId] = useState("all");
   const [businessLocations, setBusinessLocations] = useState<{id:string;name:string}[]>([]);
@@ -119,41 +106,12 @@ export default function DashboardPage() {
     });
   }, [cards, cardSearch, cardStatusFilter, showArchivedCards]);
 
-  const selectedEventRows = useMemo(() => {
-    let rows = eventRows;
-    if (selectedCardId !== "all") rows = rows.filter((event) => event.card_id === selectedCardId);
-    if (selectedLocationId !== "all") {
-      const locationCardIds = new Set(cards.filter((card) => selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId).map((card) => card.id));
-      rows = rows.filter((event) => locationCardIds.has(event.card_id));
-    }
-    return rows;
-  }, [eventRows, selectedCardId, selectedLocationId, cards]);
-
-  const periodEventRows = useMemo(() => {
-    const start = new Date();
-    start.setHours(0, 0, 0, 0);
-    start.setDate(start.getDate() - (chartPeriod - 1));
-    return selectedEventRows.filter((event) => new Date(event.created_at).getTime() >= start.getTime());
-  }, [selectedEventRows, chartPeriod]);
-
-  const displayedAnalytics = useMemo<Analytics>(() => {
-    const tapEvents = periodEventRows.filter((event) => event.event_type === "tap");
-    const reviewEvents = periodEventRows.filter((event) => event.event_type === "review_click");
-    const uniqueHashes = new Set(
-      tapEvents
-        .map((event) => event.visitor_hash)
-        .filter((hash): hash is string => Boolean(hash))
-    );
-    const totalTaps = tapEvents.length;
-    const reviewClicks = reviewEvents.length;
-
-    return {
-      totalTaps,
-      uniqueVisitors: uniqueHashes.size,
-      reviewClicks,
-      ctr: totalTaps > 0 ? (reviewClicks / totalTaps) * 100 : 0,
-    };
-  }, [periodEventRows]);
+  const displayedAnalytics: Analytics = {
+    totalTaps: Number(insightsData?.summary?.total_taps ?? 0),
+    uniqueVisitors: Number(insightsData?.summary?.unique_visitors ?? 0),
+    reviewClicks: Number(insightsData?.summary?.review_clicks ?? 0),
+    ctr: Number(insightsData?.summary?.ctr ?? 0),
+  };
 
   const [editingCard, setEditingCard] = useState<NfcCard | null>(null);
   const [editName, setEditName] = useState("");
@@ -175,129 +133,51 @@ export default function DashboardPage() {
   const [changeLogUnavailable, setChangeLogUnavailable] = useState(false);
 
   const chartData = useMemo(() => {
-    const today = new Date();
-    const days = Array.from({ length: chartPeriod }, (_, index) => {
-      const date = new Date(today);
-      date.setHours(0, 0, 0, 0);
-      date.setDate(date.getDate() - (chartPeriod - 1 - index));
-      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-
+    return (insightsData?.daily ?? []).map((item: { day: string; taps: number; clicks: number }) => {
+      const [year, month, day] = item.day.split("-").map(Number);
+      const date = new Date(year, month - 1, day);
       return {
-        key,
-        label:
-          chartPeriod === 7
-            ? date.toLocaleDateString("id-ID", { weekday: "short" })
-            : date.toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "short",
-              }),
-        taps: 0,
-        clicks: 0,
+        key: item.day,
+        label: chartPeriod === 7
+          ? date.toLocaleDateString("id-ID", { weekday: "short" })
+          : date.toLocaleDateString("id-ID", { day: "numeric", month: "short" }),
+        taps: Number(item.taps ?? 0),
+        clicks: Number(item.clicks ?? 0),
       };
     });
+  }, [insightsData, chartPeriod]);
 
-    const dayMap = new Map(days.map((day) => [day.key, day]));
-
-    selectedEventRows.forEach((event) => {
-      const date = new Date(event.created_at);
-      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-      const day = dayMap.get(key);
-      if (!day) return;
-
-      if (event.event_type === "tap") day.taps += 1;
-      if (event.event_type === "review_click") day.clicks += 1;
-    });
-
-    return days;
-  }, [selectedEventRows, chartPeriod]);
-
-  const chartMax = Math.max(
-    1,
-    ...chartData.map((day) => Math.max(day.taps, day.clicks))
-  );
-
-  const periodTapTotal = chartData.reduce((sum, day) => sum + day.taps, 0);
-  const periodClickTotal = chartData.reduce((sum, day) => sum + day.clicks, 0);
+  const chartMax = Math.max(1, ...chartData.map((day) => Math.max(day.taps, day.clicks)));
+  const periodTapTotal = displayedAnalytics.totalTaps;
+  const periodClickTotal = displayedAnalytics.reviewClicks;
   const hasPeriodActivity = periodTapTotal > 0 || periodClickTotal > 0;
 
-  // Aggregate analytics once per card instead of repeatedly scanning the full event list.
   const cardEventStats = useMemo(() => {
-    const stats = new Map<string, { taps: number; clicks: number; visitors: Set<string> }>();
-    for (const event of selectedEventRows) {
-      let item = stats.get(event.card_id);
-      if (!item) {
-        item = { taps: 0, clicks: 0, visitors: new Set<string>() };
-        stats.set(event.card_id, item);
-      }
-      if (event.event_type === "tap") {
-        item.taps += 1;
-        if (event.visitor_hash) item.visitors.add(event.visitor_hash);
-      } else if (event.event_type === "review_click") {
-        item.clicks += 1;
-      }
+    const stats = new Map<string, { taps: number; clicks: number; visitors: number }>();
+    for (const item of insightsData?.cards ?? []) {
+      stats.set(item.card_id, {
+        taps: Number(item.taps ?? 0),
+        clicks: Number(item.clicks ?? 0),
+        visitors: Number(item.unique_visitors ?? 0),
+      });
     }
     return stats;
-  }, [selectedEventRows]);
-
-  const latestTapByCard = useMemo(() => {
-    const latest = new Map<string, string>();
-    for (const event of eventRows) {
-      if (event.event_type !== "tap") continue;
-      const previous = latest.get(event.card_id);
-      if (!previous || event.created_at > previous) latest.set(event.card_id, event.created_at);
-    }
-    return latest;
-  }, [eventRows]);
+  }, [insightsData]);
 
   const analyticsInsights = useMemo(() => {
-    const end = new Date();
-    end.setHours(23, 59, 59, 999);
-    const currentStart = new Date();
-    currentStart.setHours(0, 0, 0, 0);
-    currentStart.setDate(currentStart.getDate() - (chartPeriod - 1));
-    const previousStart = new Date(currentStart);
-    previousStart.setDate(previousStart.getDate() - chartPeriod);
-    const previousEnd = new Date(currentStart.getTime() - 1);
-
-    const current = { taps: 0, clicks: 0 };
-    const previous = { taps: 0, clicks: 0 };
-    for (const event of selectedEventRows) {
-      const time = new Date(event.created_at).getTime();
-      const target = time >= currentStart.getTime() && time <= end.getTime()
-        ? current
-        : time >= previousStart.getTime() && time <= previousEnd.getTime()
-          ? previous
-          : null;
-      if (!target) continue;
-      if (event.event_type === "tap") target.taps += 1;
-      else if (event.event_type === "review_click") target.clicks += 1;
-    }
-
-    const change = (now: number, before: number) => before === 0
-      ? (now === 0 ? 0 : null)
-      : ((now - before) / before) * 100;
     const bestDay = [...chartData].sort((a, b) => b.taps - a.taps)[0];
-    const periodTapsByCard = new Map<string, number>();
-    for (const event of periodEventRows) {
-      if (event.event_type === "tap") {
-        periodTapsByCard.set(event.card_id, (periodTapsByCard.get(event.card_id) ?? 0) + 1);
-      }
-    }
-    const cardTotals = cards
-      .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
-      .filter((card) => selectedLocationId === "all" || (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
-      .map((card) => ({ name: card.card_name || "Untitled Card", taps: periodTapsByCard.get(card.id) ?? 0 }))
-      .sort((a, b) => b.taps - a.taps);
-
+    const topCardData = [...(insightsData?.cards ?? [])].sort((a: any, b: any) => Number(b.taps) - Number(a.taps))[0];
+    const tapChange = insightsData?.insight_comparison?.tap_change_pct;
+    const clickChange = insightsData?.insight_comparison?.click_change_pct;
     return {
-      current,
-      previous,
-      tapChange: change(current.taps, previous.taps),
-      clickChange: change(current.clicks, previous.clicks),
+      tapChange: tapChange === null || tapChange === undefined ? null : Number(tapChange),
+      clickChange: clickChange === null || clickChange === undefined ? null : Number(clickChange),
       bestDay: bestDay && bestDay.taps > 0 ? bestDay : null,
-      topCard: cardTotals[0] && cardTotals[0].taps > 0 ? cardTotals[0] : null,
+      topCard: topCardData && Number(topCardData.taps) > 0
+        ? { name: topCardData.card_name, taps: Number(topCardData.taps) }
+        : null,
     };
-  }, [selectedEventRows, periodEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId]);
+  }, [chartData, insightsData]);
 
   const cardPerformance = useMemo(() => cards
     .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
@@ -306,47 +186,91 @@ export default function DashboardPage() {
       const stats = cardEventStats.get(card.id);
       const taps = stats?.taps ?? 0;
       const clicks = stats?.clicks ?? 0;
-      return { card, taps, clicks, visitors: stats?.visitors.size ?? 0, ctr: taps ? clicks / taps * 100 : 0 };
+      return { card, taps, clicks, visitors: stats?.visitors ?? 0, ctr: taps ? clicks / taps * 100 : 0 };
     })
     .sort((a, b) => b.taps - a.taps), [cards, cardEventStats, selectedCardId, selectedLocationId]);
 
   const locationPerformance = useMemo(() => {
-    const rows = businessLocations.map((location) => {
-      const locationCards = cards.filter((card) => card.location_id === location.id);
-      const cardIds = new Set(locationCards.map((card) => card.id));
-      const events = eventRows.filter((event) => cardIds.has(event.card_id));
-      const taps = events.filter((event) => event.event_type === "tap").length;
-      const clicks = events.filter((event) => event.event_type === "review_click").length;
-      return { ...location, cardCount: locationCards.length, taps, clicks, ctr: taps ? clicks / taps * 100 : 0 };
-    });
-    return rows.sort((a, b) => b.taps - a.taps);
-  }, [businessLocations, cards, eventRows]);
+    const locationMap = new Map((insightsData?.locations ?? []).map((item: any) => [item.location_id, item]));
+    return businessLocations
+      .filter((location) => selectedLocationId === "all" || (selectedLocationId !== "unassigned" && location.id === selectedLocationId))
+      .map((location) => {
+        const stats: any = locationMap.get(location.id);
+        return {
+          ...location,
+          cardCount: Number(stats?.card_count ?? 0),
+          taps: Number(stats?.taps ?? 0),
+          clicks: Number(stats?.clicks ?? 0),
+          ctr: Number(stats?.ctr ?? 0),
+        };
+      })
+      .sort((a, b) => b.taps - a.taps);
+  }, [businessLocations, insightsData, selectedLocationId]);
 
-  function exportAnalyticsCsv() {
-    const rows = periodEventRows.map((event) => {
-      const card = cards.find((item) => item.id === event.card_id);
-      return [card?.card_name || "Untitled Card", event.event_type === "tap" ? "Tap" : "Review Click", new Date(event.created_at).toLocaleString("id-ID")];
-    });
+  async function exportAnalyticsCsv() {
+    const exportCards = cards.filter((card) =>
+      (selectedCardId === "all" || card.id === selectedCardId) &&
+      (selectedLocationId === "all" ||
+        (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
+    );
+    const cardIds = exportCards.map((card) => card.id);
+    if (cardIds.length === 0) {
+      setAnalyticsError("Tidak ada kartu yang sesuai dengan filter untuk diekspor.");
+      return;
+    }
 
-    // Prevent spreadsheet formula injection from user-controlled card names.
-    const escapeCsvCell = (value: unknown) => {
-      let safeValue = String(value ?? "");
-      if (/^[\s\u0000-\u001f]*[=+\-@]/.test(safeValue)) {
-        safeValue = "'" + safeValue;
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    start.setDate(start.getDate() - (chartPeriod - 1));
+
+    try {
+      const pageSize = 1000;
+      let offset = 0;
+      const rows: string[][] = [];
+      while (true) {
+        const { data, error } = await supabase
+          .from("tap_events")
+          .select("card_id,event_type,created_at")
+          .in("card_id", cardIds)
+          .in("event_type", ["tap", "review_click"])
+          .gte("created_at", start.toISOString())
+          .order("created_at", { ascending: true })
+          .range(offset, offset + pageSize - 1);
+        if (error) throw error;
+
+        const page = data ?? [];
+        for (const event of page) {
+          const card = exportCards.find((item) => item.id === event.card_id);
+          rows.push([
+            card?.card_name || "Untitled Card",
+            event.event_type === "tap" ? "Tap" : "Review Click",
+            new Date(event.created_at).toLocaleString("id-ID"),
+          ]);
+        }
+        if (page.length < pageSize) break;
+        offset += pageSize;
       }
-      return '"' + safeValue.replace(/"/g, '""') + '"';
-    };
 
-    const csv = [["Nama Kartu", "Aktivitas", "Waktu"], ...rows]
-      .map((row) => row.map(escapeCsvCell).join(","))
-      .join("\r\n");
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = "ditapaja-analytics-" + new Date().toISOString().slice(0, 10) + ".csv";
-    anchor.click();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      const escapeCsvCell = (value: unknown) => {
+        let safeValue = String(value ?? "");
+        if (/^[\s\u0000-\u001f]*[=+\-@]/.test(safeValue)) safeValue = "'" + safeValue;
+        return '"' + safeValue.replace(/"/g, '""') + '"';
+      };
+      const csv = [["Nama Kartu", "Aktivitas", "Waktu"], ...rows]
+        .map((row) => row.map(escapeCsvCell).join(","))
+        .join("\r\n");
+      const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = "ditapaja-analytics-" + new Date().toISOString().slice(0, 10) + ".csv";
+      anchor.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setAnalyticsError("");
+    } catch (error) {
+      console.error("Analytics CSV export error:", error);
+      setAnalyticsError("Ekspor CSV gagal. Coba lagi atau periksa izin akses database.");
+    }
   }
 
   function downloadQrPng(card: NfcCard) {
@@ -506,76 +430,9 @@ export default function DashboardPage() {
           setChangeLogs(logs ?? []);
         }
 
-        if (userCards.length > 0) {
-          const cardIds = userCards.map((card) => card.id);
-
-          // Supabase/PostgREST commonly returns at most 1,000 rows per request.
-          // Fetch analytics in pages so larger accounts do not silently lose older events.
-          const pageSize = 1000;
-          let offset = 0;
-          let allEvents: AnalyticsEvent[] = [];
-          let eventsError: { message: string } | null = null;
-
-          while (true) {
-            const pageResult = await supabase
-              .from("tap_events")
-              .select("card_id, event_type, visitor_hash, created_at")
-              .in("card_id", cardIds)
-              .in("event_type", ["tap", "review_click"])
-              .order("created_at", { ascending: true })
-              .range(offset, offset + pageSize - 1);
-
-            if (pageResult.error) {
-              eventsError = pageResult.error;
-              break;
-            }
-
-            const page = (pageResult.data ?? []) as AnalyticsEvent[];
-            allEvents = allEvents.concat(page);
-            if (page.length < pageSize) break;
-            offset += pageSize;
-          }
-
-          if (eventsError) {
-            console.error("Analytics loading error:", eventsError);
-            setAnalyticsError(
-              "Statistik belum dapat dimuat. Periksa izin akses database."
-            );
-          } else {
-            setEventRows(allEvents);
-
-            const tapEvents = allEvents.filter(
-              (event) => event.event_type === "tap"
-            );
-            const reviewEvents = allEvents.filter(
-              (event) => event.event_type === "review_click"
-            );
-
-            const uniqueHashes = new Set(
-              tapEvents
-                .map((event) => event.visitor_hash)
-                .filter((hash): hash is string => Boolean(hash))
-            );
-
-            const totalTaps = tapEvents.length;
-            const reviewClicks = reviewEvents.length;
-
-            setAnalytics({
-              totalTaps,
-              uniqueVisitors: uniqueHashes.size,
-              reviewClicks,
-              ctr: totalTaps > 0 ? (reviewClicks / totalTaps) * 100 : 0,
-            });
-          }
-        } else {
-          setEventRows([]);
-          setAnalytics({
-            totalTaps: 0,
-            uniqueVisitors: 0,
-            reviewClicks: 0,
-            ctr: 0,
-          });
-        }
+        setAnalyticsUserId(data.user.id);
+        setInsightsData(null);
+        setAnalyticsError("");
       } catch (error) {
         console.error("Dashboard loading error:", error);
         setAnalyticsError("Terjadi kesalahan saat memuat dashboard.");
@@ -586,6 +443,44 @@ export default function DashboardPage() {
 
     loadDashboard();
   }, [router]);
+
+
+  useEffect(() => {
+    if (!analyticsUserId) return;
+    let cancelled = false;
+
+    async function loadCustomerInsights() {
+      if (cards.length === 0) {
+        setInsightsData(null);
+        return;
+      }
+
+      const locationFilter = selectedLocationId === "all"
+        ? null
+        : selectedLocationId === "unassigned"
+          ? "00000000-0000-0000-0000-000000000000"
+          : selectedLocationId;
+
+      const { data, error } = await supabase.rpc("get_customer_insights", {
+        p_days: chartPeriod,
+        p_card_id: selectedCardId === "all" ? null : selectedCardId,
+        p_location_id: locationFilter,
+      });
+
+      if (cancelled) return;
+      if (error) {
+        console.error("Customer insights RPC error:", error);
+        setInsightsData(null);
+        setAnalyticsError("Statistik belum dapat dimuat. Periksa izin akses database.");
+      } else {
+        setInsightsData(data);
+        setAnalyticsError("");
+      }
+    }
+
+    void loadCustomerInsights();
+    return () => { cancelled = true; };
+  }, [analyticsUserId, cards, chartPeriod, selectedCardId, selectedLocationId]);
 
   async function handleLogout() {
     await supabase.auth.signOut();
