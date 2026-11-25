@@ -1,8 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
+import { readRequestBodyLimited } from "../../lib/read-request-body-limited";
 
 export const dynamic = "force-dynamic";
 
+const MAX_BODY_SIZE = 16_384;
 const PRODUCTS = {
   "DiTapAja Noir": { price: 50000, minimum: 1 },
   "DiTapAja Blanc": { price: 50000, minimum: 1 },
@@ -24,11 +26,26 @@ export async function POST(request: NextRequest) {
     }
 
     const contentLength = Number(request.headers.get("content-length") || 0);
-    if (contentLength > 16_384) {
+    if (contentLength > MAX_BODY_SIZE) {
       return NextResponse.json({ error: "Data pesanan terlalu besar." }, { status: 413 });
     }
 
-    const body: unknown = await request.json();
+    let bodyBytes: Uint8Array;
+    try {
+      bodyBytes = await readRequestBodyLimited(request, MAX_BODY_SIZE);
+    } catch (error) {
+      if (error instanceof RangeError) {
+        return NextResponse.json({ error: "Data pesanan terlalu besar." }, { status: 413 });
+      }
+      throw error;
+    }
+
+    let body: unknown;
+    try {
+      body = JSON.parse(new TextDecoder().decode(bodyBytes));
+    } catch {
+      return NextResponse.json({ error: "Format data pesanan tidak valid." }, { status: 400 });
+    }
     if (!body || typeof body !== "object" || Array.isArray(body)) {
       return NextResponse.json({ error: "Format data pesanan tidak valid." }, { status: 400 });
     }
@@ -108,7 +125,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, orderId: data.id });
+    return NextResponse.json({ success: true, orderId: data.id }, {
+      headers: { "Cache-Control": "no-store, max-age=0" },
+    });
   } catch (error) {
     console.error("Public order intake error:", error);
     return NextResponse.json({ error: "Terjadi kesalahan saat mencatat pesanan." }, { status: 500 });
