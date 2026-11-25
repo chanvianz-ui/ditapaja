@@ -5,8 +5,8 @@ import Link from "next/link";
 export default function PrivacyPage() {
   return (
     <main className="dt-legal-v2">
-      <article className="dt-legal-card">
-        <Link href="/register" className="dt-legal-back">← Kembali ke pendaftaran</Link>
+      <article className="dt-legal-v2-card">
+        <Link href="/register" className="dt-legal-v2-back">← Kembali ke pendaftaran</Link>
         <p className="dt-legal-eyebrow">DITAPAJA · LEGAL</p>
         <h1>Kebijakan Privasi</h1>
         <p className="dt-legal-updated">Terakhir diperbarui: 25 November 2026</p>
