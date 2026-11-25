@@ -2053,3 +2053,19 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
 @media(prefers-reduced-motion:reduce){
   .dt-auth-v2 *,.dt-auth-v2 *:before,.dt-auth-v2 *:after{transition:none!important;animation:none!important}
 }
+
+
+/* Legal navigation and reading rhythm refinement */
+.dt-legal-v2 .dt-legal-v2-card{position:relative;overflow:hidden}
+.dt-legal-v2 .dt-legal-v2-back{display:inline-flex;align-items:center;gap:7px;color:#91aeb8;font-size:10px;font-weight:650;text-decoration:none;transition:color .16s,transform .16s}
+.dt-legal-v2 .dt-legal-v2-back:hover{color:var(--av-mint);transform:translateX(-2px)}
+.dt-legal-v2 .dt-legal-eyebrow{margin-top:38px}
+.dt-legal-v2 .dt-legal-updated{padding-bottom:22px;border-bottom:1px solid var(--av-line)}
+.dt-legal-v2 h2{scroll-margin-top:24px;padding-top:2px}
+.dt-legal-v2 h2+p{margin-top:0}
+.dt-legal-v2 .dt-legal-v2-card>p:not(.dt-legal-eyebrow):not(.dt-legal-updated){max-width:68ch}
+.dt-legal-v2 .dt-legal-v2-card>p:last-child{margin-bottom:0}
+@media(max-width:520px){
+  .dt-legal-v2 .dt-legal-eyebrow{margin-top:30px}
+  .dt-legal-v2 .dt-legal-updated{padding-bottom:18px}
+}
