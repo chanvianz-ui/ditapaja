@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     const boundedRequest = new Request(request.url, {
       method: "POST",
       headers: formHeaders,
-      body: bodyBytes,
+      body: bodyBytes as unknown as BodyInit,
     });
     const form = await boundedRequest.formData();
     const orderId = String(form.get("orderId") || "");
