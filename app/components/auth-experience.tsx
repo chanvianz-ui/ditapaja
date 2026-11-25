@@ -115,6 +115,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
     }
 
     setLoading(true);
+    setAuthStorageMode(false);
     try {
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
