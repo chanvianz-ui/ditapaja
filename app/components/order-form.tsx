@@ -94,23 +94,25 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error || "Bukti transfer gagal dikirim.");
 
-      const normalizedPhone = phone.replace(/\D/g, "").replace(/^0/, "62");
+      const digits = phone.replace(/\D/g, "");
+      const normalizedPhone = digits.startsWith("0") ? "62" + digits.slice(1) : digits.startsWith("8") ? "62" + digits : digits;
       const message = [
-        "Halo DiTapAja, saya sudah melakukan pemesanan dan mengirim bukti transfer melalui website.",
+        "Halo tim DiTapAja, saya ingin mengonfirmasi pesanan dan pembayaran saya.",
         "",
-        "KONFIRMASI PESANAN",
-        "Nomor pesanan: " + orderId,
-        "Nama: " + customer,
-        "Bisnis: " + business,
+        "*KONFIRMASI PESANAN*",
+        "No. pesanan: " + orderId,
+        "Nama: " + customer.trim(),
+        "Bisnis: " + business.trim(),
         "Produk: " + product.name,
         "Jumlah: " + quantity + " kartu",
-        "Total transfer: " + money(total),
-        "Metode: Transfer bank",
-        "Referensi transfer: " + (paymentReference.trim() || "-"),
-        "Email: " + email,
-        "WhatsApp: +" + normalizedPhone,
+        "Total: *" + money(total) + "*",
+        "Pembayaran: Transfer bank",
+        ...(paymentReference.trim() ? ["Referensi transfer: " + paymentReference.trim()] : []),
+        "Email akun: " + email.trim(),
         "",
-        "Bukti transfer sudah diunggah melalui website. Mohon konfirmasi penerimaan dan verifikasi pembayaran saya. Terima kasih."
+        "Bukti transfer sudah saya unggah melalui website. Mohon bantu cek dan konfirmasi pembayaran jika dana sudah diterima.",
+        "",
+        "Terima kasih."
       ].join("\n");
       const url = "https://wa.me/6281321778081?text=" + encodeURIComponent(message);
       if (whatsappWindow) { whatsappWindow.opener = null; whatsappWindow.location.href = url; }
