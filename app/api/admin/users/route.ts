@@ -53,8 +53,8 @@ export async function GET(request: NextRequest) {
     if (searchError) throw searchError;
 
     const result = searchResult as {
-      total?: number;
-      users?: Array<{
+      total: number;
+      users: Array<{
         id: string;
         email: string;
         username: string | null;
