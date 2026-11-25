@@ -2069,3 +2069,171 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
   .dt-legal-v2 .dt-legal-eyebrow{margin-top:30px}
   .dt-legal-v2 .dt-legal-updated{padding-bottom:18px}
 }
+
+
+/* ORDER EXPERIENCE V2 — editorial checkout + customer order workspace */
+.dt-order-checkout {
+  --order-ink:#edf2f4; --order-muted:#9aabb8; --order-line:rgba(183,204,211,.13);
+  background:
+    radial-gradient(ellipse at 12% 14%,rgba(165,214,202,.09),transparent 34rem),
+    radial-gradient(ellipse at 88% 72%,rgba(111,155,164,.07),transparent 30rem),
+    #09131e !important;
+}
+.dt-order-checkout .order-header {
+  display:flex;align-items:center;justify-content:space-between;
+  border-color:var(--order-line);padding-top:20px;padding-bottom:20px;
+}
+.dt-order-checkout .order-brand {font-size:18px;letter-spacing:-.06em}
+.dt-order-checkout .order-back {
+  display:inline-flex;align-items:center;gap:8px;padding:10px 13px;
+  border:1px solid var(--order-line);border-radius:8px;color:#b8c7ce;
+  font-size:11px;font-weight:650;transition:border-color .18s,color .18s,background .18s;
+}
+.dt-order-checkout .order-back:hover {border-color:rgba(165,214,202,.42);background:rgba(165,214,202,.05);color:#d9eee7}
+.dt-order-checkout .order-layout {grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:clamp(32px,6vw,82px);padding-top:clamp(38px,6vw,78px)}
+.dt-order-checkout .order-intro {top:28px}
+.dt-order-checkout .order-kicker {display:inline-flex;align-items:center;gap:9px;font-size:9px;font-weight:800}
+.dt-order-checkout .order-kicker i {width:7px;height:7px;border-radius:50%;background:#a5d6ca;box-shadow:0 0 0 4px rgba(165,214,202,.09)}
+.dt-order-checkout .order-intro h1 {max-width:560px;margin-top:22px;font-size:clamp(42px,5.2vw,68px);line-height:.98;letter-spacing:-.078em}
+.dt-order-checkout .order-intro h1 em {color:#a5d6ca;font-style:normal}
+.dt-order-checkout .order-intro>p {max-width:410px;margin-top:22px;font-size:13px;line-height:1.9;color:#9aabb8}
+.dt-order-checkout .order-assurance {display:flex;gap:13px;align-items:flex-start;margin-top:34px;padding:17px;border-radius:11px;background:rgba(20,35,51,.68)}
+.dt-order-checkout .order-assurance>span {display:grid;place-items:center;width:34px;height:34px;flex:0 0 auto;border:1px solid rgba(165,214,202,.18);border-radius:9px;background:rgba(165,214,202,.07);color:#a5d6ca}
+.dt-order-checkout .order-assurance b {display:block;color:#e3ecee;font-size:11px}
+.dt-order-checkout .order-assurance small {display:block;margin-top:6px;color:#8fa2ad;font-size:10px;line-height:1.7}
+.dt-order-checkout .order-mini-note {display:flex;align-items:center;gap:9px;margin-top:11px;padding:11px 13px;border:0;background:transparent;color:#aebdc4;font-size:10px}
+.dt-order-checkout .order-mini-note svg {color:#a5d6ca}
+.dt-order-checkout .order-form {padding:clamp(22px,3.2vw,38px);border-radius:14px;border-color:rgba(183,204,211,.16);background:linear-gradient(155deg,#142536,#0e1c2a 72%);box-shadow:0 28px 80px rgba(0,0,0,.2)}
+.dt-order-checkout .order-form-heading {display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--order-line)}
+.dt-order-checkout .order-form-heading>div>span {color:#a5d6ca;font-size:9px;font-weight:800;letter-spacing:.16em}
+.dt-order-checkout .order-form-heading h2 {margin-top:7px;color:#edf2f4;font-size:21px;font-weight:700;letter-spacing:-.055em}
+.dt-order-checkout .order-form-heading>small {color:#7f939f;font-size:9px}
+.dt-order-checkout .order-field {display:grid;gap:8px;color:#c9d5da;font-size:10px;font-weight:700}
+.dt-order-checkout .order-field :where(input,select,textarea) {min-height:47px;padding:0 13px;border-color:rgba(183,204,211,.17);border-radius:8px;background:#0a1722;color:#edf2f4;font:500 11px Manrope,ui-sans-serif,system-ui,sans-serif;transition:border-color .16s,box-shadow .16s}
+.dt-order-checkout .order-field textarea {padding:12px 13px;min-height:92px;resize:vertical}
+.dt-order-checkout .order-field :where(input,select,textarea)::placeholder {color:#637987}
+.dt-order-checkout .order-field :where(input,select,textarea):focus {border-color:#a5d6ca;outline:0;box-shadow:0 0 0 3px rgba(165,214,202,.09)}
+.dt-order-checkout .order-field-hint {color:#7f939f;font-size:9px;font-weight:450;line-height:1.6}
+.dt-order-checkout .order-product-summary {display:grid;gap:6px;margin-top:15px;padding:16px;border-radius:9px;background:rgba(5,17,27,.45)}
+.dt-order-checkout .order-product-summary span {color:#a5d6ca;font-size:9px;font-weight:750;letter-spacing:.08em}
+.dt-order-checkout .order-product-summary b {font-size:15px;letter-spacing:-.03em}
+.dt-order-checkout .order-product-summary small {color:#8599a5;font-size:9px;line-height:1.6}
+.dt-order-checkout .order-quantity-row {display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:19px;padding:14px 0;border-bottom:1px solid var(--order-line)}
+.dt-order-checkout .order-quantity-row b {display:block;color:#e5edef;font-size:11px}
+.dt-order-checkout .order-quantity-row small {display:block;margin-top:4px;color:#8296a2;font-size:9px}
+.dt-order-checkout .order-quantity {display:flex;align-items:center;gap:15px}
+.dt-order-checkout .order-quantity button {display:grid;width:32px;height:32px;place-items:center;border:1px solid var(--order-line);border-radius:8px;background:#0a1722;color:#dce7e8}
+.dt-order-checkout .order-quantity button:disabled {opacity:.35;cursor:not-allowed}
+.dt-order-checkout .order-quantity output {min-width:24px;text-align:center;color:#edf2f4;font-size:13px;font-weight:750}
+.dt-order-checkout .order-total {display:grid;grid-template-columns:1fr auto;gap:5px 12px;margin-top:16px;padding:16px;border-color:rgba(165,214,202,.18);background:rgba(165,214,202,.055)}
+.dt-order-checkout .order-total span {color:#b9c9ce;font-size:10px}
+.dt-order-checkout .order-total b {color:#c2e9dc;font-size:19px;letter-spacing:-.045em}
+.dt-order-checkout .order-total small {grid-column:1/-1;color:#80959f;font-size:9px;line-height:1.6}
+.dt-order-checkout .order-customer-heading {margin-top:30px}
+.dt-order-checkout .order-fields-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 13px;margin-top:19px}
+.dt-order-checkout .order-notes-field {margin-top:18px}
+.dt-order-checkout .order-submit {display:flex;width:100%;min-height:51px;align-items:center;justify-content:center;gap:10px;margin-top:20px;border:1px solid rgba(165,214,202,.25);border-radius:8px;background:#a5d6ca;color:#10201f;font-size:11px;transition:transform .16s,background .16s}
+.dt-order-checkout .order-submit:hover:not(:disabled) {transform:translateY(-1px);background:#b7e3d5}
+.dt-order-checkout .order-submit:disabled {opacity:.6;cursor:wait}
+.dt-order-checkout .order-privacy-note {margin-top:13px;font-size:9px;line-height:1.7;text-align:center}
+.dt-order-checkout .order-footer {display:flex;justify-content:space-between;gap:12px;width:min(1120px,100%);margin:0 auto;padding:18px 24px 28px;border-top:1px solid var(--order-line);color:#718692;font-size:9px}
+.dt-order-account-overlay>section {max-width:420px;padding:30px;border:1px solid rgba(183,204,211,.17);border-radius:15px;background:#142536;box-shadow:0 30px 100px rgba(0,0,0,.4)}
+.dt-order-account-overlay>section>div:first-child {border:1px solid rgba(165,214,202,.18);background:rgba(165,214,202,.08);color:#a5d6ca}
+.dt-order-account-overlay>section>p:nth-of-type(1) {color:#a5d6ca!important;font-size:9px;letter-spacing:.16em}
+.dt-order-account-overlay>section h2 {font-size:25px;letter-spacing:-.06em}
+.dt-order-account-overlay>section p:nth-of-type(2) {color:#9aabb8!important;font-size:11px;line-height:1.8}
+.dt-order-account-overlay>section a {min-height:44px;display:grid;place-items:center;font-size:10px}
+.dt-order-account-overlay>section a:first-child {border-color:var(--order-line);color:#dce7e8}
+.dt-order-account-overlay>section a:last-child {background:#a5d6ca;color:#10201f}
+.dt-order-account-overlay>section button {color:#91a4ae}
+.dt-order-account-overlay>section button:hover {background:rgba(255,255,255,.04)}
+@media(max-width:820px) {
+  .dt-order-checkout .order-layout {grid-template-columns:1fr;gap:25px;max-width:720px}
+  .dt-order-checkout .order-intro {position:static}
+  .dt-order-checkout .order-intro h1 {max-width:620px;font-size:clamp(40px,8vw,58px)}
+  .dt-order-checkout .order-assurance {max-width:540px;margin-top:22px}
+  .dt-order-checkout .order-mini-note {display:inline-flex;margin:8px 14px 0 0;padding:8px 0}
+}
+@media(max-width:560px) {
+  .dt-order-checkout .order-header {padding:14px 16px}
+  .dt-order-checkout .order-brand {font-size:16px}
+  .dt-order-checkout .order-back {padding:9px 10px;font-size:9px}
+  .dt-order-checkout .order-layout {padding:28px 15px 42px;gap:23px}
+  .dt-order-checkout .order-intro h1 {margin-top:16px;font-size:42px}
+  .dt-order-checkout .order-intro>p {margin-top:14px;font-size:11px}
+  .dt-order-checkout .order-form {padding:20px 16px;border-radius:12px}
+  .dt-order-checkout .order-form-heading h2 {font-size:19px}
+  .dt-order-checkout .order-fields-grid {grid-template-columns:1fr;gap:14px}
+  .dt-order-checkout .order-footer {padding:16px;flex-wrap:wrap;font-size:8px}
+  .dt-order-account-overlay>section {padding:24px 20px}
+}
+
+/* Customer orders — compact account workspace, clear status hierarchy, responsive cards. */
+.dt-customer-orders-v2 {
+  --co-bg:#09131e;--co-panel:#122334;--co-panel-2:#0d1c29;--co-line:rgba(183,204,211,.13);
+  --co-text:#edf2f4;--co-muted:#9aabb6;--co-accent:#a5d6ca;
+  color:var(--co-text)!important;
+  background:
+    radial-gradient(ellipse at 80% -8%,rgba(165,214,202,.09),transparent 34rem),
+    #09131e!important;
+}
+.dt-customer-orders-v2 .dt-customer-orders-inner {max-width:1080px}
+.dt-customer-orders-v2 .dt-customer-orders-header {min-height:58px;padding-bottom:18px;border-bottom:1px solid var(--co-line)}
+.dt-customer-orders-v2 .dt-customer-orders-header>a:first-child {color:var(--co-text)!important;font-size:18px}
+.dt-customer-orders-v2 .dt-customer-orders-header>a:first-child span {color:var(--co-accent)!important}
+.dt-customer-orders-v2 .dt-customer-orders-header>a:last-child {padding:9px 12px;border:1px solid var(--co-line);border-radius:8px;color:#b5c5cb!important;font-size:10px}
+.dt-customer-orders-v2 .dt-customer-orders-heading {margin-top:30px;margin-bottom:30px;align-items:flex-end}
+.dt-customer-orders-v2 .dt-customer-orders-heading p:first-child {color:var(--co-accent)!important;font-size:9px;letter-spacing:.18em}
+.dt-customer-orders-v2 .dt-customer-orders-heading h1 {color:var(--co-text)!important;font-size:clamp(32px,5vw,46px);letter-spacing:-.075em}
+.dt-customer-orders-v2 .dt-customer-orders-heading p:last-child {color:var(--co-muted)!important;font-size:11px;line-height:1.7}
+.dt-customer-orders-v2 .dt-customer-orders-heading button {min-height:40px;border-color:var(--co-line);border-radius:8px;background:#122334;color:#c7d5d9;font-size:10px}
+.dt-customer-orders-v2 .dt-customer-order-card {
+  overflow:hidden;border:1px solid var(--co-line)!important;border-radius:13px!important;
+  background:linear-gradient(150deg,#142638,#0e1c29)!important;box-shadow:0 18px 55px rgba(0,0,0,.15)!important;
+}
+.dt-customer-orders-v2 .dt-customer-order-card>div:first-child {border-color:var(--co-line)!important;background:rgba(5,16,25,.2)}
+.dt-customer-orders-v2 .dt-customer-order-card :where(h2,b,strong) {color:#eaf1f2!important}
+.dt-customer-orders-v2 .dt-customer-order-card :where(p,span) { }
+.dt-customer-orders-v2 .dt-customer-order-card .text-slate-400,
+.dt-customer-orders-v2 .dt-customer-order-card .text-slate-500 {color:#91a4ae!important}
+.dt-customer-orders-v2 .dt-customer-order-card .text-slate-800,
+.dt-customer-orders-v2 .dt-customer-order-card .text-slate-700,
+.dt-customer-orders-v2 .dt-customer-order-card .text-slate-900 {color:#eaf1f2!important}
+.dt-customer-orders-v2 .dt-customer-order-card .border-slate-100,
+.dt-customer-orders-v2 .dt-customer-order-card .border-slate-200 {border-color:var(--co-line)!important}
+.dt-customer-orders-v2 .dt-customer-order-card .bg-slate-50,
+.dt-customer-orders-v2 .dt-customer-order-card .bg-slate-50\/70 {background:#0c1a27!important}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel {border:1px solid var(--co-line);background:#0b1925!important}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel :where(p,span,label) {color:#aabac1}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel .text-emerald-700 {color:#a5d6ca!important}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel .text-amber-700 {color:#e5c58c!important}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel input,
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel select {min-height:42px;border-color:var(--co-line);border-radius:8px;background:#101f2c;color:#eaf1f2}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel input:focus,
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel select:focus {outline:2px solid rgba(165,214,202,.18);border-color:#a5d6ca}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel .border-emerald-100.bg-emerald-50 {border-color:rgba(165,214,202,.2);background:rgba(165,214,202,.07);color:#b8e2d5}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel .border-red-100.bg-red-50 {border-color:rgba(240,139,145,.2);background:rgba(240,139,145,.07);color:#ffc2c6}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel label>input,
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-payment-panel label>select {margin-top:7px}
+.dt-customer-orders-v2 .dt-customer-order-card a[href^="https://wa.me"] {border-color:rgba(165,214,202,.2);background:rgba(165,214,202,.07);color:#b9e0d4}
+.dt-customer-orders-v2 .dt-customer-order-card>div:last-child {border-color:var(--co-line)!important;background:rgba(5,16,25,.24)!important}
+.dt-customer-orders-v2 .dt-customer-order-card>div:last-child :where(p,span) {color:#9aabb6}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-progress p {color:#879ba6!important}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-progress .text-blue-700 {color:#a5d6ca!important}
+.dt-customer-orders-v2 .dt-customer-order-card .dt-order-progress .bg-blue-600 {background:#a5d6ca!important}
+.dt-customer-orders-v2>div>p:last-child {color:#758995!important}
+.dt-customer-orders-v2>div>div>section,
+.dt-customer-orders-v2>div>div[role="alert"],
+.dt-customer-orders-v2>div>div.flex.items-center.justify-center {border-color:var(--co-line)!important;border-radius:13px;background:#122334;color:#c2d0d5}
+.dt-customer-orders-v2 .bg-amber-50 {border-color:rgba(229,197,140,.2)!important;background:rgba(229,197,140,.07)!important;color:#e5c58c!important}
+.dt-customer-orders-v2 .bg-blue-50 {background:rgba(165,214,202,.08)!important;color:#b9e0d4!important}
+@media(max-width:640px) {
+  .dt-customer-orders-v2 {padding:18px 14px 34px!important}
+  .dt-customer-orders-v2 .dt-customer-orders-heading {margin-top:22px;margin-bottom:22px}
+  .dt-customer-orders-v2 .dt-customer-order-card>div:first-child {gap:12px;padding:17px!important}
+  .dt-customer-orders-v2 .dt-customer-order-card .grid.grid-cols-5 p {font-size:8px!important}
+  .dt-customer-orders-v2 .dt-customer-order-card .grid.gap-5 {gap:16px;padding:17px!important}
+}
+@media(prefers-reduced-motion:reduce) {
+  .dt-order-checkout *, .dt-customer-orders-v2 * {scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
