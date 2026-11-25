@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
         .dt-recovery-kicker{margin:38px 0 9px;color:#a8f0d5;font-size:9px;font-weight:800;letter-spacing:.17em}
         h1{margin:0;font-size:30px;letter-spacing:-.06em}.dt-recovery-copy{color:#9bb0c2;font-size:12px;line-height:1.8}
         form{display:grid;gap:16px;margin-top:26px}label{display:grid;gap:8px;color:#d0dce5;font-size:11px;font-weight:700}
-        input{height:51px;padding:0 14px;border:1px solid rgba(169,207,224,.18);border-radius:9px;background:#071426;color:#edf7fb;font:500 12px inherit}
+        input{height:51px;padding:0 14px;border:1px solid rgba(169,207,224,.18);border-radius:9px;background:#071426;color:#edf7fb;font:500 12px Arial,sans-serif}
         button{height:52px;border:0;border-radius:9px;background:#a8f0d5;color:#092238;font-weight:800;cursor:pointer}button:disabled{opacity:.6}
         .dt-recovery-error,.dt-recovery-success{padding:12px;border:1px solid rgba(255,133,145,.25);border-radius:8px;color:#ffc0c8;font-size:11px;line-height:1.7}
         .dt-recovery-success{margin-top:24px;border-color:rgba(168,240,213,.25);color:#a8f0d5;background:rgba(168,240,213,.06)}
