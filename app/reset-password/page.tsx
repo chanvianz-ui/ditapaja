@@ -2,10 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
-import { Manrope } from "next/font/google";
 import { supabase } from "../../lib/supabase";
-
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], display: "swap" });
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -48,7 +45,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main className={`dt-recovery ${manrope.className}`}>
+    <main className="dt-recovery">
       <section className="dt-recovery-card">
         <Link href="/login" className="dt-recovery-brand"><span>d.</span> ditapaja</Link>
         <p className="dt-recovery-kicker">SECURE YOUR ACCOUNT</p>
@@ -64,7 +61,7 @@ export default function ResetPasswordPage() {
         <Link href="/forgot-password" className="dt-recovery-back">Minta tautan baru</Link>
       </section>
       <style jsx>{`
-        .dt-recovery{display:grid;place-items:center;min-height:100svh;padding:24px 16px;background:#071426;color:#edf7fb}
+        .dt-recovery{font-family:"Manrope",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:grid;place-items:center;min-height:100svh;padding:24px 16px;background:#071426;color:#edf7fb}
         .dt-recovery-card{width:min(100%,440px);padding:clamp(26px,5vw,42px);border:1px solid rgba(170,205,222,.15);border-radius:20px;background:#0d2038;box-shadow:0 24px 70px rgba(0,0,0,.25)}
         .dt-recovery-brand{display:flex;align-items:center;gap:10px;color:#edf7fb;text-decoration:none;font-size:17px;font-weight:800}
         .dt-recovery-brand span{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#a8f0d5;color:#092238}
