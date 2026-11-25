@@ -1951,3 +1951,105 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
 @media(prefers-reduced-motion:reduce) {
   .dt-auth-simple-card { animation:none!important; }
 }
+
+
+/* AUTH SUITE V2 — unified account surfaces */
+.dt-auth-v2,.dt-recovery-v2,.dt-legal-v2 {
+  --av-bg:#071321;--av-panel:#0d2031;--av-panel-2:#10283b;--av-text:#edf4f5;
+  --av-muted:#9aadb7;--av-subtle:#718792;--av-line:rgba(174,205,214,.14);
+  --av-mint:#a8e6d2;--av-cyan:#76cbd8;
+  color:var(--av-text);font-family:Manrope,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+.dt-auth-v2 *,.dt-recovery-v2 *,.dt-legal-v2 *{box-sizing:border-box}
+.dt-auth-v2{
+  display:grid;min-height:100svh;place-items:center;padding:34px 22px;
+  background:radial-gradient(ellipse at 50% -24%,rgba(92,170,179,.15),transparent 42rem),linear-gradient(180deg,#091827 0%,#071321 72%);
+}
+.dt-auth-v2-frame{width:min(100%,456px);margin:auto}
+.dt-auth-v2-topbar{display:flex;align-items:center;justify-content:space-between;margin:0 3px 22px}
+.dt-auth-v2-brand{display:inline-flex;align-items:center;gap:10px;color:var(--av-text);font-size:16px;font-weight:800;letter-spacing:-.055em;text-decoration:none}
+.dt-auth-v2-mark{display:grid;width:34px;height:34px;place-items:center;border:1px solid rgba(168,230,210,.22);border-radius:10px;background:linear-gradient(145deg,#b4ead9,#78cbd8);color:#102a37;font-size:20px;letter-spacing:-.1em}
+.dt-auth-v2-mark span{color:#287f87}
+.dt-auth-v2-secure{display:inline-flex;align-items:center;gap:6px;color:#8da4af;font-size:9px;font-weight:650;letter-spacing:.035em}
+.dt-auth-v2-secure svg{width:15px;height:15px;fill:none;stroke:var(--av-mint);stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+.dt-auth-v2-panel{padding:clamp(27px,6vw,42px);border:1px solid var(--av-line);border-radius:20px;background:linear-gradient(155deg,rgba(16,40,59,.98),rgba(10,29,45,.99));box-shadow:0 28px 90px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.035)}
+.dt-auth-v2-intro{margin-bottom:25px}
+.dt-auth-v2-eyebrow{margin:0 0 11px;color:var(--av-mint);font-size:9px;font-weight:800;letter-spacing:.19em}
+.dt-auth-v2-intro h1{margin:0;color:var(--av-text);font-size:clamp(27px,6vw,34px);font-weight:750;line-height:1.14;letter-spacing:-.065em}
+.dt-auth-v2-intro>p:last-child{margin:10px 0 0;color:var(--av-muted);font-size:11px;line-height:1.75}
+.dt-auth-v2-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:0 0 24px;padding:4px;border:1px solid rgba(174,205,214,.1);border-radius:10px;background:rgba(3,15,25,.48)}
+.dt-auth-v2-tabs a{display:grid;min-height:39px;place-items:center;border-radius:7px;color:#93a7b1;font-size:11px;font-weight:700;text-decoration:none;transition:background .18s,color .18s}
+.dt-auth-v2-tabs a.is-active{background:var(--av-mint);color:#102b36;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.dt-auth-v2-form{display:grid;gap:17px}
+.dt-auth-v2-field{display:grid;gap:8px;min-width:0}
+.dt-auth-v2-field>span{color:#d2dfe2;font-size:10px;font-weight:700}
+.dt-auth-v2-field input{display:block;width:100%;height:49px;min-width:0;padding:0 14px;border:1px solid rgba(174,205,214,.17);border-radius:9px;outline:none;background:rgba(3,15,25,.48);color:var(--av-text);font:500 11px Manrope,ui-sans-serif,system-ui,sans-serif;transition:border-color .16s,background .16s,box-shadow .16s}
+.dt-auth-v2-field input::placeholder{color:#6f8791}
+.dt-auth-v2-field input:hover{border-color:rgba(168,230,210,.34)}
+.dt-auth-v2-field input:focus{border-color:var(--av-mint);background:rgba(3,15,25,.72);box-shadow:0 0 0 3px rgba(168,230,210,.09)}
+.dt-auth-v2-password{position:relative}
+.dt-auth-v2-password input{padding-right:48px}
+.dt-auth-v2-password button{position:absolute;top:50%;right:8px;display:grid;width:32px;height:32px;place-items:center;padding:0;border:0;border-radius:7px;background:transparent;color:#8ca8b2;cursor:pointer;transform:translateY(-50%);transition:color .16s,background .16s}
+.dt-auth-v2-password button:hover{background:rgba(118,203,216,.09);color:var(--av-mint)}
+.dt-auth-v2-password svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+.dt-auth-v2-options{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:-2px}
+.dt-auth-v2-check,.dt-auth-v2-consent{display:flex;align-items:flex-start;gap:8px;color:var(--av-muted);font-size:10px;line-height:1.65;cursor:pointer}
+.dt-auth-v2-check{align-items:center}
+.dt-auth-v2-check input,.dt-auth-v2-consent input{width:14px;height:14px;margin:0;flex:0 0 auto;accent-color:var(--av-mint)}
+.dt-auth-v2-consent input{margin-top:2px}
+.dt-auth-v2-options>a,.dt-auth-v2-consent a,.dt-auth-v2-switch a{color:var(--av-cyan);font-weight:700;text-decoration:none}
+.dt-auth-v2-options>a{font-size:10px;white-space:nowrap}
+.dt-auth-v2-options>a:hover,.dt-auth-v2-consent a:hover,.dt-auth-v2-switch a:hover{text-decoration:underline;text-underline-offset:3px}
+.dt-auth-v2-message{margin:0;padding:11px 12px;border:1px solid rgba(240,139,145,.25);border-radius:8px;background:rgba(240,139,145,.07);color:#ffc2c6;font-size:10px;line-height:1.7}
+.dt-auth-v2-message.is-success{border-color:rgba(168,230,210,.25);background:rgba(168,230,210,.07);color:var(--av-mint)}
+.dt-auth-v2-submit{display:flex;width:100%;min-height:50px;align-items:center;justify-content:space-between;margin-top:1px;padding:0 15px;border:0;border-radius:9px;background:linear-gradient(100deg,#b1ead8,#8bd6d5);color:#102c37;font:800 11px Manrope,ui-sans-serif,system-ui,sans-serif;cursor:pointer;transition:filter .16s,transform .16s,box-shadow .16s}
+.dt-auth-v2-submit>span:last-child{font-size:17px;transition:transform .16s}
+.dt-auth-v2-submit:hover:not(:disabled){filter:brightness(1.04);transform:translateY(-1px);box-shadow:0 7px 18px rgba(91,195,176,.12)}
+.dt-auth-v2-submit:hover:not(:disabled)>span:last-child{transform:translate(2px,-2px)}
+.dt-auth-v2-submit:disabled{opacity:.58;cursor:wait}
+.dt-auth-v2-switch{margin:1px 0 0;text-align:center;color:var(--av-muted);font-size:10px}
+.dt-auth-v2-footer{display:flex;justify-content:space-between;gap:12px;margin-top:27px;padding-top:16px;border-top:1px solid rgba(174,205,214,.1);color:#728a95;font-size:8px;font-weight:750;letter-spacing:.15em}
+.dt-auth-v2-footer span:last-child{font-weight:600;letter-spacing:.09em;text-align:right}
+.dt-auth-v2-bottom{margin:17px 0 0;color:#6f8490;font-size:9px;line-height:1.7;text-align:center}
+.dt-auth-v2 a:focus-visible,.dt-auth-v2 button:focus-visible{outline:2px solid var(--av-cyan);outline-offset:3px}
+.dt-recovery-v2{display:grid;min-height:100svh;place-items:center;padding:28px 18px;background:radial-gradient(ellipse at 50% -24%,rgba(92,170,179,.15),transparent 42rem),#071321}
+.dt-recovery-v2-card{width:min(100%,456px);padding:clamp(27px,6vw,42px);border:1px solid var(--av-line);border-radius:20px;background:linear-gradient(155deg,rgba(16,40,59,.98),rgba(10,29,45,.99));box-shadow:0 28px 90px rgba(0,0,0,.3)}
+.dt-recovery-v2-brand{display:inline-flex;align-items:center;gap:10px;color:var(--av-text);font-size:16px;font-weight:800;letter-spacing:-.05em;text-decoration:none}
+.dt-recovery-v2-brand>span{display:grid;width:34px;height:34px;place-items:center;border-radius:10px;background:linear-gradient(145deg,#b4ead9,#78cbd8);color:#102a37;font-size:20px}
+.dt-recovery-v2-kicker{margin:35px 0 10px;color:var(--av-mint);font-size:9px;font-weight:800;letter-spacing:.18em}
+.dt-recovery-v2 h1{margin:0;color:var(--av-text);font-size:clamp(27px,6vw,33px);letter-spacing:-.065em}
+.dt-recovery-v2-copy{color:var(--av-muted);font-size:11px;line-height:1.8}
+.dt-recovery-v2 form{display:grid;gap:15px;margin-top:24px}
+.dt-recovery-v2 label{display:grid;gap:8px;color:#d2dfe2;font-size:10px;font-weight:700}
+.dt-recovery-v2 input{width:100%;height:49px;padding:0 14px;border:1px solid rgba(174,205,214,.17);border-radius:9px;background:rgba(3,15,25,.48);color:var(--av-text);font:500 11px Manrope,ui-sans-serif,system-ui,sans-serif}
+.dt-recovery-v2 input:focus{outline:0;border-color:var(--av-mint);box-shadow:0 0 0 3px rgba(168,230,210,.09)}
+.dt-recovery-v2 button{min-height:50px;border:0;border-radius:9px;background:linear-gradient(100deg,#b1ead8,#8bd6d5);color:#102c37;font:800 11px Manrope,ui-sans-serif,system-ui,sans-serif;cursor:pointer}
+.dt-recovery-v2 button:disabled{opacity:.58;cursor:wait}
+.dt-recovery-v2-error,.dt-recovery-v2-success{padding:11px 12px;border:1px solid rgba(240,139,145,.25);border-radius:8px;color:#ffc2c6;font-size:10px;line-height:1.7}
+.dt-recovery-v2-success{border-color:rgba(168,230,210,.25);background:rgba(168,230,210,.07);color:var(--av-mint)}
+.dt-recovery-v2-back{display:inline-block;margin-top:24px;color:var(--av-cyan);font-size:10px;font-weight:700;text-decoration:none}
+.dt-legal-v2{min-height:100svh;padding:36px 18px;background:radial-gradient(ellipse at 50% -24%,rgba(92,170,179,.12),transparent 42rem),#071321}
+.dt-legal-v2 article{width:min(100%,790px);margin:0 auto;padding:clamp(25px,5vw,54px);border:1px solid var(--av-line);border-radius:20px;background:linear-gradient(155deg,rgba(16,40,59,.98),rgba(10,29,45,.99));box-shadow:0 24px 75px rgba(0,0,0,.22)}
+.dt-legal-v2 a{color:var(--av-cyan);font-size:11px;font-weight:700;text-decoration:none}
+.dt-legal-v2 a:hover{text-decoration:underline;text-underline-offset:3px}
+.dt-legal-v2 .dt-legal-eyebrow{margin:34px 0 10px;color:var(--av-mint);font-size:9px;font-weight:800;letter-spacing:.18em}
+.dt-legal-v2 h1{margin:0;color:var(--av-text);font-size:clamp(31px,6vw,46px);letter-spacing:-.065em}
+.dt-legal-v2 .dt-legal-updated{margin:9px 0 25px;color:var(--av-subtle);font-size:10px}
+.dt-legal-v2 h2{margin:29px 0 7px;color:#dcebe9;font-size:14px;letter-spacing:-.02em}
+.dt-legal-v2 p{color:#a9bbc2;font-size:12px;line-height:1.9}
+.dt-legal-v2 .dt-legal-links{display:flex;flex-wrap:wrap;gap:20px;margin-top:34px;padding-top:19px;border-top:1px solid var(--av-line)}
+@media(max-width:520px){
+  .dt-auth-v2{padding:20px 14px}
+  .dt-auth-v2-topbar{margin:0 2px 16px}
+  .dt-auth-v2-panel{padding:25px 21px;border-radius:16px}
+  .dt-auth-v2-intro{margin-bottom:22px}
+  .dt-auth-v2-form{gap:15px}
+  .dt-auth-v2-footer span:last-child{max-width:52%;line-height:1.5}
+  .dt-recovery-v2{padding:18px 14px}
+  .dt-recovery-v2-card{padding:25px 21px;border-radius:16px}
+  .dt-legal-v2{padding:18px 12px}
+  .dt-legal-v2 article{padding:25px 21px;border-radius:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .dt-auth-v2 *,.dt-auth-v2 *:before,.dt-auth-v2 *:after{transition:none!important;animation:none!important}
+}
