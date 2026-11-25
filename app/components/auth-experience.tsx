@@ -37,6 +37,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -68,12 +69,6 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
         }
         const { error } = await supabase.auth.setSession(result.session);
         if (error) throw error;
-      }
-
-      if (rememberMe) {
-        localStorage.setItem("ditapaja_login_expires_at", String(Date.now() + 7 * 24 * 60 * 60 * 1000));
-      } else {
-        localStorage.removeItem("ditapaja_login_expires_at");
       }
 
       const { data: userData } = await supabase.auth.getUser();
@@ -108,6 +103,11 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
     event.preventDefault();
     setMessage("");
     setSuccess(false);
+
+    if (!acceptedTerms) {
+      setMessage("Kamu perlu menyetujui Syarat & Ketentuan dan Kebijakan Privasi.");
+      return;
+    }
 
     if (password.length < 8) {
       setMessage("Password minimal 8 karakter.");
@@ -193,6 +193,16 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
         .dt-auth-simple-switch a { color:var(--auth-cyan); }
         .dt-auth-simple-footer { margin-top:25px; padding-top:15px; font-size:8px; letter-spacing:.16em; }
         .dt-auth-simple-message { padding:12px 13px; border-radius:9px; font-size:11px; }
+        .dt-auth-simple-options { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:-5px; }
+        .dt-auth-simple-remember { display:inline-flex; align-items:center; gap:8px; color:#9bb0c2; font-size:10px; cursor:pointer; user-select:none; }
+        .dt-auth-simple-remember input,.dt-auth-simple-consent input { width:15px; height:15px; margin:0; accent-color:var(--auth-mint); flex:0 0 auto; }
+        .dt-auth-simple-forgot { color:var(--auth-cyan); font-size:10px; font-weight:700; text-decoration:none; }
+        .dt-auth-simple-forgot:hover,.dt-auth-simple-legal a:hover { text-decoration:underline; text-underline-offset:3px; }
+        .dt-auth-simple-consent { display:flex; align-items:flex-start; gap:9px; color:#9bb0c2; font-size:10px; line-height:1.65; cursor:pointer; }
+        .dt-auth-simple-consent input { margin-top:2px; }
+        .dt-auth-simple-legal a { color:var(--auth-cyan); font-weight:700; text-decoration:none; }
+        .dt-auth-simple-trust { display:flex; align-items:center; justify-content:center; gap:7px; margin:16px 0 0; color:#71899c; font-size:9px; }
+        .dt-auth-simple-trust svg { width:13px; height:13px; color:var(--auth-mint); }
         .dt-auth-simple-card:focus-within { border-color:rgba(168,240,213,.2); box-shadow:0 26px 76px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.035); }
         .dt-auth-simple a:focus-visible,.dt-auth-simple button:focus-visible { outline:2px solid var(--auth-cyan); outline-offset:3px; }
         @media(max-width:480px) {
@@ -250,6 +260,13 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
                 </button>
               </div>
             </label>
+            <div className="dt-auth-simple-options">
+              <label className="dt-auth-simple-remember">
+                <input type="checkbox" checked={rememberMe} onChange={(event) => setRememberMe(event.target.checked)} />
+                <span>Ingat saya selama 7 hari</span>
+              </label>
+              <Link className="dt-auth-simple-forgot" href="/forgot-password">Lupa password?</Link>
+            </div>
             {message && <p className="dt-auth-simple-message" role="alert">{message}</p>}
             <button className="dt-auth-simple-submit" type="submit" disabled={loading}>
               {loading ? "Memproses..." : "Masuk"}
@@ -280,6 +297,10 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
                 </button>
               </div>
             </label>
+            <label className="dt-auth-simple-consent">
+              <input type="checkbox" checked={acceptedTerms} onChange={(event) => setAcceptedTerms(event.target.checked)} required />
+              <span>Saya menyetujui <Link className="dt-auth-simple-legal" href="/terms" target="_blank" rel="noopener noreferrer">Syarat &amp; Ketentuan</Link> dan <Link className="dt-auth-simple-legal" href="/privacy" target="_blank" rel="noopener noreferrer">Kebijakan Privasi</Link> DiTapAja.</span>
+            </label>
             {message && <p className={"dt-auth-simple-message" + (success ? " is-success" : "")} role={success ? "status" : "alert"}>{message}</p>}
             <button className="dt-auth-simple-submit" type="submit" disabled={loading}>
               {loading ? "Membuat akun..." : "Buat akun"}
@@ -288,6 +309,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
             <p className="dt-auth-simple-switch">Sudah punya akun? <Link href={"/login" + querySuffix}>Masuk</Link></p>
           </form>
         )}
+        <p className="dt-auth-simple-trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 8-7 10-4.2-2-7-5.5-7-10V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg> Akses akun yang aman dan privat</p>
         <div className="dt-auth-simple-footer">DITAPAJA</div>
       </section>
     </main>
