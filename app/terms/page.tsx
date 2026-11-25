@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function TermsPage() {
   return (
-    <main className="dt-legal-page">
+    <main className="dt-legal-v2">
       <article className="dt-legal-card">
         <Link href="/register" className="dt-legal-back">← Kembali ke pendaftaran</Link>
         <p className="dt-legal-eyebrow">DITAPAJA · LEGAL</p>
@@ -29,15 +29,6 @@ export default function TermsPage() {
         <p>Untuk pertanyaan terkait ketentuan ini, hubungi pengelola melalui kanal kontak resmi DiTapAja yang tersedia pada situs.</p>
         <div className="dt-legal-links"><Link href="/privacy">Baca Kebijakan Privasi</Link><Link href="/register">Kembali daftar</Link></div>
       </article>
-      <style jsx>{`
-        .dt-legal-page{min-height:100svh;padding:40px 18px;background:#071426;color:#edf7fb;font-family:Arial,sans-serif}
-        .dt-legal-card{width:min(100%,780px);margin:0 auto;padding:clamp(24px,5vw,54px);border:1px solid rgba(170,205,222,.15);border-radius:18px;background:#0d2038}
-        .dt-legal-back,.dt-legal-links a{color:#64d8ef;text-decoration:none;font-size:12px;font-weight:700}
-        .dt-legal-eyebrow{margin:36px 0 10px;color:#a8f0d5;font-size:10px;font-weight:800;letter-spacing:.18em}
-        h1{margin:0;font-size:clamp(32px,6vw,48px);letter-spacing:-.06em}h2{margin:30px 0 8px;font-size:16px;color:#d9f4ed}
-        p{color:#a8bac8;font-size:13px;line-height:1.9}.dt-legal-updated{font-size:11px;color:#71899c}
-        .dt-legal-links{display:flex;flex-wrap:wrap;gap:20px;margin-top:35px;padding-top:20px;border-top:1px solid rgba(170,205,222,.12)}
-      `}</style>
     </main>
   );
 }
