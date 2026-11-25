@@ -297,7 +297,7 @@ export default function DashboardPage() {
       bestDay: bestDay && bestDay.taps > 0 ? bestDay : null,
       topCard: cardTotals[0] && cardTotals[0].taps > 0 ? cardTotals[0] : null,
     };
-  }, [selectedEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId, cardEventStats]);
+  }, [selectedEventRows, periodEventRows, chartData, chartPeriod, cards, selectedCardId, selectedLocationId]);
 
   const cardPerformance = useMemo(() => cards
     .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
@@ -1037,7 +1037,7 @@ export default function DashboardPage() {
                   <div className="dt-insight-stat"><span>Perubahan tap</span><b>{analyticsInsights.tapChange===null?"—":(analyticsInsights.tapChange>0?"+":"")+analyticsInsights.tapChange.toFixed(1)+"%"}</b></div>
                   <div className="dt-insight-stat"><span>Klik review</span><b>{analyticsInsights.clickChange===null?"—":(analyticsInsights.clickChange>0?"+":"")+analyticsInsights.clickChange.toFixed(1)+"%"}</b></div>
                   <div className="dt-insight-stat"><span>Hari teraktif</span><b>{analyticsInsights.bestDay?.label || "—"}</b></div>
-                  <div className="dt-top-card"><small>Kartu teratas</small><strong>{analyticsInsights.topCard?.name || "Belum ada data"}</strong><span>{analyticsInsights.topCard ? analyticsInsights.topCard.taps.toLocaleString("id-ID")+" total tap" : "Data kartu akan muncul di sini."}</span></div>
+                  <div className="dt-top-card"><small>Kartu teratas</small><strong>{analyticsInsights.topCard?.name || "Belum ada data"}</strong><span>{analyticsInsights.topCard ? analyticsInsights.topCard.taps.toLocaleString("id-ID")+" tap pada periode ini" : "Belum ada aktivitas pada periode ini."}</span></div>
                 </aside>
               </section>
 
