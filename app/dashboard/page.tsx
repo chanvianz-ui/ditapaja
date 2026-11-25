@@ -129,9 +129,16 @@ export default function DashboardPage() {
     return rows;
   }, [eventRows, selectedCardId, selectedLocationId, cards]);
 
+  const periodEventRows = useMemo(() => {
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    start.setDate(start.getDate() - (chartPeriod - 1));
+    return selectedEventRows.filter((event) => new Date(event.created_at).getTime() >= start.getTime());
+  }, [selectedEventRows, chartPeriod]);
+
   const displayedAnalytics = useMemo<Analytics>(() => {
-    const tapEvents = selectedEventRows.filter((event) => event.event_type === "tap");
-    const reviewEvents = selectedEventRows.filter((event) => event.event_type === "review_click");
+    const tapEvents = periodEventRows.filter((event) => event.event_type === "tap");
+    const reviewEvents = periodEventRows.filter((event) => event.event_type === "review_click");
     const uniqueHashes = new Set(
       tapEvents
         .map((event) => event.visitor_hash)
@@ -146,7 +153,7 @@ export default function DashboardPage() {
       reviewClicks,
       ctr: totalTaps > 0 ? (reviewClicks / totalTaps) * 100 : 0,
     };
-  }, [selectedEventRows]);
+  }, [periodEventRows]);
 
   const [editingCard, setEditingCard] = useState<NfcCard | null>(null);
   const [editName, setEditName] = useState("");
@@ -202,13 +209,6 @@ export default function DashboardPage() {
     });
 
     return days;
-  }, [selectedEventRows, chartPeriod]);
-
-  const periodEventRows = useMemo(() => {
-    const start = new Date();
-    start.setHours(0, 0, 0, 0);
-    start.setDate(start.getDate() - (chartPeriod - 1));
-    return selectedEventRows.filter((event) => new Date(event.created_at).getTime() >= start.getTime());
   }, [selectedEventRows, chartPeriod]);
 
   const chartMax = Math.max(
@@ -277,10 +277,16 @@ export default function DashboardPage() {
       ? (now === 0 ? 0 : null)
       : ((now - before) / before) * 100;
     const bestDay = [...chartData].sort((a, b) => b.taps - a.taps)[0];
+    const periodTapsByCard = new Map<string, number>();
+    for (const event of periodEventRows) {
+      if (event.event_type === "tap") {
+        periodTapsByCard.set(event.card_id, (periodTapsByCard.get(event.card_id) ?? 0) + 1);
+      }
+    }
     const cardTotals = cards
       .filter((card) => selectedCardId === "all" || card.id === selectedCardId)
       .filter((card) => selectedLocationId === "all" || (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
-      .map((card) => ({ name: card.card_name || "Untitled Card", taps: cardEventStats.get(card.id)?.taps ?? 0 }))
+      .map((card) => ({ name: card.card_name || "Untitled Card", taps: periodTapsByCard.get(card.id) ?? 0 }))
       .sort((a, b) => b.taps - a.taps);
 
     return {
@@ -981,22 +987,22 @@ export default function DashboardPage() {
 
   const analyticsItems = [
     {
-      label: "Total Taps",
+      label: `Tap · ${chartPeriod} hari`,
       value: displayedAnalytics.totalTaps.toLocaleString("id-ID"),
       icon: MousePointerClick,
     },
     {
-      label: "Unique Visitors",
+      label: "Estimasi pengunjung unik",
       value: displayedAnalytics.uniqueVisitors.toLocaleString("id-ID"),
       icon: Users,
     },
     {
-      label: "Review Clicks",
+      label: "Klik review",
       value: displayedAnalytics.reviewClicks.toLocaleString("id-ID"),
       icon: ExternalLink,
     },
     {
-      label: "CTR",
+      label: "Rasio klik / tap",
       value: `${displayedAnalytics.ctr.toFixed(1)}%`,
       icon: BarChart3,
     },
