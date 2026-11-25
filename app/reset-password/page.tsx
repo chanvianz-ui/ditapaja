@@ -14,6 +14,7 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     let recovered = false;
+    let validationTimeout: number | undefined;
     const hasCallbackError =
       window.location.hash.includes("error=") ||
       window.location.search.includes("error=");
@@ -21,13 +22,13 @@ export default function ResetPasswordPage() {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "PASSWORD_RECOVERY" && session) {
         recovered = true;
-        window.clearTimeout(validationTimeout);
+        if (validationTimeout !== undefined) window.clearTimeout(validationTimeout);
         setReady(true);
         setMessage("");
       }
     });
 
-    const validationTimeout = window.setTimeout(() => {
+    validationTimeout = window.setTimeout(() => {
       if (!recovered && !hasCallbackError) {
         setMessage("Tautan pemulihan tidak dapat diverifikasi atau sudah kedaluwarsa. Minta tautan reset yang baru.");
       }
