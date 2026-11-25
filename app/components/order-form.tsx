@@ -49,7 +49,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
 
   async function createOrder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const digits = phone.replace(/\\D/g, "");
+    const digits = phone.replace(/\D/g, "");
     const normalizedPhone = digits.startsWith("0") ? "62" + digits.slice(1) : digits.startsWith("8") ? "62" + digits : digits;
     if (normalizedPhone.length < 10 || normalizedPhone.length > 15) {
       setError("Masukkan nomor WhatsApp yang valid.");
@@ -94,7 +94,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error || "Bukti transfer gagal dikirim.");
 
-      const normalizedPhone = phone.replace(/\\D/g, "").replace(/^0/, "62");
+      const normalizedPhone = phone.replace(/\D/g, "").replace(/^0/, "62");
       const message = [
         "Halo DiTapAja, saya sudah melakukan pemesanan dan mengirim bukti transfer melalui website.",
         "",
@@ -111,7 +111,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
         "WhatsApp: +" + normalizedPhone,
         "",
         "Bukti transfer sudah diunggah melalui website. Mohon konfirmasi penerimaan dan verifikasi pembayaran saya. Terima kasih."
-      ].join("\\n");
+      ].join("\n");
       const url = "https://wa.me/6281321778081?text=" + encodeURIComponent(message);
       if (whatsappWindow) { whatsappWindow.opener = null; whatsappWindow.location.href = url; }
       else window.location.href = url;
