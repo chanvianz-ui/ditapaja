@@ -41,42 +41,55 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: true, users, pagination: { page, perPage, hasMore: users.length === perPage } });
     }
 
-    // Search across the complete account directory, not only the currently loaded page.
-    const matches: Array<{ id: string; email: string; username: string | null; accountType: "email" | "username"; createdAt: string; lastSignInAt: string | null; emailConfirmedAt: string | null }> = [];
-    let authPage = 1;
-    const batchSize = 1000;
-    while (true) {
-      const { data, error } = await supabase.auth.admin.listUsers({ page: authPage, perPage: batchSize });
-      if (error) throw error;
-      const batch = data.users;
-      if (!batch.length) break;
-      const ids = batch.map((user) => user.id);
-      const { data: usernameRows, error: usernameError } = await supabase
-        .from("account_usernames").select("user_id, username").in("user_id", ids);
-      if (usernameError) throw usernameError;
-      const usernameById = new Map((usernameRows || []).map((row) => [row.user_id, row.username]));
-      for (const user of batch) {
-        const username = usernameById.get(user.id) || null;
-        const email = username ? "" : user.email ?? "";
-        const searchable = [user.id, email, username || ""].join(" ").toLowerCase();
-        if (!searchable.includes(keyword)) continue;
-        matches.push({
-          id: user.id, email, username,
-          accountType: username ? "username" : "email",
-          createdAt: user.created_at,
-          lastSignInAt: user.last_sign_in_at ?? null,
-          emailConfirmedAt: username ? null : user.email_confirmed_at ?? null,
-        });
+    // Search the full account directory in PostgreSQL; avoid paginating every Auth user in Worker memory.
+    const { data: searchResult, error: searchError } = await supabase.rpc(
+      "search_admin_user_directory",
+      {
+        p_keyword: keyword,
+        p_page: page,
+        p_page_size: perPage,
       }
-      if (batch.length < batchSize) break;
-      authPage += 1;
+    );
+    if (searchError) throw searchError;
+
+    const result = searchResult as {
+      total: number;
+      users: Array<{
+        id: string;
+        email: string;
+        username: string | null;
+        accountType: "email" | "username";
+        createdAt: string;
+        lastSignInAt: string | null;
+        emailConfirmedAt: string | null;
+      }>;
+    } | null;
+
+    if (
+      !result ||
+      !Number.isInteger(result.total) ||
+      !Array.isArray(result.users)
+    ) {
+      throw new Error("Admin user directory search RPC returned an invalid payload.");
     }
-    const start = (page - 1) * perPage;
-    return NextResponse.json({
-      success: true,
-      users: matches.slice(start, start + perPage),
-      pagination: { page, perPage, hasMore: matches.length > start + perPage },
-    });
+
+    const startIndex = (page - 1) * perPage;
+    return NextResponse.json(
+      {
+        success: true,
+        users: result.users,
+        pagination: {
+          page,
+          perPage,
+          hasMore: result.total > startIndex + result.users.length,
+        },
+      },
+      {
+        headers: {
+          "Cache-Control": "private, no-store",
+        },
+      }
+    );
   } catch (error) {
     console.error("Admin users GET error:", error);
     return NextResponse.json({ success: false, error: "Failed to load users." }, { status: 500 });
