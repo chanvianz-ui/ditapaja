@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     const reference = String(form.get("paymentReference") || "").trim();
     const file = form.get("file");
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(orderId) ||
-      !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || email.length > 254 ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 ||
       !["bank_transfer", "qris"].includes(method) || reference.length > 120 ||
       !(file instanceof File)) return response("Data bukti pembayaran tidak valid.", 400);
 
