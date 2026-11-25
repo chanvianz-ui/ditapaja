@@ -79,18 +79,16 @@ export async function PATCH(request: NextRequest) {
       }
       const cardIds = [...new Set((selectedPins ?? []).map((pin: any) => pin.card_id).filter(Boolean))];
       if (!cardIds.length) return NextResponse.json({ success: false, error: "Tidak ada kartu valid dalam pilihan." }, { status: 404 });
-      const { data: archivedCards, error: archiveError } = await auth.supabase!.from("nfc_cards")
-        .update({ archived_at: new Date().toISOString(), archived_by: auth.user!.id })
-        .in("id", cardIds).is("archived_at", null).select("id");
+
+      const { data: archivedCount, error: archiveError } = await auth.supabase!.rpc(
+        "admin_bulk_archive_nfc_cards",
+        { p_card_ids: cardIds, p_archived_by: auth.user!.id },
+      );
       if (archiveError) throw archiveError;
-      const archivedIds = (archivedCards ?? []).map((card: any) => card.id);
-      const availablePinIds = (selectedPins ?? []).filter((pin: any) => pin.status === "available" && archivedIds.includes(pin.card_id)).map((pin: any) => pin.id);
-      if (availablePinIds.length) {
-        const { error: revokeError } = await auth.supabase!.from("nfc_activation_pins")
-          .update({ status: "revoked" }).in("id", availablePinIds).eq("status", "available");
-        if (revokeError) throw revokeError;
+      if (!Number.isInteger(archivedCount)) {
+        throw new Error("Atomic card archive RPC returned an invalid result.");
       }
-      return NextResponse.json({ success: true, updated: archivedIds.length });
+      return NextResponse.json({ success: true, updated: archivedCount });
     }
 
     if (!/^[0-9a-f-]{36}$/i.test(String(id || ""))) {
