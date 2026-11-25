@@ -194,8 +194,21 @@ function HowItWorks() {
               id={"dt-how-tab-" + index}
               aria-selected={activeStep === index}
               aria-controls="dt-how-panel"
+              tabIndex={activeStep === index ? 0 : -1}
               className={"dt-how-step" + (activeStep === index ? " is-active" : "")}
               onClick={() => setActiveStep(index)}
+              onKeyDown={(event) => {
+                const key = event.key;
+                if (key !== "ArrowRight" && key !== "ArrowDown" && key !== "ArrowLeft" && key !== "ArrowUp" && key !== "Home" && key !== "End") return;
+                event.preventDefault();
+                const nextIndex = key === "Home"
+                  ? 0
+                  : key === "End"
+                    ? steps.length - 1
+                    : (index + (key === "ArrowRight" || key === "ArrowDown" ? 1 : -1) + steps.length) % steps.length;
+                setActiveStep(nextIndex);
+                document.getElementById("dt-how-tab-" + nextIndex)?.focus();
+              }}
             >
               <span className="dt-how-step-number">{item.number}</span>
               <span className="dt-how-step-label">{item.title}</span>
@@ -212,7 +225,7 @@ function HowItWorks() {
             <div className="dt-how-note"><span><i/>{step.note}</span><span>STEP {step.number} / 03</span></div>
           </div>
 
-          <div className={"dt-how-visual dt-how-visual-" + step.visual} aria-label={step.visualTitle}>
+          <div className={"dt-how-visual dt-how-visual-" + step.visual} role="img" aria-label={step.visualTitle}>
             <div className="dt-how-visual-grid"/>
             <div className="dt-how-visual-orbit"/>
             <div className="dt-how-visual-core">
