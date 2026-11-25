@@ -41,13 +41,6 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const passwordScore = [
-    password.length >= 8,
-    /[A-Z]/.test(password),
-    /[0-9]/.test(password),
-    /[^A-Za-z0-9]/.test(password),
-  ].filter(Boolean).length;
-
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
@@ -156,6 +149,72 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
 
   return (
     <main className={`dt-auth-simple ${manrope.className}`}>
+      <style jsx global>{`
+        .dt-auth-simple { padding:clamp(24px,5vh,54px) 22px; }
+        .dt-auth-simple-card {
+          width:min(100%,448px); padding:clamp(30px,5vw,44px);
+          border-color:rgba(169,207,224,.13); border-radius:22px;
+          background:linear-gradient(155deg,rgba(15,38,63,.985),rgba(9,27,47,.99));
+          box-shadow:0 26px 76px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.035);
+        }
+        .dt-auth-simple-brand { gap:11px; font-size:18px; letter-spacing:-.045em; }
+        .dt-auth-simple-mark { width:36px; height:36px; border-radius:10px; box-shadow:none; }
+        .dt-auth-simple-heading { margin-top:36px; }
+        .dt-auth-simple-heading h1 { font-size:clamp(25px,4vw,30px); letter-spacing:-.055em; line-height:1.18; }
+        .dt-auth-simple-heading p { margin-top:10px; font-size:12px; color:#9bb0c2; }
+        .dt-auth-simple-tabs {
+          gap:4px; margin:28px 0 26px; padding:4px;
+          border-color:rgba(169,207,224,.12); border-radius:10px; background:rgba(3,15,28,.52);
+        }
+        .dt-auth-simple-tabs a { min-height:42px; border-radius:7px; font-size:12px; transition:background .16s,color .16s; }
+        .dt-auth-simple-tabs a.is-active {
+          background:var(--auth-mint); color:#092338; box-shadow:0 2px 8px rgba(0,0,0,.12);
+        }
+        .dt-auth-simple-form { gap:19px; }
+        .dt-auth-simple-field { gap:8px; }
+        .dt-auth-simple-field>span { color:#d0dce5; font-size:11px; font-weight:650; letter-spacing:.005em; }
+        .dt-auth-simple-field input {
+          height:53px; padding-inline:15px; border-radius:10px;
+          border-color:rgba(169,207,224,.16); background:rgba(3,15,28,.48);
+          font-size:12px; letter-spacing:.005em;
+        }
+        .dt-auth-simple-field input:hover { border-color:rgba(168,240,213,.32); }
+        .dt-auth-simple-field input:focus { border-color:var(--auth-mint); background:rgba(3,15,28,.72); box-shadow:0 0 0 3px rgba(168,240,213,.09); }
+        .dt-auth-simple-password input { padding-right:52px; }
+        .dt-auth-simple-password .dt-auth-simple-visibility { right:10px; width:34px; height:34px; }
+        .dt-auth-simple-submit {
+          min-height:53px; margin-top:2px; padding-inline:17px; border-radius:10px;
+          background:var(--auth-mint); box-shadow:0 5px 16px rgba(75,197,167,.10);
+          font-size:12px; letter-spacing:.005em;
+        }
+        .dt-auth-simple-submit:hover:not(:disabled) { background:#b8f5df; box-shadow:0 8px 20px rgba(75,197,167,.15); }
+        .dt-auth-simple-submit span { width:28px; height:28px; border-color:rgba(8,34,56,.17); }
+        .dt-auth-simple-switch { margin-top:5px; font-size:11px; }
+        .dt-auth-simple-switch a { color:var(--auth-cyan); }
+        .dt-auth-simple-footer { margin-top:25px; padding-top:15px; font-size:8px; letter-spacing:.16em; }
+        .dt-auth-simple-message { padding:12px 13px; border-radius:9px; font-size:11px; }
+        .dt-auth-simple-card:focus-within { border-color:rgba(168,240,213,.2); box-shadow:0 26px 76px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.035); }
+        .dt-auth-simple a:focus-visible,.dt-auth-simple button:focus-visible { outline:2px solid var(--auth-cyan); outline-offset:3px; }
+        @media(max-width:480px) {
+          .dt-auth-simple { padding:20px 15px; }
+          .dt-auth-simple-card { padding:27px 22px; border-radius:18px; }
+          .dt-auth-simple-heading { margin-top:30px; }
+          .dt-auth-simple-tabs { margin:24px 0; }
+          .dt-auth-simple-form { gap:17px; }
+          .dt-auth-simple-field input { height:51px; }
+        }
+        @media(max-height:720px) and (min-width:481px) {
+          .dt-auth-simple { place-items:start center; }
+          .dt-auth-simple-card { margin-block:12px; }
+          .dt-auth-simple-heading { margin-top:24px; }
+          .dt-auth-simple-tabs { margin:20px 0; }
+          .dt-auth-simple-form { gap:14px; }
+        }
+        @media(prefers-reduced-motion:reduce) {
+          .dt-auth-simple-card { animation:none!important; }
+          .dt-auth-simple *,.dt-auth-simple *:before,.dt-auth-simple *:after { transition:none!important; }
+        }
+      `}</style>
       <section className="dt-auth-simple-card" aria-label={mode === "login" ? "Masuk ke DiTapAja" : "Daftar DiTapAja"}>
         <Link href="/" className="dt-auth-simple-brand" aria-label="DiTapAja">
           <span className="dt-auth-simple-mark" aria-hidden="true">d<span>.</span></span>
