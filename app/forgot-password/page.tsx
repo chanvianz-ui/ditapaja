@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { Manrope } from "next/font/google";
-import { supabase } from "../../lib/supabase";
+import { setAuthStorageMode, supabase } from "../../lib/supabase";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], display: "swap" });
 
@@ -17,6 +17,7 @@ export default function ForgotPasswordPage() {
     event.preventDefault();
     setLoading(true);
     setError("");
+    setAuthStorageMode(true);
     try {
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
         redirectTo: `${window.location.origin}/reset-password`,
