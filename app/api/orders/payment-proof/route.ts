@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
+import { readRequestBodyLimited } from "../../../lib/read-request-body-limited";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,10 +36,26 @@ export async function POST(request: NextRequest) {
     if (!origin || new URL(origin).origin !== request.nextUrl.origin) {
       return response("Permintaan tidak valid.", 403);
     }
+    const maxBodySize = MAX_FILE_SIZE + 64_000;
     const length = Number(request.headers.get("content-length") || 0);
-    if (length > MAX_FILE_SIZE + 32_000) return response("Ukuran file maksimal 5 MB.", 413);
+    if (length > maxBodySize) return response("Ukuran file maksimal 5 MB.", 413);
 
-    const form = await request.formData();
+    let bodyBytes: Uint8Array;
+    try {
+      bodyBytes = await readRequestBodyLimited(request, maxBodySize);
+    } catch (error) {
+      if (error instanceof RangeError) return response("Ukuran file maksimal 5 MB.", 413);
+      throw error;
+    }
+
+    const formHeaders = new Headers(request.headers);
+    formHeaders.delete("content-length");
+    const boundedRequest = new Request(request.url, {
+      method: "POST",
+      headers: formHeaders,
+      body: bodyBytes,
+    });
+    const form = await boundedRequest.formData();
     const orderId = String(form.get("orderId") || "");
     const email = String(form.get("email") || "").trim().toLowerCase();
     const method = String(form.get("paymentMethod") || "bank_transfer");
