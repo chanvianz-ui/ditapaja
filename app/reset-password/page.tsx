@@ -13,16 +13,34 @@ export default function ResetPasswordPage() {
   const [message, setMessage] = useState("Memvalidasi tautan pemulihan...");
 
   useEffect(() => {
+    let recovered = false;
+    const hasCallbackError =
+      window.location.hash.includes("error=") ||
+      window.location.search.includes("error=");
+
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "PASSWORD_RECOVERY" && session) {
+        recovered = true;
+        window.clearTimeout(validationTimeout);
         setReady(true);
         setMessage("");
       }
     });
-    if (window.location.hash.includes("error=") || window.location.search.includes("error=")) {
+
+    const validationTimeout = window.setTimeout(() => {
+      if (!recovered && !hasCallbackError) {
+        setMessage("Tautan pemulihan tidak dapat diverifikasi atau sudah kedaluwarsa. Minta tautan reset yang baru.");
+      }
+    }, 10000);
+
+    if (hasCallbackError) {
       setMessage("Tautan tidak valid atau sudah kedaluwarsa. Minta tautan reset yang baru.");
     }
-    return () => listener.subscription.unsubscribe();
+
+    return () => {
+      window.clearTimeout(validationTimeout);
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -50,7 +68,7 @@ export default function ResetPasswordPage() {
         <Link href="/login" className="dt-recovery-v2-brand"><span>d.</span> ditapaja</Link>
         <p className="dt-recovery-v2-kicker">SECURE YOUR ACCOUNT</p>
         <h1>Buat password baru</h1>
-        {!ready && <p className="dt-recovery-v2-copy">{message}</p>}
+        {!ready && <p className="dt-recovery-v2-copy" role="status">{message}</p>}
         {ready && !done && (
           <form onSubmit={submit}>
             <label>Password baru<input required minLength={8} type="password" autoComplete="new-password" value={password} onChange={event => setPassword(event.target.value)} /></label>
