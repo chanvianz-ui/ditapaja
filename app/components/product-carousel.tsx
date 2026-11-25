@@ -26,7 +26,7 @@ function ProductObject({ product }: { product: Product }) {
         className={"dt-neo-card" + (active ? " is-active" : "")}
         onClick={() => setActive(value => !value)}
         aria-pressed={active}
-        aria-label={(active ? "Nonaktifkan" : "Aktifkan") + " simulasi NFC " + product.label}
+        aria-label={(active ? "Nonaktifkan" : "Aktifkan") + " simulasi visual kartu " + product.label}
       >
         <span className="dt-neo-grain" aria-hidden="true"/>
         <span className="dt-neo-rail" aria-hidden="true"/>
@@ -48,10 +48,10 @@ function ProductObject({ product }: { product: Product }) {
         </span>
         <span className="dt-neo-bottom">
           <span className="dt-neo-material">{product.tone === "noir" ? "OBSIDIAN / MATTE" : product.tone === "blanc" ? "PORCELAIN / SATIN" : "BRONZE / SIGNATURE"}</span>
-          <span className="dt-neo-signal"><i/>{active ? "NFC FIELD ACTIVE" : "READY TO CONNECT"}</span>
+          <span className="dt-neo-signal"><i/>{active ? "VISUAL DEMO ACTIVE" : "READY TO CONNECT"}</span>
         </span>
         <span className="dt-neo-scan" aria-hidden="true"/>
-        <span className="dt-neo-press-hint">{active ? "CONNECTION SIMULATED" : "TAP TO TEST NFC"}</span>
+        <span className="dt-neo-press-hint">{active ? "VISUAL SIMULATION" : "TAP TO PREVIEW"}</span>
       </button>
       <div className="dt-neo-caption">
         <span><i/> DITAPAJA / PHYSICAL COLLECTION</span>

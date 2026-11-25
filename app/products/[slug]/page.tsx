@@ -33,13 +33,13 @@ const features=[
 ];
 function ProductArtwork({tone}:{tone:string}) {
  const variant = tone === "blanc" ? "BLANC / WHITE" : tone === "signature" ? "SIGNATURE / CUSTOM" : "NOIR / BLACK";
- return <div className={`detail-art detail-art--${tone}`} aria-label={`Visualisasi kartu DiTapAja ${tone}`}>
+ return <div className={`detail-art detail-art--${tone}`} role="img" aria-label={`Visualisasi kartu DiTapAja ${tone}`}>
   <div className="detail-art-orbit detail-art-orbit--one" />
   <div className="detail-art-orbit detail-art-orbit--two" />
   <div className="detail-art-index"><span>DITAPAJA OBJECTS</span><b>01 — 03</b></div>
   <div className={`detail-card detail-card--${tone}`}>
    <div className="detail-card-top"><span className="detail-card-brand">DiTapAja<span>.</span></span><span className="detail-card-edition">{variant}</span></div>
-   <div className="detail-card-center"><span className="detail-card-overline">YOUR REVIEW, ONE TAP AWAY</span><strong>Make every<br/>tap count<span>.</span></strong><div className="detail-stars" aria-label="Lima bintang">★★★★★</div></div>
+   <div className="detail-card-center"><span className="detail-card-overline">YOUR REVIEW, ONE TAP AWAY</span><strong>Make every<br/>tap count<span>.</span></strong><div className="detail-stars" aria-hidden="true">★★★★★</div></div>
    <div className="detail-card-bottom"><span><i/> NFC + QR ENABLED</span><span className="detail-card-mark"><Nfc size={25} strokeWidth={1.5}/></span></div>
   </div>
   <div className="detail-art-foot"><span>01 / PHYSICAL NFC REVIEW CARD</span><span>10 × 10 CM</span></div>

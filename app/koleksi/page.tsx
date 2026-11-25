@@ -25,7 +25,7 @@ export default function KoleksiPage() {
         <p>Temukan desain yang paling cocok dengan karakter bisnismu. Satu kartu untuk menghubungkan pelanggan ke pengalaman review yang lebih praktis.</p>
         <a href="#catalog-products" className="nx-button-primary">Pilih desain <ArrowDown size={16}/></a>
       </div>
-      <div className="nx-catalog-orbit nx-catalog-object" aria-label="Pratinjau kartu DiTapAja Noir"><div className="nx-catalog-orbit-ring"/><div className="nx-catalog-orbit-card"><span>DITAPAJA® <small>SMART REVIEW OBJECT</small></span><b>Make it<br/><em>count.</em></b><small>NFC + QR&nbsp;&nbsp; / &nbsp;&nbsp;NOIR 001</small></div><div className="nx-catalog-orbit-tag"><Nfc size={17}/> NFC + QR</div><div className="nx-catalog-object-caption"><span>01 / NOIR</span><span>MATTE FINISH</span></div></div>
+      <div className="nx-catalog-orbit nx-catalog-object" role="img" aria-label="Pratinjau desain kartu DiTapAja Noir"><div className="nx-catalog-orbit-ring"/><div className="nx-catalog-orbit-card"><span>DITAPAJA® <small>SMART REVIEW OBJECT</small></span><b>Make it<br/><em>count.</em></b><small>NFC + QR&nbsp;&nbsp; / &nbsp;&nbsp;NOIR 001</small></div><div className="nx-catalog-orbit-tag"><Nfc size={17}/> NFC + QR</div><div className="nx-catalog-object-caption"><span>01 / NOIR</span><span>MATTE FINISH</span></div></div>
     </section>
     <section className="nx-catalog-perks">
       <div><span><Nfc size={19}/></span><p><b>Tap or scan</b><small>NFC dan QR dalam satu kartu</small></p></div>
