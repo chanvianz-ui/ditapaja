@@ -190,23 +190,6 @@ export default function DashboardPage() {
     })
     .sort((a, b) => b.taps - a.taps), [cards, cardEventStats, selectedCardId, selectedLocationId]);
 
-  const locationPerformance = useMemo(() => {
-    const locationMap = new Map((insightsData?.locations ?? []).map((item: any) => [item.location_id, item]));
-    return businessLocations
-      .filter((location) => selectedLocationId === "all" || (selectedLocationId !== "unassigned" && location.id === selectedLocationId))
-      .map((location) => {
-        const stats: any = locationMap.get(location.id);
-        return {
-          ...location,
-          cardCount: Number(stats?.card_count ?? 0),
-          taps: Number(stats?.taps ?? 0),
-          clicks: Number(stats?.clicks ?? 0),
-          ctr: Number(stats?.ctr ?? 0),
-        };
-      })
-      .sort((a, b) => b.taps - a.taps);
-  }, [businessLocations, insightsData, selectedLocationId]);
-
   async function exportAnalyticsCsv() {
     const exportCards = cards.filter((card) =>
       (selectedCardId === "all" || card.id === selectedCardId) &&
@@ -244,6 +227,7 @@ export default function DashboardPage() {
           .gte("created_at", start.toISOString())
           .lt("created_at", end.toISOString())
           .order("created_at", { ascending: true })
+          .order("id", { ascending: true })
           .range(offset, offset + pageSize - 1);
         if (error) throw error;
 
@@ -253,7 +237,7 @@ export default function DashboardPage() {
           rows.push([
             card?.card_name || "Untitled Card",
             event.event_type === "tap" ? "Tap" : "Review Click",
-            new Date(event.created_at).toLocaleString("id-ID"),
+            new Date(event.created_at).toLocaleString("id-ID", { timeZone: "Asia/Jakarta" }),
           ]);
         }
         if (page.length < pageSize) break;
