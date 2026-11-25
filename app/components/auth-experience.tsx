@@ -158,14 +158,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
     <main className={`dt-auth-simple ${manrope.className}`}>
       <section className="dt-auth-simple-card" aria-label={mode === "login" ? "Masuk ke DiTapAja" : "Daftar DiTapAja"}>
         <Link href="/" className="dt-auth-simple-brand" aria-label="DiTapAja">
-          <span className="dt-auth-simple-mark" aria-hidden="true">
-            <svg viewBox="0 0 40 40" role="presentation" focusable="false">
-              <path className="dt-auth-eye-outline" d="M4.5 20s5.4-9 15.5-9 15.5 9 15.5 9-5.4 9-15.5 9S4.5 20 4.5 20Z" />
-              <circle className="dt-auth-eye-iris" cx="20" cy="20" r="6.2" />
-              <circle className="dt-auth-eye-pupil" cx="20" cy="20" r="2.7" />
-              <circle className="dt-auth-eye-glint" cx="22.2" cy="17.8" r="1.1" />
-            </svg>
-          </span>
+          <span className="dt-auth-simple-mark" aria-hidden="true">d<span>.</span></span>
           <span>ditapaja</span>
         </Link>
 
@@ -189,7 +182,13 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
               <span>Password</span>
               <div className="dt-auth-simple-password">
                 <input required type={showPassword ? "text" : "password"} autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Masukkan password" />
-                <button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}>{showPassword ? "Sembunyikan" : "Tampilkan"}</button>
+                <button className="dt-auth-simple-visibility" type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"} title={showPassword ? "Sembunyikan password" : "Tampilkan password"}>
+                  {showPassword ? (
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0112 5c5.2 0 9 4.8 9 7a9.8 9.8 0 01-3 4.2M6.2 6.2C4.2 7.6 3 9.7 3 12c0 2.2 3.8 7 9 7 1.1 0 2.1-.2 3-.6"/></svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12s3.3-7 9-7 9 7 9 7-3.3 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+                  )}
+                </button>
               </div>
             </label>
             {message && <p className="dt-auth-simple-message" role="alert">{message}</p>}
@@ -213,7 +212,13 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
               <span>Password</span>
               <div className="dt-auth-simple-password">
                 <input required minLength={8} type={showPassword ? "text" : "password"} autoComplete="new-password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Minimal 8 karakter" />
-                <button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}>{showPassword ? "Sembunyikan" : "Tampilkan"}</button>
+                <button className="dt-auth-simple-visibility" type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"} title={showPassword ? "Sembunyikan password" : "Tampilkan password"}>
+                  {showPassword ? (
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0112 5c5.2 0 9 4.8 9 7a9.8 9.8 0 01-3 4.2M6.2 6.2C4.2 7.6 3 9.7 3 12c0 2.2 3.8 7 9 7 1.1 0 2.1-.2 3-.6"/></svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12s3.3-7 9-7 9 7 9 7-3.3 7-9 7-9-7-9-7Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+                  )}
+                </button>
               </div>
             </label>
             {message && <p className={"dt-auth-simple-message" + (success ? " is-success" : "")} role={success ? "status" : "alert"}>{message}</p>}
