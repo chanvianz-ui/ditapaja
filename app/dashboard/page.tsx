@@ -214,6 +214,7 @@ export default function DashboardPage() {
         (selectedLocationId === "unassigned" ? !card.location_id : card.location_id === selectedLocationId))
     );
     const cardIds = exportCards.map((card) => card.id);
+    const cardById = new Map(exportCards.map((card) => [card.id, card]));
     if (cardIds.length === 0) {
       setAnalyticsError("Tidak ada kartu yang sesuai dengan filter untuk diekspor.");
       return;
@@ -248,7 +249,7 @@ export default function DashboardPage() {
 
         const page = data ?? [];
         for (const event of page) {
-          const card = exportCards.find((item) => item.id === event.card_id);
+          const card = cardById.get(event.card_id);
           rows.push([
             card?.card_name || "Untitled Card",
             event.event_type === "tap" ? "Tap" : "Review Click",
