@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
+import { readRequestBodyLimited } from "../../../../../lib/read-request-body-limited";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -14,6 +15,18 @@ const MIME_EXTENSIONS: Record<string, string> = {
   "application/pdf": "pdf",
 };
 type PaymentMethod = "bank_transfer" | "qris";
+const MAX_JSON_BODY_SIZE = 16 * 1024;
+
+function validFileSignature(type: string, bytes: Uint8Array) {
+  if (type === "image/jpeg") return bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+  if (type === "image/png") return bytes.slice(0, 8).join(",") === "137,80,78,71,13,10,26,10";
+  if (type === "image/webp") {
+    return String.fromCharCode(...bytes.slice(0, 4)) === "RIFF" &&
+      String.fromCharCode(...bytes.slice(8, 12)) === "WEBP";
+  }
+  if (type === "application/pdf") return String.fromCharCode(...bytes.slice(0, 5)) === "%PDF-";
+  return false;
+}
 
 function json(data: Record<string, unknown>, status = 200) {
   return NextResponse.json(data, {
@@ -60,8 +73,30 @@ export async function POST(
     const { data: authData, error: authError } = await authClient.auth.getUser(accessToken);
     if (authError || !authData.user) return json({ error: "Sesi login tidak valid. Silakan login kembali." }, 401);
 
-    const body = await request.json();
-    const action = body?.action;
+    const contentLength = Number(request.headers.get("content-length") || 0);
+    if (contentLength > MAX_JSON_BODY_SIZE) {
+      return json({ error: "Data permintaan terlalu besar." }, 413);
+    }
+
+    let bodyBytes: Uint8Array;
+    try {
+      bodyBytes = await readRequestBodyLimited(request, MAX_JSON_BODY_SIZE);
+    } catch (error) {
+      if (error instanceof RangeError) return json({ error: "Data permintaan terlalu besar." }, 413);
+      throw error;
+    }
+
+    let body: Record<string, unknown>;
+    try {
+      const parsed: unknown = JSON.parse(new TextDecoder().decode(bodyBytes));
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        return json({ error: "Format permintaan tidak valid." }, 400);
+      }
+      body = parsed as Record<string, unknown>;
+    } catch {
+      return json({ error: "Format permintaan tidak valid." }, 400);
+    }
+    const action = body.action;
     if (action !== "create" && action !== "confirm") {
       return json({ error: "Permintaan upload tidak valid." }, 400);
     }
@@ -150,19 +185,51 @@ export async function POST(
       return json({ error: "Format atau ukuran file tidak diizinkan." }, 400);
     }
 
+    // Storage metadata and filename are not proof of the actual file format.
+    // Inspect the stored bytes before attaching the object to the order.
+    const { data: proofBlob, error: downloadError } = await admin.storage.from(BUCKET).download(path);
+    if (downloadError || !proofBlob) {
+      console.error("Payment proof content download failed:", downloadError);
+      await admin.storage.from(BUCKET).remove([path]);
+      return json({ error: "File bukti pembayaran belum dapat diverifikasi." }, 400);
+    }
+    const proofBytes = new Uint8Array(await proofBlob.arrayBuffer());
+    if (
+      proofBytes.byteLength !== uploadedSize ||
+      proofBytes.byteLength > MAX_FILE_SIZE ||
+      !validFileSignature(uploadedMime, proofBytes)
+    ) {
+      await admin.storage.from(BUCKET).remove([path]);
+      return json({ error: "Isi file tidak sesuai dengan format yang diizinkan." }, 400);
+    }
+
     const oldProofPath = order.payment_proof_path as string | null;
-    const { error: updateError } = await admin.from("ditapaja_orders").update({
+    let updateQuery = admin.from("ditapaja_orders").update({
       payment_method: paymentMethod,
       payment_reference: paymentReference || null,
       payment_proof_path: path,
       payment_status: "pending_verification",
       updated_at: new Date().toISOString(),
-    }).eq("id", order.id).eq("customer_user_id", authData.user.id);
+    }).eq("id", order.id)
+      .eq("customer_user_id", authData.user.id)
+      .eq("status", order.status);
 
-    if (updateError) {
-      console.error("Payment proof order update failed:", updateError);
+    updateQuery = order.payment_status === null
+      ? updateQuery.is("payment_status", null)
+      : updateQuery.eq("payment_status", order.payment_status);
+    updateQuery = oldProofPath === null
+      ? updateQuery.is("payment_proof_path", null)
+      : updateQuery.eq("payment_proof_path", oldProofPath);
+
+    const { data: updatedOrder, error: updateError } = await updateQuery.select("id").maybeSingle();
+
+    if (updateError || !updatedOrder) {
       await admin.storage.from(BUCKET).remove([path]);
-      return json({ error: "Bukti tersimpan, tetapi status pesanan gagal diperbarui. Hubungi tim DiTapAja." }, 500);
+      if (updateError) {
+        console.error("Payment proof order update failed:", updateError);
+        return json({ error: "Status pesanan gagal diperbarui. Silakan coba kembali." }, 500);
+      }
+      return json({ error: "Status pesanan berubah atau bukti pembayaran sudah dikirim dari sesi lain. Muat ulang pesanan." }, 409);
     }
 
     if (oldProofPath && oldProofPath !== path) {
