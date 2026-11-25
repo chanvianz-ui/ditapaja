@@ -129,7 +129,7 @@ export default function CustomerOrdersPage() {
 
   useEffect(()=>{ void load(); },[router]);
 
-  return <><SiteHeader /><main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6 dt-customer-orders">
+  return <><SiteHeader /><main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6 dt-customer-orders dt-customer-orders-v2">
     <div className="mx-auto max-w-5xl dt-customer-orders-inner">
       <header className="mb-8 flex dt-customer-orders-header items-center justify-between gap-3">
         <Link href="/" className="text-xl font-black tracking-tight text-slate-900">DiTap<span className="text-blue-600">Aja.</span></Link>
