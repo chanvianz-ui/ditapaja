@@ -219,9 +219,16 @@ export default function DashboardPage() {
       return;
     }
 
-    const start = new Date();
-    start.setHours(0, 0, 0, 0);
-    start.setDate(start.getDate() - (chartPeriod - 1));
+    const jakartaToday = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Jakarta",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date());
+    const end = new Date(jakartaToday + "T00:00:00+07:00");
+    end.setUTCDate(end.getUTCDate() + 1);
+    const start = new Date(end);
+    start.setUTCDate(start.getUTCDate() - chartPeriod);
 
     try {
       const pageSize = 1000;
@@ -234,6 +241,7 @@ export default function DashboardPage() {
           .in("card_id", cardIds)
           .in("event_type", ["tap", "review_click"])
           .gte("created_at", start.toISOString())
+          .lt("created_at", end.toISOString())
           .order("created_at", { ascending: true })
           .range(offset, offset + pageSize - 1);
         if (error) throw error;
