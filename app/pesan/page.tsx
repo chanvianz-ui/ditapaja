@@ -3,7 +3,7 @@ import OrderForm from "../components/order-form";
 
 export const metadata: Metadata = {
   title: "Pemesanan Kartu NFC | DiTapAja",
-  description: "Kirim detail pemesanan kartu NFC + QR DiTapAja melalui WhatsApp. Dashboard termasuk tanpa biaya bulanan.",
+  description: "Pesan kartu NFC DiTapAja langsung di website, transfer ke rekening tujuan, dan unggah bukti pembayaran untuk konfirmasi via WhatsApp.",
   robots: { index: false, follow: true },
 };
 
