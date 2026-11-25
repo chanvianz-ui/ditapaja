@@ -1067,11 +1067,11 @@ export default function DashboardPage() {
         <div className="dt-bulk-qr-overlay fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-slate-950/55 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-6">
           <div className="dt-bulk-qr-panel mx-auto max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-7">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
-              <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR PRINT SHEET</p><h3 className="mt-1 text-lg font-bold text-slate-900">Cetak semua QR Code aktif</h3><p className="mt-1 text-xs text-slate-500">{cards.filter((card) => card.active).length} kartu aktif · Gunakan kertas A4 dan skala 100%.</p></div>
+              <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR PRINT SHEET</p><h3 className="mt-1 text-lg font-bold text-slate-900">Cetak semua QR Code aktif</h3><p className="mt-1 text-xs text-slate-500">{cards.filter((card) => selectedCardIds.includes(card.id) && card.active && !card.archived_at).length} kartu terpilih · Gunakan kertas A4 dan skala 100%.</p></div>
               <div className="flex flex-wrap items-center gap-2"><div className="flex rounded-xl border border-slate-200 p-1"><button type="button" onClick={() => setBulkQrTheme("light")} className={`rounded-lg px-3 py-2 text-xs font-semibold ${bulkQrTheme === "light" ? "bg-slate-900 text-white" : "text-slate-500"}`}>Hitam / Putih</button><button type="button" onClick={() => setBulkQrTheme("dark")} className={`rounded-lg px-3 py-2 text-xs font-semibold ${bulkQrTheme === "dark" ? "bg-slate-900 text-white" : "text-slate-500"}`}>Putih / Hitam</button></div><button type="button" onClick={() => window.print()} className="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-700"><Printer size={14} className="mr-1 inline"/> Cetak / Simpan PDF</button><button type="button" onClick={() => setShowBulkQrSheet(false)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">Tutup</button></div>
             </div>
             <div id="ditapaja-bulk-qr-sheet" className="dt-bulk-qr-grid grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5">
-              {cards.filter((card) => card.active).map((card) => (
+              {cards.filter((card) => selectedCardIds.includes(card.id) && card.active && !card.archived_at).map((card) => (
                 <div key={card.id} className={`dt-bulk-qr-card flex break-inside-avoid flex-col items-center rounded-xl border p-3 text-center sm:p-4 ${bulkQrTheme === "dark" ? "border-slate-700 bg-slate-950" : "border-slate-200 bg-white"}`}>
                   <p className={`w-full truncate text-sm font-bold ${bulkQrTheme === "dark" ? "text-white" : "text-slate-900"}`}>{card.card_name || "Untitled Card"}</p>
                   <p className={`mt-1 text-[10px] font-medium uppercase tracking-wider ${bulkQrTheme === "dark" ? "text-slate-400" : "text-slate-400"}`}>SCAN TO REVIEW</p>
@@ -1081,7 +1081,7 @@ export default function DashboardPage() {
                 </div>
               ))}
             </div>
-            <p className="mt-4 text-center text-[10px] text-slate-400 print:hidden">Hanya kartu aktif yang disertakan. Setiap QR mengarah ke URL publik kartu masing-masing.</p>
+            <p className="mt-4 text-center text-[10px] text-slate-400 print:hidden">Hanya kartu terpilih yang aktif yang disertakan. Setiap QR mengarah ke URL publik kartu masing-masing.</p>
           </div>
           <style jsx global>{`@media print { @page { size: A4; margin: 10mm; } body * { visibility: hidden !important; } #ditapaja-bulk-qr-sheet, #ditapaja-bulk-qr-sheet * { visibility: visible !important; } #ditapaja-bulk-qr-sheet { position: absolute !important; inset: 0 auto auto 0 !important; width: 100% !important; border: 0 !important; } #ditapaja-bulk-qr-sheet > div { break-inside: avoid; } }`}</style>
         </div>
