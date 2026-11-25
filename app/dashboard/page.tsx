@@ -377,7 +377,7 @@ export default function DashboardPage() {
     ctx.font = "500 20px Arial, sans-serif";
     ctx.fillText("Arahkan kamera ke QR Code", 450, 920);
     ctx.font = "500 17px Arial, sans-serif";
-    ctx.fillText("ditapaja.web.id/c/" + card.public_code, 450, 975);
+    ctx.fillText(window.location.host + "/c/" + card.public_code, 450, 975);
     const anchor = document.createElement("a");
     anchor.href = output.toDataURL("image/png");
     anchor.download = "ditapaja-qr-print-" + card.public_code + ".png";
@@ -1075,8 +1075,8 @@ export default function DashboardPage() {
                 <div key={card.id} className={`dt-bulk-qr-card flex break-inside-avoid flex-col items-center rounded-xl border p-3 text-center sm:p-4 ${bulkQrTheme === "dark" ? "border-slate-700 bg-slate-950" : "border-slate-200 bg-white"}`}>
                   <p className={`w-full truncate text-sm font-bold ${bulkQrTheme === "dark" ? "text-white" : "text-slate-900"}`}>{card.card_name || "Untitled Card"}</p>
                   <p className={`mt-1 text-[10px] font-medium uppercase tracking-wider ${bulkQrTheme === "dark" ? "text-slate-400" : "text-slate-400"}`}>SCAN TO REVIEW</p>
-                  <div className={`my-3 rounded-lg p-2 ${bulkQrTheme === "dark" ? "bg-slate-950" : "bg-white"}`}><QRCodeSVG value={typeof window !== "undefined" ? window.location.origin + "/c/" + card.public_code : "https://ditapaja.netlify.app/c/" + card.public_code} size={150} level="H" includeMargin fgColor={bulkQrTheme === "dark" ? "#ffffff" : "#111827"} bgColor={bulkQrTheme === "dark" ? "#000000" : "#ffffff"}/></div>
-                  <p className={`break-all text-[9px] ${bulkQrTheme === "dark" ? "text-slate-400" : "text-slate-500"}`}>{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.netlify.app"}/c/{card.public_code}</p>
+                  <div className={`my-3 rounded-lg p-2 ${bulkQrTheme === "dark" ? "bg-slate-950" : "bg-white"}`}><QRCodeSVG value={typeof window !== "undefined" ? window.location.origin + "/c/" + card.public_code : "https://ditapaja.ditapaja.workers.dev/c/" + card.public_code} size={150} level="H" includeMargin fgColor={bulkQrTheme === "dark" ? "#ffffff" : "#111827"} bgColor={bulkQrTheme === "dark" ? "#000000" : "#ffffff"}/></div>
+                  <p className={`break-all text-[9px] ${bulkQrTheme === "dark" ? "text-slate-400" : "text-slate-500"}`}>{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.ditapaja.workers.dev"}/c/{card.public_code}</p>
                   <p className={`mt-2 text-[9px] font-semibold tracking-wide ${bulkQrTheme === "dark" ? "text-slate-500" : "text-slate-400"}`}>DiTapAja · YOUR REVIEW STARTS HERE</p>
                 </div>
               ))}
@@ -1092,8 +1092,8 @@ export default function DashboardPage() {
         <div className="dt-qr-modal-overlay fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto overscroll-contain bg-slate-950/55 p-3 py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-4" onClick={() => setQrCard(null)}>
           <div role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="dt-qr-modal-panel my-auto w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-4 text-center shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between text-left"><div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR ACCESS</p><h3 id="qr-card-title" className="mt-1 text-lg font-bold text-slate-900">{qrCard.card_name || "Untitled Card"}</h3></div><button type="button" onClick={() => setQrCard(null)} aria-label="Tutup QR Code" className="rounded-full p-2 text-slate-400 hover:bg-slate-100"><X size={19}/></button></div>
-            <div className="dt-qr-preview mx-auto my-4 inline-flex max-w-full rounded-2xl border border-slate-100 bg-white p-3 sm:my-6 sm:p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} className="h-auto w-[min(64vw,220px)]" value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.netlify.app/c/" + qrCard.public_code} size={220} level="H" includeMargin fgColor={qrForeground} bgColor={qrBackground} /></div>
-            <p className="break-all px-1 text-[11px] text-slate-400">{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.netlify.app"}/c/{qrCard.public_code}</p>
+            <div className="dt-qr-preview mx-auto my-4 inline-flex max-w-full rounded-2xl border border-slate-100 bg-white p-3 sm:my-6 sm:p-4"><QRCodeCanvas id={"ditapaja-qr-" + qrCard.public_code} className="h-auto w-[min(64vw,220px)]" value={typeof window !== "undefined" ? window.location.origin + "/c/" + qrCard.public_code : "https://ditapaja.ditapaja.workers.dev/c/" + qrCard.public_code} size={220} level="H" includeMargin fgColor={qrForeground} bgColor={qrBackground} /></div>
+            <p className="break-all px-1 text-[11px] text-slate-400">{typeof window !== "undefined" ? window.location.origin : "https://ditapaja.ditapaja.workers.dev"}/c/{qrCard.public_code}</p>
             <button type="button" onClick={() => copyQrLink(qrCard)} className="mt-2 text-xs font-semibold text-blue-600 hover:text-blue-700">{qrLinkCopied ? "Tautan berhasil disalin" : "Salin tautan kartu"}</button>
             <p className="mt-2 text-xs leading-5 text-slate-500">Scan QR ini untuk membuka halaman review kartu.</p>
             <div className="dt-qr-color-controls grid grid-cols-2 gap-3 text-left">
