@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Activity, ArrowDownRight, ArrowUpRight, BarChart3, CreditCard, Loader2, MapPin, MousePointerClick, RefreshCw, Users } from "lucide-react";
+import { Activity, ArrowUpRight, BarChart3, CreditCard, Loader2, MapPin, MousePointerClick, Users } from "lucide-react";
 import "./customer-insights.css";
 import { supabase } from "@/lib/supabase";
 
