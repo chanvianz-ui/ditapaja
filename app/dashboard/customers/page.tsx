@@ -37,6 +37,7 @@ export default function CustomerInsightsPage() {
   const [data, setData] = useState<InsightsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -76,7 +77,7 @@ export default function CustomerInsightsPage() {
 
     void load();
     return () => { cancelled = true; };
-  }, [period, router]);
+  }, [period, refreshKey, router]);
 
   const cardMap = useMemo(() => new Map(cards.map(card => [card.id, card])), [cards]);
   const chartMax = Math.max(1, ...(data?.daily || []).flatMap(day => [day.taps, day.clicks]));
@@ -104,7 +105,7 @@ export default function CustomerInsightsPage() {
         {error && (
           <div className="ci-error" role="alert">
             <span>{error}</span>
-            <button type="button" onClick={() => setPeriod(value => value)}>Coba lagi</button>
+            <button type="button" onClick={() => setRefreshKey(value => value + 1)}>Coba lagi</button>
           </div>
         )}
 
