@@ -11,16 +11,16 @@ import { supabase } from "@/lib/supabase";
 import styles from "./dashboard-shell.module.css";
 
 const items = [
-  { href: "/dashboard", label: "Ringkasan", icon: LayoutDashboard, group: "Workspace", view: "overview" },
-  { href: "/dashboard?view=cards", label: "Kartu NFC", icon: CreditCard, group: "Workspace", view: "cards" },
-  { href: "/dashboard/business", label: "Lokasi bisnis", icon: Building2, group: "Workspace" },
-  { href: "/dashboard/landing-page", label: "Page Studio", icon: Eye, group: "Workspace" },
-  { href: "/dashboard/customers", label: "Analitik pelanggan", icon: BarChart3, group: "Insights" },
-  { href: "/pesanan", label: "Pesanan saya", icon: ShoppingBag, group: "Account" },
-  { href: "/dashboard/settings", label: "Pengaturan", icon: Settings, group: "Account" },
+  { href: "/dashboard", label: "Ringkasan", icon: LayoutDashboard, group: "Ruang kerja", view: "overview" },
+  { href: "/dashboard?view=cards", label: "Kartu NFC", icon: CreditCard, group: "Ruang kerja", view: "cards" },
+  { href: "/dashboard/business", label: "Lokasi bisnis", icon: Building2, group: "Ruang kerja" },
+  { href: "/dashboard/landing-page", label: "Page Studio", icon: Eye, group: "Ruang kerja" },
+  { href: "/dashboard/customers", label: "Analitik pelanggan", icon: BarChart3, group: "Analitik" },
+  { href: "/pesanan", label: "Pesanan saya", icon: ShoppingBag, group: "Akun" },
+  { href: "/dashboard/settings", label: "Pengaturan", icon: Settings, group: "Akun" },
 ] as const;
 
-const groups = ["Workspace", "Insights", "Account"] as const;
+const groups = ["Ruang kerja", "Analitik", "Akun"] as const;
 
 function itemPathIsDashboard(href: string) {
   return href === "/dashboard" || href === "/dashboard?view=cards";
@@ -134,7 +134,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {menuOpen && <button className={styles.mobileBackdrop} type="button" aria-label="Close navigation" onClick={() => setMenuOpen(false)} />}
       <aside ref={sidebarRef} id="workspace-navigation" className={menuOpen ? `${styles.sidebar} ${styles.sidebarOpen}` : styles.sidebar} aria-label="Workspace navigation">
         {brand}
-        <div className={styles.workspaceLabel}>Workspace</div>
+        <div className={styles.workspaceLabel}>Ruang kerja</div>
         <nav className={styles.nav}>
           {groups.map((group, index) => {
             const groupItems = items.filter(item => item.group === group);
