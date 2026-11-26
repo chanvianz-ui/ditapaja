@@ -1,3 +1,4 @@
+import { createHmac, randomBytes, createHash } from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 import { readRequestBodyLimited } from "../../lib/read-request-body-limited";
@@ -94,9 +95,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Layanan pemesanan belum dikonfigurasi." }, { status: 503 });
     }
 
+    const forwardedFor = request.headers.get("x-forwarded-for");
+    const clientIp = request.headers.get("x-real-ip") || forwardedFor?.split(",")[0]?.trim() || "";
+    if (!clientIp) return NextResponse.json({ error: "Permintaan tidak dapat diverifikasi." }, { status: 400 });
+    const rateKey = createHmac("sha256", secretKey).update(clientIp).digest("hex");
+
     const supabase = createClient(supabaseUrl, secretKey, {
       auth: { autoRefreshToken: false, persistSession: false },
     });
+
+    const { data: withinLimit, error: rateLimitError } = await supabase.rpc("consume_public_order_rate_limit", { p_key_hash: rateKey });
+    if (rateLimitError) {
+      console.error("Public order rate limit check failed:", rateLimitError);
+      return NextResponse.json({ error: "Layanan pemesanan sedang sibuk. Coba kembali beberapa saat lagi." }, { status: 503 });
+    }
+    if (withinLimit !== true) return NextResponse.json({ error: "Terlalu banyak percobaan pemesanan. Silakan coba lagi dalam 15 menit." }, { status: 429, headers: { "Retry-After": "900", "Cache-Control": "no-store, max-age=0" } });
+
+    const publicUploadToken = randomBytes(32).toString("base64url");
+    const publicUploadTokenHash = createHash("sha256").update(publicUploadToken).digest("hex");
+    const publicUploadTokenExpiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString();
 
     const orderNotes = [
       "Nama bisnis: " + business,
@@ -115,6 +132,8 @@ export async function POST(request: NextRequest) {
       unit_price: product.price,
       status: "pending",
       notes: orderNotes,
+      public_upload_token_hash: publicUploadTokenHash,
+      public_upload_token_expires_at: publicUploadTokenExpiresAt,
     }).select("id").single();
 
     if (error) {
@@ -125,7 +144,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, orderId: data.id }, {
+    return NextResponse.json({ success: true, orderId: data.id, uploadToken: publicUploadToken }, {
       headers: { "Cache-Control": "no-store, max-age=0" },
     });
   } catch (error) {
