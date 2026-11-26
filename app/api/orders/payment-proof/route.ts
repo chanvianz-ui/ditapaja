@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
       public_upload_token_hash: null,
       public_upload_token_expires_at: null,
       updated_at: new Date().toISOString(),
-    }).eq("id", order.id).eq("public_upload_token_hash", tokenHash).select("id").maybeSingle();
+    }).eq("id", order.id).eq("public_upload_token_hash", tokenHash).eq("status", order.status).eq("payment_status", order.payment_status).select("id").maybeSingle();
     if (updateError || !updatedOrder) {
       await admin.storage.from(BUCKET).remove([path]);
       console.error("Public payment proof update failed:", updateError);
