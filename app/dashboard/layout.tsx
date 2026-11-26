@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   BarChart3, Building2, CreditCard, Eye, LayoutDashboard, LogOut,
-  Menu, Settings, X
+  Menu, Settings, ShoppingBag, X
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import "../styles/design-tokens.css";
 import styles from "./dashboard-shell.module.css";
 
 const items = [
@@ -17,6 +16,7 @@ const items = [
   { href: "/dashboard/business", label: "Business locations", icon: Building2, group: "Workspace" },
   { href: "/dashboard/landing-page", label: "Page Studio", icon: Eye, group: "Workspace" },
   { href: "/dashboard/customers", label: "Customer insights", icon: BarChart3, group: "Insights" },
+  { href: "/pesanan", label: "My orders", icon: ShoppingBag, group: "Account" },
   { href: "/dashboard/settings", label: "Settings", icon: Settings, group: "Account" },
 ] as const;
 
@@ -33,6 +33,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [cardsView, setCardsView] = useState(false);
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("Your workspace");
+  const sidebarRef = useRef<HTMLElement>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setCardsView(new URLSearchParams(window.location.search).get("view") === "cards");
@@ -70,9 +72,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [pathname]);
 
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!menuOpen) {
+      menuTriggerRef.current?.focus();
+      return;
+    }
+    const sidebar = sidebarRef.current;
+    const getFocusable = () => Array.from(sidebar?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])') || [])
+      .filter(element => element.offsetWidth > 0 || element.offsetHeight > 0);
+    getFocusable()[0]?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape") { event.preventDefault(); setMenuOpen(false); return; }
+      if (event.key !== "Tab") return;
+      const focusable = getFocusable();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
@@ -113,7 +129,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className={styles.shell}>
       {menuOpen && <button className={styles.mobileBackdrop} type="button" aria-label="Close navigation" onClick={() => setMenuOpen(false)} />}
-      <aside className={menuOpen ? `${styles.sidebar} ${styles.sidebarOpen}` : styles.sidebar} aria-label="Workspace navigation">
+      <aside ref={sidebarRef} id="workspace-navigation" className={menuOpen ? `${styles.sidebar} ${styles.sidebarOpen}` : styles.sidebar} aria-label="Workspace navigation">
         {brand}
         <div className={styles.workspaceLabel}>Workspace</div>
         <nav className={styles.nav}>
@@ -163,7 +179,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className={styles.main}>
         <header className={styles.mobileHeader}>
           {brand}
-          <button className={styles.mobileMenu} type="button" onClick={() => setMenuOpen(value => !value)} aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen}>
+          <button ref={menuTriggerRef} className={styles.mobileMenu} type="button" onClick={() => setMenuOpen(value => !value)} aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="workspace-navigation">
             {menuOpen ? <X size={18}/> : <Menu size={18}/>}
           </button>
         </header>
