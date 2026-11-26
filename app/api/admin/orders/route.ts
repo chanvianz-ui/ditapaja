@@ -82,6 +82,12 @@ export async function PATCH(request: NextRequest) {
       if (body.payment_status === "paid") updates.paid_at = new Date().toISOString();
       else if (body.payment_status === "unpaid" || body.payment_status === "pending_verification") updates.paid_at = null;
     }
+    const nextOrderStatus = typeof body.status === "string" ? body.status : current.status;
+    const nextPaymentStatus = typeof body.payment_status === "string" ? body.payment_status : current.payment_status;
+    if (nextOrderStatus === "cancelled" && nextPaymentStatus === "paid") {
+      return NextResponse.json({ success: false, error: "Pembayaran harus di-refund sebelum pesanan berstatus dibatalkan." }, { status: 409 });
+    }
+
     if (Object.keys(updates).length === 1) {
       return NextResponse.json({ success: false, error: "Tidak ada perubahan yang dikirim." }, { status: 400 });
     }
