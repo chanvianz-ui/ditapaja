@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { createHash, randomUUID, timingSafeEqual } from "crypto";
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 import { readRequestBodyLimited } from "../../../lib/read-request-body-limited";
@@ -57,12 +57,12 @@ export async function POST(request: NextRequest) {
     });
     const form = await boundedRequest.formData();
     const orderId = String(form.get("orderId") || "");
-    const email = String(form.get("email") || "").trim().toLowerCase();
+    const uploadToken = String(form.get("uploadToken") || "");
     const method = String(form.get("paymentMethod") || "bank_transfer");
     const reference = String(form.get("paymentReference") || "").trim();
     const file = form.get("file");
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(orderId) ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 ||
+      !/^[A-Za-z0-9_-]{40,64}$/.test(uploadToken) ||
       !["bank_transfer", "qris"].includes(method) || reference.length > 120 ||
       !(file instanceof File)) return response("Data bukti pembayaran tidak valid.", 400);
 
@@ -78,14 +78,18 @@ export async function POST(request: NextRequest) {
     if (!url || !key) return response("Layanan pembayaran belum tersedia.", 503);
     const admin = createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 
+    const tokenHash = createHash("sha256").update(uploadToken).digest("hex");
     const { data: order, error: lookupError } = await admin.from("ditapaja_orders")
-      .select("id,user_id,customer_email,status,payment_status,payment_proof_path")
-      .eq("id", orderId).eq("customer_email", email).maybeSingle();
+      .select("id,user_id,status,payment_status,payment_proof_path,public_upload_token_hash,public_upload_token_expires_at")
+      .eq("id", orderId).maybeSingle();
     if (lookupError) {
       console.error("Public payment proof lookup failed:", lookupError);
       return response("Pesanan belum dapat diperiksa.", 500);
     }
-    if (!order) return response("Pesanan tidak ditemukan. Periksa email dan nomor pesanan.", 404);
+    if (!order || !order.public_upload_token_hash || !order.public_upload_token_expires_at) return response("Token upload tidak valid atau sudah digunakan.", 403);
+    const expectedHash = Buffer.from(order.public_upload_token_hash, "hex");
+    const providedHash = Buffer.from(tokenHash, "hex");
+    if (expectedHash.length !== providedHash.length || !timingSafeEqual(expectedHash, providedHash) || new Date(order.public_upload_token_expires_at).getTime() < Date.now()) return response("Token upload tidak valid atau sudah kedaluwarsa. Masuk ke akun untuk mengunggah bukti pembayaran.", 403);
     if (order.status === "cancelled" || ["paid", "refunded"].includes(order.payment_status)) {
       return response("Bukti pembayaran tidak dapat dikirim untuk pesanan ini.", 409);
     }
@@ -101,17 +105,19 @@ export async function POST(request: NextRequest) {
       return response("Bukti transfer gagal diunggah. Silakan coba kembali.", 500);
     }
 
-    const { error: updateError } = await admin.from("ditapaja_orders").update({
+    const { data: updatedOrder, error: updateError } = await admin.from("ditapaja_orders").update({
       payment_method: method,
       payment_reference: reference || null,
       payment_proof_path: path,
       payment_status: "pending_verification",
+      public_upload_token_hash: null,
+      public_upload_token_expires_at: null,
       updated_at: new Date().toISOString(),
-    }).eq("id", order.id);
-    if (updateError) {
+    }).eq("id", order.id).eq("public_upload_token_hash", tokenHash).select("id").maybeSingle();
+    if (updateError || !updatedOrder) {
       await admin.storage.from(BUCKET).remove([path]);
       console.error("Public payment proof update failed:", updateError);
-      return response("File terunggah, tetapi status pembayaran gagal diperbarui. Hubungi DiTapAja.", 500);
+      return response(updateError ? "File terunggah, tetapi status pembayaran gagal diperbarui. Hubungi DiTapAja." : "Token upload sudah digunakan atau pesanan berubah. Silakan login untuk melanjutkan.", updateError ? 500 : 409);
     }
 
     if (order.payment_proof_path) await admin.storage.from(BUCKET).remove([order.payment_proof_path]);
