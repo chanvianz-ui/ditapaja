@@ -39,6 +39,11 @@ begin
         end
   returning request_count into v_count;
 
+  if v_count = 1 then
+    delete from private.public_order_rate_limits
+    where window_started_at < now() - interval '1 day';
+  end if;
+
   return v_count <= 10;
 end;
 $$;
