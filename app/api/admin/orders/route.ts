@@ -51,11 +51,25 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ success: false, error: "ID pesanan tidak valid." }, { status: 400 });
     }
 
+    const { data: current, error: currentError } = await auth.supabase!.from("ditapaja_orders")
+      .select("status,payment_status")
+      .eq("id", id)
+      .maybeSingle();
+    if (currentError) throw currentError;
+    if (!current) return NextResponse.json({ success: false, error: "Pesanan tidak ditemukan." }, { status: 404 });
+
+    const orderTransitions: Record<string, readonly string[]> = {
+      pending: ["confirmed", "cancelled"], confirmed: ["processing", "cancelled"], processing: ["shipped", "cancelled"], shipped: ["completed"], completed: [], cancelled: [],
+    };
+    const paymentTransitions: Record<string, readonly string[]> = {
+      unpaid: ["pending_verification", "paid"], pending_verification: ["paid", "unpaid"], paid: ["refunded"], refunded: [],
+    };
     const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
     if (typeof body.status === "string") {
       if (!(orderStatuses as readonly string[]).includes(body.status)) {
         return NextResponse.json({ success: false, error: "Status pesanan tidak valid." }, { status: 400 });
       }
+      if (body.status !== current.status && !orderTransitions[current.status]?.includes(body.status)) return NextResponse.json({ success: false, error: "Perubahan status pesanan tidak diizinkan dari status saat ini." }, { status: 409 });
       updates.status = body.status;
       if (body.status === "shipped") updates.shipped_at = new Date().toISOString();
     }
@@ -63,6 +77,7 @@ export async function PATCH(request: NextRequest) {
       if (!(paymentStatuses as readonly string[]).includes(body.payment_status)) {
         return NextResponse.json({ success: false, error: "Status pembayaran tidak valid." }, { status: 400 });
       }
+      if (body.payment_status !== current.payment_status && !paymentTransitions[current.payment_status]?.includes(body.payment_status)) return NextResponse.json({ success: false, error: "Perubahan status pembayaran tidak diizinkan dari status saat ini." }, { status: 409 });
       updates.payment_status = body.payment_status;
       if (body.payment_status === "paid") updates.paid_at = new Date().toISOString();
       else if (body.payment_status === "unpaid" || body.payment_status === "pending_verification") updates.paid_at = null;
@@ -72,7 +87,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     const { data, error } = await auth.supabase!.from("ditapaja_orders")
-      .update(updates).eq("id", id)
+      .update(updates).eq("id", id).eq("status", current.status).eq("payment_status", current.payment_status)
       .select("id,status,payment_status,paid_at,shipped_at,updated_at").maybeSingle();
     if (error) throw error;
     if (!data) return NextResponse.json({ success: false, error: "Pesanan tidak ditemukan." }, { status: 404 });
