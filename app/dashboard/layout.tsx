@@ -35,6 +35,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [displayName, setDisplayName] = useState("Your workspace");
   const sidebarRef = useRef<HTMLElement>(null);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
+  const menuWasOpenRef = useRef(false);
 
   useEffect(() => {
     setCardsView(new URLSearchParams(window.location.search).get("view") === "cards");
@@ -73,9 +74,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   useEffect(() => {
     if (!menuOpen) {
-      menuTriggerRef.current?.focus();
+      if (menuWasOpenRef.current) menuTriggerRef.current?.focus();
+      menuWasOpenRef.current = false;
       return;
     }
+    menuWasOpenRef.current = true;
     const sidebar = sidebarRef.current;
     const getFocusable = () => Array.from(sidebar?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])') || [])
       .filter(element => element.offsetWidth > 0 || element.offsetHeight > 0);
