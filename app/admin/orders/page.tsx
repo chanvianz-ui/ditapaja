@@ -80,9 +80,43 @@ export default function AdminOrdersPage() {
 
   async function viewProof(order:Order) {
     if(!order.payment_proof_path) return;
-    const {data,error:proofError}=await supabase.storage.from("ditapaja-payment-proofs").createSignedUrl(order.payment_proof_path,60);
-    if(proofError || !data?.signedUrl) { setError("Bukti pembayaran tidak dapat dibuka."); return; }
-    window.open(data.signedUrl,"_blank","noopener,noreferrer");
+
+    // Open a blank tab synchronously from the click so mobile browsers do not block it
+    // after the authenticated API request completes.
+    const proofWindow = window.open("about:blank", "_blank");
+    if (!proofWindow) {
+      setError("Popup diblokir browser. Izinkan popup untuk membuka bukti pembayaran.");
+      return;
+    }
+    proofWindow.opener = null;
+    proofWindow.document.title = "Memuat bukti pembayaran…";
+
+    setError("");
+    try {
+      const { data, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !data.session) {
+        proofWindow.close();
+        router.replace("/login");
+        return;
+      }
+
+      const response = await fetch(
+        "/api/admin/orders/payment-proof?orderId=" + encodeURIComponent(order.id),
+        {
+          headers: { Authorization: "Bearer " + data.session.access_token },
+          cache: "no-store",
+        }
+      );
+      const result = await response.json();
+      if (!response.ok || !result.success || typeof result.signedUrl !== "string") {
+        throw new Error(result.error || "Bukti pembayaran tidak dapat dibuka.");
+      }
+
+      proofWindow.location.replace(result.signedUrl);
+    } catch (err) {
+      proofWindow.close();
+      setError(err instanceof Error ? err.message : "Bukti pembayaran tidak dapat dibuka.");
+    }
   }
 
   async function logout(){await supabase.auth.signOut();router.replace("/login");}
