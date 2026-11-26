@@ -7,10 +7,10 @@ import { supabase } from "@/lib/supabase";
 import styles from "./admin-menu.module.css";
 
 const items = [
-  { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
-  { href: "/admin/orders", label: "Order Management", icon: ClipboardList },
-  { href: "/admin/users", label: "User Management", icon: Users },
-  { href: "/admin/pins", label: "Activation PINs", icon: KeyRound },
+  { href: "/admin", label: "Ringkasan", icon: LayoutDashboard, exact: true },
+  { href: "/admin/orders", label: "Manajemen pesanan", icon: ClipboardList },
+  { href: "/admin/users", label: "Manajemen pengguna", icon: Users },
+  { href: "/admin/pins", label: "PIN aktivasi", icon: KeyRound },
 ];
 
 export default function AdminMenu() {
@@ -61,7 +61,7 @@ export default function AdminMenu() {
         ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Open admin menu"
+        aria-label="Buka menu admin"
         aria-controls="admin-navigation-dialog"
         aria-expanded={open}
         aria-haspopup="dialog"
@@ -72,8 +72,8 @@ export default function AdminMenu() {
 
       {open && (
         <div className={styles.overlay}>
-          <button type="button" className="absolute inset-0 h-full w-full cursor-default border-0 bg-transparent" aria-label="Close admin menu" onClick={() => setOpen(false)} />
-          <section id="admin-navigation-dialog" ref={panelRef} role="dialog" aria-modal="true" aria-label="Admin navigation" className={styles.panel}>
+          <button type="button" className="absolute inset-0 h-full w-full cursor-default border-0 bg-transparent" aria-label="Tutup menu admin" onClick={() => setOpen(false)} />
+          <section id="admin-navigation-dialog" ref={panelRef} role="dialog" aria-modal="true" aria-label="Navigasi admin" className={styles.panel}>
             <div className={styles.top}>
               <div className={styles.brand}>
                 <span className={styles.brandMark}><ShieldCheck size={19}/></span>
@@ -82,13 +82,13 @@ export default function AdminMenu() {
                   <small>PLATFORM CONTROL</small>
                 </span>
               </div>
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className={styles.close}>
+              <button type="button" onClick={() => setOpen(false)} aria-label="Tutup menu" className={styles.close}>
                 <X size={18}/>
               </button>
             </div>
 
-            <p className={styles.label}>Superadmin workspace</p>
-            <nav className={styles.nav} aria-label="Admin pages">
+            <p className={styles.label}>Ruang kerja Superadmin</p>
+            <nav className={styles.nav} aria-label="Halaman admin">
               {items.map(item => {
                 const active = item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(item.href + "/");
                 const Icon = item.icon;
@@ -111,12 +111,12 @@ export default function AdminMenu() {
             <div className={styles.access}>
               <span className={styles.accessIcon}><ShieldCheck size={17}/></span>
               <span className={styles.accessCopy}>
-                <b>Superadmin access</b>
-                <small>Manage DiTapAja platform operations.</small>
+                <b>Akses Superadmin</b>
+                <small>Kelola operasional platform DiTapAja.</small>
               </span>
             </div>
             <button type="button" onClick={logout} className={styles.logout}>
-              <LogOut size={16}/> Sign out
+              <LogOut size={16}/> Keluar
             </button>
           </section>
         </div>
