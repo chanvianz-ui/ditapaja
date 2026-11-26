@@ -11,13 +11,13 @@ import { supabase } from "@/lib/supabase";
 import styles from "./dashboard-shell.module.css";
 
 const items = [
-  { href: "/dashboard", label: "Overview", icon: LayoutDashboard, group: "Workspace", view: "overview" },
-  { href: "/dashboard?view=cards", label: "NFC Cards", icon: CreditCard, group: "Workspace", view: "cards" },
-  { href: "/dashboard/business", label: "Business locations", icon: Building2, group: "Workspace" },
+  { href: "/dashboard", label: "Ringkasan", icon: LayoutDashboard, group: "Workspace", view: "overview" },
+  { href: "/dashboard?view=cards", label: "Kartu NFC", icon: CreditCard, group: "Workspace", view: "cards" },
+  { href: "/dashboard/business", label: "Lokasi bisnis", icon: Building2, group: "Workspace" },
   { href: "/dashboard/landing-page", label: "Page Studio", icon: Eye, group: "Workspace" },
-  { href: "/dashboard/customers", label: "Customer insights", icon: BarChart3, group: "Insights" },
-  { href: "/pesanan", label: "My orders", icon: ShoppingBag, group: "Account" },
-  { href: "/dashboard/settings", label: "Settings", icon: Settings, group: "Account" },
+  { href: "/dashboard/customers", label: "Analitik pelanggan", icon: BarChart3, group: "Insights" },
+  { href: "/pesanan", label: "Pesanan saya", icon: ShoppingBag, group: "Account" },
+  { href: "/dashboard/settings", label: "Pengaturan", icon: Settings, group: "Account" },
 ] as const;
 
 const groups = ["Workspace", "Insights", "Account"] as const;
