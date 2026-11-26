@@ -16,18 +16,34 @@ const items = [
 export default function AdminMenu() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      if (wasOpenRef.current) triggerRef.current?.focus();
+      wasOpenRef.current = false;
+      return;
+    }
+    wasOpenRef.current = true;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const getFocusable = () => Array.from(panelRef.current?.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])') || [])
+      .filter(element => element.offsetWidth > 0 || element.offsetHeight > 0);
+    getFocusable()[0]?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") { event.preventDefault(); setOpen(false); return; }
+      if (event.key !== "Tab") return;
+      const focusable = getFocusable();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     };
     window.addEventListener("keydown", onKeyDown);
-    panelRef.current?.querySelector("button")?.focus();
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
@@ -42,9 +58,11 @@ export default function AdminMenu() {
   return (
     <>
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open admin menu"
+        aria-controls="admin-navigation-dialog"
         aria-expanded={open}
         aria-haspopup="dialog"
         className={styles.trigger}
@@ -55,7 +73,7 @@ export default function AdminMenu() {
       {open && (
         <div className={styles.overlay}>
           <button type="button" className="absolute inset-0 h-full w-full cursor-default border-0 bg-transparent" aria-label="Close admin menu" onClick={() => setOpen(false)} />
-          <section ref={panelRef} role="dialog" aria-modal="true" aria-label="Admin navigation" className={styles.panel}>
+          <section id="admin-navigation-dialog" ref={panelRef} role="dialog" aria-modal="true" aria-label="Admin navigation" className={styles.panel}>
             <div className={styles.top}>
               <div className={styles.brand}>
                 <span className={styles.brandMark}><ShieldCheck size={19}/></span>
