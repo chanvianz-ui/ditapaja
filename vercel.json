@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "app/api/schedules/dispatch-notifications/route.ts": {
+      "experimentalTriggers": [
+        {
+          "type": "schedule/v1beta"
+        }
+      ]
+    }
+  },
+  "schedules": {
+    "superadmin-whatsapp-notifications": {
+      "schedule": "* * * * *",
+      "timezone": "Asia/Jakarta",
+      "function": "app/api/schedules/dispatch-notifications"
+    }
+  }
+}
