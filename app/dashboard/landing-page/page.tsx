@@ -6,6 +6,7 @@ import { ArrowLeft, Eye, Loader2, Save, Smartphone, Monitor, ImagePlus } from "l
 import { supabase } from "@/lib/supabase";
 import { renderNfcPageDocument } from "@/lib/nfc-page-template";
 import "./page-studio.css";
+import "./workspace-v3.css";
 
 type Card = { id: string; card_name: string | null; public_code: string; active: boolean; location_id?: string | null };
 type Settings = {
