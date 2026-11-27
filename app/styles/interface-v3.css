@@ -191,3 +191,47 @@ button:disabled{cursor:not-allowed;opacity:.52}
 .ditapaja-studio-page :where(input,select,textarea){background:#050f1b!important;color:var(--dt-ink)!important;border-color:var(--dt-line-strong)!important}
 @media(max-width:900px){.order-layout{grid-template-columns:1fr!important}}
 @media(max-width:640px){.order-form,.dt-order-form,.dt-payment-step{border-radius:17px!important}.order-page{padding-inline:14px!important}.dt-customer-orders-v2{padding-inline:14px!important}}
+
+/* Superadmin legacy utility migration: keep operational data readable */
+.dt-admin-shell{background:radial-gradient(ellipse at 86% 0,rgba(57,216,232,.09),transparent 34rem),var(--dt-midnight)!important;color:var(--dt-ink)!important}
+.dt-admin-shell [class*="text-[#"],.dt-admin-shell [class*="text-slate-"],.dt-admin-shell [class*="text-gray-"]{color:var(--dt-muted)!important}
+.dt-admin-shell h1,.dt-admin-shell h2,.dt-admin-shell h3,.dt-admin-shell strong,.dt-admin-shell [class*="text-white"]{color:var(--dt-ink)!important}
+.dt-admin-shell [class*="bg-white"],.dt-admin-shell [class*="bg-[#1b1f"],.dt-admin-shell [class*="bg-[#211d"],.dt-admin-shell [class*="bg-[#2227"],.dt-admin-shell [class*="bg-[#1518"]{background:linear-gradient(150deg,#10263d,#091827)!important;color:var(--dt-ink)!important}
+.dt-admin-shell [class*="border-[#"],.dt-admin-shell [class*="border-slate-"]{border-color:var(--dt-line)!important}
+.dt-admin-shell [class*="bg-[#3a2a20"],.dt-admin-shell [class*="bg-[#493326"],.dt-admin-shell [class*="bg-blue-600"],.dt-admin-shell [class*="bg-blue-700"]{background:linear-gradient(110deg,var(--dt-cyan),var(--dt-mint))!important;color:#04131d!important;border-color:transparent!important}
+.dt-admin-shell [class*="text-[#d2a17d"],.dt-admin-shell [class*="text-[#b88b6b"],.dt-admin-shell [class*="text-blue-"]{color:var(--dt-cyan)!important}
+.dt-admin-shell header{border-color:var(--dt-line)!important;background:rgba(5,11,20,.88)!important}
+.dt-admin-shell input,.dt-admin-shell select,.dt-admin-shell textarea{background:#050f1b!important;color:var(--dt-ink)!important;border-color:var(--dt-line-strong)!important}
+.dt-admin-shell table th{background:#0b1d31!important;color:var(--dt-muted)!important}
+.dt-admin-shell table td{border-color:var(--dt-line)!important;color:var(--dt-ink)!important}
+/* Dashboard overview and analytics */
+.dt-reset-dashboard,.dt-page{background:radial-gradient(ellipse at 84% 0,rgba(57,216,232,.1),transparent 34rem),var(--dt-midnight)!important;color:var(--dt-ink)!important}
+.dt-reset-dashboard .dt-kpi,.dt-reset-dashboard .dt-panel,.dt-reset-dashboard .dt-performance,.dt-reset-dashboard .dt-card-manager,.dt-reset-dashboard .dt-managed-card{background:linear-gradient(150deg,#10263d,#091827)!important;border:1px solid var(--dt-line)!important;color:var(--dt-ink)!important;box-shadow:0 18px 50px rgba(0,0,0,.2)!important}
+.dt-reset-dashboard .dt-kpi :where(span,small),.dt-reset-dashboard .dt-panel :where(p,small){color:var(--dt-muted)!important}
+.dt-reset-dashboard .dt-kpi strong,.dt-reset-dashboard .dt-panel h2,.dt-reset-dashboard .dt-panel h3{color:var(--dt-ink)!important}
+.dt-reset-dashboard :where(.dt-primary,.dt-text-button){background:linear-gradient(110deg,var(--dt-cyan),var(--dt-mint))!important;color:#04131d!important;border:0!important}
+.dt-reset-dashboard :where(button:not(.dt-primary),select,input){border-color:var(--dt-line-strong)!important}
+.ci-page{background:var(--dt-midnight)!important;color:var(--dt-ink)!important}
+.ci-page :where(.ci-kpi,.ci-panel,.ci-card-row,.ci-location-row){background:linear-gradient(150deg,#10263d,#091827)!important;border-color:var(--dt-line)!important;color:var(--dt-ink)!important}
+.ci-page :where(.ci-eyebrow,.ci-legend,.ci-footer){color:var(--dt-muted)!important}
+.ci-page :where(h1,h2,h3,strong){color:var(--dt-ink)!important}
+/* Auth experience: split-screen sign-in with secure access panel */
+.dt-auth-v2-frame{background:radial-gradient(ellipse at 80% 0,rgba(57,216,232,.12),transparent 35rem),var(--dt-midnight)!important;color:var(--dt-ink)!important}
+.dt-auth-v2-topbar{border-color:var(--dt-line)!important}
+.dt-auth-v2-panel{background:linear-gradient(150deg,rgba(16,38,61,.97),rgba(7,18,31,.98))!important;border:1px solid var(--dt-line)!important;border-radius:24px!important;box-shadow:var(--dt-shadow)!important}
+.dt-auth-v2-brand,.dt-auth-v2-intro h1,.dt-auth-v2-intro h2{color:var(--dt-ink)!important}
+.dt-auth-v2-eyebrow,.dt-auth-v2-secure{color:var(--dt-mint)!important}
+.dt-auth-v2-tabs{background:#071523!important;border:1px solid var(--dt-line)!important}
+.dt-auth-v2-tabs button[aria-selected=true],.dt-auth-v2-submit{background:linear-gradient(110deg,var(--dt-cyan),var(--dt-mint))!important;color:#04131d!important}
+.dt-auth-v2-field label,.dt-auth-v2-options,.dt-auth-v2-consent,.dt-auth-v2-footer{color:var(--dt-muted)!important}
+.dt-auth-v2-field input,.dt-auth-v2-password input{background:#050f1b!important;color:var(--dt-ink)!important;border-color:var(--dt-line-strong)!important}
+.dt-auth-v2-switch a{color:var(--dt-cyan)!important}
+/* Landing experience */
+.ed-hero{background:radial-gradient(ellipse at 80% 30%,rgba(57,216,232,.14),transparent 34rem),linear-gradient(145deg,#0b1d31,#050b14 74%)!important}
+.home-demo-heading,.home-demo-footer,.dt-how-heading,.dt-how-copy{color:var(--dt-ink)!important}
+.home-demo-card,.dt-how-mini-card,.dt-how-review-card{border-color:rgba(57,216,232,.25)!important;box-shadow:0 28px 70px rgba(0,0,0,.4)!important}
+.home-demo-instruction,.home-section-index,.dt-how-eyebrow,.home-demo-disclaimer{color:var(--dt-mint)!important}
+.home-demo-phone,.home-demo-review-screen,.home-demo-review-brand,.home-demo-review-prompt{background:#0c2034!important;color:var(--dt-ink)!important;border-color:var(--dt-line)!important}
+.home-google-review-input{background:#050f1b!important;color:var(--dt-ink)!important;border-color:var(--dt-line)!important}
+.home-google-submit{background:linear-gradient(110deg,var(--dt-cyan),var(--dt-mint))!important;color:#04131d!important}
+@media(max-width:760px){.dt-reset-dashboard .dt-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.dt-admin-shell{overflow-x:hidden!important}.dt-admin-shell table{min-width:640px}}
