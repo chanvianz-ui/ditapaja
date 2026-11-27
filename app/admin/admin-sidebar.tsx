@@ -2,17 +2,18 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LayoutDashboard, ShoppingBag, Users, KeyRound, ShieldCheck, LogOut } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Users, KeyRound, ShieldCheck, LogOut, Bell } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const items = [
   { id: "overview", label: "Ringkasan", href: "/admin", icon: LayoutDashboard },
   { id: "orders", label: "Manajemen pesanan", href: "/admin/orders", icon: ShoppingBag },
+  { id: "notifications", label: "Notifikasi", href: "/admin/notifications", icon: Bell },
   { id: "users", label: "Manajemen pengguna", href: "/admin/users", icon: Users },
   { id: "pins", label: "PIN aktivasi", href: "/admin/pins", icon: KeyRound },
 ] as const;
 
-export default function AdminSidebar({ active }: { active: "overview" | "orders" | "users" | "pins" }) {
+export default function AdminSidebar({ active }: { active: "overview" | "orders" | "users" | "pins" | "notifications" }) {
   const router = useRouter();
   async function logout() {
     await supabase.auth.signOut();
