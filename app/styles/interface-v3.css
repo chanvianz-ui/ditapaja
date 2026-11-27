@@ -1,0 +1,113 @@
+/* DiTapAja Interface System v3 — Cyan / Navy / Midnight / Mint */
+:root{
+  color-scheme:dark;
+  --dt-midnight:#050b14;
+  --dt-navy:#0a192b;
+  --dt-navy-2:#10243b;
+  --dt-panel:#10263d;
+  --dt-panel-raised:#16334d;
+  --dt-cyan:#39d8e8;
+  --dt-cyan-bright:#6beafa;
+  --dt-mint:#78f0c3;
+  --dt-mint-soft:rgba(120,240,195,.12);
+  --dt-line:rgba(145,190,218,.15);
+  --dt-line-strong:rgba(145,190,218,.25);
+  --dt-ink:#effaff;
+  --dt-muted:#9bb2c6;
+  --dt-dim:#6f879d;
+  --dt-danger:#ff8295;
+  --dt-bg:var(--dt-midnight);
+  --dt-bg-soft:var(--dt-navy);
+  --dt-surface:var(--dt-panel);
+  --dt-surface-raised:var(--dt-panel-raised);
+  --dt-border:var(--dt-line);
+  --dt-border-strong:var(--dt-line-strong);
+  --dt-text:var(--dt-ink);
+  --dt-blue:var(--dt-cyan);
+  --dt-blue-strong:#19b9d0;
+  --dt-cyan-soft:rgba(57,216,232,.12);
+  --dt-success:var(--dt-mint);
+  --dt-radius-sm:10px;
+  --dt-radius-md:16px;
+  --dt-radius-lg:24px;
+  --dt-shadow:0 24px 80px rgba(0,0,0,.34);
+}
+html{background:var(--dt-midnight)!important;scroll-behavior:smooth}
+body{background:var(--dt-midnight)!important;color:var(--dt-ink)!important}
+::selection{background:var(--dt-mint);color:#04111a}
+:focus-visible{outline:2px solid var(--dt-cyan)!important;outline-offset:3px}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button:disabled{cursor:not-allowed;opacity:.52}
+:where(input,select,textarea){accent-color:var(--dt-cyan)}
+:where(input:not([type=checkbox]):not([type=radio]),select,textarea){
+ background:rgba(5,15,27,.78)!important;color:var(--dt-ink)!important;
+ border:1px solid var(--dt-line-strong)!important;border-radius:13px!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+}
+:where(input,select,textarea)::placeholder{color:#718ba1!important}
+:where(input,select,textarea):focus{border-color:rgba(57,216,232,.72)!important;box-shadow:0 0 0 3px rgba(57,216,232,.12)!important;outline:0}
+:where(button,a[class*="button"],a[class*="btn"]){transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease}
+:where(button,a[class*="button"],a[class*="btn"]):active{transform:translateY(1px)}
+/* Shared visual language */
+:where(.dt-site-header,.dt-auth-form-card,.info-content,.nx-catalog-products,.ck-section,
+.product-detail-page,.dt-admin-shell article,.dt-workspace-page article,.dt-workspace-page section,
+.dt-customer-orders article,.ditapaja-studio-page .studio-panel,.ditapaja-insights-page .ditapaja-insights-panel){
+ border-radius:var(--dt-radius-lg)!important;border-color:var(--dt-line)!important
+}
+:where(.dt-auth-page,.info-page,.nx-catalog-page,.ck-page,.product-detail-page,.dt-activation-page,
+.dt-customer-orders,.dt-workspace-page,.dt-reset-dashboard,.dt-admin-shell,.ditapaja-insights-page,
+.ditapaja-studio-page){color:var(--dt-ink)!important;background-color:var(--dt-midnight)!important}
+:where(.dt-site-header,.dt-admin-shell,.dt-workspace-page){--accent:var(--dt-cyan)}
+/* Public navigation: compact floating command bar */
+.dt-site-header{position:sticky!important;top:12px!important;z-index:80!important;width:min(1240px,calc(100% - 32px))!important;margin:12px auto 0!important;border:1px solid var(--dt-line-strong)!important;border-radius:18px!important;background:rgba(7,19,33,.84)!important;backdrop-filter:blur(22px)!important;box-shadow:0 12px 44px rgba(0,0,0,.22)!important}
+.dt-header-shell{min-height:70px!important;padding-inline:clamp(16px,3vw,30px)!important}
+.dt-brand-symbol,.dt-v2-brand-mark{border-color:rgba(57,216,232,.35)!important;background:linear-gradient(145deg,#112e46,#081725)!important}
+.dt-brand-symbol i,.dt-v2-brand-mark i{background:linear-gradient(180deg,var(--dt-cyan),var(--dt-mint))!important}
+.dt-brand-word-top,.dt-brand-word{color:var(--dt-ink)!important}
+.dt-brand-word small{color:var(--dt-dim)!important}
+.dt-header-nav a{color:var(--dt-muted)!important}
+.dt-header-nav a:hover,.dt-header-nav a[aria-current=page]{color:var(--dt-cyan)!important}
+.dt-header-nav-number{color:var(--dt-cyan)!important}
+.dt-header-login{color:var(--dt-muted)!important}
+.dt-header-cta,.dt-header-mobile-cta{background:linear-gradient(115deg,var(--dt-cyan),var(--dt-mint))!important;color:#06131d!important;border:0!important;border-radius:12px!important}
+.dt-header-cta small,.dt-header-cta strong,.dt-header-cta-icon{color:#06131d!important}
+.dt-header-mobile button{border:1px solid var(--dt-line-strong)!important;background:var(--dt-panel)!important;color:var(--dt-cyan)!important;border-radius:12px!important}
+.dt-menu-panel{background:linear-gradient(145deg,#0b1c30,#050b14)!important;color:var(--dt-ink)!important}
+.dt-menu-action-card{background:var(--dt-panel)!important;border-color:var(--dt-line)!important}
+.dt-menu-action-icon{color:var(--dt-cyan)!important}
+/* Public editorial surfaces */
+.nx-catalog-page,.product-detail-page,.info-page,.ck-page{background:var(--dt-midnight)!important}
+.nx-catalog-hero,.detail-hero,.info-hero{background:radial-gradient(ellipse at 78% 24%,rgba(57,216,232,.13),transparent 34rem),linear-gradient(145deg,#0b1d31,#050b14 72%)!important}
+.nx-eyebrow,.info-eyebrow,.ck-eyebrow,.eyebrow{color:var(--dt-mint)!important}
+.nx-catalog-hero h1,.detail-copy h1,.info-hero h1{color:var(--dt-ink)!important}
+.nx-catalog-hero h1 em,.detail-copy h1 em,.info-hero h1 em{color:var(--dt-cyan)!important}
+.nx-catalog-perks,.nx-catalog-products,.nx-footer,.info-content{background:var(--dt-midnight)!important}
+.nx-catalog-perks>div,.nx-catalog-products,.info-content article{border-color:var(--dt-line)!important}
+.nx-catalog-perks>div>span{color:var(--dt-cyan)!important;background:var(--dt-cyan-soft)!important}
+.nx-button-primary,.detail-order-button,.ck-submit,.dt-auth-submit{background:linear-gradient(115deg,var(--dt-cyan),var(--dt-mint))!important;color:#04131d!important;border:0!important;box-shadow:0 12px 34px rgba(57,216,232,.15)!important}
+.nx-button-primary svg,.detail-order-button svg{color:#04131d!important}
+.nx-footer{border-top:1px solid var(--dt-line)!important}
+.nx-footer a:hover{color:var(--dt-cyan)!important}
+/* Auth, checkout and customer account */
+.dt-auth-page,.dt-activation-page,.dt-customer-orders,.ck-page{background:radial-gradient(ellipse at 50% 0,rgba(57,216,232,.1),transparent 36rem),var(--dt-midnight)!important}
+.dt-auth-form-card,.ck-section,.dt-customer-orders article{background:linear-gradient(155deg,rgba(16,38,61,.96),rgba(7,18,31,.98))!important;border:1px solid var(--dt-line)!important;box-shadow:var(--dt-shadow)!important}
+.dt-auth-form-card h1,.ck-section h2{color:var(--dt-ink)!important}
+.dt-auth-form-card p,.ck-section p{color:var(--dt-muted)!important}
+/* User workspace and Superadmin */
+.dt-admin-shell,.dt-workspace-page,.ditapaja-insights-page,.ditapaja-studio-page{background:var(--dt-midnight)!important}
+.dt-admin-sidebar{background:linear-gradient(180deg,#0b1d31,#07111f)!important;border-color:var(--dt-line)!important}
+.dt-admin-sidebar-brand,.dt-admin-sidebar-nav a{color:var(--dt-muted)!important}
+.dt-admin-sidebar-nav a:hover,.dt-admin-sidebar-nav a.is-active{color:var(--dt-ink)!important;background:linear-gradient(100deg,rgba(57,216,232,.13),rgba(120,240,195,.05))!important;border-color:rgba(57,216,232,.22)!important}
+.dt-admin-sidebar-nav a.is-active svg,.dt-admin-sidebar-nav a:hover svg{color:var(--dt-cyan)!important}
+.admin-overview-main{background:transparent!important}
+.admin-overview-hero,.admin-overview-metric,.dt-admin-shell article{background:linear-gradient(145deg,rgba(16,38,61,.96),rgba(8,22,37,.98))!important;border:1px solid var(--dt-line)!important;box-shadow:0 18px 55px rgba(0,0,0,.2)!important}
+.admin-overview-eyebrow,.admin-overview-live{color:var(--dt-mint)!important}
+.admin-overview-hero h2,.admin-overview-metric strong{color:var(--dt-ink)!important}
+.admin-overview-metric-icon{color:var(--dt-cyan)!important;background:var(--dt-cyan-soft)!important}
+.admin-overview-refresh{border:1px solid var(--dt-line-strong)!important;background:var(--dt-panel)!important;color:var(--dt-cyan)!important;border-radius:12px!important}
+:where(.dt-workspace-page,.dt-admin-shell,.ditapaja-insights-page,.ditapaja-studio-page) :where(table){border-color:var(--dt-line)!important}
+:where(.dt-workspace-page,.dt-admin-shell,.ditapaja-insights-page,.ditapaja-studio-page) :where(th){color:var(--dt-muted)!important;background:#0a1a2c!important}
+:where(.dt-workspace-page,.dt-admin-shell,.ditapaja-insights-page,.ditapaja-studio-page) :where(td){color:var(--dt-ink)!important;border-color:var(--dt-line)!important}
+:where(.dt-workspace-page,.dt-admin-shell,.ditapaja-insights-page,.ditapaja-studio-page) :where(a,button){-webkit-tap-highlight-color:transparent}
+@media(max-width:700px){.dt-site-header{top:8px!important;width:calc(100% - 20px)!important;margin-top:8px!important;border-radius:15px!important}.dt-header-shell{min-height:60px!important;padding-inline:14px!important}.nx-catalog-hero,.detail-hero,.info-hero{padding-top:76px!important}.nx-catalog-perks{grid-template-columns:1fr!important}.nx-footer-top{gap:28px!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
