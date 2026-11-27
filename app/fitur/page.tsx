@@ -12,7 +12,7 @@ const features = [
   { icon: BarChart3, number: "02", title: "Pantau aktivitas", text: "Lihat total tap, estimasi pengunjung unik berbasis identitas hash, klik menuju Google Review, dan rasio klik dari aktivitas yang tercatat." },
   { icon: Nfc, number: "03", title: "Tulis NFC dari dashboard", text: "Untuk perangkat yang mendukung Web NFC, tulis URL kartu DiTapAja langsung ke kartu NFC melalui browser yang kompatibel." },
   { icon: QrCode, number: "04", title: "NFC dan QR sebagai akses", text: "Pelanggan dapat mendekatkan ponsel yang mendukung NFC atau memindai QR Code yang tersedia pada kartu fisik." },
-  { icon: SlidersHorizontal, number: "05", title: "Atur status kartu", text: "Ubah nama kartu, perbarui link tujuan, aktifkan atau nonaktifkan kartu, dan hapus kartu yang tidak lagi digunakan." },
+  { icon: SlidersHorizontal, number: "05", title: "Atur status kartu", text: "Ubah nama kartu, perbarui link tujuan, aktifkan atau nonaktifkan kartu, serta arsipkan kartu yang tidak lagi digunakan." },
   { icon: ShieldCheck, number: "06", title: "Akun dan kontrol akses", text: "Setiap pengguna mengelola kartu miliknya melalui akun. Informasi dan aktivitas kartu ditampilkan di workspace masing-masing." },
 ];
 
