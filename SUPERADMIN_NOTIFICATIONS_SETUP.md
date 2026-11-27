@@ -60,7 +60,7 @@ Never prefix secrets with `NEXT_PUBLIC_`. Never commit them to Git.
 ## Delivery behavior
 
 - Only important and critical events are eligible for WhatsApp. Informational events stay in the dashboard.
-- The scheduled worker checks the durable database queue every minute.
+- When a Superadmin workspace is open, Realtime events trigger WhatsApp delivery immediately. When all admin sessions are closed, the scheduled worker checks the durable queue every 10 minutes as a fallback. The 10-minute cadence stays within the 5,000 monthly schedule runs included on Vercel Hobby.
 - Failed transient API calls retry with backoff, up to five attempts. Permanent errors are surfaced in the dashboard.
 - Delivery status is updated from Meta webhook callbacks.
 - If Meta is not configured, the database notifications remain available and no message is sent.
