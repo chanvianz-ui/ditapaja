@@ -39,11 +39,9 @@ export async function GET(request: NextRequest) {
         .select("id", { count: "exact", head: true })
         .eq("recipient_id", auth.user.id)
         .is("read_at", null),
-      supabase.from("superadmin_notifications")
+      supabase.from("ditapaja_orders")
         .select("id", { count: "exact", head: true })
-        .eq("recipient_id", auth.user.id)
-        .eq("event_type", "payment_proof_submitted")
-        .is("read_at", null),
+        .eq("payment_status", "pending_verification"),
     ]);
 
     if (error || countError || proofError) {
