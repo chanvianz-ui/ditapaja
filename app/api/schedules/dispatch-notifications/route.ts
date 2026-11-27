@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { handleSchedule } from "@vercel/schedules";
 
 export const runtime = "nodejs";
@@ -21,7 +21,7 @@ function retryDelaySeconds(attempt: number) {
 }
 
 async function updateFailure(
-  admin: ReturnType<typeof createClient>,
+  admin: SupabaseClient<any>,
   notification: QueuedNotification,
   errorMessage: string,
   transient: boolean
@@ -39,7 +39,7 @@ async function updateFailure(
 }
 
 async function deliverOne(
-  admin: ReturnType<typeof createClient>,
+  admin: SupabaseClient<any>,
   notification: QueuedNotification,
   accessToken: string,
   phoneNumberId: string,
