@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { handleSchedule } from "@vercel/schedules";
 
 export const runtime = "nodejs";
+export const maxDuration = 60;
 
 type QueuedNotification = {
   id: string;
@@ -28,12 +29,100 @@ async function updateFailure(
   const attempts = notification.whatsapp_attempts;
   const shouldRetry = transient && attempts < 5;
   const nextAttempt = new Date(Date.now() + retryDelaySeconds(attempts) * 1000).toISOString();
-  await admin.from("superadmin_notifications").update({
+  const { error } = await admin.from("superadmin_notifications").update({
     whatsapp_status: shouldRetry ? "pending" : "failed",
     whatsapp_next_attempt_at: nextAttempt,
     whatsapp_locked_until: null,
     whatsapp_last_error: cleanText(errorMessage, 500),
   }).eq("id", notification.id);
+  if (error) console.error("Could not persist WhatsApp delivery failure:", error);
+}
+
+async function deliverOne(
+  admin: ReturnType<typeof createClient>,
+  notification: QueuedNotification,
+  accessToken: string,
+  phoneNumberId: string,
+  adminPhone: string,
+  templateName: string,
+  templateLanguage: string,
+  apiVersion: string,
+  baseUrl: string
+) {
+  const title = cleanText(notification.title, 120);
+  const message = cleanText(notification.message, 700);
+  const actionPath = typeof notification.action_url === "string" && /^\/admin(?:\/|$)/.test(notification.action_url)
+    ? notification.action_url
+    : "/admin/notifications";
+  const actionUrl = new URL(actionPath, baseUrl).toString();
+
+  try {
+    const response = await fetch(
+      "https://graph.facebook.com/" + apiVersion + "/" + encodeURIComponent(phoneNumberId) + "/messages",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messaging_product: "whatsapp",
+          to: adminPhone,
+          type: "template",
+          template: {
+            name: templateName,
+            language: { code: templateLanguage },
+            components: [{
+              type: "body",
+              parameters: [
+                { type: "text", text: title },
+                { type: "text", text: message },
+                { type: "text", text: actionUrl },
+              ],
+            }],
+          },
+        }),
+        signal: AbortSignal.timeout(12000),
+      }
+    );
+
+    const payload = await response.json().catch(() => null) as {
+      messages?: Array<{ id?: string }>;
+      error?: { message?: string; code?: number };
+    } | null;
+
+    if (!response.ok) {
+      const errorMessage = payload?.error?.message || "Meta API returned HTTP " + response.status;
+      await updateFailure(admin, notification, errorMessage, response.status === 429 || response.status >= 500);
+      return;
+    }
+
+    const providerMessageId = payload?.messages?.[0]?.id;
+    if (!providerMessageId) {
+      await updateFailure(admin, notification, "Meta accepted no message ID in its response.", true);
+      return;
+    }
+
+    const { error } = await admin.from("superadmin_notifications").update({
+      whatsapp_status: "sent",
+      whatsapp_provider_message_id: providerMessageId,
+      whatsapp_sent_at: new Date().toISOString(),
+      whatsapp_locked_until: null,
+      whatsapp_last_error: null,
+    }).eq("id", notification.id);
+
+    if (error) {
+      // Meta may already have accepted the message; do not blindly retry this case.
+      console.error("WhatsApp was accepted but delivery state could not be saved:", error);
+    }
+  } catch (error) {
+    await updateFailure(
+      admin,
+      notification,
+      error instanceof Error ? error.message : "Unknown WhatsApp delivery error.",
+      true
+    );
+  }
 }
 
 export const POST = handleSchedule(async (metadata) => {
@@ -48,7 +137,6 @@ export const POST = handleSchedule(async (metadata) => {
   const templateLanguage = process.env.WHATSAPP_TEMPLATE_LANGUAGE || "id";
   const apiVersion = process.env.WHATSAPP_API_VERSION || "v27.0";
 
-  // Keep queued events in the database until the admin explicitly finishes Meta setup.
   if (
     process.env.WHATSAPP_ADMIN_OPT_IN !== "true" ||
     !accessToken ||
@@ -62,85 +150,13 @@ export const POST = handleSchedule(async (metadata) => {
     auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
   });
 
-  const { data, error } = await admin.rpc("claim_superadmin_notification_deliveries", { p_limit: 10 });
+  const { data, error } = await admin.rpc("claim_superadmin_notification_deliveries", { p_limit: 5 });
   if (error) throw new Error("Could not claim WhatsApp notifications: " + error.message);
 
   const baseUrl = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://ditapaja.web.id";
-
-  for (const row of (data || []) as QueuedNotification[]) {
-    const notification = row;
-    const title = cleanText(notification.title, 120);
-    const message = cleanText(notification.message, 700);
-    const actionPath = typeof notification.action_url === "string" && /^\/admin(?:\/|$)/.test(notification.action_url)
-      ? notification.action_url
-      : "/admin/notifications";
-    const actionUrl = new URL(actionPath, baseUrl).toString();
-
-    try {
-      const response = await fetch(
-        "https://graph.facebook.com/" + apiVersion + "/" + encodeURIComponent(phoneNumberId) + "/messages",
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + accessToken,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            messaging_product: "whatsapp",
-            to: adminPhone,
-            type: "template",
-            template: {
-              name: templateName,
-              language: { code: templateLanguage },
-              components: [{
-                type: "body",
-                parameters: [
-                  { type: "text", text: title },
-                  { type: "text", text: message },
-                  { type: "text", text: actionUrl },
-                ],
-              }],
-            },
-          }),
-          signal: AbortSignal.timeout(15000),
-        }
-      );
-
-      const payload = await response.json().catch(() => null) as {
-        messages?: Array<{ id?: string }>;
-        error?: { message?: string; code?: number };
-      } | null;
-
-      if (!response.ok) {
-        const messageText = payload?.error?.message || "Meta API returned HTTP " + response.status;
-        await updateFailure(admin, notification, messageText, response.status === 429 || response.status >= 500);
-        continue;
-      }
-
-      const providerMessageId = payload?.messages?.[0]?.id;
-      if (!providerMessageId) {
-        await updateFailure(admin, notification, "Meta accepted no message ID in its response.", true);
-        continue;
-      }
-
-      const { error: updateError } = await admin.from("superadmin_notifications").update({
-        whatsapp_status: "sent",
-        whatsapp_provider_message_id: providerMessageId,
-        whatsapp_sent_at: new Date().toISOString(),
-        whatsapp_locked_until: null,
-        whatsapp_last_error: null,
-      }).eq("id", notification.id);
-
-      if (updateError) throw updateError;
-    } catch (error) {
-      await updateFailure(
-        admin,
-        notification,
-        error instanceof Error ? error.message : "Unknown WhatsApp delivery error.",
-        true
-      );
-    }
-  }
+  await Promise.all((data || []).map((notification: QueuedNotification) =>
+    deliverOne(admin, notification, accessToken, phoneNumberId, adminPhone, templateName, templateLanguage, apiVersion, baseUrl)
+  ));
 
   console.info("Superadmin WhatsApp dispatch completed", {
     schedule: metadata.name,
