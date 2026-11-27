@@ -69,6 +69,11 @@ export default function AdminNotificationBell() {
       }
       await load();
       if (!active) return;
+      const dispatchNow = () => fetch("/api/admin/notifications/dispatch", {
+        method: "POST",
+        headers: { Authorization: "Bearer " + session.access_token },
+      }).catch(() => undefined);
+
       channel = supabase
         .channel("superadmin-notifications-" + session.user.id)
         .on("postgres_changes", {
@@ -76,8 +81,14 @@ export default function AdminNotificationBell() {
           schema: "public",
           table: "superadmin_notifications",
           filter: "recipient_id=eq." + session.user.id,
-        }, () => { void load(); })
+        }, (payload) => {
+          void load();
+          if (payload.eventType === "INSERT") void dispatchNow();
+        })
         .subscribe();
+
+      // Drain any queued messages when a Superadmin opens the workspace.
+      void dispatchNow();
     };
 
     void connect();
