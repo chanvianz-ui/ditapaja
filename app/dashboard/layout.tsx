@@ -32,7 +32,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [menuOpen, setMenuOpen] = useState(false);
   const [cardsView, setCardsView] = useState(false);
   const [email, setEmail] = useState("");
-  const [displayName, setDisplayName] = useState("Your workspace");
+  const [displayName, setDisplayName] = useState("Ruang kerja Anda");
   const sidebarRef = useRef<HTMLElement>(null);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const menuWasOpenRef = useRef(false);
@@ -79,6 +79,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       return;
     }
     menuWasOpenRef.current = true;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const sidebar = sidebarRef.current;
     const getFocusable = () => Array.from(sidebar?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])') || [])
       .filter(element => element.offsetWidth > 0 || element.offsetHeight > 0);
@@ -94,7 +96,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     };
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [menuOpen]);
 
   function isActive(item: typeof items[number]) {
@@ -108,10 +113,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   function navigate(item: typeof items[number]) {
     setMenuOpen(false);
-    if (itemPathIsDashboard(item.href) && pathname === "/dashboard") {
-      window.location.assign(item.href);
-      return;
-    }
     if (item.href === "/dashboard?view=cards") setCardsView(true);
     else if (item.href === "/dashboard") setCardsView(false);
     router.push(item.href);
@@ -123,7 +124,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   const brand = (
-    <Link href="/" className={styles.brand} aria-label="DiTapAja home">
+    <Link href="/" className={styles.brand} aria-label="Beranda DiTapAja">
       <span className={styles.brandMark} aria-hidden="true"><i/><i/><i/></span>
       <span>DiTap<span className={styles.brandAccent}>Aja</span></span>
     </Link>
@@ -131,8 +132,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className={styles.shell}>
-      {menuOpen && <button className={styles.mobileBackdrop} type="button" aria-label="Close navigation" onClick={() => setMenuOpen(false)} />}
-      <aside ref={sidebarRef} id="workspace-navigation" className={menuOpen ? `${styles.sidebar} ${styles.sidebarOpen}` : styles.sidebar} aria-label="Workspace navigation">
+      {menuOpen && <button className={styles.mobileBackdrop} type="button" aria-label="Tutup navigasi" onClick={() => setMenuOpen(false)} />}
+      <aside ref={sidebarRef} id="workspace-navigation" className={menuOpen ? `${styles.sidebar} ${styles.sidebarOpen}` : styles.sidebar} aria-label="Navigasi ruang kerja">
         {brand}
         <div className={styles.workspaceLabel}>Ruang kerja</div>
         <nav className={styles.nav}>
@@ -170,11 +171,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <span className={styles.avatar}>{displayName.slice(0, 1).toUpperCase()}</span>
             <span className={styles.accountCopy}>
               <span className={styles.accountName}>{displayName}</span>
-              <span className={styles.accountEmail}>{email || "DiTapAja account"}</span>
+              <span className={styles.accountEmail}>{email || "Akun DiTapAja"}</span>
             </span>
           </div>
           <button className={styles.logout} type="button" onClick={logout}>
-            <LogOut size={16}/><span>Sign out</span>
+            <LogOut size={16}/><span>Keluar</span>
           </button>
         </div>
       </aside>
@@ -182,7 +183,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className={styles.main}>
         <header className={styles.mobileHeader}>
           {brand}
-          <button ref={menuTriggerRef} className={styles.mobileMenu} type="button" onClick={() => setMenuOpen(value => !value)} aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="workspace-navigation">
+          <button ref={menuTriggerRef} className={styles.mobileMenu} type="button" onClick={() => setMenuOpen(value => !value)} aria-label={menuOpen ? "Tutup navigasi" : "Buka navigasi"} aria-expanded={menuOpen} aria-controls="workspace-navigation">
             {menuOpen ? <X size={18}/> : <Menu size={18}/>}
           </button>
         </header>
