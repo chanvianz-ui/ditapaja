@@ -3,10 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Manrope } from "next/font/google";
 import { setAuthStorageMode, supabase } from "../../lib/supabase";
 
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], display: "swap" });
 type AuthMode = "login" | "register";
 
 function getSafeNextPath() {
@@ -118,7 +116,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
   }
 
   return (
-    <main className={`dt-auth-v2 ${manrope.className}`}>
+    <main className="dt-auth-v2">
       <div className="dt-auth-v2-frame">
         <header className="dt-auth-v2-topbar">
           <Link href="/" className="dt-auth-v2-brand" aria-label="DiTapAja beranda"><span className="dt-auth-v2-mark">d<span>.</span></span><span>ditapaja</span></Link>
