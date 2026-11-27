@@ -132,6 +132,11 @@ export default function AdminNotificationsPage() {
     return true;
   }), [notifications, filter]);
 
+  async function openNotification(item: Notification) {
+    if (!item.read_at) await mutate("mark_read", item.id);
+    router.push(safeHref(item.action_url));
+  }
+
   async function mutate(action: string, id?: string) {
     setBusyId(id || action);
     try {
@@ -201,7 +206,7 @@ export default function AdminNotificationsPage() {
                     <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] text-[#8e9695]"><span>{dateLabel(item.created_at)}</span><span>·</span><span>WhatsApp: {whatsappLabels[item.whatsapp_status] || item.whatsapp_status}</span>{item.whatsapp_last_error && <span className="max-w-full truncate text-[#e5a4a4]">{item.whatsapp_last_error}</span>}</div>
                   </div>
                   <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end">
-                    <button type="button" onClick={() => router.push(safeHref(item.action_url))} className="inline-flex h-9 items-center justify-center rounded-lg bg-[#493326] px-3 text-[10px] font-semibold text-white hover:bg-[#5a4030]">Buka detail</button>
+                    <button type="button" onClick={() => void openNotification(item)} className="inline-flex h-9 items-center justify-center rounded-lg bg-[#493326] px-3 text-[10px] font-semibold text-white hover:bg-[#5a4030]">Buka detail</button>
                     {!item.read_at && <button type="button" onClick={() => void mutate("mark_read", item.id)} disabled={!!busyId} aria-label="Tandai sudah dibaca" className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#34383a] text-[#a0a3a2] hover:text-white disabled:opacity-40"><Check size={14}/></button>}
                     {item.whatsapp_status==="failed" && item.whatsapp_eligible && <button type="button" onClick={() => void mutate("retry_whatsapp", item.id)} disabled={!whatsappConfigured || !!busyId} className="inline-flex h-9 items-center gap-1 rounded-lg border border-[#51412e] px-3 text-[10px] font-semibold text-[#d8b67c] disabled:opacity-40">{isBusy ? <Loader2 size={12} className="animate-spin"/> : <RefreshCw size={12}/>} Coba lagi</button>}
                   </div>
