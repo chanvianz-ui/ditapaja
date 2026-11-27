@@ -725,3 +725,65 @@ body{
   .home-demo-heading{align-items:flex-start;flex-direction:column}
   .dt-how-panel,.dt-behind-panel,.dt-closing-main{border-radius:16px!important}
 }
+
+
+/* Auth and checkout components: verified selectors, clearer conversion hierarchy. */
+.dt-auth-v2{
+  min-height:100vh!important;
+  background:radial-gradient(ellipse at 78% 12%,rgba(57,216,232,.1),transparent 34rem),#050b14!important;
+}
+.dt-auth-v2-frame{width:min(1120px,calc(100% - 36px))!important}
+.dt-auth-v2-topbar{border-color:var(--dt-line)!important}
+.dt-auth-v2-panel{
+  border:1px solid var(--dt-line)!important;border-radius:22px!important;
+  background:linear-gradient(145deg,rgba(16,38,61,.97),rgba(7,19,32,.99))!important;
+  box-shadow:0 28px 80px rgba(0,0,0,.34)!important;
+}
+.dt-auth-v2-eyebrow{color:var(--dt-mint)!important}
+.dt-auth-v2-tabs{background:rgba(5,11,20,.72)!important;border:1px solid var(--dt-line)!important}
+.dt-auth-v2-tabs button[aria-selected=true]{background:rgba(57,216,232,.15)!important;color:var(--dt-ink)!important}
+.dt-auth-v2-field input,.dt-auth-v2-password input{
+  min-height:48px!important;border:1px solid var(--dt-line)!important;
+  border-radius:10px!important;background:#071321!important;color:var(--dt-ink)!important;
+}
+.dt-auth-v2-field input:focus,.dt-auth-v2-password input:focus{
+  border-color:rgba(57,216,232,.65)!important;box-shadow:0 0 0 3px rgba(57,216,232,.1)!important;outline:none!important;
+}
+.dt-auth-v2-submit{
+  min-height:50px!important;border:1px solid rgba(57,216,232,.28)!important;border-radius:11px!important;
+  background:linear-gradient(110deg,#117c91,#176e6b)!important;
+  box-shadow:0 12px 28px rgba(57,216,232,.13)!important;
+}
+.dt-auth-v2-message{border-radius:10px!important}
+.dt-order-checkout,.dt-order-checkout-v5{
+  background:radial-gradient(ellipse at 78% 0,rgba(57,216,232,.09),transparent 34rem),#050b14!important;
+}
+.dt-checkout-layout-v5{gap:clamp(24px,4vw,58px)!important}
+.dt-checkout-intro-v5{top:110px}
+.dt-checkout-panel-v5{
+  border:1px solid var(--dt-line)!important;border-radius:20px!important;
+  background:linear-gradient(145deg,rgba(16,38,61,.97),rgba(7,19,32,.99))!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.3)!important;
+}
+.dt-checkout-panel-v5 .order-form-heading{border-bottom:1px solid var(--dt-line)!important}
+.dt-order-form .order-field input,.dt-order-form .order-field select,.dt-order-form .order-field textarea{
+  min-height:46px!important;border:1px solid var(--dt-line)!important;border-radius:10px!important;
+  background:#071321!important;color:var(--dt-ink)!important;
+}
+.dt-order-form .order-field :is(input,select,textarea):focus{
+  border-color:rgba(57,216,232,.6)!important;box-shadow:0 0 0 3px rgba(57,216,232,.09)!important;outline:none!important;
+}
+.dt-order-form .order-submit{
+  min-height:52px!important;border:1px solid rgba(57,216,232,.3)!important;border-radius:11px!important;
+  background:linear-gradient(110deg,#117c91,#176e6b)!important;color:#effaff!important;
+}
+.dt-payment-step,.dt-order-status{border-color:var(--dt-line)!important;border-radius:14px!important}
+.dt-bank-card{border-color:var(--dt-line)!important;background:rgba(5,11,20,.5)!important}
+.dt-order-account-overlay{backdrop-filter:blur(12px)}
+@media(max-width:760px){
+ .dt-auth-v2-frame{width:calc(100% - 24px)!important}
+ .dt-auth-v2-panel{border-radius:16px!important}
+ .dt-checkout-layout-v5{gap:20px!important}
+ .dt-checkout-intro-v5{top:auto}
+ .dt-checkout-panel-v5{border-radius:15px!important}
+}
