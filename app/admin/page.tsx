@@ -16,7 +16,26 @@ export default function AdminPage(){
  const router=useRouter(); const [stats,setStats]=useState<AdminStats>(initialStats); const [loading,setLoading]=useState(true); const [refreshing,setRefreshing]=useState(false); const [error,setError]=useState(""); const [menuOpen,setMenuOpen]=useState(false);
  async function loadStats(){setError("");try{const {data,error:sessionError}=await supabase.auth.getSession();if(sessionError||!data.session){router.replace("/login");return;}const response=await fetch("/api/admin/overview",{headers:{Authorization:"Bearer "+data.session.access_token},cache:"no-store"});const result=(await response.json()) as AdminOverviewResponse;if(response.status===401){router.replace("/login");return;}if(!response.ok||result.success===false)throw new Error(result.success===false?result.error||"Gagal mengambil data Admin":"Gagal mengambil data Admin");setStats(result.stats);}catch(err){setError(err instanceof Error?err.message:"Terjadi kesalahan saat mengambil data.");}finally{setLoading(false);setRefreshing(false);}}
  useEffect(()=>{void loadStats();},[]);
- useEffect(()=>{if(!menuOpen)return;const onKeyDown=(event:KeyboardEvent)=>{if(event.key==="Escape")setMenuOpen(false);};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown);},[menuOpen]);
+ useEffect(()=>{
+  if(!menuOpen)return;
+  const panel=document.getElementById("admin-overview-mobile-menu");
+  const trigger=document.querySelector<HTMLButtonElement>(".dt-control-menu-trigger");
+  const previousFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
+  const previousOverflow=document.body.style.overflow;
+  document.body.style.overflow="hidden";
+  const getFocusable=()=>Array.from(panel?.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')??[]).filter(el=>el.offsetWidth>0||el.offsetHeight>0);
+  getFocusable()[0]?.focus();
+  const onKeyDown=(event:KeyboardEvent)=>{
+   if(event.key==="Escape"){event.preventDefault();setMenuOpen(false);return;}
+   if(event.key!=="Tab")return;
+   const focusable=getFocusable();if(!focusable.length)return;
+   const first=focusable[0],last=focusable[focusable.length-1];
+   if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+   else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+  };
+  window.addEventListener("keydown",onKeyDown);
+  return()=>{document.body.style.overflow=previousOverflow;window.removeEventListener("keydown",onKeyDown);if(previousFocus?.isConnected)trigger?.focus();};
+ },[menuOpen]);
  async function logout(){await supabase.auth.signOut();router.replace("/login");}
  const metrics=[{label:"Pengguna terdaftar",value:stats.totalUsers,detail:"Akun di platform",icon:Users},{label:"Kartu NFC",value:stats.totalCards,detail:number(stats.activeCards)+" aktif",icon:CreditCard},{label:"Total interaksi",value:stats.totalTaps,detail:"Tap NFC tercatat",icon:MousePointerClick},{label:"Pesanan masuk",value:stats.totalOrders,detail:number(stats.paidOrders)+" sudah lunas",icon:ShoppingBag}];
  return <main className="dt-control">
