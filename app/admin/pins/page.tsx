@@ -226,7 +226,7 @@ export default function AdminPinsPage() {
   });
 
   return (
-    <main className="dt-admin-shell min-h-screen bg-[#15181b] text-[#efede7]">
+    <main className="dt-admin-shell dt-admin-v4 min-h-screen bg-[#15181b] text-[#efede7]">
       <AdminSidebar active="pins"/>
 
       <section className="min-h-screen lg:ml-[264px]">
