@@ -1,5 +1,7 @@
 -- Deliver one WhatsApp message per event even if multiple Superadmins receive dashboard rows.
-create or replace function public.claim_superadmin_notification_deliveries(p_limit integer default 10)
+drop function if exists public.claim_superadmin_notification_deliveries(integer);
+
+create function public.claim_superadmin_notification_deliveries(p_limit integer default 10)
 returns table (
   event_key text,
   id uuid,
