@@ -49,6 +49,7 @@ async function updateFailure(
   const nextAttempt = new Date(Date.now() + retryDelaySeconds(attempts) * 1000).toISOString();
   const { error } = await admin.from("superadmin_notifications").update({
     whatsapp_status: shouldRetry ? "pending" : "failed",
+    whatsapp_attempts: shouldRetry ? attempts : 5,
     whatsapp_next_attempt_at: nextAttempt,
     whatsapp_locked_until: null,
     whatsapp_last_error: cleanText(errorMessage, 500),
