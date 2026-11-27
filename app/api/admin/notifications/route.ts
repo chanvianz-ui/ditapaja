@@ -13,8 +13,11 @@ function json(body: Record<string, unknown>, status = 200) {
 }
 
 function isWhatsAppConfigured() {
+  const phone = (process.env.WHATSAPP_ADMIN_PHONE || "").replace(/\\D/g, "");
+  const apiVersion = process.env.WHATSAPP_API_VERSION || "v27.0";
   return process.env.WHATSAPP_ADMIN_OPT_IN === "true"
-    && Boolean(process.env.WHATSAPP_ADMIN_PHONE)
+    && /^\\d{8,15}$/.test(phone)
+    && /^v\\d+\\.\\d+$/.test(apiVersion)
     && Boolean(process.env.WHATSAPP_PHONE_NUMBER_ID)
     && Boolean(process.env.WHATSAPP_CLOUD_API_TOKEN)
     && Boolean(process.env.WHATSAPP_TEMPLATE_NAME);
