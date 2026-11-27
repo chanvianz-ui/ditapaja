@@ -4552,3 +4552,41 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
   .admin-overview-main{margin-left:0}
   .admin-overview-mobile-menu{display:block}
 }
+
+
+/* Admin subpages — shared component language and readable dark controls */
+.dt-admin-shell>section{min-width:0;background:transparent!important;color:#e8f1fb}
+.dt-admin-shell>section>header{border-color:rgba(153,184,215,.13)!important;background:rgba(7,19,33,.9)!important;backdrop-filter:blur(18px)}
+.dt-admin-shell>section>header>div{min-height:72px;max-width:1600px;margin:0 auto;padding-left:clamp(16px,3vw,42px)!important;padding-right:clamp(16px,3vw,42px)!important}
+.dt-admin-shell>section>header p{color:#83a0b9!important;font-size:9px!important;font-weight:750!important;letter-spacing:.09em}
+.dt-admin-shell>section>header h1{color:#edf6ff!important;font-family:Manrope,ui-sans-serif,sans-serif;font-size:18px!important;font-weight:800!important;letter-spacing:-.045em}
+.dt-admin-shell>section>div.mx-auto{width:min(100%,1540px);padding:clamp(18px,3vw,38px)!important}
+.dt-admin-shell h2{color:#edf6ff;letter-spacing:-.045em}
+.dt-admin-shell h3{color:#e3effb}
+.dt-admin-shell p{line-height:1.7}
+.dt-admin-shell article{border-color:rgba(153,184,215,.15)!important;border-radius:15px!important;background:linear-gradient(150deg,rgba(16,41,66,.96),rgba(8,24,41,.98))!important;box-shadow:0 14px 38px rgba(0,0,0,.12)}
+.dt-admin-shell article:hover{border-color:rgba(126,215,227,.22)!important}
+.dt-admin-shell .bg-white{background:#10253b!important;color:#e5f0fa!important}
+.dt-admin-shell button.bg-white{border-color:rgba(153,184,215,.2)!important;color:#dceaf7!important}
+.dt-admin-shell button[class*="bg-[#3a2a20]"]{border:1px solid rgba(126,215,227,.25)!important;background:rgba(49,213,232,.12)!important;color:#a9edf0!important}
+.dt-admin-shell button[class*="bg-[#3a2a20]"]:hover{background:rgba(49,213,232,.19)!important}
+.dt-admin-shell input,.dt-admin-shell select,.dt-admin-shell textarea{max-width:100%;border-color:rgba(153,184,215,.2)!important;border-radius:10px!important;background:#091b2d!important;color:#e8f3fc!important;outline:none}
+.dt-admin-shell input::placeholder,.dt-admin-shell textarea::placeholder{color:#68839c!important}
+.dt-admin-shell input:focus,.dt-admin-shell select:focus,.dt-admin-shell textarea:focus{border-color:rgba(126,215,227,.6)!important;box-shadow:0 0 0 3px rgba(126,215,227,.08)}
+.dt-admin-shell table{width:100%;border-collapse:separate;border-spacing:0}
+.dt-admin-shell th{background:#0d2237;color:#89a6c0!important;font-size:9px!important;font-weight:850!important;letter-spacing:.1em;text-transform:uppercase}
+.dt-admin-shell td{color:#d5e4f2}
+.dt-admin-shell th,.dt-admin-shell td{border-color:rgba(153,184,215,.12)!important}
+.dt-admin-shell tr:hover td{background:rgba(126,215,227,.035)}
+.dt-admin-shell a{transition:color .18s,border-color .18s,background .18s}
+.dt-admin-shell button{transition:color .18s,border-color .18s,background .18s,transform .18s}
+.dt-admin-shell button:active{transform:translateY(1px)}
+.dt-admin-shell button:focus-visible,.dt-admin-shell a:focus-visible{outline:2px solid #83d9df;outline-offset:3px}
+.dt-admin-shell [role="alert"]{border-color:rgba(251,113,133,.25)!important;background:rgba(251,113,133,.08)!important;color:#ffc1cb!important}
+.dt-admin-shell .text-\[\#a0a3a2\],.dt-admin-shell .text-\[\#8e9695\]{color:#829ab2!important}
+.dt-admin-shell .border-\[\#34383a\]{border-color:rgba(153,184,215,.16)!important}
+.dt-admin-shell .hover\:bg-\[\#15181b\]:hover{background:#17334e!important}
+.dt-admin-shell .rounded-2xl{border-radius:15px}
+@media(max-width:1023px){.dt-admin-shell>section>div.mx-auto{padding:22px 18px 32px!important}}
+@media(max-width:680px){.dt-admin-shell>section>header>div{min-height:66px;padding-top:10px!important;padding-bottom:10px!important}.dt-admin-shell>section>header h1{font-size:15px!important}.dt-admin-shell>section>div.mx-auto{padding:18px 13px 28px!important}.dt-admin-shell table{min-width:640px}.dt-admin-shell :is(.overflow-x-auto,.overflow-auto){max-width:100%;overscroll-behavior-x:contain}}
+@media(prefers-reduced-motion:reduce){.dt-admin-shell button,.dt-admin-shell a{transition:none!important}}
