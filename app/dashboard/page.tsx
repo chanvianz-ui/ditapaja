@@ -62,6 +62,16 @@ type Analytics = {
   ctr: number;
 };
 
+type CustomerInsights = {
+  period_days: number;
+  summary: { total_taps: number; unique_visitors: number; review_clicks: number; ctr: number };
+  previous: { total_taps: number; review_clicks: number };
+  daily: Array<{ day: string; taps: number; clicks: number }>;
+  cards: Array<{ card_id: string; card_name: string; location_id: string | null; taps: number; clicks: number; unique_visitors: number; ctr: number }>;
+  locations: Array<{ location_id: string | null; card_count: number; taps: number; clicks: number; ctr: number }>;
+  insight_comparison: { tap_change_pct: number | null; click_change_pct: number | null };
+};
+
 export default function DashboardPage() {
   const router = useRouter();
   const [activeView, setActiveView] = useState<"overview" | "cards">("overview");
@@ -88,7 +98,7 @@ export default function DashboardPage() {
   const [analyticsError, setAnalyticsError] = useState("");
   const [chartPeriod, setChartPeriod] = useState<7 | 30 | 90>(7);
   const [analyticsUserId, setAnalyticsUserId] = useState<string | null>(null);
-  const [insightsData, setInsightsData] = useState<any>(null);
+  const [insightsData, setInsightsData] = useState<CustomerInsights | null>(null);
   const [selectedCardId, setSelectedCardId] = useState("all");
   const [selectedLocationId, setSelectedLocationId] = useState("all");
   const [businessLocations, setBusinessLocations] = useState<{id:string;name:string}[]>([]);
@@ -139,8 +149,6 @@ export default function DashboardPage() {
   const [nfcError, setNfcError] = useState("");
   const [qrCard, setQrCard] = useState<NfcCard | null>(null);
   const [showBulkQrSheet, setShowBulkQrSheet] = useState(false);
-  const [changeLogs, setChangeLogs] = useState<any[]>([]);
-  const [changeLogUnavailable, setChangeLogUnavailable] = useState(false);
 
   const chartData = useMemo<Array<{ key: string; label: string; taps: number; clicks: number }>>(() => {
     return (insightsData?.daily ?? []).map((item: { day: string; taps: number; clicks: number }) => {
@@ -176,7 +184,7 @@ export default function DashboardPage() {
 
   const analyticsInsights = useMemo(() => {
     const bestDay = [...chartData].sort((a, b) => b.taps - a.taps)[0];
-    const topCardData = [...(insightsData?.cards ?? [])].sort((a: any, b: any) => Number(b.taps) - Number(a.taps))[0];
+    const topCardData = [...(insightsData?.cards ?? [])].sort((a, b) => b.taps - a.taps)[0];
     const tapChange = insightsData?.insight_comparison?.tap_change_pct;
     const clickChange = insightsData?.insight_comparison?.click_change_pct;
     return {
@@ -375,23 +383,42 @@ export default function DashboardPage() {
 
         // Older databases may not have the optional multi-location column yet.
         // Retry without it so existing cards remain visible and manageable.
-        let cardsResult: any = initialCardsResult;
+        let cardRows: NfcCard[] = (initialCardsResult.data ?? []).map((card) => ({
+          id: card.id,
+          card_name: card.card_name,
+          public_code: card.public_code,
+          destination_url: card.destination_url,
+          active: card.active,
+          location_id: card.location_id ?? null,
+          archived_at: card.archived_at ?? null,
+          archived_by: card.archived_by ?? null,
+        }));
+        let cardLoadError = initialCardsResult.error;
         if (
-          cardsResult.error &&
-          (cardsResult.error.code === "PGRST204" ||
-            cardsResult.error.message?.includes("location_id"))
+          cardLoadError &&
+          (cardLoadError.code === "PGRST204" ||
+            cardLoadError.message?.includes("location_id"))
         ) {
           console.warn("Card location column is not available yet; loading cards without location_id.");
-          cardsResult = await supabase
+          const fallbackCardsResult = await supabase
             .from("nfc_cards")
             .select("id, card_name, public_code, destination_url, active, archived_at, archived_by")
             .eq("user_id", data.user.id)
             .order("created_at", { ascending: false });
+          cardLoadError = fallbackCardsResult.error;
+          if (!cardLoadError) {
+            cardRows = (fallbackCardsResult.data ?? []).map((card) => ({
+              ...card,
+              location_id: null,
+              archived_at: card.archived_at ?? null,
+              archived_by: card.archived_by ?? null,
+            }));
+          }
         }
 
-        if (cardsResult.error) {
-          console.error("Card loading error:", cardsResult.error);
-          throw cardsResult.error;
+        if (cardLoadError) {
+          console.error("Card loading error:", cardLoadError);
+          throw cardLoadError;
         }
 
         let currentProfile = profileResult.data;
@@ -416,22 +443,8 @@ export default function DashboardPage() {
 
         setProfile(currentProfile);
 
-        const userCards = ((cardsResult.data ?? []).map((card: any) => ({ ...card, location_id: card.location_id ?? null, archived_at: card.archived_at ?? null, archived_by: card.archived_by ?? null }))) as NfcCard[];
-        setCards(userCards);
+        setCards(cardRows);
         setBusinessLocations(locationsResult.data ?? []);
-
-        const { data: logs, error: logsError } = await supabase
-          .from("nfc_card_change_logs")
-          .select("id, card_id, change_type, old_values, new_values, created_at")
-          .eq("user_id", data.user.id)
-          .order("created_at", { ascending: false })
-          .limit(30);
-        if (logsError) {
-          console.warn("Card history is not available yet:", logsError.message);
-          setChangeLogUnavailable(true);
-        } else {
-          setChangeLogs(logs ?? []);
-        }
 
         setAnalyticsUserId(data.user.id);
         setInsightsData(null);
