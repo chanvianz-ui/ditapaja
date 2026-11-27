@@ -38,7 +38,6 @@ import {
 import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
 import { supabase } from "../../lib/supabase";
 import "./dashboard-experience.css";
-import "./workspace-v3.css";
 
 type Profile = {
   full_name: string | null;
