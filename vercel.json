@@ -13,7 +13,7 @@
     "superadmin-whatsapp-notifications": {
       "schedule": "* * * * *",
       "timezone": "Asia/Jakarta",
-      "function": "app/api/schedules/dispatch-notifications"
+      "function": "api/schedules/dispatch-notifications"
     }
   }
 }
