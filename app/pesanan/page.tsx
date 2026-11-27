@@ -129,7 +129,11 @@ export default function CustomerOrdersPage() {
 
   useEffect(()=>{ void load(); },[router]);
 
-  return <><SiteHeader /><main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6 dt-customer-orders dt-customer-orders-v2">
+  const unpaidCount = orders.filter(order => !["paid","refunded"].includes(order.payment_status)).length;
+  const activeCount = orders.filter(order => !["completed","cancelled"].includes(order.status)).length;
+  const paidTotal = orders.filter(order => order.payment_status === "paid").reduce((sum, order) => sum + order.unit_price * order.quantity + (order.shipping_cost || 0), 0);
+
+  return <><SiteHeader /><main className="min-h-screen bg-[#f7f9fc] px-4 py-8 sm:px-6 dt-customer-orders dt-customer-orders-v2 dt-customer-orders-v5">
     <div className="mx-auto max-w-5xl dt-customer-orders-inner">
       <header className="mb-8 flex dt-customer-orders-header items-center justify-between gap-3">
         <Link href="/" className="text-xl font-black tracking-tight text-slate-900">DiTap<span className="text-blue-600">Aja.</span></Link>
@@ -148,10 +152,16 @@ export default function CustomerOrdersPage() {
           </button>
         </div>
       </div>
+      {!loading && !error && orders.length > 0 && <section className="dt-order-overview-v5" aria-label="Ringkasan transaksi">
+        <article><span>Total pesanan</span><strong>{orders.length.toString().padStart(2, "0")}</strong><small>Seluruh transaksi</small></article>
+        <article><span>Dalam proses</span><strong>{activeCount.toString().padStart(2, "0")}</strong><small>Belum selesai</small></article>
+        <article><span>Menunggu pembayaran</span><strong>{unpaidCount.toString().padStart(2, "0")}</strong><small>Perlu tindak lanjut</small></article>
+        <article><span>Total terverifikasi</span><strong>{money(paidTotal)}</strong><small>Pembayaran yang dikonfirmasi</small></article>
+      </section>}
       {error && <div role="alert" className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">{error}</div>}
       {loading ? <div className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white p-12 text-sm text-slate-500"><RefreshCw size={16} className="animate-spin"/> Memuat transaksi...</div>
       : orders.length === 0 ? <section className="rounded-3xl border border-slate-200 bg-white px-6 py-14 text-center shadow-sm"><Package size={32} className="mx-auto text-slate-300"/><h2 className="mt-4 text-lg font-bold text-slate-900">Belum ada pesanan</h2><p className="mt-2 text-sm text-slate-500">Pastikan kamu login menggunakan email yang sama dengan email saat checkout.</p><Link href="/koleksi" className="mt-6 inline-flex rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white">Lihat koleksi kartu</Link></section>
-      : <div className="space-y-5">{orders.map(order=><article key={order.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dt-customer-order-card">
+      : <div className="space-y-5">{orders.map(order=><article key={order.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dt-customer-order-card dt-customer-order-v5">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 p-5 sm:p-6">
           <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">ORDER · {order.id.slice(0,8).toUpperCase()}</p><h2 className="mt-2 text-lg font-bold text-slate-900">{order.product_name}</h2><p className="mt-1 text-xs text-slate-500">{new Date(order.created_at).toLocaleString("id-ID",{dateStyle:"long",timeStyle:"short"})}</p></div>
           <span className={"rounded-full px-3 py-1.5 text-xs font-bold "+(order.status==="completed"?"bg-emerald-50 text-emerald-700":order.status==="cancelled"?"bg-slate-100 text-slate-500":"bg-blue-50 text-blue-700")}>{statusNames[order.status] || order.status}</span>
