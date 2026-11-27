@@ -155,7 +155,7 @@ export default function CustomerOrdersPage() {
       {!loading && !error && orders.length > 0 && <section className="dt-order-overview-v5" aria-label="Ringkasan transaksi">
         <article><span>Total pesanan</span><strong>{orders.length.toString().padStart(2, "0")}</strong><small>Seluruh transaksi</small></article>
         <article><span>Dalam proses</span><strong>{activeCount.toString().padStart(2, "0")}</strong><small>Belum selesai</small></article>
-        <article><span>Menunggu pembayaran</span><strong>{unpaidCount.toString().padStart(2, "0")}</strong><small>Perlu tindak lanjut</small></article>
+        <article><span>Belum terverifikasi</span><strong>{unpaidCount.toString().padStart(2, "0")}</strong><small>Perlu tindak lanjut</small></article>
         <article><span>Total terverifikasi</span><strong>{money(paidTotal)}</strong><small>Pembayaran yang dikonfirmasi</small></article>
       </section>}
       {error && <div role="alert" className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">{error}</div>}
