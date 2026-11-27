@@ -2,6 +2,7 @@
 
 import AdminMenu from "@/app/admin/admin-menu";
 import AdminSidebar from "@/app/admin/admin-sidebar";
+import AdminNotificationBell from "@/app/admin/admin-notification-bell";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -125,7 +126,7 @@ export default function AdminOrdersPage() {
       <AdminSidebar active="orders"/>
 
       <section className="min-h-screen lg:ml-[264px]">
-        <header className="sticky top-0 z-20 border-b border-[#34383a] bg-[#15181b]/90 backdrop-blur-xl"><div className="flex items-center justify-between px-4 py-4 sm:px-8 lg:px-10"><div><p className="text-[11px] font-medium text-[#dedbd4]">DiTapAja <span className="mx-1.5 text-[#d8d3ca]">/</span> Workspace</p><h1 className="mt-1 text-base font-semibold tracking-tight sm:text-lg">Order management</h1></div><div className="flex items-center gap-2"><button onClick={()=>{setRefreshing(true);void load();}} disabled={refreshing||loading} className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#34383a] bg-white px-3.5 text-xs font-semibold text-[#efede7] transition hover:border-[#b9c8b5] disabled:opacity-50"><RefreshCw size={14} className={refreshing?"animate-spin":""}/><span className="hidden sm:inline">Refresh data</span></button><div className="lg:hidden"><AdminMenu/></div></div></div></header>
+        <header className="sticky top-0 z-20 border-b border-[#34383a] bg-[#15181b]/90 backdrop-blur-xl"><div className="flex items-center justify-between px-4 py-4 sm:px-8 lg:px-10"><div><p className="text-[11px] font-medium text-[#dedbd4]">DiTapAja <span className="mx-1.5 text-[#d8d3ca]">/</span> Workspace</p><h1 className="mt-1 text-base font-semibold tracking-tight sm:text-lg">Order management</h1></div><div className="flex items-center gap-2"><AdminNotificationBell/><button onClick={()=>{setRefreshing(true);void load();}} disabled={refreshing||loading} className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#34383a] bg-white px-3.5 text-xs font-semibold text-[#efede7] transition hover:border-[#b9c8b5] disabled:opacity-50"><RefreshCw size={14} className={refreshing?"animate-spin":""}/><span className="hidden sm:inline">Refresh data</span></button><div className="lg:hidden"><AdminMenu/></div></div></div></header>
 
         <div className="mx-auto max-w-[1480px] px-4 py-7 sm:px-8 sm:py-9 lg:px-10">
           <div className="mb-8 flex flex-col justify-between gap-5 xl:flex-row xl:items-end"><div><button onClick={()=>router.push("/admin")} className="mb-5 inline-flex items-center gap-2 text-[11px] font-medium text-[#dedbd4] transition hover:text-[#e0b28f]"><ArrowLeft size={14}/> Kembali ke overview</button><h2 className="text-[30px] font-semibold leading-tight tracking-[-.045em] sm:text-[38px]">Pesanan masuk.</h2></div><div className="rounded-2xl border border-[#34383a] bg-white px-5 py-4 xl:min-w-[220px]"><p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#a0a3a2]">Total hasil pencarian</p><p className="mt-1 text-2xl font-semibold tracking-tight">{loading?"—":total.toLocaleString("id-ID")} <span className="text-xs font-medium text-[#a0a3a2]">pesanan</span></p></div></div>
