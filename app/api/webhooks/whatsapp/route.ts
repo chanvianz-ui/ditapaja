@@ -72,18 +72,26 @@ export async function POST(request: NextRequest) {
           if (!status.id || !["sent", "delivered", "read", "failed"].includes(status.status || "")) continue;
 
           const nextStatus = status.status as "sent" | "delivered" | "read" | "failed";
+          const now = new Date().toISOString();
           const update: Record<string, unknown> = { whatsapp_status: nextStatus };
-          if (nextStatus === "delivered" || nextStatus === "read") update.whatsapp_delivered_at = new Date().toISOString();
-          if (nextStatus === "read") update.whatsapp_read_at = new Date().toISOString();
+          if (nextStatus === "sent") update.whatsapp_sent_at = now;
+          if (nextStatus === "delivered" || nextStatus === "read") update.whatsapp_delivered_at = now;
+          if (nextStatus === "read") update.whatsapp_read_at = now;
           if (nextStatus === "failed") {
             update.whatsapp_attempts = 5;
             update.whatsapp_locked_until = null;
             update.whatsapp_last_error = (status.errors || []).map(item => item.message || item.title || String(item.code || "")).join("; ").slice(0, 500) || "Meta reported delivery failure.";
           }
 
-          const { error } = await admin.from("superadmin_notifications")
+          let query = admin.from("superadmin_notifications")
             .update(update)
             .eq("whatsapp_provider_message_id", status.id);
+          if (nextStatus === "sent") query = query.in("whatsapp_status", ["processing", "sent"]);
+          else if (nextStatus === "delivered") query = query.in("whatsapp_status", ["sent", "delivered"]);
+          else if (nextStatus === "read") query = query.in("whatsapp_status", ["sent", "delivered", "read"]);
+          else query = query.in("whatsapp_status", ["processing", "sent"]);
+
+          const { error } = await query;
           if (error) console.error("WhatsApp status webhook update failed:", error);
         }
       }
