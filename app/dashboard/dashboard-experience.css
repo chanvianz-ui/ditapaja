@@ -188,3 +188,48 @@
  .dt-reset-dashboard .dt-card-counts { grid-template-columns:repeat(2,minmax(0,1fr)); }
  .dt-reset-dashboard .dt-card-toolbar { grid-template-columns:1fr; }
 }
+
+
+/* Palette and component hierarchy aligned to the DiTapAja cyan / navy / mint system. */
+.dt-reset-dashboard{
+  --dash-bg:#050b14;--dash-panel:#10263d;--dash-panel-2:#16334d;
+  --dash-line:rgba(145,190,218,.15);--dash-text:#effaff;--dash-muted:#9bb2c6;
+  --dash-blue:#39d8e8;--dash-cyan:#78f0c3;
+  background:
+    radial-gradient(ellipse at 82% 0%,rgba(57,216,232,.11),transparent 34rem),
+    radial-gradient(ellipse at 8% 52%,rgba(120,240,195,.04),transparent 30rem),
+    #050b14!important;
+}
+.dt-reset-dashboard .dt-eyebrow{color:#78f0c3}
+.dt-reset-dashboard .dt-primary{
+  border-color:rgba(57,216,232,.3);border-radius:10px;
+  background:linear-gradient(120deg,#137d91,#176b6a);
+  box-shadow:0 10px 28px rgba(57,216,232,.12);
+}
+.dt-reset-dashboard .dt-kpi{
+  border-color:rgba(145,190,218,.15);border-radius:16px;
+  background:linear-gradient(145deg,rgba(16,38,61,.98),rgba(7,19,32,.98));
+  box-shadow:0 18px 48px rgba(0,0,0,.2);
+}
+.dt-reset-dashboard .dt-kpi-head svg,.dt-reset-dashboard .dt-card-icon{color:#39d8e8}
+.dt-reset-dashboard .dt-panel,.dt-reset-dashboard .dt-recent-section,.dt-reset-dashboard .dt-card-manager{
+  border-color:rgba(145,190,218,.15);border-radius:16px;
+  background:linear-gradient(150deg,rgba(16,38,61,.96),rgba(7,19,32,.98));
+  box-shadow:0 18px 50px rgba(0,0,0,.18);
+}
+.dt-reset-dashboard .dt-period button.is-active{background:rgba(57,216,232,.17);color:#effaff}
+.dt-reset-dashboard .dt-bar-taps{background:linear-gradient(180deg,#39d8e8,#176b8c)}
+.dt-reset-dashboard .dt-bar-clicks{background:linear-gradient(180deg,#78f0c3,#287d73)}
+.dt-reset-dashboard .dt-top-card{border-color:rgba(57,216,232,.2);background:linear-gradient(135deg,rgba(20,115,143,.17),rgba(16,48,72,.12))}
+.dt-reset-dashboard .dt-top-card small,.dt-reset-dashboard .dt-chart-foot button,.dt-reset-dashboard .dt-text-button{color:#78f0c3}
+.dt-reset-dashboard .dt-card-counts>div{border-color:rgba(145,190,218,.15);background:linear-gradient(145deg,#10263d,#0a192b)}
+.dt-reset-dashboard .dt-card-toolbar input:focus,.dt-reset-dashboard .dt-card-toolbar select:focus{
+  border-color:rgba(57,216,232,.55);box-shadow:0 0 0 3px rgba(57,216,232,.1);outline:none;
+}
+.dt-reset-dashboard :where(button,a,input,select):focus-visible{outline:2px solid #39d8e8;outline-offset:3px}
+.dt-reset-dashboard .dt-managed-card{border-color:rgba(145,190,218,.14);background:rgba(5,11,20,.45)}
+@media(max-width:600px){
+ .dt-reset-dashboard .dt-page-heading{padding-bottom:19px}
+ .dt-reset-dashboard .dt-kpi{border-radius:13px}
+ .dt-reset-dashboard .dt-panel,.dt-reset-dashboard .dt-recent-section{border-radius:13px}
+}
