@@ -3,6 +3,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 type AdminClient = SupabaseClient<any>;
 type QueuedNotification = {
   id: string;
+  event_key: string;
   title: string;
   message: string;
   action_url: string;
@@ -53,7 +54,7 @@ async function updateFailure(
     whatsapp_next_attempt_at: nextAttempt,
     whatsapp_locked_until: null,
     whatsapp_last_error: cleanText(errorMessage, 500),
-  }).eq("id", notification.id);
+  }).eq("event_key", notification.event_key);
   if (error) throw new Error("Could not save WhatsApp delivery failure: " + error.message);
   return shouldRetry ? "retried" : "failed";
 }
@@ -127,7 +128,7 @@ async function deliverOne(
       whatsapp_sent_at: new Date().toISOString(),
       whatsapp_locked_until: null,
       whatsapp_last_error: null,
-    }).eq("id", notification.id);
+    }).eq("event_key", notification.event_key);
 
     if (error) {
       // Meta may already have accepted this message. Do not automatically resend on a DB write failure.
