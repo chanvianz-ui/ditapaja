@@ -395,3 +395,25 @@ button:disabled{cursor:not-allowed;opacity:.52}
 .dt-customer-orders-v2 :where(.bg-blue-600){background:linear-gradient(110deg,var(--dt-cyan),var(--dt-mint))!important;color:#04131d!important}
 .dt-customer-orders-v2 :where(.text-blue-600){color:var(--dt-cyan)!important}
 @media(max-width:760px){.ed-hero{min-height:0;padding:72px 18px 60px!important}.ed-hero h1{font-size:clamp(46px,13vw,68px)!important}.nx-catalog-hero-v2{min-height:0;padding:72px 18px 50px!important}.nx-catalog-hero-copy h1{font-size:clamp(44px,12vw,62px)!important}.detail-hero{padding-inline:16px!important}.detail-copy h1{font-size:42px!important}.order-layout{grid-template-columns:1fr!important}.order-page{padding-inline:14px!important}.dt-customer-orders-v2{padding-inline:14px!important}}
+
+/* Recovery and NFC activation flows */
+.dt-recovery-v2{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 50% 0,rgba(57,216,232,.13),transparent 34rem),var(--dt-midnight)!important;color:var(--dt-ink)!important}
+.dt-recovery-v2-card{width:min(100%,480px);padding:clamp(24px,5vw,42px);border:1px solid var(--dt-line)!important;border-radius:23px!important;background:linear-gradient(150deg,#10263d,#071522)!important;box-shadow:0 28px 80px rgba(0,0,0,.35)!important}
+.dt-recovery-v2-brand{color:var(--dt-ink)!important}.dt-recovery-v2-brand span{color:var(--dt-cyan)!important}
+.dt-recovery-v2-kicker{color:var(--dt-mint)!important;font-size:9px!important;font-weight:900!important;letter-spacing:1.8px!important}
+.dt-recovery-v2-copy,.dt-recovery-v2-card p{color:var(--dt-muted)!important;line-height:1.8!important}
+.dt-recovery-v2-card h1{color:var(--dt-ink)!important;font-size:clamp(32px,6vw,44px)!important;letter-spacing:-.07em!important}
+.dt-recovery-v2-card input{border:1px solid var(--dt-line-strong)!important;border-radius:11px!important;background:#061421!important;color:var(--dt-ink)!important}
+.dt-recovery-v2-card button{border:0!important;border-radius:11px!important;background:linear-gradient(110deg,var(--dt-cyan),var(--dt-mint))!important;color:#04131d!important}
+.dt-recovery-v2-success{border:1px solid rgba(120,240,195,.22)!important;border-radius:12px!important;background:rgba(120,240,195,.07)!important;color:var(--dt-mint)!important}
+.dt-recovery-v2-error{border:1px solid rgba(255,130,149,.2)!important;border-radius:12px!important;background:rgba(255,130,149,.07)!important;color:#ffb3bf!important}
+.dt-activation-page{background:radial-gradient(ellipse at 15% 0,rgba(57,216,232,.1),transparent 30rem),var(--dt-midnight)!important;color:var(--dt-ink)!important}
+.dt-activation-page .dt-activation-shell{border:1px solid var(--dt-line)!important;border-radius:23px!important;background:linear-gradient(145deg,#10263d,#071522)!important;box-shadow:0 30px 90px rgba(0,0,0,.34)!important}
+.dt-activation-page .dt-activation-shell>div:first-child{background:radial-gradient(ellipse at 100% 0,rgba(57,216,232,.17),transparent 24rem),linear-gradient(145deg,#12324b,#081827)!important}
+.dt-activation-page :where(h1,h2,strong){color:var(--dt-ink)!important}
+.dt-activation-page :where(p,small){color:var(--dt-muted)!important}
+.dt-activation-page .dt-activation-form{background:linear-gradient(150deg,#10263d,#091827)!important;color:var(--dt-ink)!important}
+.dt-activation-page input{border:1px solid var(--dt-line-strong)!important;border-radius:12px!important;background:#050f1b!important;color:var(--dt-ink)!important}
+.dt-activation-page button{border-radius:11px!important}
+.dt-activation-page button.bg-\[\#102c49\]{border:0!important;background:linear-gradient(110deg,var(--dt-cyan),var(--dt-mint))!important;color:#04131d!important}
+.dt-activation-page a{color:var(--dt-cyan)!important}
