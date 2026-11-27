@@ -115,19 +115,23 @@ export default function AdminNotificationBell() {
   }, [open]);
 
   async function markRead(id: string) {
-    const { data } = await supabase.auth.getSession();
-    if (!data.session) return;
-    const response = await fetch("/api/admin/notifications", {
-      method: "PATCH",
-      headers: {
-        Authorization: "Bearer " + data.session.access_token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ action: "mark_read", id }),
-    });
-    if (response.ok) {
-      setItems(current => current.map(item => item.id === id ? { ...item, read_at: new Date().toISOString() } : item));
-      setUnread(current => Math.max(0, current - 1));
+    try {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) return;
+      const response = await fetch("/api/admin/notifications", {
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer " + data.session.access_token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action: "mark_read", id }),
+      });
+      if (response.ok) {
+        setItems(current => current.map(item => item.id === id ? { ...item, read_at: new Date().toISOString() } : item));
+        setUnread(current => Math.max(0, current - 1));
+      }
+    } catch {
+      // Keep navigation usable if the read-state request fails.
     }
   }
 
