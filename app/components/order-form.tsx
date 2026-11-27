@@ -5,7 +5,7 @@ import type { FormEvent } from "react";
 import { ArrowLeft, ArrowRight, Check, Copy, CreditCard, FileImage, LockKeyhole, MessageCircle, Minus, Plus, ShieldCheck, Upload } from "lucide-react";
 import Link from "next/link";
 import SiteHeader from "./site-header";
-import { PRODUCTS, formatProductPrice, type ProductSlug } from "../lib/product-catalog";
+import { PRODUCTS, formatProductPrice, isProductSlug, type ProductSlug } from "../lib/product-catalog";
 
 const products = PRODUCTS;
 
@@ -15,8 +15,8 @@ const accounts = [
 ];
 
 export default function OrderForm({ initialProduct = "signature" }: { initialProduct?: string }) {
-  const safeInitial = Object.prototype.hasOwnProperty.call(products, initialProduct) ? initialProduct as ProductKey : "signature";
-  const [productKey, setProductKey] = useState<ProductKey>(safeInitial);
+  const safeInitial: ProductSlug = isProductSlug(initialProduct) ? initialProduct : "signature";
+  const [productKey, setProductKey] = useState<ProductSlug>(safeInitial);
   const [quantity, setQuantity] = useState<number>(products[safeInitial].minimum);
   const [business, setBusiness] = useState("");
   const [customer, setCustomer] = useState("");
@@ -38,9 +38,9 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
   const money = formatProductPrice;
 
   function changeProduct(value: string) {
-    const next = value as ProductKey;
-    setProductKey(next);
-    setQuantity(products[next].minimum);
+    if (!isProductSlug(value)) return;
+    setProductKey(value);
+    setQuantity(products[value].minimum);
   }
 
   async function createOrder(event: FormEvent<HTMLFormElement>) {
