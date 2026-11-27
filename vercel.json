@@ -11,7 +11,7 @@
   },
   "schedules": {
     "superadmin-whatsapp-notifications": {
-      "schedule": "*/10 * * * *",
+      "schedule": "*/15 * * * *",
       "timezone": "Asia/Jakarta",
       "function": "api/schedules/dispatch-notifications"
     }
