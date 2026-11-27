@@ -163,7 +163,7 @@ export default function AdminNotificationsPage() {
   }
 
   return (
-    <main className="dt-admin-shell min-h-screen bg-[#15181b] text-[#efede7]">
+    <main className="dt-admin-shell dt-admin-v4 min-h-screen bg-[#15181b] text-[#efede7]">
       <AdminSidebar active="notifications"/>
       <section className="min-h-screen lg:ml-[264px]">
         <header className="sticky top-0 z-20 border-b border-[#34383a] bg-[#15181b]/90 backdrop-blur-xl">
