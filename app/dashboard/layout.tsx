@@ -22,10 +22,6 @@ const items = [
 
 const groups = ["Ruang kerja", "Analitik", "Akun"] as const;
 
-function itemPathIsDashboard(href: string) {
-  return href === "/dashboard" || href === "/dashboard?view=cards";
-}
-
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
