@@ -30,6 +30,8 @@ type Filter = "all" | "unread" | "critical";
 
 const eventLabels: Record<string, string> = {
   account_created: "Akun baru",
+  account_suspended: "Akun ditangguhkan",
+  account_activated: "Akun diaktifkan",
   order_created: "Pesanan baru",
   payment_proof_submitted: "Bukti pembayaran",
   payment_approved: "Pembayaran disetujui",
