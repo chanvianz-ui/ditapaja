@@ -2290,3 +2290,32 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
  .dt-order-payment-flow .dt-bank-card>strong{font-size:20px}
  .dt-order-payment-flow .dt-payment-step{gap:15px}
 }
+
+
+/* Product collection: keep selection on the edition controls, not on decorative artwork. */
+.dt-neo-card { cursor: default; }
+.dt-stage-description {
+  max-width: 38rem;
+  margin: 14px 0 0;
+  color: var(--dt-muted, #9bb0c7);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.dt-stage-availability {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 12px;
+  padding: 7px 9px;
+  border: 1px solid var(--dt-border, rgba(148,183,219,.16));
+  border-radius: 6px;
+  color: var(--dt-muted, #9bb0c7);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  line-height: 1.5;
+}
+@media (max-width: 760px) {
+  .dt-stage-description { font-size: 12px; }
+  .dt-stage-availability { font-size: 8px; }
+}

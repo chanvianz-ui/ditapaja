@@ -16,18 +16,15 @@ type Product = {
 };
 
 function ProductObject({ product }: { product: Product }) {
-  const [active, setActive] = useState(false);
   const serial = product.tone === "noir" ? "01" : product.tone === "blanc" ? "02" : "03";
 
   return (
-    <div className={"dt-neo-display dt-neo-" + product.tone}>
-      <button
-        type="button"
-        className={"dt-neo-card" + (active ? " is-active" : "")}
-        onClick={() => setActive(value => !value)}
-        aria-pressed={active}
-        aria-label={(active ? "Nonaktifkan" : "Aktifkan") + " simulasi visual kartu " + product.label}
-      >
+    <div
+      className={"dt-neo-display dt-neo-" + product.tone}
+      role="img"
+      aria-label={"Visualisasi kartu DiTapAja " + product.label}
+    >
+      <div className="dt-neo-card">
         <span className="dt-neo-grain" aria-hidden="true"/>
         <span className="dt-neo-rail" aria-hidden="true"/>
         <span className="dt-neo-top">
@@ -48,11 +45,10 @@ function ProductObject({ product }: { product: Product }) {
         </span>
         <span className="dt-neo-bottom">
           <span className="dt-neo-material">{product.tone === "noir" ? "OBSIDIAN / MATTE" : product.tone === "blanc" ? "PORCELAIN / SATIN" : "BRONZE / SIGNATURE"}</span>
-          <span className="dt-neo-signal"><i/>{active ? "VISUAL DEMO ACTIVE" : "READY TO CONNECT"}</span>
+          <span className="dt-neo-signal"><i/>NFC + QR READY</span>
         </span>
         <span className="dt-neo-scan" aria-hidden="true"/>
-        <span className="dt-neo-press-hint">{active ? "VISUAL SIMULATION" : "TAP TO PREVIEW"}</span>
-      </button>
+      </div>
       <div className="dt-neo-caption">
         <span><i/> DITAPAJA / PHYSICAL COLLECTION</span>
         <span>0{serial} — 03</span>
@@ -78,10 +74,12 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
           <div className="dt-stage-title">
             <span className="dt-editorial-kicker">THE NFC OBJECT / 2026</span>
             <h3>{product.label}<em>.</em></h3>
+            <p className="dt-stage-description">{product.description}</p>
           </div>
           <div className="dt-stage-price">
             <span>PEMBAYARAN SEKALI</span>
             <strong>{product.price}</strong><small>/ kartu</small>
+            <span className="dt-stage-availability">{product.order}</span>
           </div>
           <div className="dt-stage-actions">
             <Link href={"/pesan?product=" + product.tone} className="dt-stage-primary">
@@ -106,7 +104,7 @@ export default function ProductCarousel({ products }: { products: Product[] }) {
       <div className="dt-edition-selector dt-neo-selector">
         <div className="dt-selector-heading">
           <span><Layers3 size={14}/> CHOOSE YOUR FINISH</span>
-          <small>SELECT AN EDITION TO PREVIEW</small>
+          <small>PILIH EDISI UNTUK MELIHAT DETAIL</small>
         </div>
         <div className="dt-selector-options">
           {products.map((item, index) => (
