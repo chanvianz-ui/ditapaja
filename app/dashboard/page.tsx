@@ -920,63 +920,107 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className="dt-reset-dashboard">
-      <div className="dt-page">
-          {(cardError || cardMessage || analyticsError || nfcError || nfcMessage) && <div className={cardError || analyticsError || nfcError ? "dt-alert is-error" : "dt-alert"}>{cardError || analyticsError || nfcError || cardMessage || nfcMessage}</div>}
+    <main className="dt-v4">
+      <div className="dt-v4-inner">
+        <header className="dt-v4-header">
+          <div className="dt-v4-heading">
+            <span className="dt-v4-overline">DITAPAJA / WORKSPACE</span>
+            <h1>{activeView === "overview" ? "Ringkasan performa" : "Kartu NFC"}</h1>
+            <p>{activeView === "overview" ? `Selamat datang kembali, ${workspaceName}. Pantau interaksi pelanggan dan performa kartu kamu.` : "Satu tempat untuk mengelola kartu, akses publik, dan aktivitas NFC."}</p>
+          </div>
+          <div className="dt-v4-header-actions">
+            <button type="button" className={activeView === "overview" ? "dt-v4-tab is-active" : "dt-v4-tab"} onClick={() => { setActiveView("overview"); router.push("/dashboard"); }}><LayoutDashboard size={15}/>Ringkasan</button>
+            <button type="button" className={activeView === "cards" ? "dt-v4-tab is-active" : "dt-v4-tab"} onClick={() => { setActiveView("cards"); router.push("/dashboard?view=cards"); }}><CreditCard size={15}/>Kartu NFC</button>
+            <button type="button" className="dt-v4-create" onClick={() => router.push("/dashboard/cards/new")}><Plus size={16}/>Buat kartu</button>
+          </div>
+        </header>
 
-          {activeView === "overview" ? (
-            <>
-              <section className="dt-page-heading">
-                <div><h1>Overview</h1></div>
-                <button className="dt-primary" type="button" onClick={() => router.push("/dashboard/cards/new")}><Plus size={16}/>Buat kartu</button>
-              </section>
+        {(cardError || cardMessage || analyticsError || nfcError || nfcMessage) && (
+          <div role="status" className={cardError || analyticsError || nfcError ? "dt-v4-alert is-error" : "dt-v4-alert"}>
+            {cardError || analyticsError || nfcError || cardMessage || nfcMessage}
+          </div>
+        )}
 
-              <section className="dt-kpi-grid" aria-label="Metrik utama">
-                {analyticsItems.map((item) => { const Icon = item.icon; return <article className="dt-kpi" key={item.label}><div className="dt-kpi-head"><span>{item.label}</span><Icon size={17}/></div><strong>{item.value}</strong></article>; })}
-              </section>
+        {activeView === "overview" ? (
+          <>
+            <section className="dt-v4-metrics" aria-label="Metrik utama">
+              {analyticsItems.map((item, index) => { const Icon = item.icon; return (
+                <article className="dt-v4-metric" key={item.label}>
+                  <div className="dt-v4-metric-top"><span>{item.label}</span><i className={`dt-v4-metric-icon tone-${index}`}><Icon size={17}/></i></div>
+                  <strong>{item.value}</strong>
+                  <small>{index === 3 ? "Rasio klik dari seluruh tap" : "Dalam periode terpilih"}</small>
+                </article>
+              ); })}
+            </section>
 
-              <section className="dt-overview-grid" id="analytics">
-                <div className="dt-panel dt-performance">
-                  <div className="dt-panel-heading"><div><h2>Aktivitas pelanggan</h2></div><div className="dt-panel-filters"><select aria-label="Filter kartu" value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)}><option value="all">Semua kartu</option>{cards.filter(c => !c.archived_at).map(c => <option key={c.id} value={c.id}>{c.card_name || "Untitled Card"}</option>)}</select><select aria-label="Filter lokasi" value={selectedLocationId} onChange={e => setSelectedLocationId(e.target.value)}><option value="all">Semua lokasi</option><option value="unassigned">Tanpa lokasi</option>{businessLocations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}</select></div></div>
-                  <div className="dt-chart-toolbar"><div className="dt-legend"><span><i className="dt-dot-taps"/>Tap NFC</span><span><i className="dt-dot-clicks"/>Klik review</span></div><div className="dt-period">{([7,30,90] as const).map(period => <button type="button" key={period} className={chartPeriod===period?"is-active":""} onClick={()=>setChartPeriod(period)}>{period}H</button>)}</div></div>
-                  {hasPeriodActivity ? <div className="dt-chart">{chartData.map(day => <div className="dt-chart-day" key={day.key}><div className="dt-chart-bars"><i className="dt-bar-taps" style={{height: Math.max(day.taps ? 4 : 0, day.taps/chartMax*100)+"%"}}/><i className="dt-bar-clicks" style={{height: Math.max(day.clicks ? 4 : 0, day.clicks/chartMax*100)+"%"}}/></div><span>{day.label}</span></div>)}</div> : <div className="dt-chart-empty"><BarChart3 size={25}/><b>Belum ada aktivitas di periode ini</b><span>Grafik akan terisi otomatis saat pelanggan mulai menggunakan kartu NFC.</span></div>}
-                  <div className="dt-chart-foot"><span>{chartPeriod} hari terakhir</span><b>{periodTapTotal.toLocaleString("id-ID")} tap <i>·</i> {periodClickTotal.toLocaleString("id-ID")} klik review</b><button type="button" onClick={exportAnalyticsCsv}><Download size={14}/>Export CSV</button></div>
+            <section className="dt-v4-main-grid">
+              <article className="dt-v4-surface dt-v4-chart-panel">
+                <div className="dt-v4-panel-head">
+                  <div><span className="dt-v4-overline">ACTIVITY</span><h2>Aktivitas pelanggan</h2><p>Perbandingan tap NFC dan klik menuju review.</p></div>
+                  <div className="dt-v4-period">{([7,30,90] as const).map(period => <button key={period} type="button" className={chartPeriod === period ? "is-active" : ""} onClick={() => setChartPeriod(period)}>{period}H</button>)}</div>
                 </div>
-
-                <aside className="dt-panel dt-insights">
-                  <h2>Insight</h2>
-                  <div className="dt-insight-stat"><span>Perubahan tap</span><b>{analyticsInsights.tapChange===null?"—":(analyticsInsights.tapChange>0?"+":"")+analyticsInsights.tapChange.toFixed(1)+"%"}</b></div>
-                  <div className="dt-insight-stat"><span>Klik review</span><b>{analyticsInsights.clickChange===null?"—":(analyticsInsights.clickChange>0?"+":"")+analyticsInsights.clickChange.toFixed(1)+"%"}</b></div>
-                  <div className="dt-insight-stat"><span>Hari teraktif</span><b>{analyticsInsights.bestDay?.label || "—"}</b></div>
-                  <div className="dt-top-card"><small>Kartu teratas</small><strong>{analyticsInsights.topCard?.name || "Belum ada data"}</strong><span>{analyticsInsights.topCard ? analyticsInsights.topCard.taps.toLocaleString("id-ID")+" tap pada periode ini" : "Belum ada aktivitas pada periode ini."}</span></div>
-                </aside>
-              </section>
-
-              <section className="dt-recent-section">
-                <div className="dt-section-heading"><div><h2>Kartu NFC</h2></div><button className="dt-text-button" type="button" onClick={() => { setActiveView("cards"); router.push("/dashboard?view=cards"); }}>Kelola semua kartu <ExternalLink size={14}/></button></div>
-                <div className="dt-recent-list">
-                  {cards.filter(card => !card.archived_at).slice(0,4).length ? cards.filter(card => !card.archived_at).slice(0,4).map(card => <article className="dt-recent-card" key={card.id}><span className="dt-card-icon"><CreditCard size={18}/></span><div className="dt-recent-info"><b>{card.card_name || "Untitled Card"}</b><small>{card.public_code}</small></div><span className={card.active?"dt-status is-on":"dt-status"}>{card.active?"Aktif":"Nonaktif"}</span><span className="dt-recent-taps">{(cardEventStats.get(card.id)?.taps || 0).toLocaleString("id-ID")} <small>taps</small></span></article>) : <div className="dt-no-cards"><CreditCard size={22}/><b>Belum ada kartu NFC</b><span>Buat kartu pertama untuk mulai mengumpulkan ulasan.</span></div>}
+                <div className="dt-v4-filters">
+                  <label><span>Kartu</span><select value={selectedCardId} onChange={e => setSelectedCardId(e.target.value)}><option value="all">Semua kartu</option>{cards.filter(c => !c.archived_at).map(c => <option key={c.id} value={c.id}>{c.card_name || "Untitled Card"}</option>)}</select></label>
+                  <label><span>Lokasi</span><select value={selectedLocationId} onChange={e => setSelectedLocationId(e.target.value)}><option value="all">Semua lokasi</option><option value="unassigned">Tanpa lokasi</option>{businessLocations.map(location => <option key={location.id} value={location.id}>{location.name}</option>)}</select></label>
                 </div>
-              </section>
-            </>
-          ) : (
-            <>
-              <section className="dt-page-heading dt-cards-heading">
-                <div><span className="dt-eyebrow">WORKSPACE / 02</span><h1>Kartu NFC<span>.</span></h1><p>Kelola status, tautan tujuan, QR Code, dan penulisan NFC.</p></div>
-                <button className="dt-primary" type="button" onClick={()=>router.push("/dashboard/cards/new")}><Plus size={16}/>Tambah kartu</button>
-              </section>
-              <section className="dt-card-counts">
-                <div><small>Total kartu</small><b>{cards.filter(c=>!c.archived_at).length}</b></div><div><small>Aktif</small><b>{cards.filter(c=>c.active&&!c.archived_at).length}</b></div><div><small>Nonaktif</small><b>{cards.filter(c=>!c.active&&!c.archived_at).length}</b></div><div><small>Diarsipkan</small><b>{cards.filter(c=>c.archived_at).length}</b></div>
-              </section>
-              <section className="dt-card-manager">
-                <div className="dt-card-toolbar"><input value={cardSearch} onChange={e=>setCardSearch(e.target.value)} placeholder="Cari nama kartu, kode, atau URL..." aria-label="Cari kartu"/><select value={cardStatusFilter} onChange={e=>setCardStatusFilter(e.target.value as "all"|"active"|"inactive")} aria-label="Filter status"><option value="all">Semua status</option><option value="active">Aktif</option><option value="inactive">Nonaktif</option></select><button className={showArchivedCards?"is-active":""} type="button" onClick={()=>setShowArchivedCards(v=>!v)}><Archive size={14}/>{showArchivedCards?"Lihat kartu aktif":"Lihat arsip"}</button></div>
-                {selectedCardIds.length>0 && !showArchivedCards && <div className="dt-bulkbar"><b>{selectedCardIds.length} kartu dipilih</b><button type="button" onClick={()=>handleBulkCardAction("activate")} disabled={bulkActionBusy}>Aktifkan</button><button type="button" onClick={()=>handleBulkCardAction("deactivate")} disabled={bulkActionBusy}>Nonaktifkan</button><button type="button" onClick={()=>setShowBulkQrSheet(true)}>Cetak QR</button><button type="button" onClick={()=>handleBulkCardAction("archive")} disabled={bulkActionBusy}>Arsipkan</button><button type="button" onClick={()=>setSelectedCardIds([])}>Batal</button></div>}
-                {visibleCards.length===0 ? <div className="dt-no-cards"><CreditCard size={25}/><b>{showArchivedCards?"Belum ada kartu di arsip":"Belum ada kartu yang cocok"}</b><span>{showArchivedCards?"Kartu yang diarsipkan akan muncul di sini.":"Buat kartu NFC pertamamu untuk mulai mengumpulkan review."}</span>{!showArchivedCards&&<button className="dt-primary" type="button" onClick={()=>router.push("/dashboard/cards/new")}><Plus size={15}/>Buat kartu pertama</button>}</div> : <div className="dt-managed-list">{visibleCards.map(card=>{const stats=cardEventStats.get(card.id);const archived=Boolean(card.archived_at);return <article className="dt-managed-card" key={card.id}><label className="dt-check"><input type="checkbox" checked={selectedCardIds.includes(card.id)} onChange={e=>setSelectedCardIds(current=>e.target.checked?[...current,card.id]:current.filter(id=>id!==card.id))} disabled={archived}/></label><span className="dt-card-icon"><CreditCard size={19}/></span><div className="dt-managed-info"><div className="dt-managed-title"><b>{card.card_name||"Untitled Card"}</b><span className={archived?"is-archived":card.active?"is-on":"is-off"}>{archived?"Diarsipkan":card.active?"Aktif":"Nonaktif"}</span></div><p>Kode: {card.public_code}</p><small>{card.destination_url}</small><div className="dt-managed-stats"><span>{(stats?.taps||0).toLocaleString("id-ID")} tap</span><span>{(stats?.clicks||0).toLocaleString("id-ID")} klik review</span><span>CTR {stats?.taps?((stats.clicks/stats.taps)*100).toFixed(1):"0.0"}%</span></div></div><div className="dt-managed-actions">{archived?<button type="button" onClick={()=>handleRestoreCard(card)} disabled={updatingCardId===card.id}><RefreshCw size={14}/>Pulihkan</button>:<><button type="button" onClick={()=>setQrCard(card)}><QrCode size={14}/>QR</button><button type="button" onClick={()=>copyPublicCardLink(card)}><Copy size={14}/>{copiedCardId===card.id?"Tersalin":"Salin link"}</button><button type="button" onClick={()=>handleWriteNfc(card)} disabled={writingCardId===card.id||!card.active}>{writingCardId===card.id?<Loader2 size={14} className="animate-spin"/>:<Nfc size={14}/>}Tulis NFC</button><button type="button" onClick={()=>handleDuplicateCard(card)} disabled={duplicatingCardId===card.id}><Copy size={14}/>Duplikat</button><button type="button" onClick={()=>openEditCard(card)}><Pencil size={14}/>Edit</button><button type="button" onClick={()=>handleToggleCard(card)} disabled={updatingCardId===card.id}><Power size={14}/>{card.active?"Nonaktifkan":"Aktifkan"}</button><button type="button" className="is-danger" onClick={()=>{setDeleteTarget(card);setCardError("");}}><Archive size={14}/>Arsipkan</button></>}</div></article>;})}</div>}
-                <div className="dt-list-foot">Menampilkan {visibleCards.length} dari {cards.length} kartu <span>Data tersimpan otomatis di akunmu</span></div>
-              </section>
-            </>
-          )}
-          <footer className="dt-footer">DiTapAja <span>·</span> NFC Review Workspace <small>Tanpa biaya langganan bulanan</small></footer>
+                {hasPeriodActivity ? (
+                  <div className="dt-v4-chart" role="img" aria-label="Grafik aktivitas tap NFC dan klik review">
+                    {chartData.map(day => <div className="dt-v4-chart-day" key={day.key}>
+                      <div className="dt-v4-bars"><i className="tap" style={{height: Math.max(day.taps ? 4 : 0, day.taps/chartMax*100)+"%"}}/><i className="click" style={{height: Math.max(day.clicks ? 4 : 0, day.clicks/chartMax*100)+"%"}}/></div>
+                      <span>{day.label}</span>
+                    </div>)}
+                  </div>
+                ) : <div className="dt-v4-empty-chart"><BarChart3 size={25}/><b>Aktivitas belum tersedia</b><span>Grafik akan terisi saat pelanggan mulai melakukan tap pada kartu NFC.</span></div>}
+                <div className="dt-v4-chart-foot"><div><span><i className="tap"/>Tap NFC</span><span><i className="click"/>Klik review</span></div><strong>{periodTapTotal.toLocaleString("id-ID")} tap <em>·</em> {periodClickTotal.toLocaleString("id-ID")} klik</strong><button type="button" onClick={exportAnalyticsCsv}><Download size={14}/>Ekspor CSV</button></div>
+              </article>
+
+              <aside className="dt-v4-surface dt-v4-insights">
+                <div className="dt-v4-panel-head"><div><span className="dt-v4-overline">PERFORMANCE NOTES</span><h2>Insight</h2><p>Ringkasan perubahan periode.</p></div><span className="dt-v4-insight-mark"><BarChart3 size={18}/></span></div>
+                <div className="dt-v4-insight-list">
+                  <div><span>Perubahan tap</span><b>{analyticsInsights.tapChange===null?"—":(analyticsInsights.tapChange>0?"+":"")+analyticsInsights.tapChange.toFixed(1)+"%"}</b></div>
+                  <div><span>Perubahan klik review</span><b>{analyticsInsights.clickChange===null?"—":(analyticsInsights.clickChange>0?"+":"")+analyticsInsights.clickChange.toFixed(1)+"%"}</b></div>
+                  <div><span>Hari teraktif</span><b>{analyticsInsights.bestDay?.label || "—"}</b></div>
+                </div>
+                <div className="dt-v4-top-card"><span>KARTU DENGAN PERFORMA TERBAIK</span><strong>{analyticsInsights.topCard?.name || "Belum ada data"}</strong><p>{analyticsInsights.topCard ? analyticsInsights.topCard.taps.toLocaleString("id-ID")+" tap pada periode ini" : "Data performa akan muncul setelah ada aktivitas."}</p></div>
+              </aside>
+            </section>
+
+            <section className="dt-v4-surface dt-v4-recent">
+              <div className="dt-v4-panel-head"><div><span className="dt-v4-overline">YOUR INVENTORY</span><h2>Kartu terbaru</h2><p>Akses cepat ke kartu yang sedang digunakan.</p></div><button type="button" className="dt-v4-link" onClick={() => { setActiveView("cards"); router.push("/dashboard?view=cards"); }}>Kelola semua kartu <ExternalLink size={14}/></button></div>
+              <div className="dt-v4-recent-list">
+                {cards.filter(card => !card.archived_at).slice(0,4).length ? cards.filter(card => !card.archived_at).slice(0,4).map(card => <article key={card.id} className="dt-v4-recent-item"><span className="dt-v4-card-symbol"><Nfc size={19}/></span><div><b>{card.card_name || "Untitled Card"}</b><small>{card.public_code}</small></div><span className={card.active ? "dt-v4-status is-active" : "dt-v4-status"}>{card.active ? "Aktif" : "Nonaktif"}</span><strong>{(cardEventStats.get(card.id)?.taps || 0).toLocaleString("id-ID")} <small>tap</small></strong></article>) : <div className="dt-v4-empty"><CreditCard size={24}/><b>Belum ada kartu NFC</b><span>Buat kartu pertama untuk mulai menerima review pelanggan.</span></div>}
+              </div>
+            </section>
+          </>
+        ) : (
+          <>
+            <section className="dt-v4-inventory-summary">
+              <div><span>ACTIVE INVENTORY</span><strong>{cards.filter(c=>c.active&&!c.archived_at).length}</strong><small>Kartu aktif</small></div>
+              <div><span>INACTIVE INVENTORY</span><strong>{cards.filter(c=>!c.active&&!c.archived_at).length}</strong><small>Kartu nonaktif</small></div>
+              <div><span>ARCHIVED</span><strong>{cards.filter(c=>c.archived_at).length}</strong><small>Kartu diarsipkan</small></div>
+              <div><span>TOTAL RECORDS</span><strong>{cards.length}</strong><small>Seluruh kartu</small></div>
+            </section>
+            <section className="dt-v4-surface dt-v4-inventory">
+              <div className="dt-v4-panel-head"><div><span className="dt-v4-overline">CARD MANAGEMENT</span><h2>Inventaris kartu</h2><p>Atur status, duplikasi, QR, dan tautan kartu tanpa meninggalkan halaman.</p></div><span className="dt-v4-count">{visibleCards.length} ditampilkan</span></div>
+              <div className="dt-v4-toolbar">
+                <label className="dt-v4-search"><Eye size={16}/><input value={cardSearch} onChange={e=>setCardSearch(e.target.value)} placeholder="Cari nama, kode, atau URL..." aria-label="Cari kartu"/></label>
+                <select value={cardStatusFilter} onChange={e=>setCardStatusFilter(e.target.value as "all"|"active"|"inactive")} aria-label="Filter status"><option value="all">Semua status</option><option value="active">Aktif</option><option value="inactive">Nonaktif</option></select>
+                <button type="button" className={showArchivedCards ? "dt-v4-filter is-active" : "dt-v4-filter"} onClick={()=>setShowArchivedCards(v=>!v)}><Archive size={15}/>{showArchivedCards ? "Lihat kartu aktif" : "Arsip"}</button>
+              </div>
+              {selectedCardIds.length > 0 && !showArchivedCards && <div className="dt-v4-bulk"><strong>{selectedCardIds.length} kartu dipilih</strong><button type="button" onClick={()=>handleBulkCardAction("activate")} disabled={bulkActionBusy}>Aktifkan</button><button type="button" onClick={()=>handleBulkCardAction("deactivate")} disabled={bulkActionBusy}>Nonaktifkan</button><button type="button" onClick={()=>setShowBulkQrSheet(true)}>Cetak QR</button><button type="button" onClick={()=>handleBulkCardAction("archive")} disabled={bulkActionBusy}>Arsipkan</button><button type="button" onClick={()=>setSelectedCardIds([])}>Batalkan pilihan</button></div>}
+              {visibleCards.length === 0 ? <div className="dt-v4-empty"><CreditCard size={26}/><b>{showArchivedCards ? "Arsip masih kosong" : "Tidak ada kartu yang cocok"}</b><span>{showArchivedCards ? "Kartu yang diarsipkan akan muncul di sini." : "Buat kartu baru atau ubah filter pencarian."}</span>{!showArchivedCards && <button type="button" className="dt-v4-create" onClick={()=>router.push("/dashboard/cards/new")}><Plus size={15}/>Buat kartu</button>}</div> : (
+                <div className="dt-v4-card-list">{visibleCards.map(card => {const stats=cardEventStats.get(card.id);const archived=Boolean(card.archived_at);return <article className="dt-v4-card-row" key={card.id}>
+                  <label className="dt-v4-select"><input type="checkbox" checked={selectedCardIds.includes(card.id)} onChange={e=>setSelectedCardIds(current=>e.target.checked?[...current,card.id]:current.filter(id=>id!==card.id))} disabled={archived}/></label>
+                  <span className="dt-v4-card-symbol"><CreditCard size={20}/></span>
+                  <div className="dt-v4-card-main"><div className="dt-v4-card-title"><h3>{card.card_name || "Untitled Card"}</h3><span className={archived ? "dt-v4-status is-archived" : card.active ? "dt-v4-status is-active" : "dt-v4-status"}>{archived ? "Diarsipkan" : card.active ? "Aktif" : "Nonaktif"}</span></div><p>{card.public_code}</p><small>{card.destination_url}</small><div className="dt-v4-card-stats"><span>{(stats?.taps||0).toLocaleString("id-ID")} tap</span><span>{(stats?.clicks||0).toLocaleString("id-ID")} klik review</span><span>CTR {stats?.taps?((stats.clicks/stats.taps)*100).toFixed(1):"0.0"}%</span></div></div>
+                  <div className="dt-v4-card-actions">{archived ? <button type="button" onClick={()=>handleRestoreCard(card)} disabled={updatingCardId===card.id}><RefreshCw size={14}/>Pulihkan</button> : <><button type="button" onClick={()=>setQrCard(card)}><QrCode size={14}/>QR</button><button type="button" onClick={()=>copyPublicCardLink(card)}><Copy size={14}/>{copiedCardId===card.id?"Tersalin":"Salin link"}</button><button type="button" onClick={()=>handleWriteNfc(card)} disabled={writingCardId===card.id||!card.active}>{writingCardId===card.id?<Loader2 size={14} className="animate-spin"/>:<Nfc size={14}/>}Tulis NFC</button><button type="button" onClick={()=>handleDuplicateCard(card)} disabled={duplicatingCardId===card.id}><Copy size={14}/>Duplikat</button><button type="button" onClick={()=>openEditCard(card)}><Pencil size={14}/>Edit</button><button type="button" onClick={()=>handleToggleCard(card)} disabled={updatingCardId===card.id}><Power size={14}/>{card.active?"Nonaktifkan":"Aktifkan"}</button><button type="button" className="is-danger" onClick={()=>{setDeleteTarget(card);setCardError("");}}><Archive size={14}/>Arsip</button></>}</div>
+                </article>;})}</div>
+              )}
+              <div className="dt-v4-list-foot">Menampilkan {visibleCards.length} dari {cards.length} kartu <span>Perubahan tersimpan pada akun kamu</span></div>
+            </section>
+          </>
+        )}
+        <footer className="dt-v4-footer"><span>DiTapAja</span><i/>NFC REVIEW WORKSPACE<small>Built for better customer feedback</small></footer>
       </div>
 
       {/* BULK QR PRINT SHEET */}
