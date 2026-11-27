@@ -2,6 +2,7 @@
 
 import AdminMenu from "@/app/admin/admin-menu";
 import AdminSidebar from "@/app/admin/admin-sidebar";
+import AdminNotificationBell from "@/app/admin/admin-notification-bell";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -104,6 +105,7 @@ export default function AdminUsersPage() {
           <div className="flex items-center justify-between px-4 py-4 sm:px-8 lg:px-10">
             <div><p className="text-[11px] font-medium text-[#dedbd4]">DiTapAja <span className="mx-1.5 text-[#d8d3ca]">/</span> Workspace</p><h1 className="mt-1 text-base font-semibold tracking-tight sm:text-lg">User management</h1></div>
             <div className="flex items-center gap-2">
+              <AdminNotificationBell/>
               <button onClick={refreshUsers} disabled={loading || refreshing} className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#34383a] bg-white px-3.5 text-xs font-semibold text-[#efede7] transition hover:border-[#b9c8b5] disabled:opacity-50"><RefreshCw size={14} className={refreshing ? "animate-spin" : ""}/><span className="hidden sm:inline">Refresh data</span></button>
               <div className="lg:hidden"><AdminMenu/></div>
             </div>
