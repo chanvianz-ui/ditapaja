@@ -2319,3 +2319,29 @@ h1,h2,h3,h4,h5,h6 { color: var(--dt-text); }
   .dt-stage-description { font-size: 12px; }
   .dt-stage-availability { font-size: 8px; }
 }
+
+
+/* Product detail hierarchy and reading rhythm */
+.product-detail-page .detail-copy h1{margin:22px 0 14px;color:#f0f4f5;font-size:clamp(42px,5.4vw,68px);line-height:.98;letter-spacing:-.065em}
+.product-detail-page .detail-copy h2{max-width:620px;margin:0 0 22px;color:#a5d6ca;font-size:clamp(20px,2.3vw,29px);font-weight:600;line-height:1.18;letter-spacing:-.035em}
+.product-detail-page .detail-copy p{max-width:590px;margin:0 0 13px;font-size:14px}
+.product-detail-page .detail-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-top:25px}
+.product-detail-page .detail-price strong{font-size:clamp(27px,3vw,36px);letter-spacing:-.045em}
+.product-detail-page .detail-price small{flex-basis:100%;color:#a5d6ca;font-size:12px}
+.product-detail-page .detail-spec-section{padding:clamp(58px,8vw,94px) 0}
+.product-detail-page .detail-spec-section .eyebrow,.product-detail-page .detail-features>.eyebrow{color:#a5d6ca;font-size:9px;font-weight:800;letter-spacing:.17em}
+.product-detail-page .detail-spec-section h2,.product-detail-page .detail-features>h2{margin:12px 0 28px;color:#edf2f4;font-size:clamp(28px,3.6vw,42px);line-height:1.06;letter-spacing:-.055em}
+.product-detail-page .detail-spec-grid>div{display:flex;flex-direction:column;justify-content:space-between;gap:12px;min-height:112px;padding:20px}
+.product-detail-page .detail-spec-grid>div span{color:#8296a4;font-size:11px}
+.product-detail-page .detail-spec-grid>div b{color:#e5ecef;font-size:14px;font-weight:650}
+.product-detail-page .detail-fit{margin-top:22px;color:#9aabb8;font-size:13px;line-height:1.7}
+.product-detail-page .detail-features{padding-top:clamp(58px,8vw,94px);padding-bottom:clamp(58px,8vw,94px)}
+.product-detail-page .detail-feature-intro{max-width:620px;margin:-10px 0 28px;color:#9aabb8;font-size:14px;line-height:1.8}
+.product-detail-page .detail-feature-grid article{min-height:190px;padding:24px}
+.product-detail-page .detail-feature-grid article h3{margin:16px 0 8px;color:#eaf0f2;font-size:15px;line-height:1.35}
+.product-detail-page .detail-feature-grid article p{color:#91a3af;font-size:12px;line-height:1.75}
+.product-detail-page .detail-order{padding:clamp(30px,5vw,58px)}
+.product-detail-page .detail-order .eyebrow{color:#a5d6ca;font-size:9px;font-weight:800;letter-spacing:.17em}
+.product-detail-page .detail-order-inner h2{margin:12px 0;font-size:clamp(28px,3.7vw,44px);line-height:1.04;letter-spacing:-.055em}
+.product-detail-page .detail-order-inner p{max-width:560px;color:#a9b8c1;font-size:13px;line-height:1.8}
+@media(max-width:640px){.product-detail-page .detail-copy h1{font-size:clamp(40px,12vw,54px)}.product-detail-page .detail-copy h2{font-size:21px}.product-detail-page .detail-spec-grid>div{min-height:94px}.product-detail-page .detail-feature-grid article{padding:16px}}
