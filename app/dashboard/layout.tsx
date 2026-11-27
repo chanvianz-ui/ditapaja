@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import styles from "./dashboard-shell.module.css";
+import "./workspace-v3.css";
 
 const items = [
   { href: "/dashboard", label: "Ringkasan", icon: LayoutDashboard, group: "Ruang kerja", view: "overview" },
