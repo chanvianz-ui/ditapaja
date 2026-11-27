@@ -1,61 +1,262 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Activity, ArrowUpRight, CreditCard, KeyRound, LayoutDashboard, LogOut, MousePointerClick, RefreshCw, ShieldCheck, Users, Wallet, AlertCircle, Menu, X, ChevronRight, TrendingUp, CircleDollarSign, UserRound, ShoppingBag, Bell } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import {
+  Activity, ArrowUpRight, Bell, CreditCard, CircleDollarSign, Clock3,
+  RefreshCw, ShoppingBag, TrendingUp, Users, Wallet, MousePointerClick,
+} from "lucide-react";
+import AdminMenu from "@/app/admin/admin-menu";
+import AdminSidebar from "@/app/admin/admin-sidebar";
 import AdminNotificationBell from "@/app/admin/admin-notification-bell";
+import { supabase } from "@/lib/supabase";
 
-type AdminStats = { totalUsers:number; totalCards:number; activeCards:number; totalTaps:number; totalReviewClicks:number; totalOrders:number; paidOrders:number; pendingOrders:number; paidRevenue:number; monthlyRevenue:number; topProducts:{name:string;quantity:number;revenue:number}[] };
-type AdminOverviewResponse = {success:true;stats:AdminStats}|{success:false;error?:string};
-const initialStats:AdminStats={totalUsers:0,totalCards:0,activeCards:0,totalTaps:0,totalReviewClicks:0,totalOrders:0,paidOrders:0,pendingOrders:0,paidRevenue:0,monthlyRevenue:0,topProducts:[]};
-const number=(v:number)=>Number(v||0).toLocaleString("id-ID");
-const rupiah=(v:number)=>"Rp"+number(v);
-const nav=[{label:"Ringkasan",href:"/admin",icon:LayoutDashboard},{label:"Manajemen pesanan",href:"/admin/orders",icon:ShoppingBag},{label:"Manajemen pengguna",href:"/admin/users",icon:Users},{label:"Notifikasi",href:"/admin/notifications",icon:Bell},{label:"PIN aktivasi",href:"/admin/pins",icon:KeyRound}];
+type AdminStats = {
+  totalUsers: number;
+  totalCards: number;
+  activeCards: number;
+  totalTaps: number;
+  totalReviewClicks: number;
+  totalOrders: number;
+  paidOrders: number;
+  pendingOrders: number;
+  paidRevenue: number;
+  monthlyRevenue: number;
+  topProducts: { name: string; quantity: number; revenue: number }[];
+};
 
-export default function AdminPage(){
- const router=useRouter(); const [stats,setStats]=useState<AdminStats>(initialStats); const [loading,setLoading]=useState(true); const [refreshing,setRefreshing]=useState(false); const [error,setError]=useState(""); const [menuOpen,setMenuOpen]=useState(false);
- async function loadStats(){setError("");try{const {data,error:sessionError}=await supabase.auth.getSession();if(sessionError||!data.session){router.replace("/login");return;}const response=await fetch("/api/admin/overview",{headers:{Authorization:"Bearer "+data.session.access_token},cache:"no-store"});const result=(await response.json()) as AdminOverviewResponse;if(response.status===401){router.replace("/login");return;}if(!response.ok||result.success===false)throw new Error(result.success===false?result.error||"Gagal mengambil data Admin":"Gagal mengambil data Admin");setStats(result.stats);}catch(err){setError(err instanceof Error?err.message:"Terjadi kesalahan saat mengambil data.");}finally{setLoading(false);setRefreshing(false);}}
- useEffect(()=>{void loadStats();},[]);
- useEffect(()=>{
-  if(!menuOpen)return;
-  const panel=document.getElementById("admin-overview-mobile-menu");
-  const trigger=document.querySelector<HTMLButtonElement>(".dt-control-menu-trigger");
-  const previousFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
-  const previousOverflow=document.body.style.overflow;
-  document.body.style.overflow="hidden";
-  const getFocusable=()=>Array.from(panel?.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')??[]).filter(el=>el.offsetWidth>0||el.offsetHeight>0);
-  getFocusable()[0]?.focus();
-  const onKeyDown=(event:KeyboardEvent)=>{
-   if(event.key==="Escape"){event.preventDefault();setMenuOpen(false);return;}
-   if(event.key!=="Tab")return;
-   const focusable=getFocusable();if(!focusable.length)return;
-   const first=focusable[0],last=focusable[focusable.length-1];
-   if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
-   else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
-  };
-  window.addEventListener("keydown",onKeyDown);
-  return()=>{document.body.style.overflow=previousOverflow;window.removeEventListener("keydown",onKeyDown);if(previousFocus?.isConnected)trigger?.focus();};
- },[menuOpen]);
- async function logout(){await supabase.auth.signOut();router.replace("/login");}
- const metrics=[{label:"Pengguna terdaftar",value:stats.totalUsers,detail:"Akun di platform",icon:Users},{label:"Kartu NFC",value:stats.totalCards,detail:number(stats.activeCards)+" aktif",icon:CreditCard},{label:"Total interaksi",value:stats.totalTaps,detail:"Tap NFC tercatat",icon:MousePointerClick},{label:"Pesanan masuk",value:stats.totalOrders,detail:number(stats.paidOrders)+" sudah lunas",icon:ShoppingBag}];
- return <main className="dt-control">
-  <aside className="dt-control-rail"><a className="dt-control-brand" href="/admin"><span className="dt-control-symbol">D</span><span><b>DiTapAja</b><small>KONTROL PLATFORM</small></span></a><div className="dt-control-nav-label">RUANG KERJA</div><nav>{nav.map(item=>{const Icon=item.icon;return <button type="button" key={item.href} onClick={()=>router.push(item.href)} aria-current={item.href==="/admin"?"page":undefined} className={item.href==="/admin"?"active":""}><Icon size={17}/><span>{item.label}</span>{item.href==="/admin"&&<i/>}</button>;})}</nav><div className="dt-control-rail-bottom"><div className="dt-control-access"><ShieldCheck size={17}/><span><b>Superadmin</b><small>Akses penuh platform</small></span></div><button onClick={logout}><LogOut size={17}/>Keluar</button></div></aside>
-  {menuOpen&&<div id="admin-overview-mobile-menu" className="dt-control-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigasi Superadmin"><div className="dt-control-mobile-head"><b>DiTapAja Control</b><button type="button" onClick={()=>setMenuOpen(false)} aria-label="Tutup menu"><X/></button></div>{nav.map(item=>{const Icon=item.icon;return <button type="button" key={item.href} onClick={()=>{setMenuOpen(false);router.push(item.href);}} aria-current={item.href==="/admin"?"page":undefined}><Icon size={18}/>{item.label}<ChevronRight size={16}/></button>;})}<button type="button" onClick={logout}><LogOut size={18}/>Keluar</button></div>}
-  <section className="dt-control-main"><header className="dt-control-top"><div><span>PUSAT KONTROL</span><b>Ringkasan <i>/</i> Kontrol platform</b></div><div className="dt-control-top-actions"><AdminNotificationBell/><span className="dt-control-live"><i/> Sistem terpantau</span><button onClick={()=>{setRefreshing(true);void loadStats();}} disabled={loading||refreshing}><RefreshCw size={15} className={refreshing?"animate-spin":""}/><span>Perbarui</span></button><button type="button" className="dt-control-menu-trigger" onClick={()=>setMenuOpen(true)} aria-label="Buka menu" aria-controls="admin-overview-mobile-menu" aria-expanded={menuOpen}><Menu/></button></div></header>
-   <div className="dt-control-content">
-    <section className="dt-control-intro"><div className="dt-control-intro-copyblock"><h1>CONTROL<br/><em>THE FLOW.</em></h1></div><div className="dt-control-hero-art" aria-hidden="true"><div className="dt-control-orbit orbit-one"/><div className="dt-control-orbit orbit-two"/><div className="dt-control-orbit orbit-three"/><div className="dt-control-orbit-core"><span>D</span><small>CONTROL<br/>CENTER</small></div><div className="orbit-cross cross-one"/><div className="orbit-cross cross-two"/></div></section>
-    {error&&<div className="dt-control-error"><AlertCircle size={18}/><span>{error}</span></div>}
-    <section className="dt-control-metrics"><div className="dt-control-metrics-heading"><b>Ringkasan platform</b></div>{metrics.map((m,i)=>{const Icon=m.icon;return <article className={i===0?"metric-featured":""} key={m.label}><div className="metric-top"><span>{m.label}</span><Icon size={18}/></div><strong>{loading?"—":number(m.value)}</strong><small>{m.detail}</small><div className="metric-index">0{i+1}</div></article>;})}</section>
-    <section className="dt-control-workgrid">
-     <article className="dt-control-revenue"><div className="panel-heading"><div><h2>Performa pendapatan</h2></div><CircleDollarSign size={21}/></div><div className="revenue-primary"><small>Total pendapatan terkonfirmasi</small><strong>{loading?"—":rupiah(stats.paidRevenue)}</strong><span><TrendingUp size={14}/> Akumulasi pesanan lunas</span></div><div className="revenue-secondary"><div><small>Pendapatan bulan ini</small><b>{loading?"—":rupiah(stats.monthlyRevenue)}</b></div><div><small>Pesanan lunas</small><b>{loading?"—":number(stats.paidOrders)}</b></div></div><button onClick={()=>router.push("/admin/orders")}>Buka laporan pesanan <ArrowUpRight size={16}/></button></article>
-     <article className="dt-control-engagement"><div className="panel-heading"><div><h2>Interaksi pelanggan</h2></div><Activity size={20}/></div><div className="engagement-total"><strong>{loading?"—":number(stats.totalTaps)}</strong><small>Total tap NFC</small></div><div className="engagement-gauge" style={{"--engagement-progress":stats.totalTaps?Math.max(8,Math.min(100,stats.totalReviewClicks/stats.totalTaps*100)):0} as React.CSSProperties}><div><b>{loading?"—":Math.round(stats.totalTaps?stats.totalReviewClicks/stats.totalTaps*100:0)}%</b><small>REVIEW RATE</small></div></div><div className="engagement-track"><i style={{width:stats.totalTaps?Math.max(8,Math.min(100,stats.totalReviewClicks/stats.totalTaps*100))+"%":"0%"}}/></div><div className="engagement-foot"><span>Klik Google Review</span><b>{loading?"—":number(stats.totalReviewClicks)}</b></div><p>Konversi interaksi ke halaman ulasan pelanggan.</p></article>
-    </section>
-    <section className="dt-control-lower"><article className="dt-control-status"><div className="panel-heading"><div><h2>Kondisi platform</h2></div></div><div className="status-list"><div><span>Kartu aktif</span><b>{loading?"—":number(stats.activeCards)}</b></div><div><span>Menunggu pembayaran</span><b className="status-warn">{loading?"—":number(stats.pendingOrders)}</b></div><div><span>Klik Google Review</span><b>{loading?"—":number(stats.totalReviewClicks)}</b></div><div><span>Pesanan lunas</span><b>{loading?"—":number(stats.paidOrders)}</b></div></div></article>
-     <article className="dt-control-products"><div className="panel-heading"><div><h2>Produk terjual</h2></div><CreditCard size={20}/></div>{loading?<p className="empty-state">Memuat data…</p>:stats.topProducts.length===0?<p className="empty-state">Belum ada transaksi terkonfirmasi.</p>:stats.topProducts.map(product=><div className="product-line" key={product.name}><div><b>{product.name}</b><small>{number(product.quantity)} unit terjual</small></div><strong>{rupiah(product.revenue)}</strong></div>)}</article></section>
-    <section className="dt-control-shortcuts"><div><h2>Kelola platform</h2></div>{nav.slice(1).map(item=>{const Icon=item.icon;return <button key={item.href} onClick={()=>router.push(item.href)}><Icon size={19}/><span>{item.label}</span><ArrowUpRight size={16}/></button>;})}</section>
-    <footer className="dt-control-footer">DiTapAja <span>·</span> Ruang kerja Superadmin</footer>
-   </div>
-  </section>
- </main>;
+type OverviewResponse =
+  | { success: true; stats: AdminStats }
+  | { success: false; error?: string };
+
+const initialStats: AdminStats = {
+  totalUsers: 0, totalCards: 0, activeCards: 0, totalTaps: 0,
+  totalReviewClicks: 0, totalOrders: 0, paidOrders: 0, pendingOrders: 0,
+  paidRevenue: 0, monthlyRevenue: 0, topProducts: [],
+};
+
+const number = (value: number) => Number(value || 0).toLocaleString("id-ID");
+const money = (value: number) => new Intl.NumberFormat("id-ID", {
+  style: "currency", currency: "IDR", maximumFractionDigits: 0,
+}).format(Number.isFinite(value) ? value : 0);
+
+function MetricCard({ label, value, detail, icon: Icon, tone = "blue" }: {
+  label: string; value: string; detail: string;
+  icon: typeof Users; tone?: "blue" | "mint" | "amber" | "violet";
+}) {
+  return (
+    <article className={`admin-overview-metric tone-${tone}`}>
+      <div className="admin-overview-metric-top">
+        <span>{label}</span><span className="admin-overview-metric-icon"><Icon size={18}/></span>
+      </div>
+      <strong>{value}</strong>
+      <small>{detail}</small>
+    </article>
+  );
+}
+
+export default function AdminPage() {
+  const router = useRouter();
+  const [stats, setStats] = useState<AdminStats>(initialStats);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState("");
+
+  const loadStats = useCallback(async (signal?: AbortSignal) => {
+    setError("");
+    try {
+      const { data, error: sessionError } = await supabase.auth.getSession();
+      if (signal?.aborted) return;
+      if (sessionError || !data.session) {
+        router.replace("/login");
+        return;
+      }
+
+      const response = await fetch("/api/admin/overview", {
+        headers: { Authorization: `Bearer ${data.session.access_token}` },
+        cache: "no-store",
+        signal,
+      });
+      if (signal?.aborted) return;
+      if (response.status === 401) {
+        router.replace("/login");
+        return;
+      }
+      const result = await response.json() as OverviewResponse;
+      if (!response.ok || !result.success) {
+        throw new Error(result.success === false ? result.error || "Gagal memuat ringkasan." : "Gagal memuat ringkasan.");
+      }
+      setStats({
+        ...initialStats,
+        ...result.stats,
+        topProducts: Array.isArray(result.stats.topProducts) ? result.stats.topProducts : [],
+      });
+    } catch (cause) {
+      if (cause instanceof Error && cause.name === "AbortError") return;
+      setError(cause instanceof Error ? cause.message : "Terjadi kesalahan saat memuat data.");
+    } finally {
+      if (!signal?.aborted) {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    }
+  }, [router]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    void loadStats(controller.signal);
+    return () => controller.abort();
+  }, [loadStats]);
+
+  const reviewRate = useMemo(() => (
+    stats.totalTaps > 0
+      ? Math.min(100, Math.max(0, (stats.totalReviewClicks / stats.totalTaps) * 100))
+      : 0
+  ), [stats.totalTaps, stats.totalReviewClicks]);
+
+  const metrics = [
+    { label: "Pengguna terdaftar", value: stats.totalUsers, detail: "Akun terdaftar", icon: Users, tone: "blue" as const },
+    { label: "Kartu NFC", value: stats.totalCards, detail: `${number(stats.activeCards)} kartu aktif`, icon: CreditCard, tone: "mint" as const },
+    { label: "Total interaksi", value: stats.totalTaps, detail: "Tap NFC tercatat", icon: MousePointerClick, tone: "violet" as const },
+    { label: "Pesanan masuk", value: stats.totalOrders, detail: `${number(stats.paidOrders)} pesanan lunas`, icon: ShoppingBag, tone: "amber" as const },
+  ];
+
+  return (
+    <main className="dt-admin-shell admin-overview-shell">
+      <AdminSidebar active="overview"/>
+      <section className="admin-overview-main">
+        <header className="admin-overview-header">
+          <div className="admin-overview-heading">
+            <span className="admin-overview-eyebrow">DITAPAJA / CONTROL CENTER</span>
+            <h1>Ringkasan <span>platform</span></h1>
+          </div>
+          <div className="admin-overview-actions">
+            <span className="admin-overview-live"><i/> Sistem berjalan</span>
+            <AdminNotificationBell/>
+            <button
+              type="button"
+              className="admin-overview-refresh"
+              onClick={() => {
+                setRefreshing(true);
+                void loadStats();
+              }}
+              disabled={loading || refreshing}
+            >
+              <RefreshCw size={15} className={refreshing ? "animate-spin" : ""}/>
+              <span>Perbarui</span>
+            </button>
+            <div className="admin-overview-mobile-menu"><AdminMenu/></div>
+          </div>
+        </header>
+
+        <div className="admin-overview-content">
+          <section className="admin-overview-hero">
+            <div className="admin-overview-hero-copy">
+              <span className="admin-overview-eyebrow">OVERVIEW / 01</span>
+              <h2>Operasional<br/><em>dalam kendali.</em></h2>
+              <p>Pantau aktivitas, transaksi, dan performa ekosistem DiTapAja dari satu ruang kerja.</p>
+              <div className="admin-overview-hero-links">
+                <button type="button" onClick={() => router.push("/admin/orders")}>Lihat pesanan <ArrowUpRight size={15}/></button>
+                <button type="button" onClick={() => router.push("/admin/users")}>Kelola pengguna <ArrowUpRight size={15}/></button>
+              </div>
+            </div>
+            <div className="admin-overview-hero-visual" aria-hidden="true">
+              <div className="admin-overview-orbit orbit-a"/>
+              <div className="admin-overview-orbit orbit-b"/>
+              <div className="admin-overview-orbit orbit-c"/>
+              <div className="admin-overview-core"><span>D.</span><small>PLATFORM<br/>OPERATIONS</small></div>
+              <div className="admin-overview-float float-a"><Activity size={15}/><span>LIVE ACTIVITY</span></div>
+              <div className="admin-overview-float float-b"><CircleDollarSign size={15}/><span>PAYMENT FLOW</span></div>
+            </div>
+            <div className="admin-overview-hero-index">DT / 2026</div>
+          </section>
+
+          {error && (
+            <div className="admin-overview-error" role="alert">
+              <span>{error}</span>
+              <button type="button" onClick={() => { setRefreshing(true); void loadStats(); }}>Coba lagi</button>
+            </div>
+          )}
+
+          <section className="admin-overview-section">
+            <div className="admin-overview-section-head">
+              <div><span className="admin-overview-eyebrow">LIVE SNAPSHOT / 02</span><h2>Statistik utama</h2></div>
+              <small>Data platform secara keseluruhan</small>
+            </div>
+            <div className="admin-overview-metrics">
+              {metrics.map((metric) => (
+                <MetricCard key={metric.label} {...metric} value={loading ? "—" : number(metric.value)}/>
+              ))}
+            </div>
+          </section>
+
+          <section className="admin-overview-panels">
+            <article className="admin-overview-panel admin-overview-revenue">
+              <div className="admin-overview-panel-head">
+                <div><span className="admin-overview-eyebrow">FINANCIAL / 03</span><h2>Performa pendapatan</h2></div>
+                <span className="admin-overview-panel-icon"><Wallet size={19}/></span>
+              </div>
+              <div className="admin-overview-revenue-total">
+                <small>Total pendapatan terkonfirmasi</small>
+                <strong>{loading ? "—" : money(stats.paidRevenue)}</strong>
+                <span><TrendingUp size={14}/> Berdasarkan pesanan lunas</span>
+              </div>
+              <div className="admin-overview-revenue-split">
+                <div><small>Pendapatan bulan ini</small><b>{loading ? "—" : money(stats.monthlyRevenue)}</b></div>
+                <div><small>Pesanan lunas</small><b>{loading ? "—" : number(stats.paidOrders)}</b></div>
+              </div>
+              <button type="button" onClick={() => router.push("/admin/orders")}>Buka manajemen pesanan <ArrowUpRight size={15}/></button>
+            </article>
+
+            <article className="admin-overview-panel admin-overview-engagement">
+              <div className="admin-overview-panel-head">
+                <div><span className="admin-overview-eyebrow">CUSTOMER SIGNAL / 04</span><h2>Interaksi pelanggan</h2></div>
+                <span className="admin-overview-panel-icon"><Activity size={19}/></span>
+              </div>
+              <div className="admin-overview-engagement-main">
+                <div><strong>{loading ? "—" : number(stats.totalTaps)}</strong><small>Total tap NFC</small></div>
+                <div className="admin-overview-ring" style={{ "--ring-value": `${reviewRate}%` } as React.CSSProperties}>
+                  <div><b>{loading ? "—" : `${reviewRate.toFixed(1)}%`}</b><small>REVIEW RATE</small></div>
+                </div>
+              </div>
+              <div className="admin-overview-progress"><i style={{ width: `${reviewRate}%` }}/></div>
+              <div className="admin-overview-engagement-foot"><span>Klik Google Review</span><b>{loading ? "—" : number(stats.totalReviewClicks)}</b></div>
+              <p>Persentase interaksi NFC yang berlanjut ke halaman ulasan.</p>
+            </article>
+          </section>
+
+          <section className="admin-overview-bottom">
+            <article className="admin-overview-panel admin-overview-ops">
+              <div className="admin-overview-panel-head"><div><span className="admin-overview-eyebrow">OPERATIONS / 05</span><h2>Perlu perhatian</h2></div><Clock3 size={18}/></div>
+              <div className="admin-overview-ops-row"><span><i className="ops-dot amber"/>Menunggu verifikasi pembayaran</span><b>{loading ? "—" : number(stats.pendingOrders)}</b></div>
+              <div className="admin-overview-ops-row"><span><i className="ops-dot mint"/>Kartu NFC aktif</span><b>{loading ? "—" : number(stats.activeCards)}</b></div>
+              <div className="admin-overview-ops-row"><span><i className="ops-dot blue"/>Pesanan lunas</span><b>{loading ? "—" : number(stats.paidOrders)}</b></div>
+              <button type="button" onClick={() => router.push("/admin/orders")}>Tinjau antrean pesanan <ArrowUpRight size={15}/></button>
+            </article>
+
+            <article className="admin-overview-panel admin-overview-products">
+              <div className="admin-overview-panel-head"><div><span className="admin-overview-eyebrow">PRODUCT MIX / 06</span><h2>Produk terjual</h2></div><ShoppingBag size={18}/></div>
+              {loading ? <p className="admin-overview-empty">Memuat data produk…</p> : stats.topProducts.length === 0 ? (
+                <p className="admin-overview-empty">Belum ada transaksi terkonfirmasi.</p>
+              ) : stats.topProducts.slice(0, 5).map((product, index) => (
+                <div className="admin-overview-product" key={product.name}>
+                  <span className="admin-overview-product-index">0{index + 1}</span>
+                  <div><b>{product.name}</b><small>{number(product.quantity)} unit terjual</small></div>
+                  <strong>{money(product.revenue)}</strong>
+                </div>
+              ))}
+            </article>
+          </section>
+
+          <section className="admin-overview-quicklinks">
+            <div><span className="admin-overview-eyebrow">WORKSPACE / 07</span><h2>Akses cepat</h2></div>
+            <button type="button" onClick={() => router.push("/admin/notifications")}><Bell size={17}/><span>Notifikasi</span><ArrowUpRight size={14}/></button>
+            <button type="button" onClick={() => router.push("/admin/pins")}><CreditCard size={17}/><span>Inventaris PIN</span><ArrowUpRight size={14}/></button>
+            <button type="button" onClick={() => router.push("/admin/users")}><Users size={17}/><span>Manajemen pengguna</span><ArrowUpRight size={14}/></button>
+          </section>
+          <footer className="admin-overview-footer"><span>DiTapAja Control Center</span><span>ADMINISTRATOR WORKSPACE · 2026</span></footer>
+        </div>
+      </section>
+    </main>
+  );
 }
