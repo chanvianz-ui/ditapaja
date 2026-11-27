@@ -465,3 +465,190 @@ button:disabled{cursor:not-allowed;opacity:.52}
 .dt-customer-orders-v5 :is(button,a,input,select):focus-visible{outline:2px solid #65d8dc!important;outline-offset:3px}
 @media(max-width:900px){.dt-checkout-layout-v5{grid-template-columns:1fr!important;max-width:720px!important}.dt-checkout-intro-v5{position:relative;top:auto!important}.dt-checkout-intro-v5 .order-intro h1{font-size:clamp(40px,8vw,58px)!important}}
 @media(max-width:650px){.dt-checkout-layout-v5{width:calc(100% - 28px)!important;margin:28px auto!important;gap:20px!important}.dt-checkout-panel-v5{padding:19px 15px!important}.dt-checkout-panel-v5 .dt-bank-list{grid-template-columns:1fr!important}.dt-checkout-intro-v5 .dt-order-steps{gap:7px!important}.dt-order-overview-v5{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dt-order-overview-v5 article{padding:14px}.dt-customer-orders-v5 .dt-customer-orders-header{margin-bottom:25px}.dt-customer-order-v5{border-radius:14px!important}}
+
+
+/* ─────────────────────────────────────────────────────────────
+   DiTapAja 2026 / final visual pass
+   Shared geometry, hierarchy, motion and mobile ergonomics.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --dt-page-width:1240px;
+  --dt-page-gutter:clamp(16px,4vw,48px);
+  --dt-card-shadow:0 18px 54px rgba(0,0,0,.22);
+  --dt-glow:0 0 0 1px rgba(57,216,232,.10),0 18px 54px rgba(0,0,0,.22);
+}
+html{scroll-padding-top:104px}
+body{
+  background:
+    radial-gradient(ellipse at 88% -12%,rgba(57,216,232,.085),transparent 38rem),
+    radial-gradient(ellipse at 8% 42%,rgba(120,240,195,.035),transparent 34rem),
+    var(--dt-midnight)!important;
+  text-rendering:optimizeLegibility;
+}
+:where(h1,h2,h3){text-wrap:balance}
+:where(p,li){text-wrap:pretty}
+:where(button,a,input,select,textarea){font-family:inherit}
+:where(button,a){touch-action:manipulation}
+:where(button:not(:disabled),a){cursor:pointer}
+:where(input,select,textarea){min-width:0}
+:where(img,video,canvas,svg){height:auto}
+:where(.dt-auth-form-card,.dt-recovery-v2-card,.dt-activation-page .dt-activation-shell,
+.dt-admin-shell article,.dt-admin-v4 article,.dt-workspace-page article,
+.dt-workspace-page section,.dt-customer-orders article,.order-form,
+.dt-order-form,.dt-payment-step,.dt-checkout-panel-v5,.dt-customer-order-v5){
+  box-shadow:var(--dt-card-shadow);
+}
+:where(.dt-admin-shell article,.dt-admin-v4 article,.dt-workspace-page article,
+.dt-workspace-page section,.dt-customer-orders article,.dt-control-card,
+.dt-control-metric,.dt-control-panel,.order-form,.dt-order-form,.dt-payment-step){
+  border:1px solid var(--dt-line)!important;
+  background:linear-gradient(145deg,rgba(16,38,61,.94),rgba(7,19,32,.97))!important;
+}
+:where(.dt-admin-shell article,.dt-admin-v4 article,.dt-workspace-page article,
+.dt-workspace-page section,.dt-control-card,.dt-control-metric,.dt-control-panel){
+  transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease;
+}
+:where(.dt-admin-shell article,.dt-admin-v4 article,.dt-workspace-page article,
+.dt-control-card,.dt-control-panel):hover{
+  border-color:rgba(57,216,232,.28)!important;
+}
+:where(.dt-admin-shell button,.dt-admin-v4 button,.dt-workspace-page button,
+.dt-control button,.order-page button,.dt-customer-orders-v2 button){
+  min-height:38px;
+}
+:where(.dt-admin-shell input,.dt-admin-shell select,.dt-admin-shell textarea,
+.dt-admin-v4 input,.dt-admin-v4 select,.dt-admin-v4 textarea,
+.dt-workspace-page input,.dt-workspace-page select,.dt-workspace-page textarea,
+.order-page input,.order-page select,.order-page textarea){
+  min-height:44px;
+}
+:where(.dt-admin-shell table,.dt-admin-v4 table,.dt-workspace-page table){
+  font-variant-numeric:tabular-nums;
+}
+:where(.dt-admin-shell th,.dt-admin-v4 th,.dt-workspace-page th){
+  white-space:nowrap;
+}
+:where(.dt-admin-shell td,.dt-admin-v4 td,.dt-workspace-page td){
+  overflow-wrap:anywhere;
+}
+:where(.dt-site-header,.dt-public-header,.order-header,.dt-admin-shell>section>header){
+  backdrop-filter:blur(20px) saturate(145%);
+}
+:where(.dt-header-cta,.dt-header-mobile-cta,.ed-button,.order-submit,
+.dt-auth-submit,.dt-recovery-v2-card button,.dt-activation-page button.bg-\\[\\#102c49\\]){
+  box-shadow:0 10px 28px rgba(57,216,232,.13)!important;
+}
+:where(.dt-header-cta,.dt-header-mobile-cta,.ed-button,.order-submit,
+.dt-auth-submit):hover{filter:brightness(1.06);transform:translateY(-1px)}
+:where(.dt-header-cta,.dt-header-mobile-cta,.ed-button,.order-submit,
+.dt-auth-submit):active{transform:translateY(0)}
+/* Homepage: editorial rhythm and consistent section surfaces. */
+.ed-hero{
+  background:
+    radial-gradient(ellipse at 78% 22%,rgba(57,216,232,.13),transparent 34rem),
+    linear-gradient(135deg,#0a1a2c 0%,#071321 58%,#0b202b 100%)!important;
+}
+.ed-hero-grid{width:min(var(--dt-page-width),calc(100% - 2*var(--dt-page-gutter)))!important}
+.ed-hero-copy h1{max-width:780px;text-wrap:balance}
+.ed-hero-lead{max-width:590px}
+.ed-intro-band,.nx-collection,.home-dashboard-story,.dt-how-section,
+.dt-next-home,.home-closing,.dt-footer{
+  position:relative;
+}
+.dt-how-section,.home-dashboard-story,.nx-collection{
+  border-top:1px solid rgba(145,190,218,.075);
+}
+.home-demo-card,.home-demo-phone,.dt-how-panel,.dt-behind-panel{
+  border-color:var(--dt-line)!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.3)!important;
+}
+.home-demo-card-glint{opacity:.7}
+.home-demo-instruction,.home-demo-disclaimer{color:var(--dt-muted)!important}
+.dt-how-step-label{letter-spacing:.01em}
+.dt-how-step-indicator{background:linear-gradient(90deg,var(--dt-cyan),var(--dt-mint))!important}
+.dt-behind-panel,.dt-closing-main{
+  border:1px solid var(--dt-line)!important;
+  background:linear-gradient(145deg,rgba(16,38,61,.94),rgba(7,19,32,.98))!important;
+  box-shadow:var(--dt-card-shadow);
+}
+.dt-footer{border-top:1px solid var(--dt-line)!important}
+/* Public catalogue and product detail. */
+.nx-catalog-page,.product-detail-page{
+  background:
+    radial-gradient(ellipse at 82% 0,rgba(57,216,232,.08),transparent 34rem),
+    var(--dt-midnight)!important;
+}
+.nx-catalog-products,.detail-spec-grid>*,.detail-fit,.detail-feature-grid>*{
+  box-shadow:0 16px 44px rgba(0,0,0,.16);
+}
+.nx-catalog-products :where(button,a),.detail-hero :where(button,a){
+  transition:transform .2s ease,border-color .2s ease,background .2s ease;
+}
+.nx-catalog-products :where(button,a):hover,.detail-hero :where(button,a):hover{
+  transform:translateY(-2px);
+}
+/* Workspace and admin: consistent density and readable surfaces. */
+.dt-workspace-page,.dt-reset-dashboard,.dt-admin-shell,.dt-admin-v4{
+  min-height:100vh;
+}
+.dt-workspace-page :where(h1,h2),.dt-admin-shell :where(h1,h2),.dt-admin-v4 :where(h1,h2){
+  letter-spacing:-.055em;
+}
+.dt-workspace-page :where(.grid){min-width:0}
+.dt-workspace-page :where(article,section){min-width:0}
+.dt-workspace-page :where(input,select,textarea),
+.dt-admin-shell :where(input,select,textarea),
+.dt-admin-v4 :where(input,select,textarea){font-size:14px}
+.dt-workspace-page :where(.overflow-x-auto,.overflow-auto),
+.dt-admin-shell :where(.overflow-x-auto,.overflow-auto),
+.dt-admin-v4 :where(.overflow-x-auto,.overflow-auto){
+  max-width:100%;overscroll-behavior-x:contain;
+}
+.dt-workspace-page :where(.rounded-2xl,.rounded-xl),
+.dt-admin-shell :where(.rounded-2xl,.rounded-xl),
+.dt-admin-v4 :where(.rounded-2xl,.rounded-xl){overflow-wrap:anywhere}
+.dt-admin-shell [role=dialog],.dt-admin-v4 [role=dialog],
+.dt-workspace-page [role=dialog]{
+  max-height:min(88dvh,820px);overflow:auto;overscroll-behavior:contain;
+}
+/* Checkout, order history and auth: consistent field rhythm. */
+.order-layout{align-items:start}
+.order-field{min-width:0}
+.order-field :where(input,select,textarea){width:100%;min-width:0}
+.dt-auth-form-card,.dt-recovery-v2-card{backdrop-filter:blur(18px)}
+.dt-auth-form :where(input,button){min-height:48px}
+.dt-customer-orders-v2 :where(article,section){min-width:0}
+.dt-customer-orders-v2 :where(button,a){min-height:40px}
+/* Motion is restrained and respects OS accessibility preferences. */
+@media(prefers-reduced-motion:no-preference){
+  .ed-hero-copy,.ed-hero-grid{animation:dt-rise-in .65s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes dt-rise-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+}
+@media(max-width:900px){
+  .ed-hero-grid{grid-template-columns:1fr!important}
+  .ed-hero-copy{max-width:760px}
+}
+@media(max-width:760px){
+  html{scroll-padding-top:78px}
+  .dt-site-header{top:7px!important;width:calc(100% - 16px)!important;margin:7px auto 0!important}
+  .dt-header-shell{min-height:60px!important}
+  .dt-workspace-page :where(.grid){gap:12px}
+  .dt-workspace-page :where(h1){font-size:clamp(25px,7vw,36px)}
+  .dt-admin-shell :where(h1),.dt-admin-v4 :where(h1){font-size:clamp(22px,6vw,30px)!important}
+  .dt-admin-shell :where(input,select,textarea),
+  .dt-admin-v4 :where(input,select,textarea),
+  .dt-workspace-page :where(input,select,textarea),
+  .order-page :where(input,select,textarea){font-size:16px!important}
+  .dt-admin-shell table,.dt-admin-v4 table,.dt-workspace-page table{min-width:680px}
+  .home-demo-stage{min-height:0}
+  .dt-footer-main{grid-template-columns:1fr!important}
+}
+@media(max-width:480px){
+  .dt-header-shell{padding-inline:12px!important}
+  .ed-hero{padding-inline:17px!important}
+  .dt-checkout-panel-v5{padding:17px 13px!important}
+  .dt-customer-orders-v5{padding-inline:12px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
