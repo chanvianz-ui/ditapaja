@@ -103,6 +103,29 @@ export default function AdminNotificationsPage() {
 
   useEffect(() => { void load(); }, [load]);
 
+  useEffect(() => {
+    let active = true;
+    let channel: ReturnType<typeof supabase.channel> | null = null;
+    const connect = async () => {
+      const { data } = await supabase.auth.getSession();
+      const session = data.session;
+      if (!active || !session || session.user.app_metadata?.role !== "superadmin") return;
+      channel = supabase.channel("superadmin-notification-center-" + session.user.id)
+        .on("postgres_changes", {
+          event: "*",
+          schema: "public",
+          table: "superadmin_notifications",
+          filter: "recipient_id=eq." + session.user.id,
+        }, () => { void load(); })
+        .subscribe();
+    };
+    void connect();
+    return () => {
+      active = false;
+      if (channel) void supabase.removeChannel(channel);
+    };
+  }, [load]);
+
   const visible = useMemo(() => notifications.filter(item => {
     if (filter === "unread") return !item.read_at;
     if (filter === "critical") return item.severity === "critical";
