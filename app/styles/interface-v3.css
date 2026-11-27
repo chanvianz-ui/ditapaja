@@ -652,3 +652,76 @@ body{
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* Component-aligned redesign pass — selectors verified against rendered page components. */
+.dt-v3-header{
+  position:sticky!important;top:12px!important;z-index:80!important;
+  width:min(1240px,calc(100% - 36px))!important;margin:12px auto 0!important;
+  border:1px solid rgba(145,190,218,.14)!important;border-radius:18px!important;
+  background:rgba(5,11,20,.82)!important;backdrop-filter:blur(22px) saturate(150%)!important;
+  box-shadow:0 14px 44px rgba(0,0,0,.24)!important;
+}
+.dt-v3-header-inner{min-height:70px!important;padding-inline:clamp(16px,2.2vw,30px)!important}
+.dt-v3-brand-mark{filter:drop-shadow(0 0 12px rgba(57,216,232,.2))}
+.dt-v3-nav a{transition:color .18s ease,background .18s ease}
+.dt-v3-nav a:hover{color:var(--dt-cyan)!important}
+.dt-v3-header-cta,.dt-v3-mobile-shop{
+  border:1px solid rgba(57,216,232,.28)!important;
+  background:linear-gradient(120deg,rgba(57,216,232,.18),rgba(120,240,195,.11))!important;
+  color:var(--dt-ink)!important;border-radius:11px!important;
+}
+.dt-v3-menu-panel{
+  border:1px solid var(--dt-line)!important;
+  background:radial-gradient(ellipse at 85% 0,rgba(57,216,232,.12),transparent 28rem),#071321!important;
+}
+.dt-v3-menu-links a{border-color:var(--dt-line)!important}
+.dt-v3-menu-links a:hover{background:rgba(57,216,232,.07)!important}
+.dt-editorial-home{
+  overflow:clip;background:var(--dt-midnight)!important;
+}
+.home-hero-proof,.home-hero-marquee{border-color:var(--dt-line)!important}
+.home-demo-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.home-demo-card{
+  border:1px solid rgba(120,240,195,.3)!important;
+  background:radial-gradient(ellipse at 78% 12%,rgba(57,216,232,.22),transparent 58%),linear-gradient(145deg,#16334d,#081421 78%)!important;
+  box-shadow:0 28px 75px rgba(0,0,0,.45),0 0 36px rgba(57,216,232,.08)!important;
+}
+.home-demo-card-title{letter-spacing:-.065em}
+.home-demo-card-glint{background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.16) 48%,transparent 70%)!important}
+.home-demo-transfer{color:var(--dt-cyan)!important}
+.home-demo-phone{border-color:rgba(145,190,218,.3)!important;box-shadow:0 30px 80px rgba(0,0,0,.4)!important}
+.home-demo-footer{border-top:1px solid var(--dt-line)!important}
+.dt-how-section,.dt-next-home,.dt-editorial-home .home-dashboard-story,
+.dt-editorial-home .nx-collection,.dt-editorial-home .home-closing{
+  background:transparent!important;
+}
+.dt-how-panel,.dt-behind-panel,.dt-closing-main{
+  border:1px solid var(--dt-line)!important;border-radius:22px!important;
+  background:linear-gradient(145deg,rgba(16,38,61,.92),rgba(7,19,32,.98))!important;
+  box-shadow:var(--dt-card-shadow)!important;
+}
+.dt-how-step-label{color:var(--dt-ink)!important}
+.dt-how-step-indicator,.dt-how-progress{background:linear-gradient(90deg,var(--dt-cyan),var(--dt-mint))!important}
+.dt-how-visual-core{box-shadow:0 0 55px rgba(57,216,232,.13)!important}
+.dt-behind-panel{backdrop-filter:blur(18px)}
+.dt-behind-metrics>*{border-color:var(--dt-line)!important}
+.dt-footer-redesign{border-top:1px solid var(--dt-line)!important}
+.dt-footer-hero{background:radial-gradient(ellipse at 70% 0,rgba(57,216,232,.12),transparent 30rem)!important}
+.admin-overview-shell{background:var(--dt-midnight)!important}
+.admin-overview-header,.admin-overview-hero,.admin-overview-metric{
+  border-color:var(--dt-line)!important;
+}
+.admin-overview-hero{
+  background:radial-gradient(ellipse at 85% 15%,rgba(57,216,232,.13),transparent 28rem),linear-gradient(140deg,#10263d,#081522 72%)!important;
+}
+.admin-overview-hero h2 em,.admin-overview-heading h1 span{color:var(--dt-mint)!important}
+.admin-overview-metric{background:linear-gradient(145deg,#10263d,#091725)!important;border-radius:16px!important}
+.admin-overview-metric-icon{border-color:rgba(57,216,232,.2)!important;color:var(--dt-cyan)!important}
+.admin-overview-refresh{border-radius:10px!important}
+@media(max-width:760px){
+  .dt-v3-header{top:7px!important;width:calc(100% - 16px)!important;margin-top:7px!important;border-radius:14px!important}
+  .dt-v3-header-inner{min-height:60px!important}
+  .home-demo-heading{align-items:flex-start;flex-direction:column}
+  .dt-how-panel,.dt-behind-panel,.dt-closing-main{border-radius:16px!important}
+}
