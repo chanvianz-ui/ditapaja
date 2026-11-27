@@ -4397,3 +4397,16 @@ button,input,select,textarea{font-family:"DM Sans",sans-serif}
 @media(max-width:900px){.ck-hero{grid-template-columns:1fr minmax(300px,.8fr);gap:20px}.ck-hero h1{font-size:clamp(45px,6vw,64px)}.ck-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.ck-step-connector{display:none}.ck-dual{grid-template-columns:1fr 1fr}.ck-dual-intro{grid-column:1/-1}.ck-dual-intro>p{max-width:560px}}
 @media(max-width:680px){.ck-hero{grid-template-columns:1fr;gap:12px;min-height:0;padding:55px 21px 35px}.ck-hero h1{font-size:clamp(46px,12vw,66px);margin:27px 0 17px}.ck-hero-foot{margin-top:37px;gap:12px 18px}.ck-visual{min-height:330px;margin-top:8px}.ck-orbit-one{width:270px}.ck-orbit-two{width:215px}.ck-card{width:min(82%,340px)}.ck-phone{right:1%;bottom:0;width:100px;height:205px}.ck-phone-screen{padding:25px 8px 8px}.ck-phone-check{margin:18px 0 10px}.ck-phone-screen>b{font-size:16px}.ck-label-top{top:5%;right:0}.ck-label-bottom{bottom:0;left:0}.ck-proof-strip{grid-template-columns:1fr;padding:15px 20px;gap:7px}.ck-proof-strip>div{padding:10px 13px}.ck-steps-section{padding:65px 20px}.ck-section-heading{align-items:flex-start;flex-direction:column;gap:13px;margin-bottom:28px}.ck-section-heading h2{font-size:clamp(39px,10vw,54px)}.ck-steps{grid-template-columns:1fr;gap:9px}.ck-step{min-height:0;padding:18px}.ck-step-icon{margin:18px 0 13px}.ck-step p{min-height:0}.ck-step>small{margin-top:14px}.ck-dual{grid-template-columns:1fr;padding:55px 20px;gap:9px}.ck-dual-intro{grid-column:auto;padding:0 0 10px}.ck-dual-intro h2{font-size:clamp(38px,10vw,52px)}.ck-dual>article{padding:20px}.ck-dual-icon{margin-bottom:18px}.ck-compat{grid-template-columns:1fr;gap:22px;padding:55px 20px}.ck-compat h2{font-size:clamp(38px,10vw,52px)}.ck-close{align-items:flex-start;flex-direction:column;padding:52px 21px}.ck-footer{flex-wrap:wrap;padding:19px 21px}.ck-footer>span{order:3;width:100%}.ck-footer>div{margin-left:auto;gap:12px}}
 @media(prefers-reduced-motion:reduce){.ck-page *{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Artwork is illustrative, not an interactive control. Edition buttons own selection. */
+.dt-home-rebuild .ed-collection .dt-neo-card {
+  cursor: default;
+}
+.dt-home-rebuild .ed-collection .dt-neo-card:hover {
+  transform: none !important;
+  filter: none;
+}
+.dt-home-rebuild .ed-collection .dt-neo-card:focus-visible {
+  outline: none;
+}
