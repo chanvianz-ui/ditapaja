@@ -1,0 +1,139 @@
+/* DiTapAja Workspace v3 — dashboard + Page Studio. Visual-only layer. */
+:root{--w-bg:#050b14;--w-navy:#0a192b;--w-panel:#10263d;--w-raised:#15334c;--w-cyan:#39d8e8;--w-mint:#78f0c3;--w-ink:#effaff;--w-muted:#9bb2c6;--w-dim:#6f879d;--w-line:rgba(145,190,218,.15)}
+/* Workspace overview: editorial command center */
+.dt-reset-dashboard{min-height:100%;background:radial-gradient(ellipse at 82% -8%,rgba(57,216,232,.13),transparent 34rem),radial-gradient(ellipse at 10% 40%,rgba(120,240,195,.045),transparent 28rem),var(--w-bg)!important;color:var(--w-ink)!important}
+.dt-reset-dashboard .dt-page{width:min(100%,1560px);padding:clamp(24px,3.8vw,56px) clamp(16px,3.5vw,56px) 64px}
+.dt-reset-dashboard .dt-alert{border:1px solid rgba(57,216,232,.25);border-radius:14px;background:rgba(16,38,61,.9);color:#c9f9ff;padding:14px 17px;margin-bottom:22px}
+.dt-reset-dashboard .dt-page-heading{position:relative;display:flex;align-items:end;justify-content:space-between;gap:22px;margin:0 0 27px;padding:0 0 25px;border-bottom:1px solid var(--w-line)}
+.dt-reset-dashboard .dt-page-heading:before{content:"DITAPAJA / WORKSPACE";display:block;position:absolute;top:-16px;color:var(--w-mint);font-size:8px;font-weight:900;letter-spacing:2px}
+.dt-reset-dashboard .dt-page-heading h1{margin:10px 0 7px;color:var(--w-ink);font-size:clamp(36px,5vw,64px);font-weight:780;letter-spacing:-.075em;line-height:.98}
+.dt-reset-dashboard .dt-page-heading h1 span{color:var(--w-cyan)}
+.dt-reset-dashboard .dt-page-heading p{max-width:570px;margin:12px 0 0;color:var(--w-muted);font-size:12px;line-height:1.75}
+.dt-reset-dashboard .dt-primary{min-height:46px;padding:0 18px;border:0;border-radius:12px;background:linear-gradient(110deg,var(--w-cyan),var(--w-mint));color:#04131d;font-size:11px;font-weight:900;box-shadow:0 12px 34px rgba(57,216,232,.12)}
+.dt-reset-dashboard .dt-primary:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.dt-reset-dashboard .dt-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.dt-reset-dashboard .dt-kpi{position:relative;min-height:145px;padding:19px 20px;border:1px solid var(--w-line);border-radius:18px;background:linear-gradient(150deg,rgba(18,45,68,.94),rgba(8,22,37,.98));box-shadow:0 18px 48px rgba(0,0,0,.17);overflow:hidden}
+.dt-reset-dashboard .dt-kpi:after{right:-46px;bottom:-70px;width:160px;height:160px;border-color:rgba(57,216,232,.11)}
+.dt-reset-dashboard .dt-kpi-head{color:var(--w-muted);font-size:9px;font-weight:850;letter-spacing:.11em}
+.dt-reset-dashboard .dt-kpi-head svg{color:var(--w-cyan)}
+.dt-reset-dashboard .dt-kpi>strong{margin-top:24px;color:var(--w-ink);font-size:clamp(28px,3vw,40px);font-weight:780;letter-spacing:-.07em}
+.dt-reset-dashboard .dt-kpi>small{color:var(--w-dim);font-size:9px}
+.dt-reset-dashboard .dt-overview-grid{grid-template-columns:minmax(0,1.8fr) minmax(250px,.72fr);gap:14px;margin-bottom:18px}
+.dt-reset-dashboard .dt-panel,.dt-reset-dashboard .dt-recent-section,.dt-reset-dashboard .dt-card-manager{border:1px solid var(--w-line);border-radius:20px;background:linear-gradient(155deg,rgba(16,38,61,.97),rgba(7,18,31,.99));box-shadow:0 20px 55px rgba(0,0,0,.18)}
+.dt-reset-dashboard .dt-panel{padding:clamp(18px,2.4vw,27px)}
+.dt-reset-dashboard .dt-panel h2,.dt-reset-dashboard .dt-section-heading h2{color:var(--w-ink);font-size:20px;font-weight:780;letter-spacing:-.045em}
+.dt-reset-dashboard .dt-panel-heading p,.dt-reset-dashboard .dt-section-heading p{color:var(--w-muted)}
+.dt-reset-dashboard .dt-panel-filters select,.dt-reset-dashboard .dt-card-toolbar input,.dt-reset-dashboard .dt-card-toolbar select{min-height:39px;border:1px solid var(--w-line)!important;border-radius:10px!important;background:#071522!important;color:var(--w-ink)!important;padding:0 12px;font-size:10px}
+.dt-reset-dashboard .dt-chart-toolbar{margin-top:26px}
+.dt-reset-dashboard .dt-legend{color:var(--w-muted);font-size:10px}
+.dt-reset-dashboard .dt-dot-taps{background:var(--w-cyan)}.dt-reset-dashboard .dt-dot-clicks{background:var(--w-mint)}
+.dt-reset-dashboard .dt-period{padding:4px;border:1px solid var(--w-line);border-radius:10px;background:#071522}
+.dt-reset-dashboard .dt-period button{min-width:39px;border-radius:7px;color:var(--w-muted)}
+.dt-reset-dashboard .dt-period button.is-active{background:linear-gradient(110deg,var(--w-cyan),var(--w-mint));color:#04131d}
+.dt-reset-dashboard .dt-chart{min-height:230px;gap:clamp(5px,1.5vw,18px);padding-top:25px}
+.dt-reset-dashboard .dt-chart-day{color:var(--w-dim);font-size:9px}
+.dt-reset-dashboard .dt-chart-bars{border-bottom:1px solid var(--w-line);gap:4px}
+.dt-reset-dashboard .dt-bar-taps{background:linear-gradient(180deg,#69e8f3,#168da8);border-radius:5px 5px 1px 1px}
+.dt-reset-dashboard .dt-bar-clicks{background:linear-gradient(180deg,#9bf5d1,#3cae8d);border-radius:5px 5px 1px 1px}
+.dt-reset-dashboard .dt-chart-empty{color:var(--w-dim)}
+.dt-reset-dashboard .dt-chart-empty b{color:var(--w-ink)}
+.dt-reset-dashboard .dt-chart-foot{border-color:var(--w-line);color:var(--w-muted);font-size:9px}
+.dt-reset-dashboard .dt-chart-foot b{color:var(--w-ink)}
+.dt-reset-dashboard .dt-chart-foot button,.dt-reset-dashboard .dt-text-button{color:var(--w-cyan)}
+.dt-reset-dashboard .dt-insights{background:radial-gradient(ellipse at 100% 0,rgba(120,240,195,.09),transparent 18rem),linear-gradient(155deg,#102c42,#081827)}
+.dt-reset-dashboard .dt-insight-intro{color:var(--w-muted)}
+.dt-reset-dashboard .dt-insight-stat{border-color:var(--w-line);color:var(--w-muted);font-size:10px}
+.dt-reset-dashboard .dt-insight-stat b{color:var(--w-ink)}
+.dt-reset-dashboard .dt-top-card{border:1px solid rgba(120,240,195,.2);border-radius:14px;background:rgba(120,240,195,.055)}
+.dt-reset-dashboard .dt-top-card small{color:var(--w-mint)}
+.dt-reset-dashboard .dt-top-card strong{color:var(--w-ink)}
+.dt-reset-dashboard .dt-top-card span{color:var(--w-muted)}
+.dt-reset-dashboard .dt-recent-section{padding:22px}
+.dt-reset-dashboard .dt-recent-card{display:flex;align-items:center;gap:14px;padding:15px 4px;border-color:var(--w-line)}
+.dt-reset-dashboard .dt-card-icon{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(57,216,232,.2);border-radius:13px;background:rgba(57,216,232,.08);color:var(--w-cyan)}
+.dt-reset-dashboard .dt-recent-info b{color:var(--w-ink)}
+.dt-reset-dashboard .dt-recent-info small,.dt-reset-dashboard .dt-recent-taps small{color:var(--w-dim)}
+.dt-reset-dashboard .dt-status{border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:5px 9px;color:var(--w-muted);font-size:9px}
+.dt-reset-dashboard .dt-status.is-on{border-color:rgba(120,240,195,.2);background:rgba(120,240,195,.08);color:var(--w-mint)}
+.dt-reset-dashboard .dt-recent-taps{color:var(--w-ink)}
+.dt-reset-dashboard .dt-no-cards{border:1px dashed var(--w-line);border-radius:15px;color:var(--w-muted)}
+/* Card management — inventory table becomes responsive cards */
+.dt-reset-dashboard .dt-cards-heading{margin-bottom:24px}
+.dt-reset-dashboard .dt-cards-heading .dt-eyebrow{color:var(--w-mint)}
+.dt-reset-dashboard .dt-card-counts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:15px}
+.dt-reset-dashboard .dt-card-counts>div{padding:16px 18px;border:1px solid var(--w-line);border-radius:15px;background:linear-gradient(145deg,#10263d,#091827)}
+.dt-reset-dashboard .dt-card-counts small{color:var(--w-muted);font-size:9px}.dt-reset-dashboard .dt-card-counts b{display:block;margin-top:8px;color:var(--w-ink);font-size:25px;letter-spacing:-.05em}
+.dt-reset-dashboard .dt-card-manager{padding:18px}
+.dt-reset-dashboard .dt-card-toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding-bottom:15px;border-bottom:1px solid var(--w-line)}
+.dt-reset-dashboard .dt-card-toolbar input{flex:1;min-width:200px}
+.dt-reset-dashboard .dt-card-toolbar button,.dt-reset-dashboard .dt-bulkbar button{min-height:38px;padding:0 12px;border:1px solid var(--w-line);border-radius:10px;background:#0b1d2e;color:var(--w-muted);font-size:10px;font-weight:750}
+.dt-reset-dashboard .dt-card-toolbar button.is-active{border-color:rgba(57,216,232,.3);color:var(--w-cyan)}
+.dt-reset-dashboard .dt-managed-list{display:grid;gap:9px;padding-top:13px}
+.dt-reset-dashboard .dt-managed-card{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:16px;border:1px solid var(--w-line);border-radius:15px;background:rgba(5,15,27,.54)}
+.dt-reset-dashboard .dt-managed-info{min-width:0}
+.dt-reset-dashboard .dt-managed-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dt-reset-dashboard .dt-managed-title b{color:var(--w-ink);font-size:12px}
+.dt-reset-dashboard .dt-managed-info p,.dt-reset-dashboard .dt-managed-info small{color:var(--w-dim);overflow-wrap:anywhere}
+.dt-reset-dashboard .dt-managed-stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;color:var(--w-muted);font-size:9px}
+.dt-reset-dashboard .dt-managed-actions{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;max-width:310px}
+.dt-reset-dashboard .dt-managed-actions button{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 9px;border:1px solid var(--w-line);border-radius:9px;background:#0b1c2d;color:var(--w-muted);font-size:9px;font-weight:750}
+.dt-reset-dashboard .dt-managed-actions button:hover{border-color:rgba(57,216,232,.35);color:var(--w-cyan)}
+.dt-reset-dashboard .dt-managed-actions button.is-danger{border-color:rgba(255,130,149,.2);color:#ff9cac}
+.dt-reset-dashboard .dt-list-foot{color:var(--w-dim)}
+/* Studio: visual editor is a focused split workspace */
+.ditapaja-studio-page{min-height:100vh;background:radial-gradient(ellipse at 78% -5%,rgba(57,216,232,.12),transparent 32rem),var(--w-bg)!important;color:var(--w-ink)!important}
+.ditapaja-studio-page .studio-shell{width:min(100%,1600px);margin:0 auto;padding:0 clamp(14px,3vw,42px) 54px;background:transparent!important}
+.ditapaja-studio-page .studio-topbar{position:sticky;top:0;z-index:40;min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 calc(clamp(14px,3vw,42px)*-1) 28px;padding:0 clamp(14px,3vw,42px);border-bottom:1px solid var(--w-line);background:rgba(5,11,20,.88)!important;backdrop-filter:blur(20px)}
+.ditapaja-studio-page .studio-back{color:var(--w-muted)!important}.ditapaja-studio-page .studio-back:hover{color:var(--w-cyan)!important}
+.ditapaja-studio-page .studio-brand{gap:11px}.ditapaja-studio-page .studio-brand-mark{width:39px;height:39px;border:1px solid rgba(57,216,232,.35);border-radius:13px;background:linear-gradient(145deg,#153b55,#091827);color:var(--w-cyan)}
+.ditapaja-studio-page .studio-brand b{color:var(--w-ink);font-size:14px}.ditapaja-studio-page .studio-brand small{color:var(--w-dim)}
+.ditapaja-studio-page .studio-status{color:var(--w-muted)}.ditapaja-studio-page .studio-status.is-live i{background:var(--w-mint);box-shadow:0 0 0 3px rgba(120,240,195,.12)}
+.ditapaja-studio-page .studio-save-top{display:inline-flex;min-height:41px;border:0;border-radius:11px;background:linear-gradient(110deg,var(--w-cyan),var(--w-mint));color:#04131d}
+.ditapaja-studio-page .studio-intro{grid-template-columns:minmax(0,1fr) minmax(240px,330px);gap:30px;margin-bottom:18px;padding:clamp(23px,3.5vw,42px);border:1px solid rgba(57,216,232,.19);border-radius:22px;background:radial-gradient(ellipse at 92% 0,rgba(57,216,232,.16),transparent 24rem),linear-gradient(130deg,#102b43,#071522 78%);box-shadow:0 24px 70px rgba(0,0,0,.2)}
+.ditapaja-studio-page .studio-intro:after{border-color:rgba(57,216,232,.12);box-shadow:0 0 0 25px rgba(57,216,232,.025),0 0 0 55px rgba(120,240,195,.018)}
+.ditapaja-studio-page .studio-kicker{color:var(--w-mint);font-size:8px;letter-spacing:2px}
+.ditapaja-studio-page .studio-intro h1{color:var(--w-ink);font-size:clamp(32px,4.5vw,54px);letter-spacing:-.07em}
+.ditapaja-studio-page .studio-intro>div:first-child>p:last-child{color:var(--w-muted);font-size:12px}
+.ditapaja-studio-page .studio-card-picker label,.ditapaja-studio-page .studio-canvas-heading>div>span{color:var(--w-mint)}
+.ditapaja-studio-page .studio-card-picker select{height:48px;border:1px solid var(--w-line-strong)!important;border-radius:11px!important;background:#071522!important;color:var(--w-ink)!important}
+.ditapaja-studio-page .studio-feedback{border-radius:12px}.ditapaja-studio-page .studio-feedback.is-success{border-color:rgba(120,240,195,.25);background:rgba(120,240,195,.08);color:var(--w-mint)}
+.ditapaja-studio-page .studio-empty{border:1px dashed rgba(57,216,232,.28);border-radius:18px;background:rgba(16,38,61,.55)}
+.ditapaja-studio-page .studio-empty>span{border:1px solid rgba(57,216,232,.3);border-radius:14px;background:rgba(57,216,232,.1);color:var(--w-cyan)}
+.ditapaja-studio-page .studio-empty h2{color:var(--w-ink)}.ditapaja-studio-page .studio-empty p{color:var(--w-muted)}
+.ditapaja-studio-page .studio-workspace{grid-template-columns:minmax(0,1.06fr) minmax(360px,.94fr);gap:16px;align-items:start}
+.ditapaja-studio-page .studio-editor{min-width:0;display:flex;flex-direction:column;gap:12px}
+.ditapaja-studio-page .studio-section-heading{align-items:center;margin:0 0 2px}
+.ditapaja-studio-page .studio-section-heading span{color:var(--w-mint)}.ditapaja-studio-page .studio-section-heading h2{color:var(--w-ink);font-size:20px}
+.ditapaja-studio-page .studio-section-heading>small{color:var(--w-dim)}
+.ditapaja-studio-page .studio-tabs{gap:5px;padding:5px;border:1px solid var(--w-line);border-radius:13px;background:#071522}
+.ditapaja-studio-page .studio-tabs button{min-height:47px;border-radius:9px;color:var(--w-muted)}
+.ditapaja-studio-page .studio-tabs button.is-active{border-color:rgba(57,216,232,.3);background:linear-gradient(110deg,rgba(57,216,232,.14),rgba(120,240,195,.06));color:var(--w-ink)}
+.ditapaja-studio-page .studio-tabs button.is-active span{color:var(--w-cyan)}
+.ditapaja-studio-page .studio-tabs button i.is-complete{background:var(--w-mint);box-shadow:0 0 0 3px rgba(120,240,195,.1)}
+.ditapaja-studio-page .studio-form,.ditapaja-studio-page .studio-upload-card,.ditapaja-studio-page .studio-setting-group{border:1px solid var(--w-line);border-radius:17px;background:linear-gradient(150deg,#10263d,#091827);box-shadow:0 18px 48px rgba(0,0,0,.16)}
+.ditapaja-studio-page .studio-form-heading{padding:20px 22px;border-color:var(--w-line)}
+.ditapaja-studio-page .studio-form-heading>div>span{color:var(--w-mint)}
+.ditapaja-studio-page .studio-form-heading h2{color:var(--w-ink);font-size:20px}
+.ditapaja-studio-page .studio-form-heading p{color:var(--w-muted)}
+.ditapaja-studio-page .studio-step-count{border-color:rgba(57,216,232,.2);border-radius:9px;background:rgba(57,216,232,.07);color:var(--w-cyan)}
+.ditapaja-studio-page .studio-form-content{padding:22px}
+.ditapaja-studio-page .studio-label,.ditapaja-studio-page .studio-field label{color:var(--w-muted)!important}
+.ditapaja-studio-page .studio-field input,.ditapaja-studio-page .studio-field textarea,.ditapaja-studio-page .studio-field select{border:1px solid var(--w-line-strong)!important;border-radius:11px!important;background:#061421!important;color:var(--w-ink)!important}
+.ditapaja-studio-page .studio-info{border:1px solid var(--w-line);border-radius:12px;background:rgba(57,216,232,.055);color:var(--w-muted)}
+.ditapaja-studio-page .studio-primary-button,.ditapaja-studio-page .studio-next-button{border:0;border-radius:11px;background:linear-gradient(110deg,var(--w-cyan),var(--w-mint));color:#04131d;font-weight:900}
+.ditapaja-studio-page .studio-secondary-button,.ditapaja-studio-page .studio-quiet-button{border:1px solid var(--w-line-strong);border-radius:11px;background:#0b1d2e;color:var(--w-muted)}
+.ditapaja-studio-page .studio-canvas-panel{position:sticky;top:94px;min-width:0;overflow:hidden;border:1px solid var(--w-line)!important;border-radius:19px;background:linear-gradient(150deg,#10263d,#071522)!important;box-shadow:0 22px 58px rgba(0,0,0,.24)}
+.ditapaja-studio-page .studio-canvas-heading{padding:17px 19px;border-bottom:1px solid var(--w-line)}
+.ditapaja-studio-page .studio-canvas-heading strong{color:var(--w-ink)}.ditapaja-studio-page .studio-canvas-heading small{color:var(--w-muted)}
+.ditapaja-studio-page .studio-view-switch{padding:4px;border:1px solid var(--w-line);border-radius:10px;background:#061421}
+.ditapaja-studio-page .studio-view-switch button{border-radius:7px;color:var(--w-muted)}
+.ditapaja-studio-page .studio-view-switch button.is-active{background:rgba(57,216,232,.15);color:var(--w-cyan)}
+.ditapaja-studio-page .studio-canvas-stage{display:grid;place-items:center;min-height:600px;padding:24px;background:radial-gradient(ellipse at 50% 0,rgba(57,216,232,.09),transparent 23rem),repeating-linear-gradient(0deg,transparent 0 31px,rgba(145,190,218,.035) 32px),repeating-linear-gradient(90deg,transparent 0 31px,rgba(145,190,218,.035) 32px),#071421}
+.ditapaja-studio-page .studio-device-frame{border:7px solid #1b2b3b;border-radius:34px;background:#030910;box-shadow:0 35px 80px rgba(0,0,0,.55),0 0 0 1px rgba(57,216,232,.18)}
+.ditapaja-studio-page .studio-device-camera{background:#1b2b3b}
+.ditapaja-studio-page .studio-preview-iframe{border:0;border-radius:26px;background:#fff}
+.ditapaja-studio-page .studio-canvas-meta{padding:13px 18px;border-top:1px solid var(--w-line);color:var(--w-muted)}
+@media(max-width:1120px){.ditapaja-studio-page .studio-workspace{grid-template-columns:minmax(0,1fr)}.ditapaja-studio-page .studio-canvas-panel{position:relative;top:auto;grid-row:1}.ditapaja-studio-page .studio-editor{grid-row:2}.ditapaja-studio-page .studio-canvas-stage{min-height:540px}}
+@media(max-width:900px){.dt-reset-dashboard .dt-overview-grid{grid-template-columns:1fr}.dt-reset-dashboard .dt-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dt-reset-dashboard .dt-managed-card{grid-template-columns:auto auto minmax(0,1fr)}.dt-reset-dashboard .dt-managed-actions{grid-column:3;justify-content:flex-start;max-width:none}}
+@media(max-width:650px){.dt-reset-dashboard .dt-page{padding:30px 14px 44px}.dt-reset-dashboard .dt-page-heading{align-items:flex-start;flex-direction:column}.dt-reset-dashboard .dt-page-heading .dt-primary{width:100%}.dt-reset-dashboard .dt-kpi{min-height:125px;padding:15px}.dt-reset-dashboard .dt-kpi>strong{margin-top:17px}.dt-reset-dashboard .dt-panel{padding:16px}.dt-reset-dashboard .dt-panel-heading{flex-direction:column}.dt-reset-dashboard .dt-panel-filters{width:100%;flex-wrap:wrap}.dt-reset-dashboard .dt-panel-filters select{flex:1;min-width:0}.dt-reset-dashboard .dt-chart{min-height:185px}.dt-reset-dashboard .dt-chart-foot{align-items:flex-start;flex-direction:column}.dt-reset-dashboard .dt-recent-section{padding:15px}.dt-reset-dashboard .dt-recent-card{flex-wrap:wrap}.dt-reset-dashboard .dt-recent-taps{margin-left:auto}.dt-reset-dashboard .dt-card-counts{grid-template-columns:repeat(2,minmax(0,1fr))}.dt-reset-dashboard .dt-card-manager{padding:12px}.dt-reset-dashboard .dt-card-toolbar{align-items:stretch;flex-direction:column}.dt-reset-dashboard .dt-card-toolbar input,.dt-reset-dashboard .dt-card-toolbar select,.dt-reset-dashboard .dt-card-toolbar button{width:100%;min-height:42px}.dt-reset-dashboard .dt-managed-card{grid-template-columns:auto minmax(0,1fr);gap:11px;padding:13px}.dt-reset-dashboard .dt-managed-card>.dt-card-icon{grid-column:1;grid-row:1}.dt-reset-dashboard .dt-managed-info{grid-column:2;grid-row:1}.dt-reset-dashboard .dt-check{grid-column:1;grid-row:2}.dt-reset-dashboard .dt-managed-actions{grid-column:2;grid-row:2;justify-content:flex-start}.dt-reset-dashboard .dt-managed-actions button{min-height:36px}.ditapaja-studio-page .studio-shell{padding-inline:12px}.ditapaja-studio-page .studio-topbar{min-height:62px;margin-bottom:17px}.ditapaja-studio-page .studio-intro{grid-template-columns:1fr;padding:21px;border-radius:17px}.ditapaja-studio-page .studio-intro h1{font-size:36px}.ditapaja-studio-page .studio-workspace{display:flex;flex-direction:column}.ditapaja-studio-page .studio-canvas-panel{width:100%;order:0}.ditapaja-studio-page .studio-editor{width:100%;order:1}.ditapaja-studio-page .studio-canvas-stage{min-height:440px;padding:12px}.ditapaja-studio-page .studio-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.ditapaja-studio-page .studio-form-content{padding:16px}.ditapaja-studio-page .studio-form-heading{padding:16px}.ditapaja-studio-page .studio-save-top{min-height:37px;padding-inline:11px}}
+@media(prefers-reduced-motion:reduce){.dt-reset-dashboard *,.ditapaja-studio-page *{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
