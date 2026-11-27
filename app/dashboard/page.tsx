@@ -67,7 +67,17 @@ export default function DashboardPage() {
   const [activeView, setActiveView] = useState<"overview" | "cards">("overview");
 
   useEffect(() => {
-    if (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("view") === "cards") setActiveView("cards");
+    const syncViewFromUrl = () => {
+      setActiveView(
+        new URLSearchParams(window.location.search).get("view") === "cards"
+          ? "cards"
+          : "overview"
+      );
+    };
+
+    syncViewFromUrl();
+    window.addEventListener("popstate", syncViewFromUrl);
+    return () => window.removeEventListener("popstate", syncViewFromUrl);
   }, []);
 
   const [loading, setLoading] = useState(true);
@@ -930,7 +940,7 @@ export default function DashboardPage() {
               </section>
 
               <section className="dt-recent-section">
-                <div className="dt-section-heading"><div><h2>Kartu NFC</h2></div><button className="dt-text-button" type="button" onClick={() => window.location.assign("/dashboard?view=cards")}>Kelola semua kartu <ExternalLink size={14}/></button></div>
+                <div className="dt-section-heading"><div><h2>Kartu NFC</h2></div><button className="dt-text-button" type="button" onClick={() => { setActiveView("cards"); router.push("/dashboard?view=cards"); }}>Kelola semua kartu <ExternalLink size={14}/></button></div>
                 <div className="dt-recent-list">
                   {cards.filter(card => !card.archived_at).slice(0,4).length ? cards.filter(card => !card.archived_at).slice(0,4).map(card => <article className="dt-recent-card" key={card.id}><span className="dt-card-icon"><CreditCard size={18}/></span><div className="dt-recent-info"><b>{card.card_name || "Untitled Card"}</b><small>{card.public_code}</small></div><span className={card.active?"dt-status is-on":"dt-status"}>{card.active?"Aktif":"Nonaktif"}</span><span className="dt-recent-taps">{(cardEventStats.get(card.id)?.taps || 0).toLocaleString("id-ID")} <small>taps</small></span></article>) : <div className="dt-no-cards"><CreditCard size={22}/><b>Belum ada kartu NFC</b><span>Buat kartu pertama untuk mulai mengumpulkan ulasan.</span></div>}
                 </div>
