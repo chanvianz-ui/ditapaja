@@ -129,15 +129,15 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
   }
 
   return (
-    <main className="order-page dt-order-checkout dt-order-payment-flow">
+    <main className="order-page dt-order-checkout dt-order-payment-flow dt-order-checkout-v5">
       <SiteHeader />
       <header className="order-header">
         <Link href="/" className="order-brand"><span className="order-brand-mark">D</span>DiTap<span>Aja</span></Link>
         <Link href="/koleksi" className="order-back"><ArrowLeft size={15}/> Kembali ke koleksi</Link>
       </header>
 
-      <div className="order-layout">
-        <section className="order-intro dt-order-intro">
+      <div className="order-layout dt-checkout-layout-v5">
+        <section className="order-intro dt-order-intro dt-checkout-intro-v5">
           <span className="order-kicker"><i/> PEMESANAN DITAPAJA</span>
           <h1>Pesan kartu.<br/><em>Bayar dengan mudah.</em></h1>
           <p>Selesaikan pemesanan langsung di website. Unggah bukti transfer, lalu konfirmasi pesanan melalui WhatsApp.</p>
@@ -147,7 +147,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
           <div className="dt-order-steps"><span className={!orderId ? "is-active" : "is-done"}>01 <small>Data pesanan</small></span><i/><span className={orderId ? "is-active" : ""}>02 <small>Pembayaran</small></span><i/><span className={showAccountPrompt ? "is-done" : ""}>03 <small>Konfirmasi</small></span></div>
         </section>
 
-        <section className="order-form dt-order-form">
+        <section className="order-form dt-order-form dt-checkout-panel-v5">
           {!orderId ? (
             <form onSubmit={createOrder}>
               <div className="order-form-heading"><div><span>01 / CHECKOUT</span><h2>Detail pesanan</h2></div><small>* Wajib diisi</small></div>
