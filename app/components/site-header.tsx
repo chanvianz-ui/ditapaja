@@ -2,25 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ArrowUpRight, X, Nfc, LayoutDashboard, MessageCircle, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Menu, X, Nfc, LayoutDashboard, MessageCircle } from "lucide-react";
+
+const links = [
+  { label: "Beranda", href: "/" },
+  { label: "Koleksi", href: "/koleksi" },
+  { label: "Cara kerja", href: "/cara-kerja" },
+  { label: "Fitur", href: "/fitur" },
+  { label: "FAQ", href: "/faq" },
+];
 
 function Brand() {
   return (
-    <a href="/" className="dt-brand" aria-label="DiTapAja — Beranda">
-      <span className="dt-brand-symbol" aria-hidden="true"><i /><i /><i /><b /></span>
-      <span className="dt-brand-word">
-        <span className="dt-brand-word-top">DI<span>TAP</span>AJA</span>
-        <small>MAKE EVERY TAP COUNT</small>
-      </span>
-    </a>
+    <Link href="/" className="dt-v3-brand" aria-label="DiTapAja — Beranda">
+      <span className="dt-v3-brand-mark" aria-hidden="true"><i/><i/><i/></span>
+      <span className="dt-v3-brand-word"><b>DiTap<span>Aja</span><i>.</i></b><small>MAKE EVERY TAP COUNT</small></span>
+    </Link>
   );
 }
-
-const links = [
-  ["01", "Koleksi", "/koleksi"],
-  ["02", "Cara kerja", "/cara-kerja"],
-  ["03", "FAQ", "/faq"],
-];
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -32,24 +32,13 @@ export default function SiteHeader() {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-        return;
-      }
+      if (event.key === "Escape") { setOpen(false); return; }
       if (event.key !== "Tab") return;
-      const focusable = panelRef.current?.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      );
-      if (!focusable?.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+      const nodes = panelRef.current?.querySelectorAll<HTMLElement>('a[href],button:not([disabled])');
+      if (!nodes?.length) return;
+      const first = nodes[0], last = nodes[nodes.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
@@ -61,101 +50,41 @@ export default function SiteHeader() {
     };
   }, [open]);
 
-  const closeMenu = () => setOpen(false);
-
   return (
     <>
-      <header className="dt-site-header dt-header-modern dt-header-signature">
-        <div className="dt-header-shell">
+      <header className="dt-v3-header">
+        <div className="dt-v3-header-inner">
           <Brand />
-          <nav className="dt-header-nav" aria-label="Navigasi utama">
-            {links.map(([number, label, href]) => (
-              <a key={href} href={href}>
-                <span className="dt-header-nav-number">{number}</span>
-                <strong>{label}</strong>
-              </a>
+          <nav className="dt-v3-nav" aria-label="Navigasi utama">
+            {links.map((item, index) => (
+              <Link href={item.href} key={item.href}>
+                <small>0{index + 1}</small>{item.label}
+              </Link>
             ))}
           </nav>
-          <div className="dt-header-actions">
-            <a className="dt-header-login" href="/login">Masuk</a>
-            <a className="dt-header-cta" href="/koleksi">
-              <span className="dt-header-cta-copy"><small>SIAP MULAI?</small><strong>Temukan kartu</strong></span>
-              <span className="dt-header-cta-icon"><ArrowUpRight size={17} aria-hidden="true" /></span>
-            </a>
+          <div className="dt-v3-header-actions">
+            <Link href="/login" className="dt-v3-login"><LayoutDashboard size={15}/> Masuk</Link>
+            <Link href="/koleksi" className="dt-v3-header-cta">Pilih kartu <ArrowUpRight size={16}/></Link>
           </div>
-          <div className="dt-header-mobile">
-            <a className="dt-header-mobile-cta" href="/koleksi">Koleksi <ArrowUpRight size={14} aria-hidden="true" /></a>
-            <button
-              ref={triggerRef}
-              type="button"
-              onClick={() => setOpen(true)}
-              aria-label="Buka navigasi"
-              aria-expanded={open}
-              aria-controls="dt-mobile-menu"
-            >
-              <span className="dt-header-menu-icon" aria-hidden="true"><i /><i /></span>
-            </button>
+          <div className="dt-v3-mobile-actions">
+            <Link href="/koleksi" className="dt-v3-mobile-shop">Koleksi <ArrowUpRight size={14}/></Link>
+            <button ref={triggerRef} type="button" onClick={() => setOpen(true)} aria-label="Buka navigasi" aria-expanded={open} aria-controls="dt-v3-mobile-menu"><Menu size={20}/></button>
           </div>
         </div>
       </header>
-
       {open && createPortal(
-        <div
-          className="dt-menu-overlay"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) closeMenu();
-          }}
-        >
-          <section
-            ref={panelRef}
-            className="dt-menu-panel dt-menu-redesign"
-            id="dt-mobile-menu"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigasi DiTapAja"
-          >
-            <div className="dt-menu-top">
-              <Brand />
-              <button ref={closeRef} className="dt-menu-close" type="button" onClick={closeMenu} aria-label="Tutup menu">
-                <span>TUTUP</span><X size={18} />
-              </button>
+        <div className="dt-v3-menu-backdrop" onMouseDown={event => { if (event.target === event.currentTarget) setOpen(false); }}>
+          <section ref={panelRef} id="dt-v3-mobile-menu" className="dt-v3-menu-panel" role="dialog" aria-modal="true" aria-label="Navigasi DiTapAja">
+            <div className="dt-v3-menu-head"><Brand/><button ref={closeRef} type="button" onClick={() => setOpen(false)} aria-label="Tutup navigasi"><X size={19}/></button></div>
+            <div className="dt-v3-menu-intro"><small>DITAPAJA / NAVIGATION</small><h2>Everything<br/><em>starts with a tap.</em></h2></div>
+            <nav className="dt-v3-menu-links" aria-label="Halaman utama">
+              {links.map((item,index)=><Link key={item.href} href={item.href} onClick={()=>setOpen(false)}><small>0{index+1}</small><strong>{item.label}</strong><ArrowUpRight size={18}/></Link>)}
+            </nav>
+            <div className="dt-v3-menu-quick">
+              <Link href="/activate" onClick={()=>setOpen(false)}><Nfc size={18}/><span><small>SUDAH PUNYA KARTU?</small><b>Aktivasi kartu</b></span><ArrowUpRight size={16}/></Link>
+              <Link href="/login" onClick={()=>setOpen(false)}><LayoutDashboard size={18}/><span><small>AREA PENGELOLAAN</small><b>Dashboard</b></span><ArrowUpRight size={16}/></Link>
             </div>
-            <div className="dt-menu-content">
-              <div className="dt-menu-intro">
-                <span><Sparkles size={12} aria-hidden="true" /> DITAPAJA / NAVIGASI</span>
-                <p>Semua yang kamu<br /><em>butuhkan, satu tap.</em></p>
-              </div>
-              <div className="dt-menu-grid">
-                <nav className="dt-menu-links" aria-label="Halaman utama">
-                  {links.map(([number, label, href]) => (
-                    <a key={href} href={href} onClick={closeMenu}>
-                      <span className="dt-menu-link-number">{number}</span>
-                      <strong>{label}</strong>
-                      <ArrowUpRight size={20} aria-hidden="true" />
-                    </a>
-                  ))}
-                </nav>
-                <aside className="dt-menu-quick">
-                  <span className="dt-menu-quick-label">AKSES CEPAT</span>
-                  <a className="dt-menu-action-card" href="/activate" onClick={closeMenu}>
-                    <span className="dt-menu-action-icon"><Nfc size={20} /></span>
-                    <span className="dt-menu-action-copy"><small>SUDAH PUNYA KARTU?</small><strong>Aktivasi kartu</strong><em>Hubungkan kartu ke bisnismu</em></span>
-                    <ArrowUpRight className="dt-menu-action-arrow" size={18} />
-                  </a>
-                  <a className="dt-menu-action-card" href="/login" onClick={closeMenu}>
-                    <span className="dt-menu-action-icon"><LayoutDashboard size={19} /></span>
-                    <span className="dt-menu-action-copy"><small>AREA PENGELOLAAN</small><strong>Dashboard</strong><em>Kelola kartu dan aktivitas</em></span>
-                    <ArrowUpRight className="dt-menu-action-arrow" size={18} />
-                  </a>
-                </aside>
-              </div>
-            </div>
-            <div className="dt-menu-foot">
-              <span>© 2026 DITAPAJA</span>
-              <a href="https://wa.me/6281321778081" target="_blank" rel="noopener noreferrer"><MessageCircle size={14} /> HUBUNGI KAMI</a>
-              <span>NFC · QR · TANPA BIAYA BULANAN</span>
-            </div>
+            <a className="dt-v3-menu-contact" href="https://wa.me/6281321778081" target="_blank" rel="noopener noreferrer"><MessageCircle size={15}/> Hubungi tim DiTapAja</a>
           </section>
         </div>,
         document.body
