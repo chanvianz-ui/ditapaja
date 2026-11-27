@@ -1,15 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 import { readRequestBodyLimited } from "../../lib/read-request-body-limited";
+import { PRODUCTS } from "../../lib/product-catalog";
 
 export const dynamic = "force-dynamic";
 
 const MAX_BODY_SIZE = 16_384;
-const PRODUCTS = {
-  "DiTapAja Noir": { price: 50000, minimum: 1 },
-  "DiTapAja Blanc": { price: 50000, minimum: 1 },
-  "DiTapAja Signature": { price: 60000, minimum: 10 },
-} as const;
+
 
 export async function POST(request: NextRequest) {
   try {
@@ -73,12 +70,13 @@ export async function POST(request: NextRequest) {
       phone.length < 10 || phone.length > 15 ||
       !Number.isInteger(quantity) || quantity < 1 || quantity > 1000 ||
       notes.length > 1000 ||
-      !Object.prototype.hasOwnProperty.call(PRODUCTS, productName)
+      !Object.values(PRODUCTS).some((item) => item.name === productName)
     ) {
       return NextResponse.json({ error: "Periksa kembali data pesanan." }, { status: 400 });
     }
 
-    const product = PRODUCTS[productName as keyof typeof PRODUCTS];
+    const product = Object.values(PRODUCTS).find((item) => item.name === productName);
+    if (!product) return NextResponse.json({ error: "Produk tidak valid." }, { status: 400 });
     if (quantity < product.minimum) {
       return NextResponse.json(
         { error: "Jumlah minimum untuk produk ini adalah " + product.minimum + " kartu." },

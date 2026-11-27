@@ -3,17 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Check, ChevronRight, Layers3, Nfc } from "lucide-react";
+import type { ProductConfig } from "../lib/product-catalog";
 
-type Product = {
-  name: string;
-  label: string;
-  description: string;
-  tone: string;
-  price: string;
-  order: string;
-  action: string;
-  mode: string;
-};
+type Product = ProductConfig;
 
 function ProductObject({ product }: { product: Product }) {
   const serial = product.tone === "noir" ? "01" : product.tone === "blanc" ? "02" : "03";
@@ -57,7 +49,7 @@ function ProductObject({ product }: { product: Product }) {
   );
 }
 
-export default function ProductCarousel({ products }: { products: Product[] }) {
+export default function ProductCarousel({ products }: { products: readonly Product[] }) {
   const [selected, setSelected] = useState(products[0]?.tone ?? "");
   const product = products.find(item => item.tone === selected) ?? products[0];
   if (!product) return null;

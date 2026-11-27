@@ -2,17 +2,14 @@ import type { Metadata } from "next";
 import { ArrowDown, ArrowUpRight, Nfc, BarChart3, ShieldCheck } from "lucide-react";
 import SiteHeader from "../components/site-header";
 import ProductCarousel from "../components/product-carousel";
+import { PRODUCT_LIST } from "../lib/product-catalog";
 
 export const metadata: Metadata = {
   title: "Koleksi Kartu NFC DiTapAja",
   description: "Pilih kartu NFC + QR DiTapAja untuk bisnis. Dashboard termasuk tanpa biaya bulanan.",
 };
 
-const products = [
-  { name: "DiTapAja Noir", label: "Noir", description: "Karakter tegas untuk bisnis yang ingin tampil standout.", tone: "noir", price: "Rp50.000", order: "READY TO ORDER", action: "Beli Noir", mode: "buy" },
-  { name: "DiTapAja Blanc", label: "Blanc", description: "Minimal, bersih, dan mudah menyatu dengan identitas brand.", tone: "blanc", price: "Rp50.000", order: "READY TO ORDER", action: "Beli Blanc", mode: "buy" },
-  { name: "DiTapAja Signature", label: "Signature", description: "Kartu dengan identitas visual bisnismu sendiri.", tone: "signature", price: "Rp60.000", order: "PRE-ORDER · MIN. 10 KARTU", action: "Pre-order", mode: "preorder" },
-];
+const products = PRODUCT_LIST;
 
 export default function KoleksiPage() {
   return <main className="nx-catalog-page">

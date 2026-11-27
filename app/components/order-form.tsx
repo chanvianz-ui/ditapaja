@@ -5,13 +5,9 @@ import type { FormEvent } from "react";
 import { ArrowLeft, ArrowRight, Check, Copy, CreditCard, FileImage, LockKeyhole, MessageCircle, Minus, Plus, ShieldCheck, Upload } from "lucide-react";
 import Link from "next/link";
 import SiteHeader from "./site-header";
+import { PRODUCTS, formatProductPrice, type ProductSlug } from "../lib/product-catalog";
 
-const products = {
-  noir: { name: "DiTapAja Noir", price: 50000, minimum: 1, type: "Regular" },
-  blanc: { name: "DiTapAja Blanc", price: 50000, minimum: 1, type: "Regular" },
-  signature: { name: "DiTapAja Signature", price: 60000, minimum: 10, type: "Custom · Pre-order" },
-} as const;
-type ProductKey = keyof typeof products;
+const products = PRODUCTS;
 
 const accounts = [
   { bank: "BCA", number: "5771660178", owner: "Chandra Irawan" },
@@ -39,7 +35,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
   const [showAccountPrompt, setShowAccountPrompt] = useState(false);
   const product = products[productKey];
   const total = useMemo(() => product.price * quantity, [product.price, quantity]);
-  const money = (value: number) => "Rp" + value.toLocaleString("id-ID");
+  const money = formatProductPrice;
 
   function changeProduct(value: string) {
     const next = value as ProductKey;

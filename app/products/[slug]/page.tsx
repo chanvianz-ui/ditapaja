@@ -1,16 +1,13 @@
 import Link from "next/link";
 import SiteHeader from "../../components/site-header";
 import type { Metadata } from "next";
+import { PRODUCTS, formatProductPrice, isProductSlug } from "../../lib/product-catalog";
 import { ArrowLeft, ArrowUpRight, Check, ChartNoAxesCombined, Link2, MonitorSmartphone, Nfc, QrCode, Settings2, CalendarDays } from "lucide-react";
-const collection = {
- noir:{name:"DiTapAja Noir",edition:"BLACK EDITION",headline:"Elegance in Every Interaction.",description:"Desain hitam yang elegan dan eksklusif untuk bisnis yang ingin menghadirkan kesan modern dan profesional.",detail:"Dengan ukuran 10 × 10 cm, Noir mudah ditempatkan di area kasir maupun meja pelanggan. Cukup satu kali tap NFC atau scan QR Code, pelanggan langsung diarahkan ke halaman Google Review bisnismu.",color:"noir",price:"Rp50.000",mode:"buy",fit:"Specialty coffee, coffee shop, restoran, lounge, bar, dan bisnis dengan konsep modern."},
- blanc:{name:"DiTapAja Blanc",edition:"WHITE EDITION",headline:"Simplicity Meets Elegance.",description:"Desain putih yang bersih, minimalis, dan timeless untuk bisnis yang mengutamakan estetika sederhana tanpa mengesampingkan fungsi.",detail:"Dengan ukuran 10 × 10 cm, Blanc memberikan tampilan rapi dan profesional. Pelanggan cukup melakukan satu kali tap NFC atau scan QR Code untuk membuka halaman Google Review.",color:"blanc",price:"Rp50.000",mode:"buy",fit:"Cafe, bakery, dessert shop, hotel, salon, klinik kecantikan, dan retail."},
- signature:{name:"DiTapAja Signature",edition:"CUSTOM EDITION",headline:"Your Brand. Your Signature.",description:"Desain personal yang mengikuti identitas visual bisnismu. Tampilkan logo, warna, dan elemen visual yang mencerminkan karakter brand.",detail:"Dengan ukuran 10 × 10 cm, kartu dirancang mengikuti identitas visual bisnismu, sekaligus memudahkan pelanggan membuka halaman Google Review melalui NFC atau QR Code.",color:"signature",price:"Rp60.000",mode:"preorder",fit:"Corporate business, franchise, hotel, restoran, coffee shop, salon, dan bisnis yang mengutamakan identitas brand."}
-};
+const collection = PRODUCTS;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
  const { slug } = await params;
- const product = collection[slug as keyof typeof collection];
+ const product = (isProductSlug(slug) ? collection[slug] : undefined);
  if (!product) return { title: "Produk tidak ditemukan | DiTapAja", robots: { index: false, follow: false } };
  const description = product.description + " " + product.detail;
  return {
@@ -48,13 +45,13 @@ function ProductArtwork({tone}:{tone:string}) {
 export default async function ProductDetail({params}:{params:Promise<{slug:string}>}) {
  const {slug}=await params; const product=collection[slug as keyof typeof collection];
  if(!product)return <main className="product-not-found"><h1>Produk tidak ditemukan</h1><Link href="/koleksi">Kembali ke koleksi</Link></main>;
- const minimumQuantity=product.mode==="preorder"?10:1;
- const minimumTotal=Number(product.price.replace(/[^0-9]/g,""))*minimumQuantity;
+ const minimumQuantity=product.minimum;
+ const minimumTotal=product.price*minimumQuantity;
  const orderUrl="/pesan?product="+slug;
  const orderLabel=product.mode==="preorder"?"Mulai pre-order":"Pesan sekarang";
  return <main className="product-detail-page"><SiteHeader />
 
- <section className="detail-hero container dt-product-hero"><div className="detail-copy dt-product-copy"><Link href="/koleksi" className="detail-back"><ArrowLeft size={15}/> Kembali ke koleksi</Link><div className="eyebrow">DITAPAJA / PRODUCT SERIES / {product.edition}</div><h1>{product.name}</h1><h2>{product.headline}</h2><p>{product.description}</p><p>{product.detail}</p><div className="detail-price"><strong>{product.price}</strong><span>/ kartu</span>{product.mode==="preorder"&&<small>Min. 10 kartu · Total mulai Rp{minimumTotal.toLocaleString("id-ID")}</small>}</div><div className="detail-pills"><span><Nfc size={14}/> NFC</span><span><QrCode size={14}/> QR Code</span><span><Check size={14}/> Dashboard gratis</span></div><Link className="button" href={orderUrl}>{orderLabel} <ArrowUpRight size={16}/></Link><p className="detail-order-hint">{product.mode==="preorder"?"Diskusikan kebutuhan desain custom melalui WhatsApp.":"Isi detail pesanan, lalu lanjutkan konfirmasi melalui WhatsApp."}</p></div><ProductArtwork tone={product.color}/></section>
+ <section className="detail-hero container dt-product-hero"><div className="detail-copy dt-product-copy"><Link href="/koleksi" className="detail-back"><ArrowLeft size={15}/> Kembali ke koleksi</Link><div className="eyebrow">DITAPAJA / PRODUCT SERIES / {product.edition}</div><h1>{product.name}</h1><h2>{product.headline}</h2><p>{product.description}</p><p>{product.detail}</p><div className="detail-price"><strong>{formatProductPrice(product.price)}</strong><span>/ kartu</span>{product.mode==="preorder"&&<small>Min. {minimumQuantity} kartu · Total mulai {formatProductPrice(minimumTotal)}</small>}</div><div className="detail-pills"><span><Nfc size={14}/> NFC</span><span><QrCode size={14}/> QR Code</span><span><Check size={14}/> Dashboard gratis</span></div><Link className="button" href={orderUrl}>{orderLabel} <ArrowUpRight size={16}/></Link><p className="detail-order-hint">{product.mode==="preorder"?"Diskusikan kebutuhan desain custom melalui WhatsApp.":"Isi detail pesanan, lalu lanjutkan konfirmasi melalui WhatsApp."}</p></div><ProductArtwork tone={product.color}/></section>
  <section className="detail-spec-section dt-product-spec"><div className="container"><div className="eyebrow">PRODUCT SPECIFICATIONS</div><h2>Detail produk</h2><div className="detail-spec-grid"><div><span>Material</span><b>PVC Card</b></div><div><span>Ukuran</span><b>10 × 10 cm</b></div><div><span>Teknologi</span><b>NFC</b></div><div><span>Akses alternatif</span><b>QR Code</b></div><div><span>Warna / desain</span><b>{product.edition.replace(" EDITION","")}</b></div><div><span>Tujuan penggunaan</span><b>Google Review</b></div></div><p className="detail-fit"><b>Cocok untuk:</b> {product.fit}</p></div></section>
  <section className="detail-features container dt-product-features"><div className="eyebrow">MORE THAN A CARD</div><h2>Semua yang kamu butuhkan<br/>dalam satu ekosistem.</h2><p className="detail-feature-intro">Setiap pembelian kartu DiTapAja sudah dilengkapi akses dashboard untuk mengelola dan memantau aktivitas kartu.</p><div className="detail-feature-grid">{features.map(({icon:Icon,title,desc})=><article key={title}><span><Icon size={20}/></span><h3>{title}</h3><p>{desc}</p></article>)}</div></section>
  <section className="detail-order dt-product-order"><div className="container detail-order-inner"><div><div className="eyebrow">READY TO GET STARTED?</div><h2>Mulai bangun reputasi<br/>bisnismu bersama DiTapAja.</h2><p>{product.mode==="preorder"?"Mulai dari minimum 10 kartu. Tim kami akan membantu membahas kebutuhan desain dan pemesananmu.":"Isi detail pesanan dan lanjutkan konfirmasi melalui WhatsApp. Dashboard monitoring sudah termasuk tanpa biaya bulanan."}</p></div><Link className="button button-white" href={orderUrl}>{orderLabel} <ArrowUpRight size={16}/></Link></div></section>
