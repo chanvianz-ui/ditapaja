@@ -276,30 +276,40 @@ export default function Home() {
           </div>
         </div>
 
-        <HeroTapDemo/>
+        <div className="dt-home-object-stage" aria-label="Kartu NFC DiTapAja">
+          <div className="dt-home-object-shadow"/>
+          <div className="dt-home-object-card">
+            <span className="dt-home-object-brand"><BrandMark/> DITAPAJA</span>
+            <strong>YOUR<br/><em>review</em><br/>STARTS HERE.</strong>
+            <span className="dt-home-object-bottom">NFC REVIEW CARD <span>QR READY</span></span>
+          </div>
+          <span className="dt-home-object-caption">A PHYSICAL TOUCHPOINT FOR YOUR BUSINESS</span>
+        </div>
       </div>
-      <div className="home-hero-marquee"><span>MAKE IT SIMPLE</span><i/> <span>MAKE IT COUNT</span><i/> <span>MAKE IT DITAPAJA</span><i/> <span>MAKE IT SIMPLE</span></div>
-    </section>
-
-    <section className="ed-intro-band home-intro">
-      <span className="home-section-index">01 / THE IDEA</span>
-      <h2>Turn every visit<br/>into a chance to <em>connect.</em></h2>
-      <p>Pengalaman memberi ulasan seharusnya sesederhana pengalaman menikmati bisnismu.</p>
     </section>
 
     <section className="nx-collection ed-collection" id="koleksi">
       <div className="ed-section-heading">
-        <div><span className="home-section-index">02 / THE COLLECTION</span><h2>Find your<br/>business <em>style.</em></h2></div>
+        <div><span className="home-section-index">THE COLLECTION</span><h2>Find your<br/>business <em>style.</em></h2></div>
         <p>Pilih tampilan yang paling cocok untuk bisnismu. Setiap kartu sudah dilengkapi NFC, QR Code, dan dashboard gratis.</p>
       </div>
       <ProductCarousel products={products}/>
+    </section>
+
+    <section className="dt-home-experience" id="pengalaman-nfc">
+      <div className="dt-home-section-heading">
+        <span>SEE HOW IT FEELS</span>
+        <h2>One tap.<br/><em>A simpler journey.</em></h2>
+        <p>Coba simulasi interaktif untuk melihat bagaimana kartu NFC membawa pelanggan ke halaman tujuan.</p>
+      </div>
+      <HeroTapDemo/>
     </section>
 
     <HowItWorks/>
 
     <section className="home-dashboard-story dt-behind" id="behind-the-card">
       <div className="dt-behind-copy">
-        <span className="home-section-index">04 / BEHIND THE CARD</span>
+        <span className="home-section-index">BEHIND THE CARD</span>
         <h2>More than<br/><em>a card.</em></h2>
         <p className="dt-behind-intro">Satu dashboard sederhana untuk mengelola kartu, mengatur tujuan, dan melihat aktivitas pelanggan.</p>
         <div className="dt-behind-quick-points"><span><Check size={14}/> Kelola kartu</span><span><Check size={14}/> Atur link tujuan</span><span><Check size={14}/> Pantau aktivitas</span></div>
@@ -309,8 +319,7 @@ export default function Home() {
         <div className="dt-behind-panel">
           <div className="dt-behind-panel-top"><div className="dt-behind-brand"><BrandMark/><span>DITAPAJA <i>STUDIO</i></span></div><span className="dt-behind-preview-tag">DASHBOARD PREVIEW</span></div>
           <div className="dt-behind-panel-heading"><div><small>YOUR WORKSPACE</small><b>Overview<span>.</span></b></div><span className="dt-behind-period">LAST 30 DAYS</span></div>
-          <div className="dt-behind-metrics"><div><span>TOTAL TAPS</span><b>1,284</b><small>Card interactions</small></div><div><span>REVIEW CLICKS</span><b>864</b><small>Outbound visits</small></div></div>
-          <div className="dt-behind-mini-activity"><span>ACTIVITY OVERVIEW</span><div>{[32,48,39,66,51,78,60,91,69,82,58,76].map((height,i)=><i key={i} style={{height:height+"%"}}/>)}</div></div>
+          <div className="dt-behind-metrics"><div><span>CARD MANAGEMENT</span><b>Kelola kartu</b><small>Atur kartu dalam satu tempat</small></div><div><span>DESTINATION LINKS</span><b>Atur tujuan</b><small>Perbarui tautan kapan saja</small></div></div>
           <div className="dt-behind-card-line"><Nfc size={16}/><b>Noir — Main counter</b><span>ACTIVE</span></div>
           <p className="dt-behind-data-note">Illustrative dashboard data</p>
         </div>
@@ -318,22 +327,15 @@ export default function Home() {
     </section>
 
     <section className="home-closing dt-closing">
-      <div className="dt-closing-top"><span>05 / YOUR NEXT MOVE</span><span>DITAPAJA®</span></div>
+      <div className="dt-closing-top"><span>YOUR NEXT MOVE</span><span>DITAPAJA®</span></div>
       <div className="dt-closing-main">
         <div><p className="dt-closing-eyebrow">MAKE IT EASY TO BE REMEMBERED.</p><h2>Turn every<br/><em>tap into trust.</em></h2></div>
         <div className="dt-closing-action"><p>Mulai dengan satu kartu NFC. Beri pelanggan cara yang lebih cepat untuk menemukan dan mengulas bisnismu.</p><a className="ed-button" href="/koleksi">Temukan kartu kamu <ArrowUpRight size={17}/></a></div>
       </div>
-      <div className="dt-closing-bottom"><span>ONE TAP CLOSER TO A GOOD REVIEW.</span><span>NFC · QR · FREE DASHBOARD</span></div>
+      <div className="dt-closing-bottom"><span>ONE TAP CLOSER TO A GOOD REVIEW.</span><span>NFC AND QR READY</span></div>
     </section>
 
     <footer className="dt-footer dt-footer-redesign">
-      <div className="dt-footer-hero">
-        <div className="dt-footer-hero-meta"><span>DITAPAJA / THE NEXT STEP</span><span>NFC CARD · QR CODE · FREE DASHBOARD</span></div>
-        <div className="dt-footer-hero-content">
-          <h2>Make every<br/><em>review count.</em></h2>
-          <div className="dt-footer-hero-action"><p>Mulai dari satu kartu. Buka jalan untuk lebih banyak cerita baik tentang bisnismu.</p><a href="/koleksi">Jelajahi koleksi <ArrowUpRight size={17}/></a></div>
-        </div>
-      </div>
       <div className="dt-footer-main">
         <div className="dt-footer-brand-col">
           <a href="/" className="dt-footer-brand"><BrandMark/><span>DiTap<span>Aja</span></span></a>
@@ -350,7 +352,7 @@ export default function Home() {
           <ArrowUpRight size={18}/>
         </a>
       </div>
-      <div className="dt-footer-bottom"><span>© 2026 DiTapAja. All rights reserved.</span><a href="#top">Kembali ke atas ↑</a><span>ONE TAP CLOSER TO A GOOD REVIEW.</span></div>
+      <div className="dt-footer-bottom"><span>DiTapAja. Dibuat untuk pengalaman pelanggan yang lebih baik.</span><a href="#top">Kembali ke atas</a><span>ONE TAP CLOSER TO A GOOD REVIEW.</span></div>
     </footer>
   </main>;
 }
