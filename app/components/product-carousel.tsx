@@ -8,8 +8,6 @@ import type { ProductConfig } from "../lib/product-catalog";
 type Product = ProductConfig;
 
 function ProductObject({ product }: { product: Product }) {
-  const serial = product.tone === "noir" ? "01" : product.tone === "blanc" ? "02" : "03";
-
   return (
     <div
       className={"dt-neo-display dt-neo-" + product.tone}
@@ -21,12 +19,12 @@ function ProductObject({ product }: { product: Product }) {
         <span className="dt-neo-rail" aria-hidden="true"/>
         <span className="dt-neo-top">
           <span className="dt-neo-brand"><i/>DITAPAJA<span>®</span></span>
-          <span className="dt-neo-serial">COLLECTION / {serial}</span>
+
         </span>
         <span className="dt-neo-main">
           <span className="dt-neo-index" aria-hidden="true">{serial}</span>
           <span className="dt-neo-copy">
-            <small>SMART REVIEW OBJECT</small>
+            <small>NFC REVIEW CARD</small>
             <strong>{product.label}</strong>
             <em>ONE TAP. A BETTER CONNECTION.</em>
           </span>
@@ -36,14 +34,13 @@ function ProductObject({ product }: { product: Product }) {
           </span>
         </span>
         <span className="dt-neo-bottom">
-          <span className="dt-neo-material">{product.tone === "noir" ? "OBSIDIAN / MATTE" : product.tone === "blanc" ? "PORCELAIN / SATIN" : "BRONZE / SIGNATURE"}</span>
-          <span className="dt-neo-signal"><i/>NFC + QR READY</span>
+          <span className="dt-neo-material">{product.tone === "noir" ? "OBSIDIAN MATTE" : product.tone === "blanc" ? "PORCELAIN SATIN" : "BRONZE SIGNATURE"}</span>
+          <span className="dt-neo-signal"><i/>NFC AND QR READY</span>
         </span>
         <span className="dt-neo-scan" aria-hidden="true"/>
       </div>
       <div className="dt-neo-caption">
-        <span><i/> DITAPAJA / PHYSICAL COLLECTION</span>
-        <span>0{serial} — 03</span>
+        <span>DITAPAJA PHYSICAL COLLECTION</span>
       </div>
     </div>
   );
@@ -57,20 +54,19 @@ export default function ProductCarousel({ products }: { products: readonly Produ
   return (
     <div className="dt-collection-experience dt-collection-editorial dt-neo-collection">
       <div className="dt-collection-toolbar">
-        <span><i/> THE COLLECTION</span>
-        <small>THREE FINISHES / ONE PURPOSE</small>
+        <span>CHOOSE YOUR FINISH</span>
       </div>
 
       <div className="dt-collection-stage" data-tone={product.tone} key={product.tone}>
         <div className="dt-stage-copy">
           <div className="dt-stage-title">
-            <span className="dt-editorial-kicker">THE NFC OBJECT / 2026</span>
+            <span className="dt-editorial-kicker">MADE FOR EVERYDAY BUSINESS</span>
             <h3>{product.label}<em>.</em></h3>
             <p className="dt-stage-description">{product.description}</p>
           </div>
           <div className="dt-stage-price">
             <span>PEMBAYARAN SEKALI</span>
-            <strong>{product.price}</strong><small>/ kartu</small>
+            <strong>{product.price}</strong><small> per kartu</small>
             <span className="dt-stage-availability">{product.order}</span>
           </div>
           <div className="dt-stage-actions">
@@ -86,20 +82,19 @@ export default function ProductCarousel({ products }: { products: readonly Produ
         <div className="dt-stage-art" data-tone={product.tone}>
           <div className="dt-art-grid"/>
           <div className="dt-art-glow"/>
-          <div className="dt-art-orbit dt-art-orbit-a"/><div className="dt-art-orbit dt-art-orbit-b"/><div className="dt-art-orbit dt-art-orbit-c"/>
-          <div className="dt-art-crosshair dt-art-crosshair-a"/><div className="dt-art-crosshair dt-art-crosshair-b"/>
+
           <ProductObject product={product}/>
-          <span className="dt-art-edition-index">EDITION / 0{products.findIndex(item => item.tone === product.tone) + 1}</span>
+
         </div>
       </div>
 
       <div className="dt-edition-selector dt-neo-selector">
         <div className="dt-selector-heading">
-          <span><Layers3 size={14}/> CHOOSE YOUR FINISH</span>
-          <small>PILIH EDISI UNTUK MELIHAT DETAIL</small>
+          <span>CHOOSE YOUR FINISH</span>
+          <small>Pilih tampilan kartu yang kamu suka</small>
         </div>
         <div className="dt-selector-options">
-          {products.map((item, index) => (
+          {products.map((item) => (
             <button
               type="button"
               key={item.tone}
@@ -109,7 +104,7 @@ export default function ProductCarousel({ products }: { products: readonly Produ
             >
               <span className="dt-neo-option-preview"><i/><i/></span>
               <span className="dt-neo-option-copy">
-                <small>0{index + 1} / {item.mode === "preorder" ? "MADE TO ORDER" : "IN STOCK"}</small>
+                <small>{item.mode === "preorder" ? "MADE TO ORDER" : "READY TO ORDER"}</small>
                 <b>{item.label}</b>
                 <em>{item.price}</em>
               </span>
