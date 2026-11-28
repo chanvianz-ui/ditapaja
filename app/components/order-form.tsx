@@ -2,13 +2,12 @@
 
 import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
-import { ArrowLeft, ArrowRight, Check, Copy, CreditCard, FileImage, LockKeyhole, MessageCircle, Minus, Plus, ShieldCheck, Upload } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Copy, FileImage, LockKeyhole, MessageCircle, Minus, Plus, ShieldCheck, Sparkles, PackageCheck, CreditCard, Truck } from "lucide-react";
 import Link from "next/link";
 import SiteHeader from "./site-header";
 import { PRODUCTS, formatProductPrice, isProductSlug, type ProductSlug } from "../lib/product-catalog";
 
 const products = PRODUCTS;
-
 const accounts = [
   { bank: "BCA", number: "5771660178", owner: "Chandra Irawan" },
   { bank: "BNI", number: "2106676984", owner: "Chandra Irawan" },
@@ -129,77 +128,125 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
   }
 
   return (
-    <main className="order-page dt-order-checkout dt-order-payment-flow dt-order-checkout-v5">
+    <main className="dt-order-redesign">
       <SiteHeader />
-      <header className="order-header">
-        <Link href="/" className="order-brand"><span className="order-brand-mark">D</span>DiTap<span>Aja</span></Link>
-        <Link href="/koleksi" className="order-back"><ArrowLeft size={15}/> Kembali ke koleksi</Link>
-      </header>
-
-      <div className="order-layout dt-checkout-layout-v5">
-        <section className="order-intro dt-order-intro dt-checkout-intro-v5">
-          <span className="order-kicker"><i/> PEMESANAN DITAPAJA</span>
-          <h1>Pesan kartu.<br/><em>Bayar dengan mudah.</em></h1>
-          <p>Selesaikan pemesanan langsung di website. Unggah bukti transfer, lalu konfirmasi pesanan melalui WhatsApp.</p>
-          <div className="order-assurance"><span><ShieldCheck size={17}/></span><div><b>Pembayaran diverifikasi manual</b><small>Bukti transfer tersimpan secara privat. Status lunas hanya diberikan setelah tim kami memeriksa pembayaran.</small></div></div>
-          <div className="order-mini-note"><Check size={14}/> NFC + QR Code dalam satu kartu</div>
-          <div className="order-mini-note"><Check size={14}/> Dashboard termasuk tanpa biaya bulanan</div>
-          <div className="dt-order-steps"><span className={!orderId ? "is-active" : "is-done"}>01 <small>Data pesanan</small></span><i/><span className={orderId ? "is-active" : ""}>02 <small>Pembayaran</small></span><i/><span className={showAccountPrompt ? "is-done" : ""}>03 <small>Konfirmasi</small></span></div>
-        </section>
-
-        <section className="order-form dt-order-form dt-checkout-panel-v5">
-          {!orderId ? (
-            <form onSubmit={createOrder}>
-              <div className="order-form-heading"><div><span>01 / CHECKOUT</span><h2>Detail pesanan</h2></div><small>* Wajib diisi</small></div>
-              <label aria-hidden="true" className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden">Website<input tabIndex={-1} autoComplete="off" value={website} onChange={e=>setWebsite(e.target.value)}/></label>
-              <label className="order-field">Pilih kartu
-                <select value={productKey} onChange={e=>changeProduct(e.target.value)}>
-                  <option value="noir">DiTapAja Noir — Rp50.000 / kartu</option>
-                  <option value="blanc">DiTapAja Blanc — Rp50.000 / kartu</option>
-                  <option value="signature">DiTapAja Signature — Rp60.000 / kartu</option>
-                </select>
-              </label>
-              <div className="order-product-summary"><span>{product.type}</span><b>{product.name}</b><small>{product.minimum > 1 ? "Minimum 10 kartu untuk desain custom." : "Minimum 1 kartu."}</small></div>
-              <div className="order-quantity-row"><div><b>Jumlah kartu</b><small>Minimum {product.minimum} kartu</small></div><div className="order-quantity"><button type="button" aria-label="Kurangi jumlah" disabled={quantity<=product.minimum} onClick={()=>setQuantity(v=>Math.max(product.minimum,v-1))}><Minus size={15}/></button><output>{quantity}</output><button type="button" aria-label="Tambah jumlah" disabled={quantity>=1000} onClick={()=>setQuantity(v=>Math.min(1000,v+1))}><Plus size={15}/></button></div></div>
-              <div className="order-total dt-order-total"><span>Subtotal produk</span><b>{money(total)}</b><small>Ongkos kirim akan dikonfirmasi oleh tim DiTapAja.</small></div>
-              <div className="order-form-heading order-customer-heading"><div><span>02 / INFORMASI CUSTOMER</span><h2>Data pemesan & pengiriman</h2></div></div>
-              <div className="order-fields-grid">
-                <label className="order-field">Nama bisnis<input required maxLength={120} autoComplete="organization" value={business} onChange={e=>setBusiness(e.target.value)} placeholder="Nama bisnis"/></label>
-                <label className="order-field">Nama lengkap<input required maxLength={100} autoComplete="name" value={customer} onChange={e=>setCustomer(e.target.value)} placeholder="Nama pemesan"/></label>
-                <label className="order-field">Email aktif<input required type="email" autoComplete="email" maxLength={254} value={email} onChange={e=>setEmail(e.target.value.trimStart())} placeholder="nama@email.com"/><small className="order-field-hint">Gunakan email yang sama saat mendaftar untuk melihat riwayat order.</small></label>
-                <label className="order-field">Nomor WhatsApp<input required type="tel" inputMode="tel" autoComplete="tel" maxLength={24} value={phone} onChange={e=>setPhone(e.target.value)} placeholder="08xxxxxxxxxx"/></label>
-                <label className="order-field">Alamat pengiriman<input required maxLength={250} autoComplete="shipping street-address" value={destination} onChange={e=>setDestination(e.target.value)} placeholder="Alamat lengkap, kota, provinsi"/></label>
-              </div>
-              <label className="order-field order-notes-field">Catatan tambahan <textarea value={notes} onChange={e=>setNotes(e.target.value)} maxLength={1000} rows={3} placeholder="Logo, warna brand, atau kebutuhan custom."/></label>
-              {error && <p role="alert" className="dt-order-error">{error}</p>}
-              <button className="order-submit" type="submit" disabled={sending}>{sending ? "Membuat pesanan..." : "Buat pesanan & lanjut pembayaran"} <ArrowRight size={16}/></button>
-              <p className="order-privacy-note"><LockKeyhole size={12}/> Tidak perlu login untuk melakukan pemesanan.</p>
-            </form>
-          ) : (
-            <div className="dt-payment-step">
-              <div className="order-form-heading"><div><span>02 / PEMBAYARAN</span><h2>Transfer pembayaran</h2></div><span className="dt-order-status">ORDER DIBUAT</span></div>
-              <div className="dt-order-reference"><small>Nomor pesanan</small><strong>{orderId}</strong><button type="button" onClick={()=>void copyNumber(orderId)} aria-label="Salin nomor pesanan"><Copy size={15}/></button></div>
-              <p className="dt-payment-intro">Transfer sesuai subtotal berikut ke salah satu rekening DiTapAja. Pastikan nominal transfer sesuai.</p>
-              <div className="dt-bank-list">
-                {accounts.map(account=><article key={account.bank} className="dt-bank-card"><div className="dt-bank-head"><b>{account.bank}</b><span>TRANSFER BANK</span></div><strong>{account.number}</strong><p>a.n. {account.owner}</p><button type="button" onClick={()=>void copyNumber(account.number)}><Copy size={13}/> Salin nomor rekening</button></article>)}
-              </div>
-              <div className="dt-payment-total"><span>Total transfer</span><strong>{money(total)}</strong><small>Belum termasuk ongkos kirim. Jika ada penyesuaian ongkir, tim kami akan menghubungi melalui WhatsApp.</small></div>
-              <div className="dt-proof-upload">
-                <div><span>03 / KONFIRMASI PEMBAYARAN</span><h3>Unggah bukti transfer</h3><p>Gunakan screenshot atau foto bukti transfer yang menampilkan nominal, tanggal, dan status transaksi.</p></div>
-                <label className="dt-proof-file"><FileImage size={18}/><span>{selectedFile ? selectedFile.name : "Pilih file bukti transfer"}</span><small>JPG, PNG, WEBP, PDF · Maks. 5 MB</small><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={e=>setSelectedFile(e.target.files?.[0] || null)}/></label>
-                <label className="order-field">Nomor referensi / berita transfer <span className="font-normal text-slate-400">(opsional)</span><input maxLength={120} value={paymentReference} onChange={e=>setPaymentReference(e.target.value)} placeholder="Nomor referensi transaksi"/></label>
-                {error && <p role="alert" className="dt-order-error">{error}</p>}
-                <button type="button" className="order-submit" onClick={()=>void submitProof()} disabled={uploading || !selectedFile}>{uploading ? "Mengirim bukti pembayaran..." : "Kirim bukti & konfirmasi via WhatsApp"} <MessageCircle size={16}/></button>
-                <p className="order-privacy-note"><ShieldCheck size={12}/> Bukti pembayaran disimpan secara privat dan diperiksa manual oleh admin.</p>
-              </div>
+      <section className="dt-order-hero">
+        <div className="dt-order-hero-inner">
+          <div className="dt-order-hero-copy">
+            <Link href="/koleksi" className="dt-order-back"><ArrowLeft size={15}/> Kembali ke koleksi</Link>
+            <span className="dt-order-eyebrow"><i/> ORDER YOUR NFC CARD</span>
+            <h1>Make it real.<br/><em>Start with one tap.</em></h1>
+            <p>Pesan kartu NFC untuk bisnismu. Isi detail pesanan, selesaikan pembayaran, lalu tim kami akan membantu proses berikutnya.</p>
+            <div className="dt-order-proof">
+              <span><Check size={15}/> NFC + QR Code</span>
+              <span><Check size={15}/> Dashboard gratis</span>
+              <span><Check size={15}/> Tanpa biaya bulanan</span>
             </div>
-          )}
-          {notice && <p role="status" className="dt-order-notice">{notice}</p>}
-        </section>
-      </div>
-      <footer className="order-footer"><span>© 2026 DiTapAja</span><span>Make every customer interaction count.</span></footer>
+          </div>
+          <div className="dt-order-hero-art" aria-label="Pratinjau kartu NFC DiTapAja">
+            <div className="dt-order-art-glow"/>
+            <div className="dt-order-art-card">
+              <div><span className="dt-order-art-mark"><i/><i/><i/></span><b>DITAPAJA</b><span>NFC · QR READY</span></div>
+              <strong>YOUR<br/><em>review</em><br/>STARTS HERE.</strong>
+              <small>ONE TAP CLOSER TO A GOOD REVIEW.</small>
+            </div>
+            <span className="dt-order-art-caption">A PHYSICAL TOUCHPOINT FOR YOUR BUSINESS</span>
+          </div>
+        </div>
+      </section>
 
-      {showAccountPrompt && <div className="fixed inset-0 z-[100] dt-order-account-overlay flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm"><section role="dialog" aria-modal="true" aria-labelledby="order-account-title"><div><Check size={27}/></div><p>PAYMENT SUBMITTED</p><h2 id="order-account-title">Bukti pembayaran diterima</h2><p>Tim DiTapAja akan memeriksa pembayaran secara manual. Masuk atau daftar menggunakan email <b>{email}</b> untuk memantau status transaksi dan riwayat pesanan.</p><div><Link href={"/login?next="+encodeURIComponent("/pesanan")}>Masuk</Link><Link href={"/register?next="+encodeURIComponent("/pesanan")}>Daftar akun</Link></div><button type="button" onClick={()=>setShowAccountPrompt(false)}>Nanti saja</button></section></div>}
+      <section className="dt-order-process">
+        <div className="dt-order-section-heading">
+          <span>THE ORDER EXPERIENCE</span>
+          <h2>{orderId ? "One step closer." : "Your card, your way."}</h2>
+          <p>{orderId ? "Pesanan sudah tercatat. Selesaikan transfer dan kirim bukti pembayaran." : "Semua dimulai dari detail sederhana. Tidak perlu membuat akun untuk memesan."}</p>
+        </div>
+        <div className="dt-order-stepbar" aria-label="Tahapan pemesanan">
+          <div className={!orderId ? "is-current" : "is-complete"}><span>{orderId ? <Check size={15}/> : "01"}</span><b>Detail pesanan</b></div>
+          <i/>
+          <div className={orderId ? "is-current" : ""}><span>02</span><b>Pembayaran</b></div>
+          <i/>
+          <div className={showAccountPrompt ? "is-complete" : ""}><span>{showAccountPrompt ? <Check size={15}/> : "03"}</span><b>Konfirmasi</b></div>
+        </div>
+
+        <div className="dt-order-workspace">
+          <section className="dt-order-main-card">
+            {!orderId ? (
+              <form onSubmit={createOrder}>
+                <div className="dt-order-card-heading"><div><span>01 / CHECKOUT</span><h3>Detail pesanan</h3><p>Tentukan kartu dan isi informasi pemesan.</p></div><span className="dt-order-required">* Wajib diisi</span></div>
+                <label aria-hidden="true" className="pointer-events-none absolute -left-[10000px] top-auto h-px w-px overflow-hidden">Website<input tabIndex={-1} autoComplete="off" value={website} onChange={e=>setWebsite(e.target.value)}/></label>
+
+                <div className="dt-order-product-card">
+                  <div className="dt-order-product-visual"><span>DITAPAJA</span><strong>{product.type}</strong><small>NFC · QR</small></div>
+                  <div className="dt-order-product-info">
+                    <span>YOUR CARD SELECTION</span><b>{product.name}</b><p>{product.minimum > 1 ? "Minimum 10 kartu untuk desain custom." : "Minimum 1 kartu. Siap digunakan untuk bisnismu."}</p>
+                    <label className="dt-order-select-label">Pilih desain kartu
+                      <select value={productKey} onChange={e=>changeProduct(e.target.value)}>
+                        <option value="noir">DiTapAja Noir — Rp50.000 / kartu</option>
+                        <option value="blanc">DiTapAja Blanc — Rp50.000 / kartu</option>
+                        <option value="signature">DiTapAja Signature — Rp60.000 / kartu</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="dt-order-quantity-total">
+                  <div className="dt-order-quantity-box"><span>JUMLAH KARTU</span><div><button type="button" aria-label="Kurangi jumlah" disabled={quantity<=product.minimum} onClick={()=>setQuantity(v=>Math.max(product.minimum,v-1))}><Minus size={16}/></button><output>{quantity}</output><button type="button" aria-label="Tambah jumlah" disabled={quantity>=1000} onClick={()=>setQuantity(v=>Math.min(1000,v+1))}><Plus size={16}/></button></div><small>Minimum {product.minimum} kartu</small></div>
+                  <div className="dt-order-total-box"><span>ESTIMASI SUBTOTAL</span><strong>{money(total)}</strong><small>Ongkos kirim dikonfirmasi terpisah</small></div>
+                </div>
+
+                <div className="dt-order-form-section">
+                  <div className="dt-order-subheading"><span>02 / YOUR INFORMATION</span><h3>Data pemesan & pengiriman</h3><p>Pastikan email dan nomor WhatsApp aktif agar tim kami mudah menghubungi.</p></div>
+                  <div className="dt-order-fields">
+                    <label>Nama bisnis<input required maxLength={120} autoComplete="organization" value={business} onChange={e=>setBusiness(e.target.value)} placeholder="Contoh: Kopi Senja"/></label>
+                    <label>Nama lengkap<input required maxLength={100} autoComplete="name" value={customer} onChange={e=>setCustomer(e.target.value)} placeholder="Nama pemesan"/></label>
+                    <label>Email aktif<input required type="email" autoComplete="email" maxLength={254} value={email} onChange={e=>setEmail(e.target.value.trimStart())} placeholder="nama@email.com"/><small>Gunakan email yang sama saat mendaftar untuk melihat riwayat order.</small></label>
+                    <label>Nomor WhatsApp<input required type="tel" inputMode="tel" autoComplete="tel" maxLength={24} value={phone} onChange={e=>setPhone(e.target.value)} placeholder="08xxxxxxxxxx"/></label>
+                    <label className="dt-order-address-field">Alamat pengiriman<input required maxLength={250} autoComplete="shipping street-address" value={destination} onChange={e=>setDestination(e.target.value)} placeholder="Alamat lengkap, kota, provinsi"/></label>
+                    <label className="dt-order-notes-field">Catatan tambahan <span>(opsional)</span><textarea value={notes} onChange={e=>setNotes(e.target.value)} maxLength={1000} rows={3} placeholder="Logo, warna brand, atau kebutuhan custom."/></label>
+                  </div>
+                </div>
+                {error && <p role="alert" className="dt-order-alert">{error}</p>}
+                <button className="dt-order-submit" type="submit" disabled={sending}>{sending ? "Membuat pesanan..." : "Buat pesanan & lanjut pembayaran"} <ArrowRight size={17}/></button>
+                <p className="dt-order-privacy"><LockKeyhole size={13}/> Tidak perlu login untuk melakukan pemesanan.</p>
+              </form>
+            ) : (
+              <div className="dt-order-payment-view">
+                <div className="dt-order-card-heading"><div><span>02 / PAYMENT</span><h3>Transfer pembayaran</h3><p>Gunakan salah satu rekening berikut sesuai total pesanan.</p></div><span className="dt-order-payment-badge"><i/> ORDER DIBUAT</span></div>
+                <div className="dt-order-reference"><div><small>NOMOR PESANAN</small><strong>{orderId}</strong></div><button type="button" onClick={()=>void copyNumber(orderId)} aria-label="Salin nomor pesanan"><Copy size={16}/></button></div>
+                <div className="dt-order-bank-grid">
+                  {accounts.map(account=><article key={account.bank}><div><b>{account.bank}</b><span>TRANSFER BANK</span></div><strong>{account.number}</strong><small>a.n. {account.owner}</small><button type="button" onClick={()=>void copyNumber(account.number)}><Copy size={14}/> Salin nomor rekening</button></article>)}
+                </div>
+                <div className="dt-order-transfer-total"><span>TOTAL TRANSFER</span><strong>{money(total)}</strong><p>Belum termasuk ongkos kirim. Jika ada penyesuaian ongkir, tim kami akan menghubungi melalui WhatsApp.</p></div>
+                <div className="dt-order-proof-panel">
+                  <div className="dt-order-subheading"><span>03 / PAYMENT CONFIRMATION</span><h3>Kirim bukti pembayaran</h3><p>Unggah screenshot atau foto bukti transfer yang menampilkan nominal, tanggal, dan status transaksi.</p></div>
+                  <label className="dt-order-file"><FileImage size={21}/><strong>{selectedFile ? selectedFile.name : "Pilih file bukti transfer"}</strong><small>JPG, PNG, WEBP, PDF · Maks. 5 MB</small><input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={e=>setSelectedFile(e.target.files?.[0] || null)}/></label>
+                  <label className="dt-order-reference-field">Nomor referensi / berita transfer <span>(opsional)</span><input maxLength={120} value={paymentReference} onChange={e=>setPaymentReference(e.target.value)} placeholder="Nomor referensi transaksi"/></label>
+                  {error && <p role="alert" className="dt-order-alert">{error}</p>}
+                  <button type="button" className="dt-order-submit" onClick={()=>void submitProof()} disabled={uploading || !selectedFile}>{uploading ? "Mengirim bukti pembayaran..." : "Kirim bukti & konfirmasi via WhatsApp"} <MessageCircle size={17}/></button>
+                  <p className="dt-order-privacy"><ShieldCheck size={13}/> Bukti pembayaran disimpan secara privat dan diperiksa manual oleh admin.</p>
+                </div>
+              </div>
+            )}
+            {notice && <p role="status" className="dt-order-notice"><Check size={15}/>{notice}</p>}
+          </section>
+
+          <aside className="dt-order-aside">
+            <div className="dt-order-aside-card dt-order-summary-card">
+              <span>YOUR ORDER</span><h3>Simple from<br/><em>start to finish.</em></h3>
+              <div className="dt-order-summary-line"><PackageCheck size={18}/><div><b>Kartu NFC fisik</b><small>Siap digunakan di lokasi bisnismu</small></div></div>
+              <div className="dt-order-summary-line"><CreditCard size={18}/><div><b>NFC + QR Code</b><small>Dua cara untuk membuka halaman tujuan</small></div></div>
+              <div className="dt-order-summary-line"><Sparkles size={18}/><div><b>Dashboard gratis</b><small>Kelola kartu dan tautan tujuan</small></div></div>
+              <div className="dt-order-summary-line"><Truck size={18}/><div><b>Pengiriman dikonfirmasi</b><small>Tim kami menghubungi untuk detail ongkir</small></div></div>
+            </div>
+            <div className="dt-order-aside-card dt-order-help-card"><span>NEED A HAND?</span><h3>Masih ada yang ingin ditanyakan?</h3><p>Hubungi tim DiTapAja jika butuh bantuan sebelum menyelesaikan pesanan.</p><a href="https://wa.me/6281321778081" target="_blank" rel="noopener noreferrer"><MessageCircle size={16}/> Chat tim DiTapAja <ArrowRight size={15}/></a></div>
+          </aside>
+        </div>
+      </section>
+
+      <footer className="dt-order-footer"><div><b>DiTapAja.</b><span>Make every customer interaction count.</span></div><Link href="/koleksi">Jelajahi koleksi <ArrowRight size={14}/></Link></footer>
+
+      {showAccountPrompt && <div className="dt-order-account-overlay"><section role="dialog" aria-modal="true" aria-labelledby="order-account-title"><div className="dt-order-modal-icon"><Check size={27}/></div><p>PAYMENT SUBMITTED</p><h2 id="order-account-title">Bukti pembayaran diterima</h2><p>Tim DiTapAja akan memeriksa pembayaran secara manual. Masuk atau daftar menggunakan email <b>{email}</b> untuk memantau status transaksi dan riwayat pesanan.</p><div><Link href={"/login?next="+encodeURIComponent("/pesanan")}>Masuk</Link><Link href={"/register?next="+encodeURIComponent("/pesanan")}>Daftar akun</Link></div><button type="button" onClick={()=>setShowAccountPrompt(false)}>Nanti saja</button></section></div>}
     </main>
   );
 }
