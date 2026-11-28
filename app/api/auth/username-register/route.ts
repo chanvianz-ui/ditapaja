@@ -11,7 +11,6 @@ function json(data: Record<string, unknown>, status = 200) {
 }
 
 export async function POST(request: NextRequest) {
-  let createdUserId: string | null = null;
   try {
     if (!request.headers.get("content-type")?.toLowerCase().startsWith("application/json")) {
       return json({ success: false, error: "Content-Type tidak valid." }, 415);
@@ -65,7 +64,6 @@ export async function POST(request: NextRequest) {
         createError?.message.toLowerCase().includes("registered");
       return json({ success: false, error: duplicate ? "Username sudah digunakan." : "Akun tidak dapat dibuat. Periksa data lalu coba lagi." }, duplicate ? 409 : 400);
     }
-    createdUserId = created.user.id;
 
     const { error: mappingError } = await admin.from("account_usernames").insert({
       user_id: created.user.id,
@@ -74,7 +72,6 @@ export async function POST(request: NextRequest) {
     });
     if (mappingError) {
       await admin.auth.admin.deleteUser(created.user.id);
-      createdUserId = null;
       if (mappingError.code === "23505") return json({ success: false, error: "Username sudah digunakan." }, 409);
       console.error("Username mapping insert failed:", mappingError);
       return json({ success: false, error: "Data akun gagal disimpan." }, 500);
@@ -86,7 +83,6 @@ export async function POST(request: NextRequest) {
     });
     if (signInError || !signedIn.session) {
       await admin.auth.admin.deleteUser(created.user.id);
-      createdUserId = null;
       console.error("New username account sign-in failed:", signInError);
       return json({ success: false, error: "Akun dibuat, tetapi sesi login gagal. Silakan masuk melalui username." }, 500);
     }
