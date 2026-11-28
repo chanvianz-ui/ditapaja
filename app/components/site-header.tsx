@@ -57,9 +57,7 @@ export default function SiteHeader() {
           <Brand />
           <nav className="dt-v3-nav" aria-label="Navigasi utama">
             {links.map((item, index) => (
-              <Link href={item.href} key={item.href}>
-                <small>0{index + 1}</small>{item.label}
-              </Link>
+              <Link href={item.href} key={item.href}>{item.label}</Link>
             ))}
           </nav>
           <div className="dt-v3-header-actions">
@@ -76,9 +74,9 @@ export default function SiteHeader() {
         <div className="dt-v3-menu-backdrop" onMouseDown={event => { if (event.target === event.currentTarget) setOpen(false); }}>
           <section ref={panelRef} id="dt-v3-mobile-menu" className="dt-v3-menu-panel" role="dialog" aria-modal="true" aria-label="Navigasi DiTapAja">
             <div className="dt-v3-menu-head"><Brand/><button ref={closeRef} type="button" onClick={() => setOpen(false)} aria-label="Tutup navigasi"><X size={19}/></button></div>
-            <div className="dt-v3-menu-intro"><small>DITAPAJA / NAVIGATION</small><h2>Everything<br/><em>starts with a tap.</em></h2></div>
+            <div className="dt-v3-menu-intro"><small>EXPLORE DITAPAJA</small><h2>Everything<br/><em>starts with a tap.</em></h2></div>
             <nav className="dt-v3-menu-links" aria-label="Halaman utama">
-              {links.map((item,index)=><Link key={item.href} href={item.href} onClick={()=>setOpen(false)}><small>0{index+1}</small><strong>{item.label}</strong><ArrowUpRight size={18}/></Link>)}
+              {links.map((item)=><Link key={item.href} href={item.href} onClick={()=>setOpen(false)}><strong>{item.label}</strong><ArrowUpRight size={18}/></Link>)}
             </nav>
             <div className="dt-v3-menu-quick">
               <Link href="/activate" onClick={()=>setOpen(false)}><Nfc size={18}/><span><small>SUDAH PUNYA KARTU?</small><b>Aktivasi kartu</b></span><ArrowUpRight size={16}/></Link>
