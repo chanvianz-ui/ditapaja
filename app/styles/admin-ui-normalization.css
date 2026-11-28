@@ -1,0 +1,52 @@
+/* Superadmin visual normalization. Scoped: no changes to admin behavior. */
+.dt-admin-shell{
+  --admin-bg:#07131f;--admin-panel:#102536;--admin-panel-raised:#163247;
+  --admin-border:rgba(147,190,205,.17);--admin-text:#edf8fb;--admin-muted:#9bb3bf;
+  min-height:100vh!important;background:var(--admin-bg)!important;color:var(--admin-text)!important;
+}
+.dt-admin-shell [class~="bg-white"],
+.dt-admin-shell [class*="bg-[#fff"],
+.dt-admin-shell [class*="bg-[#f"]{
+  background:linear-gradient(145deg,#102536,#0b1d2c)!important;
+  border-color:var(--admin-border)!important;
+  color:var(--admin-text)!important;
+}
+.dt-admin-shell [class*="border-[#34383a]"],
+.dt-admin-shell [class*="border-[#2"]{
+  border-color:var(--admin-border)!important;
+}
+.dt-admin-shell [class*="text-[#15181b]"],
+.dt-admin-shell [class*="text-[#1"],
+.dt-admin-shell [class*="text-[#2"],
+.dt-admin-shell [class*="text-[#3"]{
+  color:var(--admin-text)!important;
+}
+.dt-admin-shell [class*="text-[#a0a3a2]"],
+.dt-admin-shell [class*="text-[#dedbd4]"],
+.dt-admin-shell [class*="text-[#d8d3ca]"]{
+  color:var(--admin-muted)!important;
+}
+.dt-admin-shell input:not([type="checkbox"]):not([type="radio"]),
+.dt-admin-shell select,.dt-admin-shell textarea{
+  background:#071725!important;color:var(--admin-text)!important;
+  border-color:var(--admin-border)!important;
+}
+.dt-admin-shell input::placeholder,.dt-admin-shell textarea::placeholder{color:#7893a1!important}
+.dt-admin-shell button:focus-visible,.dt-admin-shell a:focus-visible,
+.dt-admin-shell input:focus-visible,.dt-admin-shell select:focus-visible{
+  outline:2px solid #39d3df!important;outline-offset:3px!important;
+}
+.dt-admin-shell table thead{background:#0a1b29!important;color:#b9d0db!important}
+.dt-admin-shell table tbody tr{border-color:var(--admin-border)!important}
+.dt-admin-shell table tbody tr:hover{background:rgba(57,211,223,.045)!important}
+.dt-admin-shell .dt-admin-sidebar{
+  background:#081725!important;border-color:var(--admin-border)!important;
+}
+.dt-admin-shell .dt-admin-sidebar-nav a.is-active{
+  background:rgba(57,211,223,.12)!important;color:#8ce9df!important;
+}
+@media(max-width:1023px){
+ .dt-admin-shell{overflow-x:hidden}
+ .dt-admin-shell main,.dt-admin-shell section{min-width:0}
+ .dt-admin-shell .overflow-x-auto{-webkit-overflow-scrolling:touch}
+}
