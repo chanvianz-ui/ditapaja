@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type PointerEvent, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type CSSProperties } from "react";
 import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi, MessageCircle, Coffee, CalendarDays } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
@@ -40,20 +40,20 @@ function HeroTapDemo() {
     dragStart.current = null;
   };
 
-  const startDrag = (event: PointerEvent<HTMLButtonElement>) => {
+  const startDrag = (event: ReactPointerEvent<HTMLButtonElement>) => {
     if (event.button !== 0 && event.pointerType === "mouse") return;
     dragStart.current = { x: event.clientX, y: event.clientY };
     setDragOffset(0);
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
-  const moveDrag = (event: PointerEvent<HTMLButtonElement>) => {
+  const moveDrag = (event: ReactPointerEvent<HTMLButtonElement>) => {
     if (!dragStart.current) return;
     const dx = event.clientX - dragStart.current.x;
     setDragOffset(Math.max(0, Math.min(dx, 170)));
   };
 
-  const finishDrag = (event: PointerEvent<HTMLButtonElement>) => {
+  const finishDrag = (event: ReactPointerEvent<HTMLButtonElement>) => {
     if (!dragStart.current) return;
     const dx = event.clientX - dragStart.current.x;
     dragStart.current = null;
@@ -357,7 +357,7 @@ function HeroProductObject() {
   const [dashboardOpen, setDashboardOpen] = useState(false);
   const [dashboardTab, setDashboardTab] = useState<"activity" | "cards">("activity");
   const [tapCount, setTapCount] = useState(0);
-  const handleMove = (event: PointerEvent<HTMLButtonElement>) => {
+  const handleMove = (event: ReactPointerEvent<HTMLButtonElement>) => {
     if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width - 0.5;
