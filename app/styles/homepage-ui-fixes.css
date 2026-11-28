@@ -249,3 +249,59 @@
  .dt-home-rebuild .dt-usecase-phone-screen{min-height:210px}
 }
 @media(prefers-reduced-motion:reduce){.dt-home-rebuild .dt-usecase-option,.dt-home-rebuild .dt-usecase-cta{transition:none}}
+
+
+/* Motion system: scroll reveals, ambient light, tactile product interaction */
+.dt-home-rebuild{position:relative;isolation:isolate;overflow:clip}
+.dt-home-rebuild:before,.dt-home-rebuild:after{content:"";position:absolute;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(1px);opacity:.45}
+.dt-home-rebuild:before{width:48vw;height:48vw;max-width:700px;max-height:700px;top:4%;right:-20%;background:radial-gradient(circle,rgba(26,160,190,.12),transparent 68%);animation:dtAmbientDrift 18s ease-in-out infinite alternate}
+.dt-home-rebuild:after{width:40vw;height:40vw;max-width:560px;max-height:560px;top:36%;left:-22%;background:radial-gradient(circle,rgba(83,202,174,.08),transparent 68%);animation:dtAmbientDrift 22s ease-in-out infinite alternate-reverse}
+.dt-home-rebuild .dt-reveal{opacity:0;transform:translate3d(0,34px,0) scale(.99);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.dt-home-rebuild .dt-reveal.is-in-view{opacity:1;transform:translate3d(0,0,0) scale(1)}
+.dt-home-rebuild .dt-home-object-stage{perspective:1200px}
+.dt-home-rebuild .dt-home-object-card{appearance:none;cursor:pointer;text-align:left;color:inherit;transform-style:preserve-3d;transform:rotateX(var(--card-tilt-x,0deg)) rotateY(var(--card-tilt-y,0deg)) rotateZ(-7deg);transition:transform .75s cubic-bezier(.2,.8,.2,1),box-shadow .4s;animation:dtCardFloat 7s ease-in-out infinite}
+.dt-home-rebuild .dt-home-object-card:hover{transform:rotateX(var(--card-tilt-x,0deg)) rotateY(var(--card-tilt-y,0deg)) rotateZ(-2deg) translateY(-8px);box-shadow:0 54px 110px rgba(0,0,0,.56),inset 0 1px rgba(255,255,255,.18)}
+.dt-home-rebuild .dt-home-object-card.is-flipped{transform:rotateX(0deg) rotateY(180deg) rotateZ(-4deg)}
+.dt-home-rebuild .dt-home-object-card.is-flipped:hover{transform:rotateX(var(--card-tilt-x,0deg)) rotateY(180deg) rotateZ(-1deg) translateY(-8px)}
+.dt-home-rebuild .dt-home-object-face{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,3vw,38px);border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.dt-home-rebuild .dt-home-object-front{background:linear-gradient(145deg,#23384a,#0c1927 65%,#101f2d)}
+.dt-home-rebuild .dt-home-object-back{align-items:flex-start;background:linear-gradient(145deg,#183c48,#0a1d2b 70%,#122e38);transform:rotateY(180deg)}
+.dt-home-rebuild .dt-home-object-back>strong{font-size:clamp(27px,4vw,49px);line-height:.9;letter-spacing:-.07em;color:#f3fbfc}
+.dt-home-rebuild .dt-home-object-back>strong em{font-style:normal;color:#83d9c0}
+.dt-home-rebuild .dt-home-object-qr{display:grid;place-items:center;width:100px;height:100px;border:8px solid #f0f5f3;border-radius:9px;background:#f0f5f3;color:#153444}
+.dt-home-rebuild .dt-home-object-card-hint{position:absolute;right:18px;top:50%;padding:6px 9px;border:1px solid rgba(255,255,255,.2);border-radius:99px;background:rgba(2,13,22,.48);color:#d9edf1;font-size:7px;font-weight:900;letter-spacing:.13em;transform:translateY(-50%) translateZ(2px);backface-visibility:hidden}
+.dt-home-rebuild .dt-home-object-back .dt-home-object-card-hint{transform:translateY(-50%) rotateY(180deg)}
+.dt-home-rebuild .dt-home-object-card:focus-visible{outline:2px solid #83d9df;outline-offset:8px}
+.dt-home-rebuild .dt-home-object-card:before{content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.15) 48%,transparent 68%);transform:translateX(-130%);animation:dtCardGlint 7s ease-in-out infinite;pointer-events:none}
+.dt-home-rebuild .dt-usecase-preview,.dt-home-rebuild .dt-how-panel,.dt-home-rebuild .dt-behind-panel{transition:transform .35s ease,border-color .35s,box-shadow .35s}
+.dt-home-rebuild .dt-usecase-preview:hover,.dt-home-rebuild .dt-behind-panel:hover{transform:translateY(-4px);border-color:rgba(126,215,227,.3);box-shadow:0 30px 70px rgba(0,0,0,.24)}
+.dt-home-rebuild .dt-usecase-phone{animation:dtPhoneFloat 6s ease-in-out infinite}
+.dt-home-rebuild .dt-usecase-option.is-active .dt-usecase-option-icon{animation:dtIconPop .38s cubic-bezier(.2,.8,.2,1)}
+.dt-home-rebuild .dt-how-visual-orbit{animation:dtOrbitSpin 24s linear infinite}
+.dt-home-rebuild .dt-how-signal i{animation:dtSignalPulse 1.8s ease-out infinite}
+.dt-home-rebuild .dt-how-signal i:nth-child(2){animation-delay:.3s}
+.dt-home-rebuild .dt-how-signal i:nth-child(3){animation-delay:.6s}
+.dt-home-rebuild .home-demo-card-glint{animation:dtCardGlint 5.5s ease-in-out infinite}
+.dt-home-rebuild .ed-button,.dt-home-rebuild .dt-usecase-cta,.dt-home-rebuild .dt-stage-primary{position:relative;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,background .25s ease}
+.dt-home-rebuild .ed-button:hover,.dt-home-rebuild .dt-stage-primary:hover{transform:translateY(-3px);box-shadow:0 14px 35px rgba(34,190,205,.18)}
+.dt-home-rebuild .ed-button:active,.dt-home-rebuild .dt-usecase-cta:active{transform:translateY(0) scale(.98)}
+@keyframes dtAmbientDrift{from{transform:translate3d(-3%,0,0) scale(.92)}to{transform:translate3d(5%,8%,0) scale(1.08)}}
+@keyframes dtCardFloat{0%,100%{translate:0 0}50%{translate:0 -13px}}
+@keyframes dtCardGlint{0%,62%,100%{transform:translateX(-130%)}78%{transform:translateX(130%)}}
+@keyframes dtPhoneFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+@keyframes dtIconPop{0%{transform:scale(.82) rotate(-8deg)}70%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes dtOrbitSpin{to{transform:rotate(360deg)}}
+@keyframes dtSignalPulse{0%{opacity:.2;transform:scale(.7)}55%{opacity:1;transform:scale(1.1)}100%{opacity:.2;transform:scale(.7)}}
+@media(max-width:760px){
+ .dt-home-rebuild .dt-home-object-card{transform:rotateZ(-5deg);animation:dtCardFloat 8s ease-in-out infinite}
+ .dt-home-rebuild .dt-home-object-card.is-flipped{transform:rotateY(180deg) rotateZ(-3deg)}
+ .dt-home-rebuild .dt-home-object-face{padding:20px}
+ .dt-home-rebuild .dt-home-object-card-hint{right:12px;font-size:6px}
+ .dt-home-rebuild .dt-home-object-qr{width:78px;height:78px}
+ .dt-home-rebuild .dt-reveal{transform:translate3d(0,20px,0)}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-home-rebuild:before,.dt-home-rebuild:after,.dt-home-rebuild .dt-home-object-card,.dt-home-rebuild .dt-home-object-card:before,.dt-home-rebuild .dt-usecase-phone,.dt-home-rebuild .dt-how-visual-orbit,.dt-home-rebuild .dt-how-signal i,.dt-home-rebuild .home-demo-card-glint{animation:none!important}
+ .dt-home-rebuild .dt-reveal{opacity:1!important;transform:none!important;transition:none!important}
+ .dt-home-rebuild .dt-home-object-card,.dt-home-rebuild .dt-home-object-card:hover,.dt-home-rebuild .dt-home-object-card.is-flipped{transition:none!important}
+}
