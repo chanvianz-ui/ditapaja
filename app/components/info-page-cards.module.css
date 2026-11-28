@@ -77,3 +77,20 @@
  .contentCards :global(.info-legal > h2) { padding:18px 18px 8px; }
  .contentCards :global(.info-legal > h2 + p) { padding:8px 18px 18px; }
 }
+
+.contentCards :global(.info-story) { display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:14px; }
+.contentCards :global(.info-story > .info-quote),
+.contentCards :global(.info-story > div),
+.contentCards :global(.info-value-grid > article) { min-width:0; padding:25px; border:1px solid rgba(148,163,184,.18); border-radius:22px; background:linear-gradient(145deg,rgba(20,34,55,.94),rgba(10,20,36,.96)); box-shadow:0 16px 42px rgba(0,0,0,.16); }
+.contentCards :global(.info-story > .info-quote) { display:flex; align-items:center; margin:0; color:#eaf4f8; font-size:clamp(19px,2.4vw,28px); font-weight:700; line-height:1.35; letter-spacing:-.035em; }
+.contentCards :global(.info-story h2) { margin:0 0 10px; color:#f4f7fb; font-size:20px; line-height:1.25; }
+.contentCards :global(.info-story p:not(.info-quote)) { margin:0; color:#aab9cb; font-size:14px; line-height:1.8; }
+.contentCards :global(.info-value-grid) { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:14px; }
+.contentCards :global(.info-value-grid > article) { display:flex; flex-direction:column; align-items:flex-start; min-height:185px; }
+.contentCards :global(.info-value-grid > article > svg) { width:25px; height:25px; color:#72dfd0; }
+.contentCards :global(.info-value-grid h2) { margin:24px 0 8px; color:#f4f7fb; font-size:19px; }
+.contentCards :global(.info-value-grid p) { margin:0; color:#aab9cb; font-size:13px; line-height:1.7; }
+@media(max-width:760px) {
+ .contentCards :global(.info-story), .contentCards :global(.info-value-grid) { grid-template-columns:1fr; }
+ .contentCards :global(.info-value-grid > article) { min-height:0; }
+}
