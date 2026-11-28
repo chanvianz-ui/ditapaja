@@ -369,6 +369,7 @@ function HeroProductObject() {
 
 export default function Home() {
   return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
+    <HomeMotionController/>
     <SiteHeader/>
 
     <section className="ed-hero">
