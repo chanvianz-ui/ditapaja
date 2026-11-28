@@ -162,7 +162,7 @@ export default function NewCardPage() {
 
   return (
     <main className="dt-card-create-page dt-workspace-page min-h-screen bg-[#f7f9fc] px-4 py-6 sm:px-6 sm:py-9">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-6xl">
         <Link
           href="/dashboard"
           className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600"
@@ -171,8 +171,8 @@ export default function NewCardPage() {
           Kembali ke Dashboard
         </Link>
 
-        <div className="dt-card-create-layout mt-7 grid items-stretch gap-5 lg:grid-cols-[.78fr_1.22fr] lg:gap-7">
-          <section className="dt-card-create-intro flex flex-col justify-between rounded-[28px] p-6 sm:p-8 lg:min-h-[720px]">
+        <div className="dt-card-create-layout mt-7 grid items-stretch gap-5 lg:grid-cols-[.88fr_1.12fr] lg:gap-7">
+          <section className="dt-card-create-intro flex flex-col justify-between rounded-[28px] p-6 sm:p-8 lg:min-h-[620px]">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 text-blue-700 ring-1 ring-blue-100">
             <CreditCard size={27} />
           </div>
