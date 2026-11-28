@@ -1,22 +1,31 @@
-:root {
-  --dt-bg: #07111f;
-  --dt-bg-soft: #0b192b;
-  --dt-surface: #102238;
-  --dt-surface-raised: #152c45;
-  --dt-border: rgba(148, 183, 219, .16);
-  --dt-border-strong: rgba(148, 183, 219, .24);
-  --dt-text: #edf6ff;
-  --dt-muted: #9bb0c7;
-  --dt-muted-strong: #7189a4;
-  --dt-blue: #2878e8;
-  --dt-blue-strong: #1762cf;
-  --dt-cyan: #31d5e8;
-  --dt-cyan-soft: rgba(49, 213, 232, .13);
-  --dt-danger: #fb7185;
-  --dt-success: #34d399;
-  --dt-radius-sm: 9px;
-  --dt-radius-md: 14px;
-  --dt-radius-lg: 20px;
-  --dt-shadow-soft: 0 12px 34px rgba(0, 0, 0, .18);
-  --dt-shadow-deep: 0 24px 70px rgba(0, 0, 0, .30);
+/* DiTapAja shared design tokens — canonical palette and layout scale */
+:root{
+  color-scheme:dark;
+  --dt-bg:#07131f;
+  --dt-bg-soft:#0b1b29;
+  --dt-surface:#102536;
+  --dt-surface-raised:#163247;
+  --dt-border:rgba(147,190,205,.16);
+  --dt-border-strong:rgba(147,190,205,.28);
+  --dt-text:#edf8fb;
+  --dt-muted:#9bb3bf;
+  --dt-muted-strong:#7893a1;
+  --dt-blue:#168f9e;
+  --dt-blue-strong:#117482;
+  --dt-cyan:#39d3df;
+  --dt-cyan-soft:rgba(57,211,223,.12);
+  --dt-mint:#79e3c1;
+  --dt-danger:#f08e98;
+  --dt-success:#79d9ad;
+  --dt-radius-sm:8px;
+  --dt-radius-md:12px;
+  --dt-radius-lg:18px;
+  --dt-shadow-soft:0 12px 34px rgba(0,0,0,.18);
+  --dt-shadow-deep:0 24px 70px rgba(0,0,0,.30);
+  --dt-content-width:1280px;
+  --dt-page-gutter:clamp(16px,4vw,56px);
 }
+html{background:var(--dt-bg);scroll-padding-top:88px}
+body{color:var(--dt-text);background:radial-gradient(ellipse at 82% -18%,rgba(57,211,223,.10),transparent 40rem),var(--dt-bg)}
+::selection{color:#04151b;background:var(--dt-mint)}
+:focus-visible{outline-color:var(--dt-cyan)}
