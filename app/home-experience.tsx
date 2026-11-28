@@ -385,6 +385,7 @@ function HeroProductObject() {
 
 export default function Home() {
   return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
+    <div className="dt-home-scroll-progress" aria-hidden="true"/>
     <HomeMotionController/>
     <SiteHeader/>
 
