@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "./styles/design-tokens.css";
 import "./styles/interface-v3.css";
 import "./styles/experience-v4.css";
 import "./styles/experience-v4-consistency.css";
 import "./styles/homepage-ui-fixes.css";
 import "./styles/auth-page-fixes.css";
+import "./styles/design-tokens.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
