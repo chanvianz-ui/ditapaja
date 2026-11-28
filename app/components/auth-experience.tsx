@@ -189,7 +189,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
             </form>
           ) : (
             <form className="dt-auth-v2-form" onSubmit={handleRegister}>
-              <div className="dt-auth-v2-options" role="group" aria-label="Metode registrasi">
+              <div className="dt-auth-v2-method-switch" role="group" aria-label="Metode registrasi">
                 <button type="button" className={registerMethod === "email" ? "is-active" : ""} onClick={() => { setRegisterMethod("email"); setMessage(""); }}>Dengan email</button>
                 <button type="button" className={registerMethod === "username" ? "is-active" : ""} onClick={() => { setRegisterMethod("username"); setMessage(""); }}>Dengan username</button>
               </div>
