@@ -1,0 +1,54 @@
+/* DiTapAja homepage — hybrid interaction hero, isolated from other routes. */
+.dt-home-rebuild .ed-hero{position:relative;isolation:isolate;overflow:hidden;padding:clamp(34px,4.5vw,68px) clamp(18px,4.5vw,68px) clamp(48px,6vw,84px)!important;background:radial-gradient(ellipse at 82% 28%,rgba(49,213,232,.13),transparent 34rem),radial-gradient(ellipse at 12% 92%,rgba(120,240,195,.07),transparent 30rem),linear-gradient(132deg,#071321 0%,#0a1b2e 54%,#07111e 100%)!important}
+.dt-home-rebuild .ed-hero:after{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;opacity:.2;background-image:linear-gradient(rgba(148,190,214,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(148,190,214,.055) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(90deg,transparent,#000 38%,#000 100%)}
+.dt-home-rebuild .ed-hero-grid{display:grid!important;grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr)!important;align-items:center!important;gap:clamp(28px,4vw,64px)!important;width:min(1460px,100%)!important;min-height:0!important;margin:0 auto!important;padding:clamp(26px,3vw,48px) 0 0!important}
+.dt-home-rebuild .ed-hero-copy{position:relative;z-index:2;max-width:560px!important}
+.dt-home-rebuild .ed-hero-copy h1{font-size:clamp(54px,6.5vw,94px)!important;line-height:.91!important;letter-spacing:-.085em!important;margin:24px 0 22px!important}
+.dt-home-rebuild .ed-hero-lead{max-width:470px!important;font-size:clamp(14px,1.15vw,16px)!important;line-height:1.85!important;color:#b2c5d6!important}
+.dt-home-rebuild .home-kicker{display:inline-flex;align-items:center;gap:10px;color:#8ce5df!important;font-size:9px!important;letter-spacing:.19em!important;font-weight:850}
+.dt-home-rebuild .home-kicker i{display:block!important;width:7px;height:7px;border-radius:50%;background:#78f0c3;box-shadow:0 0 0 5px rgba(120,240,195,.1),0 0 20px rgba(120,240,195,.5)}
+.dt-home-rebuild .ed-hero-actions{margin-top:28px!important;gap:12px 20px!important}
+.dt-home-rebuild .ed-hero-actions .ed-button{min-height:52px;padding:0 21px!important;border-radius:8px!important}
+.dt-home-rebuild .home-hero-proof{display:grid!important;grid-template-columns:1fr 1fr;gap:12px!important;margin-top:30px!important}
+.dt-home-rebuild .home-hero-proof span{display:flex;align-items:center;gap:8px;font-size:10px!important;color:#9fb5c8!important}
+.dt-home-rebuild .home-hero-proof svg{color:#78f0c3}
+.dt-home-rebuild .dt-hybrid-visual{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);align-items:stretch;gap:14px;min-width:0}
+.dt-home-rebuild .dt-hybrid-product,.dt-home-rebuild .dt-hybrid-simulator{position:relative;min-width:0;overflow:hidden;border:1px solid rgba(151,190,215,.16);border-radius:18px;background:linear-gradient(155deg,rgba(17,39,60,.88),rgba(5,15,27,.96));box-shadow:0 26px 70px rgba(0,0,0,.25)}
+.dt-home-rebuild .dt-hybrid-product{display:flex;flex-direction:column;justify-content:space-between;min-height:540px;padding:12px 10px 4px}
+.dt-home-rebuild .dt-hybrid-simulator{display:flex;flex-direction:column;min-height:540px;padding:12px}
+.dt-home-rebuild .dt-hybrid-visual-label{position:relative;z-index:8;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 7px 8px;border-bottom:1px solid rgba(151,190,215,.1)}
+.dt-home-rebuild .dt-hybrid-visual-label span{font-size:8px;color:#79d9d8;letter-spacing:.15em;font-weight:850}
+.dt-home-rebuild .dt-hybrid-visual-label b{font-size:8px;color:#8fa8bb;letter-spacing:.12em}
+.dt-home-rebuild .dt-hybrid-product .dt-home-object-stage{flex:1;min-height:0;height:100%;overflow:visible;transform:scale(.92)}
+.dt-home-rebuild .dt-hybrid-product .dt-home-object-card{width:94%;padding:clamp(15px,2vw,26px);border-radius:17px;transform:rotate(-9deg);animation:dtHybridCardFloat 6s ease-in-out infinite}
+.dt-home-rebuild .dt-hybrid-product .dt-home-object-card:hover{transform:rotate(-3deg) translateY(-7px)}
+.dt-home-rebuild .dt-hybrid-product .dt-home-object-card>strong{font-size:clamp(28px,3vw,46px)}
+.dt-home-rebuild .dt-hybrid-product .dt-home-object-caption{display:none}
+.dt-home-rebuild .dt-hybrid-product .dt-home-object-controls{bottom:2%;gap:3px;padding:4px;max-width:calc(100% - 8px)}
+.dt-home-rebuild .dt-hybrid-product .dt-home-object-controls button{min-height:31px;padding:0 7px;font-size:7px}
+.dt-home-rebuild .dt-hybrid-product .dt-home-float-panel{max-width:70%;padding:9px}
+.dt-home-rebuild .dt-hybrid-product .dt-home-float-analytics{top:13%;right:-2%}
+.dt-home-rebuild .dt-hybrid-product .dt-home-float-scan{left:-2%;bottom:21%}
+.dt-home-rebuild .dt-hybrid-simulator .home-hero-visual.home-tap-demo{flex:1;width:100%;max-width:none;min-height:0;display:flex;flex-direction:column;justify-content:space-between;padding:12px 4px 5px;border:0;border-radius:0;background:transparent;box-shadow:none}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-heading{align-items:flex-start;gap:7px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-heading>div{display:grid;gap:5px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-heading b{font-size:11px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-disclaimer{font-size:6px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-stage{flex:1;grid-template-columns:minmax(0,.84fr) 16px minmax(0,1.16fr);gap:3px;min-height:0}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-instruction{font-size:6px;letter-spacing:.1em}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-card{min-height:145px;padding:11px;border-radius:10px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-card-title{font-size:clamp(17px,2vw,26px)}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-card-top{font-size:6px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-card-bottom{font-size:5px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-phone{width:min(100%,210px);max-width:210px;min-height:0}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-phone-wrap{align-self:center}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-phone-status{font-size:7px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-footer{align-items:center;gap:6px;font-size:8px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-footer-actions{gap:6px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-footer button{font-size:7px}
+.dt-home-rebuild .dt-hybrid-simulator .home-demo-footer button svg{width:10px;height:10px}
+.dt-home-rebuild .dt-home-scroll-progress{position:fixed;z-index:80;top:0;left:0;height:2px;width:var(--home-scroll-progress,0%);background:linear-gradient(90deg,#31d5e8,#78f0c3);pointer-events:none}
+@keyframes dtHybridCardFloat{0%,100%{translate:0 0}50%{translate:0 -8px}}
+@media(max-width:1180px){.dt-home-rebuild .ed-hero-grid{grid-template-columns:1fr!important;max-width:1040px!important;gap:32px!important}.dt-home-rebuild .ed-hero-copy{max-width:800px!important}.dt-home-rebuild .ed-hero-copy h1{font-size:clamp(58px,8vw,88px)!important}.dt-home-rebuild .dt-hybrid-visual{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.dt-home-rebuild .dt-hybrid-product,.dt-home-rebuild .dt-hybrid-simulator{min-height:510px}}
+@media(max-width:680px){.dt-home-rebuild .ed-hero{padding:28px 16px 46px!important}.dt-home-rebuild .ed-hero-grid{padding-top:18px!important;gap:24px!important}.dt-home-rebuild .ed-hero-copy h1{font-size:clamp(48px,13vw,68px)!important;margin:18px 0 14px!important}.dt-home-rebuild .ed-hero-lead{font-size:13px!important;line-height:1.75!important}.dt-home-rebuild .home-hero-proof{grid-template-columns:1fr 1fr;gap:9px!important;margin-top:22px!important}.dt-home-rebuild .home-hero-proof span{font-size:8px!important}.dt-home-rebuild .dt-hybrid-visual{grid-template-columns:1fr;gap:10px}.dt-home-rebuild .dt-hybrid-product{min-height:380px;padding:10px 8px 0}.dt-home-rebuild .dt-hybrid-product .dt-home-object-stage{min-height:345px;transform:none}.dt-home-rebuild .dt-hybrid-product .dt-home-object-card{width:min(84%,380px);padding:18px}.dt-home-rebuild .dt-hybrid-product .dt-home-object-card>strong{font-size:clamp(33px,9vw,48px)}.dt-home-rebuild .dt-hybrid-product .dt-home-object-controls{bottom:3%;gap:4px}.dt-home-rebuild .dt-hybrid-product .dt-home-object-controls button{font-size:8px;padding:0 9px}.dt-home-rebuild .dt-hybrid-simulator{min-height:530px;padding:12px}.dt-home-rebuild .dt-hybrid-simulator .home-demo-stage{grid-template-columns:minmax(0,.9fr) 18px minmax(0,1.1fr);gap:5px}.dt-home-rebuild .dt-hybrid-simulator .home-demo-card{min-height:160px}.dt-home-rebuild .dt-hybrid-simulator .home-demo-phone{width:min(100%,230px);max-width:230px}.dt-home-rebuild .dt-hybrid-simulator .home-demo-card-title{font-size:clamp(19px,6vw,28px)}}
+@media(prefers-reduced-motion:reduce){.dt-home-rebuild .dt-hybrid-product .dt-home-object-card{animation:none!important;transition:none!important}}
