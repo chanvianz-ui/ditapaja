@@ -75,7 +75,7 @@ function HeroTapDemo() {
         <button type="button" className="home-demo-card" onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={finishDrag} onPointerCancel={() => { dragStart.current = null; setDragOffset(0); }} style={dragOffset ? { transform: "translateX(" + dragOffset + "px) rotate(2deg) scale(.98)" } : undefined} onClick={(event) => { if (event.detail === 0 && !tapped) setTapped(true); }} aria-label="Geser kartu NFC ke kanan untuk memulai simulasi">
           <div className="home-demo-card-top"><BrandMark/><span>DITAPAJA</span><Nfc size={22}/></div>
           <div className="home-demo-card-title">YOUR<br/><em>review</em><br/>STARTS HERE.</div>
-          <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC · QR</span></div>
+          <div className="home-demo-card-bottom"><span>ONE TAP TO REVIEW</span><span>NFC AND QR</span></div>
           <span className="home-demo-card-glint"/>
         </button>
         <span className="home-demo-card-caption">NFC REVIEW CARD · NOIR</span>
@@ -113,12 +113,12 @@ function HeroTapDemo() {
               <div className="home-maps-sheet-handle"/>
               <div className="home-maps-place-title"><div><small>DESTINATION PREVIEW</small><strong>DiTapAja</strong><span>Tujuan dari tautan Google Maps</span></div><span className="home-maps-place-icon"><MapPin size={18}/></span></div>
               <div className="home-maps-place-actions">
-                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>➤</span> Rute</a>
-                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>↗</span> Bagikan</a>
-                <a href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer"><span>⌑</span> Buka</a>
+                <span>Tujuan bisnis</span>
+                <span>Halaman ulasan</span>
+                <span>Browser ponsel</span>
               </div>
               <button className="home-maps-open" type="button" onClick={() => { setShowReview(true); setSubmitted(false); }}>Lihat alur review <ArrowUpRight size={13}/></button>
-              <a className="home-maps-real-link" href="https://maps.app.goo.gl/kQR7hMfPdd7EKAhY6" target="_blank" rel="noopener noreferrer">Buka tujuan di Google Maps <ArrowUpRight size={12}/></a>
+              <span className="home-maps-real-link">Contoh tampilan tujuan pelanggan</span>
               <small className="home-google-note">Ilustrasi peta · detail lokasi dibuka dari Google Maps asli</small>
             </div>
           </div>}
@@ -127,7 +127,7 @@ function HeroTapDemo() {
       </div>
     </div>
     <div className="home-demo-footer">
-      <span>{!tapped ? "01 — Geser kartu ke kanan untuk mulai" : submitted ? "03 — Simulasi selesai" : showReview ? "02 — Pilih rating dan coba form review" : "01 — Kartu berhasil terbaca"}</span>
+      <span>{!tapped ? "Geser kartu ke kanan untuk mulai" : submitted ? "Simulasi selesai" : showReview ? "Pilih rating dan coba form review" : "Kartu berhasil terbaca"}</span>
       <div className="home-demo-footer-actions">
         {tapped && !showReview && <button type="button" onClick={() => setShowReview(true)}>Coba alur review <ArrowUpRight size={12}/></button>}
         <button type="button" onClick={resetDemo}><RotateCcw size={13}/> Reset demo</button>
@@ -139,7 +139,7 @@ function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
   const steps = [
     {
-      number: "01",
+      number: "Tap",
       eyebrow: "THE FIRST CONTACT",
       title: "Tap or scan.",
       description: "Pelanggan cukup mendekatkan smartphone ke kartu NFC atau memindai QR Code yang tersedia. Tidak perlu aplikasi tambahan.",
@@ -149,7 +149,7 @@ function HowItWorks() {
       visualCopy: "Dekatkan ponsel. Kartu akan terbaca otomatis."
     },
     {
-      number: "02",
+      number: "Open",
       eyebrow: "INSTANT REDIRECT",
       title: "Your page opens.",
       description: "Browser langsung membuka tautan tujuan yang sudah kamu atur. Pengalaman tetap cepat, familiar, dan mudah diikuti.",
@@ -159,7 +159,7 @@ function HowItWorks() {
       visualCopy: "Tidak ada aplikasi yang harus diunduh."
     },
     {
-      number: "03",
+      number: "Review",
       eyebrow: "THE MOMENT THAT MATTERS",
       title: "Leave a review.",
       description: "Pelanggan tiba di halaman review bisnismu dan bisa membagikan pengalaman mereka dengan lebih praktis.",
@@ -175,7 +175,7 @@ function HowItWorks() {
     <section className="dt-how-section" id="cara-kerja">
       <div className="dt-how-heading">
         <div>
-          <span className="dt-how-kicker"><i/> 03 / HOW IT WORKS</span>
+          <span className="dt-how-kicker">HOW IT WORKS</span>
           <h2>From a tap<br/>to a <em>review.</em></h2>
         </div>
         <p>Teknologi di baliknya sederhana. Pengalaman pelanggan juga harus begitu.</p>
@@ -219,7 +219,7 @@ function HowItWorks() {
             <span className="dt-how-eyebrow">{step.eyebrow}</span>
             <h3>{step.title}</h3>
             <p>{step.description}</p>
-            <div className="dt-how-note"><span><i/>{step.note}</span><span>STEP {step.number} / 03</span></div>
+            <div className="dt-how-note"><span><i/>{step.note}</span><span>THE CUSTOMER JOURNEY</span></div>
           </div>
 
           <div className={"dt-how-visual dt-how-visual-" + step.visual} role="img" aria-label={step.visualTitle}>
@@ -240,12 +240,12 @@ function HowItWorks() {
               ) : (
                 <>
                   <div className="dt-how-review-card"><span>YOUR EXPERIENCE</span><b>How was<br/>your visit?</b><div className="dt-how-stars">★★★★★</div><small>SHARE YOUR FEEDBACK</small><div className="dt-how-review-line"/></div>
-                  <div className="dt-how-review-spark">✳</div>
+                   
                 </>
               )}
             </div>
             <div className="dt-how-visual-caption"><span><i/> {step.visualTitle}</span><small>{step.visualCopy}</small></div>
-            <span className="dt-how-visual-index">DTA / {step.number}</span>
+             
           </div>
         </div>
         <div className="dt-how-progress" aria-hidden="true"><span style={{width: ((activeStep + 1) / 3 * 100) + "%"}}/></div>
