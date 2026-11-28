@@ -1,0 +1,68 @@
+.contentCards {
+  color: #e8eef8;
+}
+.contentCards :global(.feature-page-intro) {
+  display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin: 0 0 22px;
+}
+.contentCards :global(.feature-page-intro > div),
+.contentCards :global(.feature-page-grid > article),
+.contentCards :global(.guide-page-steps > article),
+.contentCards :global(.info-contact-grid > article),
+.contentCards :global(.info-faq > details),
+.contentCards :global(.feature-page-note),
+.contentCards :global(.guide-page-callout) {
+  min-width: 0; border: 1px solid rgba(148,163,184,.18); border-radius: 22px;
+  background: linear-gradient(145deg,rgba(20,34,55,.94),rgba(10,20,36,.96));
+  box-shadow: 0 16px 42px rgba(0,0,0,.16);
+}
+.contentCards :global(.feature-page-intro > div) { padding: 22px; display:flex; flex-direction:column; gap:8px; }
+.contentCards :global(.feature-page-intro span),
+.contentCards :global(.feature-page-grid .feature-page-card-top span),
+.contentCards :global(.info-contact-grid article > small) {
+  color:#8fa8c5; font-size:10px; font-weight:800; letter-spacing:.14em;
+}
+.contentCards :global(.feature-page-intro strong) { color:#f5f8fc; font-size:clamp(19px,2vw,26px); line-height:1.15; }
+.contentCards :global(.feature-page-intro small) { color:#a9b8ca; font-size:13px; }
+.contentCards :global(.feature-page-grid) { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.contentCards :global(.feature-page-grid > article) { padding:24px; display:flex; flex-direction:column; min-height:220px; }
+.contentCards :global(.feature-page-card-top) { display:flex; justify-content:space-between; align-items:center; gap:12px; color:#65d9df; }
+.contentCards :global(.feature-page-grid h2),
+.contentCards :global(.info-contact-grid h2),
+.contentCards :global(.guide-page-steps h2),
+.contentCards :global(.feature-page-note h2),
+.contentCards :global(.guide-page-callout h2) { color:#f4f7fb; font-size:19px; line-height:1.25; margin:22px 0 9px; }
+.contentCards :global(.feature-page-grid p),
+.contentCards :global(.info-contact-grid p),
+.contentCards :global(.guide-page-steps p),
+.contentCards :global(.feature-page-note p),
+.contentCards :global(.guide-page-callout p) { color:#aab9cb; font-size:14px; line-height:1.75; margin:0; }
+.contentCards :global(.feature-page-note),
+.contentCards :global(.guide-page-callout) { padding:26px; margin-top:18px; }
+.contentCards :global(.feature-page-note > div:first-child),
+.contentCards :global(.guide-page-callout > div:first-child) { display:flex; align-items:center; gap:10px; color:#72e0d0; font-size:11px; font-weight:800; letter-spacing:.13em; }
+.contentCards :global(.feature-page-note a),
+.contentCards :global(.guide-page-callout a),
+.contentCards :global(.info-contact-grid a) { display:inline-flex; align-items:center; gap:8px; margin-top:20px; color:#72e0d0; font-weight:750; text-decoration:none; }
+.contentCards :global(.guide-page-steps) { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.contentCards :global(.guide-page-steps > article) { padding:22px; display:grid; grid-template-columns:42px minmax(0,1fr) 20px; gap:14px; align-items:start; }
+.contentCards :global(.guide-step-index) { display:grid; place-items:center; width:40px; height:40px; border-radius:13px; color:#071827; background:#78dfd0; font-weight:900; }
+.contentCards :global(.guide-step-icon) { display:none; }
+.contentCards :global(.guide-page-steps h2) { margin:2px 0 8px; }
+.contentCards :global(.guide-step-check) { color:#70dfc9; margin-top:5px; }
+.contentCards :global(.info-faq) { display:grid; gap:12px; }
+.contentCards :global(.info-faq > details) { padding:0 22px; }
+.contentCards :global(.info-faq summary) { cursor:pointer; list-style:none; padding:21px 34px 21px 0; color:#f0f5fb; font-size:15px; font-weight:750; position:relative; }
+.contentCards :global(.info-faq summary::-webkit-details-marker) { display:none; }
+.contentCards :global(.info-faq summary::after) { content:"+"; position:absolute; right:0; top:17px; color:#72dfd0; font-size:24px; font-weight:400; }
+.contentCards :global(.info-faq details[open] summary::after) { content:"−"; }
+.contentCards :global(.info-faq details p) { color:#aab9cb; font-size:14px; line-height:1.75; margin:0; padding:0 0 22px; max-width:78ch; }
+.contentCards :global(.info-contact-grid) { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.contentCards :global(.info-contact-grid > article) { padding:24px; display:flex; flex-direction:column; align-items:flex-start; }
+.contentCards :global(.info-contact-grid article > svg) { color:#70dfd0; width:25px; height:25px; margin-bottom:22px; }
+.contentCards :global(.info-contact-grid h2) { margin:12px 0 9px; }
+.contentCards :global(.info-contact-grid a) { margin-top:auto; padding-top:20px; }
+@media (max-width: 760px) {
+ .contentCards :global(.feature-page-intro), .contentCards :global(.feature-page-grid), .contentCards :global(.info-contact-grid) { grid-template-columns:1fr; }
+ .contentCards :global(.guide-page-steps) { grid-template-columns:1fr; }
+ .contentCards :global(.feature-page-grid > article), .contentCards :global(.info-contact-grid > article) { min-height:0; }
+}
