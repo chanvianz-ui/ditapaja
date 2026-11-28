@@ -35,7 +35,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const menuWasOpenRef = useRef(false);
 
   useEffect(() => {
-    setCardsView(new URLSearchParams(window.location.search).get("view") === "cards");
+    const syncCardsView = () => {
+      setCardsView(new URLSearchParams(window.location.search).get("view") === "cards");
+    };
+    syncCardsView();
+    window.addEventListener("popstate", syncCardsView);
+    return () => window.removeEventListener("popstate", syncCardsView);
   }, [pathname]);
 
   useEffect(() => {
