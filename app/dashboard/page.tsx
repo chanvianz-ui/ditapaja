@@ -1026,9 +1026,9 @@ export default function DashboardPage() {
       {/* BULK QR PRINT SHEET */}
       {showBulkQrSheet && (
         <div className="dt-bulk-qr-overlay fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-slate-950/55 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:p-6">
-          <div className="dt-bulk-qr-panel mx-auto max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-7">
+          <div role="dialog" aria-modal="true" aria-labelledby="bulk-qr-title" className="dt-bulk-qr-panel mx-auto max-w-5xl rounded-2xl bg-white p-4 shadow-2xl sm:p-7">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3 print:hidden">
-              <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR PRINT SHEET</p><h3 className="mt-1 text-lg font-bold text-slate-900">Cetak semua QR Code aktif</h3><p className="mt-1 text-xs text-slate-500">{cards.filter((card) => selectedCardIds.includes(card.id) && card.active && !card.archived_at).length} kartu terpilih · Gunakan kertas A4 dan skala 100%.</p></div>
+              <div><p className="text-[10px] font-bold uppercase tracking-[.18em] text-blue-600">DITAPAJA · QR PRINT SHEET</p><h3 id="bulk-qr-title" className="mt-1 text-lg font-bold text-slate-900">Cetak semua QR Code aktif</h3><p className="mt-1 text-xs text-slate-500">{cards.filter((card) => selectedCardIds.includes(card.id) && card.active && !card.archived_at).length} kartu terpilih · Gunakan kertas A4 dan skala 100%.</p></div>
               <div className="flex flex-wrap items-center gap-2"><div className="flex rounded-xl border border-slate-200 p-1"><button type="button" onClick={() => setBulkQrTheme("light")} className={`rounded-lg px-3 py-2 text-xs font-semibold ${bulkQrTheme === "light" ? "bg-slate-900 text-white" : "text-slate-500"}`}>Hitam / Putih</button><button type="button" onClick={() => setBulkQrTheme("dark")} className={`rounded-lg px-3 py-2 text-xs font-semibold ${bulkQrTheme === "dark" ? "bg-slate-900 text-white" : "text-slate-500"}`}>Putih / Hitam</button></div><button type="button" onClick={() => window.print()} className="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-700"><Printer size={14} className="mr-1 inline"/> Cetak / Simpan PDF</button><button type="button" onClick={() => setShowBulkQrSheet(false)} className="rounded-xl border border-slate-200 px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">Tutup</button></div>
             </div>
             <div id="ditapaja-bulk-qr-sheet" className="dt-bulk-qr-grid grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5">{cards.filter((card) => selectedCardIds.includes(card.id) && card.active && !card.archived_at).length === 0 ? <p className="col-span-full rounded-xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500">Tidak ada kartu aktif untuk dicetak. Tutup lembar ini, lalu pilih kartu yang berstatus aktif.</p> : null}
@@ -1069,12 +1069,12 @@ export default function DashboardPage() {
 
       {/* ARCHIVE CARD CONFIRMATION MODAL */}
       {deleteTarget && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto overscroll-contain p-3 py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-slate-950/50 backdrop-blur-sm">
           <div
             role="dialog"
             aria-modal="true"
             aria-labelledby="delete-card-title"
-            className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl"
+            className="my-auto w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl sm:p-6"
           >
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
               <Archive size={24} />
@@ -1126,11 +1126,11 @@ export default function DashboardPage() {
 
       {/* EDIT CARD MODAL */}
       {editingCard && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overscroll-contain p-3 py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-slate-950/50 backdrop-blur-sm" onClick={() => { if (!savingCard) { setEditingCard(null); setCardError(""); } }}>
+          <div role="dialog" aria-modal="true" aria-labelledby="edit-card-title" className="my-auto w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl sm:p-6" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="text-lg font-bold">Edit NFC Card</h3>
+                <h3 id="edit-card-title" className="text-lg font-bold">Edit NFC Card</h3>
                 <p className="mt-1 text-sm text-slate-500">
                   Perbarui informasi kartu NFC kamu.
                 </p>
