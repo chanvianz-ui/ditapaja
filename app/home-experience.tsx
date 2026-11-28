@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState, type PointerEvent, type CSSProperties } from "react";
 import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi, MessageCircle, Coffee, CalendarDays } from "lucide-react";
 import SiteHeader from "./components/site-header";
