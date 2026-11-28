@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Check, ChevronRight, Nfc } from "lucide-react";
-import type { ProductConfig } from "../lib/product-catalog";
+import { formatProductPrice, type ProductConfig } from "../lib/product-catalog";
 
 type Product = ProductConfig;
 
@@ -65,7 +65,7 @@ export default function ProductCarousel({ products }: { products: readonly Produ
           </div>
           <div className="dt-stage-price">
             <span>PEMBAYARAN SEKALI</span>
-            <strong>{product.price}</strong><small> per kartu</small>
+            <strong>{formatProductPrice(product.price)}</strong><small> per kartu</small>
             <span className="dt-stage-availability">{product.order}</span>
           </div>
           <div className="dt-stage-actions">
@@ -105,7 +105,7 @@ export default function ProductCarousel({ products }: { products: readonly Produ
               <span className="dt-neo-option-copy">
                 <small>{item.mode === "preorder" ? "MADE TO ORDER" : "READY TO ORDER"}</small>
                 <b>{item.label}</b>
-                <em>{item.price}</em>
+                <em>{formatProductPrice(item.price)}</em>
               </span>
               <span className="dt-neo-option-state">{item.tone === product.tone ? <Check size={15}/> : <ChevronRight size={16}/>}</span>
             </button>
