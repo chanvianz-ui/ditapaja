@@ -1,0 +1,24 @@
+/* Card surfaces for operational workspaces. Scoped by page to avoid changing unrelated flows. */
+.dt-admin-orders .dt-order-list{display:grid;gap:12px;padding:14px;background:rgba(5,13,22,.34)}
+.dt-admin-orders .dt-order-list>article{border:1px solid rgba(147,190,205,.16);border-radius:18px;background:linear-gradient(145deg,#102536,#0b1d2c);box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.dt-admin-orders .dt-order-list>article:hover{background:linear-gradient(145deg,#153149,#102536)}
+.dt-admin-orders .dt-order-summary{border:1px solid rgba(57,211,223,.2);background:linear-gradient(145deg,rgba(16,49,67,.9),rgba(11,29,44,.96))}
+.dt-admin-pins .dt-pin-list{display:grid;gap:10px;padding:14px;background:rgba(5,13,22,.3)}
+.dt-admin-pins .dt-pin-list>div{border:1px solid rgba(147,190,205,.15);border-radius:16px;background:linear-gradient(145deg,#102536,#0b1d2c);padding:16px 18px;box-shadow:0 10px 25px rgba(0,0,0,.1)}
+.dt-admin-pins .dt-pin-list>div:hover{border-color:rgba(57,211,223,.3);background:linear-gradient(145deg,#153149,#102536)}
+.dt-admin-pins .dt-pin-metrics>article{border-radius:18px;border-color:rgba(147,190,205,.17);background:linear-gradient(145deg,#102536,#0b1d2c)}
+.dt-admin-pins .dt-pin-create-grid>article{border-radius:20px;border-color:rgba(147,190,205,.17)}
+.dt-business-page .dt-business-profile-panel,.dt-business-page .dt-business-locations-panel{border-color:rgba(93,133,125,.18);border-radius:24px;background:linear-gradient(145deg,#fff,#f7faf8);box-shadow:0 18px 50px -38px rgba(12,35,33,.28)}
+.dt-business-page .dt-business-location-card{border-color:#dce8e3;border-radius:16px;background:linear-gradient(145deg,#fff,#f8fbf9);box-shadow:0 8px 22px -20px rgba(12,35,33,.3)}
+.dt-business-page .dt-business-add-location{border:1px solid #e1ebe6;border-radius:17px;background:#f5f9f7}
+.dt-card-create-page .dt-card-create-intro{border:1px solid rgba(113,143,169,.18);background:radial-gradient(ellipse at 90% 5%,rgba(75,190,190,.17),transparent 45%),linear-gradient(145deg,#0c2032,#102c40 58%,#0a1c2c);box-shadow:0 28px 65px -42px rgba(5,20,33,.6)}
+.dt-card-create-page .dt-card-create-intro h1{color:#f4f8fa}
+.dt-card-create-page .dt-card-create-intro p{color:#a9bfca}
+.dt-card-create-page .dt-card-create-steps{gap:10px}
+.dt-card-create-page .dt-card-create-steps>div{border:1px solid rgba(183,219,223,.14);border-radius:15px;background:rgba(255,255,255,.045);padding:14px 15px}
+.dt-card-create-page .dt-card-create-steps>div:last-child{border-bottom:1px solid rgba(183,219,223,.14)}
+.dt-card-create-page form{border:1px solid #e2eaf0;border-radius:24px;background:#fff;box-shadow:0 20px 55px -42px rgba(15,35,55,.35)}
+@media(max-width:760px){
+ .dt-admin-orders .dt-order-list,.dt-admin-pins .dt-pin-list{padding:9px;gap:9px}
+ .dt-admin-orders .dt-order-list>article,.dt-admin-pins .dt-pin-list>div{border-radius:14px}
+}
