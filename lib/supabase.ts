@@ -8,8 +8,8 @@ const rememberModeKey = "ditapaja_auth_storage_mode";
 const authStorage = {
   getItem(key: string) {
     if (typeof window === "undefined") return null;
-    const isSession = window.localStorage.getItem(rememberModeKey) === "session";
-    if (!isSession) {
+    const mode = window.localStorage.getItem(rememberModeKey) || "session";
+    if (mode === "persistent") {
       const expiresAt = Number(window.localStorage.getItem("ditapaja_login_expires_at") || 0);
       if (!expiresAt || Date.now() >= expiresAt) {
         window.localStorage.removeItem(key);
@@ -18,8 +18,9 @@ const authStorage = {
         window.localStorage.setItem(rememberModeKey, "session");
         return null;
       }
+      return window.localStorage.getItem(key);
     }
-    return (isSession ? window.sessionStorage : window.localStorage).getItem(key);
+    return window.sessionStorage.getItem(key);
   },
   setItem(key: string, value: string) {
     if (typeof window === "undefined") return;
@@ -43,6 +44,8 @@ export function setAuthStorageMode(rememberForSevenDays: boolean) {
     window.localStorage.setItem("ditapaja_login_expires_at", String(Date.now() + 7 * 24 * 60 * 60 * 1000));
   } else {
     window.localStorage.removeItem("ditapaja_login_expires_at");
+    window.localStorage.removeItem("supabase.auth.token");
+    window.sessionStorage.removeItem("supabase.auth.token");
   }
 }
 
