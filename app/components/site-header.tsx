@@ -56,7 +56,7 @@ export default function SiteHeader() {
         <div className="dt-v3-header-inner">
           <Brand />
           <nav className="dt-v3-nav" aria-label="Navigasi utama">
-            {links.map((item, index) => (
+            {links.map((item) => (
               <Link href={item.href} key={item.href}>{item.label}</Link>
             ))}
           </nav>
