@@ -60,6 +60,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       const expiry = Number(localStorage.getItem("ditapaja_login_expires_at") || 0);
       if (mode === "persistent" && (!expiry || Date.now() >= expiry)) {
         localStorage.removeItem("ditapaja_login_expires_at");
+        localStorage.setItem("ditapaja_auth_storage_mode", "session");
         await supabase.auth.signOut({ scope: "local" });
         if (alive) {
           setAuthorized(false);
@@ -146,7 +147,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   async function logout() {
-    await supabase.auth.signOut();
+    await supabase.auth.signOut({ scope: "local" });
+    localStorage.removeItem("ditapaja_login_expires_at");
+    localStorage.setItem("ditapaja_auth_storage_mode", "session");
     router.replace("/login");
   }
 
