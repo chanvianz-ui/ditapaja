@@ -15,6 +15,15 @@ function isGoogleMapsUrl(value: string) {
   } catch { return false; }
 }
 
+function serializeInlineScriptValue(value: unknown) {
+  return JSON.stringify(value)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026")
+    .replace(/\\u2028/g, "\\\\u2028")
+    .replace(/\\u2029/g, "\\\\u2029");
+}
+
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => {
     const entities: Record<string, string> = {
@@ -147,12 +156,12 @@ export async function GET(
     });
     const trackingScript = `  <script>
     (function () {
-      var code = ${JSON.stringify(code)};
+      var code = ${serializeInlineScriptValue(code)};
       var button = document.getElementById("reviewButton");
       var status = document.getElementById("status");
       var tapKey = "ditapaja-tap-" + code;
       var previewMode = ${JSON.stringify(previewMode)};
-      var fallbackReviewUrl = ${JSON.stringify(fallbackReviewUrl)};
+      var fallbackReviewUrl = ${serializeInlineScriptValue(fallbackReviewUrl)};
 
       if (!previewMode) {
         try {
