@@ -300,6 +300,73 @@ function UseCaseExplorer() {
   );
 }
 
+
+function HomeMotionController() {
+  useEffect(() => {
+    const root = document.querySelector<HTMLElement>(".dt-home-rebuild");
+    if (!root) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const targets = Array.from(root.querySelectorAll<HTMLElement>("section, .dt-home-object-stage, .dt-collection-stage, .dt-behind-panel, .dt-closing-main"));
+    if (reduced || !("IntersectionObserver" in window)) {
+      targets.forEach((element) => element.classList.add("is-in-view"));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in-view");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -48px 0px" });
+    targets.forEach((element) => {
+      element.classList.add("dt-reveal");
+      observer.observe(element);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  return null;
+}
+
+function HeroProductObject() {
+  const [flipped, setFlipped] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const handleMove = (event: PointerEvent<HTMLButtonElement>) => {
+    if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: y * -12, y: x * 14 });
+  };
+  return (
+    <div className="dt-home-object-stage" aria-label="Kartu NFC DiTapAja interaktif">
+      <div className="dt-home-object-shadow"/>
+      <button type="button" className={"dt-home-object-card" + (flipped ? " is-flipped" : "")}
+        onClick={() => setFlipped((value) => !value)}
+        onPointerMove={handleMove}
+        onPointerLeave={() => setTilt({ x: 0, y: 0 })}
+        style={{ "--card-tilt-x": tilt.x + "deg", "--card-tilt-y": tilt.y + "deg" } as React.CSSProperties}
+        aria-pressed={flipped}
+        aria-label={flipped ? "Tampilkan sisi depan kartu" : "Balik kartu untuk melihat fitur NFC dan QR"}>
+        <span className="dt-home-object-face dt-home-object-front">
+          <span className="dt-home-object-brand"><BrandMark/> DITAPAJA</span>
+          <strong>YOUR<br/><em>review</em><br/>STARTS HERE.</strong>
+          <span className="dt-home-object-bottom">NFC REVIEW CARD <span>QR READY</span></span>
+        </span>
+        <span className="dt-home-object-face dt-home-object-back">
+          <span className="dt-home-object-brand"><BrandMark/> DITAPAJA · CONNECT</span>
+          <span className="dt-home-object-qr"><QrCode size={74}/></span>
+          <strong>ONE TAP.<br/><em>ONE SCAN.</em></strong>
+          <span className="dt-home-object-bottom">NFC CHIP INSIDE <span>DOUBLE-SIDED EXPERIENCE</span></span>
+        </span>
+        <span className="dt-home-object-card-hint">{flipped ? "TAP TO VIEW FRONT" : "TAP TO FLIP"}</span>
+      </button>
+      <span className="dt-home-object-caption">A PHYSICAL TOUCHPOINT FOR YOUR BUSINESS · INTERACTIVE 3D</span>
+    </div>
+  );
+}
+
 export default function Home() {
   return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
     <SiteHeader/>
