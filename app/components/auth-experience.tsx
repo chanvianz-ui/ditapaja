@@ -32,6 +32,8 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
   const [querySuffix, setQuerySuffix] = useState("");
   const [name, setName] = useState("");
   const [identifier, setIdentifier] = useState("");
+  const [registerMethod, setRegisterMethod] = useState<"email" | "username">("email");
+  const [registerUsername, setRegisterUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -111,6 +113,28 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
     setLoading(true);
     setAuthStorageMode(false);
     try {
+      if (registerMethod === "username") {
+        const response = await fetch("/api/auth/username-register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: registerUsername.trim().toLowerCase(), password, fullName: name.trim() }),
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success || !result.session) {
+          throw new Error(result.error || "Registrasi username gagal.");
+        }
+        const { data: sessionData, error: sessionError } = await supabase.auth.setSession(result.session);
+        if (sessionError) throw sessionError;
+        if (sessionData.user) {
+          const { error: profileError } = await supabase.from("profiles").upsert({ id: sessionData.user.id, full_name: name.trim() });
+          if (profileError) console.error("Profile sync error:", profileError);
+        }
+        const { error: claimError } = await supabase.rpc("claim_my_ditapaja_orders");
+        if (claimError && !claimError.message.includes("Email must be verified")) console.error("Order linking:", claimError.message);
+        router.push(getSafeNextPath());
+        return;
+      }
+
       const { data, error } = await supabase.auth.signUp({
         email: email.trim(),
         password,
@@ -165,8 +189,16 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
             </form>
           ) : (
             <form className="dt-auth-v2-form" onSubmit={handleRegister}>
+              <div className="dt-auth-v2-options" role="group" aria-label="Metode registrasi">
+                <button type="button" className={registerMethod === "email" ? "is-active" : ""} onClick={() => { setRegisterMethod("email"); setMessage(""); }}>Dengan email</button>
+                <button type="button" className={registerMethod === "username" ? "is-active" : ""} onClick={() => { setRegisterMethod("username"); setMessage(""); }}>Dengan username</button>
+              </div>
               <label className="dt-auth-v2-field"><span>Nama lengkap</span><input required autoComplete="name" value={name} onChange={event => setName(event.target.value)} placeholder="Nama sesuai identitas akun" /></label>
-              <label className="dt-auth-v2-field"><span>Email</span><input required type="email" autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} placeholder="nama@email.com" /></label>
+              {registerMethod === "email" ? (
+                <label className="dt-auth-v2-field"><span>Email</span><input required type="email" autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} placeholder="nama@email.com" /></label>
+              ) : (
+                <label className="dt-auth-v2-field"><span>Username</span><input required minLength={3} maxLength={24} pattern="[a-zA-Z0-9][a-zA-Z0-9._-]{2,23}" autoComplete="username" value={registerUsername} onChange={event => setRegisterUsername(event.target.value.toLowerCase())} placeholder="contoh: namakamu" /><small>3–24 karakter. Huruf, angka, titik, garis bawah, atau strip.</small></label>
+              )}
               <label className="dt-auth-v2-field"><span>Password</span><div className="dt-auth-v2-password"><input required minLength={8} type={showPassword ? "text" : "password"} autoComplete="new-password" value={password} onChange={event => setPassword(event.target.value)} placeholder="Minimal 8 karakter" /><button type="button" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}><EyeIcon hidden={showPassword}/></button></div></label>
               <label className="dt-auth-v2-consent"><input type="checkbox" checked={acceptedTerms} onChange={event => setAcceptedTerms(event.target.checked)} required/><span>Saya menyetujui <Link href="/terms" target="_blank" rel="noopener noreferrer">Syarat &amp; Ketentuan</Link> dan <Link href="/privacy" target="_blank" rel="noopener noreferrer">Kebijakan Privasi</Link>.</span></label>
               {message && <p className={"dt-auth-v2-message" + (success ? " is-success" : "")} role={success ? "status" : "alert"}>{message}</p>}
