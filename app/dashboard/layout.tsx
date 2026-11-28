@@ -30,6 +30,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [cardsView, setCardsView] = useState(false);
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("Ruang kerja Anda");
+  const [authChecked, setAuthChecked] = useState(false);
+  const [authorized, setAuthorized] = useState(false);
   const sidebarRef = useRef<HTMLElement>(null);
   const menuTriggerRef = useRef<HTMLButtonElement>(null);
   const menuWasOpenRef = useRef(false);
@@ -45,29 +47,52 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   useEffect(() => {
     let alive = true;
-    async function loadAccount() {
-      const expiry = Number(localStorage.getItem("ditapaja_login_expires_at") || 0);
-      if (expiry && Date.now() > expiry) {
-        localStorage.removeItem("ditapaja_login_expires_at");
-        await supabase.auth.signOut();
-        if (alive) router.replace("/login");
-        return;
-      }
-      const { data } = await supabase.auth.getUser();
-      if (!alive) return;
-      if (!data.user) {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_OUT") {
+        setAuthorized(false);
+        setAuthChecked(true);
         router.replace("/login");
+      }
+    });
+
+    async function loadAccount() {
+      const mode = localStorage.getItem("ditapaja_auth_storage_mode") || "session";
+      const expiry = Number(localStorage.getItem("ditapaja_login_expires_at") || 0);
+      if (mode === "persistent" && (!expiry || Date.now() >= expiry)) {
+        localStorage.removeItem("ditapaja_login_expires_at");
+        await supabase.auth.signOut({ scope: "local" });
+        if (alive) {
+          setAuthorized(false);
+          setAuthChecked(true);
+          router.replace("/login");
+        }
         return;
       }
+
+      const { data, error } = await supabase.auth.getUser();
+      if (!alive) return;
+      if (error || !data.user) {
+        setAuthorized(false);
+        setAuthChecked(true);
+        router.replace("/login?next=" + encodeURIComponent(window.location.pathname + window.location.search));
+        return;
+      }
+
       setEmail(data.user.email || "");
+      setAuthorized(true);
+      setAuthChecked(true);
       const { data: profile } = await supabase.from("profiles")
         .select("full_name").eq("id", data.user.id).maybeSingle();
       if (!alive) return;
       setDisplayName(profile?.full_name || data.user.user_metadata?.full_name ||
         data.user.email?.split("@")[0] || "Your workspace");
     }
+
     void loadAccount();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+      authListener.subscription.unsubscribe();
+    };
   }, [router]);
 
   useEffect(() => {
@@ -131,6 +156,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <span>DiTap<span className={styles.brandAccent}>Aja</span></span>
     </Link>
   );
+
+  if (!authChecked || !authorized) {
+    return (
+      <main className="dt-auth-guard" aria-live="polite">
+        <div className="dt-auth-guard-card">
+          <span className="dt-auth-guard-mark" aria-hidden="true" />
+          <p>{authChecked ? "Mengarahkan ke halaman login..." : "Memeriksa sesi akun..."}</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <div className={styles.shell}>
