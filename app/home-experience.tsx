@@ -327,7 +327,7 @@ export default function Home() {
     </section>
 
     <section className="home-closing dt-closing">
-      <div className="dt-closing-top"><span>YOUR NEXT MOVE</span><span>DITAPAJA®</span></div>
+      <div className="dt-closing-top"><span>START WITH ONE TAP</span><span>DITAPAJA®</span></div>
       <div className="dt-closing-main">
         <div><p className="dt-closing-eyebrow">MAKE IT EASY TO BE REMEMBERED.</p><h2>Turn every<br/><em>tap into trust.</em></h2></div>
         <div className="dt-closing-action"><p>Mulai dengan satu kartu NFC. Beri pelanggan cara yang lebih cepat untuk menemukan dan mengulas bisnismu.</p><a className="ed-button" href="/koleksi">Temukan kartu kamu <ArrowUpRight size={17}/></a></div>
