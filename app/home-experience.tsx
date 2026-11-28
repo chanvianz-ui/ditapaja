@@ -353,6 +353,8 @@ function HomeMotionController() {
 function HeroProductObject() {
   const [flipped, setFlipped] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [connection, setConnection] = useState<"nfc" | "qr">("nfc");
+  const [dashboardOpen, setDashboardOpen] = useState(false);
   const handleMove = (event: PointerEvent<HTMLButtonElement>) => {
     if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
@@ -361,8 +363,21 @@ function HeroProductObject() {
     setTilt({ x: y * -12, y: x * 14 });
   };
   return (
-    <div className="dt-home-object-stage" aria-label="Kartu NFC DiTapAja interaktif">
+    <div className="dt-home-object-stage" aria-label="Kartu NFC DiTapAja dan pratinjau dashboard interaktif">
       <div className="dt-home-object-shadow"/>
+      <div className="dt-home-orbit dt-home-orbit-one"/><div className="dt-home-orbit dt-home-orbit-two"/>
+      <div className="dt-home-signal"><span/><span/><span/><i><Wifi size={17}/></i></div>
+      <div className="dt-home-float-panel dt-home-float-analytics">
+        <span className="dt-home-float-eyebrow"><i/> LIVE PREVIEW</span>
+        <strong>Dashboard <em>gratis.</em></strong>
+        <div className="dt-home-mini-chart" aria-hidden="true"><i/><i/><i/><i/><i/><i/><i/><i/><i/></div>
+        <span className="dt-home-float-foot"><BarChart3 size={13}/> Aktivitas kartu terpantau</span>
+      </div>
+      <div className="dt-home-float-panel dt-home-float-scan">
+        <span className="dt-home-float-icon"><Nfc size={16}/></span>
+        <span><strong>{connection === "nfc" ? "NFC ready" : "QR ready"}</strong><small>{connection === "nfc" ? "Tap to connect" : "Scan to connect"}</small></span>
+        <i/>
+      </div>
       <button type="button" className={"dt-home-object-card" + (flipped ? " is-flipped" : "")}
         onClick={() => setFlipped((value) => !value)}
         onPointerMove={handleMove}
@@ -383,6 +398,12 @@ function HeroProductObject() {
         </span>
         <span className="dt-home-object-card-hint">{flipped ? "TAP TO VIEW FRONT" : "TAP TO FLIP"}</span>
       </button>
+      <div className="dt-home-object-controls" aria-label="Pilih simulasi koneksi">
+        <button type="button" className={connection === "nfc" ? "is-active" : ""} aria-pressed={connection === "nfc"} onClick={() => setConnection("nfc")}><Nfc size={14}/> NFC tap</button>
+        <button type="button" className={connection === "qr" ? "is-active" : ""} aria-pressed={connection === "qr"} onClick={() => { setConnection("qr"); setFlipped(true); }}><QrCode size={14}/> QR scan</button>
+        <button type="button" className={dashboardOpen ? "is-active" : ""} aria-expanded={dashboardOpen} onClick={() => setDashboardOpen((value) => !value)}><BarChart3 size={14}/> {dashboardOpen ? "Tutup" : "Dashboard"}</button>
+      </div>
+      {dashboardOpen && <div className="dt-home-dashboard-pop" role="status"><span>YOUR WORKSPACE</span><strong>Semua kartu, satu dashboard.</strong><small>Atur tujuan dan pantau aktivitas tanpa biaya bulanan.</small></div>}
       <span className="dt-home-object-caption">A PHYSICAL TOUCHPOINT FOR YOUR BUSINESS · INTERACTIVE 3D</span>
     </div>
   );
