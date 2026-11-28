@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import AdminMenu from "@/app/admin/admin-menu";
 import AdminSidebar from "@/app/admin/admin-sidebar";
-import AdminNotificationBell from "@/app/admin/admin-notification-bell";
 import { supabase } from "@/lib/supabase";
 
 type AdminStats = {
@@ -132,7 +131,6 @@ export default function AdminPage() {
           </div>
           <div className="admin-overview-actions">
             <span className="admin-overview-live"><i/> Sistem berjalan</span>
-            <AdminNotificationBell/>
             <button
               type="button"
               className="admin-overview-refresh"
