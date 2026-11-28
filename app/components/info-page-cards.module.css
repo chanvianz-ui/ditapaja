@@ -66,3 +66,14 @@
  .contentCards :global(.guide-page-steps) { grid-template-columns:1fr; }
  .contentCards :global(.feature-page-grid > article), .contentCards :global(.info-contact-grid > article) { min-height:0; }
 }
+
+.contentCards :global(.info-legal) { display:grid; gap:0; max-width:900px; }
+.contentCards :global(.info-legal > p:first-child) { color:#8fa8c5; font-size:12px; margin:0 0 14px; }
+.contentCards :global(.info-legal > h2) { margin:12px 0 0; padding:21px 24px 8px; border:1px solid rgba(148,163,184,.18); border-bottom:0; border-radius:20px 20px 0 0; background:linear-gradient(145deg,rgba(20,34,55,.94),rgba(10,20,36,.96)); color:#f4f7fb; font-size:18px; }
+.contentCards :global(.info-legal > h2 + p) { margin:0 0 5px; padding:8px 24px 22px; border:1px solid rgba(148,163,184,.18); border-top:0; border-radius:0 0 20px 20px; background:linear-gradient(145deg,rgba(20,34,55,.94),rgba(10,20,36,.96)); color:#aab9cb; font-size:14px; line-height:1.8; }
+.contentCards :global(.info-legal > p:not(:first-child):not(.info-legal-note)) { color:#aab9cb; font-size:14px; line-height:1.8; }
+.contentCards :global(.info-legal-note) { margin-top:18px; padding:18px 20px; border:1px solid rgba(236,190,112,.24); border-radius:16px; background:rgba(126,85,31,.12); color:#d9c39d; font-size:13px; line-height:1.7; }
+@media (max-width: 760px) {
+ .contentCards :global(.info-legal > h2) { padding:18px 18px 8px; }
+ .contentCards :global(.info-legal > h2 + p) { padding:8px 18px 18px; }
+}
