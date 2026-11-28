@@ -310,3 +310,7 @@
 .dt-home-rebuild .dt-home-object-front>strong em{font-style:normal;color:#82dce2}
 .dt-home-rebuild .dt-home-object-front .dt-home-object-brand{align-self:flex-start}
 .dt-home-rebuild .dt-home-object-back .dt-home-object-brand{align-self:flex-start}
+
+.dt-home-rebuild{background-image:radial-gradient(420px circle at var(--home-pointer-x,78%) var(--home-pointer-y,12%),rgba(45,173,194,.055),transparent 72%)}
+.dt-home-rebuild .dt-home-scroll-progress{position:fixed;z-index:1000;top:0;left:0;width:var(--home-scroll-progress,0%);height:2px;background:linear-gradient(90deg,#45c5d5,#8ce0c2);box-shadow:0 0 12px rgba(69,197,213,.45);pointer-events:none;transition:width .08s linear}
+@media(prefers-reduced-motion:reduce){.dt-home-rebuild .dt-home-scroll-progress{transition:none}}
