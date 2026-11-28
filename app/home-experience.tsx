@@ -340,7 +340,11 @@ function HomeMotionController() {
       element.classList.add("dt-reveal");
       observer.observe(element);
     });
-    return () => {\n      observer.disconnect();\n      window.removeEventListener("scroll", updateProgress);\n      root.removeEventListener("pointermove", updatePointer);\n    };
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", updateProgress);
+      root.removeEventListener("pointermove", updatePointer);
+    };
   }, []);
 
   return null;
