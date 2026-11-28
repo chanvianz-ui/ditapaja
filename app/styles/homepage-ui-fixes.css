@@ -101,3 +101,52 @@
 @media(prefers-reduced-motion:reduce){
  .dt-home-rebuild .home-demo-card,.dt-home-rebuild .dt-how-section *,.dt-home-rebuild .dt-behind-panel{animation:none!important;transition:none!important}
 }
+
+
+/* Mobile composition correction — keep the NFC demo and marquee in normal flow. */
+@media(max-width:760px){
+  .dt-home-rebuild .ed-hero-grid{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    width:100%!important;
+    max-width:100%!important;
+    align-items:stretch!important;
+  }
+  .dt-home-rebuild .ed-hero-copy,
+  .dt-home-rebuild .home-hero-visual.home-tap-demo{
+    grid-column:1/-1!important;
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    justify-self:stretch!important;
+  }
+  .dt-home-rebuild .home-demo-stage{
+    width:100%!important;
+    grid-template-columns:minmax(0,.9fr) 16px minmax(0,1.1fr)!important;
+  }
+  .dt-home-rebuild .home-demo-card-wrap,
+  .dt-home-rebuild .home-demo-phone-wrap{min-width:0!important}
+  .dt-home-rebuild .home-demo-card{width:100%!important;max-width:none!important}
+  .dt-home-rebuild .home-demo-phone{width:min(100%,220px)!important;margin-inline:auto!important}
+  .dt-home-rebuild .home-hero-marquee{
+    position:relative!important;
+    inset:auto!important;
+    display:flex!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:14px var(--home-gutter) 22px!important;
+    justify-content:flex-start!important;
+    overflow:hidden!important;
+    flex-wrap:wrap!important;
+    transform:none!important;
+  }
+}
+@media(max-width:390px){
+  .dt-home-rebuild .home-demo-stage{
+    grid-template-columns:minmax(0,.86fr) 12px minmax(0,1.14fr)!important;
+    gap:2px!important;
+  }
+  .dt-home-rebuild .home-demo-phone{width:min(100%,190px)!important}
+}
