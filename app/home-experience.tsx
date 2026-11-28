@@ -437,12 +437,12 @@ export default function Home() {
     <HomeMotionController/>
     <SiteHeader/>
 
-    <section className="ed-hero">
-      <div className="ed-hero-grid">
-        <div className="ed-hero-copy">
+    <section className="ed-hero dt-clean-hero">
+      <div className="ed-hero-grid dt-clean-hero-grid">
+        <div className="ed-hero-copy dt-clean-hero-copy">
           <span className="home-kicker"><i/> NFC REVIEW CARD · DASHBOARD GRATIS</span>
-          <h1>Good reviews.<br/><em>Made easier.</em></h1>
-          <p className="ed-hero-lead">Bantu pelanggan menemukan halaman review bisnismu tanpa langkah yang berbelit. Satu tap atau scan, lalu mereka bisa langsung memberi ulasan.</p>
+          <h1>One tap.<br/><em>Better reviews.</em></h1>
+          <p className="ed-hero-lead">Buat pelanggan lebih mudah menemukan halaman ulasan bisnismu. Cukup dekatkan kartu atau scan QR — pengalaman berikutnya terbuka dalam sekejap.</p>
           <div className="ed-hero-actions">
             <a href="#koleksi" className="ed-button">Pilih kartu <ArrowUpRight size={17}/></a>
             <a href="#cara-kerja" className="ed-text-link">Lihat cara kerja <ArrowDownRight size={16}/></a>
@@ -450,19 +450,13 @@ export default function Home() {
           <div className="home-hero-proof">
             <span><Nfc size={15}/> NFC + QR Code</span>
             <span><Check size={15}/> Tanpa aplikasi</span>
-            <span><Check size={15}/> Tanpa biaya bulanan</span>
+            <span><Check size={15}/> Dashboard gratis</span>
           </div>
+          <div className="dt-clean-hero-foot"><span>DESIGNED FOR REAL BUSINESSES</span><span>01 — 03</span></div>
         </div>
-
-        <div className="dt-hybrid-visual">
-          <div className="dt-hybrid-product">
-            <div className="dt-hybrid-visual-label"><span>01 / OBJECT</span><b>THE NFC CARD</b></div>
-            <HeroProductObject/>
-          </div>
-          <div className="dt-hybrid-simulator">
-            <div className="dt-hybrid-visual-label"><span>02 / EXPERIENCE</span><b>TRY THE TAP</b></div>
-            <HeroTapDemo/>
-          </div>
+        <div className="dt-clean-demo-wrap">
+          <div className="dt-clean-demo-heading"><span>TRY THE EXPERIENCE</span><span><i/> INTERACTIVE DEMO</span></div>
+          <HeroTapDemo/>
         </div>
       </div>
     </section>
