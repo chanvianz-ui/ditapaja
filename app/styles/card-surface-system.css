@@ -480,3 +480,188 @@
 @media(prefers-reduced-motion:reduce){
  .dt-order-redesign .dt-order-art-card,.dt-order-redesign .dt-order-submit{transition:none}
 }
+
+
+/* /pesan — second direction: dark product workspace, no light card surfaces. */
+.dt-order-redesign{
+ --order-bg:#06121e;--order-panel:#0b1c2b;--order-panel-2:#102536;--order-line:rgba(157,198,211,.16);
+ --order-white:#f3f8fa;--order-copy:#b0c1cb;--order-dim:#78909e;--order-mint:#8de2d7;--order-cyan:#67d2e4;
+ background:var(--order-bg)!important;color:var(--order-white)!important;
+}
+.dt-order-redesign .dt-order-hero{
+ background:linear-gradient(115deg,#071725 0%,#0a2030 55%,#071522 100%)!important;
+ border-bottom:1px solid var(--order-line);
+}
+.dt-order-redesign .dt-order-hero:after{right:8%;top:-390px;opacity:.55}
+.dt-order-redesign .dt-order-hero-inner{
+ width:min(1240px,calc(100% - 72px));min-height:410px;padding:38px 0 46px;
+ grid-template-columns:1.1fr .9fr;gap:40px;
+}
+.dt-order-redesign .dt-order-back{margin-bottom:30px}
+.dt-order-redesign .dt-order-hero h1{font-size:clamp(48px,5.6vw,72px);margin:17px 0}
+.dt-order-redesign .dt-order-hero-copy>p{max-width:570px;color:var(--order-copy)}
+.dt-order-redesign .dt-order-hero-art{min-height:300px}
+.dt-order-redesign .dt-order-art-card{width:min(88%,470px);aspect-ratio:1.72;border-radius:14px;transform:rotate(-4deg);background:linear-gradient(135deg,#193849,#0a1724 72%);box-shadow:0 34px 70px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.12)}
+.dt-order-redesign .dt-order-art-card:hover{transform:rotate(-1deg) translateY(-5px)}
+.dt-order-redesign .dt-order-process{width:min(1240px,calc(100% - 72px));padding:62px 0 78px}
+.dt-order-redesign .dt-order-section-heading{max-width:none;margin:0 0 23px;text-align:left;display:grid;grid-template-columns:1fr auto;align-items:end;gap:8px 20px}
+.dt-order-redesign .dt-order-section-heading>span{grid-column:1/-1;justify-content:flex-start}
+.dt-order-redesign .dt-order-section-heading h2{margin:7px 0 0;font-size:clamp(34px,4vw,48px)}
+.dt-order-redesign .dt-order-section-heading>p{margin:0;max-width:390px;text-align:right;color:var(--order-copy);font-size:11px}
+.dt-order-redesign .dt-order-stepbar{justify-content:flex-start;margin:0 0 22px;padding:13px 17px;border:1px solid var(--order-line);border-radius:13px;background:#091a28}
+.dt-order-redesign .dt-order-workspace{display:grid;grid-template-columns:1fr;gap:15px}
+.dt-order-redesign .dt-order-main-card{min-width:0;padding:0;border:0;border-radius:0;background:transparent!important;color:var(--order-white)!important;box-shadow:none}
+.dt-order-redesign .dt-order-main-card>form{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:14px}
+.dt-order-redesign .dt-order-card-heading{grid-column:1/-1;align-items:center;margin:0;padding:20px 23px;border:1px solid var(--order-line);border-radius:15px;background:var(--order-panel)}
+.dt-order-redesign .dt-order-card-heading>div>span,.dt-order-redesign .dt-order-subheading>span{color:var(--order-mint)}
+.dt-order-redesign .dt-order-card-heading h3,.dt-order-redesign .dt-order-subheading h3{color:var(--order-white);font-size:27px}
+.dt-order-redesign .dt-order-card-heading p,.dt-order-redesign .dt-order-subheading p{color:var(--order-copy)}
+.dt-order-redesign .dt-order-required{border-color:var(--order-line);color:var(--order-copy);background:#0a1b29}
+.dt-order-redesign .dt-order-product-card{
+ grid-column:1;grid-row:2;align-self:stretch;grid-template-columns: minmax(140px,.7fr) minmax(0,1.3fr);
+ padding:18px;border:1px solid var(--order-line);border-radius:15px;background:var(--order-panel)!important;
+}
+.dt-order-redesign .dt-order-product-visual{min-height:210px;border:1px solid rgba(141,226,215,.16);background:linear-gradient(145deg,#1b3a4b,#091723 72%);box-shadow:inset 0 1px rgba(255,255,255,.1)}
+.dt-order-redesign .dt-order-product-info>span{color:var(--order-mint)}
+.dt-order-redesign .dt-order-product-info>b{color:var(--order-white);font-size:24px}
+.dt-order-redesign .dt-order-product-info>p{color:var(--order-copy)}
+.dt-order-redesign .dt-order-select-label{color:#d5e1e6}
+.dt-order-redesign .dt-order-select-label select{
+ min-height:46px;border:1px solid var(--order-line);border-radius:9px;background:#071725!important;color:var(--order-white)!important;color-scheme:dark;
+}
+.dt-order-redesign .dt-order-quantity-total{
+ grid-column:2;grid-row:2;align-self:stretch;display:flex;flex-direction:column;gap:12px;margin:0;
+}
+.dt-order-redesign .dt-order-quantity-box,.dt-order-redesign .dt-order-total-box{
+ flex:1;min-width:0;padding:22px;border:1px solid var(--order-line);border-radius:15px;background:var(--order-panel)!important;
+}
+.dt-order-redesign .dt-order-quantity-box>span,.dt-order-redesign .dt-order-total-box>span{color:#9cb1bd}
+.dt-order-redesign .dt-order-quantity-box button{border:1px solid var(--order-line);background:#142d3d;color:var(--order-mint)}
+.dt-order-redesign .dt-order-quantity-box button:disabled{opacity:.35}
+.dt-order-redesign .dt-order-quantity-box output{color:var(--order-white);font-size:25px}
+.dt-order-redesign .dt-order-quantity-box>small,.dt-order-redesign .dt-order-total-box>small{color:var(--order-dim)}
+.dt-order-redesign .dt-order-total-box{border-color:rgba(141,226,215,.24);background:linear-gradient(135deg,#10313a,#0b202d)!important}
+.dt-order-redesign .dt-order-total-box strong{color:var(--order-mint);font-size:32px}
+.dt-order-redesign .dt-order-form-section{
+ grid-column:1/-1;margin:0;padding:24px;border:1px solid var(--order-line);border-radius:15px;background:var(--order-panel);
+}
+.dt-order-redesign .dt-order-subheading{margin-bottom:20px}
+.dt-order-redesign .dt-order-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px 18px}
+.dt-order-redesign .dt-order-fields>label,.dt-order-redesign .dt-order-reference-field{color:#dce7eb}
+.dt-order-redesign .dt-order-fields>label>input,.dt-order-redesign .dt-order-fields>label>textarea,.dt-order-redesign .dt-order-reference-field>input{
+ min-height:48px;border:1px solid var(--order-line);border-radius:9px;background:#071725!important;color:var(--order-white)!important;box-shadow:none;
+}
+.dt-order-redesign .dt-order-fields>label>input::placeholder,.dt-order-redesign .dt-order-fields>label>textarea::placeholder,.dt-order-redesign .dt-order-reference-field>input::placeholder{color:#68818f}
+.dt-order-redesign .dt-order-fields>label>input:focus,.dt-order-redesign .dt-order-fields>label>textarea:focus,.dt-order-redesign .dt-order-reference-field>input:focus{border-color:var(--order-mint);box-shadow:0 0 0 3px rgba(141,226,215,.1)}
+.dt-order-redesign .dt-order-fields>label>small{color:#8da3af}
+.dt-order-redesign .dt-order-fields textarea{min-height:100px}
+.dt-order-redesign .dt-order-submit{grid-column:1/-1;min-height:56px;margin:0;border:1px solid rgba(141,226,215,.25);background:linear-gradient(105deg,#148d9b,#72d6c8);color:#06212a;box-shadow:0 12px 32px rgba(16,143,155,.13)}
+.dt-order-redesign .dt-order-privacy{color:#8da3af}
+.dt-order-redesign .dt-order-privacy svg{color:var(--order-mint)}
+.dt-order-redesign .dt-order-alert{border:1px solid rgba(255,126,137,.25);background:#2a1822;color:#ffb8bf}
+.dt-order-redesign .dt-order-notice{border:1px solid rgba(141,226,215,.2);background:#102c30;color:#b9eee2}
+.dt-order-redesign .dt-order-aside{grid-template-columns:1.2fr .8fr;gap:14px}
+.dt-order-redesign .dt-order-aside-card{padding:23px;border:1px solid var(--order-line);border-radius:15px;background:var(--order-panel)!important;box-shadow:none}
+.dt-order-redesign .dt-order-summary-card h3{color:var(--order-white);font-size:27px}
+.dt-order-redesign .dt-order-summary-line{border-color:var(--order-line)}
+.dt-order-redesign .dt-order-summary-line b{color:var(--order-white)}
+.dt-order-redesign .dt-order-summary-line small{color:var(--order-copy)}
+.dt-order-redesign .dt-order-help-card{background:linear-gradient(145deg,#102a39,#0b1c2a)!important}
+.dt-order-redesign .dt-order-help-card h3{color:var(--order-white)}
+.dt-order-redesign .dt-order-help-card p{color:var(--order-copy)}
+.dt-order-redesign .dt-order-help-card>a{color:var(--order-mint)}
+.dt-order-redesign .dt-order-footer{width:min(1240px,calc(100% - 72px));border-color:var(--order-line)}
+.dt-order-redesign .dt-order-footer b{color:var(--order-white)}
+.dt-order-redesign .dt-order-footer span,.dt-order-redesign .dt-order-footer>a{color:var(--order-copy)}
+/* Payment state uses the same dark surfaces and a new two-column payment layout. */
+.dt-order-redesign .dt-order-payment-view{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.dt-order-redesign .dt-order-payment-view>.dt-order-card-heading{grid-column:1/-1}
+.dt-order-redesign .dt-order-reference{grid-column:1/-1;padding:18px 20px;border:1px solid var(--order-line);border-radius:13px;background:var(--order-panel)!important}
+.dt-order-redesign .dt-order-reference small{color:#9cb1bd}
+.dt-order-redesign .dt-order-reference strong{color:var(--order-white)}
+.dt-order-redesign .dt-order-reference button{border:1px solid var(--order-line);background:#142d3d;color:var(--order-mint)}
+.dt-order-redesign .dt-order-bank-grid{grid-template-columns:1fr;gap:10px;margin:0}
+.dt-order-redesign .dt-order-bank-grid article{padding:18px;border:1px solid var(--order-line);border-radius:13px;background:var(--order-panel)!important}
+.dt-order-redesign .dt-order-bank-grid article>div>b,.dt-order-redesign .dt-order-bank-grid article>strong{color:var(--order-white)}
+.dt-order-redesign .dt-order-bank-grid article>div>span,.dt-order-redesign .dt-order-bank-grid article>small{color:var(--order-copy)}
+.dt-order-redesign .dt-order-bank-grid article>button{border:1px solid var(--order-line);background:#142d3d;color:var(--order-mint)}
+.dt-order-redesign .dt-order-transfer-total{margin:0;padding:21px;border:1px solid rgba(141,226,215,.2);border-radius:13px;background:linear-gradient(145deg,#10313a,#0b202d)!important}
+.dt-order-redesign .dt-order-transfer-total>span{color:var(--order-mint)}
+.dt-order-redesign .dt-order-transfer-total>strong{color:var(--order-mint)}
+.dt-order-redesign .dt-order-transfer-total>p{color:var(--order-copy)}
+.dt-order-redesign .dt-order-proof-panel{grid-column:1/-1;margin:0;padding:23px;border:1px solid var(--order-line);border-radius:14px;background:var(--order-panel)}
+.dt-order-redesign .dt-order-file{border:1px dashed rgba(141,226,215,.32);background:#071725!important;color:var(--order-mint)}
+.dt-order-redesign .dt-order-file strong{color:var(--order-white)}
+.dt-order-redesign .dt-order-file small{color:var(--order-copy)}
+.dt-order-redesign .dt-order-file input{color:var(--order-copy)}
+.dt-order-redesign .dt-order-reference-field{color:#dce7eb}
+.dt-order-redesign .dt-order-reference-field>input{border:1px solid var(--order-line);background:#071725!important;color:var(--order-white)!important}
+.dt-order-redesign .dt-order-payment-badge{border-color:rgba(141,226,215,.2);background:#102d30;color:var(--order-mint)}
+.dt-order-redesign .dt-order-account-overlay>section{border:1px solid var(--order-line);background:#0b1c2b!important}
+.dt-order-redesign .dt-order-account-overlay h2{color:var(--order-white)}
+.dt-order-redesign .dt-order-account-overlay>section>p:nth-of-type(2){color:var(--order-copy)}
+.dt-order-redesign .dt-order-account-overlay>section>div:last-of-type a+ a{border-color:rgba(141,226,215,.24);background:#102d3a;color:var(--order-mint)}
+@media(max-width:900px){
+ .dt-order-redesign .dt-order-hero-inner{width:calc(100% - 48px);min-height:360px}
+ .dt-order-redesign .dt-order-process{width:calc(100% - 48px)}
+ .dt-order-redesign .dt-order-main-card>form{grid-template-columns:1fr 280px}
+ .dt-order-redesign .dt-order-product-card{grid-template-columns:110px minmax(0,1fr)}
+ .dt-order-redesign .dt-order-product-visual{min-height:185px}
+ .dt-order-redesign .dt-order-footer{width:calc(100% - 48px)}
+}
+@media(max-width:680px){
+ .dt-order-redesign .dt-order-hero-inner{width:calc(100% - 36px);padding:27px 0 32px;grid-template-columns:1fr;gap:5px}
+ .dt-order-redesign .dt-order-back{margin-bottom:24px}
+ .dt-order-redesign .dt-order-hero h1{font-size:clamp(43px,11vw,59px)}
+ .dt-order-redesign .dt-order-hero-art{min-height:230px}
+ .dt-order-redesign .dt-order-art-card{width:min(83%,360px);padding:19px}
+ .dt-order-redesign .dt-order-process{width:calc(100% - 28px);padding:40px 0 48px}
+ .dt-order-redesign .dt-order-section-heading{grid-template-columns:1fr;gap:8px}
+ .dt-order-redesign .dt-order-section-heading>p{text-align:left;max-width:100%}
+ .dt-order-redesign .dt-order-stepbar{gap:7px;padding:11px 10px}
+ .dt-order-redesign .dt-order-stepbar>div{gap:5px;font-size:8px}
+ .dt-order-redesign .dt-order-stepbar>i{max-width:22px}
+ .dt-order-redesign .dt-order-main-card>form{grid-template-columns:1fr;gap:10px}
+ .dt-order-redesign .dt-order-card-heading{padding:17px 15px}
+ .dt-order-redesign .dt-order-card-heading h3,.dt-order-redesign .dt-order-subheading h3{font-size:24px}
+ .dt-order-redesign .dt-order-product-card{grid-column:1;grid-row:auto;grid-template-columns:100px minmax(0,1fr);gap:12px;padding:12px}
+ .dt-order-redesign .dt-order-product-visual{min-height:158px;padding:12px}
+ .dt-order-redesign .dt-order-product-visual strong{font-size:18px}
+ .dt-order-redesign .dt-order-product-info>b{font-size:18px}
+ .dt-order-redesign .dt-order-product-info>p{font-size:9px;margin:5px 0 10px}
+ .dt-order-redesign .dt-order-quantity-total{grid-column:1;grid-row:auto;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+ .dt-order-redesign .dt-order-quantity-box,.dt-order-redesign .dt-order-total-box{padding:14px}
+ .dt-order-redesign .dt-order-quantity-box>div{gap:7px}
+ .dt-order-redesign .dt-order-quantity-box button{width:29px;height:29px}
+ .dt-order-redesign .dt-order-quantity-box output{font-size:18px}
+ .dt-order-redesign .dt-order-total-box strong{font-size:20px}
+ .dt-order-redesign .dt-order-form-section{grid-column:1;padding:18px 14px}
+ .dt-order-redesign .dt-order-fields{grid-template-columns:1fr;gap:13px}
+ .dt-order-redesign .dt-order-fields .dt-order-address-field,.dt-order-redesign .dt-order-fields .dt-order-notes-field{grid-column:auto}
+ .dt-order-redesign .dt-order-submit{grid-column:1;min-height:52px}
+ .dt-order-redesign .dt-order-aside{grid-template-columns:1fr}
+ .dt-order-redesign .dt-order-aside-card{padding:19px}
+ .dt-order-redesign .dt-order-payment-view{grid-template-columns:1fr;gap:10px}
+ .dt-order-redesign .dt-order-payment-view>.dt-order-card-heading,.dt-order-redesign .dt-order-reference,.dt-order-redesign .dt-order-proof-panel{grid-column:1}
+ .dt-order-redesign .dt-order-payment-badge{font-size:7px}
+ .dt-order-redesign .dt-order-bank-grid{grid-template-columns:1fr 1fr}
+ .dt-order-redesign .dt-order-bank-grid article{padding:13px}
+ .dt-order-redesign .dt-order-bank-grid article>div>span{font-size:6px}
+ .dt-order-redesign .dt-order-bank-grid article>strong{font-size:16px}
+ .dt-order-redesign .dt-order-bank-grid article>button{font-size:8px;padding:8px}
+ .dt-order-redesign .dt-order-proof-panel{padding:17px 14px}
+ .dt-order-redesign .dt-order-footer{width:calc(100% - 28px)}
+}
+@media(max-width:390px){
+ .dt-order-redesign .dt-order-process{width:calc(100% - 22px)}
+ .dt-order-redesign .dt-order-product-card{grid-template-columns:86px minmax(0,1fr);gap:9px}
+ .dt-order-redesign .dt-order-product-visual{min-height:150px;padding:9px}
+ .dt-order-redesign .dt-order-product-info>b{font-size:16px}
+ .dt-order-redesign .dt-order-select-label select{font-size:8px;padding-inline:6px}
+ .dt-order-redesign .dt-order-quantity-box,.dt-order-redesign .dt-order-total-box{padding:11px}
+ .dt-order-redesign .dt-order-quantity-box button{width:26px;height:26px}
+ .dt-order-redesign .dt-order-quantity-box output{min-width:16px;font-size:15px}
+ .dt-order-redesign .dt-order-total-box strong{font-size:17px}
+ .dt-order-redesign .dt-order-bank-grid{grid-template-columns:1fr}
+ .dt-order-redesign .dt-order-footer{gap:8px}
+}
