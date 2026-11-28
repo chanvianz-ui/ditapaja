@@ -35,6 +35,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [capsLockOn, setCapsLockOn] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -118,16 +119,15 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
   return (
     <main className="dt-auth-v2">
       <div className="dt-auth-v2-frame">
-        <header className="dt-auth-v2-topbar">
-          <Link href="/" className="dt-auth-v2-brand" aria-label="DiTapAja beranda"><span className="dt-auth-v2-mark">d<span>.</span></span><span>ditapaja</span></Link>
-          <span className="dt-auth-v2-secure"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 16 5v4.4c0 3.8-2.4 6.7-6 8.1-3.6-1.4-6-4.3-6-8.1V5l6-2.5Z"/><path d="m7.5 9.8 1.7 1.7 3.5-3.5"/></svg> Secure account access</span>
+        <header className="dt-auth-v2-topbar" aria-label="Akses akun">
+          <span className="dt-auth-v2-secure" role="img" aria-label="Koneksi aman"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 16 5v4.4c0 3.8-2.4 6.7-6 8.1-3.6-1.4-6-4.3-6-8.1V5l6-2.5Z"/><path d="m7.5 9.8 1.7 1.7 3.5-3.5"/></svg></span>
         </header>
 
         <section className="dt-auth-v2-panel" aria-label={mode === "login" ? "Masuk ke DiTapAja" : "Daftar DiTapAja"}>
           <div className="dt-auth-v2-intro">
-            <p className="dt-auth-v2-eyebrow">{mode === "login" ? "ACCOUNT ACCESS" : "GET STARTED"}</p>
-            <h1>{mode === "login" ? "Selamat datang kembali." : "Mulai dari sini."}</h1>
-            <p>{mode === "login" ? "Masuk ke akun untuk mengelola pengalaman DiTapAja." : "Buat akun untuk mulai mengelola kartu dan pesananmu."}</p>
+            <p className="dt-auth-v2-eyebrow">{mode === "login" ? "AKSES AKUN" : "AKUN BARU"}</p>
+            <h1>{mode === "login" ? "Selamat datang." : "Buat akun."}</h1>
+            <p>{mode === "login" ? "Masuk untuk melanjutkan." : "Isi detail berikut untuk memulai."}</p>
           </div>
 
           <nav className="dt-auth-v2-tabs" aria-label="Pilih masuk atau daftar">
@@ -138,7 +138,8 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
           {mode === "login" ? (
             <form className="dt-auth-v2-form" onSubmit={handleLogin}>
               <label className="dt-auth-v2-field"><span>Email atau username</span><input required autoComplete="username" value={identifier} onChange={event => setIdentifier(event.target.value)} placeholder="Masukkan email atau username" /></label>
-              <label className="dt-auth-v2-field"><span>Password</span><div className="dt-auth-v2-password"><input required type={showPassword ? "text" : "password"} autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} placeholder="Masukkan password" /><button type="button" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}><EyeIcon hidden={showPassword}/></button></div></label>
+              <label className="dt-auth-v2-field"><span>Password</span><div className="dt-auth-v2-password"><input required type={showPassword ? "text" : "password"} autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} onKeyUp={event => setCapsLockOn(event.getModifierState("CapsLock"))} onBlur={() => setCapsLockOn(false)} placeholder="Masukkan password" /><button type="button" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}><EyeIcon hidden={showPassword}/></button></div></label>
+              {capsLockOn && <p className="dt-auth-v2-caps" role="status">Caps Lock sedang aktif</p>}
               <div className="dt-auth-v2-options"><label className="dt-auth-v2-check"><input type="checkbox" checked={rememberMe} onChange={event => setRememberMe(event.target.checked)}/><span>Ingat saya selama 7 hari</span></label><Link href="/forgot-password">Lupa password?</Link></div>
               {message && <p className="dt-auth-v2-message" role="alert">{message}</p>}
               <button className="dt-auth-v2-submit" type="submit" disabled={loading}><span>{loading ? "Memproses..." : "Masuk ke akun"}</span><span aria-hidden="true">↗</span></button>
@@ -155,9 +156,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
               <p className="dt-auth-v2-switch">Sudah punya akun? <Link href={"/login" + querySuffix}>Masuk</Link></p>
             </form>
           )}
-          <footer className="dt-auth-v2-footer"><span>DITAPAJA</span><span>ONE TAP. BETTER CONNECTION.</span></footer>
-        </section>
-        <p className="dt-auth-v2-bottom">Dengan melanjutkan, kamu menggunakan layanan DiTapAja sesuai ketentuan yang berlaku.</p>
+          </section>
       </div>
     </main>
   );
