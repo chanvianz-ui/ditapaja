@@ -389,15 +389,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="dt-home-object-stage" aria-label="Kartu NFC DiTapAja">
-          <div className="dt-home-object-shadow"/>
-          <div className="dt-home-object-card">
-            <span className="dt-home-object-brand"><BrandMark/> DITAPAJA</span>
-            <strong>YOUR<br/><em>review</em><br/>STARTS HERE.</strong>
-            <span className="dt-home-object-bottom">NFC REVIEW CARD <span>QR READY</span></span>
-          </div>
-          <span className="dt-home-object-caption">A PHYSICAL TOUCHPOINT FOR YOUR BUSINESS</span>
-        </div>
+        <HeroProductObject/>
       </div>
     </section>
 
