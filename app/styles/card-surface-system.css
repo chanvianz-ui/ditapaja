@@ -146,3 +146,84 @@
  .dt-order-checkout-v5 .dt-order-steps>span small{font-size:8px}
 }
 @media(prefers-reduced-motion:reduce){.dt-order-checkout-v5 *{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Mobile checkout refinement: reduce vertical density and prevent cramped card stacking. */
+@media(max-width:600px){
+ .dt-order-checkout-v5{overflow-x:clip}
+ .dt-order-checkout-v5 .order-header{
+  min-height:58px;padding:10px 16px;gap:12px;display:flex;align-items:center;justify-content:space-between
+ }
+ .dt-order-checkout-v5 .order-brand{font-size:15px;white-space:nowrap}
+ .dt-order-checkout-v5 .order-back{font-size:10px;gap:5px;white-space:nowrap}
+ .dt-order-checkout-v5 .dt-checkout-layout-v5{width:100%;padding:12px 14px 28px;gap:12px}
+ .dt-order-checkout-v5 .dt-checkout-intro-v5{
+  position:relative;top:auto;padding:19px 18px 16px;border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.16)
+ }
+ .dt-order-checkout-v5 .order-kicker{font-size:9px;letter-spacing:.1em}
+ .dt-order-checkout-v5 .dt-checkout-intro-v5 h1{margin:12px 0 9px;font-size:clamp(30px,8.5vw,38px);line-height:1.04;letter-spacing:-.055em}
+ .dt-order-checkout-v5 .dt-checkout-intro-v5>p{max-width:42ch;font-size:11px;line-height:1.6}
+ .dt-order-checkout-v5 .order-assurance{gap:10px;margin:14px 0 12px;padding:12px;border-radius:13px}
+ .dt-order-checkout-v5 .order-assurance>span{flex-basis:30px;height:30px;border-radius:9px}
+ .dt-order-checkout-v5 .order-assurance b{font-size:10px}
+ .dt-order-checkout-v5 .order-assurance small{font-size:9px;line-height:1.5}
+ .dt-order-checkout-v5 .order-mini-note{display:inline-flex;margin:4px 9px 0 0;font-size:9px;line-height:1.4}
+ .dt-order-checkout-v5 .order-mini-note svg{width:12px;height:12px;flex:0 0 auto}
+ .dt-order-checkout-v5 .dt-order-steps{gap:7px;margin-top:14px;padding-top:13px}
+ .dt-order-checkout-v5 .dt-order-steps>span{font-size:9px;gap:3px}
+ .dt-order-checkout-v5 .dt-order-steps>span small{font-size:8px}
+ .dt-order-checkout-v5 .dt-checkout-panel-v5{padding:17px 15px;border-radius:18px;box-shadow:0 12px 34px rgba(0,0,0,.15)}
+ .dt-order-checkout-v5 .order-form-heading{margin-bottom:13px;padding-bottom:12px}
+ .dt-order-checkout-v5 .order-form-heading h2{font-size:18px;line-height:1.2}
+ .dt-order-checkout-v5 .order-form-heading>div>span,.dt-order-checkout-v5 .dt-proof-upload>div>span{font-size:8px}
+ .dt-order-checkout-v5 .order-field{gap:6px;margin:11px 0;font-size:10px}
+ .dt-order-checkout-v5 .order-field input,.dt-order-checkout-v5 .order-field select,.dt-order-checkout-v5 .order-field textarea{
+  min-height:45px;padding:11px 12px;border-radius:10px;font-size:16px
+ }
+ .dt-order-checkout-v5 .order-field textarea{min-height:76px}
+ .dt-order-checkout-v5 .order-field-hint{font-size:9px}
+ .dt-order-checkout-v5 .order-product-summary{gap:3px;margin:11px 0;padding:13px;border-radius:12px}
+ .dt-order-checkout-v5 .order-product-summary>b{font-size:15px}
+ .dt-order-checkout-v5 .order-product-summary>small{font-size:9px}
+ .dt-order-checkout-v5 .order-quantity-row{margin:10px 0;padding:12px;border-radius:12px}
+ .dt-order-checkout-v5 .order-quantity-row b{font-size:11px}
+ .dt-order-checkout-v5 .order-quantity-row small{font-size:9px}
+ .dt-order-checkout-v5 .order-quantity{gap:10px}
+ .dt-order-checkout-v5 .order-quantity button{width:30px;height:30px}
+ .dt-order-checkout-v5 .dt-order-total{margin:11px 0 21px;padding:14px;border-radius:13px}
+ .dt-order-checkout-v5 .dt-order-total>b{font-size:18px}
+ .dt-order-checkout-v5 .order-customer-heading{margin-top:22px}
+ .dt-order-checkout-v5 .order-fields-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+ .dt-order-checkout-v5 .order-fields-grid>.order-field:last-child{grid-column:auto}
+ .dt-order-checkout-v5 .order-notes-field{margin-top:7px}
+ .dt-order-checkout-v5 .order-submit{min-height:48px;margin-top:14px;padding:0 12px;border-radius:11px;font-size:11px}
+ .dt-order-checkout-v5 .order-privacy-note{font-size:9px;line-height:1.5;text-align:center}
+ .dt-order-checkout-v5 .dt-payment-step{gap:11px}
+ .dt-order-checkout-v5 .dt-order-reference,.dt-order-checkout-v5 .dt-payment-total{padding:13px;border-radius:13px}
+ .dt-order-checkout-v5 .dt-order-reference strong{font-size:15px;overflow-wrap:anywhere}
+ .dt-order-checkout-v5 .dt-payment-intro{font-size:11px;line-height:1.55}
+ .dt-order-checkout-v5 .dt-bank-list{grid-template-columns:minmax(0,1fr);gap:9px}
+ .dt-order-checkout-v5 .dt-bank-card{padding:14px;border-radius:13px}
+ .dt-order-checkout-v5 .dt-bank-card>strong{margin-top:11px;font-size:17px}
+ .dt-order-checkout-v5 .dt-bank-card>button{margin-top:10px}
+ .dt-order-checkout-v5 .dt-payment-total>strong{font-size:19px}
+ .dt-order-checkout-v5 .dt-proof-upload{gap:10px;padding:14px;border-radius:14px}
+ .dt-order-checkout-v5 .dt-proof-upload>div>h3{font-size:15px}
+ .dt-order-checkout-v5 .dt-proof-upload>div>p{font-size:10px}
+ .dt-order-checkout-v5 .dt-proof-file{padding:17px 10px;border-radius:11px}
+ .dt-order-checkout-v5 .dt-proof-file>span{font-size:10px}
+ .dt-order-checkout-v5 .dt-order-account-overlay{align-items:flex-end;padding:12px}
+ .dt-order-checkout-v5 .dt-order-account-overlay>section{padding:22px 19px;border-radius:20px}
+ .dt-order-checkout-v5 .dt-order-account-overlay h2{font-size:20px}
+ .dt-order-checkout-v5 .dt-order-account-overlay>section>p:nth-of-type(2){font-size:11px}
+ .dt-order-checkout-v5 .order-footer{display:flex;flex-direction:column;gap:5px;padding:18px 14px;text-align:center;font-size:9px}
+}
+@media(max-width:380px){
+ .dt-order-checkout-v5 .order-header{padding-inline:12px}
+ .dt-order-checkout-v5 .order-back{font-size:9px}
+ .dt-order-checkout-v5 .dt-checkout-layout-v5{padding-inline:10px}
+ .dt-order-checkout-v5 .dt-checkout-intro-v5,.dt-order-checkout-v5 .dt-checkout-panel-v5{padding:15px 13px}
+ .dt-order-checkout-v5 .order-mini-note{font-size:8px}
+ .dt-order-checkout-v5 .dt-order-steps{gap:5px}
+ .dt-order-checkout-v5 .dt-order-steps>span small{font-size:7px}
+}
