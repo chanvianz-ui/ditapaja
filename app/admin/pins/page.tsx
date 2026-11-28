@@ -34,6 +34,17 @@ export default function AdminPinsPage() {
   const [bulkLoading, setBulkLoading] = useState(false);
   const [qrCard, setQrCard] = useState<{id:string;cardName:string;publicCode:string}|null>(null);
 
+  useEffect(() => {
+    if (!qrCard && !editingCard) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      if (qrCard) setQrCard(null);
+      else if (editingCard && !savingCard) setEditingCard(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [qrCard, editingCard, savingCard]);
+
   const token = useCallback(async () => {
     const { data, error } = await supabase.auth.getSession();
     if (error || !data.session) { router.replace("/login"); throw new Error("Sesi login tidak ditemukan."); }
@@ -306,8 +317,8 @@ export default function AdminPinsPage() {
             </div>}
             {!loading && pins.length > 0 && visiblePins.length === 0 && <div className="px-5 py-14 text-center"><Search size={24} className="mx-auto mb-3 text-[#d8d3ca]"/><p className="text-sm font-semibold text-[#dedbd4]">Tidak ada kartu yang cocok</p><p className="mt-1 text-xs text-[#a0a3a2]">Coba ubah kata kunci atau filter yang dipilih.</p></div>}
           </section>
-          {qrCard && <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#090a0c]/60 p-4 backdrop-blur-sm" onMouseDown={e => { if (e.target === e.currentTarget) setQrCard(null); }}>
-            <section role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="w-full max-w-md rounded-2xl border border-[#34383a] bg-white p-5 shadow-2xl sm:p-7">
+          {qrCard && <div className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto overscroll-contain p-3 py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-[#090a0c]/70 backdrop-blur-sm" onMouseDown={e => { if (e.target === e.currentTarget) setQrCard(null); }}>
+            <section role="dialog" aria-modal="true" aria-labelledby="qr-card-title" className="my-auto w-full max-w-md rounded-2xl border border-[#34383a] bg-white p-5 shadow-2xl sm:p-7">
               <div className="flex items-start justify-between gap-4"><div><p className="text-[10px] font-bold uppercase tracking-[.17em] text-[#dedbd4]">QR & print studio</p><h3 id="qr-card-title" className="mt-2 text-xl font-semibold tracking-tight text-[#efede7]">QR kartu</h3><p className="mt-1 text-xs text-[#dedbd4]">{qrCard.cardName}</p></div><button aria-label="Tutup QR" onClick={() => setQrCard(null)} className="rounded-lg border border-[#34383a] p-2 text-[#dedbd4] hover:bg-[#15181b]"><X size={16}/></button></div>
               <div className="mt-6 rounded-2xl border border-[#34383a] bg-[#15181b] p-5 text-center">
                 <div className="mx-auto inline-flex rounded-xl bg-white p-3 shadow-sm"><QRCodeSVG id="ditapaja-qr-preview" value={getCardUrl(qrCard.publicCode)} size={224} level="H" includeMargin /></div>
@@ -321,8 +332,8 @@ export default function AdminPinsPage() {
               <p className="mt-3 text-[10px] leading-5 text-[#a0a3a2]">QR berisi URL publik kartu NFC, bukan PIN aktivasi. PIN tetap dibagikan secara terpisah kepada pembeli.</p>
             </section>
           </div>}
-          {editingCard && <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#090a0c]/55 p-4 backdrop-blur-sm" onMouseDown={e => { if (e.target === e.currentTarget && !savingCard) setEditingCard(null); }}>
-            <section role="dialog" aria-modal="true" aria-labelledby="edit-card-title" className="w-full max-w-lg rounded-2xl border border-[#34383a] bg-white p-5 shadow-2xl sm:p-7">
+          {editingCard && <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overscroll-contain p-3 py-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-[#090a0c]/70 backdrop-blur-sm" onMouseDown={e => { if (e.target === e.currentTarget && !savingCard) setEditingCard(null); }}>
+            <section role="dialog" aria-modal="true" aria-labelledby="edit-card-title" className="my-auto w-full max-w-lg rounded-2xl border border-[#34383a] bg-white p-5 shadow-2xl sm:p-7">
               <div className="flex items-start justify-between gap-4"><div><p className="text-[10px] font-bold uppercase tracking-[.17em] text-[#dedbd4]">Card management</p><h3 id="edit-card-title" className="mt-2 text-xl font-semibold tracking-tight text-[#efede7]">Edit detail kartu</h3><p className="mt-1 text-xs leading-5 text-[#dedbd4]">Perubahan URL tujuan akan langsung berlaku saat kartu NFC dipindai berikutnya.</p></div><button aria-label="Tutup" disabled={savingCard} onClick={() => setEditingCard(null)} className="rounded-lg border border-[#34383a] p-2 text-[#dedbd4] hover:bg-[#15181b]"><X size={16}/></button></div>
               <div className="mt-6 grid gap-4">
                 <label className="grid gap-2 text-xs font-semibold text-[#dedbd4]">Nama kartu<input value={editingCard.cardName} onChange={e=>setEditingCard(v=>v?{...v,cardName:e.target.value}:v)} maxLength={60} className="h-11 rounded-xl border border-[#34383a] bg-[#15181b] px-3 text-sm font-normal outline-none focus:border-[#34383a]"/></label>
