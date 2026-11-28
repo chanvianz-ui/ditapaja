@@ -307,9 +307,25 @@ function HomeMotionController() {
     if (!root) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targets = Array.from(root.querySelectorAll<HTMLElement>("section, .dt-home-object-stage, .dt-collection-stage, .dt-behind-panel, .dt-closing-main"));
+    const updateProgress = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      root.style.setProperty("--home-scroll-progress", maxScroll > 0 ? String(window.scrollY / maxScroll * 100) + "%" : "0%");
+    };
+    const updatePointer = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse" || reduced) return;
+      const bounds = root.getBoundingClientRect();
+      root.style.setProperty("--home-pointer-x", String(event.clientX - bounds.left) + "px");
+      root.style.setProperty("--home-pointer-y", String(event.clientY - bounds.top) + "px");
+    };
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    root.addEventListener("pointermove", updatePointer, { passive: true });
     if (reduced || !("IntersectionObserver" in window)) {
       targets.forEach((element) => element.classList.add("is-in-view"));
-      return;
+      return () => {
+        window.removeEventListener("scroll", updateProgress);
+        root.removeEventListener("pointermove", updatePointer);
+      };
     }
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -323,7 +339,7 @@ function HomeMotionController() {
       element.classList.add("dt-reveal");
       observer.observe(element);
     });
-    return () => observer.disconnect();
+    return () => {\n      observer.disconnect();\n      window.removeEventListener("scroll", updateProgress);\n      root.removeEventListener("pointermove", updatePointer);\n    };
   }, []);
 
   return null;
