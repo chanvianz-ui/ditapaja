@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Check, ChevronRight, Layers3, Nfc } from "lucide-react";
+import { ArrowUpRight, Check, ChevronRight, Nfc } from "lucide-react";
 import type { ProductConfig } from "../lib/product-catalog";
 
 type Product = ProductConfig;
