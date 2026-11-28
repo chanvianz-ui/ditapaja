@@ -149,3 +149,35 @@
   .dt-auth-v2-panel{animation:none!important}
   .dt-auth-v2 *,.dt-auth-v2 *:before{transition:none!important}
 }
+
+
+/* Protected dashboard auth gate */
+.dt-auth-guard {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: #e8f4f5;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(25, 190, 205, .13), transparent 48%),
+    #07131f;
+}
+.dt-auth-guard-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: min(100%, 340px);
+  padding: 18px 20px;
+  border: 1px solid rgba(124, 207, 211, .16);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(19, 43, 58, .96), rgba(10, 27, 41, .98));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
+}
+.dt-auth-guard-card p { margin: 0; color: #c0d4dc; font-size: 13px; }
+.dt-auth-guard-mark {
+  width: 9px; height: 9px; flex: 0 0 9px; border-radius: 50%;
+  background: #62e4d1; box-shadow: 0 0 0 5px rgba(98, 228, 209, .10);
+  animation: dt-auth-pulse 1.4s ease-in-out infinite;
+}
+@keyframes dt-auth-pulse { 50% { opacity: .45; transform: scale(.82); } }
+@media (prefers-reduced-motion: reduce) { .dt-auth-guard-mark { animation: none; } }
