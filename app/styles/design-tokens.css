@@ -24,6 +24,27 @@
   --dt-shadow-deep:0 24px 70px rgba(0,0,0,.30);
   --dt-content-width:1280px;
   --dt-page-gutter:clamp(16px,4vw,56px);
+  /* Compatibility aliases for existing dashboard/admin modules during migration. */
+  --dt-midnight:var(--dt-bg);
+  --dt-navy:var(--dt-bg-soft);
+  --dt-navy-2:var(--dt-surface);
+  --dt-panel:var(--dt-surface);
+  --dt-panel-raised:var(--dt-surface-raised);
+  --dt-ink:var(--dt-text);
+  --dt-dim:var(--dt-muted-strong);
+  --dt-line:var(--dt-border);
+  --dt-line-strong:var(--dt-border-strong);
+  --w-bg:var(--dt-bg);
+  --w-navy:var(--dt-bg-soft);
+  --w-panel:var(--dt-surface);
+  --w-raised:var(--dt-surface-raised);
+  --w-cyan:var(--dt-cyan);
+  --w-mint:var(--dt-mint);
+  --w-ink:var(--dt-text);
+  --w-muted:var(--dt-muted);
+  --w-dim:var(--dt-muted-strong);
+  --w-line:var(--dt-border);
+  --w-line-strong:var(--dt-border-strong);
 }
 html{background:var(--dt-bg);scroll-padding-top:88px}
 body{color:var(--dt-text);background:radial-gradient(ellipse at 82% -18%,rgba(57,211,223,.10),transparent 40rem),var(--dt-bg)}
