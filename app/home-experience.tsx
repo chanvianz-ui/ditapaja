@@ -291,7 +291,7 @@ function UseCaseExplorer() {
             <div className="dt-usecase-phone"><div className="dt-usecase-phone-top"><span>9:41</span><span>●●● ▰</span></div><div className="dt-usecase-phone-screen">
               <span className="dt-usecase-preview-icon"><PreviewIcon size={22}/></span><small>DITAPAJA · DESTINATION PREVIEW</small><strong>{item.previewTitle}</strong><p>{item.previewBody}</p><span className="dt-usecase-preview-button">{item.action}<ArrowUpRight size={13}/></span><span className="dt-usecase-preview-url">Contoh tampilan tujuan</span>
             </div><span className="dt-usecase-phone-home"/></div>
-            <div className="dt-usecase-explainer"><span className="dt-usecase-label">CUSTOMER JOURNEY</span><h3>{item.title}</h3><p>{item.description}</p><div className="dt-usecase-flow"><Nfc size={16}/><span>{item.step}</span></div><Link href="/koleksi" className="dt-usecase-cta">Pilih kartu NFC <ArrowUpRight size={16}/></Link></div>
+            <div className="dt-usecase-explainer"><span className="dt-usecase-label">CUSTOMER JOURNEY</span><h3>{item.title}</h3><p>{item.description}</p><div className="dt-usecase-flow"><Nfc size={16}/><span>{item.step}</span></div><a href="/koleksi" className="dt-usecase-cta">Pilih kartu NFC <ArrowUpRight size={16}/></a></div>
           </div>
           <p className="dt-usecase-disclaimer">Ilustrasi alur penggunaan. Tujuan akhir mengikuti tautan yang diatur pemilik kartu.</p>
         </div>
