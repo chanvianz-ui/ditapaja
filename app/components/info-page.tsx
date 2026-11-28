@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowUpRight, MessageCircle, Sparkles } from "lucide-react";
 import SiteHeader from "./site-header";
+import styles from "./info-page-cards.module.css";
 
 export default function InfoPage({
   eyebrow,
@@ -48,7 +49,7 @@ export default function InfoPage({
             <span>INFORMASI DITAPAJA</span>
             <span>DIRANCANG UNTUK JELAS & PRAKTIS</span>
           </div>
-          <div className="info-content-body">{children}</div>
+          <div className={`info-content-body ${styles.contentCards}`}>{children}</div>
           <div className="info-contact-strip">
             <div className="info-contact-icon"><MessageCircle size={20} /></div>
             <div className="info-contact-copy">
