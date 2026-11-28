@@ -123,7 +123,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
           <span className="dt-auth-v2-secure" role="img" aria-label="Koneksi aman"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 16 5v4.4c0 3.8-2.4 6.7-6 8.1-3.6-1.4-6-4.3-6-8.1V5l6-2.5Z"/><path d="m7.5 9.8 1.7 1.7 3.5-3.5"/></svg></span>
         </header>
 
-        <section className="dt-auth-v2-panel" aria-label={mode === "login" ? "Masuk ke DiTapAja" : "Daftar DiTapAja"}>
+        <section className="dt-auth-v2-panel" aria-label={mode === "login" ? "Masuk ke akun" : "Buat akun"}>
           <div className="dt-auth-v2-intro">
             <p className="dt-auth-v2-eyebrow">{mode === "login" ? "AKSES AKUN" : "AKUN BARU"}</p>
             <h1>{mode === "login" ? "Selamat datang." : "Buat akun."}</h1>
