@@ -2,14 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, ClipboardList, Users, KeyRound, LogOut, Menu, X, ShieldCheck, Bell } from "lucide-react";
+import { LayoutDashboard, ClipboardList, Users, KeyRound, LogOut, Menu, X, ShieldCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import styles from "./admin-menu.module.css";
 
 const items = [
   { href: "/admin", label: "Ringkasan", icon: LayoutDashboard, exact: true },
   { href: "/admin/orders", label: "Manajemen pesanan", icon: ClipboardList },
-  { href: "/admin/notifications", label: "Notifikasi", icon: Bell },
   { href: "/admin/users", label: "Manajemen pengguna", icon: Users },
   { href: "/admin/pins", label: "PIN aktivasi", icon: KeyRound },
 ];
