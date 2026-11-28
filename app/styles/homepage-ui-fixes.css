@@ -314,3 +314,70 @@
 .dt-home-rebuild{background-image:radial-gradient(420px circle at var(--home-pointer-x,78%) var(--home-pointer-y,12%),rgba(45,173,194,.055),transparent 72%)}
 .dt-home-rebuild .dt-home-scroll-progress{position:fixed;z-index:1000;top:0;left:0;width:var(--home-scroll-progress,0%);height:2px;background:linear-gradient(90deg,#45c5d5,#8ce0c2);box-shadow:0 0 12px rgba(69,197,213,.45);pointer-events:none;transition:width .08s linear}
 @media(prefers-reduced-motion:reduce){.dt-home-rebuild .dt-home-scroll-progress{transition:none}}
+
+
+/* Hero visual upgrade: floating product UI, NFC signal and direct interaction controls */
+.dt-home-rebuild .dt-home-object-stage{overflow:visible;perspective:1400px}
+.dt-home-rebuild .dt-home-object-card{z-index:3}
+.dt-home-rebuild .dt-home-orbit{position:absolute;z-index:0;left:50%;top:48%;width:min(94%,570px);aspect-ratio:1;border:1px solid rgba(112,205,218,.13);border-radius:50%;transform:translate(-50%,-50%) rotate(-24deg);pointer-events:none}
+.dt-home-rebuild .dt-home-orbit:before,.dt-home-rebuild .dt-home-orbit:after{content:"";position:absolute;border:1px solid rgba(112,205,218,.1);border-radius:50%;inset:10% 23%;transform:rotate(58deg)}
+.dt-home-rebuild .dt-home-orbit:after{inset:23% 10%;transform:rotate(-58deg)}
+.dt-home-rebuild .dt-home-orbit-two{width:min(78%,460px);border-style:dashed;border-color:rgba(134,217,192,.17);transform:translate(-50%,-50%) rotate(36deg);animation:dtHeroOrbit 38s linear infinite}
+.dt-home-rebuild .dt-home-signal{position:absolute;z-index:2;left:14%;top:18%;width:76px;height:76px;display:grid;place-items:center;color:#8ce0d0}
+.dt-home-rebuild .dt-home-signal span{position:absolute;inset:0;border:1px solid rgba(117,218,211,.42);border-radius:50%;animation:dtHeroPulse 2.8s ease-out infinite}
+.dt-home-rebuild .dt-home-signal span:nth-child(2){animation-delay:.9s}.dt-home-rebuild .dt-home-signal span:nth-child(3){animation-delay:1.8s}
+.dt-home-rebuild .dt-home-signal i{display:grid;width:38px;height:38px;place-items:center;border:1px solid rgba(117,218,211,.3);border-radius:50%;background:#102c3b;box-shadow:0 0 30px rgba(91,213,207,.18)}
+.dt-home-rebuild .dt-home-float-panel{position:absolute;z-index:4;border:1px solid rgba(170,208,222,.2);border-radius:14px;background:linear-gradient(145deg,rgba(18,43,62,.94),rgba(7,22,37,.94));box-shadow:0 20px 55px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:#e9f5fa}
+.dt-home-rebuild .dt-home-float-analytics{right:0;top:9%;width:190px;padding:14px;transform:rotate(5deg);animation:dtHeroFloat 7s ease-in-out infinite}
+.dt-home-rebuild .dt-home-float-eyebrow{display:flex;align-items:center;gap:7px;color:#91b4c6;font-size:7px;font-weight:900;letter-spacing:.14em}
+.dt-home-rebuild .dt-home-float-eyebrow i,.dt-home-rebuild .dt-home-float-scan>i{width:6px;height:6px;border-radius:50%;background:#83d9c0;box-shadow:0 0 10px rgba(131,217,192,.7)}
+.dt-home-rebuild .dt-home-float-analytics>strong{display:block;margin:9px 0 12px;font-size:17px;letter-spacing:-.05em}
+.dt-home-rebuild .dt-home-float-analytics>strong em{color:#83d9c0;font-style:normal}
+.dt-home-rebuild .dt-home-mini-chart{height:42px;display:flex;align-items:end;gap:5px;padding:0 2px;border-bottom:1px solid rgba(160,196,211,.16)}
+.dt-home-rebuild .dt-home-mini-chart i{flex:1;height:var(--bar,40%);border-radius:4px 4px 0 0;background:linear-gradient(180deg,#68d2d5,#287e91);opacity:.9}
+.dt-home-rebuild .dt-home-mini-chart i:nth-child(1){height:28%}.dt-home-rebuild .dt-home-mini-chart i:nth-child(2){height:42%}.dt-home-rebuild .dt-home-mini-chart i:nth-child(3){height:36%}.dt-home-rebuild .dt-home-mini-chart i:nth-child(4){height:60%}.dt-home-rebuild .dt-home-mini-chart i:nth-child(5){height:49%}.dt-home-rebuild .dt-home-mini-chart i:nth-child(6){height:72%}.dt-home-rebuild .dt-home-mini-chart i:nth-child(7){height:64%}.dt-home-rebuild .dt-home-mini-chart i:nth-child(8){height:88%}.dt-home-rebuild .dt-home-mini-chart i:nth-child(9){height:100%}
+.dt-home-rebuild .dt-home-float-foot{display:flex;align-items:center;gap:6px;margin-top:9px;color:#9db8c8;font-size:7px}
+.dt-home-rebuild .dt-home-float-foot svg{color:#83d9c0}
+.dt-home-rebuild .dt-home-float-scan{left:0;bottom:21%;display:flex;align-items:center;gap:9px;padding:10px 12px;animation:dtHeroFloat 6s ease-in-out infinite reverse}
+.dt-home-rebuild .dt-home-float-icon{display:grid;width:31px;height:31px;place-items:center;border-radius:9px;background:rgba(93,204,202,.12);color:#8ce0d0}
+.dt-home-rebuild .dt-home-float-scan>span:nth-child(2){display:grid;gap:3px}
+.dt-home-rebuild .dt-home-float-scan strong{font-size:9px}.dt-home-rebuild .dt-home-float-scan small{color:#8daabd;font-size:7px}
+.dt-home-rebuild .dt-home-float-scan>i{margin-left:8px}
+.dt-home-rebuild .dt-home-object-controls{position:absolute;z-index:6;left:50%;bottom:3%;display:flex;gap:6px;max-width:100%;padding:5px;border:1px solid rgba(152,194,211,.16);border-radius:99px;background:rgba(6,22,36,.82);box-shadow:0 12px 32px rgba(0,0,0,.24);transform:translateX(-50%);backdrop-filter:blur(12px)}
+.dt-home-rebuild .dt-home-object-controls button{display:flex;align-items:center;justify-content:center;gap:5px;min-height:31px;padding:0 10px;border:1px solid transparent;border-radius:99px;background:transparent;color:#a9c1d0;font-size:8px;font-weight:850;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.dt-home-rebuild .dt-home-object-controls button.is-active{border-color:rgba(125,215,220,.26);background:rgba(70,177,190,.16);color:#c8f5ee}
+.dt-home-rebuild .dt-home-object-controls button:focus-visible{outline:2px solid #83d9df;outline-offset:3px}
+.dt-home-rebuild .dt-home-dashboard-pop{position:absolute;z-index:7;right:3%;bottom:12%;width:min(260px,72%);display:grid;gap:6px;padding:15px;border:1px solid rgba(131,217,192,.3);border-radius:13px;background:rgba(7,27,42,.96);box-shadow:0 20px 50px rgba(0,0,0,.38);animation:dtDashboardPop .22s ease-out}
+.dt-home-rebuild .dt-home-dashboard-pop>span{color:#83d9c0;font-size:7px;font-weight:900;letter-spacing:.15em}
+.dt-home-rebuild .dt-home-dashboard-pop strong{color:#f0f8fb;font-size:13px}.dt-home-rebuild .dt-home-dashboard-pop small{color:#9bb4c5;font-size:9px;line-height:1.6}
+@keyframes dtHeroOrbit{to{transform:translate(-50%,-50%) rotate(396deg)}}
+@keyframes dtHeroPulse{0%{opacity:.8;transform:scale(.4)}100%{opacity:0;transform:scale(1.45)}}
+@keyframes dtHeroFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}
+@keyframes dtDashboardPop{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:1050px){.dt-home-rebuild .dt-home-object-stage{min-height:440px}.dt-home-rebuild .dt-home-float-analytics{right:5%}}
+@media(max-width:760px){
+ .dt-home-rebuild .dt-home-object-stage{min-height:360px;overflow:hidden}
+ .dt-home-rebuild .dt-home-object-card{width:min(78%,390px);transform:rotateZ(-5deg)}
+ .dt-home-rebuild .dt-home-float-analytics{top:4%;right:0;width:142px;padding:10px;transform:rotate(4deg) scale(.92);transform-origin:top right}
+ .dt-home-rebuild .dt-home-float-analytics>strong{font-size:13px;margin:7px 0 8px}
+ .dt-home-rebuild .dt-home-mini-chart{height:30px}
+ .dt-home-rebuild .dt-home-float-foot{font-size:6px}
+ .dt-home-rebuild .dt-home-float-scan{left:0;bottom:22%;padding:8px;gap:6px}
+ .dt-home-rebuild .dt-home-float-icon{width:26px;height:26px}
+ .dt-home-rebuild .dt-home-float-scan strong{font-size:8px}
+ .dt-home-rebuild .dt-home-float-scan small{font-size:6px}
+ .dt-home-rebuild .dt-home-signal{left:5%;top:15%;transform:scale(.75)}
+ .dt-home-rebuild .dt-home-object-controls{bottom:0;gap:2px;width:max-content;max-width:100%}
+ .dt-home-rebuild .dt-home-object-controls button{min-height:30px;padding:0 8px;font-size:7px}
+ .dt-home-rebuild .dt-home-object-caption{bottom:-7%;font-size:6px;text-align:center}
+ .dt-home-rebuild .dt-home-dashboard-pop{right:0;bottom:13%;width:min(240px,85%)}
+}
+@media(max-width:390px){
+ .dt-home-rebuild .dt-home-object-stage{min-height:330px}
+ .dt-home-rebuild .dt-home-object-card{width:76%}
+ .dt-home-rebuild .dt-home-float-analytics{width:126px}
+ .dt-home-rebuild .dt-home-object-controls button{padding:0 6px;font-size:6px}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-home-rebuild .dt-home-orbit-two,.dt-home-rebuild .dt-home-signal span,.dt-home-rebuild .dt-home-float-analytics,.dt-home-rebuild .dt-home-float-scan{animation:none!important}
+}
