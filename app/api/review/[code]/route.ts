@@ -79,13 +79,13 @@ export async function POST(
 
     const { data: card, error } = await supabase
       .from("nfc_cards")
-      .select("id, destination_url, active")
+      .select("id, destination_url, active, archived_at")
       .eq("public_code", code)
       .maybeSingle();
 
     if (error) throw error;
 
-    if (!card || !card.active) {
+    if (!card || !card.active || card.archived_at) {
       return new NextResponse("Kartu tidak ditemukan atau tidak aktif.", {
         status: 404,
       });
