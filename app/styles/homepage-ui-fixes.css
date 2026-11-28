@@ -305,3 +305,8 @@
  .dt-home-rebuild .dt-reveal{opacity:1!important;transform:none!important;transition:none!important}
  .dt-home-rebuild .dt-home-object-card,.dt-home-rebuild .dt-home-object-card:hover,.dt-home-rebuild .dt-home-object-card.is-flipped{transition:none!important}
 }
+
+.dt-home-rebuild .dt-home-object-front>strong{font-size:clamp(34px,5vw,66px);line-height:.84;letter-spacing:-.08em;color:#f5fbff}
+.dt-home-rebuild .dt-home-object-front>strong em{font-style:normal;color:#82dce2}
+.dt-home-rebuild .dt-home-object-front .dt-home-object-brand{align-self:flex-start}
+.dt-home-rebuild .dt-home-object-back .dt-home-object-brand{align-self:flex-start}
