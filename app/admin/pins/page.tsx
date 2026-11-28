@@ -237,7 +237,7 @@ export default function AdminPinsPage() {
   });
 
   return (
-    <main className="dt-admin-shell dt-admin-v4 min-h-screen bg-[#15181b] text-[#efede7]">
+    <main className="dt-admin-shell dt-admin-v4 dt-admin-pins min-h-screen bg-[#15181b] text-[#efede7]">
       <AdminSidebar active="pins"/>
 
       <section className="min-h-screen lg:ml-[264px]">
@@ -262,7 +262,7 @@ export default function AdminPinsPage() {
           {error && <div className="mb-5 flex items-start gap-3 rounded-xl border border-[#63383e] bg-[#2b1b1d] p-4 text-sm text-[#e5a4a4]"><AlertCircle size={18} className="mt-0.5 shrink-0"/><div><p className="font-semibold">Ada kendala</p><p className="mt-1">{error}</p></div></div>}
           {message && <div className="mb-5 flex items-start gap-3 rounded-xl border border-[#34383a] bg-[#15181b] p-4 text-sm text-[#d2a17d]"><Check size={18} className="mt-0.5 shrink-0"/><p className="font-medium">{message}</p></div>}
 
-          <section className="mb-7 grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(300px,.8fr)]">
+          <section className="dt-pin-create-grid mb-7 grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(300px,.8fr)]">
             <article className="rounded-2xl border border-[#34383a] bg-white p-5 sm:p-6">
               <div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-[#15181b] text-[#d2a17d]"><CreditCard size={18}/></span><div><h3 className="text-sm font-semibold">Siapkan kartu + PIN</h3><p className="mt-1 text-xs text-[#dedbd4]">Buat kartu fisik dan PIN aktivasi dalam satu proses.</p></div></div>
               <div className="mt-5 grid gap-4">
@@ -277,7 +277,7 @@ export default function AdminPinsPage() {
             </article>
           </section>
 
-          <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <section className="dt-pin-metrics grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {[
               { label: "Total kartu", value: pins.filter(p => p.card).length, note: "Kartu dengan PIN terpasang", tone: "bg-[#15181b] text-[#dedbd4]", icon: CreditCard },
               { label: "Siap digunakan", value: available, note: "Belum diaktifkan customer", tone: "bg-[#15181b] text-[#d2a17d]", icon: ShieldCheck },
@@ -304,7 +304,7 @@ export default function AdminPinsPage() {
                 <button onClick={() => setSelectedIds([])} className="h-10 rounded-xl border border-[#34383a] px-3 text-[10px] font-semibold text-[#dedbd4]">Reset pilihan</button>
               </div><div className="relative w-full lg:max-w-[280px]"><Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#a0a3a2]"/><input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari nama kartu, hint PIN, atau kode NFC..." className="h-10 w-full rounded-xl border border-[#34383a] bg-[#15181b] pl-10 pr-4 text-xs text-[#efede7] outline-none transition placeholder:text-[#a0a3a2] focus:border-[#34383a] focus:bg-white focus:ring-4 focus:ring-[#76553e]"/></div></div></div>
             {selectedIds.length > 0 && <div className="flex flex-col gap-3 border-b border-[#34383a] bg-[#15181b] px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6"><p className="text-xs font-semibold text-[#d2a17d]">{selectedIds.length} item dipilih</p><div className="flex flex-wrap gap-2"><button disabled={bulkLoading} onClick={() => void runBulkAction("revoke")} className="h-9 rounded-lg border border-[#63383e] px-3 text-[11px] font-semibold text-[#e5a4a4] disabled:opacity-50">{bulkLoading ? "Memproses..." : "Cabut PIN terpilih"}</button><button disabled={bulkLoading} onClick={() => void runBulkAction("archive")} className="h-9 rounded-lg bg-[#3a2a20] px-3 text-[11px] font-semibold text-white disabled:opacity-50">Arsipkan kartu terpilih</button></div></div>}
-            {loading ? <div className="px-5 py-16 text-center text-xs text-[#a0a3a2]">Memuat data PIN...</div> : pins.length === 0 ? <div className="px-5 py-16 text-center"><KeyRound size={26} className="mx-auto mb-3 text-[#d8d3ca]"/><p className="text-sm font-semibold text-[#dedbd4]">Belum ada PIN aktivasi</p><p className="mt-1 text-xs text-[#a0a3a2]">Generate PIN pertama untuk mulai mengisi stok.</p></div> : <div className="divide-y divide-[#f0f2ee]">
+            {loading ? <div className="px-5 py-16 text-center text-xs text-[#a0a3a2]">Memuat data PIN...</div> : pins.length === 0 ? <div className="px-5 py-16 text-center"><KeyRound size={26} className="mx-auto mb-3 text-[#d8d3ca]"/><p className="text-sm font-semibold text-[#dedbd4]">Belum ada PIN aktivasi</p><p className="mt-1 text-xs text-[#a0a3a2]">Generate PIN pertama untuk mulai mengisi stok.</p></div> : <div className="dt-pin-list">
               {visiblePins.map(pin => {
                 const archived = Boolean(pin.card?.archived_at);
                 const cardState = archived ? "Diarsipkan" : pin.card?.active ? (pin.card?.user_id ? "Aktif · Terhubung akun" : "Aktif · Tanpa akun") : pin.status === "claimed" ? "Dinonaktifkan sementara" : "Belum diaktivasi";
