@@ -454,7 +454,16 @@ export default function Home() {
           </div>
         </div>
 
-        <HeroProductObject/>
+        <div className="dt-hybrid-visual">
+          <div className="dt-hybrid-product">
+            <div className="dt-hybrid-visual-label"><span>01 / OBJECT</span><b>THE NFC CARD</b></div>
+            <HeroProductObject/>
+          </div>
+          <div className="dt-hybrid-simulator">
+            <div className="dt-hybrid-visual-label"><span>02 / EXPERIENCE</span><b>TRY THE TAP</b></div>
+            <HeroTapDemo/>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -466,16 +475,9 @@ export default function Home() {
       <ProductCarousel products={products}/>
     </section>
 
-    <section className="dt-home-experience" id="pengalaman-nfc">
-      <div className="dt-home-section-heading">
-        <span>SEE HOW IT FEELS</span>
-        <h2>One tap.<br/><em>A simpler journey.</em></h2>
-        <p>Coba simulasi interaktif untuk melihat bagaimana kartu NFC membawa pelanggan ke halaman tujuan.</p>
-      </div>
-      <HeroTapDemo/>
-    </section>
+    <HowItWorks/>
 
-    <HowItWorks/>\n\n    <UseCaseExplorer/>
+    <UseCaseExplorer/>
 
     <section className="home-dashboard-story dt-behind" id="behind-the-card">
       <div className="dt-behind-copy">

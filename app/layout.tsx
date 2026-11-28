@@ -8,6 +8,7 @@ import "./styles/auth-page-fixes.css";
 import "./styles/design-tokens.css";
 import "./styles/admin-ui-normalization.css";
 import "./styles/card-surface-system.css";
+import "./styles/homepage-hybrid-hero.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
