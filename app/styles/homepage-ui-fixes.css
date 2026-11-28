@@ -1,0 +1,103 @@
+/* Homepage-only layout repair. Keep these rules isolated from dashboard and checkout. */
+.dt-home-rebuild{--home-gutter:clamp(20px,5vw,76px);overflow:clip}
+.dt-home-rebuild .ed-hero{width:100%;max-width:none;padding:clamp(34px,5vw,76px) var(--home-gutter) 0!important}
+.dt-home-rebuild .ed-hero-grid{display:grid!important;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;align-items:center!important;gap:clamp(26px,4vw,58px)!important;width:min(1320px,100%)!important;min-height:0!important;margin:0 auto!important;padding:clamp(38px,5vw,72px) 0!important}
+.dt-home-rebuild .ed-hero-copy{min-width:0!important;max-width:660px!important}
+.dt-home-rebuild .ed-hero h1{max-width:100%;font-size:clamp(54px,6.6vw,92px)!important;line-height:.96!important;overflow-wrap:normal}
+.dt-home-rebuild .ed-hero-lead{max-width:560px!important}
+.dt-home-rebuild .ed-hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 22px}
+.dt-home-rebuild .home-hero-proof{display:flex;flex-wrap:wrap;gap:10px 16px}
+.dt-home-rebuild .home-hero-visual.home-tap-demo{width:100%;min-width:0;max-width:650px;justify-self:end;padding:clamp(14px,2vw,22px);border-radius:20px}
+.dt-home-rebuild .home-demo-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.dt-home-rebuild .home-demo-stage{display:grid;grid-template-columns:minmax(0,.88fr) 28px minmax(0,1.12fr);align-items:center;gap:clamp(5px,1vw,12px);min-width:0}
+.dt-home-rebuild .home-demo-card-wrap,.dt-home-rebuild .home-demo-phone-wrap{min-width:0;width:100%}
+.dt-home-rebuild .home-demo-card{width:100%;max-width:100%;touch-action:pan-y}
+.dt-home-rebuild .home-demo-phone{width:100%;max-width:260px;margin-inline:auto}
+.dt-home-rebuild .home-demo-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.dt-home-rebuild .home-demo-footer-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.dt-home-rebuild .home-hero-marquee{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2vw,26px);flex-wrap:wrap;min-height:54px;margin:0 calc(var(--home-gutter)*-1);padding:12px var(--home-gutter)}
+.dt-home-rebuild .ed-collection{width:100%;max-width:1320px;margin:0 auto;padding:clamp(68px,8vw,112px) var(--home-gutter)!important}
+.dt-home-rebuild .ed-section-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.62fr);align-items:end;gap:28px;margin:0 auto clamp(28px,4vw,46px);max-width:1120px}
+.dt-home-rebuild .ed-section-heading>div,.dt-home-rebuild .ed-section-heading>p{min-width:0}
+.dt-home-rebuild .ed-section-heading h2{font-size:clamp(44px,6vw,76px);line-height:.98}
+.dt-home-rebuild .dt-collection-experience{width:100%;max-width:1120px;margin:0 auto}
+.dt-home-rebuild .dt-collection-stage{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);align-items:center;gap:clamp(20px,4vw,56px);min-width:0}
+.dt-home-rebuild .dt-stage-copy,.dt-home-rebuild .dt-stage-art{min-width:0;width:100%}
+.dt-home-rebuild .dt-stage-art{min-height:clamp(300px,38vw,500px);overflow:hidden}
+.dt-home-rebuild .dt-stage-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.dt-home-rebuild .dt-collection-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.dt-home-rebuild .dt-how-section{width:100%;max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,120px) var(--home-gutter)!important}
+.dt-home-rebuild .dt-how-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;max-width:1120px;margin:0 auto clamp(26px,4vw,44px)}
+.dt-home-rebuild .dt-how-heading>div,.dt-home-rebuild .dt-how-heading>p{min-width:0}
+.dt-home-rebuild .dt-how-workspace{width:100%;max-width:1120px;margin:0 auto}
+.dt-home-rebuild .dt-how-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.dt-home-rebuild .dt-how-step{min-width:0}
+.dt-home-rebuild .dt-how-panel{display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);align-items:center;gap:clamp(20px,4vw,52px);min-width:0}
+.dt-home-rebuild .dt-how-copy,.dt-home-rebuild .dt-how-visual{min-width:0}
+.dt-home-rebuild .dt-how-visual{width:100%;min-height:clamp(280px,32vw,390px)}
+.dt-home-rebuild .dt-behind{display:grid!important;grid-template-columns:minmax(250px,.78fr) minmax(0,1.22fr);align-items:center;gap:clamp(28px,6vw,88px);width:100%;padding:clamp(70px,9vw,124px) var(--home-gutter)!important}
+.dt-home-rebuild .dt-behind-copy,.dt-home-rebuild .dt-behind-visual{min-width:0;width:100%}
+.dt-home-rebuild .dt-behind-panel{width:100%;max-width:760px;margin-left:auto;transform:perspective(1200px) rotateY(-3deg) rotateX(1deg)}
+.dt-home-rebuild .dt-behind-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.dt-home-rebuild .dt-behind-mini-activity>div{display:flex;align-items:end;gap:clamp(4px,1vw,10px);min-width:0}
+.dt-home-rebuild .dt-closing{padding-inline:var(--home-gutter)}
+.dt-home-rebuild :is(.ed-hero,.ed-collection,.dt-how-section,.dt-behind,.dt-closing) *{min-width:0}
+@media(max-width:1050px){
+ .dt-home-rebuild .ed-hero-grid{grid-template-columns:1fr!important;width:min(820px,100%)!important;gap:30px!important}
+ .dt-home-rebuild .ed-hero-copy{max-width:760px!important}
+ .dt-home-rebuild .home-hero-visual.home-tap-demo{max-width:820px;justify-self:stretch}
+ .dt-home-rebuild .dt-behind{grid-template-columns:1fr!important;gap:26px}
+ .dt-home-rebuild .dt-behind-copy{max-width:760px}
+ .dt-home-rebuild .dt-behind-panel{max-width:none;transform:none}
+}
+@media(max-width:760px){
+ .dt-home-rebuild{--home-gutter:20px}
+ .dt-home-rebuild .ed-hero{padding-top:28px!important}
+ .dt-home-rebuild .ed-hero-grid{padding:34px 0 38px!important;gap:24px!important}
+ .dt-home-rebuild .ed-hero h1{font-size:clamp(44px,12vw,68px)!important;line-height:.98!important}
+ .dt-home-rebuild .ed-hero-actions{gap:10px}
+ .dt-home-rebuild .home-hero-proof{gap:9px 12px}
+ .dt-home-rebuild .home-hero-visual.home-tap-demo{padding:14px 12px;border-radius:16px}
+ .dt-home-rebuild .home-demo-stage{grid-template-columns:minmax(0,.88fr) 18px minmax(0,1.12fr);gap:5px;padding:16px 0 12px}
+ .dt-home-rebuild .home-demo-phone{height:360px;min-height:360px}
+ .dt-home-rebuild .home-demo-heading b{font-size:12px}
+ .dt-home-rebuild .home-demo-disclaimer{font-size:7px}
+ .dt-home-rebuild .ed-collection{padding:60px var(--home-gutter)!important}
+ .dt-home-rebuild .ed-section-heading{grid-template-columns:1fr;gap:14px;margin-bottom:24px}
+ .dt-home-rebuild .ed-section-heading h2{font-size:clamp(42px,11vw,58px)}
+ .dt-home-rebuild .dt-collection-stage{grid-template-columns:1fr;gap:20px}
+ .dt-home-rebuild .dt-stage-art{min-height:300px}
+ .dt-home-rebuild .dt-stage-actions>*{flex:1 1 auto}
+ .dt-home-rebuild .dt-how-section{padding:64px var(--home-gutter)!important}
+ .dt-home-rebuild .dt-how-heading{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px}
+ .dt-home-rebuild .dt-how-heading h2{font-size:clamp(46px,12vw,64px)}
+ .dt-home-rebuild .dt-how-workspace{padding:10px;border-radius:16px}
+ .dt-home-rebuild .dt-how-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding-bottom:10px}
+ .dt-home-rebuild .dt-how-step{grid-template-columns:1fr;justify-items:start;gap:5px;min-height:70px;padding:9px 7px}
+ .dt-home-rebuild .dt-how-step-number{width:25px;height:25px}
+ .dt-home-rebuild .dt-how-step-label{font-size:10px;line-height:1.25}
+ .dt-home-rebuild .dt-how-step-indicator{display:none}
+ .dt-home-rebuild .dt-how-panel{grid-template-columns:1fr;gap:16px;padding:20px 8px 8px;min-height:0}
+ .dt-home-rebuild .dt-how-copy h3{font-size:clamp(34px,9vw,48px)}
+ .dt-home-rebuild .dt-how-note{margin-top:20px;flex-wrap:wrap}
+ .dt-home-rebuild .dt-how-visual{min-height:260px}
+ .dt-home-rebuild .dt-behind{padding:62px var(--home-gutter)!important;gap:18px}
+ .dt-home-rebuild .dt-behind-copy h2{font-size:clamp(48px,12vw,68px)}
+ .dt-home-rebuild .dt-behind-visual{padding:8px 0 18px}
+ .dt-home-rebuild .dt-behind-panel{padding:16px;transform:none}
+ .dt-home-rebuild .dt-behind-panel-heading{align-items:flex-start;flex-wrap:wrap}
+ .dt-home-rebuild .dt-behind-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .dt-home-rebuild .dt-behind-metrics>*{min-width:0}
+ .dt-home-rebuild .dt-behind-card-line{gap:8px;flex-wrap:wrap}
+}
+@media(max-width:390px){
+ .dt-home-rebuild{--home-gutter:15px}
+ .dt-home-rebuild .home-demo-stage{grid-template-columns:minmax(0,.82fr) 14px minmax(0,1.18fr);gap:3px}
+ .dt-home-rebuild .home-demo-phone{height:330px;min-height:330px}
+ .dt-home-rebuild .home-demo-instruction{font-size:7px}
+ .dt-home-rebuild .dt-how-step-label{font-size:9px}
+ .dt-home-rebuild .dt-behind-panel{padding:13px}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-home-rebuild .home-demo-card,.dt-home-rebuild .dt-how-section *,.dt-home-rebuild .dt-behind-panel{animation:none!important;transition:none!important}
+}
