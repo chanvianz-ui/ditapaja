@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./styles/interface-v3.css";
 import "./styles/experience-v4.css";
+import "./styles/experience-v4-consistency.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
