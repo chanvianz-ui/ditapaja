@@ -431,77 +431,34 @@ function HeroProductObject() {
   );
 }
 
-type HeroScenario = "cafe" | "salon" | "retail";
-type HeroSkin = "midnight" | "ivory" | "mint";
-function HeroInteractiveStudio() {
-  const [scenario,setScenario] = useState<HeroScenario>("cafe");
-  const [skin,setSkin] = useState<HeroSkin>("midnight");
-  const [stage,setStage] = useState<0|1|2|3>(0);
-  const [rating,setRating] = useState(0);
-  const [taps,setTaps] = useState(0);
-  const [showQr,setShowQr] = useState(false);
-  const business = {cafe:{name:"Kopi Sudut",type:"COFFEE & BREW",tagline:"A little moment. A better review.",initial:"K",destination:"Google Review"},salon:{name:"Studio Senja",type:"BEAUTY & CARE",tagline:"Your glow deserves a good review.",initial:"S",destination:"Review & Feedback"},retail:{name:"Ruang Rupa",type:"RETAIL & LIFESTYLE",tagline:"Find your style. Share your story.",initial:"R",destination:"Store Review"}}[scenario];
-  const start = () => { setStage(1); setRating(0); setTaps(v=>v+1); };
-  const reset = () => { setStage(0); setRating(0); };
-  return <div className="dt-studio" data-skin={skin}>
-    <div className="dt-studio-topline"><span><i/> INTERACTIVE PRODUCT STUDIO</span><span>LIVE PREVIEW <b>●</b></span></div>
-    <div className="dt-studio-layout">
-      <div className="dt-studio-controls">
-        <div className="dt-studio-intro"><span>MAKE IT YOURS / 01</span><h2>Built around<br/><em>your business.</em></h2><p>Pilih jenis bisnismu, tentukan karakter kartu, lalu coba sendiri pengalaman pelanggan.</p></div>
-        <div className="dt-studio-group"><label>01 — PILIH BISNIS</label><div className="dt-studio-options">
-          <button type="button" className={scenario==="cafe"?"active":""} onClick={()=>{setScenario("cafe");reset();}}><Coffee size={16}/> Cafe</button>
-          <button type="button" className={scenario==="salon"?"active":""} onClick={()=>{setScenario("salon");reset();}}><Star size={16}/> Salon</button>
-          <button type="button" className={scenario==="retail"?"active":""} onClick={()=>{setScenario("retail");reset();}}><ShoppingBagIcon/> Retail</button>
-        </div></div>
-        <div className="dt-studio-group"><label>02 — PILIH FINISHING</label><div className="dt-studio-skins">
-          <button type="button" aria-label="Midnight" aria-pressed={skin==="midnight"} className={skin==="midnight"?"active":""} onClick={()=>setSkin("midnight")}><i className="skin-midnight"/>Midnight</button>
-          <button type="button" aria-label="Ivory" aria-pressed={skin==="ivory"} className={skin==="ivory"?"active":""} onClick={()=>setSkin("ivory")}><i className="skin-ivory"/>Ivory</button>
-          <button type="button" aria-label="Mint" aria-pressed={skin==="mint"} className={skin==="mint"?"active":""} onClick={()=>setSkin("mint")}><i className="skin-mint"/>Mint</button>
-        </div></div>
-        <div className="dt-studio-note"><span>✳</span><p>Preview berubah langsung. Tidak ada data atau ulasan yang dikirim.</p></div>
-      </div>
-      <div className="dt-studio-stage">
-        <div className="dt-studio-stage-head"><span>YOUR CARD / PREVIEW</span><span>01 <i/> 03</span></div>
-        <div className="dt-studio-card-area">
-          <div className="dt-studio-orbit orbit-a"/><div className="dt-studio-orbit orbit-b"/>
-          <div className={"dt-studio-card skin-"+skin}>
-            <div className="dt-studio-card-head"><span><BrandMark/> DITAPAJA</span><span>{showQr?<QrCode size={20}/>:<Nfc size={20}/>}</span></div>
-            <div className="dt-studio-card-center"><small>{business.type}</small><strong>{business.name}</strong><em>{business.tagline}</em></div>
-            <div className="dt-studio-card-foot"><span>ONE TAP TO CONNECT</span><span>{showQr?"QR READY":"NFC · QR"}</span></div>
-            <div className="dt-studio-card-shine"/>
-          </div>
-          <div className="dt-studio-floating-chip"><span><i/> NFC READY</span><b>01 / 01</b></div>
-          <button type="button" className="dt-studio-qr-toggle" onClick={()=>setShowQr(v=>!v)} aria-pressed={showQr}>{showQr?<Nfc size={14}/>:<QrCode size={14}/>} {showQr?"Lihat NFC":"Lihat QR"}</button>
-        </div>
-        <div className="dt-studio-flow">
-          <div className={"dt-studio-step "+(stage>=1?"done":"current")}><span>{stage>0?<Check size={13}/>: "01"}</span><small>Tap kartu</small></div><i className={stage>=1?"filled":""}/><div className={"dt-studio-step "+(stage>=2?"done":stage===1?"current":"" )}><span>{stage>=2?<Check size={13}/>:"02"}</span><small>Halaman terbuka</small></div><i className={stage>=2?"filled":""}/><div className={"dt-studio-step "+(stage>=3?"done":stage===2?"current":"" )}><span>{stage>=3?<Check size={13}/>:"03"}</span><small>Review</small></div>
-        </div>
-        <div className="dt-studio-customer">
-          <div className="dt-studio-customer-top"><span><Smartphone size={15}/> CUSTOMER JOURNEY</span><span>SIMULASI INTERAKTIF</span></div>
-          {stage===0?<div className="dt-studio-idle"><div className="dt-studio-phone-icon"><Nfc size={29}/></div><div><b>Ready when you are.</b><p>Tekan tombol di bawah untuk mensimulasikan pelanggan men-tap kartu.</p></div><button type="button" onClick={start}>Simulasikan tap <ArrowUpRight size={15}/></button></div>:stage===1?<div className="dt-studio-result"><span className="dt-studio-result-icon"><Check size={18}/></span><div><small>CONNECTION SUCCESSFUL</small><b>{business.destination} terbuka</b><p>Pelanggan berhasil diarahkan ke halaman tujuan bisnis.</p></div><button type="button" onClick={()=>setStage(2)}>Lanjut <ArrowUpRight size={14}/></button></div>:stage===2?<div className="dt-studio-rating"><div><small>CONTOH HALAMAN REVIEW</small><b>Bagaimana pengalamanmu di {business.name}?</b><p>Pilih rating untuk melanjutkan simulasi.</p></div><div className="dt-studio-stars" role="group" aria-label="Pilih rating">{[1,2,3,4,5].map(n=><button type="button" key={n} aria-label={n+" bintang"} aria-pressed={rating===n} className={rating>=n?"selected":""} onClick={()=>setRating(n)}>★</button>)}</div><button type="button" disabled={!rating} onClick={()=>setStage(3)}>Lihat hasil simulasi <ArrowUpRight size={14}/></button></div>:<div className="dt-studio-complete"><span><Check size={20}/></span><div><small>SIMULASI SELESAI</small><b>Customer journey, lebih singkat.</b><p>Rating {rating}/5 dipilih. Tidak ada ulasan yang dikirim ke platform mana pun.</p></div><button type="button" onClick={reset}><RotateCcw size={14}/> Ulangi</button></div>}
-        </div>
-        <div className="dt-studio-bottom"><span><i/> DEMO TAP SESSION · {taps}</span><span>NO APP. NO MONTHLY FEE.</span></div>
-      </div>
-    </div>
-  </div>;
-}
-function ShoppingBagIcon(){ return <span className="dt-studio-bag" aria-hidden="true">▱</span>; }
-
 export default function Home() {
   return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
     <div className="dt-home-scroll-progress" aria-hidden="true"/>
     <HomeMotionController/>
     <SiteHeader/>
 
-    <section className="ed-hero dt-studio-hero">
-      <div className="dt-studio-hero-copy">
-        <span className="home-kicker"><i/> NFC REVIEW CARD · DASHBOARD GRATIS</span>
-        <h1>Make every<br/><em>tap count.</em></h1>
-        <p className="ed-hero-lead">Bukan sekadar kartu. Bangun pengalaman pelanggan yang terasa lebih personal — dari satu sentuhan sampai ulasan.</p>
-        <div className="ed-hero-actions"><a href="#koleksi" className="ed-button">Jelajahi kartu <ArrowUpRight size={17}/></a><a href="#cara-kerja" className="ed-text-link">Cara kerja <ArrowDownRight size={16}/></a></div>
-        <div className="home-hero-proof"><span><Nfc size={15}/> NFC + QR Code</span><span><Check size={15}/> Tanpa aplikasi</span><span><Check size={15}/> Dashboard gratis</span></div>
+    <section className="ed-hero dt-clean-hero">
+      <div className="ed-hero-grid dt-clean-hero-grid">
+        <div className="ed-hero-copy dt-clean-hero-copy">
+          <span className="home-kicker"><i/> NFC REVIEW CARD · DASHBOARD GRATIS</span>
+          <h1>One tap.<br/><em>Better reviews.</em></h1>
+          <p className="ed-hero-lead">Buat pelanggan lebih mudah menemukan halaman ulasan bisnismu. Cukup dekatkan kartu atau scan QR — pengalaman berikutnya terbuka dalam sekejap.</p>
+          <div className="ed-hero-actions">
+            <a href="#koleksi" className="ed-button">Pilih kartu <ArrowUpRight size={17}/></a>
+            <a href="#cara-kerja" className="ed-text-link">Lihat cara kerja <ArrowDownRight size={16}/></a>
+          </div>
+          <div className="home-hero-proof">
+            <span><Nfc size={15}/> NFC + QR Code</span>
+            <span><Check size={15}/> Tanpa aplikasi</span>
+            <span><Check size={15}/> Dashboard gratis</span>
+          </div>
+          <div className="dt-clean-hero-foot"><span>DESIGNED FOR REAL BUSINESSES</span><span>01 — 03</span></div>
+        </div>
+        <div className="dt-clean-demo-wrap">
+          <div className="dt-clean-demo-heading"><span>TRY THE EXPERIENCE</span><span><i/> INTERACTIVE DEMO</span></div>
+          <HeroTapDemo/>
+        </div>
       </div>
-      <HeroInteractiveStudio/>
     </section>
 
     <section className="nx-collection ed-collection" id="koleksi">
