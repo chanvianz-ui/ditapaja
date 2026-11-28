@@ -133,3 +133,21 @@
 .dt-workspace-page [class*="hover:bg-blue-"]:hover{background:rgba(57,216,232,.09)!important}
 .dt-workspace-page [class*="focus:border-blue-"]:focus{border-color:#39d8e8!important}
 .dt-workspace-page [class*="focus:ring-blue-"]:focus{--tw-ring-color:rgba(57,216,232,.12)!important}
+
+/* Dashboard modal surfaces and loading state: retain readable contrast in the dark workspace. */
+.dt-v4-loading{background:radial-gradient(ellipse at 50% 40%,rgba(57,216,232,.08),transparent 24rem),#050b14!important}
+.dt-v4-loading svg{color:#39d8e8!important}
+.dt-v4 .dt-qr-modal-panel{
+ border-color:rgba(145,190,218,.2)!important;
+ background:linear-gradient(155deg,#10263d,#071625)!important;
+ color:#effaff!important;
+}
+.dt-v4 .dt-qr-modal-panel :is(h3,label){color:#effaff!important}
+.dt-v4 .dt-qr-modal-panel :is(p,.text-slate-500,.text-slate-600){color:#9bb2c6!important}
+.dt-v4 .dt-qr-modal-panel :is(.border-slate-100,.border-slate-200){border-color:rgba(145,190,218,.18)!important}
+.dt-v4 .dt-qr-modal-panel :is(.hover\\:bg-slate-100:hover){background:rgba(57,216,232,.09)!important}
+.dt-v4 .dt-qr-modal-panel .dt-qr-preview{background:#071625!important;border-color:rgba(145,190,218,.18)!important}
+.dt-v4 .dt-qr-modal-panel :is(button.bg-blue-600){background:linear-gradient(115deg,#39d8e8,#78f0c3)!important;color:#06131d!important}
+@media(max-width:640px){
+ .dt-v4 .dt-qr-modal-panel{border-radius:18px!important;padding:14px!important}
+}
