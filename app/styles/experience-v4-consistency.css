@@ -1,0 +1,118 @@
+/* DiTapAja v4 consistency pass — admin, settings, checkout and shared controls. */
+:root{
+ --dt-line-strong:rgba(145,190,218,.25);
+ --dt-cyan-soft:rgba(57,216,232,.10);
+ --dt-mint-soft:rgba(120,240,195,.10);
+}
+
+/* Admin inner pages still contained a legacy brown/white utility palette. */
+.dt-admin-v4{
+ background:radial-gradient(ellipse at 85% -10%,rgba(57,216,232,.08),transparent 34rem),#050b14!important;
+ color:#effaff!important;
+}
+.dt-admin-v4 [class*="bg-white"],
+.dt-admin-v4 [class*="bg-[#15181b]"],
+.dt-admin-v4 [class*="bg-[#211d27]"],
+.dt-admin-v4 [class*="bg-[#2a241b]"],
+.dt-admin-v4 [class*="bg-[#3a2a20]"]{
+ background-color:#10263d!important;
+}
+.dt-admin-v4 [class*="border-[#34383a]"],
+.dt-admin-v4 [class*="border-[#4a3f5a]"],
+.dt-admin-v4 [class*="border-[#63383e]"]{
+ border-color:rgba(145,190,218,.17)!important;
+}
+.dt-admin-v4 [class*="text-[#efede7]"],
+.dt-admin-v4 [class*="text-[#dedbd4]"],
+.dt-admin-v4 [class*="text-white"]{color:#effaff!important}
+.dt-admin-v4 [class*="text-[#a0a3a2]"],
+.dt-admin-v4 [class*="text-[#d8d3ca]"]{color:#9bb2c6!important}
+.dt-admin-v4 [class*="text-[#d2a17d]"],
+.dt-admin-v4 [class*="text-[#d8b67c]"],
+.dt-admin-v4 [class*="text-[#e0b28f]"]{color:#78f0c3!important}
+.dt-admin-v4 [class*="hover:bg-[#15181b]"]:hover,
+.dt-admin-v4 [class*="hover:bg-[#493326]"]:hover{background:#16334d!important}
+.dt-admin-v4 input,.dt-admin-v4 select,.dt-admin-v4 textarea{
+ color:#effaff!important;background:#071625!important;border-color:rgba(145,190,218,.2)!important;
+}
+.dt-admin-v4 input::placeholder,.dt-admin-v4 textarea::placeholder{color:#718ba2!important}
+.dt-admin-v4 button:focus-visible,.dt-admin-v4 a:focus-visible,.dt-admin-v4 input:focus-visible,.dt-admin-v4 select:focus-visible{
+ outline:2px solid #39d8e8!important;outline-offset:3px
+}
+.dt-admin-v4 table thead{background:#0b1c2d!important;color:#9bb2c6!important}
+.dt-admin-v4 table tbody tr{border-color:rgba(145,190,218,.12)!important}
+.dt-admin-v4 table tbody tr:hover{background:rgba(57,216,232,.045)!important}
+.dt-admin-v4 [role="dialog"]{background:#0b1c2d!important;color:#effaff!important;border-color:rgba(145,190,218,.18)!important}
+
+/* Account settings were the last user-workspace page using a light-blue shell. */
+.dt-workspace-page{
+ min-height:100vh!important;
+ background:radial-gradient(ellipse at 82% -10%,rgba(57,216,232,.08),transparent 32rem),#050b14!important;
+ color:#effaff!important;
+}
+.dt-workspace-page header{background:rgba(5,11,20,.9)!important;border-color:rgba(145,190,218,.15)!important}
+.dt-workspace-page header :is(a,button){color:#b7cad9!important}
+.dt-workspace-page [class*="bg-white"],
+.dt-workspace-page [class*="bg-slate-50"],
+.dt-workspace-page [class*="bg-blue-50"],
+.dt-workspace-page [class*="bg-indigo-50"]{
+ background:#10263d!important;
+}
+.dt-workspace-page [class*="border-slate-"],
+.dt-workspace-page [class*="border-white"]{border-color:rgba(145,190,218,.16)!important}
+.dt-workspace-page [class*="text-[#17243b]"],
+.dt-workspace-page [class*="text-slate-700"],
+.dt-workspace-page [class*="text-slate-600"]{color:#effaff!important}
+.dt-workspace-page [class*="text-slate-400"],
+.dt-workspace-page [class*="text-slate-500"]{color:#9bb2c6!important}
+.dt-workspace-page [class*="text-blue-600"],
+.dt-workspace-page [class*="text-indigo-600"]{color:#39d8e8!important}
+.dt-workspace-page input,.dt-workspace-page textarea{
+ color:#effaff!important;background:#071625!important;border-color:rgba(145,190,218,.2)!important;
+}
+.dt-workspace-page input::placeholder{color:#718ba2!important}
+.dt-workspace-page button[class*="bg-blue-600"]{
+ background:linear-gradient(115deg,#39d8e8,#78f0c3)!important;color:#06131d!important;
+}
+.dt-workspace-page button:focus-visible,.dt-workspace-page a:focus-visible,.dt-workspace-page input:focus-visible{
+ outline:2px solid #39d8e8!important;outline-offset:3px
+}
+
+/* Checkout: unify payment, upload and account prompt surfaces. */
+.dt-order-checkout{
+ background:radial-gradient(ellipse at 80% 0%,rgba(57,216,232,.10),transparent 35rem),#050b14!important;
+ color:#effaff!important;
+}
+.dt-order-checkout :is(.order-form,.dt-payment-step,.dt-order-status,.dt-bank-card,.dt-order-notice,.dt-order-total){
+ border-color:rgba(145,190,218,.16)!important;
+ background:linear-gradient(150deg,rgba(16,38,61,.97),rgba(7,18,31,.99))!important;
+ color:#effaff!important;
+}
+.dt-order-checkout :is(.order-form-heading,.order-kicker,.dt-payment-intro){color:#effaff!important}
+.dt-order-checkout :is(.order-mini-note,.order-privacy-note,.dt-order-reference){color:#9bb2c6!important}
+.dt-order-checkout :is(input,select,textarea){
+ color:#effaff!important;background:#071625!important;border-color:rgba(145,190,218,.2)!important;
+}
+.dt-order-checkout :is(input,textarea)::placeholder{color:#718ba2!important}
+.dt-order-checkout .order-submit{
+ background:linear-gradient(115deg,#39d8e8,#78f0c3)!important;color:#06131d!important;
+ box-shadow:0 12px 30px rgba(57,216,232,.12)!important;
+}
+.dt-order-checkout .dt-order-account-overlay>div{
+ border:1px solid rgba(145,190,218,.2)!important;background:#0b1c2d!important;color:#effaff!important;
+}
+.dt-order-checkout :is(button,a):focus-visible{outline:2px solid #39d8e8;outline-offset:3px}
+
+/* Global motion and tap-target hygiene. */
+@media(hover:hover){
+ .dt-admin-v4 button,.dt-workspace-page button,.dt-order-checkout button{transition:background-color .18s,border-color .18s,color .18s,transform .18s}
+}
+@media(max-width:640px){
+ .dt-admin-v4 table{font-size:11px}
+ .dt-admin-v4 [class*="max-w-"]{max-width:100%}
+ .dt-workspace-page main{padding-inline:14px!important}
+ .dt-order-checkout .order-layout{gap:18px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .dt-admin-v4 *,.dt-workspace-page *,.dt-order-checkout *{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
