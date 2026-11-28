@@ -36,13 +36,29 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [capsLockOn, setCapsLockOn] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
+  const [rememberMe, setRememberMe] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => { setQuerySuffix(window.location.search); }, []);
+  useEffect(() => {
+    setQuerySuffix(window.location.search);
+    if (mode !== "login") return;
+    let alive = true;
+    async function redirectIfAlreadyAuthenticated() {
+      const storageMode = localStorage.getItem("ditapaja_auth_storage_mode") || "session";
+      const expiresAt = Number(localStorage.getItem("ditapaja_login_expires_at") || 0);
+      if (storageMode === "persistent" && (!expiresAt || Date.now() >= expiresAt)) {
+        await supabase.auth.signOut({ scope: "local" });
+        return;
+      }
+      const { data, error } = await supabase.auth.getUser();
+      if (alive && !error && data.user) router.replace(getSafeNextPath());
+    }
+    void redirectIfAlreadyAuthenticated();
+    return () => { alive = false; };
+  }, [mode, router]);
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
