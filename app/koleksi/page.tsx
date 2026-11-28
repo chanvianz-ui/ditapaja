@@ -53,7 +53,11 @@ export default function KoleksiPage() {
           <div><span className={styles.catalogEyebrow}>01 / THE COLLECTION</span><h2 className={styles.catalogTitle}>Choose your<br /><em>signature.</em></h2></div>
           <p className={styles.catalogDescription}>Setiap desain punya karakter berbeda, tetapi semuanya membawa fungsi yang sama: akses NFC, QR Code, dan dashboard monitoring tanpa biaya langganan.</p>
         </div>
-        <div className={styles.carousel}><ProductCarousel products={products} /></div>
+        <div className={styles.carousel}>
+          <div className="dt-home-rebuild">
+            <div className="ed-collection"><ProductCarousel products={products} /></div>
+          </div>
+        </div>
       </section>
 
       <section className={styles.bottomCta}>
