@@ -61,7 +61,7 @@ export default function SiteHeader() {
             ))}
           </nav>
           <div className="dt-v3-header-actions">
-            <Link href="/login" className="dt-v3-login"><LayoutDashboard size={15}/> Masuk</Link>
+            <Link href="/dashboard" className="dt-v3-login"><LayoutDashboard size={15}/> Dashboard</Link>
             <Link href="/koleksi" className="dt-v3-header-cta">Pilih kartu <ArrowUpRight size={16}/></Link>
           </div>
           <div className="dt-v3-mobile-actions">
@@ -80,7 +80,8 @@ export default function SiteHeader() {
             </nav>
             <div className="dt-v3-menu-quick">
               <Link href="/activate" onClick={()=>setOpen(false)}><Nfc size={18}/><span><small>SUDAH PUNYA KARTU?</small><b>Aktivasi kartu</b></span><ArrowUpRight size={16}/></Link>
-              <Link href="/login" onClick={()=>setOpen(false)}><LayoutDashboard size={18}/><span><small>AREA PENGELOLAAN</small><b>Dashboard</b></span><ArrowUpRight size={16}/></Link>
+              <Link href="/dashboard" onClick={()=>setOpen(false)}><LayoutDashboard size={18}/><span><small>AREA PENGELOLAAN</small><b>Dashboard</b></span><ArrowUpRight size={16}/></Link>
+              <Link href="/login" onClick={()=>setOpen(false)}><LayoutDashboard size={18}/><span><small>AKSES AKUN</small><b>Login</b></span><ArrowUpRight size={16}/></Link>
             </div>
             <a className="dt-v3-menu-contact" href="https://wa.me/6281321778081" target="_blank" rel="noopener noreferrer"><MessageCircle size={15}/> Hubungi tim DiTapAja</a>
           </section>
