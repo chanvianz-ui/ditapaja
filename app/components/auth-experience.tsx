@@ -50,6 +50,8 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
       const storageMode = localStorage.getItem("ditapaja_auth_storage_mode") || "session";
       const expiresAt = Number(localStorage.getItem("ditapaja_login_expires_at") || 0);
       if (storageMode === "persistent" && (!expiresAt || Date.now() >= expiresAt)) {
+        localStorage.removeItem("ditapaja_login_expires_at");
+        localStorage.setItem("ditapaja_auth_storage_mode", "session");
         await supabase.auth.signOut({ scope: "local" });
         return;
       }
@@ -156,7 +158,7 @@ export default function AuthExperience({ mode }: { mode: AuthMode }) {
               <label className="dt-auth-v2-field"><span>Email atau username</span><input required autoComplete="username" value={identifier} onChange={event => setIdentifier(event.target.value)} placeholder="Masukkan email atau username" /></label>
               <label className="dt-auth-v2-field"><span>Password</span><div className="dt-auth-v2-password"><input required type={showPassword ? "text" : "password"} autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} onKeyUp={event => setCapsLockOn(event.getModifierState("CapsLock"))} onBlur={() => setCapsLockOn(false)} placeholder="Masukkan password" /><button type="button" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}><EyeIcon hidden={showPassword}/></button></div></label>
               {capsLockOn && <p className="dt-auth-v2-caps" role="status">Caps Lock sedang aktif</p>}
-              <div className="dt-auth-v2-options"><label className="dt-auth-v2-check"><input type="checkbox" checked={rememberMe} onChange={event => setRememberMe(event.target.checked)}/><span>Ingat saya selama 7 hari</span></label><Link href="/forgot-password">Lupa password?</Link></div>
+              <div className="dt-auth-v2-options"><label className="dt-auth-v2-check"><input type="checkbox" checked={rememberMe} onChange={event => setRememberMe(event.target.checked)}/><span>Tetap masuk selama 7 hari</span></label><Link href="/forgot-password">Lupa password?</Link></div>
               {message && <p className="dt-auth-v2-message" role="alert">{message}</p>}
               <button className="dt-auth-v2-submit" type="submit" disabled={loading}><span>{loading ? "Memproses..." : "Masuk ke akun"}</span><span aria-hidden="true">↗</span></button>
               <p className="dt-auth-v2-switch">Belum punya akun? <Link href={"/register" + querySuffix}>Daftar sekarang</Link></p>
