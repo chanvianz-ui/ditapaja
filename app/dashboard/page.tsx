@@ -150,6 +150,29 @@ export default function DashboardPage() {
   const [qrCard, setQrCard] = useState<NfcCard | null>(null);
   const [showBulkQrSheet, setShowBulkQrSheet] = useState(false);
 
+  useEffect(() => {
+    const hasOpenDialog = Boolean(qrCard || deleteTarget || editingCard || showBulkQrSheet);
+    if (!hasOpenDialog) return;
+
+    const handleDialogKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      if (showBulkQrSheet) {
+        setShowBulkQrSheet(false);
+      } else if (qrCard) {
+        setQrCard(null);
+      } else if (deleteTarget && !deletingCard) {
+        setDeleteTarget(null);
+        setCardError("");
+      } else if (editingCard && !savingCard) {
+        setEditingCard(null);
+        setCardError("");
+      }
+    };
+
+    window.addEventListener("keydown", handleDialogKeyDown);
+    return () => window.removeEventListener("keydown", handleDialogKeyDown);
+  }, [qrCard, deleteTarget, editingCard, showBulkQrSheet, deletingCard, savingCard]);
+
   const chartData = useMemo<Array<{ key: string; label: string; taps: number; clicks: number }>>(() => {
     return (insightsData?.daily ?? []).map((item: { day: string; taps: number; clicks: number }) => {
       const [year, month, day] = item.day.split("-").map(Number);
