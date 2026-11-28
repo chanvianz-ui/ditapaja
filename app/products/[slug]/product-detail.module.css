@@ -36,8 +36,8 @@
 .spec{padding:5rem 5vw;background:#0d1721;border-top:1px solid rgba(174,205,219,.1);border-bottom:1px solid rgba(174,205,219,.1)}
 .inner{max-width:1140px;margin:auto}
 .sectionTitle{margin:14px 0 30px;font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.065em}
-.specGrid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(174,205,219,.14);border-left:1px solid rgba(174,205,219,.14)}
-.specItem{min-height:104px;padding:22px;border-right:1px solid rgba(174,205,219,.14);border-bottom:1px solid rgba(174,205,219,.14)}
+.specGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.specItem{min-width:0;min-height:112px;padding:22px;border:1px solid rgba(141,211,205,.16);border-radius:14px;background:linear-gradient(145deg,rgba(18,39,52,.92),rgba(10,23,34,.96));box-shadow:inset 0 1px rgba(255,255,255,.025)}
 .specItem span{display:block;color:#8297a3;font-size:10px;margin-bottom:10px}
 .specItem b{font-size:14px;color:#e0eceb}
 .fit{margin-top:24px;color:#92a8b1;font-size:13px;line-height:1.8}
@@ -45,8 +45,9 @@
 .features{max-width:1140px;margin:auto;padding:clamp(4rem,8vw,7rem) 5vw}
 .featureHeading{max-width:760px;margin:14px 0 18px;font-size:clamp(2.3rem,5vw,4.6rem);line-height:.98;letter-spacing:-.07em}
 .featureIntro{max-width:590px;color:#91a5b1;font-size:13px;line-height:1.8}
-.featureGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:40px;background:rgba(174,205,219,.13);border:1px solid rgba(174,205,219,.13)}
-.feature{min-height:190px;padding:23px;background:#0b1520}
+.featureGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:40px;background:transparent;border:0}
+.feature{min-width:0;min-height:190px;padding:23px;border:1px solid rgba(141,211,205,.15);border-radius:15px;background:linear-gradient(150deg,rgba(17,37,51,.96),rgba(9,21,32,.98));box-shadow:0 16px 36px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.025);transition:transform .2s,border-color .2s}
+.feature:hover{transform:translateY(-3px);border-color:rgba(120,240,195,.32)}
 .featureIcon{width:38px;height:38px;display:grid;place-items:center;color:#8de2cf;border:1px solid rgba(141,226,207,.23)}
 .feature h3{margin:22px 0 8px;font-size:13px}
 .feature p{margin:0;color:#8399a5;font-size:11px;line-height:1.7}
@@ -56,5 +57,5 @@
 .orderCopy{max-width:590px;color:#96abb5;font-size:13px;line-height:1.8}
 .footer{max-width:1140px;margin:auto;padding:24px 5vw 32px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(174,205,219,.12);color:#758a96;font-size:10px}
 .footer a{color:#a9c0c5;text-decoration:none}
-@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:4rem}.art{min-height:430px}.featureGrid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.hero{padding:3.5rem 22px 3rem;gap:25px}.back{margin-bottom:28px}.art{min-height:340px}.card{width:80%;padding:18px}.artIndex,.artFoot{left:15px;right:15px}.spec{padding:3.5rem 22px}.specGrid{grid-template-columns:repeat(2,1fr)}.specItem{padding:16px;min-height:90px}.features{padding:3.5rem 22px}.featureGrid{grid-template-columns:1fr 1fr;margin-top:28px}.feature{padding:16px;min-height:180px}.feature h3{margin-top:16px}.order{padding:0 22px 3.5rem}.orderInner{display:block;padding:26px 20px}.orderInner .primary{margin-top:20px}.footer{padding-inline:22px}}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:4rem}.art{min-height:430px}.featureGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.specGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.hero{padding:3.5rem 22px 3rem;gap:25px}.back{margin-bottom:28px}.art{min-height:340px}.card{width:80%;padding:18px}.artIndex,.artFoot{left:15px;right:15px}.spec{padding:3.5rem 22px}.specGrid{grid-template-columns:repeat(2,1fr)}.specItem{padding:16px;min-height:90px}.features{padding:3.5rem 22px}.featureGrid{grid-template-columns:1fr 1fr;gap:9px;margin-top:28px}.feature{padding:16px;min-height:180px}.feature h3{margin-top:16px}.order{padding:0 22px 3.5rem}.orderInner{display:block;padding:26px 20px}.orderInner .primary{margin-top:20px}.footer{padding-inline:22px}}
