@@ -25,6 +25,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
   const [notes, setNotes] = useState("");
   const [website, setWebsite] = useState("");
   const [orderId, setOrderId] = useState("");
+  const [uploadToken, setUploadToken] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [paymentReference, setPaymentReference] = useState("");
   const [sending, setSending] = useState(false);
@@ -61,7 +62,9 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
       });
       const result = await response.json();
       if (!response.ok || !result.success || !result.orderId) throw new Error(result.error || "Pesanan gagal dibuat.");
+      if (typeof result.uploadToken !== "string") throw new Error("Token upload pesanan tidak diterima. Hubungi DiTapAja.");
       setOrderId(result.orderId);
+      setUploadToken(result.uploadToken);
       setNotice("Pesanan berhasil dibuat. Silakan transfer sesuai total, lalu unggah bukti pembayaran.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan saat membuat pesanan.");
@@ -81,7 +84,7 @@ export default function OrderForm({ initialProduct = "signature" }: { initialPro
     try {
       const form = new FormData();
       form.set("orderId", orderId);
-      form.set("email", email.trim().toLowerCase());
+      form.set("uploadToken", uploadToken);
       form.set("paymentMethod", "bank_transfer");
       form.set("paymentReference", paymentReference.trim());
       form.set("file", selectedFile);
