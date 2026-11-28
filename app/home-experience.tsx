@@ -438,7 +438,7 @@ function HeroInteractiveStudio() {
   const [skin,setSkin] = useState<HeroSkin>("midnight");
   const [stage,setStage] = useState<0|1|2|3>(0);
   const [rating,setRating] = useState(0);
-  const [taps,setTaps] = useState(128);
+  const [taps,setTaps] = useState(0);
   const [showQr,setShowQr] = useState(false);
   const business = {cafe:{name:"Kopi Sudut",type:"COFFEE & BREW",tagline:"A little moment. A better review.",initial:"K",destination:"Google Review"},salon:{name:"Studio Senja",type:"BEAUTY & CARE",tagline:"Your glow deserves a good review.",initial:"S",destination:"Review & Feedback"},retail:{name:"Ruang Rupa",type:"RETAIL & LIFESTYLE",tagline:"Find your style. Share your story.",initial:"R",destination:"Store Review"}}[scenario];
   const start = () => { setStage(1); setRating(0); setTaps(v=>v+1); };
@@ -480,7 +480,7 @@ function HeroInteractiveStudio() {
           <div className="dt-studio-customer-top"><span><Smartphone size={15}/> CUSTOMER JOURNEY</span><span>SIMULASI INTERAKTIF</span></div>
           {stage===0?<div className="dt-studio-idle"><div className="dt-studio-phone-icon"><Nfc size={29}/></div><div><b>Ready when you are.</b><p>Tekan tombol di bawah untuk mensimulasikan pelanggan men-tap kartu.</p></div><button type="button" onClick={start}>Simulasikan tap <ArrowUpRight size={15}/></button></div>:stage===1?<div className="dt-studio-result"><span className="dt-studio-result-icon"><Check size={18}/></span><div><small>CONNECTION SUCCESSFUL</small><b>{business.destination} terbuka</b><p>Pelanggan berhasil diarahkan ke halaman tujuan bisnis.</p></div><button type="button" onClick={()=>setStage(2)}>Lanjut <ArrowUpRight size={14}/></button></div>:stage===2?<div className="dt-studio-rating"><div><small>CONTOH HALAMAN REVIEW</small><b>Bagaimana pengalamanmu di {business.name}?</b><p>Pilih rating untuk melanjutkan simulasi.</p></div><div className="dt-studio-stars" role="group" aria-label="Pilih rating">{[1,2,3,4,5].map(n=><button type="button" key={n} aria-label={n+" bintang"} aria-pressed={rating===n} className={rating>=n?"selected":""} onClick={()=>setRating(n)}>★</button>)}</div><button type="button" disabled={!rating} onClick={()=>setStage(3)}>Lihat hasil simulasi <ArrowUpRight size={14}/></button></div>:<div className="dt-studio-complete"><span><Check size={20}/></span><div><small>SIMULASI SELESAI</small><b>Customer journey, lebih singkat.</b><p>Rating {rating}/5 dipilih. Tidak ada ulasan yang dikirim ke platform mana pun.</p></div><button type="button" onClick={reset}><RotateCcw size={14}/> Ulangi</button></div>}
         </div>
-        <div className="dt-studio-bottom"><span><i/> {taps.toLocaleString("id-ID")} SIMULATED TAPS</span><span>NO APP. NO MONTHLY FEE.</span></div>
+        <div className="dt-studio-bottom"><span><i/> DEMO TAP SESSION · {taps}</span><span>NO APP. NO MONTHLY FEE.</span></div>
       </div>
     </div>
   </div>;
