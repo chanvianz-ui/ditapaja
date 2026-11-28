@@ -22,7 +22,6 @@ function ProductObject({ product }: { product: Product }) {
 
         </span>
         <span className="dt-neo-main">
-          <span className="dt-neo-index" aria-hidden="true">{serial}</span>
           <span className="dt-neo-copy">
             <small>NFC REVIEW CARD</small>
             <strong>{product.label}</strong>
