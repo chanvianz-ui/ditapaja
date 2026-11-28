@@ -6,6 +6,7 @@ import "./styles/experience-v4-consistency.css";
 import "./styles/homepage-ui-fixes.css";
 import "./styles/auth-page-fixes.css";
 import "./styles/design-tokens.css";
+import "./styles/admin-ui-normalization.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ditapaja.web.id"),
