@@ -353,31 +353,45 @@ function HomeMotionController() {
 function HeroProductObject() {
   const [flipped, setFlipped] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [connection, setConnection] = useState<"nfc" | "qr">("nfc");
+  const [connection, setConnection] = useState<"idle" | "nfc" | "qr">("idle");
   const [dashboardOpen, setDashboardOpen] = useState(false);
+  const [dashboardTab, setDashboardTab] = useState<"activity" | "cards">("activity");
+  const [tapCount, setTapCount] = useState(0);
   const handleMove = (event: PointerEvent<HTMLButtonElement>) => {
     if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width - 0.5;
     const y = (event.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * -12, y: x * 14 });
+    setTilt({ x: y * -13, y: x * 16 });
+  };
+  const simulateNfc = () => {
+    setConnection("nfc");
+    setFlipped(false);
+    setTapCount((count) => count + 1);
+  };
+  const simulateQr = () => {
+    setConnection("qr");
+    setFlipped(true);
   };
   return (
-    <div className="dt-home-object-stage" aria-label="Kartu NFC DiTapAja dan pratinjau dashboard interaktif">
+    <div className={"dt-home-object-stage" + (connection !== "idle" ? " is-connected" : "") + (connection === "nfc" ? " is-nfc-active" : connection === "qr" ? " is-qr-active" : "")} aria-label="Kartu NFC DiTapAja dan pratinjau dashboard interaktif">
+      <div className="dt-home-stage-grid" aria-hidden="true"/>
       <div className="dt-home-object-shadow"/>
       <div className="dt-home-orbit dt-home-orbit-one"/><div className="dt-home-orbit dt-home-orbit-two"/>
       <div className="dt-home-signal"><span/><span/><span/><i><Wifi size={17}/></i></div>
+      <div className="dt-home-stage-label"><i/> PRODUCT EXPERIENCE <span>01 / 03</span></div>
       <div className="dt-home-float-panel dt-home-float-analytics">
-        <span className="dt-home-float-eyebrow"><i/> LIVE PREVIEW</span>
-        <strong>Dashboard <em>gratis.</em></strong>
+        <span className="dt-home-float-eyebrow"><i/> LIVE DASHBOARD PREVIEW</span>
+        <strong>Insight <em>at a glance.</em></strong>
         <div className="dt-home-mini-chart" aria-hidden="true"><i/><i/><i/><i/><i/><i/><i/><i/><i/></div>
-        <span className="dt-home-float-foot"><BarChart3 size={13}/> Aktivitas kartu terpantau</span>
+        <span className="dt-home-float-foot"><BarChart3 size={13}/> Aktivitas kartu dalam satu tempat</span>
       </div>
       <div className="dt-home-float-panel dt-home-float-scan">
-        <span className="dt-home-float-icon"><Nfc size={16}/></span>
-        <span><strong>{connection === "nfc" ? "NFC ready" : "QR ready"}</strong><small>{connection === "nfc" ? "Tap to connect" : "Scan to connect"}</small></span>
+        <span className="dt-home-float-icon">{connection === "qr" ? <QrCode size={16}/> : <Nfc size={16}/>}</span>
+        <span><strong>{connection === "nfc" ? "NFC connected" : connection === "qr" ? "QR detected" : "Ready to connect"}</strong><small>{connection === "nfc" ? "Tap berhasil disimulasikan" : connection === "qr" ? "QR berhasil dipindai" : "Pilih cara untuk mencoba"}</small></span>
         <i/>
       </div>
+      <div className="dt-home-card-halo" aria-hidden="true"/>
       <button type="button" className={"dt-home-object-card" + (flipped ? " is-flipped" : "")}
         onClick={() => setFlipped((value) => !value)}
         onPointerMove={handleMove}
@@ -386,7 +400,7 @@ function HeroProductObject() {
         aria-pressed={flipped}
         aria-label={flipped ? "Tampilkan sisi depan kartu" : "Balik kartu untuk melihat fitur NFC dan QR"}>
         <span className="dt-home-object-face dt-home-object-front">
-          <span className="dt-home-object-brand"><BrandMark/> DITAPAJA</span>
+          <span className="dt-home-object-brand"><BrandMark/> DITAPAJA <small>REVIEW CARD</small></span>
           <strong>YOUR<br/><em>review</em><br/>STARTS HERE.</strong>
           <span className="dt-home-object-bottom">NFC REVIEW CARD <span>QR READY</span></span>
         </span>
@@ -394,16 +408,24 @@ function HeroProductObject() {
           <span className="dt-home-object-brand"><BrandMark/> DITAPAJA · CONNECT</span>
           <span className="dt-home-object-qr"><QrCode size={74}/></span>
           <strong>ONE TAP.<br/><em>ONE SCAN.</em></strong>
-          <span className="dt-home-object-bottom">NFC CHIP INSIDE <span>DOUBLE-SIDED EXPERIENCE</span></span>
+          <span className="dt-home-object-bottom">NFC CHIP INSIDE <span>SCAN TO CONNECT</span></span>
         </span>
         <span className="dt-home-object-card-hint">{flipped ? "TAP TO VIEW FRONT" : "TAP TO FLIP"}</span>
       </button>
-      <div className="dt-home-object-controls" aria-label="Pilih simulasi koneksi">
-        <button type="button" className={connection === "nfc" ? "is-active" : ""} aria-pressed={connection === "nfc"} onClick={() => setConnection("nfc")}><Nfc size={14}/> NFC tap</button>
-        <button type="button" className={connection === "qr" ? "is-active" : ""} aria-pressed={connection === "qr"} onClick={() => { setConnection("qr"); setFlipped(true); }}><QrCode size={14}/> QR scan</button>
-        <button type="button" className={dashboardOpen ? "is-active" : ""} aria-expanded={dashboardOpen} onClick={() => setDashboardOpen((value) => !value)}><BarChart3 size={14}/> {dashboardOpen ? "Tutup" : "Dashboard"}</button>
+      <div className="dt-home-connection-path" aria-hidden="true"><span/><i/><span/></div>
+      <div className="dt-home-object-controls" aria-label="Simulasi pengalaman kartu">
+        <button type="button" className={connection === "nfc" ? "is-active" : ""} aria-pressed={connection === "nfc"} onClick={simulateNfc}><Nfc size={14}/> Simulasikan NFC</button>
+        <button type="button" className={connection === "qr" ? "is-active" : ""} aria-pressed={connection === "qr"} onClick={simulateQr}><QrCode size={14}/> Scan QR</button>
+        <button type="button" className={dashboardOpen ? "is-active" : ""} aria-expanded={dashboardOpen} onClick={() => setDashboardOpen((value) => !value)}><BarChart3 size={14}/> Dashboard</button>
       </div>
-      {dashboardOpen && <div className="dt-home-dashboard-pop" role="status"><span>YOUR WORKSPACE</span><strong>Semua kartu, satu dashboard.</strong><small>Atur tujuan dan pantau aktivitas tanpa biaya bulanan.</small></div>}
+      {connection !== "idle" && <div className="dt-home-connection-toast" role="status"><span><Check size={13}/></span><div><strong>{connection === "nfc" ? "Tap berhasil!" : "QR berhasil dipindai!"}</strong><small>{connection === "nfc" ? "Ponsel siap membuka halaman tujuan." : "Kode QR membawa pelanggan ke tautan tujuan."}</small></div><button type="button" onClick={() => setConnection("idle")} aria-label="Tutup notifikasi">×</button></div>}
+      {dashboardOpen && <div className="dt-home-dashboard-pop">
+        <div className="dt-home-dashboard-top"><span>YOUR WORKSPACE</span><button type="button" onClick={() => setDashboardOpen(false)} aria-label="Tutup dashboard preview">×</button></div>
+        <strong>Semua kartu, satu dashboard.</strong>
+        <div className="dt-home-dashboard-tabs" role="tablist" aria-label="Dashboard preview"><button type="button" role="tab" aria-selected={dashboardTab === "activity"} className={dashboardTab === "activity" ? "is-active" : ""} onClick={() => setDashboardTab("activity")}>Aktivitas</button><button type="button" role="tab" aria-selected={dashboardTab === "cards"} className={dashboardTab === "cards" ? "is-active" : ""} onClick={() => setDashboardTab("cards")}>Kartu</button></div>
+        {dashboardTab === "activity" ? <div className="dt-home-dashboard-data"><span><small>SIMULASI TAP</small><b>{tapCount}</b></span><span><small>STATUS</small><b>Aktif</b></span></div> : <div className="dt-home-dashboard-card-row"><Nfc size={16}/><span><b>Review Card</b><small>NFC + QR · Active</small></span><i/></div>}
+        <small className="dt-home-dashboard-note">Pratinjau interaktif · data simulasi</small>
+      </div>}
       <span className="dt-home-object-caption">A PHYSICAL TOUCHPOINT FOR YOUR BUSINESS · INTERACTIVE 3D</span>
     </div>
   );
