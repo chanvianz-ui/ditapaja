@@ -151,3 +151,73 @@
 @media(max-width:640px){
  .dt-v4 .dt-qr-modal-panel{border-radius:18px!important;padding:14px!important}
 }
+
+
+/* NFC card creation: correct desktop proportions and unify the form with v4. */
+.dt-card-create-page{padding-top:clamp(22px,3vw,38px)!important;padding-bottom:48px!important}
+.dt-card-create-page>.mx-auto{width:min(100%,1180px)!important}
+.dt-card-create-page>.mx-auto>a{color:#9bb2c6!important;transition:color .18s ease}
+.dt-card-create-page>.mx-auto>a:hover{color:#39d8e8!important}
+.dt-card-create-layout{align-items:stretch!important;gap:16px!important}
+.dt-card-create-intro{
+  position:relative;isolation:isolate;overflow:hidden;
+  min-width:0;border:1px solid rgba(145,190,218,.18);
+  background:radial-gradient(ellipse at 82% 12%,rgba(57,216,232,.16),transparent 21rem),linear-gradient(150deg,#102b45 0%,#081625 78%)!important;
+  box-shadow:0 22px 60px rgba(0,0,0,.2);
+}
+.dt-card-create-intro:after{
+  content:"";position:absolute;z-index:-1;right:-105px;bottom:-135px;width:310px;height:310px;
+  border:1px solid rgba(120,240,195,.14);border-radius:50%;
+  box-shadow:0 0 0 28px rgba(120,240,195,.025),0 0 0 58px rgba(57,216,232,.02);
+}
+.dt-card-create-intro>div:first-child{background:rgba(57,216,232,.1)!important;color:#39d8e8!important;box-shadow:inset 0 0 0 1px rgba(57,216,232,.18)}
+.dt-card-create-intro h1{font-size:clamp(29px,3vw,42px)!important;line-height:1.05!important;letter-spacing:-.055em!important;color:#effaff!important}
+.dt-card-create-intro p.text-xs{color:#39d8e8!important}
+.dt-card-create-steps{position:relative;z-index:1}
+.dt-card-create-steps>div{border-color:rgba(145,190,218,.13)!important}
+.dt-card-create-form{
+  min-width:0;border:1px solid rgba(145,190,218,.18);
+  background:linear-gradient(155deg,rgba(16,38,61,.98),rgba(7,18,31,.99))!important;
+  box-shadow:0 22px 60px rgba(0,0,0,.16);
+}
+.dt-card-create-form label{color:#dceaf5!important}
+.dt-card-create-form input,.dt-card-create-form select{
+  min-height:48px;border-radius:11px!important;background:#071625!important;color:#effaff!important;
+  border-color:rgba(145,190,218,.2)!important;
+}
+.dt-card-create-form input::placeholder{color:#718ba2!important}
+.dt-card-create-form input:focus,.dt-card-create-form select:focus{
+  border-color:#39d8e8!important;--tw-ring-color:rgba(57,216,232,.12)!important;
+}
+.dt-card-create-form .dt-card-create-note{
+  border-color:rgba(57,216,232,.18)!important;background:rgba(57,216,232,.07)!important;
+}
+.dt-card-create-form .dt-card-create-note :is(p){color:#b7cad9!important}
+.dt-card-create-form .dt-card-create-note p:first-child{color:#effaff!important}
+.dt-card-create-form>div:has(>button[type="button"])>div:has(input[type="checkbox"]){
+  border-color:rgba(120,240,195,.2)!important;background:rgba(120,240,195,.07)!important;
+}
+.dt-card-create-form>div:has(>button[type="button"])>div:has(input[type="checkbox"]) p{color:#b8ead8!important}
+.dt-card-create-form button[type="button"]{
+  border-color:rgba(57,216,232,.22)!important;background:rgba(57,216,232,.08)!important;color:#39d8e8!important;
+}
+.dt-card-create-form button[type="button"]:hover{background:rgba(57,216,232,.14)!important}
+.dt-card-create-form button[type="submit"]{min-height:50px;border-radius:11px!important}
+.dt-card-create-page>div>p:last-child{color:#718ba2!important}
+@media(max-width:1023px){
+  .dt-card-create-layout{grid-template-columns:1fr!important}
+  .dt-card-create-intro{min-height:0!important;gap:22px}
+  .dt-card-create-intro>.mt-10{display:none!important}
+  .dt-card-create-steps{margin-top:12px!important}
+}
+@media(max-width:640px){
+  .dt-card-create-page{padding:18px 12px 32px!important}
+  .dt-card-create-layout{margin-top:20px!important;gap:12px!important}
+  .dt-card-create-intro,.dt-card-create-form{border-radius:19px!important;padding:19px!important}
+  .dt-card-create-intro h1{font-size:29px!important}
+  .dt-card-create-form{gap:22px!important}
+  .dt-card-create-form input,.dt-card-create-form select{font-size:16px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .dt-card-create-page *{scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
