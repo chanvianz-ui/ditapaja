@@ -62,6 +62,7 @@ export default function SiteHeader() {
           </nav>
           <div className="dt-v3-header-actions">
             <Link href="/dashboard" className="dt-v3-login"><LayoutDashboard size={15}/> Dashboard</Link>
+            <Link href="/login" className="dt-v3-login">Login</Link>
             <Link href="/koleksi" className="dt-v3-header-cta">Pilih kartu <ArrowUpRight size={16}/></Link>
           </div>
           <div className="dt-v3-mobile-actions">
