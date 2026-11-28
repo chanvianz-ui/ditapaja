@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent, type CSSProperties } from "react";
 import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi, MessageCircle, Coffee, CalendarDays } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
@@ -346,7 +346,7 @@ function HeroProductObject() {
         onClick={() => setFlipped((value) => !value)}
         onPointerMove={handleMove}
         onPointerLeave={() => setTilt({ x: 0, y: 0 })}
-        style={{ "--card-tilt-x": tilt.x + "deg", "--card-tilt-y": tilt.y + "deg" } as React.CSSProperties}
+        style={{ "--card-tilt-x": tilt.x + "deg", "--card-tilt-y": tilt.y + "deg" } as CSSProperties}
         aria-pressed={flipped}
         aria-label={flipped ? "Tampilkan sisi depan kartu" : "Balik kartu untuk melihat fitur NFC dan QR"}>
         <span className="dt-home-object-face dt-home-object-front">
