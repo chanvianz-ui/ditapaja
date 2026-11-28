@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
-import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi, MessageCircle } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, BarChart3, Check, Link2, MapPin, Nfc, QrCode, Smartphone, Star, RotateCcw, Wifi, MessageCircle, Coffee, CalendarDays } from "lucide-react";
 import SiteHeader from "./components/site-header";
 import ProductCarousel from "./components/product-carousel";
 import { PRODUCT_LIST } from "./lib/product-catalog";
@@ -255,6 +255,51 @@ function HowItWorks() {
   );
 }
 
+
+type UseCaseKey = "review" | "menu" | "whatsapp" | "booking";
+
+function UseCaseExplorer() {
+  const [active, setActive] = useState<UseCaseKey>("review");
+  const cases = {
+    review: { label: "GOOGLE REVIEW", title: "Lebih mudah meminta ulasan.", description: "Arahkan pelanggan langsung ke halaman review bisnismu setelah mereka menikmati layanan.", step: "Pelanggan tap kartu → halaman review terbuka → pelanggan menulis ulasan.", previewTitle: "Bagaimana pengalamanmu?", previewBody: "Bagikan pengalamanmu bersama kami.", action: "Beri ulasan", icon: Star },
+    menu: { label: "MENU DIGITAL", title: "Menu selalu mudah ditemukan.", description: "Letakkan kartu di meja atau kasir agar pelanggan bisa membuka menu digital dari ponsel mereka.", step: "Pelanggan scan QR atau tap kartu → menu digital terbuka.", previewTitle: "Explore our menu.", previewBody: "Lihat pilihan menu dan informasi terbaru.", action: "Lihat menu", icon: Coffee },
+    whatsapp: { label: "WHATSAPP", title: "Percakapan dimulai lebih cepat.", description: "Hubungkan kartu ke WhatsApp bisnis agar pelanggan bisa langsung bertanya atau menghubungi tim.", step: "Pelanggan tap kartu → WhatsApp bisnis terbuka.", previewTitle: "Ada yang bisa kami bantu?", previewBody: "Mulai percakapan dengan tim bisnis.", action: "Chat sekarang", icon: MessageCircle },
+    booking: { label: "BOOKING & RESERVASI", title: "Akses pemesanan tanpa mencari-cari.", description: "Arahkan pelanggan ke halaman reservasi atau formulir booking yang sudah digunakan bisnismu.", step: "Pelanggan tap kartu → halaman booking terbuka.", previewTitle: "Make a reservation.", previewBody: "Pilih jadwal dan kirim permintaan reservasi.", action: "Buat reservasi", icon: CalendarDays }
+  };
+  const item = cases[active];
+  const PreviewIcon = item.icon;
+
+  return (
+    <section className="dt-usecase-section" id="use-case">
+      <div className="dt-usecase-heading">
+        <div><span className="dt-usecase-kicker">ONE CARD. YOUR DESTINATION.</span><h2>Satu kartu.<br/><em>Banyak kemungkinan.</em></h2></div>
+        <p>Gunakan kartu NFC untuk mengarahkan pelanggan ke tautan yang paling dibutuhkan bisnismu. Pilih contoh penggunaan di bawah ini.</p>
+      </div>
+      <div className="dt-usecase-layout">
+        <div className="dt-usecase-options" role="tablist" aria-label="Contoh penggunaan kartu NFC">
+          {(Object.keys(cases) as UseCaseKey[]).map((key, index) => {
+            const option = cases[key];
+            const Icon = option.icon;
+            return <button key={key} type="button" role="tab" id={"dt-usecase-tab-" + key} aria-selected={active === key} aria-controls="dt-usecase-panel" className={"dt-usecase-option" + (active === key ? " is-active" : "")} onClick={() => setActive(key)}>
+              <span className="dt-usecase-option-icon"><Icon size={18}/></span><span><small>{option.label}</small><strong>{option.title}</strong></span><ArrowUpRight size={16}/>
+            </button>;
+          })}
+        </div>
+        <div className="dt-usecase-preview" id="dt-usecase-panel" role="tabpanel" aria-labelledby={"dt-usecase-tab-" + active}>
+          <div className="dt-usecase-preview-top"><span><i/> LIVE USE-CASE PREVIEW</span><span>EXAMPLE {String((Object.keys(cases) as UseCaseKey[]).indexOf(active) + 1).padStart(2, "0")} / 04</span></div>
+          <div className="dt-usecase-preview-content">
+            <div className="dt-usecase-phone"><div className="dt-usecase-phone-top"><span>9:41</span><span>●●● ▰</span></div><div className="dt-usecase-phone-screen">
+              <span className="dt-usecase-preview-icon"><PreviewIcon size={22}/></span><small>DITAPAJA · DESTINATION PREVIEW</small><strong>{item.previewTitle}</strong><p>{item.previewBody}</p><span className="dt-usecase-preview-button">{item.action}<ArrowUpRight size={13}/></span><span className="dt-usecase-preview-url">Contoh tampilan tujuan</span>
+            </div><span className="dt-usecase-phone-home"/></div>
+            <div className="dt-usecase-explainer"><span className="dt-usecase-label">CUSTOMER JOURNEY</span><h3>{item.title}</h3><p>{item.description}</p><div className="dt-usecase-flow"><Nfc size={16}/><span>{item.step}</span></div><Link href="/koleksi" className="dt-usecase-cta">Pilih kartu NFC <ArrowUpRight size={16}/></Link></div>
+          </div>
+          <p className="dt-usecase-disclaimer">Ilustrasi alur penggunaan. Tujuan akhir mengikuti tautan yang diatur pemilik kartu.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   return <main className="dt-next-home dt-editorial-home dt-home-rebuild" id="top">
     <SiteHeader/>
@@ -305,7 +350,7 @@ export default function Home() {
       <HeroTapDemo/>
     </section>
 
-    <HowItWorks/>
+    <HowItWorks/>\n\n    <UseCaseExplorer/>
 
     <section className="home-dashboard-story dt-behind" id="behind-the-card">
       <div className="dt-behind-copy">
