@@ -1,8 +1,8 @@
 /* DiTapAja 2.0 — dashboard experience layer
    Scoped to the authenticated workspace; no data or interaction changes. */
 .dt-reset-dashboard{
-  --dash-bg:#0a111b;--dash-panel:#142333;--dash-panel-2:#192d3d;--dash-line:rgba(151,185,216,.14);
-  --dash-text:#edf5fc;--dash-muted:#8fa5ba;--dash-blue:#789d98;--dash-cyan:#a5d6ca;
+  --dash-bg:var(--dt-bg);--dash-panel:var(--dt-surface);--dash-panel-2:var(--dt-surface-raised);--dash-line:var(--dt-border);
+  --dash-text:var(--dt-text);--dash-muted:var(--dt-muted);--dash-blue:var(--dt-blue);--dash-cyan:var(--dt-cyan);
   min-height:100%;color:var(--dash-text);
   background:
     radial-gradient(ellipse at 82% 0%,rgba(39,105,167,.16),transparent 34rem),
