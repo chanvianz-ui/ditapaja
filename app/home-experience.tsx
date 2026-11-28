@@ -277,7 +277,7 @@ function UseCaseExplorer() {
       </div>
       <div className="dt-usecase-layout">
         <div className="dt-usecase-options" role="tablist" aria-label="Contoh penggunaan kartu NFC">
-          {(Object.keys(cases) as UseCaseKey[]).map((key, index) => {
+          {(Object.keys(cases) as UseCaseKey[]).map((key) => {
             const option = cases[key];
             const Icon = option.icon;
             return <button key={key} type="button" role="tab" id={"dt-usecase-tab-" + key} aria-selected={active === key} aria-controls="dt-usecase-panel" className={"dt-usecase-option" + (active === key ? " is-active" : "")} onClick={() => setActive(key)}>
